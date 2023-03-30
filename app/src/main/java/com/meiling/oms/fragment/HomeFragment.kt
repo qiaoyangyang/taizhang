@@ -1,14 +1,10 @@
 package com.meiling.oms.fragment
 
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
-import com.angcyo.tablayout.delegate2.ViewPager2Delegate
-import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.R
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter

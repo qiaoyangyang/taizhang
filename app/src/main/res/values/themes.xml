@@ -23,7 +23,7 @@
         <!-- 隐藏标题栏 -->
         <item name="android:windowNoTitle">true</item>
         <!-- 窗口透明的状态栏 -->
-        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
         <!-- 窗口透明的导航栏 -->
         <item name="android:windowTranslucentNavigation">false</item>
 

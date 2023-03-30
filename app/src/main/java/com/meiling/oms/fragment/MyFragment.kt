@@ -2,14 +2,11 @@ package com.meiling.oms.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
-import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.meiling.common.fragment.BaseFragment
-import com.meiling.oms.R
-import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentMyBinding
 import com.meiling.oms.viewmodel.MyViewModel
+import com.meiling.oms.widget.setSingleClickListener
 
 class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
@@ -34,6 +31,8 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 //        mDatabind.viewPager.adapter =
 //            BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragments)
 //        ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
+//        ImmersionB.with(this).init()
+//        ImmersionBar.setTitleBar(this,mDatabind.clMy)
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentMyBinding {
@@ -42,6 +41,9 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
 
     override fun initListener() {
+        mDatabind.txtRecharge.setSingleClickListener {
+            ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
+        }
 //        mDatabind.aivMore.setOnClickListener {
 ////            mDatabind.drawerLayout.openDrawer(GravityCompat.START)
 //        }

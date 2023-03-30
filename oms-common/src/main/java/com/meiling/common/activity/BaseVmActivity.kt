@@ -1,13 +1,17 @@
 package com.meiling.common.activity
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.BarUtils
+import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.dialog.LoadingDialog
 import com.meiling.common.getVmClazz
 import com.meiling.common.BaseViewModel
@@ -30,6 +34,11 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
         BarUtils.setStatusBarLightMode(this, isLightMode());
         initDataBind()
         init(savedInstanceState)
+    }
+
+    open fun setBar(context: Activity, view: View) {
+        ImmersionBar.with(context).init()
+        ImmersionBar.setTitleBar(context, view)
     }
 
     abstract fun isLightMode(): Boolean
