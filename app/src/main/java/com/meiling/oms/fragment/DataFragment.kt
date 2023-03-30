@@ -6,6 +6,7 @@ import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.databinding.FragmentDataBinding
 import com.meiling.oms.viewmodel.MessageViewModel
 
+
 class DataFragment : BaseFragment<MessageViewModel, FragmentDataBinding>() {
 
     companion object {
