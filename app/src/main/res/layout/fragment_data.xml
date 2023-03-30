@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/home_1F2333"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="全国/所有门店"
+        android:paddingVertical="@dimen/dp_10"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:textSize="@dimen/sp_36"
+         />
+    <com.angcyo.tablayout.DslTabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tab_deselect_color="@color/home_A8ABB2"
+        app:tab_divider_margin_top="@dimen/dp_10"
+        app:tab_draw_indicator="true"
+        app:tab_enable_gradient_scale="false"
+        app:tab_enable_text_bold="true"
+        app:tab_indicator_color="@color/red"
+        app:tab_indicator_drawable="@drawable/indicator_bottom_line_1"
+        app:tab_indicator_enable_flow="true"
+        app:tab_indicator_height="@dimen/dp_5"
+        app:tab_indicator_solid_color="@color/red"
+        app:tab_indicator_style="STYLE_BOTTOM"
+        app:tab_indicator_width="30dp"
+        app:tab_item_is_equ_width="true"
+        app:tab_select_color="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="门店"
+            android:textColor="#ff9b9b9b"
+            android:textSize="@dimen/sp_30" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="渠道"
+            android:textColor="#ff9b9b9b"
+            android:textSize="@dimen/sp_30" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="配送"
+            android:textColor="#ff9b9b9b"
+            android:textSize="@dimen/sp_30" />
+
+    </com.angcyo.tablayout.DslTabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/home_B3B3B3"
+        android:layout_marginTop="@dimen/dp_20" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,225 @@
+package com.meiling.oms.widget
+
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.view.View
+import android.widget.Checkable
+import java.text.SimpleDateFormat
+import java.util.*
+
+
+
+fun androidx.fragment.app.Fragment.showToast(content: String, type: CustomToast.CustomType) {
+    CustomToast(this.activity?.applicationContext, content, type).show()
+}
+
+fun androidx.fragment.app.Fragment.showToast(content: String, type: Int) {
+    CustomToast(this.activity?.applicationContext, content, type).show()
+}
+
+
+fun Context.showToast(content: String, type: CustomToast.CustomType) {
+    CustomToast(this, content, type).show()
+}
+
+fun Context.openBrowser(url: String) {
+    Intent(Intent.ACTION_VIEW, Uri.parse(url)).run { startActivity(this) }
+}
+
+// 扩展点击事件属性(重复点击时长)
+var <T : View> T.lastClickTime: Long
+    set(value) = setTag(1766613352, value)
+    get() = getTag(1766613352) as? Long ?: 0
+
+// 重复点击事件绑定
+inline fun <T : View> T.setSingleClickListener(time: Long = 300, crossinline block: (T) -> Unit) {
+    setOnClickListener {
+        val currentTimeMillis = System.currentTimeMillis()
+        if (currentTimeMillis - lastClickTime > time || this is Checkable) {
+            lastClickTime = currentTimeMillis
+            block(this)
+        }
+    }
+}
+
+
+/**
+ * 格式化当前日期
+ */
+fun formatCurrentDate(): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    return sdf.format(Date())
+}
+/**
+ * 格式化当前日期
+ */
+fun formatCurrentDateyear(): String {
+    val sdf = SimpleDateFormat("yyyy")
+    return sdf.format(Date())
+}
+
+/**
+ * 格式化当前日期
+ */
+fun formatCurrentMDate(): String {
+    val sdf = SimpleDateFormat("yyyy-M-dd")
+    return sdf.format(Date())
+}
+
+//之前一周的时间
+fun formatCurrentDateBeforeWeek(): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH, -7)
+    return sdf.format(cal.time)
+}
+
+fun getTomorrowDate(): String {
+    var sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH, 1)
+    return sdf.format(cal.time)
+}
+
+fun getBeforeSevenDate(): String {
+    var sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH, -6)
+    return sdf.format(cal.time)
+}
+fun getassignSevenDate(int: Int): String {
+    var sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH,int )
+
+    return sdf.format(cal.time)
+}
+
+fun getBeforeMonthDate(): String {
+    var sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH, -30)
+    return sdf.format(cal.time)
+}
+
+fun getSevenDate(): String {
+    var sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH, 6)
+    return sdf.format(cal.time)
+}
+
+fun getMonthDate(): String {
+    var sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH, 30)
+    return sdf.format(cal.time)
+}
+
+
+fun formatCurrentDate2(): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    return sdf.format(Date())
+}
+
+fun formatCurrentDate3(): String {
+    val sdf = SimpleDateFormat("HH:mm:ssss")
+    return sdf.format(Date())
+}
+
+/**
+ * String 转 Calendar
+ */
+fun String.stringToCalendar(): Calendar {
+    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    val date = sdf.parse(this)
+    val calendar = Calendar.getInstance()
+    calendar.time = date
+    return calendar
+}
+
+fun formatCurrentDateMM(): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    return sdf.format(Date())
+}
+
+fun formatCurrentDateGeshi(str: String): String {
+    val sdf2 = SimpleDateFormat("yyyy-MM-dd HH:mm")
+    val sdf1 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    var d: Date = sdf1.parse(str)
+    return sdf2.format(d)
+}
+
+fun formatCurrentDateGeshiMM(str: String): String {
+    val sdf2 = SimpleDateFormat("MM-dd HH:mm")
+    val sdf1 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    var d: Date = sdf1.parse(str)
+    return sdf2.format(d)
+}
+
+fun transToString(time: Long): String {
+    return SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(time)
+}
+
+@SuppressLint("SimpleDateFormat")
+fun calculationWorkLongTime(starTime: String?): String {
+    if (starTime.isNullOrEmpty()){
+        return "--"
+    }
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    var longStart = sdf.parse(starTime).time
+    var longEndTime = sdf.parse(formatCurrentDate2()).time
+    var longTime = longEndTime - longStart
+    var longHH = longTime / (60 * 60 * 1000); //根据时间差来计算小时数
+    val longMM = (longTime - longHH * (60 * 60 * 1000)) / (60 * 1000); //根据时间差来计算小时数
+
+    return "${longHH}小时${longMM}分钟"
+}
+
+//之前一月的时间
+fun formatCurrentDateBeforeMouth(): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH, -30)
+    return sdf.format(cal.time)
+}
+
+/**
+ * 计算时间
+ * **/
+@SuppressLint("SimpleDateFormat")
+fun calculationClickable(): Boolean {
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    val startTime = formatCurrentDate() + " 16:00:00"
+    var longStart = sdf.parse(startTime).time
+    var longEndTime = sdf.parse(formatCurrentDate2()).time
+    return longStart > longEndTime
+
+}
+
+/**
+ * 计算时间
+ * **/
+var xxxxx = true
+
+@SuppressLint("SimpleDateFormat")
+fun calculationClickableTime(): Boolean {
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
+    val startTime = formatCurrentDate() + " 20:07"
+    var longStart = sdf.parse(startTime).time
+    var longEndTime = sdf.parse(formatCurrentDate2()).time
+
+//    if (longStart == longEndTime) {
+//        if (xxxxx) {
+//            NLog.d("lwq", "执行退出")
+//            ARouter.getInstance()
+//                .build("/login/activity")
+//                .navigation()
+//            xxxxx = false
+//        } else {
+//        }
+//    }
+    return false
+}

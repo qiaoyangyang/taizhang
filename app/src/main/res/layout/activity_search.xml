@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/aiv_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+  />
+
+
+    <com.angcyo.tablayout.DslTabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tab_deselect_color="#9B9B9B"
+        app:tab_draw_indicator="true"
+        app:tab_enable_gradient_scale="false"
+        app:tab_enable_text_bold="true"
+        app:tab_indicator_color="#1758F1"
+        app:tab_indicator_drawable="@drawable/indicator_bottom_line_1"
+        app:tab_indicator_enable_flow="true"
+        app:tab_indicator_height="@dimen/dp_5"
+        app:tab_indicator_solid_color="#000000"
+        app:tab_indicator_style="STYLE_BOTTOM"
+        app:tab_indicator_width="50dp"
+        app:tab_item_is_equ_width="true"
+        app:tab_select_color="#000000">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="综合"
+            android:textColor="#ff9b9b9b"
+            android:textSize="@dimen/sp_34" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="帖子"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/sp_34" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="文章"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/sp_34" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="社区"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/sp_34" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="用户"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/sp_34" />
+
+    </com.angcyo.tablayout.DslTabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

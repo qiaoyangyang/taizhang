@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/order_dis_F7F7F7"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cos_dis_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_30"
+        android:background="@drawable/scan_bg_input"
+        android:padding="@dimen/dp_20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txt_weight_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="物品重量："
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_28"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/ll_count"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/order_dis_right_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+            <TextView
+                android:id="@+id/txtAddTipMinus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="4dp"
+                android:gravity="center"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="一"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#E1E2E5" />
+
+            <TextView
+                android:id="@+id/edtAddTipShow"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="8"
+                android:paddingVertical="6dp"
+                android:text="1kg"
+                android:textSize="@dimen/sp_28" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#E1E2E5" />
+
+            <TextView
+                android:id="@+id/txtAddTipPlus"
+                android:layout_width="26dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:text="+"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="@dimen/dp_10"
+            android:background="@color/order_dis_F7F7F7"
+            app:layout_constraintTop_toBottomOf="@+id/ll_count" />
+
+        <TextView
+            android:id="@+id/txt_rec_time_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginVertical="@dimen/dp_30"
+            android:text="取件时间："
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_28"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_line" />
+        <TextView
+            android:id="@+id/txt_rec_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_10"
+            android:text="立即取件"
+            android:drawableEnd="@drawable/icon_next"
+            android:textColor="@color/home_000000"
+            android:textSize="@dimen/sp_28"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/txt_rec_time_tip" />
+        <View
+            android:id="@+id/view_line1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="@dimen/dp_30"
+            android:background="@color/order_dis_F7F7F7"
+            app:layout_constraintTop_toBottomOf="@+id/txt_rec_time_tip" />
+
+        <TextView
+            android:id="@+id/txt_rec_shop_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_30"
+            android:text="配送物品："
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_28"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_line1" />
+
+        <TextView
+            android:id="@+id/txt_rec_shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_30"
+            android:text="甜品"
+            android:drawableEnd="@drawable/icon_next"
+            android:textColor="@color/home_000000"
+            android:textSize="@dimen/sp_28"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_line1" />
+
+        <View
+            android:id="@+id/view_line2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="@dimen/dp_30"
+            android:background="@color/order_dis_F7F7F7"
+            app:layout_constraintTop_toBottomOf="@+id/txt_rec_shop_tip" />
+
+        <TextView
+            android:id="@+id/txt_rec_pay_type_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_30"
+            android:text="付款方式："
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_28"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_line2" />
+
+        <EditText
+            android:id="@+id/edt_rec_pay_type"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_30"
+            android:text="现金"
+            android:gravity="end"
+            android:background="@null"
+            android:textColor="@color/home_999999"
+            android:textSize="@dimen/sp_28"
+            android:layout_marginEnd="@dimen/sp_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/txt_rec_pay_type_tip" />
+
+        <View
+            android:id="@+id/view_line3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="@dimen/dp_30"
+            android:background="@color/order_dis_F7F7F7"
+            app:layout_constraintTop_toBottomOf="@+id/txt_rec_pay_type_tip" />
+
+        <TextView
+            android:id="@+id/txt_rec_type_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_30"
+            android:text="配送方式："
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_28"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_line3" />
+
+        <TextView
+            android:id="@+id/txt_rec_type_rule_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_10"
+            android:text="(配送规则)："
+            android:textColor="@color/home_999999"
+            android:textSize="@dimen/sp_20"
+            app:layout_constraintBaseline_toBaselineOf="@+id/txt_rec_type_tip"
+            app:layout_constraintStart_toEndOf="@+id/txt_rec_type_tip" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_rec_type"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_30"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/txt_rec_type_rule_tip"
+            tools:listitem="@layout/item_dis_send"
+            app:spanCount="3" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_send_dis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@drawable/order_search_bg_button_red"
+        android:text="发起配送"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/cos_dis_line"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+

@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    signingConfigs {
+        debug {
+//            storeFile file('')
+//            storePassword '1q2w3e4r'
+//            keyAlias 'key0'
+//            keyPassword 'oms'
+        }
+        release {
+//            storeFile file('')
+//            storePassword '1q2w3e4r'
+//            keyAlias 'key0'
+//            keyPassword 'oms'
+        }
+    }
+    namespace 'com.meiling.oms'
+    compileSdkVersion build_versions.target_sdk
+
+    defaultConfig {
+        applicationId "com.meiling.oms"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode build_versions.version_code
+        versionName build_versions.version_name
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+
+}
+
+dependencies {
+    implementation project(':oms-common')
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    androidTestImplementation 'junit:junit:4.13.2'
+    kapt "com.alibaba:arouter-compiler:1.5.2"
+    implementation 'com.github.open-android:FragmentTabhostUtils:0.5.0'
+    implementation 'androidx.test.ext:junit:1.1.3'
+    // 状态栏沉浸：https://github.com/gyf-dev/ImmersionBar
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+}

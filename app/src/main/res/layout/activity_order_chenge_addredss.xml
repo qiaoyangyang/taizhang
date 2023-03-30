@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cos_change_order"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/home_1F2333"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/aiv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/icon_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="修改订单"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_30"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/aiv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="15dp"
+            android:src="@mipmap/icon_more_1"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp_20"
+        app:layout_constraintTop_toBottomOf="@+id/cos_change_order">
+
+        <TextView
+            android:id="@+id/txt_order_change_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:text="收货信息"
+            android:textColor="@color/home_333333"
+            android:textSize="@dimen/sp_36"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_order_change_time_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            android:paddingVertical="@dimen/dp_20"
+            android:text="收货时间"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_32"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_order_change_title" />
+
+        <TextView
+            android:gravity="end"
+            android:id="@+id/txt_order_change_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:text="收货时间"
+            android:paddingVertical="@dimen/dp_20"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_32"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txt_order_change_time_tip"
+            app:layout_constraintTop_toBottomOf="@+id/txt_order_change_title"
+            app:drawableEndCompat="@drawable/icon_next" />
+
+        <TextView
+            android:id="@+id/txt_order_change_name_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:text="收货人"
+            android:paddingVertical="@dimen/dp_20"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_32"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/txt_order_change_time_tip" />
+
+        <EditText
+            android:id="@+id/txt_order_change_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:text="收货人"
+            android:paddingVertical="@dimen/dp_20"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_32"
+            android:background="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="end"
+            app:layout_constraintStart_toEndOf="@+id/txt_order_change_address_tip"
+            app:layout_constraintTop_toBottomOf="@+id/txt_order_change_time_tip" />
+
+        <TextView
+            android:id="@+id/txt_order_change_phone_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:text="收货人电话"
+            android:paddingVertical="@dimen/dp_20"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_32"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_order_change_name_tip" />
+
+        <EditText
+            android:gravity="end"
+            android:id="@+id/txt_order_change_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:text="收货人电话"
+            android:background="@null"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_32"
+            android:paddingVertical="@dimen/dp_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txt_order_change_phone_tip"
+            app:layout_constraintTop_toBottomOf="@+id/txt_order_change_name_tip" />
+
+        <TextView
+            android:id="@+id/txt_order_change_address_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:text="收货地址"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_32"
+            android:paddingVertical="@dimen/dp_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_order_change_phone_tip" />
+
+        <TextView
+            android:gravity="end"
+            android:id="@+id/txt_order_change_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:text="收货地址收收货地址收收货地址收收货地址收收货地址收收货地址收收货地址收"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_32"
+            android:singleLine="true"
+            android:paddingVertical="@dimen/dp_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:drawableEndCompat="@drawable/icon_next"
+            app:layout_constraintStart_toEndOf="@+id/txt_order_change_address_tip"
+            app:layout_constraintTop_toBottomOf="@+id/txt_order_change_phone_tip" />
+
+        <TextView
+            android:id="@+id/txt_order_change_detail_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:text="详细地址"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_32"
+            android:paddingVertical="@dimen/dp_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_order_change_address_tip" />
+
+        <EditText
+            android:gravity="end"
+            android:id="@+id/txt_order_change_phone_detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:text="详细地址"
+            android:background="@null"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_32"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="@dimen/dp_20"
+            android:singleLine="true"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@+id/txt_order_change_detail_tip"
+            app:layout_constraintTop_toBottomOf="@+id/txt_order_change_address_tip" />
+
+        <TextView
+            android:id="@+id/txt_order_change_phone_remark_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:text="收货地址"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_36"
+            android:textStyle="bold"
+            android:paddingVertical="@dimen/dp_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_order_change_detail_tip" />
+
+        <EditText
+            android:id="@+id/edt_order_change_remark"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="@dimen/dp_20"
+            android:background="@drawable/order_change_bg_f4f4"
+            android:gravity="top"
+            android:padding="@dimen/dp_20"
+            android:hint="这是一个备注"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_36"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_order_change_phone_remark_tip" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_40"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cancel_change"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:layout_weight="1"
+            android:text="取消"
+            android:background="@drawable/order_change_bg_button_999"
+            android:textColor="@color/home_999999"
+            android:textSize="@dimen/sp_36" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_save_change"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:background="@drawable/order_search_bg_button_red"
+            android:layout_weight="1"
+            android:text="保存"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_36" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

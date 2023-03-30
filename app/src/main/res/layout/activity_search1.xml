@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    android:background="@color/home_F0F0F0"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@color/home_1F2333"
+        android:layout_height="50dp">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_search_back"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:src="@mipmap/icon_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单搜索"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_32"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/sp_20"
+        android:background="@drawable/order_search_bg_red"
+        android:orientation="horizontal"
+       >
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_icon"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_centerVertical="true"
+            android:layout_marginVertical="@dimen/dp_10"
+            android:layout_height="wrap_content"
+            android:src="@drawable/home_search_icon" />
+
+        <EditText
+            android:layout_toEndOf="@+id/img_icon"
+            android:layout_toStartOf="@+id/img_search_edit_clear"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:hint="搜订单编号、手机号、姓名"
+            android:gravity="center_vertical"
+            android:background="@null"
+            android:textSize="@dimen/sp_30"
+            android:singleLine="true"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_search_edit_clear"
+            android:layout_width="wrap_content"
+            android:src="@drawable/search_close_edt"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/btn_search"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/order_search_bg_button_red"
+            android:paddingHorizontal="@dimen/dp_30"
+            android:paddingVertical="@dimen/dp_10"
+            android:text="搜索"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_30" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content"/>
+
+    <include layout="@layout/order_search_empty"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
