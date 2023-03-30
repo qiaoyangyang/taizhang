@@ -29,8 +29,6 @@ class MySettlementDetailActivity :
             CommunityFragment.newInstance()
         )
         setBar(this,mDatabind.cosTitle)
-        ImmersionBar.with(this).init()
-        ImmersionBar.setTitleBar(this, mDatabind.cosTitle)
     }
 
     override fun initData() {
