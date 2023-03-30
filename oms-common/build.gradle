@@ -136,7 +136,7 @@ dependencies {
     api 'com.makeramen:roundedimageview:2.3.0'
     api 'com.github.getActivity:XXPermissions:16.8'
     // 状态栏沉浸：https://github.com/gyf-dev/ImmersionBar
-    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+    api 'com.gyf.immersionbar:immersionbar:3.0.0'
 
 
 }

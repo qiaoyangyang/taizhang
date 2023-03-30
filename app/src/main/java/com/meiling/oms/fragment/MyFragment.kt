@@ -3,6 +3,7 @@ package com.meiling.oms.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.alibaba.android.arouter.launcher.ARouter
+import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.databinding.FragmentMyBinding
 import com.meiling.oms.viewmodel.MyViewModel
@@ -31,8 +32,8 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 //        mDatabind.viewPager.adapter =
 //            BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragments)
 //        ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
-//        ImmersionB.with(this).init()
-//        ImmersionBar.setTitleBar(this,mDatabind.clMy)
+        ImmersionBar.with(this).init()
+        ImmersionBar.setTitleBar(this,mDatabind.clMy)
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentMyBinding {

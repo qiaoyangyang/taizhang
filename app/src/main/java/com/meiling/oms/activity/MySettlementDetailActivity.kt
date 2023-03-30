@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.activity.BaseActivity
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityRechargeSettlementDetailBinding
@@ -28,6 +29,8 @@ class MySettlementDetailActivity :
             CommunityFragment.newInstance()
         )
         setBar(this,mDatabind.cosTitle)
+        ImmersionBar.with(this).init()
+        ImmersionBar.setTitleBar(this, mDatabind.cosTitle)
     }
 
     override fun initData() {
