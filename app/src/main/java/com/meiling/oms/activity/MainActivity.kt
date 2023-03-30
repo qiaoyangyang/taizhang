@@ -13,6 +13,7 @@ import com.meiling.oms.fragment.MyFragment
 import com.meiling.oms.viewmodel.MainViewModel
 
 
+
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
 
