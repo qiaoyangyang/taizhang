@@ -40,7 +40,11 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activity.LoginActivity" />
+            android:name=".activity.LoginActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.OrderDisAddTipActivity" />
         <activity android:name=".activity.OrderChangeAddressActivity" />

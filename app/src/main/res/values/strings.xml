@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name" translatable="false">OMS</string>
+    <string name="login_name">账号密码登录</string>
 </resources>
