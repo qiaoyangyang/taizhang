@@ -16,8 +16,6 @@ import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
 import com.meiling.oms.viewmodel.CommunityViewModel
-import com.meiling.oms.widget.CustomToast
-import com.meiling.oms.widget.showToast
 
 
 class BaseOrderFragment : BaseFragment<CommunityViewModel, FragmentBaseOrderBinding>() {
@@ -73,14 +71,27 @@ class BaseOrderFragment : BaseFragment<CommunityViewModel, FragmentBaseOrderBind
             object : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_home_order) {
                 override fun convert(holder: BaseViewHolder, item: String) {
                     holder.setText(R.id.txt_order_delivery_type, item)
-                    var imgShopCopy = holder.getView<ImageView>(R.id.img_shop_copy)
-                    var changeOrder = holder.getView<TextView>(R.id.txt_change_order)
-                    var btnSendDis = holder.getView<TextView>(R.id.txt_order_dis)
+                    val imgShopCopy = holder.getView<ImageView>(R.id.img_shop_copy)
+                    val changeOrder = holder.getView<TextView>(R.id.txt_change_order)
+                    val btnSendDis = holder.getView<TextView>(R.id.txt_order_dis)
                     changeOrder.setOnClickListener {
                         ARouter.getInstance().build("/app/OrderChangeAddressActivity").navigation()
                     }
+
                     imgShopCopy.setOnClickListener {
-                        copyText("姓名："+"${"王奔康"} \n"+"年龄${"18"}\n")
+                        copyText(
+                            "订单来源：" + "${"王奔康"} \n" +
+                                    "门店名称${"18"}\n" +
+                                    "订单编号${"18"}\n" +
+                                    "-------\n" +
+                                    "商品信息${"（白羊座"}${"星愿白羊奶油蛋糕6英寸"}${"x1"}￥${"288"}\n" +
+                                    "-------\n" +
+                                    "收货时间${"2023-03-31 17:00:00"}\n" +
+                                    "收货人${"普女士18629079896"}\n" +
+                                    "收货地址${"陕西省西安市雁塔区芙蓉东路曲江紫汀苑"}\n" +
+                                    "-------\n" +
+                                    "备注${"蜡烛18已收费"}\n"
+                        )
                         ToastUtils.showLong("复制成功")
                     }
                     btnSendDis.setOnClickListener {
@@ -98,13 +109,12 @@ class BaseOrderFragment : BaseFragment<CommunityViewModel, FragmentBaseOrderBind
         orderDisAdapter.setList(list)
 
 
-
-
     }
 
-    fun copyText(str:String){
+    fun copyText(str: String) {
         // 获取剪贴板管理器
-        val clipboard =   requireContext().getSystemService (Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipboard =
+            requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         // 创建剪贴板数据对象
         val clip = ClipData.newPlainText("label", str)
         // 将剪贴板数据设置到剪贴板管理器中
