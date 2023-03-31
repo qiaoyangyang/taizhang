@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -103,5 +105,11 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
         if (mLoadingDialog != null && mLoadingDialog!!.isShowing) {
             mLoadingDialog!!.dismiss()
         }
+    }
+    /**
+     * 和 setContentView 对应的方法
+     */
+    open fun getContentView(): ViewGroup? {
+        return findViewById(Window.ID_ANDROID_CONTENT)
     }
 }
