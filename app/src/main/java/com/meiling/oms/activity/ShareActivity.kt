@@ -3,6 +3,7 @@ package com.meiling.oms.activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.meiling.common.BaseViewModel
 import com.meiling.common.activity.BaseActivity
 import com.meiling.oms.databinding.ShareActivityBinding
@@ -18,6 +19,7 @@ class ShareActivity : BaseActivity<BaseViewModel, ShareActivityBinding>() {
     }
 
     override fun initListener() {
+
     }
 
 

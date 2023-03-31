@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
-    android:background="@color/home_F0F0F0"
+    android:background="@color/app_themes_f7f7f7"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cos_title"
         android:layout_width="match_parent"
-        android:background="@color/home_1F2333"
+        android:background="@color/app_themes_1f2333"
         android:layout_height="50dp">
 
 

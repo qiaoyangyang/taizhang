@@ -11,7 +11,7 @@
         android:id="@+id/cos_change_order"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/home_1F2333"
+        android:background="@color/app_themes_1f2333"
         app:layout_constraintTop_toTopOf="parent">
 
 

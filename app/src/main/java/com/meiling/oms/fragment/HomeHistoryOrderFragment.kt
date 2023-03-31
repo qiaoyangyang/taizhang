@@ -1,7 +1,9 @@
 package com.meiling.oms.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Gravity
+import android.view.Gravity.RIGHT
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
@@ -26,6 +28,7 @@ class HomeHistoryOrderFragment : BaseFragment<RankingViewModel, FragmentHomeOrde
         mDatabind.viewPager.isUserInputEnabled = false
     }
 
+    @SuppressLint("RtlHardcoded")
     override fun initData() {
 
         fragmentList.add(BaseOrderFragment.newInstance(1))
@@ -36,7 +39,7 @@ class HomeHistoryOrderFragment : BaseFragment<RankingViewModel, FragmentHomeOrde
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
 
         mDatabind.tabLayout.updateTabBadge(0) {
-            badgeGravity = Gravity.RIGHT or Gravity.TOP
+            badgeGravity = RIGHT or Gravity.TOP
             badgeText = "99+"
             badgeTextSize = 30f
             badgeOffsetX = 5
@@ -44,7 +47,7 @@ class HomeHistoryOrderFragment : BaseFragment<RankingViewModel, FragmentHomeOrde
 
         }
         mDatabind.tabLayout.updateTabBadge(1) {
-            badgeGravity = Gravity.RIGHT or Gravity.TOP
+            badgeGravity = RIGHT or Gravity.TOP
             badgeText = "1"
             badgeTextSize = 30f
             badgeOffsetX = 5

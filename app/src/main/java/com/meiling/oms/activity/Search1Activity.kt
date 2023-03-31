@@ -14,6 +14,7 @@ class Search1Activity : BaseActivity<BaseViewModel, ActivitySearch1Binding>() {
 
 
     override fun initView(savedInstanceState: Bundle?) {
+        setBar(this,mDatabind.cosTitle)
 
     }
 

@@ -7,6 +7,7 @@ import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.databinding.FragmentMyBinding
 import com.meiling.oms.viewmodel.MyViewModel
+import com.meiling.oms.widget.MMKVUtils
 import com.meiling.oms.widget.setSingleClickListener
 
 class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
@@ -33,7 +34,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 //            BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragments)
 //        ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
         ImmersionBar.with(this).init()
-        ImmersionBar.setTitleBar(this,mDatabind.clMy)
+        ImmersionBar.setTitleBar(this, mDatabind.clMy)
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentMyBinding {
@@ -44,6 +45,10 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     override fun initListener() {
         mDatabind.txtRecharge.setSingleClickListener {
             ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
+        }
+        mDatabind.txtExit.setSingleClickListener {
+            MMKVUtils.clear()
+            ARouter.getInstance().build("/app/LoginActivity").navigation()
         }
 //        mDatabind.aivMore.setOnClickListener {
 ////            mDatabind.drawerLayout.openDrawer(GravityCompat.START)

@@ -15,7 +15,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@color/white</item>
         <!--页面背景色-->
-        <item name="android:windowBackground">@color/home_1F2333</item>
+        <item name="android:windowBackground">@color/app_themes_1f2333</item>
         <!--api 21 可用 底部导航栏颜色-->
         <item name="android:navigationBarColor">@color/black</item>
 

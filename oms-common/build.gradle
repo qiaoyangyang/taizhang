@@ -137,6 +137,8 @@ dependencies {
     api 'com.github.getActivity:XXPermissions:16.8'
     // 状态栏沉浸：https://github.com/gyf-dev/ImmersionBar
     api 'com.gyf.immersionbar:immersionbar:3.0.0'
+    //mmkv 代替SharedPreferences
+    api 'com.tencent:mmkv:1.2.15'
 
 
 }

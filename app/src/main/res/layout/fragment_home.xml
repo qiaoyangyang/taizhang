@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/home"
-    android:background="@color/home_1F2333"
+    android:background="@color/app_themes_1f2333"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical">

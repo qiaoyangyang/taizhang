@@ -18,6 +18,7 @@ class OrderDisActivity : BaseActivity<BaseViewModel, ActivityDisBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewPager.isUserInputEnabled = false
+        setBar(this,mDatabind.txtOrderDis)
 
         fragmentList.add(OrderDisFragment1.newInstance())
         fragmentList.add(OrderDisFragment2.newInstance())

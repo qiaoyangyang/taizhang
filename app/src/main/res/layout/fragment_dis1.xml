@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/order_dis_F7F7F7"
+    android:background="@color/app_themes_f7f7f7"
     android:orientation="vertical">
 
     <androidx.core.widget.NestedScrollView
@@ -72,8 +72,9 @@
                     android:gravity="center"
                     android:inputType="number"
                     android:maxLength="8"
+                    android:textColor="@color/home_333333"
                     android:paddingVertical="6dp"
-                    android:text="1kg"
+                    android:text="1"
                     android:textSize="@dimen/sp_28" />
 
                 <View
@@ -98,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="@dimen/dp_10"
-                android:background="@color/order_dis_F7F7F7"
+                android:background="@color/app_themes_f7f7f7"
                 app:layout_constraintTop_toBottomOf="@+id/ll_count" />
 
             <TextView
@@ -117,7 +118,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dp_10"
-                android:drawableEnd="@drawable/icon_next"
                 android:text="立即取件"
                 android:textColor="@color/home_000000"
                 android:textSize="@dimen/sp_28"
@@ -129,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="@dimen/dp_30"
-                android:background="@color/order_dis_F7F7F7"
+                android:background="@color/app_themes_f7f7f7"
                 app:layout_constraintTop_toBottomOf="@+id/txt_rec_time_tip" />
 
             <TextView
@@ -160,7 +160,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="@dimen/dp_30"
-                android:background="@color/order_dis_F7F7F7"
+                android:background="@color/app_themes_f7f7f7"
                 app:layout_constraintTop_toBottomOf="@+id/txt_rec_shop_tip" />
 
             <TextView
@@ -174,16 +174,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view_line2" />
 
-            <EditText
+            <TextView
                 android:id="@+id/edt_rec_pay_type"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:gravity="right"
                 android:hint="请输入付款方式"
-                android:text="现金"
+                android:text="寄付"
                 android:paddingVertical="@dimen/dp_30"
-                android:textColor="@color/home_999999"
+                android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_28"
                 app:layout_constraintStart_toEndOf="@+id/txt_rec_pay_type_tip"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txt_rec_pay_type_tip"
@@ -193,7 +193,7 @@
                 android:id="@+id/view_line3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/order_dis_F7F7F7"
+                android:background="@color/app_themes_f7f7f7"
                 app:layout_constraintTop_toBottomOf="@+id/txt_rec_pay_type_tip" />
 
             <TextView
@@ -228,25 +228,25 @@
                 app:spanCount="3"
                 tools:listitem="@layout/item_dis_send" />
 
-            <Button
-                android:id="@+id/btn_send_dis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_30"
-                android:layout_marginTop="@dimen/dp_30"
-                android:layout_marginEnd="@dimen/dp_30"
-                android:layout_marginBottom="@dimen/dp_30"
-                android:background="@drawable/order_search_bg_button_red"
-                android:text="发起配送"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
     </androidx.core.widget.NestedScrollView>
 
-
+    <Button
+        android:id="@+id/btn_send_dis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@drawable/order_search_bg_button_red"
+        android:text="发起配送"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

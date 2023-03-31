@@ -13,6 +13,7 @@ import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator
+import com.tencent.mmkv.MMKV
 import com.tencent.smtt.sdk.QbSdk
 
 open class BaseApplication : Application(), ViewModelStoreOwner {
@@ -32,6 +33,8 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
         ARouter.openDebug()
         ARouter.init(this)
         Logger.addLogAdapter(AndroidLogAdapter())
+        MMKV.initialize(this);
+
         QbSdk.initX5Environment(this, object : QbSdk.PreInitCallback {
             override fun onCoreInitFinished() {
 

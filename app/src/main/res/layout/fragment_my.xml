@@ -33,7 +33,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/order_dis_F7F7F7"
+        android:background="@color/app_themes_f7f7f7"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/txt_title">
 
@@ -49,7 +49,7 @@
                 android:layout_marginTop="@dimen/dp_20"
                 android:layout_marginEnd="@dimen/dp_20"
                 android:layout_marginBottom="@dimen/dp_20"
-                android:src="@drawable/common_me"
+                android:src="@mipmap/icon_my_head"
                 app:shape_radius="@dimen/dp_20" />
 
             <TextView
@@ -62,14 +62,13 @@
                 android:textSize="@dimen/sp_36" />
 
             <TextView
-                android:layout_alignBottom="@+id/sv_head"
                 android:layout_width="299dp"
                 android:layout_height="20dp"
-                android:text="管理员 18706714009"
+                android:layout_alignBottom="@+id/sv_head"
                 android:layout_toEndOf="@+id/sv_head"
+                android:text="管理员 18706714009"
                 android:textColor="@color/home_666666"
-                android:textSize="@dimen/sp_28"
-                />
+                android:textSize="@dimen/sp_28" />
         </RelativeLayout>
 
 
@@ -77,116 +76,90 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_20"
-            android:orientation="vertical"
             android:background="@drawable/scan_bg_input"
-           >
+            android:orientation="vertical"
+            android:padding="@dimen/dp_20">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="4">
+            <TextView
+                android:id="@+id/txt_recharge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dp_20"
+                android:text="充值中心"
+                android:textColor="@color/home_333333"
+                app:drawableStartCompat="@mipmap/icon_my_recharge" />
 
-                <TextView
-                    android:id="@+id/txt_recharge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawablePadding="@dimen/dp_20"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/dp_20"
-                    android:text="充值中心"
-                    android:textColor="@color/home_333333"
-                    app:drawableTopCompat="@mipmap/icon_my_recharge" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dp_20"
+                android:text="消息通知"
+                android:textColor="@color/home_333333"
+                app:drawableStartCompat="@mipmap/icon_my_msg" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawablePadding="@dimen/dp_20"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/dp_20"
-                    android:text="消息通知"
-                    android:textColor="@color/home_333333"
-                    app:drawableTopCompat="@mipmap/icon_my_msg" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dp_20"
+                android:text="打印设置"
+                android:textColor="@color/home_333333"
+                app:drawableStartCompat="@mipmap/icon_my_print" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawablePadding="@dimen/dp_20"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/dp_20"
-                    android:text="打印设置"
-                    android:textColor="@color/home_333333"
-                    app:drawableTopCompat="@mipmap/icon_my_print_setting" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dp_20"
+                android:text="联系客服"
+                android:textColor="@color/home_333333"
+                app:drawableStartCompat="@mipmap/icon_my_kf" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawablePadding="@dimen/dp_20"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/dp_20"
-                    android:text="联系客服"
-                    android:textColor="@color/home_333333"
-                    app:drawableTopCompat="@mipmap/icon_my_kf" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dp_20"
+                android:text="修改密码"
+                android:textColor="@color/home_333333"
+                app:drawableStartCompat="@mipmap/icon_my_lock" />
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <TextView
+                android:id="@+id/txt_exit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
-                android:orientation="horizontal"
-                android:weightSum="4">
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="start"
+                android:paddingVertical="@dimen/dp_20"
+                android:text="退出登录"
+                android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_32"
+                app:drawableStartCompat="@mipmap/icon_my_off" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawablePadding="@dimen/dp_20"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/dp_20"
-                    android:text="修改密码"
-                    android:textColor="@color/home_333333"
-                    app:drawableTopCompat="@mipmap/icon_my_lock" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dp_20"
+                android:text="注销账号"
+                android:textColor="@color/home_333333"
+                app:drawableStartCompat="@mipmap/icon_my_exit" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawablePadding="@dimen/dp_20"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/dp_20"
-                    android:text="退出登录"
-                    android:textColor="@color/home_333333"
-                    app:drawableTopCompat="@mipmap/icon_my_off" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawablePadding="@dimen/dp_20"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/dp_20"
-                    android:text="注销账号"
-                    android:textColor="@color/home_333333"
-                    app:drawableTopCompat="@mipmap/icon_my_center" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawablePadding="@dimen/dp_20"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/dp_20"
-                    android:text="充值中心"
-                    android:textColor="@color/home_333333"
-                    android:visibility="invisible"
-                    app:drawableTopCompat="@mipmap/icon_my_recharge_1" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 

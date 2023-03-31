@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rlSelect"
     android:layout_width="100dp"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:layout_centerHorizontal="true"
     android:layout_marginVertical="@dimen/dp_10"
     android:layout_marginHorizontal="@dimen/dp_10"
     android:background="@drawable/order_bg_dis_rv">

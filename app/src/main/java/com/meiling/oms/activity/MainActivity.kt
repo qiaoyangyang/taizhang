@@ -1,19 +1,23 @@
 package com.meiling.oms.activity
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.meiling.common.activity.BaseActivity
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityMainBinding
-import com.meiling.oms.fragment.ScanFragment
-import com.meiling.oms.fragment.HomeFragment
 import com.meiling.oms.fragment.DataFragment
+import com.meiling.oms.fragment.HomeFragment
 import com.meiling.oms.fragment.MyFragment
+import com.meiling.oms.fragment.ScanFragment
 import com.meiling.oms.viewmodel.MainViewModel
 
 
-
+@Suppress("DEPRECATION")
+@Route(path = "/app/MainActivity")
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
 
@@ -84,4 +88,19 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         mDatabind.aivMy.isSelected = false
         mDatabind.atvMy.isSelected = false
     }
+
+
+    private var doubleBackToExitPressedOnce = false
+
+    override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+        doubleBackToExitPressedOnce = true
+        Toast.makeText(this, "再按一次返回键退出应用", Toast.LENGTH_SHORT).show()
+        Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+    }
+
+
 }

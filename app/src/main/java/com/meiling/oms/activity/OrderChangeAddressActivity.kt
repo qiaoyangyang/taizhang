@@ -11,8 +11,7 @@ import com.meiling.oms.databinding.ActivityOrderChengeAddredssBinding
 class OrderChangeAddressActivity : BaseActivity<BaseViewModel, ActivityOrderChengeAddredssBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
-
-
+        setBar(this,mDatabind.cosChangeOrder)
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityOrderChengeAddredssBinding {

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/order_dis_F7F7F7"
+    android:background="@color/app_themes_f7f7f7"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginVertical="@dimen/dp_20"
-            android:background="@color/order_dis_F7F7F7"
+            android:background="@color/app_themes_f7f7f7"
             app:layout_constraintTop_toBottomOf="@+id/txt_rec_name" />
 
         <TextView
@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginVertical="@dimen/dp_30"
-            android:background="@color/order_dis_F7F7F7"
+            android:background="@color/app_themes_f7f7f7"
             app:layout_constraintTop_toBottomOf="@+id/txt_rec_time_tip" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -99,7 +99,6 @@
         android:background="@drawable/order_search_bg_button_red"
         android:text="发起配送"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/cos_dis_line"
         app:layout_constraintBottom_toBottomOf="parent"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

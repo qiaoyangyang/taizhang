@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/order_dis_F7F7F7"
+    android:background="@color/app_themes_f7f7f7"
     android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_6"
             android:text="#3"
-            android:textColor="@color/home_1F2333"
+            android:textColor="@color/app_themes_1f2333"
             android:textSize="@dimen/sp_42"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/img_order_icon"
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/dp_20"
             android:text="待配送"
-            android:textColor="@color/home_1F2333"
+            android:textColor="@color/app_themes_1f2333"
             android:textSize="@dimen/sp_30"
             android:textStyle="bold"
             app:layout_constraintRight_toRightOf="parent"

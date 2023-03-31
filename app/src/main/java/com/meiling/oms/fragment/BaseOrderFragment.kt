@@ -95,12 +95,18 @@ class BaseOrderFragment : BaseFragment<CommunityViewModel, FragmentBaseOrderBind
                         ToastUtils.showLong("复制成功")
                     }
                     btnSendDis.setOnClickListener {
-                        ARouter.getInstance().build("/app/OrderDisActivity").navigation()
+                        if (item == "自提") {
+                            ARouter.getInstance().build("/app/OrderDisAddTipActivity").navigation()
+                        } else {
+                            ARouter.getInstance().build("/app/OrderDisActivity").navigation()
+                        }
                     }
                     if (item == "自提") {
-                        holder.setGone(R.id.txt_order_dis, true)
+                        holder.setText(R.id.txt_order_dis, "配送详情")
+                        holder.setText(R.id.txt_change_order, "已完成")
                     } else {
-                        holder.setGone(R.id.txt_order_dis, false)
+                        holder.setText(R.id.txt_change_order, "配送")
+                        holder.setText(R.id.txt_order_dis, "发起配送")
                     }
                 }
 
