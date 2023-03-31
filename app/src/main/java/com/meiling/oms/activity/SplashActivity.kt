@@ -18,6 +18,7 @@ class SplashActivity : BaseActivity<BaseViewModel, ActivitySplashBinding>() {
         } else {
             ARouter.getInstance().build("/app/LoginActivity").navigation()
             finish()
+
         }
     }
 
