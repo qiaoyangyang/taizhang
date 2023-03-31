@@ -10,8 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cos_title"
         android:layout_width="match_parent"
-        android:background="@color/app_themes_1f2333"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@color/app_themes_1f2333">
 
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -41,45 +41,49 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/sp_20"
         android:background="@drawable/order_search_bg_red"
-        android:orientation="horizontal"
-       >
+        android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_icon"
             android:layout_width="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginVertical="@dimen/dp_10"
-            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
             android:src="@drawable/home_search_icon" />
 
         <EditText
-            android:layout_toEndOf="@+id/img_icon"
-            android:layout_toStartOf="@+id/img_search_edit_clear"
+            android:id="@+id/edt_search"
             android:layout_width="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
-            android:hint="搜订单编号、手机号、姓名"
-            android:gravity="center_vertical"
-            android:background="@null"
-            android:textSize="@dimen/sp_30"
-            android:singleLine="true"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_height="wrap_content"/>
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_toStartOf="@+id/img_search_edit_clear"
+            android:layout_toEndOf="@+id/img_icon"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="搜订单编号、手机号、姓名"
+            android:singleLine="true"
+            android:textSize="@dimen/sp_30" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_search_edit_clear"
             android:layout_width="wrap_content"
-            android:src="@drawable/search_close_edt"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:visibility="gone"
             android:layout_toStartOf="@+id/btn_search"
-            android:layout_height="wrap_content"/>
+            android:src="@drawable/search_close_edt" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
             android:background="@drawable/order_search_bg_button_red"
             android:paddingHorizontal="@dimen/dp_30"
             android:paddingVertical="@dimen/dp_10"
@@ -90,10 +94,36 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_history_order_list"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="" />
 
-    <include layout="@layout/order_search_empty"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rl_order_empty"
+        android:background="@color/home_F0F0F0">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_100"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/search_empty_result" />
+
+        <TextView
+            android:id="@+id/txt_error_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img"
+            android:layout_centerHorizontal="true"
+            android:text="支持通过订单编号、收货人姓名、手机号进行搜索"
+            android:textColor="@color/home_000000"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

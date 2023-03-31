@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/home_F0F0F0"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/order_empty"
+    android:background="@color/home_F0F0F0">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_100"
         android:layout_centerHorizontal="true"
         android:src="@mipmap/search_empty_result" />
 
     <TextView
+        android:id="@+id/txt_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/img"
