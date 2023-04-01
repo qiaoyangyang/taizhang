@@ -16,6 +16,9 @@ import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
 import com.meiling.oms.viewmodel.CommunityViewModel
+import com.meiling.oms.widget.CustomToast
+import com.meiling.oms.widget.copyText
+import com.meiling.oms.widget.showToast
 
 
 class BaseOrderFragment : BaseFragment<CommunityViewModel, FragmentBaseOrderBinding>() {
@@ -79,7 +82,7 @@ class BaseOrderFragment : BaseFragment<CommunityViewModel, FragmentBaseOrderBind
                     }
 
                     imgShopCopy.setOnClickListener {
-                        copyText(
+                        copyText(context,
                             "订单来源：" + "${"王奔康"} \n" +
                                     "门店名称${"18"}\n" +
                                     "订单编号${"18"}\n" +
@@ -93,6 +96,7 @@ class BaseOrderFragment : BaseFragment<CommunityViewModel, FragmentBaseOrderBind
                                     "备注${"蜡烛18已收费"}\n"
                         )
                         ToastUtils.showLong("复制成功")
+                        showToast("1212")
                     }
                     btnSendDis.setOnClickListener {
                         if (item == "自提") {
@@ -117,15 +121,6 @@ class BaseOrderFragment : BaseFragment<CommunityViewModel, FragmentBaseOrderBind
 
     }
 
-    fun copyText(str: String) {
-        // 获取剪贴板管理器
-        val clipboard =
-            requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        // 创建剪贴板数据对象
-        val clip = ClipData.newPlainText("label", str)
-        // 将剪贴板数据设置到剪贴板管理器中
-        clipboard.setPrimaryClip(clip)
-    }
 
     override fun getBind(inflater: LayoutInflater): FragmentBaseOrderBinding {
         return FragmentBaseOrderBinding.inflate(inflater)

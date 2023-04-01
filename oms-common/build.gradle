@@ -142,6 +142,7 @@ dependencies {
     api 'com.gyf.immersionbar:immersionbar:3.0.0'
     //mmkv 代替SharedPreferences
     api 'com.tencent:mmkv:1.2.15'
+    api 'com.github.SheHuan:NiceDialog:1.2.0'
 
 
 }

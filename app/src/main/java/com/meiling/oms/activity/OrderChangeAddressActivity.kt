@@ -7,6 +7,9 @@ import com.meiling.common.BaseViewModel
 import com.meiling.common.activity.BaseActivity
 import com.meiling.oms.databinding.ActivityOrderChengeAddredssBinding
 
+/**
+ * 此改地址
+ * **/
 @Route(path = "/app/OrderChangeAddressActivity")
 class OrderChangeAddressActivity : BaseActivity<BaseViewModel, ActivityOrderChengeAddredssBinding>() {
 

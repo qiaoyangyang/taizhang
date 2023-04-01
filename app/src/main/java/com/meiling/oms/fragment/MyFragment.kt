@@ -6,6 +6,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.databinding.FragmentMyBinding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.MyViewModel
 import com.meiling.oms.widget.MMKVUtils
 import com.meiling.oms.widget.setSingleClickListener
@@ -47,8 +48,22 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
         }
         mDatabind.txtExit.setSingleClickListener {
-            MMKVUtils.clear()
-            ARouter.getInstance().build("/app/LoginActivity").navigation()
+            val dialog: MineExitDialog = MineExitDialog().newInstance("温馨提示", "确认退出当前账号吗？")
+            dialog.setOkClickLister {
+                MMKVUtils.clear()
+                ARouter.getInstance().build("/app/LoginActivity").navigation()
+            }
+            dialog.show(childFragmentManager)
+        }
+
+        mDatabind.txtRemoveAccount.setSingleClickListener {
+            val dialog: MineExitDialog =
+                MineExitDialog().newInstance("温馨提示", "注销后，该账号将不可用。\n 请确认操作～")
+            dialog.setOkClickLister {
+                MMKVUtils.clear()
+                ARouter.getInstance().build("/app/LoginActivity").navigation()
+            }
+            dialog.show(childFragmentManager)
         }
 //        mDatabind.aivMore.setOnClickListener {
 ////            mDatabind.drawerLayout.openDrawer(GravityCompat.START)

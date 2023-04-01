@@ -82,58 +82,61 @@
 
             <TextView
                 android:id="@+id/txt_recharge"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:drawablePadding="@dimen/dp_10"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:paddingVertical="@dimen/dp_20"
                 android:text="充值中心"
                 android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_32"
                 app:drawableStartCompat="@mipmap/icon_my_recharge" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="@dimen/dp_10"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:paddingVertical="@dimen/dp_20"
                 android:text="消息通知"
                 android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_32"
                 app:drawableStartCompat="@mipmap/icon_my_msg" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:drawablePadding="@dimen/dp_10"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:paddingVertical="@dimen/dp_20"
                 android:text="打印设置"
                 android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_32"
                 app:drawableStartCompat="@mipmap/icon_my_print" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="@dimen/dp_10"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:paddingVertical="@dimen/dp_20"
                 android:text="联系客服"
                 android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_32"
                 app:drawableStartCompat="@mipmap/icon_my_kf" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="@dimen/dp_10"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:paddingVertical="@dimen/dp_20"
                 android:text="修改密码"
                 android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_32"
                 app:drawableStartCompat="@mipmap/icon_my_lock" />
 
             <TextView
@@ -150,14 +153,16 @@
                 app:drawableStartCompat="@mipmap/icon_my_off" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/txt_remove_account"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="@dimen/dp_10"
-                android:gravity="center"
+                android:gravity="start"
                 android:paddingVertical="@dimen/dp_20"
                 android:text="注销账号"
                 android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_32"
                 app:drawableStartCompat="@mipmap/icon_my_exit" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
