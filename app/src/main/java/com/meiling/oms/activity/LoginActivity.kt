@@ -15,7 +15,7 @@ import com.meiling.oms.widget.setSingleClickListener
 @Route(path = "/app/LoginActivity")
 class LoginActivity : BaseActivity<BaseViewModel, ActivityLoginBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
-        mDatabind.btnLogin?.let {
+        mDatabind.btnLogin.let {
             InputTextManager.with(this)
                 .addView(mDatabind.etPhone)
                 .addView(mDatabind.etPassword)

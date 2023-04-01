@@ -60,7 +60,7 @@
         <activity android:name=".activity.MySettlementDetailActivity" />
         <activity android:name=".activity.ReleasePostActivity" />
         <activity android:name=".activity.ShareActivity" />
-        <activity android:name=".activity.ModifyInformationActivity" />
+        <activity android:name=".activity.ModifyPassWordActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

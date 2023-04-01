@@ -48,7 +48,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
         }
         mDatabind.txtExit.setSingleClickListener {
-            val dialog: MineExitDialog = MineExitDialog().newInstance("温馨提示", "确认退出当前账号吗？")
+            val dialog: MineExitDialog = MineExitDialog().newInstance("温馨提示", "确认退出当前账号吗？", false)
             dialog.setOkClickLister {
                 MMKVUtils.clear()
                 ARouter.getInstance().build("/app/LoginActivity").navigation()
@@ -58,12 +58,15 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
         mDatabind.txtRemoveAccount.setSingleClickListener {
             val dialog: MineExitDialog =
-                MineExitDialog().newInstance("温馨提示", "注销后，该账号将不可用。\n 请确认操作～")
+                MineExitDialog().newInstance("温馨提示", "注销后，该账号将不可用。\n 请确认操作～", false)
             dialog.setOkClickLister {
                 MMKVUtils.clear()
                 ARouter.getInstance().build("/app/LoginActivity").navigation()
             }
             dialog.show(childFragmentManager)
+        }
+        mDatabind.txtModifyPwd.setSingleClickListener {
+            ARouter.getInstance().build("/app/ModifyPassWordActivity").navigation()
         }
 //        mDatabind.aivMore.setOnClickListener {
 ////            mDatabind.drawerLayout.openDrawer(GravityCompat.START)

@@ -5,11 +5,6 @@ import com.shehuan.nicedialog.ViewHolder
 
 class OrderDialog : BaseNiceDialog() {
 
-    var okClickLister: ((payAmount:String,giveAmount:String,textAmoun:String) -> Unit)? = null
-
-    fun setOkClickLister(okClickLister: (payAmount:String,giveAmount:String,textAmoun:String) -> Unit) {
-        this.okClickLister = okClickLister
-    }
 
     fun newInstance(): OrderDialog {
         return OrderDialog()

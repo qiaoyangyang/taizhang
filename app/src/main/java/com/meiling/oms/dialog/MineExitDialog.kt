@@ -9,19 +9,24 @@ import com.shehuan.nicedialog.ViewHolder
 
 class MineExitDialog : BaseNiceDialog() {
 
-    var okClickLister: (() -> Unit)? = null
-
-    fun setOkClickLister(okClickLister: () -> Unit) {
-        this.okClickLister = okClickLister
+    init {
+        setMargin(30)
+        setOutCancel(false)
     }
 
-    fun newInstance(title: String, content: String): MineExitDialog {
+    var okSelectClickLister: (() -> Unit)? = null
+    fun setOkClickLister(okClickLister: () -> Unit) {
+        this.okSelectClickLister = okClickLister
+    }
+
+    fun newInstance(title: String, content: String, type: Boolean): MineExitDialog {
         val args = Bundle()
         args.putString("title", title)
         args.putString("content", content)
+        args.putBoolean("type", type)
         val dialog = MineExitDialog()
         dialog.arguments = args
-        return MineExitDialog()
+        return dialog
     }
 
 
@@ -43,7 +48,7 @@ class MineExitDialog : BaseNiceDialog() {
             dismiss()
         }
         ok?.setSingleClickListener {
-            okClickLister?.invoke()
+            okSelectClickLister?.invoke()
         }
 
     }
