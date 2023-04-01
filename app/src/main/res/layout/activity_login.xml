@@ -36,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="32dp"
-        android:text="@string/login_name"
         android:textColor="#333333"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -61,31 +60,30 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
         <ImageView
+            app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/iv_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
 
-            android:src="@drawable/login_phone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.hjq.widget.view.ClearEditText
             android:id="@+id/et_phone"
-
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:background="@null"
-            android:hint="请输入账号"
-            android:inputType="phone"
             android:singleLine="true"
             android:textColorHint="#999999"
 
             android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
             app:layout_constraintLeft_toRightOf="@+id/iv_phone"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
+            tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck,SpeakableTextPresentCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -107,10 +105,9 @@
 
         <ImageView
             android:id="@+id/iv_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
 
-            android:src="@drawable/ic_password"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -121,9 +118,7 @@
 
             android:layout_marginHorizontal="20dp"
             android:background="@null"
-            android:hint="请输入密码"
             android:imeOptions="actionDone"
-            android:inputType="phone"
             android:singleLine="true"
             android:textColorHint="#999999"
 
@@ -131,7 +126,7 @@
             app:layout_constraintLeft_toRightOf="@+id/iv_password"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TouchTargetSizeCheck" />
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -186,6 +181,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_login" />
 
     <TextView
+
         android:layout_width="0dp"
 
         android:layout_height="1dp"
@@ -208,27 +204,48 @@
         app:layout_constraintTop_toTopOf="@+id/Other_login_methods" />
 
     <TextView
-
+        android:id="@+id/tv_Other_login_methods"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableTop="@drawable/phone_log"
         android:drawablePadding="10dp"
-        android:text="手机登录"
         android:textColor="#999999"
-        app:layout_constraintBottom_toTopOf="@+id/tv_agreement"
+        app:layout_constraintBottom_toTopOf="@+id/cl_agreement"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Other_login_methods" />
 
-    <CheckedTextView
-        android:id="@+id/tv_agreement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="登录即代表同意《美零云店用户协议及隐私政策》"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_agreement"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/cb_agreementv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/login_cb_agreement"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_agreement"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_agreement"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:layout_marginLeft="5dp"
+            app:layout_constraintLeft_toRightOf="@+id/cb_agreementv"
+            android:drawablePadding="5dp"
+            android:id="@+id/tv_agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="登录即代表同意《美零云店用户协议及隐私政策》"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
