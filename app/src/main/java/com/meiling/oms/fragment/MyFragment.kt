@@ -52,6 +52,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             dialog.setOkClickLister {
                 MMKVUtils.clear()
                 ARouter.getInstance().build("/app/LoginActivity").navigation()
+                requireActivity().finish()
             }
             dialog.show(childFragmentManager)
         }
@@ -62,6 +63,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             dialog.setOkClickLister {
                 MMKVUtils.clear()
                 ARouter.getInstance().build("/app/LoginActivity").navigation()
+                requireActivity().finish()
             }
             dialog.show(childFragmentManager)
         }

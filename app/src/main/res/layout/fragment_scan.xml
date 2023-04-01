@@ -27,6 +27,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_mei_tuan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_40"
@@ -57,11 +58,15 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_margin="@dimen/dp_20"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
             android:src="@mipmap/icon_back" />
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_kou_bei"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_40"
@@ -96,6 +101,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_dou_yin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_40"

@@ -31,7 +31,7 @@ class CustomToast {
         var errorImg = view.findViewById<ImageView>(R.id.errorImg)
         textView.text = message
         toast.view = view
-        toast.setGravity(Gravity.BOTTOM, 0, 30)
+        toast.setGravity(Gravity.CENTER, 0, 30)
     }
     constructor(context: Context?, message: String, duration: Int) {
         toast = Toast(context)
@@ -40,7 +40,7 @@ class CustomToast {
         textView = view.findViewById(R.id.tv_prompt)
         textView.text = message
         toast.view = view
-        toast.setGravity(Gravity.BOTTOM, 0, 0)
+        toast.setGravity(Gravity.CENTER, 0, 0)
     }
 
     fun show() {

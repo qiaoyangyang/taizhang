@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="@dimen/dp_240"
         android:background="@drawable/bg_log_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TitleBar" />
@@ -44,7 +44,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_phone"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp_90"
+        android:layout_height="@dimen/dp_100"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="30dp"
@@ -82,7 +82,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_password"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp_90"
+        android:layout_height="@dimen/dp_100"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
@@ -157,8 +157,8 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="@dimen/dp_90"
+        android:layout_marginTop="@dimen/dp_80"
         android:background="@drawable/login_btn_selector"
         android:enabled="false"
         android:text="登录"
@@ -171,8 +171,8 @@
     <TextView
         android:id="@+id/tv_login"
         android:layout_width="1dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_60"
         android:background="#E7E7E7"
         app:layout_constraintLeft_toLeftOf="@+id/btnLogin"
         app:layout_constraintRight_toRightOf="@+id/btnLogin"
@@ -197,7 +197,7 @@
         android:id="@+id/Other_login_methods"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_100"
+        android:layout_marginTop="@dimen/dp_80"
         android:text="其他登录方式"
         app:layout_constraintLeft_toLeftOf="@+id/btnLogin"
         app:layout_constraintRight_toRightOf="@+id/btnLogin"
@@ -226,11 +226,12 @@
         android:id="@+id/tv_Other_login_methods"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawablePadding="10dp"
+        android:drawablePadding="@dimen/dp_20"
         android:textColor="@color/home_999999"
         app:layout_constraintBottom_toTopOf="@+id/cl_agreement"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:textSize="@dimen/sp_30"
         app:layout_constraintTop_toBottomOf="@+id/Other_login_methods" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -247,7 +248,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@drawable/login_cb_agreement"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tv_agreement"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/tv_agreement"
             tools:ignore="TouchTargetSizeCheck" />
@@ -258,6 +259,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:drawablePadding="5dp"
+            android:textSize="@dimen/sp_24"
             android:text="登录即代表同意《美零云店用户协议及隐私政策》"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/cb_agreementv" />
