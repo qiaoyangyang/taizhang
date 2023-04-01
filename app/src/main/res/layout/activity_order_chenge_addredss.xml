@@ -76,6 +76,8 @@
             android:layout_marginHorizontal="@dimen/dp_20"
             android:paddingVertical="@dimen/dp_20"
             android:text="收货时间"
+            app:drawableEndCompat="@drawable/icon_must_input"
+
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_32"
             app:layout_constraintStart_toStartOf="parent"
@@ -106,6 +108,7 @@
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_32"
             app:layout_constraintStart_toStartOf="parent"
+            app:drawableEndCompat="@drawable/icon_must_input"
 
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_time_tip" />
 
@@ -133,6 +136,8 @@
             android:paddingVertical="@dimen/dp_20"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_32"
+            app:drawableEndCompat="@drawable/icon_must_input"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_name_tip" />
 
@@ -160,6 +165,8 @@
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_32"
             android:paddingVertical="@dimen/dp_20"
+            app:drawableEndCompat="@drawable/icon_must_input"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_phone_tip" />
 
@@ -188,6 +195,8 @@
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_32"
             android:paddingVertical="@dimen/dp_20"
+            app:drawableEndCompat="@drawable/icon_must_input"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_address_tip" />
 

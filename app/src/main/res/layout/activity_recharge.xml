@@ -118,6 +118,7 @@
                 app:layout_constraintStart_toEndOf="@+id/txt_service_fee" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_recharge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dp_20"

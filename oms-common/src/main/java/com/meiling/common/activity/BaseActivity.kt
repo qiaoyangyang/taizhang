@@ -1,6 +1,7 @@
 package com.meiling.common.activity
 
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.viewbinding.ViewBinding
 import com.gyf.immersionbar.ImmersionBar
@@ -55,6 +56,10 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewBinding> : BaseVmDbActi
                 ImmersionBar.setTitleBar(this, titleBar)
             }
         }
+    }
+
+    override fun onLeftClick(view: View) {
+        onBackPressed()
     }
     /**
      * 是否使用沉浸式状态栏

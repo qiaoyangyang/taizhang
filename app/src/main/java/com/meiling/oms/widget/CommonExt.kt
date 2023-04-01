@@ -22,7 +22,7 @@ fun androidx.fragment.app.Fragment.showToast(content: String) {
 }
 
 
-fun Context.showToast(content: String, type: CustomToast.CustomType) {
+fun Context.showToast(content: String) {
     CustomToast(this, content).show()
 }
 

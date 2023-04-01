@@ -39,7 +39,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/sp_20"
+        android:layout_marginStart="@dimen/sp_20"
+        android:layout_marginEnd="@dimen/sp_20"
+        android:layout_marginTop="@dimen/dp_20"
         android:background="@drawable/order_search_bg_red"
         android:orientation="horizontal">
 
@@ -98,7 +100,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="" />
+        tools:listitem="@layout/item_home_order" />
 
     <RelativeLayout
         android:layout_width="match_parent"

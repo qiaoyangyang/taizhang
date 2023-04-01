@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/scan_FBF8F7"
     android:orientation="vertical">
 
@@ -39,8 +38,7 @@
             android:id="@+id/img_meituan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_40"
-            android:layout_marginBottom="@dimen/dp_40"
+            android:layout_marginVertical="@dimen/dp_20"
             android:padding="@dimen/dp_40"
             android:src="@mipmap/scan_meituan" />
 
@@ -75,8 +73,7 @@
             android:id="@+id/img_koubei"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_40"
-            android:layout_marginBottom="@dimen/dp_40"
+            android:layout_marginVertical="@dimen/dp_20"
             android:padding="@dimen/dp_40"
             android:src="@mipmap/scan_koubei" />
 
@@ -110,17 +107,16 @@
             android:id="@+id/img_douyin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_40"
-            android:layout_marginBottom="@dimen/dp_40"
+            android:layout_marginVertical="@dimen/dp_40"
             android:padding="@dimen/dp_40"
-            android:src="@mipmap/scan_koubei" />
+            android:src="@mipmap/douyin_xhdpi"
+           />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/img_douyin"
-            android:src="@mipmap/scan_meituan"
             android:text="抖音验券"
             android:textColor="@color/home_333333" />
 
