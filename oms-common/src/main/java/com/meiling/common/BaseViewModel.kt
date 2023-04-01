@@ -92,4 +92,5 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
     }
+
 }
