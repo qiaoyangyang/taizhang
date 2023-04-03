@@ -8,6 +8,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.hjq.bar.TitleBar
 import com.hjq.widget.view.RegexEditText.Companion.REGEX_MOBILE
 import com.meiling.common.BaseViewModel
 import com.meiling.common.activity.BaseActivity
@@ -71,6 +72,8 @@ class LoginActivity : BaseActivity<BaseViewModel, ActivityLoginBinding>() {
     override fun getBind(layoutInflater: LayoutInflater): ActivityLoginBinding {
         return ActivityLoginBinding.inflate(layoutInflater)
     }
+
+
 
 
     //  登陆切换

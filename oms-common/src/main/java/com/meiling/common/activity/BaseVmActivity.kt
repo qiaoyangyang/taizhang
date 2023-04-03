@@ -9,14 +9,13 @@ import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.BarUtils
 import com.gyf.immersionbar.ImmersionBar
+import com.meiling.common.BaseViewModel
 import com.meiling.common.dialog.LoadingDialog
 import com.meiling.common.getVmClazz
-import com.meiling.common.BaseViewModel
 
 
 abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
@@ -51,7 +50,9 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
         createObserver()
         initListener()
         initData()
+
     }
+
 
     open fun initListener() {}
     open fun initData() {}
@@ -106,6 +107,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
             mLoadingDialog!!.dismiss()
         }
     }
+
     /**
      * 和 setContentView 对应的方法
      */

@@ -1,6 +1,7 @@
 package com.meiling.common.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.viewbinding.ViewBinding
@@ -43,7 +44,9 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewBinding> : BaseVmDbActi
         }
         return titleBar
     }
-    override fun initListener() {
+
+    override fun initDataBind() {
+        super.initDataBind()
         val titleBar = getTitleBar()
         titleBar?.setOnTitleBarListener(this)
 
@@ -52,10 +55,18 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewBinding> : BaseVmDbActi
             getStatusBarConfig().init()
 
             // 设置标题栏沉浸
+
             if (titleBar != null) {
+                Log.d("yjk", "initListener: ")
                 ImmersionBar.setTitleBar(this, titleBar)
+            }else{
+                Log.d("yjk", "initListener ==null ")
             }
         }
+    }
+    override fun initListener() {
+        super.initListener()
+
     }
 
     override fun onLeftClick(view: View) {
@@ -92,6 +103,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewBinding> : BaseVmDbActi
             .statusBarDarkFont(isStatusBarDarkFont()) // 指定导航栏背景颜色
             .autoDarkModeEnable(true, 0.2f)
     }
+
 
 
 
