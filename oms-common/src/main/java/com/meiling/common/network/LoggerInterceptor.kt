@@ -1,4 +1,4 @@
-package com.friendwing.universe.common.network
+package com.meiling.common.network
 
 import android.text.TextUtils
 import com.orhanobut.logger.Logger

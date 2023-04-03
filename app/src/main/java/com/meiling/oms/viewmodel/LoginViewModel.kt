@@ -9,6 +9,8 @@ import com.meiling.common.constant.ARouteConstants
 import com.meiling.common.network.APIException
 import com.meiling.common.network.ExceptionHandle
 import com.meiling.common.network.ResultData
+import com.meiling.common.network.data.ForgetDto
+import com.meiling.common.network.data.LoginDto
 import com.meiling.common.network.service.LoginService
 import com.meiling.common.network.service.loginService
 import kotlinx.coroutines.Dispatchers
@@ -17,15 +19,24 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(application: Application) : BaseViewModel(application) {
 
-    val sendCode = BaseLiveData<Boolean>()
-    val loginData = BaseLiveData<String>()
+    val sendCode = BaseLiveData<String>()
+    val loginData = BaseLiveData<LoginDto>()
+    val forgetData = BaseLiveData<ForgetDto>()
 
     fun sendCode(phone: String) {
         request({ loginService.sendCode(phone) }, sendCode)
     }
 
-    fun login(phone: String, pwd: String) {
+    fun mobileLogin(phone: String, pwd: String) {
         request({ loginService.mobileLogin(phone, pwd) }, loginData)
+    }
+
+    fun accountLogin(phone: String, pwd: String) {
+        request({ loginService.login(phone, pwd) }, loginData)
+    }
+
+    fun userNameVerify(account: String) {
+        request({ loginService.userNameVerify(account) }, forgetData)
     }
 
 

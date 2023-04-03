@@ -7,10 +7,10 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.meiling.common.BaseViewModel
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.SpannableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityForgetPwdSuccessBinding
-import com.meiling.oms.widget.MMKVUtils
 import com.meiling.oms.widget.setSingleClickListener
 
 @Route(path = "/app/ForgetPwdFinishActivity")

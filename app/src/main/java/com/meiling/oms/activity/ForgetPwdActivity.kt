@@ -52,10 +52,24 @@ class ForgetPwdActivity : BaseActivity<LoginViewModel, ActivityForgetPwdBinding>
 
         mDatabind.btnNext.setSingleClickListener {
             if (mDatabind.edtAccount.text.isNotEmpty()) {
-                ARouter.getInstance().build("/app/ForgetPwdGetCodeActivity").navigation()
+                mViewModel.userNameVerify(mDatabind.edtAccount.text.trim().toString())
             } else {
                 showToast("请输入账号")
             }
+        }
+    }
+
+
+    override fun createObserver() {
+        mViewModel.forgetData.onStart.observe(this) {
+
+        }
+        mViewModel.forgetData.onSuccess.observe(this) {
+            ARouter.getInstance().build("/app/ForgetPwdGetCodeActivity").withString("phone",it.phone).withString("phone_center",it.phoneNum).navigation()
+            finish()
+        }
+        mViewModel.forgetData.onError.observe(this) {
+            showToast(it.msg)
         }
     }
 

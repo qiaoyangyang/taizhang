@@ -9,7 +9,7 @@ class CaptchaCountdownTool(private val listener: CaptchaCountdownListener) {
     private val COUNTDOWN_INTERVAL = 1000L // Countdown interval in milliseconds
 
     private lateinit var countDownTimer: CountDownTimer
-
+    private var isInitialized = false
     fun startCountdown() {
         countDownTimer = object : CountDownTimer(COUNTDOWN_TIME * 1000, COUNTDOWN_INTERVAL) {
             override fun onTick(millisUntilFinished: Long) {
@@ -22,12 +22,15 @@ class CaptchaCountdownTool(private val listener: CaptchaCountdownListener) {
                 listener.onCountdownFinish()
             }
         }
-
+        isInitialized = true
         countDownTimer.start()
     }
 
     fun stopCountdown() {
-        countDownTimer.cancel()
+        if (isInitialized) {
+            countDownTimer.cancel()
+            isInitialized = false
+        }
     }
 
     interface CaptchaCountdownListener {

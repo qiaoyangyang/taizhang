@@ -8,17 +8,17 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.hjq.bar.TitleBar
 import com.hjq.widget.view.RegexEditText.Companion.REGEX_MOBILE
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.constant.SPConstants
 import com.meiling.common.utils.InputTextManager
+import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.SpannableUtils
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityLoginBinding
 import com.meiling.oms.viewmodel.LoginViewModel
 import com.meiling.oms.widget.CaptchaCountdownTool
-import com.meiling.oms.widget.MMKVUtils
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 
@@ -84,11 +84,31 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             if (!isAgreement) {
                 showToast("请同意并勾选用户协议和隐私政策")
             } else {
+                if (mDatabind.tvTitle.text.toString() == "账号密码登录") {
+                    if (mDatabind.etPhone.text?.trim().toString().isEmpty()) {
+                        showToast("请输入账号")
+                    }
+                    if (mDatabind.etPassword.text?.trim().toString().isEmpty()) {
+                        showToast("请输入密码")
+                    }
+                    mViewModel.accountLogin(
+                        mDatabind.etPhone.text?.trim().toString(),
+                        mDatabind.etPassword.text.trim().toString()
+                    )
+                } else {
+                    if (mDatabind.etPhone.text?.trim().toString().isEmpty()) {
+                        showToast("请输入手机号")
+                    }
+                    if (mDatabind.etPassword.text?.trim().toString().isEmpty()) {
+                        showToast("请输入验证码")
+                    }
+                    mViewModel.mobileLogin(
+                        mDatabind.etPhone.text?.trim().toString(),
+                        mDatabind.etPassword.text.trim().toString()
+                    )
+                }
 
-                captchaCountdownTool.stopCountdown()
-                MMKVUtils.putBoolean("isLogin", true)
-                ARouter.getInstance().build("/app/MainActivity").navigation()
-                finish()
+
             }
         }
 
@@ -96,7 +116,15 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             ARouter.getInstance().build("/app/ForgetPwdActivity").navigation()
         }
         mDatabind.txtAuthCode.setSingleClickListener {
-            captchaCountdownTool.startCountdown()
+            if (mDatabind.etPhone.text?.trim().toString().isNotEmpty()) {
+                mViewModel.sendCode(
+                    mDatabind.etPhone.text?.trim().toString()
+                )
+                captchaCountdownTool.startCountdown()
+            } else {
+                showToast("请输入手机号")
+            }
+
         }
     }
 
@@ -114,7 +142,29 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             showToast("验证码发送成功")
         }
         mViewModel.sendCode.onError.observe(this) {
+            disLoading()
             showToast("${it.message}")
+        }
+
+        mViewModel.loginData.onStart.observe(this) {
+            showLoading("正在登录")
+        }
+        mViewModel.loginData.onSuccess.observe(this) {
+            disLoading()
+            captchaCountdownTool.stopCountdown()
+            MMKVUtils.putBoolean("isLogin", true)
+            MMKVUtils.putString(SPConstants.PHONE, it.adminUser?.phone!!)
+            MMKVUtils.putString(SPConstants.TOKEN, it.adminUser?.token!!)
+            MMKVUtils.putString(SPConstants.ACCOUNT, it.adminUser?.username!!)
+            MMKVUtils.putString(SPConstants.AVATAR, it.adminUser?.avatar!!)
+            MMKVUtils.putString(SPConstants.NICK_NAME, it.adminUser?.nickname!!)
+            MMKVUtils.putInt(SPConstants.ROLE, it.role!!)
+            ARouter.getInstance().build("/app/MainActivity").navigation()
+            finish()
+        }
+        mViewModel.loginData.onError.observe(this) {
+            disLoading()
+            showToast("${it.msg}")
         }
     }
 
@@ -124,6 +174,8 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             mDatabind.tvTitle.text = "验证码登录"
             mDatabind.etPassword.hint = "请输入验证码"
             mDatabind.etPhone.hint = "请输入手机号"
+            mDatabind.etPhone.text?.clear()
+            mDatabind.etPassword.text?.clear()
             mDatabind.tvOtherLoginMethods.text = "账号登录"
             mDatabind.txtAuthCode.text = "获取验证码"
             mDatabind.ivPhone.setBackgroundResource(R.drawable.iv_phone)
@@ -134,8 +186,11 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             mDatabind.etPhone.setInputRegex(REGEX_MOBILE)
             mDatabind.etPhone.inputType = EditorInfo.TYPE_CLASS_PHONE
             TextDrawableUtils.setTopDrawable(mDatabind.tvOtherLoginMethods, R.drawable.ic_account)
+
         } else {
             TextDrawableUtils.setTopDrawable(mDatabind.tvOtherLoginMethods, R.drawable.phone_log)
+            mDatabind.etPhone.text?.clear()
+            mDatabind.etPassword.text?.clear()
             mDatabind.etPassword.hint = "请输入密码"
             mDatabind.etPhone.hint = "请输入账号"
             mDatabind.tvTitle.text = "账号密码登录"
@@ -146,6 +201,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             mDatabind.etPassword.inputType = EditorInfo.TYPE_TEXT_VARIATION_PASSWORD
             mDatabind.ivPhone.setBackgroundResource(R.drawable.login_phone)
             mDatabind.ivPassword.setBackgroundResource(R.drawable.ic_password)
+            captchaCountdownTool.stopCountdown()
         }
     }
 
