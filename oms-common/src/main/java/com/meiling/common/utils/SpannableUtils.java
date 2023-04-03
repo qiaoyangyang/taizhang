@@ -39,7 +39,7 @@ public class SpannableUtils {
         textView.setText(builder);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
-    public static void setTextcolor( String content, TextView textView, int ling,int begin) {
+    public static void setTextcolor(Context context,String content, TextView textView, int ling,int begin,int color) {
         SpannableStringBuilder builder = new SpannableStringBuilder(content);
         builder.setSpan(new ClickableSpan() {
             @Override
@@ -52,7 +52,7 @@ public class SpannableUtils {
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setColor(Color.parseColor("#1180FF"));       //设置文字颜色
+                ds.setColor(context.getResources().getColor(color));       //设置文字颜色
                 ds.setUnderlineText(false);      //设置下划线//根据需要添加
             }
         }, ling, begin, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

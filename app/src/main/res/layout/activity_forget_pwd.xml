@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activity.ForgetPwdActivity">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:title="忘记密码" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_account"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_100"
+        android:layout_marginHorizontal="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_50"
+        android:background="@drawable/bg_f8"
+        android:paddingHorizontal="10dp">
+
+        <ImageView
+            android:id="@+id/iv_password"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_password"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/edt_account"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/dp_30"
+            android:background="@null"
+            android:hint="请输入账号"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:textColorHint="@color/home_999999"
+            android:textSize="16sp"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintLeft_toRightOf="@+id/iv_password"
+            app:layout_constraintRight_toLeftOf="@+id/iv_clean_show"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+
+        <ImageView
+            android:id="@+id/iv_clean_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:checked="true"
+            android:src="@drawable/search_close_edt"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/edt_account"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edt_account" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.hjq.shape.view.ShapeButton
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_50"
+        android:gravity="center"
+        android:paddingVertical="@dimen/dp_30"
+        android:text="下一步"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_30"
+        app:shape_radius="@dimen/dp_100"
+        app:shape_solidColor="@color/red" />
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

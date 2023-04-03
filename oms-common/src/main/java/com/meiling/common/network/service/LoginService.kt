@@ -22,7 +22,7 @@ interface LoginService {
         @Query("code") code: String
     ): ResultData<String>
 
-
     @GET("/api/v1/app/login/imToken")
     suspend fun imToken(): ResultData<String>
+
 }
