@@ -8,8 +8,6 @@ import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.meiling.common.activity.BaseActivity
-import com.meiling.common.utils.SpannableUtils
-import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityForgetPwdBinding
 import com.meiling.oms.viewmodel.LoginViewModel
 import com.meiling.oms.widget.setSingleClickListener
@@ -65,7 +63,7 @@ class ForgetPwdActivity : BaseActivity<LoginViewModel, ActivityForgetPwdBinding>
 
         }
         mViewModel.forgetData.onSuccess.observe(this) {
-            ARouter.getInstance().build("/app/ForgetPwdGetCodeActivity").withString("phone",it.phone).withString("phone_center",it.phoneNum).navigation()
+            ARouter.getInstance().build("/app/ForgetPwdGetCodeActivity").withString("account",mDatabind.edtAccount.text.trim().toString()).withString("phone",it.phone).withString("phone_center",it.phoneNum).navigation()
             finish()
         }
         mViewModel.forgetData.onError.observe(this) {

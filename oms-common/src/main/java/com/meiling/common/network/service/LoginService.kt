@@ -16,12 +16,18 @@ val loginService: LoginService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED)
 interface LoginService {
 
 
+    /***
+     * 验证码
+     * **/
     @POST("/saas/phone/send_code")
     suspend fun sendCode(
         @Query("phone") mobile: String,
         @Query("type") type: String = "1",
     ): ResultData<String>
 
+    /**
+     * 验证码登录
+     * **/
     @POST("/uc/admin/phone_login")
     suspend fun mobileLogin(
         @Query("phone") mobile: String,
@@ -33,7 +39,7 @@ interface LoginService {
     suspend fun imToken(): ResultData<String>
 
     /**
-     * 登录
+     * 手机号登录
      */
     @POST("/uc/admin/login")
     suspend fun login(
@@ -50,7 +56,7 @@ interface LoginService {
   /**
      * 重置密码
      */
-    @GET("/uc/adminuser/reset_password")
+    @POST("/uc/adminuser/reset_password")
     suspend fun resetPwd(
       @Query("userName") username: String,
       @Query("phone") phone: String,

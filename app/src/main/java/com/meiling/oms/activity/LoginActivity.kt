@@ -1,6 +1,7 @@
 package com.meiling.oms.activity
 
 import android.os.Bundle
+import android.text.InputType
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.inputmethod.EditorInfo
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.hjq.widget.view.RegexEditText.Companion.REGEX_MOBILE
+import com.hjq.widget.view.RegexEditText.Companion.REGEX_NAME
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.constant.SPConstants
 import com.meiling.common.utils.InputTextManager
@@ -24,21 +26,20 @@ import com.meiling.oms.widget.showToast
 
 @Route(path = "/app/LoginActivity")
 class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
-    private lateinit var captchaCountdownTool: CaptchaCountdownTool
+    private  val captchaCountdownTool: CaptchaCountdownTool =
+        CaptchaCountdownTool(object : CaptchaCountdownTool.CaptchaCountdownListener {
+            override fun onCountdownTick(countDownText: String) {
+                mDatabind.txtAuthCode.text = "$countDownText s"
+            }
+
+            override fun onCountdownFinish() {
+                mDatabind.txtAuthCode.text = "重新获取"
+            }
+        })
 
 
     override fun initView(savedInstanceState: Bundle?) {
 
-        captchaCountdownTool =
-            CaptchaCountdownTool(object : CaptchaCountdownTool.CaptchaCountdownListener {
-                override fun onCountdownTick(countDownText: String) {
-                    mDatabind.txtAuthCode.text = "$countDownText s"
-                }
-
-                override fun onCountdownFinish() {
-                    mDatabind.txtAuthCode.text = "重新获取"
-                }
-            })
 
         var conet = "登录即代表同意《美零云店用户协议及隐私政策》"
         SpannableUtils.setTextcolor(
@@ -158,6 +159,8 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             MMKVUtils.putString(SPConstants.ACCOUNT, it.adminUser?.username!!)
             MMKVUtils.putString(SPConstants.AVATAR, it.adminUser?.avatar!!)
             MMKVUtils.putString(SPConstants.NICK_NAME, it.adminUser?.nickname!!)
+            MMKVUtils.putInt(SPConstants.tenantId, it.adminUser?.tenantId!!)
+            MMKVUtils.putLong(SPConstants.adminViewId, it.adminUser?.viewId!!)
             MMKVUtils.putInt(SPConstants.ROLE, it.role!!)
             ARouter.getInstance().build("/app/MainActivity").navigation()
             finish()
@@ -186,7 +189,6 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             mDatabind.etPhone.setInputRegex(REGEX_MOBILE)
             mDatabind.etPhone.inputType = EditorInfo.TYPE_CLASS_PHONE
             TextDrawableUtils.setTopDrawable(mDatabind.tvOtherLoginMethods, R.drawable.ic_account)
-
         } else {
             TextDrawableUtils.setTopDrawable(mDatabind.tvOtherLoginMethods, R.drawable.phone_log)
             mDatabind.etPhone.text?.clear()
@@ -198,9 +200,12 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             mDatabind.cbPwdShow.visibility = View.VISIBLE
             mDatabind.txtAuthCode.visibility = View.INVISIBLE
             mDatabind.etPhone.inputType = EditorInfo.TYPE_CLASS_TEXT
-            mDatabind.etPassword.inputType = EditorInfo.TYPE_TEXT_VARIATION_PASSWORD
+            mDatabind.etPhone.setInputRegex(REGEX_NAME)
+//            mDatabind.etPassword.inputType = EditorInfo.TYPE_TEXT_VARIATION_PASSWORD
             mDatabind.ivPhone.setBackgroundResource(R.drawable.login_phone)
             mDatabind.ivPassword.setBackgroundResource(R.drawable.ic_password)
+            mDatabind.etPassword.inputType =
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             captchaCountdownTool.stopCountdown()
         }
     }
