@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/order_remark_F4F4F4">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/TitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        app:layout_constraintTop_toTopOf="parent"
+        app:leftIcon="@drawable/bar_arrows_left_white"
+        app:lineVisible="false"
+        app:rightTitleSize="@dimen/sp_14"
+        app:title="浮光之丘大都会门店"
+        app:titleColor="@color/white" />
+
+    <com.hjq.shape.layout.ShapeLinearLayout
+        android:id="@+id/slbg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_150"
+        android:background="@drawable/my_recharge_bg_red"
+        app:layout_constraintTop_toBottomOf="@+id/TitleBar"
+        app:shape_bottomLeftRadius="@dimen/dp_20"
+        app:shape_bottomRightRadius="@dimen/dp_20">
+
+
+    </com.hjq.shape.layout.ShapeLinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="18dp"
+
+        android:background="@drawable/bg_import_white_30"
+        app:layout_constraintTop_toTopOf="@+id/slbg">
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginBottom="17dp"
+            android:src="@drawable/home_search_icon_red"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:textColor="@color/home_333333"
+            android:id="@+id/tv_Stock_Code"
+            app:layout_constraintRight_toRightOf="@+id/iv_search_close_edt"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center|left"
+            android:hint="请输入顾客提供的券码"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/iv_search"
+
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_search_close_edt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="17dp"
+            android:src="@drawable/search_close_edt"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_1"
+            style="@style/tv_pay_key"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_2"
+            style="@style/tv_pay_key"
+            android:layout_marginLeft="5dp"
+            app:layout_constraintLeft_toRightOf="@+id/tv_1"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_3"
+            style="@style/tv_pay_key"
+            android:layout_marginLeft="5dp"
+            app:layout_constraintLeft_toRightOf="@+id/tv_2"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="3" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            app:layout_constraintLeft_toRightOf="@+id/tv_3"
+            android:id="@+id/tv_0"
+            style="@style/tv_pay_key"
+            android:layout_marginLeft="5dp"
+            android:text="0"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_4"
+            style="@style/tv_pay_key"
+            android:layout_marginTop="5dp"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_1"
+            app:layout_constraintTop_toBottomOf="@+id/tv_0"
+            android:text="4" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_5"
+            style="@style/tv_pay_key"
+            android:layout_marginTop="5dp"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_0"
+            android:text="5" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_6"
+            style="@style/tv_pay_key"
+            android:layout_marginTop="5dp"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_3"
+            app:layout_constraintTop_toBottomOf="@+id/tv_0"
+            android:text="6" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_7"
+            style="@style/tv_pay_key"
+            android:layout_marginTop="5dp"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_4"
+            app:layout_constraintTop_toBottomOf="@+id/tv_4"
+            android:text="7" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_8"
+            style="@style/tv_pay_key"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_2"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_4"
+            android:text="8" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_9"
+            style="@style/tv_pay_key"
+            android:layout_marginTop="5dp"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_3"
+            app:layout_constraintTop_toBottomOf="@+id/tv_4"
+            android:text="9" />
+
+        <ImageView
+            android:src="@drawable/ic_numdel"
+            android:id="@+id/tv_clear"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_pay"
+            android:focusable="true"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_36"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_0"
+            app:layout_constraintRight_toRightOf="@+id/tv_0"
+            app:layout_constraintTop_toTopOf="@+id/tv_6"
+            tools:text="0" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_ok"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:background="@drawable/indicator_bottom_line"
+            android:layout_marginTop="5dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_0"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_9"
+            app:layout_constraintRight_toRightOf="@+id/tv_0"
+            app:layout_constraintTop_toBottomOf="@+id/tv_clear"
+            android:text="验\n证" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

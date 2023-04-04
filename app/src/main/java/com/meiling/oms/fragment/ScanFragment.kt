@@ -1,9 +1,11 @@
 package com.meiling.oms.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.fragment.BaseFragment
+import com.meiling.oms.activity.VoucherInspectionActivity
 import com.meiling.oms.databinding.FragmentScanBinding
 import com.meiling.oms.viewmodel.FindViewModel
 import com.meiling.oms.widget.setSingleClickListener
@@ -26,7 +28,15 @@ class ScanFragment : BaseFragment<FindViewModel, FragmentScanBinding>() {
     }
 
     override fun initListener() {
-        mDatabind.rlDouYin.setSingleClickListener { showToast("开发中。。。") }
+        //抖音
+        mDatabind.rlDouYin.setSingleClickListener {
+            startActivity(
+                Intent(mActivity, VoucherInspectionActivity::class.java).putExtra(
+                    "type",
+                    "1"
+                )
+            )
+        }
         mDatabind.rlKouBei.setSingleClickListener { showToast("开发中。。。") }
         mDatabind.rlMeiTuan.setSingleClickListener { showToast("开发中。。。") }
 

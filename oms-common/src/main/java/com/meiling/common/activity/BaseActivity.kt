@@ -72,6 +72,10 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewBinding> : BaseVmDbActi
     override fun onLeftClick(view: View) {
         onBackPressed()
     }
+
+    override fun onTitleClick(view: View) {
+
+    }
     /**
      * 是否使用沉浸式状态栏
      */

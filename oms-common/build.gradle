@@ -144,5 +144,8 @@ dependencies {
     api 'com.tencent:mmkv:1.2.15'
     api 'com.github.SheHuan:NiceDialog:1.2.0'
 
+    api 'com.huawei.hms:scanplus:2.10.0.301'
+
+
 
 }
