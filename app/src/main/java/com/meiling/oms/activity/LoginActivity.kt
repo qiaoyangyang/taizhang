@@ -151,6 +151,9 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         }
         mViewModel.sendCode.onError.observe(this) {
             disLoading()
+            captchaCountdownTool.stopCountdown()
+            mDatabind.txtAuthCode.isClickable = true
+            mDatabind.txtAuthCode.text = "重新获取"
             showToast("${it.message}")
         }
 

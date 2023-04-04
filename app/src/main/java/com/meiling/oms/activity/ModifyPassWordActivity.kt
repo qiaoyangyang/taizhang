@@ -27,10 +27,12 @@ class ModifyPassWordActivity : BaseActivity<LoginViewModel, ActivityModifyPasswo
         CaptchaCountdownTool(object : CaptchaCountdownTool.CaptchaCountdownListener {
             override fun onCountdownTick(countDownText: String) {
                 mDatabind.txtGetAuthCode.text = "$countDownText s"
+                mDatabind.txtGetAuthCode.isClickable = false
             }
 
             override fun onCountdownFinish() {
                 mDatabind.txtGetAuthCode.text = "重新获取"
+                mDatabind.txtGetAuthCode.isClickable = true
             }
         })
 
@@ -186,9 +188,13 @@ class ModifyPassWordActivity : BaseActivity<LoginViewModel, ActivityModifyPasswo
         }
         mViewModel.sendCode.onSuccess.observe(this) {
             disLoading()
+            showToast("验证码发送成功")
         }
         mViewModel.sendCode.onError.observe(this) {
             disLoading()
+            captchaCountdownTool.stopCountdown()
+            mDatabind.txtGetAuthCode.text = "重新获取"
+            mDatabind.txtGetAuthCode.isClickable = true
             showToast("${it.message}")
         }
 
