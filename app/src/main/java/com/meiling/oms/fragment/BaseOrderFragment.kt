@@ -115,8 +115,8 @@ class BaseOrderFragment : BaseFragment<CommunityViewModel, FragmentBaseOrderBind
                                     "-------\n" +
                                     "备注${"蜡烛18已收费"}\n"
                         )
-                        ToastUtils.showLong("复制成功")
-                        showToast("1212")
+//                        ToastUtils.showLong("复制成功")
+                        showToast("复制成功")
                     }
                     btnSendDis.setOnClickListener {
                         if (item == "自提") {

@@ -90,10 +90,8 @@ class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdG
         }
         mDatabind.btnNext.setSingleClickListener {
             if (mDatabind.edtCode.text.trim().toString().isNotEmpty()) {
-                captchaCountdownTool.stopCountdown()
-                ARouter.getInstance().build("/app/ForgetPwdResetActivity")
-                    .withString("account", account).withString("phone", phoneSend)
-                    .withString("code", mDatabind.edtCode.text.trim().toString()).navigation()
+                mViewModel.businessCode(phoneSend, mDatabind.edtCode.text.trim().toString())
+
             } else {
                 showToast("请输入验证码")
             }
@@ -108,6 +106,7 @@ class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdG
         mViewModel.sendCode.onStart.observe(this) {
             showLoading("发送中")
         }
+
         mViewModel.sendCode.onSuccess.observe(this) {
             disLoading()
             showToast("验证码发送成功")
@@ -117,6 +116,23 @@ class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdG
             captchaCountdownTool.stopCountdown()
             mDatabind.txtAuthCode.isClickable = true
             mDatabind.txtAuthCode.text = "重新获取"
+            showToast("${it.message}")
+        }
+
+        mViewModel.repData.onStart.observe(this) {
+            showLoading("请求中")
+        }
+
+        mViewModel.repData.onSuccess.observe(this) {
+            disLoading()
+            captchaCountdownTool.stopCountdown()
+            mDatabind.txtAuthCode.isClickable = true
+            ARouter.getInstance().build("/app/ForgetPwdResetActivity")
+                .withString("account", account).withString("phone", phoneSend)
+                .withString("code", mDatabind.edtCode.text.trim().toString()).navigation()
+        }
+        mViewModel.repData.onError.observe(this) {
+            disLoading()
             showToast("${it.message}")
         }
 
