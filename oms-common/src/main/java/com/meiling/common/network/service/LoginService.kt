@@ -22,7 +22,7 @@ interface LoginService {
     @POST("/saas/phone/send_code")
     suspend fun sendCode(
         @Query("phone") mobile: String,
-        @Query("type") type: String = "1",
+        @Query("type") type: String = "2",
     ): ResultData<String>
 
     /**

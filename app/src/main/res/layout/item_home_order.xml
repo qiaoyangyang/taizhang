@@ -272,6 +272,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/dp_20"
             android:paddingBottom="@dimen/dp_10"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/cos_hide">
 
             <TextView
@@ -394,7 +395,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/dp_10"
                 android:text="复制"
-                android:textSize="@dimen/sp_30"
+                android:textSize="@dimen/sp_28"
                 app:layout_constraintBottom_toBottomOf="@id/txt_order_id"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txt_order_id"

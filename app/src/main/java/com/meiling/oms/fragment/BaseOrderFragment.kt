@@ -93,6 +93,7 @@ class BaseOrderFragment : BaseFragment<CommunityViewModel, FragmentBaseOrderBind
                     }
                     copyOrderId.setSingleClickListener {
                         copyText(context, orderId.text.toString())
+                        showToast("复制成功")
                     }
 
                     changeOrder.setOnClickListener {
