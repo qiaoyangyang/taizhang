@@ -19,23 +19,25 @@ import com.meiling.oms.widget.showToast
 @Route(path = "/app/ForgetPwdGetCodeActivity")
 class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdGetCodeBinding>() {
 
-    private lateinit var captchaCountdownTool: CaptchaCountdownTool
+    private var captchaCountdownTool =
+        CaptchaCountdownTool(object : CaptchaCountdownTool.CaptchaCountdownListener {
+            override fun onCountdownTick(countDownText: String) {
+                mDatabind.txtAuthCode.text = "$countDownText s"
+                mDatabind.txtAuthCode.isClickable = false
+            }
+
+            override fun onCountdownFinish() {
+                mDatabind.txtAuthCode.text = "重新获取"
+                mDatabind.txtAuthCode.isClickable = true
+            }
+        })
+
     override fun isStatusBarDarkFont(): Boolean {
         return true
     }
-    override fun initView(savedInstanceState: Bundle?) {
-        captchaCountdownTool =
-            CaptchaCountdownTool(object : CaptchaCountdownTool.CaptchaCountdownListener {
-                override fun onCountdownTick(countDownText: String) {
-                    mDatabind.txtAuthCode.text = "$countDownText s"
-                    mDatabind.txtAuthCode.isClickable = false
-                }
 
-                override fun onCountdownFinish() {
-                    mDatabind.txtAuthCode.text = "重新获取"
-                    mDatabind.txtAuthCode.isClickable = true
-                }
-            })
+    override fun initView(savedInstanceState: Bundle?) {
+
     }
 
     private fun hidePhoneNumber(phoneNumber: String): String {
@@ -89,7 +91,9 @@ class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdG
         mDatabind.btnNext.setSingleClickListener {
             if (mDatabind.edtCode.text.trim().toString().isNotEmpty()) {
                 captchaCountdownTool.stopCountdown()
-                ARouter.getInstance().build("/app/ForgetPwdResetActivity").withString("account",account).withString("phone",phoneSend).withString("code",mDatabind.edtCode.text.trim().toString()).navigation()
+                ARouter.getInstance().build("/app/ForgetPwdResetActivity")
+                    .withString("account", account).withString("phone", phoneSend)
+                    .withString("code", mDatabind.edtCode.text.trim().toString()).navigation()
             } else {
                 showToast("请输入验证码")
             }
@@ -106,9 +110,13 @@ class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdG
         }
         mViewModel.sendCode.onSuccess.observe(this) {
             disLoading()
+            showToast("验证码发送成功")
         }
         mViewModel.sendCode.onError.observe(this) {
             disLoading()
+            captchaCountdownTool.stopCountdown()
+            mDatabind.txtAuthCode.isClickable = true
+            mDatabind.txtAuthCode.text = "重新获取"
             showToast("${it.message}")
         }
 
