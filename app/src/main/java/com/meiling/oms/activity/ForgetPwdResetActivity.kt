@@ -6,6 +6,7 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -25,7 +26,9 @@ class ForgetPwdResetActivity : BaseActivity<LoginViewModel, ActivityForgetPwdRas
             InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
     }
 
-
+    override fun isStatusBarDarkFont(): Boolean {
+        return true
+    }
     override fun initData() {
 
     }
@@ -36,7 +39,7 @@ class ForgetPwdResetActivity : BaseActivity<LoginViewModel, ActivityForgetPwdRas
         val phone = intent.getStringExtra("phone")
         val code = intent.getStringExtra("code")
 
-        mDatabind.cbPwdShow.addTextChangedListener(object : TextWatcher {
+        mDatabind.etPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
@@ -51,7 +54,7 @@ class ForgetPwdResetActivity : BaseActivity<LoginViewModel, ActivityForgetPwdRas
                 }
             }
         })
-        mDatabind.cbPwdAgainShow.addTextChangedListener(object : TextWatcher {
+        mDatabind.etAgainPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
@@ -99,25 +102,24 @@ class ForgetPwdResetActivity : BaseActivity<LoginViewModel, ActivityForgetPwdRas
 
         mDatabind.btnNext.setSingleClickListener {
             if (mDatabind.etPassword.text.trim().toString().isEmpty()) {
-                showToast("密码不能为空")
+                mDatabind.txtPwdTipError.visibility = View.VISIBLE
+                mDatabind.txtPwdTipError.text = "密码不能为空"
                 return@setSingleClickListener
             }
-            if (mDatabind.etPassword.text.trim()
-                    .toString().length in 21..6
-            ) {
+
+            if (mDatabind.etPassword.text.trim().toString().length>20||mDatabind.etPassword.text.trim().toString().length<8) {
                 mDatabind.txtPwdTipError.visibility = View.VISIBLE
                 mDatabind.txtPwdTipError.text = "密码长度需要在8-20位字符之间"
                 return@setSingleClickListener
             }
-
             if (!isPasswordValid(mDatabind.etPassword.text.trim().toString())) {
+                mDatabind.txtPwdTipError.visibility = View.VISIBLE
                 mDatabind.txtPwdTipError.text = "密码不能是纯数字/纯字母/纯字符"
                 return@setSingleClickListener
             }
-            if (mDatabind.etPassword.text.trim().toString() == mDatabind.etAgainPassword.text.trim()
-                    .toString()
+            if (mDatabind.etPassword.text.trim().toString() == mDatabind.etAgainPassword.text.trim().toString()
             ) {
-                mDatabind.txtPwdTipError.visibility = View.GONE
+
                 mViewModel.resetPwd(
                     account!!,
                     phone!!,
@@ -135,9 +137,11 @@ class ForgetPwdResetActivity : BaseActivity<LoginViewModel, ActivityForgetPwdRas
 
     override fun createObserver() {
         mViewModel.repData.onStart.observe(this) {
-            showLoading("发送中")
+            showLoading("请求中")
         }
         mViewModel.repData.onSuccess.observe(this) {
+            mDatabind.txtPwdTipError.visibility = View.GONE
+            mDatabind.txtPwdTipError.visibility = View.GONE
             disLoading()
             ARouter.getInstance().build("/app/ForgetPwdFinishActivity")
                 .withString("password", mDatabind.etPassword.text.trim().toString())
@@ -150,8 +154,9 @@ class ForgetPwdResetActivity : BaseActivity<LoginViewModel, ActivityForgetPwdRas
         }
     }
 
-    private fun isPasswordValid(password: String): Boolean {
+     private fun isPasswordValid(password: String): Boolean {
 
+         Log.d("lwq","=========1111${password}")
         // 判断是否是纯数字或纯字母
         if (password.matches(Regex("\\d+")) || password.matches(Regex("[a-zA-Z]+"))) {
             return false
@@ -161,8 +166,7 @@ class ForgetPwdResetActivity : BaseActivity<LoginViewModel, ActivityForgetPwdRas
         if (password.matches(Regex("[a-zA-Z]+")) && password.matches(Regex("\\d+"))) {
             return true
         }
-
-        return false
+        return true
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityForgetPwdRasetBinding {

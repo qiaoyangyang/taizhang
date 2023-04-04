@@ -20,7 +20,9 @@ import com.meiling.oms.widget.showToast
 class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdGetCodeBinding>() {
 
     private lateinit var captchaCountdownTool: CaptchaCountdownTool
-
+    override fun isStatusBarDarkFont(): Boolean {
+        return true
+    }
     override fun initView(savedInstanceState: Bundle?) {
         captchaCountdownTool =
             CaptchaCountdownTool(object : CaptchaCountdownTool.CaptchaCountdownListener {

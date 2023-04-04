@@ -10,7 +10,7 @@ data class  LoginDto(
     val lastAccessTenant: Any,
     val multiUnitMark: Boolean,
     val poiIdList: Any,
-    val role: Int,
+    val role: String,
     val state: Any
 )
 

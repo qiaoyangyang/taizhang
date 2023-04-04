@@ -19,6 +19,9 @@ class ForgetPwdActivity : BaseActivity<LoginViewModel, ActivityForgetPwdBinding>
 
     }
 
+    override fun isStatusBarDarkFont(): Boolean {
+        return true
+    }
 
     override fun initData() {
 
@@ -64,7 +67,6 @@ class ForgetPwdActivity : BaseActivity<LoginViewModel, ActivityForgetPwdBinding>
         }
         mViewModel.forgetData.onSuccess.observe(this) {
             ARouter.getInstance().build("/app/ForgetPwdGetCodeActivity").withString("account",mDatabind.edtAccount.text.trim().toString()).withString("phone",it.phone).withString("phone_center",it.phoneNum).navigation()
-            finish()
         }
         mViewModel.forgetData.onError.observe(this) {
             showToast(it.msg)

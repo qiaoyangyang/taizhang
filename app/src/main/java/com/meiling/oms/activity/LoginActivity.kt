@@ -161,7 +161,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             MMKVUtils.putString(SPConstants.NICK_NAME, it.adminUser?.nickname!!)
             MMKVUtils.putInt(SPConstants.tenantId, it.adminUser?.tenantId!!)
             MMKVUtils.putLong(SPConstants.adminViewId, it.adminUser?.viewId!!)
-            MMKVUtils.putInt(SPConstants.ROLE, it.role!!)
+            MMKVUtils.putInt(SPConstants.ROLE, 1)
             ARouter.getInstance().build("/app/MainActivity").navigation()
             finish()
         }
