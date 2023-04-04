@@ -28,7 +28,9 @@ class ForgetPwdFinishActivity : BaseActivity<LoginViewModel, ActivityForgetPwdSu
             R.color.red
         )
     }
-
+    override fun isStatusBarDarkFont(): Boolean {
+        return true
+    }
     override fun getBind(layoutInflater: LayoutInflater): ActivityForgetPwdSuccessBinding {
         return ActivityForgetPwdSuccessBinding.inflate(layoutInflater)
     }
@@ -36,12 +38,21 @@ class ForgetPwdFinishActivity : BaseActivity<LoginViewModel, ActivityForgetPwdSu
     override fun initListener() {
         val account = intent.getStringExtra("account")
         val pwd = intent.getStringExtra("password")
-        mDatabind.btnLoginNext.setSingleClickListener {
+        var isAgreement = false
+        mDatabind.cbAgreementv.setOnCheckedChangeListener { buttonView, isChecked ->
+            isAgreement = isChecked
+        }
 
-            mViewModel.accountLogin(
-                account!!,
-                pwd!!
-            )
+        mDatabind.btnLoginNext.setSingleClickListener {
+            if (!isAgreement){
+                showToast("请同意并勾选用户协议和隐私政策")
+            }else{
+                mViewModel.accountLogin(
+                    account!!,
+                    pwd!!
+                )
+
+            }
 
         }
         mDatabind.btnLoginReturn.setSingleClickListener {
@@ -63,7 +74,9 @@ class ForgetPwdFinishActivity : BaseActivity<LoginViewModel, ActivityForgetPwdSu
             MMKVUtils.putString(SPConstants.ACCOUNT, it.adminUser?.username!!)
             MMKVUtils.putString(SPConstants.AVATAR, it.adminUser?.avatar!!)
             MMKVUtils.putString(SPConstants.NICK_NAME, it.adminUser?.nickname!!)
-            MMKVUtils.putInt(SPConstants.ROLE, it.role!!)
+            MMKVUtils.putString(SPConstants.tenantId, it.adminUser?.tenantId!!)
+            MMKVUtils.putString(SPConstants.adminViewId, it.adminUser?.viewId!!)
+            MMKVUtils.putInt(SPConstants.ROLE, 1)
             ARouter.getInstance().build("/app/MainActivity").navigation()
             finish()
         }
