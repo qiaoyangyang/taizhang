@@ -1,7 +1,10 @@
 package com.meiling.oms.activity
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.meiling.common.activity.BaseActivity
@@ -37,11 +40,15 @@ class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdG
         val asterisks = "*".repeat(endIndex - startIndex)
         return phoneNumber.replaceRange(startIndex, endIndex, asterisks)
     }
-    var phoneSend = ""
+
+    private var phoneSend = ""
+    var account = ""
     override fun initData() {
+        account = intent.getStringExtra("account").toString()
         val phone = intent.getStringExtra("phone")
         val phoneCenter = intent.getStringExtra("phone_center")
-        phoneSend = phone!!.replace("****", phoneCenter!!
+        phoneSend = phone!!.replace(
+            "****", phoneCenter!!
         )
 
         var conet = "验证码将发送到绑定手机号 $phone"
@@ -57,7 +64,33 @@ class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdG
     }
 
     override fun initListener() {
+        mDatabind.edtCode.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0.toString().isNotEmpty()) {
+                    mDatabind.ivCleanShow.visibility = View.VISIBLE
+                } else {
+                    mDatabind.ivCleanShow.visibility = View.GONE
+                }
+            }
+        })
+        mDatabind.ivCleanShow.setSingleClickListener {
+            mDatabind.edtCode.setText("")
+        }
         mDatabind.btnNext.setSingleClickListener {
+            if (mDatabind.edtCode.text.trim().toString().isNotEmpty()) {
+                captchaCountdownTool.stopCountdown()
+                ARouter.getInstance().build("/app/ForgetPwdResetActivity").withString("account",account).withString("phone",phoneSend).withString("code",mDatabind.edtCode.text.trim().toString()).navigation()
+            } else {
+                showToast("请输入验证码")
+            }
+        }
+        mDatabind.txtAuthCode.setSingleClickListener {
             mViewModel.sendCode(phoneSend)
             captchaCountdownTool.startCountdown()
         }
@@ -69,12 +102,12 @@ class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdG
         }
         mViewModel.sendCode.onSuccess.observe(this) {
             disLoading()
-            showToast("验证码发送成功")
         }
         mViewModel.sendCode.onError.observe(this) {
             disLoading()
             showToast("${it.message}")
         }
+
 
     }
 

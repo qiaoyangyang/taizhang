@@ -14,4 +14,6 @@ object SPConstants {
     const val NAME = "NAME"
     const val CARDNO = "CARDNO"
     const val ROLE = "ROLE"
+    const val tenantId = "tenantId"
+    const val adminViewId = "adminViewId"
 }
