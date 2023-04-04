@@ -1,14 +1,16 @@
 package com.meiling.oms.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.alibaba.android.arouter.launcher.ARouter
 import com.gyf.immersionbar.ImmersionBar
+import com.meiling.common.constant.SPConstants
 import com.meiling.common.fragment.BaseFragment
+import com.meiling.common.utils.MMKVUtils
 import com.meiling.oms.databinding.FragmentMyBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.MyViewModel
-import com.meiling.oms.widget.MMKVUtils
 import com.meiling.oms.widget.setSingleClickListener
 
 class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
@@ -17,6 +19,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         fun newInstance() = MyFragment()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun initView(savedInstanceState: Bundle?) {
 //        val fragments: MutableList<Fragment> = arrayListOf()
 //        fragments.add(
@@ -36,6 +39,16 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 //        ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
         ImmersionBar.with(this).init()
         ImmersionBar.setTitleBar(this, mDatabind.clMy)
+        mDatabind.txtNickName.text = MMKVUtils.getString(SPConstants.NICK_NAME)
+        mDatabind.txtPhone.text = "${
+            if (MMKVUtils.getInt(SPConstants.ROLE) == 1) {
+                "管理员"
+            } else {
+                "店员"
+            }
+        }${MMKVUtils.getString(SPConstants.PHONE)}"
+
+
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentMyBinding {

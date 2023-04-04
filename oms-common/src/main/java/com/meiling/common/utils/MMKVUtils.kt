@@ -1,4 +1,4 @@
-package com.meiling.oms.widget
+package com.meiling.common.utils
 
 import com.tencent.mmkv.MMKV
 

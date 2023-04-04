@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import com.alibaba.android.arouter.launcher.ARouter
 import com.meiling.common.BaseViewModel
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.utils.MMKVUtils
 import com.meiling.oms.databinding.ActivitySplashBinding
-import com.meiling.oms.widget.MMKVUtils
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity<BaseViewModel, ActivitySplashBinding>() {

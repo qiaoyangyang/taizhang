@@ -53,8 +53,9 @@
                 app:shape_radius="@dimen/dp_20" />
 
             <TextView
-                android:layout_width="72dp"
-                android:layout_height="26dp"
+                android:id="@+id/txt_nick_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/sv_head"
                 android:layout_toEndOf="@+id/sv_head"
                 android:text="账号昵称"
@@ -62,8 +63,9 @@
                 android:textSize="@dimen/sp_36" />
 
             <TextView
-                android:layout_width="299dp"
-                android:layout_height="20dp"
+                android:id="@+id/txt_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/sv_head"
                 android:layout_toEndOf="@+id/sv_head"
                 android:text="管理员 18706714009"

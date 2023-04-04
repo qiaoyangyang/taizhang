@@ -1,6 +1,5 @@
 package com.meiling.common.network
 
-import com.friendwing.universe.common.network.LoggerInterceptor
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -34,7 +33,7 @@ class RetrofitClient {
 
     private fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://47.97.158.192:8080")
+            .baseUrl("http://dev-oms-api.igoodsale.com")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())

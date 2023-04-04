@@ -187,6 +187,7 @@
         app:layout_constraintRight_toLeftOf="@+id/tv_login" />
 
     <TextView
+        android:id="@+id/txt_forget_pwd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="忘记密码"
