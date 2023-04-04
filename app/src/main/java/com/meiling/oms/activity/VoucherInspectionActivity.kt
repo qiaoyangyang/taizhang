@@ -15,7 +15,9 @@ import com.meiling.common.activity.BaseActivity
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityVoucherinspectionBinding
+import com.meiling.oms.dialog.ShopDialog
 import com.meiling.oms.viewmodel.VoucherinspectionViewModel
+
 
 //验券
 class VoucherInspectionActivity :
@@ -46,16 +48,26 @@ class VoucherInspectionActivity :
     override fun getBind(layoutInflater: LayoutInflater): ActivityVoucherinspectionBinding {
         return ActivityVoucherinspectionBinding.inflate(layoutInflater)
     }
-
     override fun initData() {
         super.initData()
         type = intent?.getStringExtra("type").toString()
+        mViewModel. cityshop(type)
+
+
+
+
 
     }
 
     override fun onTitleClick(view: View) {
         super.onTitleClick(view)
-        Log.d("yjk", "onTitleClick: ")
+
+        mViewModel.shopBean.onSuccess.observe(this){
+            //DataPickerUtitl.setpickData(this,it)
+            var shopDialog = ShopDialog(). newInstance(it)
+            shopDialog.show(supportFragmentManager)
+
+        }
     }
     //编辑请求权限
     open fun requestPermission(requestCode: Int, mode: Int) {
@@ -102,4 +114,5 @@ class VoucherInspectionActivity :
             }
         }
     }
+
 }

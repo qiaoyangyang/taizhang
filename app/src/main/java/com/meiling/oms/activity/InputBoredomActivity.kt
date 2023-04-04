@@ -21,7 +21,7 @@ import com.meiling.oms.viewmodel.InputBoredomViewModel
 class InputBoredomActivity : BaseActivity<InputBoredomViewModel, ActivityInputBoredomBinding>() {
 
 
-    var StockCode=""
+    var StockCode = ""
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.tv0.setOnClickListener {
             setStockCode(mDatabind.tv0)
@@ -55,8 +55,8 @@ class InputBoredomActivity : BaseActivity<InputBoredomViewModel, ActivityInputBo
             setStockCode(mDatabind.tv6)
         }
         mDatabind.ivSearchCloseEdt.setOnClickListener {
-            StockCode=""
-            mDatabind.tvStockCode.text=StockCode
+            StockCode = ""
+            mDatabind.tvStockCode.text = StockCode
         }
         mDatabind.tvClear.setOnClickListener {
             if (mDatabind.tvStockCode.text.isNotEmpty()) {
@@ -71,10 +71,10 @@ class InputBoredomActivity : BaseActivity<InputBoredomViewModel, ActivityInputBo
 
     }
 
-    fun setStockCode(TextView: TextView){
+    fun setStockCode(TextView: TextView) {
         StockCode += TextView.text.toString()
-        mDatabind.tvStockCode.text=StockCode
-        mDatabind.tvStockCode.addTextChangedListener(object : TextWatcher{
+        mDatabind.tvStockCode.text = StockCode
+        mDatabind.tvStockCode.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -82,10 +82,10 @@ class InputBoredomActivity : BaseActivity<InputBoredomViewModel, ActivityInputBo
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (TextUtils.isEmpty(s.toString())){
-                    mDatabind.ivSearchCloseEdt.visibility=View.GONE
-                }else{
-                    mDatabind.ivSearchCloseEdt.visibility=View.VISIBLE
+                if (TextUtils.isEmpty(s.toString())) {
+                    mDatabind.ivSearchCloseEdt.visibility = View.GONE
+                } else {
+                    mDatabind.ivSearchCloseEdt.visibility = View.VISIBLE
                 }
             }
 
@@ -98,7 +98,7 @@ class InputBoredomActivity : BaseActivity<InputBoredomViewModel, ActivityInputBo
 
     override fun initData() {
         super.initData()
-
+        mViewModel.cityshop("1")
     }
 
 

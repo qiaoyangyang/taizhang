@@ -139,5 +139,13 @@ dependencies {
     api 'com.huawei.hms:scanplus:2.10.0.301'
 
 
+    api 'com.brucetoo.pickview:library:1.2.3'
+
+
+
+
+
+
+
 
 }

@@ -47,4 +47,18 @@
         <item name="android:paddingStart">@dimen/dp_10</item>
         <item name="android:paddingEnd">@dimen/dp_10</item>
     </style>
+
+    <declare-styleable name="WheelView">
+        <attr name="wheelTextColor" format="color"/>
+        <attr name="wheelTextSize" format="dimension"/>
+        <attr name="wheelShowCount" format="integer"/>
+        <attr name="wheelTotalOffsetX" format="dimension"/>
+        <attr name="wheelItemVerticalSpace" format="dimension"/>
+        <attr name="wheelRotationX" format="float"/>
+        <attr name="wheelVelocityUnits" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="WheelMaskView">
+        <attr name="wheelMaskLineColor" format="color"/>
+    </declare-styleable>
 </resources>
