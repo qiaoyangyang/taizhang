@@ -5,38 +5,38 @@ import com.google.gson.annotations.SerializedName
 
 data class  LoginDto(
     val adminUser: AdminUser,
-    val isChain: Int,
-    val isNew: Int,
-    val lastAccessTenant: Any,
+    val isChain: String,
+    val isNew: String,
+    val lastAccessTenant: String,
     val multiUnitMark: Boolean,
-    val poiIdList: Any,
+    val poiIdList: String,
     val role: String,
-    val state: Any
+    val state: String
 )
 
 data class AdminUser(
     val avatar: String,
-    val createTime: Long,
-    val creator: Int,
+    val createTime: String,
+    val creator: String,
     val headPhone: String,
-    val id: Int,
-    val ifPush: Int,
-    val isNew: Int,
-    val lastLoginTime: Long,
-    val modifier: Int,
+    val id: String,
+    val ifPush: String,
+    val isNew: String,
+    val lastLoginTime: String,
+    val modifier: String,
     val nickname: String,
     val openAutoPoi: Int,
     val password: String,
     val phone: String,
-    val shopId: Int,
-    val status: Int,
-    val tenantId: Int,
+    val shopId: String,
+    val status: String,
+    val tenantId: String,
     val token: String,
-    val type: Int,
-    val umengToken: Any,
-    val updateTime: Long,
+    val type: String,
+    val umengToken: String,
+    val updateTime: String,
     val username: String,
-    val viewId: Long
+    val viewId: String
 )
 
 data class ForgetDto(

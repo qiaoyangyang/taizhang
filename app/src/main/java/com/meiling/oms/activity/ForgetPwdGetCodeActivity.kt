@@ -28,10 +28,12 @@ class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdG
             CaptchaCountdownTool(object : CaptchaCountdownTool.CaptchaCountdownListener {
                 override fun onCountdownTick(countDownText: String) {
                     mDatabind.txtAuthCode.text = "$countDownText s"
+                    mDatabind.txtAuthCode.isClickable = false
                 }
 
                 override fun onCountdownFinish() {
                     mDatabind.txtAuthCode.text = "重新获取"
+                    mDatabind.txtAuthCode.isClickable = true
                 }
             })
     }

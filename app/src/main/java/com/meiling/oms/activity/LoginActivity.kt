@@ -26,13 +26,15 @@ import com.meiling.oms.widget.showToast
 
 @Route(path = "/app/LoginActivity")
 class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
-    private  val captchaCountdownTool: CaptchaCountdownTool =
+    private val captchaCountdownTool: CaptchaCountdownTool =
         CaptchaCountdownTool(object : CaptchaCountdownTool.CaptchaCountdownListener {
             override fun onCountdownTick(countDownText: String) {
                 mDatabind.txtAuthCode.text = "$countDownText s"
+                mDatabind.txtAuthCode.isClickable = false
             }
 
             override fun onCountdownFinish() {
+                mDatabind.txtAuthCode.isClickable = true
                 mDatabind.txtAuthCode.text = "重新获取"
             }
         })
@@ -135,6 +137,11 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
 
     override fun createObserver() {
+
+        mDatabind.txtRegister.setSingleClickListener {
+            showToast("注册功能，正在开发中～")
+        }
+
         mViewModel.sendCode.onStart.observe(this) {
             showLoading("发送中")
         }
@@ -159,8 +166,8 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             MMKVUtils.putString(SPConstants.ACCOUNT, it.adminUser?.username!!)
             MMKVUtils.putString(SPConstants.AVATAR, it.adminUser?.avatar!!)
             MMKVUtils.putString(SPConstants.NICK_NAME, it.adminUser?.nickname!!)
-            MMKVUtils.putInt(SPConstants.tenantId, it.adminUser?.tenantId!!)
-            MMKVUtils.putLong(SPConstants.adminViewId, it.adminUser?.viewId!!)
+            MMKVUtils.putString(SPConstants.tenantId, it.adminUser?.tenantId!!)
+            MMKVUtils.putString(SPConstants.adminViewId, it.adminUser?.viewId!!)
             MMKVUtils.putInt(SPConstants.ROLE, 1)
             ARouter.getInstance().build("/app/MainActivity").navigation()
             finish()
