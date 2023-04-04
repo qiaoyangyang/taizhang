@@ -62,7 +62,7 @@
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_20"
-            android:src="@mipmap/icon_back" />
+            android:src="@drawable/icon_back" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -70,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_40"
-        android:layout_marginTop="@dimen/dp_60"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_40"
         android:background="@drawable/scan_bg_input">
 
@@ -96,8 +96,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_margin="@dimen/dp_20"
-            android:src="@mipmap/icon_back" />
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:src="@drawable/icon_back" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -105,7 +108,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_40"
-        android:layout_marginTop="@dimen/dp_60"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_40"
         android:background="@drawable/scan_bg_input">
 
@@ -115,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/dp_40"
             android:padding="@dimen/dp_40"
-            android:src="@mipmap/douyin_xhdpi"
+            android:src="@drawable/douyin"
            />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -131,7 +134,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_margin="@dimen/dp_20"
-            android:src="@mipmap/icon_back" />
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:src="@drawable/icon_back" />
     </RelativeLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>
