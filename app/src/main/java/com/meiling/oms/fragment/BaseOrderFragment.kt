@@ -18,6 +18,7 @@ import com.meiling.oms.databinding.FragmentBaseOrderBinding
 import com.meiling.oms.viewmodel.CommunityViewModel
 import com.meiling.oms.widget.CustomToast
 import com.meiling.oms.widget.copyText
+import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 
 
@@ -77,12 +78,30 @@ class BaseOrderFragment : BaseFragment<CommunityViewModel, FragmentBaseOrderBind
                     val imgShopCopy = holder.getView<ImageView>(R.id.img_shop_copy)
                     val changeOrder = holder.getView<TextView>(R.id.txt_change_order)
                     val btnSendDis = holder.getView<TextView>(R.id.txt_order_dis)
+                    val showMsg = holder.getView<TextView>(R.id.txt_shop_show_all)
+                    val hideMsg = holder.getView<TextView>(R.id.txt_show_hide)
+                    val copyOrderId = holder.getView<TextView>(R.id.txt_copy_order)
+                    val orderId = holder.getView<TextView>(R.id.txt_order_id)
+
+                    showMsg.setSingleClickListener {
+                        holder.setGone(R.id.cos_hide, true)
+                        holder.setGone(R.id.cos_shop_show, false)
+                    }
+                    hideMsg.setSingleClickListener {
+                        holder.setGone(R.id.cos_hide, false)
+                        holder.setGone(R.id.cos_shop_show, true)
+                    }
+                    copyOrderId.setSingleClickListener {
+                        copyText(context, orderId.text.toString())
+                    }
+
                     changeOrder.setOnClickListener {
                         ARouter.getInstance().build("/app/OrderChangeAddressActivity").navigation()
                     }
 
                     imgShopCopy.setOnClickListener {
-                        copyText(context,
+                        copyText(
+                            context,
                             "订单来源：" + "${"王奔康"} \n" +
                                     "门店名称${"18"}\n" +
                                     "订单编号${"18"}\n" +
