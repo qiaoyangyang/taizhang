@@ -22,7 +22,14 @@ interface AcceptanceCheckService {
         @Query("poiType") poiType: String? = "1,2",
         @Query("channelId") channelId: String,
         @Query("hasCityAll") hasCityAll: String? = "1",
-    ):ResultData<ArrayList<ShopBean>>
+    ): ResultData<ArrayList<ShopBean>>
+
+    @GET("saas/dytg/prepare")
+    suspend fun prepare(
+        @Query("code") code: String? = "1,2",//用户券码
+        @Query("url") url: String,//扫码后的短链地址
+        @Query("shopId") shopId: String? = "",//
+    ): ResultData<ArrayList<String>>
 
 
 }

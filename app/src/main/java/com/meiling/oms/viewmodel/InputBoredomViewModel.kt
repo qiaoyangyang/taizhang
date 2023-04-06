@@ -9,6 +9,7 @@ import com.meiling.common.network.service.loginService
 
 class InputBoredomViewModel(application: Application) : BaseViewModel(application) {
     val shopBean = BaseLiveData<ArrayList<ShopBean>>()
+    val doug = BaseLiveData<ArrayList<String>>()
     fun cityshop(type: String) {
         var channelId = ""
         if (type == "1") {
@@ -16,6 +17,11 @@ class InputBoredomViewModel(application: Application) : BaseViewModel(applicatio
         }
 
         request({ acceptanceCheckService.cityshop("1,2", channelId, "1") }, shopBean)
+    }
+    fun prepare(shopId:String,int: Int,codeurl:String){
+
+        request({ acceptanceCheckService.prepare(codeurl, codeurl, shopId) }, doug)
+
     }
 
 

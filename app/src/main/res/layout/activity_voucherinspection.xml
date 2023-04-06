@@ -14,7 +14,7 @@
         app:leftIcon="@drawable/bar_arrows_left_white"
         app:lineVisible="false"
         app:rightTitleSize="@dimen/sp_14"
-        app:title="浮光之丘大都会门店"
+        app:title=""
         app:titleColor="@color/white" />
 
     <com.hjq.shape.layout.ShapeLinearLayout

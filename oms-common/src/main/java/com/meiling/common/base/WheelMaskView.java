@@ -47,7 +47,7 @@ public class WheelMaskView extends View {
         a.recycle();
 
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(1);
+        paint.setStrokeWidth(2);
     }
 
     public void updateMask(int heightCount, int itemHeight) {

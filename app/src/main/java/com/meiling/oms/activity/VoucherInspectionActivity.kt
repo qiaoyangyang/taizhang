@@ -12,6 +12,7 @@ import com.huawei.hms.hmsscankit.ScanUtil
 import com.huawei.hms.ml.scan.HmsScan
 import com.huawei.hms.ml.scan.HmsScanAnalyzerOptions
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.network.data.Shop
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityVoucherinspectionBinding
@@ -40,7 +41,7 @@ class VoucherInspectionActivity :
 
 
         mDatabind.clScan.setOnClickListener {
-            requestPermission(CAMERA_REQ_CODE,DECODE)
+            requestPermission(CAMERA_REQ_CODE, DECODE)
         }
 
     }
@@ -48,13 +49,11 @@ class VoucherInspectionActivity :
     override fun getBind(layoutInflater: LayoutInflater): ActivityVoucherinspectionBinding {
         return ActivityVoucherinspectionBinding.inflate(layoutInflater)
     }
+
     override fun initData() {
         super.initData()
         type = intent?.getStringExtra("type").toString()
-        mViewModel. cityshop(type)
-
-
-
+        mViewModel.cityshop(type)
 
 
     }
@@ -62,13 +61,25 @@ class VoucherInspectionActivity :
     override fun onTitleClick(view: View) {
         super.onTitleClick(view)
 
-        mViewModel.shopBean.onSuccess.observe(this){
+        mViewModel.shopBean.onSuccess.observe(this) {
             //DataPickerUtitl.setpickData(this,it)
-            var shopDialog = ShopDialog(). newInstance(it)
+            var shopDialog = ShopDialog().newInstance(it)
+            shopDialog.setOnresilience(object : ShopDialog.Onresilience {
+                override fun resilience(cityid: Int, shopid: Int, shop: Shop) {
+                    mViewModel.Shop.onSuccess.postValue(shop)
+                    mDatabind.TitleBar.titleView.text = shop.name
+                }
+
+            })
             shopDialog.show(supportFragmentManager)
 
         }
     }
+
+    override fun createObserver() {
+
+    }
+
     //编辑请求权限
     open fun requestPermission(requestCode: Int, mode: Int) {
         ActivityCompat.requestPermissions(
@@ -76,6 +87,7 @@ class VoucherInspectionActivity :
             requestCode
         )
     }
+
     val DECODE = 1
     val CAMERA_REQ_CODE = 111;
     val REQUEST_CODE_SCAN_ONE = 0X01
@@ -108,8 +120,12 @@ class VoucherInspectionActivity :
         if (requestCode == REQUEST_CODE_SCAN_ONE) {
             if (data != null) {
                 val obj: HmsScan? = data!!.getParcelableExtra(ScanUtil.RESULT)
+                mViewModel.Shop.onSuccess.observe(this){
 
-                Log.d("yjk-----",obj!!.originalValue)
+                    mViewModel.prepare(it.id!!,0,"")
+                }
+
+                Log.d("yjk-----", obj!!.originalValue)
                 return
             }
         }

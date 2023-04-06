@@ -10,15 +10,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-/**
- * Wheel view with selected mask.
- *
- * <br>Email:1006368252@qq.com
- * <br>QQ:1006368252
- * <br><a href="https://github.com/JustinRoom/WheelViewDemo" target="_blank">https://github.com/JustinRoom/WheelViewDemo</a>
- *
- * @author jiangshicheng
- */
+
 public class WheelItemView extends FrameLayout implements IWheelViewSetting {
 
     private WheelView wheelView;

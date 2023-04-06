@@ -2,6 +2,9 @@ package com.meiling.oms.dialog
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
+import com.hjq.shape.view.ShapeButton
 import com.meiling.common.base.WheelItem
 import com.meiling.common.base.WheelItemView
 import com.meiling.common.base.WheelView.OnSelectedListener
@@ -14,6 +17,11 @@ import com.shehuan.nicedialog.ViewHolder
 
 @Suppress("DEPRECATION")
 class ShopDialog : BaseNiceDialog() {
+    init {
+        setGravity(Gravity.BOTTOM)
+        setOutCancel(true)
+    }
+
     override fun intLayoutId(): Int {
         return R.layout.dialog_shop
     }
@@ -27,15 +35,27 @@ class ShopDialog : BaseNiceDialog() {
     }
 
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
-        val title = arguments?.getSerializable("shopBean") as ArrayList<ShopBean>
-        var view = holder?.getView<WheelItemView>(R.id.wheel_view_left)
+        val shopBean = arguments?.getSerializable("shopBean") as ArrayList<ShopBean>
+        var cityid_view = holder?.getView<WheelItemView>(R.id.wheel_view_left)
         var wheel_view_center = holder?.getView<WheelItemView>(R.id.wheel_view_center)
-        view?.setOnSelectedListener { context, selectedIndex ->
-            loadData1(wheel_view_center!!, title,selectedIndex)
+        var btn_ok_exit = holder?.getView<ShapeButton>(R.id.btn_ok_exit)
+        cityid_view?.setOnSelectedListener { context, selectedIndex ->
+            loadData1(wheel_view_center!!, shopBean,selectedIndex)
+        }
+        wheel_view_center?.setOnSelectedListener { context, selectedIndex ->
+            Log.d("yjk", "convertView: $selectedIndex")
+        }
+        btn_ok_exit?.setOnClickListener {
+            if (onresilience!=null){
+                var shop= shopBean[cityid_view?.selectedIndex!!].shopList?.get(wheel_view_center!!.selectedIndex) as Shop
+                onresilience?.resilience(cityid_view?.selectedIndex!!,wheel_view_center?.selectedIndex!!,shop!!)
+                dismiss()
+            }
+
         }
 
-        loadData(view!!, title)
-        loadData1(wheel_view_center!!, title,0)
+        loadData(cityid_view!!, shopBean)
+        loadData1(wheel_view_center!!, shopBean,0)
 
     }
 
@@ -54,5 +74,14 @@ class ShopDialog : BaseNiceDialog() {
         }
 
         wheelItemView.setItems(items)
+    }
+    fun setOnresilience(onresilience: Onresilience) {
+        this.onresilience = onresilience
+    }
+
+    private  var onresilience:Onresilience?=null
+
+    interface Onresilience {
+        fun resilience(cityid: Int,shopid: Int,shop: Shop)
     }
 }
