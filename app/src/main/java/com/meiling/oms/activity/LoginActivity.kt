@@ -1,7 +1,9 @@
 package com.meiling.oms.activity
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
@@ -83,6 +85,60 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                 .setMain(it)
                 .build()
         }
+
+        mDatabind.etPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0.toString().isNotEmpty()) {
+                    if ((mDatabind.tvTitle.text.toString() == "账号密码登录")) {
+                        mDatabind.ivClearCode.visibility = View.VISIBLE
+                    } else {
+                        mDatabind.ivClearCode.visibility = View.GONE
+                    }
+                } else {
+                    mDatabind.ivClearPwd.visibility = View.GONE
+                    mDatabind.ivClearCode.visibility = View.GONE
+                }
+            }
+        })
+        mDatabind.etPhone.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0.toString().isNotEmpty()) {
+                    if ((mDatabind.tvTitle.text.toString() == "账号密码登录")) {
+                        mDatabind.ivClearAccount.visibility = View.VISIBLE
+                    } else {
+                        mDatabind.ivClearAccount.visibility = View.VISIBLE
+                    }
+                } else {
+                    mDatabind.ivClearAccount.visibility = View.GONE
+                    mDatabind.ivClearAccount.visibility = View.GONE
+                }
+            }
+        })
+        mDatabind.ivClearPwd.setSingleClickListener {
+            mDatabind.etPassword.text.clear()
+            mDatabind.etPhone.setSelection( mDatabind.etPassword.text.length)
+        }
+        mDatabind.ivClearCode.setSingleClickListener {
+            mDatabind.etPassword.text.clear()
+            mDatabind.etPhone.setSelection( mDatabind.etPassword.text.length)
+        }
+        mDatabind.ivClearAccount.setSingleClickListener {
+            mDatabind.etPhone.text.clear()
+            mDatabind.etPhone.setSelection( mDatabind.etPhone.text.length)
+        }
+
         mDatabind.btnLogin.setSingleClickListener {
             if (!isAgreement) {
                 showToast("请同意并勾选用户协议和隐私政策")
@@ -120,6 +176,10 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         }
         mDatabind.txtAuthCode.setSingleClickListener {
             if (mDatabind.etPhone.text?.trim().toString().isNotEmpty()) {
+                if (!isPhoneNumber(mDatabind.etPhone.text?.trim().toString())) {
+                    showToast("请输入正确手机号")
+                    return@setSingleClickListener
+                }
                 mViewModel.sendCode(
                     mDatabind.etPhone.text?.trim().toString()
                 )
@@ -196,7 +256,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             mDatabind.cbPwdShow.visibility = View.GONE
             mDatabind.txtAuthCode.visibility = View.VISIBLE
             mDatabind.etPassword.inputType = EditorInfo.TYPE_CLASS_NUMBER
-            mDatabind.etPhone.setInputRegex(REGEX_MOBILE)
+//            mDatabind.etPhone.setInputRegex(REGEX_MOBILE)
             mDatabind.etPhone.inputType = EditorInfo.TYPE_CLASS_PHONE
             TextDrawableUtils.setTopDrawable(mDatabind.tvOtherLoginMethods, R.drawable.ic_account)
         } else {
@@ -210,7 +270,6 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             mDatabind.cbPwdShow.visibility = View.VISIBLE
             mDatabind.txtAuthCode.visibility = View.INVISIBLE
             mDatabind.etPhone.inputType = EditorInfo.TYPE_CLASS_TEXT
-            mDatabind.etPhone.setInputRegex(REGEX_NAME)
 //            mDatabind.etPassword.inputType = EditorInfo.TYPE_TEXT_VARIATION_PASSWORD
             mDatabind.ivPhone.setBackgroundResource(R.drawable.login_phone)
             mDatabind.ivPassword.setBackgroundResource(R.drawable.ic_password)
@@ -218,6 +277,11 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                 InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             captchaCountdownTool.stopCountdown()
         }
+    }
+
+    private fun isPhoneNumber(input: String): Boolean {
+        val regex = Regex("^1[3-9]\\d{9}$")
+        return regex.matches(input)
     }
 
 }

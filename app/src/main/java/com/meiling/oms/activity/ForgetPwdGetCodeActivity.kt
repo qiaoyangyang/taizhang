@@ -127,6 +127,7 @@ class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdG
             disLoading()
             captchaCountdownTool.stopCountdown()
             mDatabind.txtAuthCode.isClickable = true
+            mDatabind.txtAuthCode.text = "重新获取"
             ARouter.getInstance().build("/app/ForgetPwdResetActivity")
                 .withString("account", account).withString("phone", phoneSend)
                 .withString("code", mDatabind.edtCode.text.trim().toString()).navigation()
