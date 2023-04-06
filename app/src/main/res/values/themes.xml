@@ -30,4 +30,15 @@
 
 
     </style>
+    <style name="tv_pay_key">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:background">@drawable/bg_pay</item>
+        <item name="android:textColor">#9A9A9A</item>
+        <item name="android:textSize">@dimen/sp_36</item>
+        <item name="layout_constraintWidth_percent">0.24</item>
+        <item name="android:gravity">center</item>
+
+
+    </style>
 </resources>

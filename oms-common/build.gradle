@@ -136,6 +136,17 @@ dependencies {
     api 'com.tencent:mmkv:1.2.15'
     api 'com.github.SheHuan:NiceDialog:1.2.0'
 
+    api 'com.huawei.hms:scanplus:2.10.0.301'
+
+
+    api 'com.brucetoo.pickview:library:1.2.3'
+
+
+
+
+
+
+
 
     //支付宝 微信 支付
     api 'com.tencent.mm.opensdk:wechat-sdk-android:+'

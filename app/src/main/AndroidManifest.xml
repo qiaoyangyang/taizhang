@@ -77,6 +77,10 @@
         <activity android:name=".activity.RechargeFinishActivity" />
         <activity android:name=".activity.ModifyPassWordActivity" />
 
+        <activity android:name=".activity.VoucherInspectionActivity" />
+        <activity android:name=".activity.VoucherInspectionHistoryActivity" />
+        <activity android:name=".activity.InputBoredomActivity" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.meiling.oms.fileprovider"

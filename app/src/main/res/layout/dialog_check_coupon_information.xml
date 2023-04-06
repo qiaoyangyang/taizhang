@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dp_80"
+    android:background="@drawable/scan_bg_input">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="请核对券码验证信息"
+        android:textColor="#333333"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_bg_subtract"
+        android:layout_marginTop="23dp"
+        android:textColor="@color/white"
+        android:layout_marginLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/subtract"
+        app:layout_constraintLeft_toLeftOf="@+id/ll_btn"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+    <TextView
+        android:id="@+id/tv_RMB"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp"
+        android:text="RMB"
+        app:layout_constraintTop_toTopOf="@+id/tv_bg_subtract"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_bg_subtract"
+        app:layout_constraintRight_toRightOf="@+id/tv_bg_subtract"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:textColor="@color/white"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_bg_subtract"
+        android:textSize="32sp"
+        app:layout_constraintRight_toRightOf="@+id/tv_bg_subtract"
+        android:text="456"
+        app:layout_constraintTop_toBottomOf="@+id/tv_RMB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginRight="16dp"
+        android:background="@drawable/subtracty"
+        android:id="@+id/tv_youhui"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_bg_subtract"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_bg_subtract"
+        app:layout_constraintLeft_toRightOf="@+id/tv_bg_subtract"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="5dp"
+        android:textSize="16sp"
+        android:textColor="#333333"
+        android:text="单人特惠至尊套餐"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_youhui"
+        app:layout_constraintTop_toTopOf="@+id/tv_RMB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/tv_original_cost"
+        android:textSize="14sp"
+        android:textColor="#999999"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        android:text="原价:678"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/num"
+        android:layout_marginTop="12dp"
+        android:textColor="#1F2333"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bg_subtract"
+        android:layout_width="wrap_content"
+        android:text="验证张数"
+        app:layout_constraintRight_toRightOf="@+id/tv_bg_subtract"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_num"
+        android:textSize="14sp"
+        android:text="顾客共购买2张"
+        android:textColor="#1F2333"
+        app:layout_constraintTop_toBottomOf="@+id/num"
+        app:layout_constraintLeft_toLeftOf="@+id/num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+
+    <LinearLayout
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="18dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_num"
+        android:id="@+id/ll_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/btn_cancel_exit"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_weight="1"
+            android:background="@drawable/order_bg_red"
+            android:gravity="center"
+            android:shadowColor="@color/home_666666"
+            android:text="取消"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_25"
+            app:shape_radius="@dimen/sp_15"
+            app:shape_solidColor="@color/white"
+            app:shape_strokeColor="@color/home_000000"
+            app:shape_strokeWidth="@dimen/dp_1" />
+
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/btn_ok_exit"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:shadowColor="@color/home_666666"
+            android:text="确认"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_25"
+            app:shape_radius="@dimen/sp_15"
+            app:shape_solidColor="@color/red" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
