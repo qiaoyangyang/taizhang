@@ -10,11 +10,15 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.widget.setSingleClickListener
-import com.meiling.oms.widget.showToast
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
 
 class RechargeDialog : BaseNiceDialog() {
+
+
+    data class rechDto(var money: String) {
+        var select = false
+    }
 
     init {
         setGravity(Gravity.BOTTOM)
@@ -25,6 +29,9 @@ class RechargeDialog : BaseNiceDialog() {
     fun setOkClickLister(okClickLister: () -> Unit) {
         this.okSelectClickLister = okClickLister
     }
+
+    var list = ArrayList<rechDto>()
+
 
     fun newInstance(): RechargeDialog {
 //        val args = Bundle()
@@ -41,12 +48,17 @@ class RechargeDialog : BaseNiceDialog() {
         return R.layout.dialog_reacharge
     }
 
-    lateinit var rechargeAdapter: BaseQuickAdapter<String, BaseViewHolder>
+    lateinit var rechargeAdapter: BaseQuickAdapter<rechDto, BaseViewHolder>
 
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
 //        val title = arguments?.getString("title") as String
 //        val content = arguments?.getString("content") as String
-
+        list.add(rechDto("200"))
+        list.add(rechDto("500"))
+        list.add(rechDto("1000"))
+        list.add(rechDto("2000"))
+        list.add(rechDto("5000"))
+        list.add(rechDto("10000"))
         var isPayType = true
         val cancel = holder?.getView<Button>(R.id.btn_cancel_recharge)
         val close = holder?.getView<ImageView>(R.id.iv_close_recharge)
@@ -70,11 +82,11 @@ class RechargeDialog : BaseNiceDialog() {
         }
 
         rechargeAdapter =
-            object : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_recy_recharge) {
-                override fun convert(holder: BaseViewHolder, item: String) {
+            object : BaseQuickAdapter<rechDto, BaseViewHolder>(R.layout.item_recy_recharge) {
+                override fun convert(holder: BaseViewHolder, item: rechDto) {
                     val rechargeSum = holder.getView<TextView>(R.id.txt_recharge_sum)
-                    rechargeSum.text = item
-                    if (item == "100") {
+                    rechargeSum.text = item.money + "元"
+                    if (item.select) {
                         holder.setBackgroundResource(
                             R.id.txt_recharge_sum,
                             R.drawable.recharge_bg_select_true
@@ -91,9 +103,10 @@ class RechargeDialog : BaseNiceDialog() {
                 }
             }
         rvRecharge?.adapter = rechargeAdapter
-        rechargeAdapter.setList(listOf("100", "200", "300", "40000"))
+        rechargeAdapter.setList(list)
 //        holder?.setText(R.id.tv_title, title)
 //        holder?.setText(R.id.tv_content, content)
+
         cancel?.setSingleClickListener {
             dismiss()
         }
