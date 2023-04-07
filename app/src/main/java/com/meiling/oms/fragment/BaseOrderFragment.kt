@@ -26,7 +26,7 @@ import com.meiling.oms.widget.showToast
 class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseOrderBinding>() {
 
 
-    lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
+    private lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
     lateinit var orderGoodsListAdapter: BaseQuickAdapter<OrderDto.Content.GoodsVo, BaseViewHolder>
 
     var pageIndex = 1;
@@ -108,17 +108,17 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     imgShopCopy.setOnClickListener {
                         copyText(
                             context,
-                            "订单来源：" + "${"name"} \n" +
-                                    "门店名称${"18"}\n" +
-                                    "订单编号${"18"}\n" +
+                            "订单来源：" + "${item.channelName} \n" +
+                                    "门店名称${item.shopName}\n" +
+                                    "订单编号${item.order?.viewId}\n" +
                                     "-------\n" +
-                                    "商品信息${"（白羊座"}${"星愿白羊奶油蛋糕6英寸"}${"x1"}￥${"288"}\n" +
+                                    "商品信息${item.goodsVoList.toString()}\n" +
                                     "-------\n" +
-                                    "收货时间${"2023-03-31 17:00:00"}\n" +
-                                    "收货人${"普女士186****9896"}\n" +
-                                    "收货地址${"陕西省西安市雁塔区芙蓉东路曲江紫汀苑"}\n" +
+                                    "收货时间${item.order?.arriveTimeDate}\n" +
+                                    "收货人${item.order?.recvName}${item.order?.recvPhone}\n" +
+                                    "收货地址${item.order?.recvAddr}\n" +
                                     "-------\n" +
-                                    "备注${"蜡烛18已收费"}\n"
+                                    "备注${item.order?.remark}\n"
                         )
 //                        ToastUtils.showLong("复制成功")
                         showToast("复制成功")
@@ -181,7 +181,6 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
 
     override fun initData() {
 
-
         mDatabind.sflLayout.setOnRefreshListener {
             mViewModel.orderList(
                 logisticsStatus = requireArguments().getString("type").toString(),
@@ -208,7 +207,6 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 businessNumber = ""
             )
         }
-
 
         mViewModel.orderList(
             logisticsStatus = requireArguments().getString("type").toString(),

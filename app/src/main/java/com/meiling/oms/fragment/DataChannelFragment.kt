@@ -7,9 +7,9 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDataChannelBinding
-import com.meiling.oms.viewmodel.FindFollowViewModel
+import com.meiling.oms.viewmodel.DataFragmentViewModel
 
-class DataChannelFragment : BaseFragment<FindFollowViewModel, FragmentDataChannelBinding>() {
+class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChannelBinding>() {
 
     lateinit var dataChannelAdapter: BaseQuickAdapter<String, BaseViewHolder>
 

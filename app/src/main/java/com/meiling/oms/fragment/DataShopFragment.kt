@@ -7,9 +7,9 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDataShopBinding
-import com.meiling.oms.viewmodel.FindFollowViewModel
+import com.meiling.oms.viewmodel.DataFragmentViewModel
 
-class DataShopFragment : BaseFragment<FindFollowViewModel, FragmentDataShopBinding>() {
+class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBinding>() {
 
     companion object {
         fun newInstance() = DataShopFragment()

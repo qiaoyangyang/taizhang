@@ -7,9 +7,9 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDataDisBinding
-import com.meiling.oms.viewmodel.FindFollowViewModel
+import com.meiling.oms.viewmodel.DataFragmentViewModel
 
-class DataOrderDisFragment : BaseFragment<FindFollowViewModel, FragmentDataDisBinding>() {
+class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDisBinding>() {
     lateinit var dataDisAdapter: BaseQuickAdapter<String, BaseViewHolder>
 
     companion object {
