@@ -125,7 +125,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     }
                     btnSendDis.setOnClickListener {
                         if (item.order?.deliveryType == 1 || item.order?.deliveryType == 3) {
-                            ARouter.getInstance().build("/app/OrderDisActivity").navigation()
+                            ARouter.getInstance().build("/app/OrderDisActivity").withSerializable("kk",item).navigation()
                         } else {
                             ARouter.getInstance().build("/app/OrderDisAddTipActivity")
                                 .navigation()

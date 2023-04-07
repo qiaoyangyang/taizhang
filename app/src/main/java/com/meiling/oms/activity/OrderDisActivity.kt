@@ -1,6 +1,7 @@
 package com.meiling.oms.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -10,6 +11,7 @@ import com.meiling.common.activity.BaseActivity
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityDisBinding
 import com.meiling.oms.fragment.*
+import com.meiling.oms.widget.showToast
 
 @Route(path = "/app/OrderDisActivity")
 class OrderDisActivity : BaseActivity<BaseViewModel, ActivityDisBinding>() {
@@ -18,7 +20,7 @@ class OrderDisActivity : BaseActivity<BaseViewModel, ActivityDisBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewPager.isUserInputEnabled = false
-        setBar(this,mDatabind.txtOrderDis)
+        setBar(this, mDatabind.txtOrderDis)
 
         fragmentList.add(OrderDisFragment1.newInstance())
         fragmentList.add(OrderDisFragment2.newInstance())
@@ -30,11 +32,12 @@ class OrderDisActivity : BaseActivity<BaseViewModel, ActivityDisBinding>() {
 
     }
 
+    override fun initData() {
+    }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityDisBinding {
         return ActivityDisBinding.inflate(layoutInflater)
     }
-
 
 
     override fun initListener() {

@@ -23,6 +23,9 @@ interface AcceptanceCheckService {
         @Query("channelId") channelId: String,
         @Query("hasCityAll") hasCityAll: String? = "1",
     ): ResultData<ArrayList<ShopBean>>
+  @GET("saas/poi/citypoi")
+    suspend fun cityPoi(
+    ): ResultData<ArrayList<ShopBean>>
 
     @GET("saas/dytg/prepare")
     suspend fun prepare(
