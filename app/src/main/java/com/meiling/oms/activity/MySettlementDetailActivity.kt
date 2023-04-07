@@ -6,19 +6,18 @@ import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.activity.BaseActivity
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityRechargeSettlementDetailBinding
 import com.meiling.oms.fragment.CommunityFragment
-import com.meiling.oms.viewmodel.CommunityViewModel
+import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 
 /**
  * 结算明细
  * **/
 @Route(path = "/app/MySettlementDetailActivity")
 class MySettlementDetailActivity :
-    BaseActivity<CommunityViewModel, ActivityRechargeSettlementDetailBinding>() {
+    BaseActivity<BaseOrderFragmentViewModel, ActivityRechargeSettlementDetailBinding>() {
 
     lateinit var settlementAdapter: BaseQuickAdapter<String, BaseViewHolder>
 

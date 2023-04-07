@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_6"
-            android:text="#3"
+            tools:text="#3channelDaySn"
             android:textColor="@color/app_themes_1f2333"
             android:textSize="@dimen/sp_42"
             android:textStyle="bold"
@@ -50,7 +50,7 @@
             android:background="@drawable/order_home_item_5"
             android:paddingHorizontal="@dimen/dp_40"
             android:paddingVertical="@dimen/dp_10"
-            android:text="配送"
+            tools:text="1,3配送  deliveryType"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_30"
             app:layout_constraintBottom_toBottomOf="@+id/img_order_icon"
@@ -64,7 +64,7 @@
             android:layout_margin="@dimen/dp_5"
             android:gravity="center_vertical"
             android:paddingEnd="@dimen/dp_24"
-            android:text="2023-03-23 15:00:00"
+            tools:text="2023-03-23 15:00:00 arriveTimeDate"
             android:textColor="@color/red"
             android:textSize="@dimen/sp_24"
             app:layout_constraintRight_toLeftOf="@+id/txt_order_delivery_1"
@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/dp_20"
-            android:text="待配送"
+            tools:text="待配送"
             android:textColor="@color/app_themes_1f2333"
             android:textSize="@dimen/sp_30"
             android:textStyle="bold"
@@ -107,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_20"
-            android:text="王冰"
+            tools:text="王冰 recvName"
             android:textColor="@color/home_333333"
             android:textSize="@dimen/sp_34"
             android:textStyle="bold"
@@ -122,7 +122,7 @@
             android:drawableEnd="@drawable/order_icon_phone"
             android:drawablePadding="@dimen/dp_10"
             android:gravity="center"
-            android:text="139933"
+            android:text="139933 "
             android:textColor="@color/home_333333"
             android:textSize="@dimen/dp_24"
             app:layout_constraintBottom_toBottomOf="@+id/txt_order_delivery_name"
@@ -141,16 +141,17 @@
             app:drawableStartCompat="@drawable/order_edit_icon"
             app:layout_constraintBottom_toBottomOf="@+id/txt_order_delivery_address"
             app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginVertical="@dimen/dp_10"
             app:layout_constraintTop_toTopOf="@+id/txt_order_delivery_name" />
 
         <TextView
             android:id="@+id/txt_order_delivery_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/dp_10"
-            android:text="陕西省西安市莲湖区 桃园假日酒店29层"
+            tools:text="陕西省西安市莲湖区 桃园假日酒店29层 recvAddr"
             android:textColor="@color/home_333333"
-            android:textSize="@dimen/dp_24"
+            android:textSize="@dimen/dp_26"
+            android:layout_marginTop="@dimen/dp_30"
             app:layout_constraintStart_toStartOf="@+id/txt_order_delivery_name"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_delivery_name" />
 
@@ -178,12 +179,13 @@
                 android:textSize="@dimen/sp_20" />
 
             <TextView
+                android:id="@+id/txt_order_remark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/dp_10"
                 android:gravity="center"
-                android:text="祝福语：宝贝生日快乐祝宝贝生日快乐祝宝贝生日快乐祝宝贝生日快乐祝宝贝生日快乐祝宝贝生日快乐祝宝贝生日快乐祝宝贝生日快乐祝宝贝生日快乐祝宝贝生日快乐祝宝贝生日快乐祝宝贝生日快乐祝宝贝生日快乐祝宝贝生日快乐祝宝贝生日快乐祝"
+                tools:text="祝福语：remark"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_30" />
         </LinearLayout>
@@ -193,31 +195,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/dp_20"
-            android:text="1种商品，共1件"
+            tools:text="1种商品，共1件"
             android:textColor="@color/home_333333"
             android:textSize="@dimen/sp_30"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll_remark" />
 
-        <!--        <androidx.recyclerview.widget.RecyclerView-->
-        <!--            android:id="@+id/rv_shop"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@+id/txt_order_shop_msg"-->
-        <!--            tools:listitem="@layout/item_home_order_shop"-->
-        <!--            android:layout_marginVertical="@dimen/dp_20"-->
-        <!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-        <!--            android:layout_height="wrap_content"/>-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_shop"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_order_shop_msg"
+                    tools:listitem="@layout/item_home_order_shop"
+                    android:layout_marginVertical="@dimen/dp_20"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_height="wrap_content"/>
 
-        <include
-            android:id="@+id/rv_shop"
-            layout="@layout/item_home_order_shop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/dp_20"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/txt_order_shop_msg"
-            tools:listitem="@layout/item_home_order_shop" />
 
         <View
             android:id="@+id/view_shop_line"
@@ -249,7 +243,7 @@
                 android:id="@+id/txt_shop_actual_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="¥168.00"
+                tools:text="¥168.00remark"
                 android:textColor="@color/red"
                 android:textSize="@dimen/sp_30"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txt_shop_show_all"
@@ -336,7 +330,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_10"
-                android:text="¥1233"
+                tools:text="¥0"
+                android:text="¥0"
                 android:textColor="@color/red"
                 android:textSize="@dimen/sp_30"
                 app:layout_constraintBottom_toBottomOf="@id/txt_show_hide"
@@ -349,7 +344,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_10"
-                android:text="¥11"
+                tools:text="¥11"
+                android:text="¥0"
                 android:textSize="@dimen/sp_30"
                 app:layout_constraintBottom_toBottomOf="@id/txt_order_send_fee"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -360,7 +356,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_10"
-                android:text="¥11"
+                tools:text="¥11 payPrice "
+                android:text="¥0 "
                 android:textSize="@dimen/sp_30"
                 app:layout_constraintBottom_toBottomOf="@id/txt_order_pay"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -371,7 +368,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_10"
-                android:text="¥13"
+                tools:text="¥13platformServiceFee"
+                android:text="¥0"
                 android:textSize="@dimen/sp_30"
                 app:layout_constraintBottom_toBottomOf="@id/txt_order_feel"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -382,7 +380,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_10"
-                android:text="订单号"
+                tools:text="订单号viewId"
                 android:textSize="@dimen/sp_30"
                 app:layout_constraintBottom_toBottomOf="@id/txt_order_id_tip"
                 app:layout_constraintEnd_toStartOf="@+id/txt_copy_order"
@@ -473,18 +471,20 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_20"
-        android:text="2023-03-22 11:00:20下单 美团店铺"
+        tools:text="2023-03-22 11:00:20下单 美团店铺"
+        android:text=""
         android:textColor="#ffb3b3b3"
         android:textSize="12sp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cos" />
 
     <TextView
+        android:id="@+id/txt_shop_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_20"
         android:layout_marginBottom="@dimen/dp_48"
-        android:text="桃源门店"
+        tools:text="桃源门店"
         android:textColor="#ffb3b3b3"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
