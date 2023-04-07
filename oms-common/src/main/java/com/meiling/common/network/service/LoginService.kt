@@ -22,7 +22,7 @@ interface LoginService {
     @POST("/saas/phone/send_code")
     suspend fun sendCode(
         @Query("phone") mobile: String,
-        @Query("type") type: String = "1",
+        @Query("type") type: String = "2",
     ): ResultData<String>
 
     /**
@@ -53,15 +53,24 @@ interface LoginService {
     @GET("uc/adminuser/userNameVerify")
     suspend fun userNameVerify(@Query("userName") username: String): ResultData<ForgetDto>
 
-  /**
+    /**
      * 重置密码
      */
     @POST("/uc/adminuser/reset_password")
     suspend fun resetPwd(
-      @Query("userName") username: String,
-      @Query("phone") phone: String,
-      @Query("code") code: String,
-      @Query("password") password: String,
-  ): ResultData<Any>
+        @Query("userName") username: String,
+        @Query("phone") phone: String,
+        @Query("code") code: String,
+        @Query("password") password: String,
+    ): ResultData<Any>
+
+    /**
+     * 校验验证码
+     */
+    @GET("/saas/business/code")
+    suspend fun businessCode(
+        @Query("phone") phone: String,
+        @Query("code") code: String,
+    ): ResultData<Any>
 
 }

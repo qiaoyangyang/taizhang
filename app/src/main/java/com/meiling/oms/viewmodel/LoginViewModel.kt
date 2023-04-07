@@ -34,5 +34,8 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
         request({ loginService.resetPwd(account, phone, code, pwd) }, repData)
     }
 
+    fun businessCode( phone: String, code: String) {
+        request({ loginService.businessCode(phone, code) }, repData)
+    }
 
 }

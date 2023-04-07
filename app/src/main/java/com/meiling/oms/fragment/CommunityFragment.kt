@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.databinding.FragmentCommunityBinding
-import com.meiling.oms.viewmodel.CommunityViewModel
+import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 
-class CommunityFragment : BaseFragment<CommunityViewModel, FragmentCommunityBinding>() {
+class CommunityFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentCommunityBinding>() {
 
 
 
