@@ -1,10 +1,12 @@
 package com.meiling.common
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.alibaba.android.arouter.launcher.ARouter
+import com.google.gson.Gson
 import com.meiling.common.constant.ARouteConstants
 import com.meiling.common.network.APIException
 import com.meiling.common.network.ExceptionHandle
@@ -29,7 +31,9 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                 resultState.onStart.postValue("")
                 block()
             }.onSuccess {
+                Log.d("yjk", "request: ${Gson().toJson(it.toString())}")
                 if (it.code == 200) {
+
                     resultState.onSuccess.postValue(it.data)
                 } else if (it.code == 403) {
                     ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()

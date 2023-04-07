@@ -13,9 +13,12 @@ import com.huawei.hms.ml.scan.HmsScan
 import com.huawei.hms.ml.scan.HmsScanAnalyzerOptions
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.Shop
+import com.meiling.common.network.data.ShopBean
+import com.meiling.common.network.data.ThrillBen
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityVoucherinspectionBinding
+import com.meiling.oms.dialog.CheckCouponInformationDidalog
 import com.meiling.oms.dialog.ShopDialog
 import com.meiling.oms.viewmodel.VoucherinspectionViewModel
 
@@ -23,7 +26,10 @@ import com.meiling.oms.viewmodel.VoucherinspectionViewModel
 //验券
 class VoucherInspectionActivity :
     BaseActivity<VoucherinspectionViewModel, ActivityVoucherinspectionBinding>() {
+
     var type = ""
+    var thrillBen = ArrayList<ThrillBen>()
+    var shopBean = ArrayList<ShopBean>()
     override fun initView(savedInstanceState: Bundle?) {
         TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
         //验券历史
@@ -63,20 +69,40 @@ class VoucherInspectionActivity :
 
         mViewModel.shopBean.onSuccess.observe(this) {
             //DataPickerUtitl.setpickData(this,it)
-            var shopDialog = ShopDialog().newInstance(it)
-            shopDialog.setOnresilience(object : ShopDialog.Onresilience {
-                override fun resilience(cityid: Int, shopid: Int, shop: Shop) {
-                    mViewModel.Shop.onSuccess.postValue(shop)
-                    mDatabind.TitleBar.titleView.text = shop.name
-                }
+            if (it.size!=0) {
+                var shopDialog = ShopDialog().newInstance(it)
 
-            })
-            shopDialog.show(supportFragmentManager)
+                shopDialog.setOnresilience(object : ShopDialog.Onresilience {
+                    override fun resilience(cityid: Int, shopid: Int, shop: Shop) {
+                        mViewModel.Shop.onSuccess.postValue(shop)
+                        shopId = shop?.id.toString()
+                        mDatabind.TitleBar.titleView.text = shop.name
+                    }
+
+                })
+                shopDialog.show(supportFragmentManager)
+            }
 
         }
     }
 
     override fun createObserver() {
+        mViewModel.thrillBen.onSuccess.observe(this) {
+            if (it.size!=0) {
+                var checkCouponInformationDidalog = CheckCouponInformationDidalog().newInstance(it)
+                checkCouponInformationDidalog.setOnresilience(object :CheckCouponInformationDidalog.Onresilience{
+                    override fun resilience(encryptedCode: String) {
+                        mViewModel.verify(shopId,encryptedCode)
+                    }
+
+                })
+
+                checkCouponInformationDidalog.show(supportFragmentManager)
+            }
+
+
+        }
+
 
     }
 
@@ -115,15 +141,16 @@ class VoucherInspectionActivity :
         }
     }
 
+    var shopId: String = ""
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_SCAN_ONE) {
             if (data != null) {
                 val obj: HmsScan? = data!!.getParcelableExtra(ScanUtil.RESULT)
-                mViewModel.Shop.onSuccess.observe(this){
+                mViewModel.prepare(shopId, 0, obj!!.originalValue)
 
-                    mViewModel.prepare(it.id!!,0,"")
-                }
 
                 Log.d("yjk-----", obj!!.originalValue)
                 return

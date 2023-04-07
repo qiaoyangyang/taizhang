@@ -40,48 +40,58 @@ class ShopDialog : BaseNiceDialog() {
         var wheel_view_center = holder?.getView<WheelItemView>(R.id.wheel_view_center)
         var btn_ok_exit = holder?.getView<ShapeButton>(R.id.btn_ok_exit)
         cityid_view?.setOnSelectedListener { context, selectedIndex ->
-            loadData1(wheel_view_center!!, shopBean,selectedIndex)
+            //loadData1(wheel_view_center!!, shopBean, selectedIndex)
         }
         wheel_view_center?.setOnSelectedListener { context, selectedIndex ->
             Log.d("yjk", "convertView: $selectedIndex")
         }
         btn_ok_exit?.setOnClickListener {
-            if (onresilience!=null){
-                var shop= shopBean[cityid_view?.selectedIndex!!].shopList?.get(wheel_view_center!!.selectedIndex) as Shop
-                onresilience?.resilience(cityid_view?.selectedIndex!!,wheel_view_center?.selectedIndex!!,shop!!)
+            if (onresilience != null) {
+                var shop =
+                    shopBean[cityid_view?.selectedIndex!!].shopList?.get(wheel_view_center!!.selectedIndex) as Shop
+                onresilience?.resilience(
+                    cityid_view?.selectedIndex!!,
+                    wheel_view_center?.selectedIndex!!,
+                    shop!!
+                )
                 dismiss()
             }
 
         }
-
-        loadData(cityid_view!!, shopBean)
-        loadData1(wheel_view_center!!, shopBean,0)
+        if (shopBean.size != 0) {
+            loadData(cityid_view!!, shopBean)
+            loadData1(wheel_view_center!!, shopBean, 0)
+        }
 
     }
 
     private fun loadData(wheelItemView: WheelItemView, label: ArrayList<ShopBean>) {
         val items = arrayOfNulls<ShopBean>(label.size)
-       label.forEachIndexed { index, shopBean ->
-           items[index]=shopBean
-       }
-
-        wheelItemView.setItems(items)
-    }
-    private fun loadData1(wheelItemView: WheelItemView, label: ArrayList<ShopBean>,int: Int) {
-        val items = arrayOfNulls<Shop>(label.size)
-        label.get(int).shopList?.forEachIndexed { index, shopBean ->
-            items[index]=shopBean
+        label.forEachIndexed { index, shopBean ->
+            items[index] = shopBean
         }
 
         wheelItemView.setItems(items)
     }
+
+    private fun loadData1(wheelItemView: WheelItemView, label: ArrayList<ShopBean>, int: Int) {
+        val items = arrayOfNulls<Shop>(label.get(int)!!.shopList!!.size)
+
+        label.get(int).shopList?.forEachIndexed { index, shop ->
+            items[index] = shop
+        }
+
+
+        wheelItemView.setItems(items)
+    }
+
     fun setOnresilience(onresilience: Onresilience) {
         this.onresilience = onresilience
     }
 
-    private  var onresilience:Onresilience?=null
+    private var onresilience: Onresilience? = null
 
     interface Onresilience {
-        fun resilience(cityid: Int,shopid: Int,shop: Shop)
+        fun resilience(cityid: Int, shopid: Int, shop: Shop)
     }
 }

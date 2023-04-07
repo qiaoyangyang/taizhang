@@ -16,6 +16,21 @@
         app:title="验券历史"
         app:titleColor="@color/home_333333" />
 
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        app:layout_constraintTop_toBottomOf="@+id/TitleBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/refeshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+
+            android:id="@+id/ryOrderLeft"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

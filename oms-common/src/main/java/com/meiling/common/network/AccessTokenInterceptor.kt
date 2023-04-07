@@ -20,6 +20,7 @@ class AccessTokenInterceptor : Interceptor {
 //        builder.addHeader("Authorization", MMKVUtils.getString(SPConstants.TOKEN)).build()
         LogUtils.e("Token", MMKVUtils.getString(SPConstants.TOKEN))
         LogUtils.e("tenantId", MMKVUtils.getString(SPConstants.tenantId))
+        LogUtils.e("tenantId", MMKVUtils.getString(SPConstants.adminViewId))
         Log.d("addHeader", "intercept: "+Gson().toJson(builder.build().toString()))
         return chain.proceed(builder.build())
     }

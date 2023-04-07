@@ -40,6 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/tv_payAmount"
         android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="@+id/tv_bg_subtract"
         android:textSize="32sp"
@@ -69,16 +70,18 @@
         app:layout_constraintTop_toTopOf="@+id/tv_RMB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
     <TextView
-        android:layout_marginTop="10dp"
         android:id="@+id/tv_original_cost"
-        android:textSize="14sp"
-        android:textColor="#999999"
-        app:layout_constraintLeft_toLeftOf="@+id/tv_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name"
-        android:text="原价:678"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="原价:678"
+        android:textColor="#999999"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
     <TextView
         android:id="@+id/num"
         android:layout_marginTop="12dp"
