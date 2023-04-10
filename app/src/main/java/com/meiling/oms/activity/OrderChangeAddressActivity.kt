@@ -3,9 +3,11 @@ package com.meiling.oms.activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.meiling.common.BaseViewModel
 import com.meiling.common.activity.BaseActivity
 import com.meiling.oms.databinding.ActivityOrderChengeAddredssBinding
+import com.meiling.oms.widget.setSingleClickListener
 
 /**
  * 此改地址
@@ -26,6 +28,10 @@ class OrderChangeAddressActivity : BaseActivity<BaseViewModel, ActivityOrderChen
 
     override fun initListener() {
         mDatabind.aivBack.setOnClickListener { finish() }
+
+        mDatabind.txtOrderChangeAddress.setSingleClickListener {
+            ARouter.getInstance().build("/app/OrderChangeAddressMapActivity").navigation()
+        }
     }
 
 }

@@ -5,12 +5,17 @@ import android.view.LayoutInflater
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
+import com.meiling.common.network.data.DataDisDto
+import com.meiling.common.network.data.DataListDto
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDataDisBinding
-import com.meiling.oms.viewmodel.FindFollowViewModel
+import com.meiling.oms.dialog.DataSelectTimeDialog
+import com.meiling.oms.viewmodel.DataFragmentViewModel
+import com.meiling.oms.widget.setSingleClickListener
+import com.meiling.oms.widget.showToast
 
-class DataOrderDisFragment : BaseFragment<FindFollowViewModel, FragmentDataDisBinding>() {
-    lateinit var dataDisAdapter: BaseQuickAdapter<String, BaseViewHolder>
+class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDisBinding>() {
+    lateinit var dataDisAdapter: BaseQuickAdapter<DataDisDto.DeliveryConsumeLists, BaseViewHolder>
 
     companion object {
         fun newInstance() = DataOrderDisFragment()
@@ -18,20 +23,43 @@ class DataOrderDisFragment : BaseFragment<FindFollowViewModel, FragmentDataDisBi
 
     override fun initView(savedInstanceState: Bundle?) {
         dataDisAdapter =
-            object : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_data_dis) {
-                override fun convert(holder: BaseViewHolder, item: String) {
-                    holder.setText(R.id.txt_data_platform, item)
+            object :
+                BaseQuickAdapter<DataDisDto.DeliveryConsumeLists, BaseViewHolder>(R.layout.item_data_dis) {
+                override fun convert(
+                    holder: BaseViewHolder,
+                    item: DataDisDto.DeliveryConsumeLists
+                ) {
+                    holder.setText(R.id.txt_data_platform, item.logisticsName)
+                    holder.setText(R.id.txt_data_order_num, item.orderNum)
+                    holder.setText(R.id.txt_data_order_dis_amount, item.logisticsName)
+                    holder.setText(R.id.txt_data_order_tips, item.tips)
+                    holder.setText(R.id.txt_data_order_dis_avgAmount, item.avgAmount)
                 }
 
             }
-        var list = ArrayList<String>()
-        list.add("美团闪购")
-        list.add("饿了么百货")
-        list.add("美团外卖")
-        list.add("饿了么外卖")
-        list.add("口碑")
         mDatabind.rvDataDis.adapter = dataDisAdapter
-        dataDisAdapter.setList(list)
+    }
+
+
+    override fun initData() {
+        mViewModel.dataDisList(DataListDto(startTime = "", endTime = "", ArrayList<Long>()))
+        mViewModel.dataHistoryDisList(
+            DataListDto(
+                startTime = "2023-04-06 00:00:00",
+                endTime = "2023-04-06 23:59:59",
+                ArrayList<Long>()
+            )
+        )
+        mDatabind.srfDataDis.setOnRefreshListener {
+            mViewModel.dataHistoryDisList(
+                DataListDto(
+                    startTime = "2023-04-06 00:00:00",
+                    endTime = "2023-04-06 23:59:59",
+                    ArrayList<Long>()
+                )
+            )
+        }
+
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentDataDisBinding {
@@ -40,7 +68,52 @@ class DataOrderDisFragment : BaseFragment<FindFollowViewModel, FragmentDataDisBi
 
 
     override fun initListener() {
+        mDatabind.txtDataHistoryChannelTime.setSingleClickListener {
+            var dataSelectTimeDialog = DataSelectTimeDialog().newInstance()
+            dataSelectTimeDialog.show(childFragmentManager)
+            dataSelectTimeDialog.setSelectTime {
+                showToast("1212" + it)
+            }
+        }
+    }
 
+    override fun createObserver() {
+        mViewModel.dataList.onStart.observe(this) {
+            showLoading("正在请求")
+        }
+        mViewModel.dataList.onSuccess.observe(this) {
+            dismissLoading()
+            mDatabind.srfDataDis.isRefreshing = false
+            dataDisAdapter.setList(it.deliveryConsumeLists as MutableList<DataDisDto.DeliveryConsumeLists>)
+            mDatabind.txtSumOrderNum.text = it.sumOrderNum
+            mDatabind.txtSumTips.text = it.sumTips
+            mDatabind.txtSunAmount.text = it.sumAmount
+            mDatabind.txtSumAmountAndTips.text = it.sumAmountAndTips
+            mDatabind.txtHisAvgAmount.text = it.sumAvg
+
+        }
+        mViewModel.dataList.onError.observe(this) {
+            mDatabind.srfDataDis.isRefreshing = false
+            dismissLoading()
+            showToast(it.msg)
+        }
+        mViewModel.dataHistoryList.onStart.observe(this) {
+            showLoading("正在请求")
+        }
+        mViewModel.dataHistoryList.onSuccess.observe(this) {
+            dismissLoading()
+            mDatabind.srfDataDis.isRefreshing = false
+            mDatabind.txtSumOrderNum.text = it.sumOrderNum
+            mDatabind.txtHisSumOrderNum.text = it.sumOrderNum
+            mDatabind.txtHisSumTips.text = it.sumTips
+            mDatabind.txtHisSunAmount.text = it.sumAmount
+            mDatabind.txtHisSumAmountAndTips.text = it.sumAmountAndTips
+        }
+        mViewModel.dataHistoryList.onError.observe(this) {
+            mDatabind.srfDataDis.isRefreshing = false
+            dismissLoading()
+            showToast(it.msg)
+        }
     }
 
 }

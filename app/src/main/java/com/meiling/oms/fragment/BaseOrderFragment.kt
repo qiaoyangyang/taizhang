@@ -1,5 +1,6 @@
 package com.meiling.oms.fragment
 
+import android.graphics.drawable.PictureDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,11 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
+import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.OrderDto
+import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
@@ -26,7 +29,7 @@ import com.meiling.oms.widget.showToast
 class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseOrderBinding>() {
 
 
-    lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
+    private lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
     lateinit var orderGoodsListAdapter: BaseQuickAdapter<OrderDto.Content.GoodsVo, BaseViewHolder>
 
     var pageIndex = 1;
@@ -56,6 +59,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     val hideMsg = holder.getView<TextView>(R.id.txt_show_hide)
                     val copyOrderId = holder.getView<TextView>(R.id.txt_copy_order)
                     val orderId = holder.getView<TextView>(R.id.txt_order_id)
+                    val channelLogoImg = holder.getView<ImageView>(R.id.img_order_icon)
                     holder.setText(R.id.txt_order_delivery_name, item.order?.recvName)
                     holder.setText(R.id.txt_order_delivery_phone, item.order?.recvPhone)
                     holder.setText(R.id.txt_order_delivery_address, item.order?.recvAddr)
@@ -65,6 +69,13 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     holder.setText(R.id.txt_pay_money, "¥${item.order?.payPrice}")
                     holder.setText(R.id.txt_pay_fee, "¥${item.order?.platformServiceFee}")
                     holder.setText(R.id.txt_order_total_money, "¥${item.order?.actualIncome}")
+
+                    //加载svg图片
+                    Glide.with(context).`as`(PictureDrawable::class.java)
+                        .listener(SvgSoftwareLayerSetter())
+                        .load(item.channelLogo)
+                        .into(channelLogoImg)
+
                     holder.setText(
                         R.id.txt_order_delivery_state,
                         "${item.order?.deliveryStatusName}"
@@ -108,24 +119,24 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     imgShopCopy.setOnClickListener {
                         copyText(
                             context,
-                            "订单来源：" + "${"name"} \n" +
-                                    "门店名称${"18"}\n" +
-                                    "订单编号${"18"}\n" +
+                            "订单来源：" + "${item.channelName} \n" +
+                                    "门店名称${item.shopName}\n" +
+                                    "订单编号${item.order?.viewId}\n" +
                                     "-------\n" +
-                                    "商品信息${"（白羊座"}${"星愿白羊奶油蛋糕6英寸"}${"x1"}￥${"288"}\n" +
+                                    "商品信息${item.goodsVoList.toString()}\n" +
                                     "-------\n" +
-                                    "收货时间${"2023-03-31 17:00:00"}\n" +
-                                    "收货人${"普女士186****9896"}\n" +
-                                    "收货地址${"陕西省西安市雁塔区芙蓉东路曲江紫汀苑"}\n" +
+                                    "收货时间${item.order?.arriveTimeDate}\n" +
+                                    "收货人${item.order?.recvName}${item.order?.recvPhone}\n" +
+                                    "收货地址${item.order?.recvAddr}\n" +
                                     "-------\n" +
-                                    "备注${"蜡烛18已收费"}\n"
+                                    "备注${item.order?.remark}\n"
                         )
 //                        ToastUtils.showLong("复制成功")
                         showToast("复制成功")
                     }
                     btnSendDis.setOnClickListener {
                         if (item.order?.deliveryType == 1 || item.order?.deliveryType == 3) {
-                            ARouter.getInstance().build("/app/OrderDisActivity").navigation()
+                            ARouter.getInstance().build("/app/OrderDisActivity").withSerializable("kk",item).navigation()
                         } else {
                             ARouter.getInstance().build("/app/OrderDisAddTipActivity")
                                 .navigation()
@@ -181,7 +192,6 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
 
     override fun initData() {
 
-
         mDatabind.sflLayout.setOnRefreshListener {
             mViewModel.orderList(
                 logisticsStatus = requireArguments().getString("type").toString(),
@@ -208,7 +218,6 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 businessNumber = ""
             )
         }
-
 
         mViewModel.orderList(
             logisticsStatus = requireArguments().getString("type").toString(),

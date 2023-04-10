@@ -31,14 +31,15 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
         logisticsStatus: String,
         startTime: String,
         endTime: String,
-        businessNumberType: String,
+        businessNumberType: String,//1.订单编号 2.商户单号 3.商会退款 4.交易流水
         pageIndex: Int,
-        orderTime: String = "1",
+        orderTime: String = "1",//1.下单时间，2 收货时间，出货时间 4,完成时间
         pageSize: String = "20",
         deliverySelect: String = "0",
-        isValid: String = "",
+        isValid: String = "",//全部，1。有效，0。无效
         businessNumber: String = "",
-        selectText:String = ""
+        selectText:String = "",
+        channelId:String = ""//渠道全部传null,根据返回渠道
     ) {
         request({
             homeService.orderStatus(
@@ -52,7 +53,8 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
                 deliverySelect,
                 isValid,
                 businessNumber,
-                selectText
+                selectText,
+                channelId
             )
         }, orderList)
     }

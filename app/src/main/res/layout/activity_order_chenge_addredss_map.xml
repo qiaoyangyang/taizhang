@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/TitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        app:barStyle="transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:leftIcon="@null"
+        app:rightBackground="@null"
+        app:rightTitleSize="@dimen/sp_14"
+        app:title="修改收货地址" />
+
+    <RelativeLayout
+        android:layout_below="@+id/TitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_import_white_30">
+
+        <TextView
+            android:id="@+id/txtMapLocalCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/rlSearchLocal"
+            android:layout_alignBottom="@+id/rlSearchLocal"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_20"
+            android:drawablePadding="@dimen/dp_5"
+            android:gravity="center"
+            app:drawableEndCompat="@drawable/ic_local_xia"
+            app:drawableStartCompat="@drawable/ic_local_address"
+            tools:text="西安市" />
+
+        <RelativeLayout
+            android:id="@+id/rlSearchLocal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_toEndOf="@+id/txtMapLocalCity"
+            android:background="@drawable/order_home_send">
+
+            <View
+                android:id="@+id/searchLine"
+                android:layout_width="1dp"
+                android:layout_height="15dp"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="10dp"
+                android:background="@color/home_333333"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/imgLocalSearch"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/searchLine"
+                android:background="@drawable/home_search" />
+
+            <EditText
+                android:id="@+id/edtLocalSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:layout_toStartOf="@+id/imgClearLocalSearch"
+                android:layout_toEndOf="@+id/imgLocalSearch"
+                android:background="@null"
+                android:hint="请输入收货地址"
+                android:imeOptions="actionSearch"
+                android:minHeight="48dp"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="10dp"
+                android:singleLine="true"
+                android:textColor="#FF3B4152"
+                android:textColorHint="#FFC8C9CC"
+                android:textSize="@dimen/sp_28" />
+
+            <ImageView
+                android:id="@+id/imgClearLocalSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignWithParentIfMissing="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@id/scanGoods"
+                android:src="@drawable/search_close_edt"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/scanGoods"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="10dp"
+                android:background="@mipmap/search_empty_result"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/llError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent">
+
+            <ImageView
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:src="@mipmap/empty_local_error" />
+
+            <TextView
+                android:id="@+id/emptyTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="定位失败，请重试"
+                android:textColor="@color/home_666666"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+        <com.amap.api.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rlSearchLocal"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="@dimen/dp_20" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ryOrderDisSearchLocal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/mapView"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_recy_distribution_local_map" />
+
+
+    </RelativeLayout>
+</RelativeLayout>

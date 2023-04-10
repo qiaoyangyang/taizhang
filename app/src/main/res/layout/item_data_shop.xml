@@ -20,6 +20,7 @@
         android:textSize="12sp" />
 
     <TextView
+        android:id="@+id/txt_all_data_order_num"
         android:layout_width="0dp"
         android:layout_height="17dp"
         android:layout_weight="1"
@@ -29,6 +30,7 @@
         android:textSize="12sp" />
 
     <TextView
+        android:id="@+id/txt_data_receive_money"
         android:layout_width="0dp"
         android:layout_height="17dp"
         android:layout_gravity="end"

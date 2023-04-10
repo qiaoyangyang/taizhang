@@ -1,6 +1,7 @@
 package com.meiling.common.network.data
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 data class OrderDto(
@@ -24,8 +25,8 @@ data class OrderDto(
         var adminUserName: String?,
         @SerializedName("afterSaleInfo")
         var afterSaleInfo: String?,
-        @SerializedName("allPaymentTypesVo")
-        var allPaymentTypesVo: AllPaymentTypesVo?,
+//        @SerializedName("allPaymentTypesVo")
+//        var allPaymentTypesVo: AllPaymentTypesVo?,
         @SerializedName("canBeReselect")
         var canBeReselect: Boolean?,
         @SerializedName("cardNo")
@@ -119,11 +120,11 @@ data class OrderDto(
         @SerializedName("tradeOut")
         var tradeOut: Any?,
 
-    ) {
-        data class AllPaymentTypesVo(
-            @SerializedName("其他")
-            var 其他: Double?
-        )
+    ):Serializable {
+//        data class AllPaymentTypesVo(
+//            @SerializedName("其他")
+//            var 其他: Double?
+//        )
 
         data class GoodsVo(
             @SerializedName("actualAmount")
@@ -224,7 +225,7 @@ data class OrderDto(
             var unitUseType: Any?,
             @SerializedName("specs")
             var specs: String?
-        )
+        ): Serializable
 
         data class Order(
             @SerializedName("activityFee")
@@ -391,7 +392,7 @@ data class OrderDto(
             var deliveryStatusName: String?,
             @SerializedName("deliveryStatus")
             var deliveryStatus: String?
-        )
+        ):Serializable
     }
 
 }

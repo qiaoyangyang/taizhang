@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjq.shape.layout.ShapeRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/dp_40"
+    app:shape_solidColor="@color/white"
+    app:shape_topLeftRadius="@dimen/dp_10"
+    app:shape_topRightRadius="@dimen/dp_10">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="选择时间段"
+        android:textColor="#1F1F1F"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_close_select_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_30"
+        android:src="@drawable/search_close_edt"
+        android:text="选择时间段"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radio_group_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginVertical="@dimen/dp_30"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radio_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_weight="1"
+            android:background="@drawable/radio_bg_color_selecter"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:paddingVertical="@dimen/dp_15"
+            android:text="昨日"
+            android:textColor="@color/radio_button_text_color_selector"
+            android:textSize="@dimen/sp_22" />
+
+        <RadioButton
+            android:id="@+id/radio_button1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_weight="1"
+            android:background="@drawable/radio_bg_color_selecter"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:paddingVertical="@dimen/dp_15"
+            android:text="近7天"
+            android:textColor="@color/radio_button_text_color_selector"
+            android:textSize="@dimen/sp_22" />
+
+        <RadioButton
+            android:id="@+id/radio_button2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_weight="1"
+            android:background="@drawable/radio_bg_color_selecter"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:paddingVertical="@dimen/dp_15"
+            android:text="近15天"
+            android:textColor="@color/radio_button_text_color_selector"
+            android:textSize="@dimen/sp_22" />
+
+        <RadioButton
+            android:id="@+id/radio_button3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_weight="1"
+            android:background="@drawable/radio_bg_color_selecter"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:paddingVertical="@dimen/dp_15"
+            android:text="近30天"
+            android:textColor="@color/radio_button_text_color_selector"
+            android:textSize="@dimen/sp_22" />
+
+        <RadioButton
+            android:id="@+id/radio_button4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/radio_bg_color_selecter"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:paddingVertical="@dimen/dp_15"
+            android:text="近90天"
+            android:textColor="@color/radio_button_text_color_selector"
+            android:textSize="@dimen/sp_22" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/ll_select_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radio_group_select"
+        android:layout_marginVertical="@dimen/dp_30"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="2023-04-06"
+            android:textColor="@color/red"
+            android:textSize="@dimen/sp_30" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="至"
+            android:textSize="@dimen/sp_30" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="2023-04-06"
+            android:textSize="@dimen/sp_30" />
+    </LinearLayout>
+
+    <com.hjq.shape.view.ShapeButton
+        android:id="@+id/btn_ok_select_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_select_time"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginVertical="@dimen/dp_50"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/dp_30"
+        android:shadowColor="@color/home_666666"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_32"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:shape_radius="@dimen/dp_100"
+        app:shape_solidColor="@color/red" />
+
+
+</com.hjq.shape.layout.ShapeRelativeLayout>

@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.databinding.FragmentDis1Binding
-import com.meiling.oms.viewmodel.FindFollowViewModel
+import com.meiling.oms.viewmodel.DataFragmentViewModel
 
-class OrderDisFragment1 : BaseFragment<FindFollowViewModel, FragmentDis1Binding>() {
+class OrderDisFragment1 : BaseFragment<DataFragmentViewModel, FragmentDis1Binding>() {
 
     companion object {
         fun newInstance() = OrderDisFragment1()

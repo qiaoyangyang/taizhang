@@ -72,43 +72,43 @@
             android:id="@+id/txt_order_change_time_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_20"
             android:layout_marginHorizontal="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
             android:paddingVertical="@dimen/dp_20"
             android:text="收货时间"
-            app:drawableEndCompat="@drawable/icon_must_input"
-
             android:textColor="@color/home_666666"
+
             android:textSize="@dimen/sp_32"
+            app:drawableEndCompat="@drawable/icon_must_input"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_title" />
 
         <TextView
-            android:gravity="end"
             android:id="@+id/txt_order_change_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_20"
-            android:text="收货时间"
+            android:gravity="end"
             android:paddingVertical="@dimen/dp_20"
+            android:text="收货时间"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_32"
+            app:drawableEndCompat="@drawable/icon_next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txt_order_change_time_tip"
-            app:layout_constraintTop_toBottomOf="@+id/txt_order_change_title"
-            app:drawableEndCompat="@drawable/icon_next" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_order_change_title" />
 
         <TextView
             android:id="@+id/txt_order_change_name_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_20"
-            android:text="收货人"
             android:paddingVertical="@dimen/dp_20"
+            android:text="收货人"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_32"
-            app:layout_constraintStart_toStartOf="parent"
             app:drawableEndCompat="@drawable/icon_must_input"
+            app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_time_tip" />
 
@@ -117,13 +117,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_20"
-            android:text="收货人"
+            android:background="@null"
+            android:gravity="end"
             android:paddingVertical="@dimen/dp_20"
+            android:text="收货人"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_32"
-            android:background="@null"
             app:layout_constraintEnd_toEndOf="parent"
-            android:gravity="end"
             app:layout_constraintStart_toEndOf="@+id/txt_order_change_address_tip"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_time_tip" />
 
@@ -132,8 +132,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_20"
-            android:text="收货人电话"
             android:paddingVertical="@dimen/dp_20"
+            android:text="收货人电话"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_32"
             app:drawableEndCompat="@drawable/icon_must_input"
@@ -142,16 +142,16 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_name_tip" />
 
         <EditText
-            android:gravity="end"
             android:id="@+id/txt_order_change_phone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_20"
-            android:text="收货人电话"
             android:background="@null"
+            android:gravity="end"
+            android:paddingVertical="@dimen/dp_20"
+            android:text="收货人电话"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_32"
-            android:paddingVertical="@dimen/dp_20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txt_order_change_phone_tip"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_name_tip" />
@@ -161,28 +161,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_20"
+            android:paddingVertical="@dimen/dp_20"
             android:text="收货地址"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_32"
-            android:paddingVertical="@dimen/dp_20"
             app:drawableEndCompat="@drawable/icon_must_input"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_phone_tip" />
 
         <TextView
-            android:gravity="end"
             android:id="@+id/txt_order_change_address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_20"
+            android:gravity="end"
+            android:paddingVertical="@dimen/dp_20"
+            android:singleLine="true"
             android:text="收货地址收收货地址收收货地址收收货地址收收货地址收收货地址收收货地址收"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_32"
-            android:singleLine="true"
-            android:paddingVertical="@dimen/dp_20"
-            app:layout_constraintEnd_toEndOf="parent"
             app:drawableEndCompat="@drawable/icon_next"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txt_order_change_address_tip"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_phone_tip" />
 
@@ -191,29 +191,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_20"
+            android:paddingVertical="@dimen/dp_20"
             android:text="详细地址"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_32"
-            android:paddingVertical="@dimen/dp_20"
             app:drawableEndCompat="@drawable/icon_must_input"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_address_tip" />
 
         <EditText
-            android:gravity="end"
             android:id="@+id/txt_order_change_phone_detail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_20"
-            android:text="详细地址"
             android:background="@null"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:paddingVertical="@dimen/dp_20"
+            android:singleLine="true"
+            android:text="详细地址"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_32"
             app:layout_constraintEnd_toEndOf="parent"
-            android:paddingVertical="@dimen/dp_20"
-            android:singleLine="true"
-            android:ellipsize="end"
             app:layout_constraintStart_toEndOf="@+id/txt_order_change_detail_tip"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_address_tip" />
 
@@ -222,11 +222,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_20"
+            android:paddingVertical="@dimen/dp_20"
             android:text="收货地址"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_36"
             android:textStyle="bold"
-            android:paddingVertical="@dimen/dp_20"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_detail_tip" />
 
@@ -237,8 +237,8 @@
             android:layout_margin="@dimen/dp_20"
             android:background="@drawable/order_change_bg_f4f4"
             android:gravity="top"
-            android:padding="@dimen/dp_20"
             android:hint="这是一个备注"
+            android:padding="@dimen/dp_20"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_36"
             app:layout_constraintStart_toStartOf="parent"
@@ -260,8 +260,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_20"
             android:layout_weight="1"
-            android:text="取消"
             android:background="@drawable/order_change_bg_button_999"
+            android:text="取消"
             android:textColor="@color/home_999999"
             android:textSize="@dimen/sp_36" />
 
@@ -270,8 +270,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_20"
-            android:background="@drawable/order_search_bg_button_red"
             android:layout_weight="1"
+            android:background="@drawable/order_search_bg_button_red"
             android:text="保存"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_36" />
