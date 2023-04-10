@@ -63,6 +63,7 @@
             android:launchMode="singleInstance" />
         <activity android:name=".activity.OrderDisAddTipActivity" />
         <activity android:name=".activity.OrderChangeAddressActivity" />
+        <activity android:name=".activity.OrderChangeAddressMapActivity" />
         <activity android:name=".activity.SearchActivity" />
         <activity
             android:name=".activity.OrderDisActivity"
@@ -90,7 +91,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="9a26d944277356b653bc2657adc35059">
+        </meta-data>
 
+        <service android:name="com.amap.api.location.APSService"/>
 
     </application>
     <queries>

@@ -24,22 +24,28 @@ android {
 
     signingConfigs {
         debug {
-//            storeFile file('/Users/xiaofan/Desktop/RobotMeta')
-//            storePassword 'RobotMeta'
-//            keyAlias 'key0'
-//            keyPassword 'RobotMeta'
+            storeFile file('../oms')
+            storePassword '1q2w3e4r'
+            keyAlias 'oms'
+            keyPassword '1q2w3e4r'
         }
         release {
-//            storeFile file('/Users/xiaofan/Desktop/RobotMeta')
-//            storePassword 'RobotMeta'
-//            keyAlias 'key0'
-//            keyPassword 'RobotMeta'
+            storeFile file('../oms')
+            storePassword '1q2w3e4r'
+            keyAlias 'oms'
+            keyPassword '1q2w3e4r'
         }
     }
 
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
