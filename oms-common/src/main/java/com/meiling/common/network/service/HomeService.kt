@@ -3,10 +3,7 @@ package com.meiling.common.network.service
 import com.meiling.common.network.ResultData
 import com.meiling.common.network.RetrofitClient
 import com.meiling.common.network.data.*
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 import java.math.BigDecimal
 
 
@@ -30,7 +27,7 @@ interface HomeService {
         @Query("isValid") isValid: String = "",
         @Query("businessNumber") businessNumber: String = "",
         @Query("selectText") selectText: String = "",
-        ): ResultData<OrderDto>
+    ): ResultData<OrderDto>
 
     @GET("/saas/order/statusCount")
     suspend fun statusCount(
@@ -45,10 +42,25 @@ interface HomeService {
         @Query("orderStatus") orderStatus: String = "300",
         @Query("isValid") isValid: String = "",
         @Query("businessNumber") businessNumber: String = "",
-        ): ResultData<StatusCountDto>
+    ): ResultData<StatusCountDto>
 
-    @GET("/api/v1/app/home/recentTab")
-    suspend fun recentTab(): ResultData<HomeRecentTabVO>
+    @GET("/saas/order/shop/updateRemark")
+    suspend fun updateRemark(
+        @Query("remark") remark: String,
+        @Query("orderId") orderId: String
+    ): ResultData<Any>
+
+
+    @POST("/saas/order/shop/update/{orderId}")
+    suspend fun updateAddress(
+        @Path("orderId") orderId: String,
+        @Query("recvName") recvName: String,
+        @Query("recvPhone") recvPhone: String,
+        @Query("recvAddr") recvAddr: String,
+        @Query("lat") lat: String,
+        @Query("lon") lon: String,
+        @Query("arriveTime") arriveTime: String
+    ): ResultData<Any>
 
 
 }

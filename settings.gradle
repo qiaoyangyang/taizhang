@@ -10,6 +10,8 @@ pluginManagement {
         maven {url "https://maven.rongcloud.cn/repository/maven-releases/"}
         // 配置HMS Core SDK的Maven仓地址。
         maven {url 'https://developer.huawei.com/repo/'}
+
+        maven { url 'https://dl.bintray.com/umsdk/release' }
         google()
     }
 }
@@ -22,6 +24,7 @@ dependencyResolutionManagement {
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/nexus/content/groups/public' }
+        maven { url 'https://dl.bintray.com/umsdk/release' }
         mavenCentral()
         google()
         // 配置HMS Core SDK的Maven仓地址。

@@ -271,7 +271,7 @@ data class OrderDto(
             @SerializedName("couponName")
             var couponName: Any?,
             @SerializedName("createTime")
-            var createTime: Long?,
+            var createTime: String?,
             @SerializedName("deliverName")
             var deliverName: String?,
             @SerializedName("deliverPhone")

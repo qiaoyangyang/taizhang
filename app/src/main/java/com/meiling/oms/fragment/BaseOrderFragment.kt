@@ -1,5 +1,6 @@
 package com.meiling.oms.fragment
 
+import android.content.Intent
 import android.graphics.drawable.PictureDrawable
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,8 +19,10 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.OrderDto
+import com.meiling.common.utils.XDateUtils
 import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.R
+import com.meiling.oms.activity.MainActivity
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.copyText
@@ -33,6 +37,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
     lateinit var orderGoodsListAdapter: BaseQuickAdapter<OrderDto.Content.GoodsVo, BaseViewHolder>
 
     var pageIndex = 1;
+    private var REQUEST_CODE = 1000
 
     companion object {
         fun newInstance(type: String, isSelect: Boolean): Fragment {
@@ -45,11 +50,16 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        initData()
+    }
 
     override fun initView(savedInstanceState: Bundle?) {
         requireArguments().getString("type").toString()
         orderDisAdapter =
-            object : BaseQuickAdapter<OrderDto.Content, BaseViewHolder>(R.layout.item_home_order),LoadMoreModule {
+            object : BaseQuickAdapter<OrderDto.Content, BaseViewHolder>(R.layout.item_home_order),
+                LoadMoreModule {
                 override fun convert(holder: BaseViewHolder, item: OrderDto.Content) {
                     holder.setText(R.id.txt_order_delivery_type, item.orderName)
                     val imgShopCopy = holder.getView<ImageView>(R.id.img_shop_copy)
@@ -84,7 +94,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     holder.setText(R.id.txt_order_remark, "${item.order?.remark}")
                     holder.setText(
                         R.id.txt_time_shop,
-                        "${item.order?.createTime}下单${item.channelName}店铺"
+                        "${XDateUtils.string2Date(item.order?.createTime!!)}下单${item.channelName}店铺"
                     )
                     holder.setText(R.id.txt_shop_name, "${item.shopName}")
 
@@ -111,10 +121,17 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     }
 
                     changeOrder.setOnClickListener {
-                        ARouter.getInstance().build("/app/OrderChangeAddressActivity").navigation()
+                        ARouter.getInstance().build("/app/OrderChangeAddressActivity")
+                            .withString("receiveTime", item.order?.arriveTimeDate)
+                            .withString("receiveName", item.order?.recvName)
+                            .withString("receivePhone", item.order?.recvPhone)
+                            .withString("receiveAddress", item.order?.recvAddr)
+                            .withString("receiveRemark", item.order?.remark)
+                            .withString("lat", item.order?.lat)
+                            .withString("lon", item.order?.lon)
+                            .withString("orderId", item.order?.viewId)
+                            .navigation()
                     }
-
-
 
                     imgShopCopy.setOnClickListener {
                         copyText(
@@ -136,7 +153,8 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     }
                     btnSendDis.setOnClickListener {
                         if (item.order?.deliveryType == 1 || item.order?.deliveryType == 3) {
-                            ARouter.getInstance().build("/app/OrderDisActivity").withSerializable("kk",item).navigation()
+                            ARouter.getInstance().build("/app/OrderDisActivity")
+                                .withSerializable("kk", item).navigation()
                         } else {
                             ARouter.getInstance().build("/app/OrderDisAddTipActivity")
                                 .navigation()
@@ -191,7 +209,6 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
     var list = ArrayList<String>()
 
     override fun initData() {
-
         mDatabind.sflLayout.setOnRefreshListener {
             mViewModel.orderList(
                 logisticsStatus = requireArguments().getString("type").toString(),
@@ -259,9 +276,8 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 selectText = ""
             )
         }
-
-
     }
+
 
     override fun createObserver() {
         mViewModel.orderList.onStart.observe(this) {
@@ -270,19 +286,19 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         mViewModel.orderList.onSuccess.observe(this) {
             dismissLoading()
             mDatabind.sflLayout.finishRefresh()
-            if (it.pageIndex == 1){
+            if (it.pageIndex == 1) {
                 if (it.content.isNullOrEmpty()) {
                     orderDisAdapter.setEmptyView(R.layout.order_search_empty)
                 } else {
                     orderDisAdapter.setList(it.content as MutableList<OrderDto.Content>)
                 }
-            }else{
+            } else {
                 orderDisAdapter.addData(it.content as MutableList<OrderDto.Content>)
             }
             if (it.content.size < 1) {
                 orderDisAdapter.footerWithEmptyEnable = false
                 orderDisAdapter.loadMoreModule.loadMoreEnd()
-            }else{
+            } else {
                 orderDisAdapter.loadMoreModule.loadMoreComplete()
             }
 

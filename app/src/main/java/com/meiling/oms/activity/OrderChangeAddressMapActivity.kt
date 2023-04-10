@@ -1,6 +1,10 @@
 package com.meiling.oms.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -21,33 +25,44 @@ import com.amap.api.services.geocoder.GeocodeSearch
 import com.amap.api.services.geocoder.RegeocodeResult
 import com.amap.api.services.poisearch.PoiResult
 import com.amap.api.services.poisearch.PoiSearch
-import com.meiling.common.BaseViewModel
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.activity.BaseActivity
-import com.meiling.oms.databinding.ActivityOrderChengeAddredssBinding
+import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityOrderChengeAddredssMapBinding
+import com.meiling.oms.dialog.OrderDistributionSelectLocalCityDialog
+import com.meiling.oms.viewmodel.ChangeAddressModel
+import com.meiling.oms.widget.KeyBoardUtil
+
 
 /**
  * 地图选择
  * **/
 @Route(path = "/app/OrderChangeAddressMapActivity")
-class OrderChangeAddressMapActivity : BaseActivity<BaseViewModel,ActivityOrderChengeAddredssMapBinding>() {
+class OrderChangeAddressMapActivity :
+    BaseActivity<ChangeAddressModel, ActivityOrderChengeAddredssMapBinding>() {
 
     lateinit var mapView: MapView
     var aMap: AMap? = null
     var mLocationOption: AMapLocationClientOption? = null
     var mLocationClient: AMapLocationClient? = null
 
+    lateinit var ryOrderDisMapAdapter: BaseQuickAdapter<PoiItem, BaseViewHolder>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mapView =  mDatabind.mapView
+        mapView = mDatabind.mapView
         mapView.onCreate(savedInstanceState)
-        aMap =   mDatabind.mapView.map
+        aMap = mDatabind.mapView.map
 
     }
 
+    var cityCode = ""
+    var lat = "0"
+    var lon = "0"
     override fun initView(savedInstanceState: Bundle?) {
-        var mLocationListener: AMapLocationListener = AMapLocationListener { amapLocation ->
+        var mLocationListener = AMapLocationListener { amapLocation ->
             if (amapLocation != null) {
                 if (amapLocation.errorCode == 0) {
                     amapLocation.locationType;//获取当前定位结果来源，如网络定位结果，详见定位类型表
@@ -69,26 +84,33 @@ class OrderChangeAddressMapActivity : BaseActivity<BaseViewModel,ActivityOrderCh
                     amapLocation.buildingId;//获取当前室内定位的建筑物Id
                     amapLocation.floor;//获取当前室内定位的楼层
                     amapLocation.gpsAccuracyStatus;//获取GPS的当前状态
-//                    cityCode = amapLocation.cityCode
+                    cityCode = amapLocation.cityCode
                     mLocationClient?.stopLocation()
-//                    lat = amapLocation.latitude.toString()
-//                    lon = amapLocation.longitude.toString()
-//                    if(!lat.isNullOrBlank()&&!lon.isNullOrBlank()) {
-//                        getGeocodeSearch(
-//                            LatLng(amapLocation.latitude, amapLocation.longitude),
-//                            cityCode
-//                        )
-//                    }
-//                    aMap!!.animateCamera(CameraUpdateFactory.newLatLng(LatLng(amapLocation.latitude, amapLocation.longitude)))
+                    lat = amapLocation.latitude.toString()
+                    lon = amapLocation.longitude.toString()
+                    if (!lat.isNullOrBlank() && !lon.isNullOrBlank()) {
+                        getGeocodeSearch(
+                            LatLng(amapLocation.latitude, amapLocation.longitude),
+                            cityCode
+                        )
+                    }
+                    aMap!!.animateCamera(
+                        CameraUpdateFactory.newLatLng(
+                            LatLng(
+                                amapLocation.latitude,
+                                amapLocation.longitude
+                            )
+                        )
+                    )
 //                    rootView.findViewById<LinearLayout>(R.id.llError).visibility = View.GONE
-//                    mapView.visibility = View.VISIBLE
+                    mapView.visibility = View.VISIBLE
 //                    rootView.findViewById<RecyclerView>(R.id.ryOrderDisSearchLocal).visibility = View.VISIBLE
                 } else {
 //                    rootView.findViewById<LinearLayout>(R.id.llError).visibility = View.VISIBLE
                     mapView.visibility = View.GONE
                     mDatabind.txtMapLocalCity?.text = "定位中"
 //                    rootView.findViewById<RecyclerView>(R.id.ryOrderDisSearchLocal).visibility = View.GONE
-//                    NLog.d("lwq", "错误3============errorCode${amapLocation?.errorCode}")
+                    Log.d("lwq", "错误3============errorCode${amapLocation?.errorCode}")
                 }
             }
         }
@@ -140,26 +162,106 @@ class OrderChangeAddressMapActivity : BaseActivity<BaseViewModel,ActivityOrderCh
 
     private var type = true
 
+    override fun initData() {
+        ryOrderDisMapAdapter = object :
+            BaseQuickAdapter<PoiItem, BaseViewHolder>(R.layout.item_recy_distribution_local_map) {
+            override fun convert(holder: BaseViewHolder, item: PoiItem) {
+                holder.setText(R.id.txtLocalCityName, item.title)
+//                holder.setText(R.id.txtKm, "${item.distance}")
+                holder.setText(
+                    R.id.txtMapAddress,
+                    "${item.provinceName}${item.cityName}${item.adName}${item.snippet}"
+                )
+            }
+        }
+        mDatabind.ryOrderDisSearchLocal.adapter = ryOrderDisMapAdapter
+
+        ryOrderDisMapAdapter?.setOnItemClickListener { adapter, view, position ->
+            var it = adapter!!.data[position] as PoiItem
+//            mViewModel.recvAddr.onSuccess.value =
+//                "${it.provinceName}${it.cityName}${it.adName}${it.snippet}${it.title}"
+            lon = it.latLonPoint.longitude.toString()
+            lat = it.latLonPoint.latitude.toString()
+//            mViewModel.lon.onSuccess.value = lon
+//            mViewModel.lat.onSuccess.value = lat
+
+            val data = Intent()
+            data.putExtra("lon", lon)
+            data.putExtra("lat", lat)
+            data.putExtra(
+                "address",
+                "${it.provinceName}${it.cityName}${it.adName}${it.snippet}${it.title}"
+            )
+            setResult(RESULT_OK, data)
+
+            finish()
+//            onSelectMapAddress?.invoke(adapter?.data[position] as PoiItem)
+        }
+        mDatabind.edtLocalSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString().isNotEmpty()) {
+                    mDatabind.imgClearLocalSearch.visibility = View.VISIBLE
+                } else {
+                    mDatabind.imgClearLocalSearch.visibility = View.GONE
+                    if (!lat.isNullOrBlank() && !lon.isNullOrBlank()) {
+                        getGeocodeSearch(
+                            LatLng(lat.toDouble(), lon.toDouble()),
+                            cityCode
+                        )
+                    }
+                }
+            }
+        })
+
+        mDatabind.edtLocalSearch.setOnEditorActionListener { v, actionId, event ->
+            ryOrderDisMapAdapter.setList(arrayListOf())
+            ryOrderDisMapAdapter.notifyDataSetChanged()
+            searchLocationName(v.text.toString(), cityCode)
+            KeyBoardUtil.closeKeyBord(
+                mDatabind.edtLocalSearch,
+                this
+            )
+            return@setOnEditorActionListener false
+        }
+        mDatabind.imgClearLocalSearch.setOnClickListener {
+            mDatabind.edtLocalSearch.setText("")
+            ryOrderDisMapAdapter.setList(arrayListOf())
+            ryOrderDisMapAdapter.notifyDataSetChanged()
+            if (!lat.isNullOrBlank() && !lon.isNullOrBlank()) {
+                getGeocodeSearch(
+                    LatLng(lat.toDouble(), lon.toDouble()),
+                    cityCode
+                )
+            }
+        }
+
+        mDatabind.txtMapLocalCity.setOnClickListener {
+            var bas = OrderDistributionSelectLocalCityDialog().newInstance()
+            bas.show(supportFragmentManager)
+            bas.setOnSelectAddressClickLister {
+                getLatlon(it)
+                mDatabind.txtMapLocalCity?.text = it
+            }
+        }
+    }
+
     override fun initListener() {
 //        mDatabind.aivBack.setOnClickListener { finish() }
     }
+
     //逆地理编码获取当前位置信息
     fun getGeocodeSearch(targe: LatLng, cityCode: String) {
-//        if (geocodeSearch == null) geocodeSearch = GeocodeSearch(context);
-//        // 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
-//        var query: RegeocodeQuery =
-//            RegeocodeQuery(LatLonPoint(targe.latitude, targe.longitude), 1000f, GeocodeSearch.AMAP);
-//        geocodeSearch?.getFromLocationAsyn(query)
-//        geocodeSearch?.setOnGeocodeSearchListener(object : GeocodeSearch.OnGeocodeSearchListener {
-//            override fun onRegeocodeSearched(p0: RegeocodeResult?, p1: Int) {
-//                NLog.d("lwq","=====PoiResult====${Gson().toJson(p0?.regeocodeAddress!!.pois)}")
-//                ryOrderDisMapAdapter.setList(p0?.regeocodeAddress!!.pois)
-//            }
-//
-//            override fun onGeocodeSearched(p0: GeocodeResult?, p1: Int) {
-//            }
-//        });
-
         var queryQuery = PoiSearch.Query("住宿|商场|学校|住宅区|楼宇", "", cityCode)
         var poiSearch = PoiSearch(this, queryQuery)
         queryQuery.pageSize = 10
@@ -170,8 +272,8 @@ class OrderChangeAddressMapActivity : BaseActivity<BaseViewModel,ActivityOrderCh
         poiSearch.searchPOIAsyn();
         poiSearch.setOnPoiSearchListener(object : PoiSearch.OnPoiSearchListener {
             override fun onPoiSearched(p0: PoiResult?, p1: Int) {
-//                ryOrderDisMapAdapter.setList(p0?.pois)
-//                ryOrderDisMapAdapterOrderDisMapAdapter.notifyDataSetChanged()
+                ryOrderDisMapAdapter.setList(p0?.pois)
+                ryOrderDisMapAdapter.notifyDataSetChanged()
             }
 
             override fun onPoiItemSearched(p0: PoiItem?, p1: Int) {
@@ -187,16 +289,20 @@ class OrderChangeAddressMapActivity : BaseActivity<BaseViewModel,ActivityOrderCh
         poiSearch.searchPOIAsyn();
         poiSearch.setOnPoiSearchListener(object : PoiSearch.OnPoiSearchListener {
             override fun onPoiSearched(p0: PoiResult?, p1: Int) {
-                if (p0?.pois.isNullOrEmpty()){
-//                    ryOrderDisMapAdapter.setList(arrayListOf())
-//                    ryOrderDisMapAdapter.notifyDataSetChanged()
-                }else{
-//                    ryOrderDisMapAdapter.setList(p0?.pois)
+                if (p0?.pois.isNullOrEmpty()) {
+                    ryOrderDisMapAdapter.setList(arrayListOf())
+                    ryOrderDisMapAdapter.notifyDataSetChanged()
+                } else {
+                    ryOrderDisMapAdapter.setList(p0?.pois)
                     val lng =
-                        LatLng(p0?.pois!![0].latLonPoint.latitude, p0?.pois!![0].latLonPoint.longitude)
+                        LatLng(
+                            p0?.pois!![0].latLonPoint.latitude,
+                            p0?.pois!![0].latLonPoint.longitude
+                        )
                     aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(lng))
                 }
             }
+
             override fun onPoiItemSearched(p0: PoiItem?, p1: Int) {
             }
         });
@@ -218,9 +324,9 @@ class OrderChangeAddressMapActivity : BaseActivity<BaseViewModel,ActivityOrderCh
 
                         val latitude = geocodeAddress.latLonPoint.latitude //纬度
                         val longititude = geocodeAddress.latLonPoint.longitude //经度
-//                        lon = geocodeAddress.latLonPoint.longitude.toString()
-//                        lat = geocodeAddress.latLonPoint.latitude.toString()
-//                        cityCode  = geocodeAddress.adcode
+                        lon = geocodeAddress.latLonPoint.longitude.toString()
+                        lat = geocodeAddress.latLonPoint.latitude.toString()
+                        cityCode = geocodeAddress.adcode
                         val adcode = geocodeAddress.adcode //区域编码
                         val lng = LatLng(latitude, longititude)
                         aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(lng))

@@ -26,6 +26,7 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
 
     private var isFirst: Boolean = true
 
+
     lateinit var mViewModel: VM
 
     lateinit var mActivity: AppCompatActivity
@@ -57,11 +58,7 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
 
     abstract fun initView(savedInstanceState: Bundle?)
 
-
-
     abstract fun createObserver()
-
-
 
     open fun initData() {}
 
