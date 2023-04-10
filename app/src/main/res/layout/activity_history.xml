@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/order_remark_F4F4F4"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/order_remark_F4F4F4">
+
     <com.hjq.bar.TitleBar
         android:id="@+id/TitleBar"
         android:layout_width="match_parent"
@@ -11,17 +12,107 @@
         android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:leftIcon="@drawable/bar_arrows_left_black"
-        app:lineVisible="false"
+        app:lineVisible="true"
         app:rightTitleSize="@dimen/sp_14"
         app:title="验券历史"
         app:titleColor="@color/home_333333" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_top"
+
+        app:layout_constraintTop_toBottomOf="@+id/TitleBar"
+        android:layout_width="match_parent"
+
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_marginBottom="5dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_screen"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/sp_20"
+            android:layout_marginEnd="@dimen/sp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/order_search_bg_red"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginVertical="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10"
+                android:src="@drawable/home_search_icon" />
+
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_toStartOf="@+id/img_search_edit_clear"
+                android:layout_toEndOf="@+id/img_icon"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="搜索券码查询订单"
+                android:singleLine="true"
+                android:textSize="@dimen/sp_30" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_search_edit_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                android:layout_toStartOf="@+id/btn_search"
+                android:src="@drawable/search_close_edt" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btn_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:background="@drawable/order_search_bg_button_red"
+                android:paddingHorizontal="@dimen/dp_30"
+                android:paddingVertical="@dimen/dp_10"
+                android:text="搜索"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_30" />
+
+        </RelativeLayout>
+        <TextView
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginRight="18dp"
+            android:text="筛选"
+            android:id="@+id/tv_screen"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:drawableLeft="@drawable/screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
-        app:layout_constraintTop_toBottomOf="@+id/TitleBar"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         android:id="@+id/refeshLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_top">
 
         <androidx.recyclerview.widget.RecyclerView
 
@@ -29,8 +120,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

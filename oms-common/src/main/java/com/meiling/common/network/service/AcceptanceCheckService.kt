@@ -28,6 +28,7 @@ interface AcceptanceCheckService {
     suspend fun cityPoi(
     ): ResultData<ArrayList<ShopBean>>
 
+    //用户扫码的结果
     @GET("saas/dytg/prepare")
     suspend fun prepare(
         @Query("code") code: String? = "",//用户券码
@@ -35,14 +36,24 @@ interface AcceptanceCheckService {
         @Query("shopId") shopId: String? = "",//
     ): ResultData<ArrayList<ThrillBen>>
 
-    //核销
+    //开始核销
     @GET("saas/dytg/verify")
     suspend fun verify(
         @Query("code") code: String? = "",//用户券码
         @Query("shopId") shopId: String? = "",//
     ): ResultData<ArrayList<ThrillBen>>
 
-    //核销
+    //券码撤销
+    @GET("saas/dytg/cancel")
+    suspend fun cancel(
+        @Query("code") code: String? = "",//用户券码
+        @Query("shopId") shopId: String? = "",//
+    ): ResultData<String>
+
+
+
+
+    //核销列表
     @GET("saas/mttg/h5/coupon")
     suspend fun coupon(
         @Query("startDate") startDate: String = "",//开始时间

@@ -2,6 +2,7 @@ package com.meiling.common.network.data
 
 import com.google.gson.annotations.SerializedName
 import com.meiling.common.base.IWheel
+import java.io.Serializable
 
 
 data class ShopBean(
@@ -25,8 +26,13 @@ data class Shop(
     val id: String? = "",
     @SerializedName("name")
     val name: String? = "",
+    @SerializedName("poiId")
+    val poiId: String? = "",
+    @SerializedName("status")
+    val status: String? = ""
 
-) : IWheel {
+
+) :Serializable, IWheel {
     override fun getShowText(): String {
         return name.toString()
     }
@@ -97,7 +103,7 @@ data class WriteoffhistoryPageData(
     val shopName: String? = "",
     @SerializedName("sku")
     val sku: Any? = Any()
-)
+): Serializable
 
 data class Coupon(
     @SerializedName("adminViewId")
@@ -137,7 +143,7 @@ data class Coupon(
     @SerializedName("requestId")
     val requestId: String? = "",
     @SerializedName("shopId")
-    val shopId: Int? = 0,
+    val shopId: String? = "",
     @SerializedName("shopName")
     val shopName: String? = "",
     @SerializedName("spuViewId")
@@ -158,8 +164,10 @@ data class Coupon(
     val userId: String? = "",
     @SerializedName("viewId")
     val viewId: Long? = 0
-)
+):Serializable
 
-
+data class Test(
+    var name:String
+):Serializable
 
 

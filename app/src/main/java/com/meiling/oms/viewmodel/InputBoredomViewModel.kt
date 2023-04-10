@@ -21,7 +21,13 @@ class InputBoredomViewModel(application: Application) : BaseViewModel(applicatio
     }
     fun prepare(shopId:String,int: Int,codeurl:String){
 
-        request({ acceptanceCheckService.prepare("", codeurl, shopId) }, thrillBen)
+        request({ acceptanceCheckService.prepare(codeurl, "", shopId) }, thrillBen)
+
+    }
+
+    fun verify(shopId:String,code:String){
+
+        request({ acceptanceCheckService.verify( code, shopId) }, thrillBen)
 
     }
 

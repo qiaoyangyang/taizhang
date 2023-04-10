@@ -65,6 +65,11 @@ class InputBoredomActivity : BaseActivity<InputBoredomViewModel, ActivityInputBo
             }
         }
         mDatabind.tvOk.setOnClickListener {
+            if (TextUtils.isEmpty(mDatabind.tvStockCode.text.toString())){
+                return@setOnClickListener
+            }
+            mViewModel.prepare(shopId, 0, mDatabind.tvStockCode.text.toString())
+
             var checkCouponInformationDidalog = CheckCouponInformationDidalog()
             checkCouponInformationDidalog.show(supportFragmentManager)
         }
@@ -100,6 +105,31 @@ class InputBoredomActivity : BaseActivity<InputBoredomViewModel, ActivityInputBo
         super.initData()
         mViewModel.cityshop("1")
     }
+    var shopId: String = ""
+    override fun createObserver() {
+        mViewModel.thrillBen.onSuccess.observe(this) {
+            if (it.size!=0) {
+                var checkCouponInformationDidalog = CheckCouponInformationDidalog().newInstance(it)
+                checkCouponInformationDidalog.setOnresilience(object :CheckCouponInformationDidalog.Onresilience{
+                    override fun resilience(encryptedCode: String) {
+                        mViewModel.verify(shopId,encryptedCode)
+                    }
+
+                })
+
+                checkCouponInformationDidalog.show(supportFragmentManager)
+            }
+
+
+        }
+        mViewModel.shopBean.onSuccess.observe(this){
+            shopId=it.get(0).shopList?.get(0)?.id!!
+            mDatabind.TitleBar.titleView.text=it.get(0).shopList?.get(0)?.name
+        }
+
+
+    }
+
 
 
 }

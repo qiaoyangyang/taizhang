@@ -9,9 +9,27 @@ import com.meiling.common.network.service.acceptanceCheckService
 
 class VoucherInspectionHistoryViewModel(application: Application) : BaseViewModel(application) {
     val writeoffhistory = BaseLiveData<Writeoffhistory>()
-    fun coupon() {
-        request({ acceptanceCheckService.
-        coupon("2023-04-06", "2023-04-06", "156207178", "", "1", "20", "", "", "") }, writeoffhistory)
+    val cancelstring = BaseLiveData<String>()
+    fun coupon(poiId: String) {
+        request({
+            acceptanceCheckService.coupon(
+                "2023-04-06",
+                "2023-04-06",
+                poiId,
+                "",
+                "1",
+                "20",
+                "",
+                "",
+                ""
+            )
+        }, writeoffhistory)
+    }
+
+    fun cancel(code: String, shopId: String) {
+        request({
+            acceptanceCheckService.cancel(code,shopId)
+        },cancelstring)
     }
 
 }

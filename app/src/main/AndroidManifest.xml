@@ -85,6 +85,7 @@
         <activity android:name=".activity.ModifyPassWordActivity" />
         <activity android:name=".activity.VoucherInspectionActivity" />
         <activity android:name=".activity.VoucherInspectionHistoryActivity" />
+        <activity android:name=".activity.WriteOffDetailsActivity" />
         <activity android:name=".activity.InputBoredomActivity" />
 
         <provider

@@ -35,7 +35,7 @@ class VoucherInspectionActivity :
         //验券历史
         mDatabind.tvVoucherInspectionHistory.setOnClickListener {
             startActivity(
-                Intent(this, VoucherInspectionHistoryActivity::class.java)
+                Intent(this, VoucherInspectionHistoryActivity::class.java).putExtra("shop",shopdata)
             )
         }
         //  输码验券
@@ -76,6 +76,7 @@ class VoucherInspectionActivity :
                     override fun resilience(cityid: Int, shopid: Int, shop: Shop) {
                         mViewModel.Shop.onSuccess.postValue(shop)
                         shopId = shop?.id.toString()
+                        shopdata= shop
                         mDatabind.TitleBar.titleView.text = shop.name
                     }
 
@@ -101,6 +102,11 @@ class VoucherInspectionActivity :
             }
 
 
+        }
+        mViewModel.shopBean.onSuccess.observe(this){
+            shopdata= it[0].shopList?.get(0)
+            shopId=it.get(0).shopList?.get(0)?.id!!
+            mDatabind.TitleBar.titleView.text=it.get(0).shopList?.get(0)?.name
         }
 
 
@@ -142,6 +148,7 @@ class VoucherInspectionActivity :
     }
 
     var shopId: String = ""
+    var shopdata: Shop? =null
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
