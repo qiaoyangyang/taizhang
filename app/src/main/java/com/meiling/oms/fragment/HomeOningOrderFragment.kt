@@ -13,6 +13,8 @@ import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentHomeOrderOningBinding
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.viewmodel.NewsViewModel
+import com.meiling.oms.widget.formatCurrentDate
+import com.meiling.oms.widget.formatCurrentDateBeforeWeek
 import com.meiling.oms.widget.showToast
 
 class HomeOningOrderFragment :
@@ -44,8 +46,8 @@ class HomeOningOrderFragment :
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
         mViewModel.statusCount(
             logisticsStatus = "",
-            startTime = "2023-04-06",
-            endTime = "2023-04-06",
+            startTime = formatCurrentDateBeforeWeek(),
+            endTime = formatCurrentDate(),
             businessNumberType = "1",
             pageIndex = "1",
             pageSize = "20",

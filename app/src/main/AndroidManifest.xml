@@ -102,6 +102,50 @@
         </meta-data>
 
         <service android:name="com.amap.api.location.APSService"/>
+<!--        <service-->
+<!--            android:name="com.umeng.message.UmengMessageIntentReceiverService"-->
+<!--            android:exported="true"-->
+<!--            android:process=":channel">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="org.android.agoo.client.MessageReceiverService" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
+
+<!--        <receiver-->
+<!--            android:name="com.umeng.message.NotificationProxyBroadcastReceiver"-->
+<!--            android:exported="false" />-->
+
+        <service
+            android:name="com.umeng.message.UmengMessageCallbackHandlerService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE">
+            <intent-filter>
+                <action android:name="com.umeng.messge.registercallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.enablecallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.disablecallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.message.handler.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.message.sendmessage.action" />
+            </intent-filter>
+        </service>
+<!--        <service-->
+<!--            android:name="com.umeng.message.UmengDownloadResourceService"-->
+<!--            android:exported="false"-->
+<!--            android:permission="android.permission.BIND_JOB_SERVICE" />-->
+
+<!--        <provider-->
+<!--            android:name="com.umeng.message.provider.MessageProvider"-->
+<!--            android:authorities="${applicationId}.umeng.message"-->
+<!--            android:exported="false">-->
+<!--            <grant-uri-permission android:pathPattern=".*" />-->
+<!--        </provider> &lt;!&ndash; 以下为基本配置信息，需要自行添加至您的AndroidManifest文件中 end &ndash;&gt;-->
 
     </application>
     <queries>

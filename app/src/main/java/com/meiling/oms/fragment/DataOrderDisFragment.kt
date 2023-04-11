@@ -11,6 +11,8 @@ import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDataDisBinding
 import com.meiling.oms.dialog.DataSelectTimeDialog
 import com.meiling.oms.viewmodel.DataFragmentViewModel
+import com.meiling.oms.widget.formatCurrentDate
+import com.meiling.oms.widget.formatCurrentDateBeforeDay
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 
@@ -38,6 +40,9 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
 
             }
         mDatabind.rvDataDis.adapter = dataDisAdapter
+        mDatabind.srfDataDis.setOnRefreshListener {
+            initData()
+        }
     }
 
 
@@ -45,34 +50,37 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
         mViewModel.dataDisList(DataListDto(startTime = "", endTime = "", ArrayList<Long>()))
         mViewModel.dataHistoryDisList(
             DataListDto(
-                startTime = "2023-04-06 00:00:00",
-                endTime = "2023-04-06 23:59:59",
+                startTime = formatCurrentDateBeforeDay() + " 00:00:00",
+                endTime = formatCurrentDate() + " 23:59:59",
                 ArrayList<Long>()
             )
         )
-        mDatabind.srfDataDis.setOnRefreshListener {
-            mViewModel.dataHistoryDisList(
-                DataListDto(
-                    startTime = "2023-04-06 00:00:00",
-                    endTime = "2023-04-06 23:59:59",
-                    ArrayList<Long>()
-                )
-            )
-        }
+
 
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentDataDisBinding {
         return FragmentDataDisBinding.inflate(inflater)
     }
-
+    override fun onResume() {
+        super.onResume()
+        initData()
+    }
 
     override fun initListener() {
         mDatabind.txtDataHistoryChannelTime.setSingleClickListener {
             var dataSelectTimeDialog = DataSelectTimeDialog().newInstance()
             dataSelectTimeDialog.show(childFragmentManager)
-            dataSelectTimeDialog.setSelectTime {
+            dataSelectTimeDialog.setSelectTime {it,name->
                 showToast("1212" + it)
+                mDatabind.txtDataHistoryChannelTime.text = name
+                mViewModel.dataHistoryDisList(
+                    DataListDto(
+                        startTime = "$it 00:00:00",
+                        endTime = formatCurrentDate() + " 23:59:59",
+                        ArrayList<Long>()
+                    )
+                )
             }
         }
     }

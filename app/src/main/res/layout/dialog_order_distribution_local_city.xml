@@ -5,53 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.hjq.bar.TitleBar
-        android:id="@+id/TitleBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:barStyle="transparent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:rightBackground="@null"
-        app:rightTitleSize="@dimen/sp_14"
-        app:title="修改收货地址" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/TitleBar"
-        android:background="@color/white"
-        app:shape_radius="@dimen/dp_100"
-        app:shape_solidColor="@color/white"
-        app:shape_strokeColor="@color/home_666666"
-        app:shape_strokeWidth="@dimen/dp_1">
+        android:layout_marginTop="@dimen/dp_30"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/imgOrderDisClose"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_alignTop="@+id/orderDisTitle"
+            android:layout_alignBottom="@+id/orderDisTitle"
+            android:src="@drawable/bar_arrows_left_black"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txtMapLocalCity"
+            android:id="@+id/orderDisTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/rlSearchLocal"
-            android:layout_alignBottom="@+id/rlSearchLocal"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_20"
-            android:drawablePadding="@dimen/dp_5"
-            android:gravity="center"
-            app:drawableEndCompat="@drawable/ic_local_xia"
-            app:drawableStartCompat="@drawable/ic_local_address"
-            tools:text="西安市" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginVertical="@dimen/dp_30"
+            android:text="确认收货城市"
+            android:textColor="@color/home_333333"
+            android:textSize="15sp" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/orderDisTitle"
+            android:background="@color/home_999999" />
 
         <com.hjq.shape.layout.ShapeRelativeLayout
             android:id="@+id/rlSearchLocal"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/view"
             android:layout_marginHorizontal="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/dp_20"
-            android:layout_toEndOf="@+id/txtMapLocalCity"
+            android:layout_marginEnd="@dimen/dp_10"
             app:shape_radius="@dimen/dp_100"
             app:shape_solidColor="@color/white"
             app:shape_strokeColor="@color/home_666666"
-            app:shape_strokeWidth="@dimen/dp_1">
+            app:shape_strokeWidth="@dimen/dp_1"
+           >
 
             <View
                 android:id="@+id/searchLine"
@@ -72,15 +74,15 @@
                 android:background="@drawable/home_search_icon" />
 
             <EditText
-                android:id="@+id/edtLocalSearch"
+                android:id="@+id/txtLocalSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="5dp"
-                android:layout_toStartOf="@+id/imgClearLocalSearch"
+                android:layout_toStartOf="@+id/imgClearInput"
                 android:layout_toEndOf="@+id/imgLocalSearch"
                 android:background="@null"
-                android:hint="请输入收货地址"
+                android:hint="请输入城市名称"
                 android:imeOptions="actionSearch"
                 android:minHeight="48dp"
                 android:paddingHorizontal="18dp"
@@ -91,7 +93,7 @@
                 android:textSize="@dimen/sp_28" />
 
             <ImageView
-                android:id="@+id/imgClearLocalSearch"
+                android:id="@+id/imgClearInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignWithParentIfMissing="true"
@@ -109,56 +111,53 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
                 android:layout_marginEnd="10dp"
-                android:background="@mipmap/search_empty_result"
                 android:visibility="gone" />
         </com.hjq.shape.layout.ShapeRelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/llError"
+        <TextView
+            android:id="@+id/txtLocalAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="parent">
-
-            <ImageView
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                android:src="@mipmap/empty_local_error" />
-
-            <TextView
-                android:id="@+id/emptyTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="定位失败，请重试"
-                android:textColor="@color/home_666666"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-
-        <com.amap.api.maps.MapView
-            android:id="@+id/mapView"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
             android:layout_below="@+id/rlSearchLocal"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="@dimen/dp_20" />
+            android:layout_alignStart="@+id/recyCityAddress"
+            android:paddingHorizontal="@dimen/dp_20"
+            android:paddingVertical="@dimen/dp_10"
+            android:text="当前定位城市:" />
+
+        <TextView
+            android:id="@+id/txtLocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlSearchLocal"
+            android:layout_toEndOf="@+id/txtLocalAddress"
+            android:paddingVertical="@dimen/dp_10"
+            android:text="正在定位" />
+
+        <TextView
+            android:id="@+id/txtLocalReact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlSearchLocal"
+            android:layout_alignTop="@+id/txtLocal"
+            android:layout_alignRight="@+id/rlSearchLocal"
+            android:layout_alignBottom="@+id/txtLocal"
+            android:drawableStart="@drawable/ic_local_address_auto"
+            android:drawablePadding="@dimen/dp_5"
+            android:gravity="center_vertical"
+            android:text="重新定位"
+            android:textColor="@color/red" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ryOrderDisSearchLocal"
+            android:id="@+id/recyCityAddress"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/mapView"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtLocal"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/dp_10"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_recy_distribution_local_map" />
+            tools:listitem="@layout/item_city_select_name" />
 
     </RelativeLayout>
 </RelativeLayout>
