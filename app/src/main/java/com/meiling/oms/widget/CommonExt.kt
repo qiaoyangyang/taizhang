@@ -70,14 +70,54 @@ fun formatCurrentMDate(): String {
     return sdf.format(Date())
 }
 
-//之前一周的时间
+/**
+ * 之前一周的时间
+ */
 fun formatCurrentDateBeforeWeek(): String {
     val sdf = SimpleDateFormat("yyyy-MM-dd")
     var cal = Calendar.getInstance()
     cal.add(Calendar.DAY_OF_MONTH, -7)
     return sdf.format(cal.time)
 }
-
+/**
+ * 之前一天的时间
+ */
+fun formatCurrentDateBeforeDay(): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH, -1)
+    return sdf.format(cal.time)
+}
+/**
+ * 之前15天的时间
+ */
+fun formatCurrentDateBefore15(): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH, -15)
+    return sdf.format(cal.time)
+}
+/**
+ * 之前30天的时间
+ */
+fun formatCurrentDateBeforeMouth(): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH, -30)
+    return sdf.format(cal.time)
+}
+/**
+ * 之前90天的时间
+ */
+fun formatCurrentDateBefore90(): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH, -30)
+    return sdf.format(cal.time)
+}
+/**
+ * 明天
+ * */
 fun getTomorrowDate(): String {
     var sdf = SimpleDateFormat("yyyy-MM-dd")
     var cal = Calendar.getInstance()
@@ -180,13 +220,7 @@ fun calculationWorkLongTime(starTime: String?): String {
     return "${longHH}小时${longMM}分钟"
 }
 
-//之前一月的时间
-fun formatCurrentDateBeforeMouth(): String {
-    val sdf = SimpleDateFormat("yyyy-MM-dd")
-    var cal = Calendar.getInstance()
-    cal.add(Calendar.DAY_OF_MONTH, -30)
-    return sdf.format(cal.time)
-}
+
 
 /**
  * 计算时间

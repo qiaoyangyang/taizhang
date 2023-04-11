@@ -16,6 +16,8 @@ import com.meiling.oms.databinding.FragmentDataChannelBinding
 import com.meiling.oms.dialog.DataSelectTimeDialog
 import com.meiling.oms.liveData.LiveDataShopData
 import com.meiling.oms.viewmodel.DataFragmentViewModel
+import com.meiling.oms.widget.formatCurrentDate
+import com.meiling.oms.widget.getTomorrowDate
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 
@@ -48,6 +50,10 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
             }
         mDatabind.rvDataChannel.adapter = dataChannelAdapter
         mDatabind.rvDataChannelHistory.adapter = dataHistoryChannelAdapter
+
+        mDatabind.srfDataChannel.setOnRefreshListener {
+            initData()
+        }
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentDataChannelBinding {
@@ -57,43 +63,35 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
     override fun initData() {
         mViewModel.channelDataList(
             DataListDto(
-                startTime = "2023-04-06",
-                endTime = "2023-04-07",
+                startTime = formatCurrentDate(),
+                endTime = getTomorrowDate(),
                 ArrayList<Long>()
             )
         )
         mViewModel.channelHistoryDataList(
             DataListDto(
-                startTime = "2023-04-06",
-                endTime = "2023-04-07",
+                startTime = formatCurrentDate(),
+                endTime = getTomorrowDate(),
                 ArrayList<Long>()
             )
         )
         LiveDataShopData.INSTANCE.observe(this, changeObserver)
-        mDatabind.srfDataChannel.setOnRefreshListener {
-            mViewModel.channelDataList(
-                DataListDto(
-                    startTime = "2023-04-06",
-                    endTime = "2023-04-07",
-                    ArrayList<Long>()
-                )
-            )
-            mViewModel.channelHistoryDataList(
-                DataListDto(
-                    startTime = "2023-04-06",
-                    endTime = "2023-04-07",
-                    ArrayList<Long>()
-                )
-            )
-        }
     }
 
     override fun initListener() {
         mDatabind.txtHistorySelectTime.setSingleClickListener {
             var dataSelectTimeDialog = DataSelectTimeDialog().newInstance()
             dataSelectTimeDialog.show(childFragmentManager)
-            dataSelectTimeDialog.setSelectTime {
+            dataSelectTimeDialog.setSelectTime { it, name ->
                 showToast("1212" + it)
+                mDatabind.txtHistorySelectTime.text = name
+                mViewModel.channelHistoryDataList(
+                    DataListDto(
+                        startTime = it,
+                        endTime = getTomorrowDate(),
+                        ArrayList<Long>()
+                    )
+                )
             }
         }
     }
@@ -102,6 +100,11 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
         value?.let {
             Log.e("lwq", "observer:$value")
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initData()
     }
 
     override fun createObserver() {

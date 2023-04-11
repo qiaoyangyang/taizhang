@@ -7,10 +7,12 @@ import androidx.annotation.Nullable
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.meiling.common.activity.BaseActivity
+import com.meiling.oms.EventBusData.MessageEvent
 import com.meiling.oms.databinding.ActivityOrderChengeAddredssBinding
 import com.meiling.oms.viewmodel.ChangeAddressModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
+import org.greenrobot.eventbus.EventBus
 
 /**
  * 此改地址
@@ -21,6 +23,7 @@ class OrderChangeAddressActivity :
 
     override fun initView(savedInstanceState: Bundle?) {
         setBar(this, mDatabind.cosChangeOrder)
+        EventBus.getDefault().unregister(this);
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityOrderChengeAddredssBinding {
@@ -35,14 +38,16 @@ class OrderChangeAddressActivity :
     var lon = ""
     var addressDetail = ""
     var orderId = ""
+
+    var index = 1
     override fun initData() {
         val intent = intent
         mDatabind.txtOrderChangeTime.text = intent.getStringExtra("receiveTime")
         mDatabind.txtOrderChangePhone.setText(intent.getStringExtra("receivePhone"))
         mDatabind.txtOrderChangeName.setText(intent.getStringExtra("receiveName"))
         address = intent.getStringExtra("receiveAddress").toString()
+        index = intent.getIntExtra("index",1)
         orderId = intent.getStringExtra("orderId").toString()
-        showToast("order${orderId}")
         lat = intent.getStringExtra("lat").toString()
         lon = intent.getStringExtra("lon").toString()
         if (address!!.isBlank() && address!!.contains("@@")) {
@@ -77,8 +82,6 @@ class OrderChangeAddressActivity :
                     orderId.toString()
                 )
             }
-
-
         }
     }
 
@@ -86,13 +89,10 @@ class OrderChangeAddressActivity :
     override fun initListener() {
         mDatabind.aivBack.setOnClickListener { finish() }
         mDatabind.btnCancelChange.setOnClickListener { finish() }
-
         mDatabind.txtOrderChangeAddress.setSingleClickListener {
             ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
                 .navigation(this, REQUEST_CODE)
         }
-
-
     }
 
     override fun createObserver() {
@@ -102,6 +102,7 @@ class OrderChangeAddressActivity :
         mViewModel.changeAddressSuccess.onSuccess.observe(this) {
             disLoading()
             showToast("修改成功")
+            EventBus.getDefault().post( MessageEvent(index));
             finish()
         }
         mViewModel.changeAddressSuccess.onError.observe(this) {
@@ -137,5 +138,8 @@ class OrderChangeAddressActivity :
             mDatabind.txtOrderChangeAddress.text = address
         }
     }
-
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
 }

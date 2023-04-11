@@ -8,16 +8,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_30"
         android:background="@color/white">
 
         <ImageView
             android:id="@+id/imgOrderDisClose"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="7dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginEnd="@dimen/dp_10"
-            android:src="@drawable/ic_local_close_edt"
+            android:layout_alignTop="@+id/orderDisTitle"
+            android:layout_alignBottom="@+id/orderDisTitle"
+            android:src="@drawable/bar_arrows_left_black"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,8 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginVertical="@dimen/dp_30"
             android:text="确认收货城市"
             android:textColor="@color/home_333333"
             android:textSize="15sp" />
@@ -43,7 +43,7 @@
         <com.hjq.shape.layout.ShapeRelativeLayout
             android:id="@+id/rlSearchLocal"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_below="@+id/view"
             android:layout_marginHorizontal="10dp"
             android:layout_marginStart="10dp"

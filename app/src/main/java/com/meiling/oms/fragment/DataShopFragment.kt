@@ -13,6 +13,7 @@ import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDataShopBinding
 import com.meiling.oms.dialog.DataSelectTimeDialog
 import com.meiling.oms.viewmodel.DataFragmentViewModel
+import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 
@@ -40,6 +41,10 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
             }
         mDatabind.rvDataShop.adapter = dataShopAdapter
 
+        mDatabind.refDataShop.setOnRefreshListener {
+            initData()
+        }
+
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentDataShopBinding {
@@ -50,54 +55,11 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
     override fun initData() {
         mViewModel.shopDataList(
             DataListDto(
-                startTime = "2023-04-06 00:00:00",
-                endTime = "2023-04-06 23:59:59",
+                startTime = formatCurrentDate() + " 00:00:00",
+                endTime = formatCurrentDate() + " 23:59:59",
                 ArrayList<Long>()
             )
         )
-        mDatabind.refDataShop.setOnRefreshListener {
-
-            mViewModel.shopHistoryDataList(
-                DataShop(
-                    timeType = 1,
-                    orderStatus = ArrayList(),
-                    refundStatus = ArrayList(),
-                    channelIds = ArrayList(),
-                    adminUserIds = ArrayList(),
-                    deliveryType = ArrayList(),
-                    goodsType = ArrayList(),
-                    orderType = ArrayList(),
-                    classificationViewIds = ArrayList(),
-                    poiIds = ArrayList(),
-                    startTime = "2023-4-6 00:00:00",
-                    endTime = "2023-4-7 23:59:59",
-                    isValid = -1,
-                    sortType = 0,
-                    pageIndex = 1,
-                    pageSize = 50,
-                )
-            )
-            mViewModel.shopData(
-                DataShop(
-                    timeType = 1,
-                    orderStatus = ArrayList(),
-                    refundStatus = ArrayList(),
-                    channelIds = ArrayList(),
-                    adminUserIds = ArrayList(),
-                    deliveryType = ArrayList(),
-                    goodsType = ArrayList(),
-                    orderType = ArrayList(),
-                    classificationViewIds = ArrayList(),
-                    poiIds = ArrayList(),
-                    startTime = "2023-4-6 00:00:00",
-                    endTime = "2023-4-7 23:59:59",
-                    isValid = -1,
-                    sortType = 0,
-                    pageIndex = 1,
-                    pageSize = 50,
-                )
-            )
-        }
 
         mViewModel.shopHistoryDataList(
             DataShop(
@@ -111,8 +73,8 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
                 orderType = ArrayList(),
                 classificationViewIds = ArrayList(),
                 poiIds = ArrayList(),
-                startTime = "2023-4-6 00:00:00",
-                endTime = "2023-4-7 23:59:59",
+                startTime = formatCurrentDate() + " 00:00:00",
+                endTime = formatCurrentDate() + " 23:59:59",
                 isValid = -1,
                 sortType = 0,
                 pageIndex = 1,
@@ -131,8 +93,8 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
                 orderType = ArrayList(),
                 classificationViewIds = ArrayList(),
                 poiIds = ArrayList(),
-                startTime = "2023-4-6 00:00:00",
-                endTime = "2023-4-7 23:59:59",
+                startTime = formatCurrentDate() + " 00:00:00",
+                endTime = formatCurrentDate() + " 23:59:59",
                 isValid = -1,
                 sortType = 0,
                 pageIndex = 1,
@@ -145,8 +107,29 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
         mDatabind.txtDataHistoryShopTime.setSingleClickListener {
             var dataSelectTimeDialog = DataSelectTimeDialog().newInstance()
             dataSelectTimeDialog.show(childFragmentManager)
-            dataSelectTimeDialog.setSelectTime {
+            dataSelectTimeDialog.setSelectTime { it, name ->
                 showToast("1212" + it)
+                mDatabind.txtDataHistoryShopTime.text = name
+                mViewModel.shopHistoryDataList(
+                    DataShop(
+                        timeType = 1,
+                        orderStatus = ArrayList(),
+                        refundStatus = ArrayList(),
+                        channelIds = ArrayList(),
+                        adminUserIds = ArrayList(),
+                        deliveryType = ArrayList(),
+                        goodsType = ArrayList(),
+                        orderType = ArrayList(),
+                        classificationViewIds = ArrayList(),
+                        poiIds = ArrayList(),
+                        startTime = "$it 00:00:00",
+                        endTime = formatCurrentDate() + " 23:59:59",
+                        isValid = -1,
+                        sortType = 0,
+                        pageIndex = 1,
+                        pageSize = 50,
+                    )
+                )
             }
         }
     }

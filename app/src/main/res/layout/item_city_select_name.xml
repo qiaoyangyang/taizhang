@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="wrap_content">
 
     <TextView
@@ -8,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/dp_20"
-        android:paddingVertical="10dp"
+        android:paddingVertical="@dimen/dp_22"
         android:text="A"
         android:textColor="@color/home_333333" />
 
@@ -16,16 +17,16 @@
         android:id="@+id/view"
         android:layout_below="@+id/txtKey"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/dp_2"
         android:layout_marginTop="3dp"
-        android:background="@color/home_999999" />
+        android:background="@color/order_dis_D9D9D9" />
     <TextView
         android:id="@+id/txtCityName"
         android:layout_below="@+id/view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/dp_20"
-        android:paddingVertical="10dp"
+        android:paddingVertical="@dimen/dp_22"
         android:text="A"
         android:textColor="@color/home_333333" />
 

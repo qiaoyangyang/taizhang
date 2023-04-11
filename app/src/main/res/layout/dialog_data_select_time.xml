@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginVertical="@dimen/dp_30"
         android:text="选择时间段"
         android:textColor="#1F1F1F"
         android:textSize="20sp"
@@ -102,10 +102,12 @@
             android:textColor="@color/radio_button_text_color_selector"
             android:textSize="@dimen/sp_22" />
 
+
         <RadioButton
             android:id="@+id/radio_button4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_10"
             android:layout_weight="1"
             android:background="@drawable/radio_bg_color_selecter"
             android:button="@null"
@@ -115,6 +117,7 @@
             android:text="近90天"
             android:textColor="@color/radio_button_text_color_selector"
             android:textSize="@dimen/sp_22" />
+
 
     </RadioGroup>
 
@@ -128,6 +131,7 @@
         android:weightSum="3">
 
         <TextView
+            android:id="@+id/txt_change_time_show"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -147,6 +151,7 @@
             android:textSize="@dimen/sp_30" />
 
         <TextView
+            android:id="@+id/txt_current_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
