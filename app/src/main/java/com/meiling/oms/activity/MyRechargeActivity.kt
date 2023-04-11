@@ -30,7 +30,6 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
     private val fragmentList: MutableList<Fragment> = ArrayList()
 
     override fun initView(savedInstanceState: Bundle?) {
-        EventBus.getDefault().register(this)
         mDatabind.viewPager.isUserInputEnabled = false
         setBar(this, mDatabind.cosTitle)
         fragmentList.add(RechargeSettlementFragment.newInstance())

@@ -16,6 +16,7 @@ import com.meiling.oms.viewmodel.RechargeViewModel
 import com.meiling.oms.viewmodel.SelectedViewModel
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.formatCurrentDateBeforeWeek
+import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -79,6 +80,7 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun eventDay(messageEventTime: MessageEventTime) {
+        showToast(messageEventTime.starTime)
         mViewModel.getRecord(
             RechargeRecordListReq(
                 createUserId = "",
