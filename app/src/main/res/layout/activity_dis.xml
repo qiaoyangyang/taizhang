@@ -77,8 +77,8 @@
 
         <TextView
             android:id="@+id/txt_order_dis_address"
-            android:layout_width="299dp"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
             android:layout_below="@+id/txt_order_dis_name"
             android:layout_alignLeft="@+id/txt_order_dis_name"
             android:layout_marginBottom="@dimen/dp_50"
@@ -132,8 +132,8 @@
 
         <TextView
             android:id="@+id/txt_order_dis_rec_address"
-            android:layout_width="299dp"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
             android:layout_below="@+id/txt_order_dis_rec_name"
             android:layout_alignLeft="@+id/txt_order_dis_rec_name"
             android:text="内蒙古自治区鄂尔多斯市伊金霍洛旗伊金霍洛旗札萨克物流园区 14 幢 158 室"

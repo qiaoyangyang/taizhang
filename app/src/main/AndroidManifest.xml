@@ -13,13 +13,7 @@
         android:theme="@style/Theme.Tarket"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".SuccessfuActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
         <!-- 适配全面屏 -->
         <meta-data
             android:name="android.max_aspect"

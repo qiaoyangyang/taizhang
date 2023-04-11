@@ -18,6 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
+import com.meiling.common.network.data.NewGoodsVo
 import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.EventBusData.MessageEvent
@@ -135,6 +136,17 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             .navigation()
                     }
 
+
+                    var listGoods = item.goodsVoList
+                    var listNew = ArrayList<NewGoodsVo>()
+                    var x = ""
+                    for (goods in listGoods!!) {
+                        x += "名称" + goods?.gname + "\n数量" + goods?.number + "\n价格" + goods?.price
+                    }
+                    val filteredData = listGoods!!.map { goods ->
+                        NewGoodsVo(goods?.gname, goods?.number, goods?.price)
+                    }
+
                     imgShopCopy.setSingleClickListener {
                         copyText(
                             context,
@@ -142,7 +154,8 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                                     "门店名称${item.shopName}\n" +
                                     "订单编号${item.order?.viewId}\n" +
                                     "-------\n" +
-                                    "商品信息${item.goodsVoList.toString()}\n" +
+                                    "商品信息${x}\n" +
+//                                    "商品信息${Gson().fromJson(filteredData.toString(),Array<NewGoodsVo>::class.java).toList()}\n" +
                                     "-------\n" +
                                     "收货时间${item.order?.arriveTimeDate}\n" +
                                     "收货人${item.order?.recvName}${item.order?.recvPhone}\n" +
@@ -277,7 +290,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         mViewModel.orderList.onError.observe(this) {
             dismissLoading()
             mDatabind.sflLayout.finishRefresh()
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
     }
 

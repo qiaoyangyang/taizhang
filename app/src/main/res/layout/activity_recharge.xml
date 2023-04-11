@@ -212,6 +212,7 @@
                 android:paddingHorizontal="@dimen/dp_20"
                 android:paddingVertical="@dimen/dp_15"
                 android:text="近7天"
+                android:checked="true"
                 android:textColor="@color/radio_button_text_color_selector" />
 
             <RadioButton

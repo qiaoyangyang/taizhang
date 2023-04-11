@@ -120,7 +120,7 @@ data class OrderDto(
         @SerializedName("tradeOut")
         var tradeOut: Any?,
 
-    ):Serializable {
+        ) : Serializable {
 //        data class AllPaymentTypesVo(
 //            @SerializedName("其他")
 //            var 其他: Double?
@@ -200,7 +200,7 @@ data class OrderDto(
             @SerializedName("refundPrice")
             var refundPrice: Double?,
             @SerializedName("shopNames")
-            var shopNames: Any?,
+            var shopNames: String?,
             @SerializedName("sku")
             var sku: String?,
             @SerializedName("spuId")
@@ -225,7 +225,7 @@ data class OrderDto(
             var unitUseType: Any?,
             @SerializedName("specs")
             var specs: String?
-        ): Serializable
+        ) : Serializable
 
         data class Order(
             @SerializedName("activityFee")
@@ -301,7 +301,7 @@ data class OrderDto(
             @SerializedName("fshopId")
             var fshopId: Int?,
             @SerializedName("goodNames")
-            var goodNames: Any?,
+            var goodNames: String?,
             @SerializedName("goodsCost")
             var goodsCost: Double?,
             @SerializedName("goodsInfo")
@@ -347,7 +347,7 @@ data class OrderDto(
             @SerializedName("platformServiceFee")
             var platformServiceFee: Double?,
             @SerializedName("poiId")
-            var poiId: Int?,
+            var poiId: String?,
             @SerializedName("preMode")
             var preMode: Int?,
             @SerializedName("prescriptionImage")
@@ -392,7 +392,7 @@ data class OrderDto(
             var deliveryStatusName: String?,
             @SerializedName("deliveryStatus")
             var deliveryStatus: String?
-        ):Serializable
+        ) : Serializable
     }
 
 }
@@ -411,3 +411,5 @@ data class StatusCountDto(
     @SerializedName("deliverying")
     var deliverying: Int?//配送中
 )
+
+data class NewGoodsVo(val goodNames: String?, val gooNumber: Int?, val goodsPrice: String?)

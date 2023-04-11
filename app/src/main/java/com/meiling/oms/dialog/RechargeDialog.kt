@@ -25,8 +25,8 @@ class RechargeDialog : BaseNiceDialog() {
         setOutCancel(false)
     }
 
-    var okSelectClickLister: (() -> Unit)? = null
-    fun setOkClickLister(okClickLister: () -> Unit) {
+    var okSelectClickLister: ((money: String, channel: String) -> Unit)? = null
+    fun setOkClickLister(okClickLister: (money: String, channel: String) -> Unit) {
         this.okSelectClickLister = okClickLister
     }
 
@@ -50,10 +50,13 @@ class RechargeDialog : BaseNiceDialog() {
 
     lateinit var rechargeAdapter: BaseQuickAdapter<rechDto, BaseViewHolder>
 
+    var money = "0.01"
+    var channel = "2"
+
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
 //        val title = arguments?.getString("title") as String
 //        val content = arguments?.getString("content") as String
-        list.add(rechDto("200"))
+        list.add(rechDto("0.01"))
         list.add(rechDto("500"))
         list.add(rechDto("1000"))
         list.add(rechDto("2000"))
@@ -112,7 +115,7 @@ class RechargeDialog : BaseNiceDialog() {
         }
         ok?.setSingleClickListener {
             dismiss()
-            okSelectClickLister?.invoke()
+            okSelectClickLister?.invoke(money, channel)
         }
 
     }
