@@ -10,15 +10,17 @@ import com.meiling.common.network.service.acceptanceCheckService
 class VoucherInspectionHistoryViewModel(application: Application) : BaseViewModel(application) {
     val writeoffhistory = BaseLiveData<Writeoffhistory>()
     val cancelstring = BaseLiveData<String>()
-    fun coupon(poiId: String) {
+
+    fun coupon(poiId: String,startDate:String,endDate:String,selectText:String,pageIndex:Int,pageSize:String) {
         request({
             acceptanceCheckService.coupon(
-                "2023-04-06",
-                "2023-04-06",
+                startDate,
+                endDate,
                 poiId,
-                "",
-                "1",
-                "20",
+                selectText,
+                pageIndex,
+                pageSize,
+
                 "",
                 "",
                 ""

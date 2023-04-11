@@ -27,23 +27,19 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     ): Job {
         return viewModelScope.launch(Dispatchers.IO) {
             runCatching {
-                Logger.d("responseBody's contentType : $111111")
                 resultState.onStart.postValue("")
                 block()
             }.onSuccess {
-                Log.d("yjk", "request: ${Gson().toJson(it.toString())}")
                 if (it.code == 200) {
 
                     resultState.onSuccess.postValue(it.data)
                 } else if (it.code == 403) {
                     ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
                 } else {
-                    Logger.d("responseBody's contentType : $22222")
                     resultState.onError.postValue(ExceptionHandle.handleException(APIException(it.code, it.msg)))
                 }
 
             }.onFailure {
-                Logger.d("responseBody's contentType : $333333${it.message}")
                 resultState.onError.postValue(ExceptionHandle.handleException(it))
             }
         }

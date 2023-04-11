@@ -3,29 +3,65 @@ package com.meiling.oms.activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hjq.shape.view.ShapeTextView
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.network.data.OrderDto
 import com.meiling.common.network.data.Shop
-import com.meiling.common.network.data.Test
 import com.meiling.common.network.data.WriteoffhistoryPageData
+import com.meiling.common.utils.Constant
 import com.meiling.common.utils.RecyclerViewDivider
 import com.meiling.common.utils.SpannableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityHistoryBinding
 import com.meiling.oms.viewmodel.VoucherInspectionHistoryViewModel
+import com.meiling.oms.widget.showToast
+import okhttp3.internal.notify
 import java.util.ArrayList
 
 //验券历史
 class VoucherInspectionHistoryActivity :
     BaseActivity<VoucherInspectionHistoryViewModel, ActivityHistoryBinding>() {
     lateinit var orderLeftRecyAdapter: BaseQuickAdapter<WriteoffhistoryPageData?, BaseViewHolder>
+    var isSearch=false
     override fun initView(savedInstanceState: Bundle?) {
+        initRecycleyView()
+        mDatabind.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString().isNotEmpty()) {
+                    mDatabind.imgSearchEditClear.visibility = View.VISIBLE
+                } else {
+                    mDatabind.imgSearchEditClear.visibility = View.GONE
+                }
+            }
+
+        })
+        mDatabind.btnSearch.setOnClickListener {
+            orderLeftRecyAdapter.setList(null)
+            setcoupon()
+
+        }
+        mDatabind.imgSearchEditClear.setOnClickListener {
+            orderLeftRecyAdapter.setList(null)
+            mDatabind.edtSearch.setText("")
+            setcoupon()
+
+        }
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityHistoryBinding {
@@ -36,26 +72,54 @@ class VoucherInspectionHistoryActivity :
     override fun initData() {
         super.initData()
         shop = intent.getSerializableExtra("shop") as Shop
-        if (shop != null) {
-            if (!TextUtils.isEmpty(shop?.poiId)){
-                mViewModel.coupon(shop?.poiId!!)
-            }else{
-                mViewModel.coupon("")
-            }
+//
 
+
+        orderLeftRecyAdapter.loadMoreModule.setOnLoadMoreListener {
+            pageIndex++
+            setcoupon()
         }
-        initRecycleyView()
-
+        mDatabind.refeshLayout.setOnRefreshListener {
+            pageIndex = 1
+            setcoupon()
+        }
+        setcoupon()
     }
 
     override fun createObserver() {
         super.createObserver()
+
         mViewModel.writeoffhistory.onSuccess.observe(this) {
-            if (it.pageData!=null){
-                orderLeftRecyAdapter.setList(it?.pageData)
+            if (it.pageData != null) {
+
+
+                mDatabind.refeshLayout.finishRefresh()
+                if (it.pageNum == 1) {
+                    if (it.pageData.isNullOrEmpty()) {
+                        orderLeftRecyAdapter.setEmptyView(R.layout.order_search_empty1)
+                    } else {
+                        orderLeftRecyAdapter.setList(it?.pageData as MutableList<WriteoffhistoryPageData>)
+                    }
+                } else {
+                    orderLeftRecyAdapter.addData(it?.pageData as MutableList<WriteoffhistoryPageData>)
+                }
+                if (it?.pageData?.size!! < Constant.size.toInt()) {
+                    orderLeftRecyAdapter.footerWithEmptyEnable = false
+                    orderLeftRecyAdapter.loadMoreModule.loadMoreEnd()
+                } else {
+                    orderLeftRecyAdapter.loadMoreModule.loadMoreComplete()
+                }
+            }else{
+                if (orderLeftRecyAdapter.data.size==0){
+                    orderLeftRecyAdapter.setEmptyView(R.layout.order_search_empty1)
+                }
             }
 
 
+        }
+        mViewModel.writeoffhistory.onError.observe(this) {
+            mDatabind.refeshLayout.finishRefresh()
+            showToast("${it.message}")
         }
     }
 
@@ -66,7 +130,8 @@ class VoucherInspectionHistoryActivity :
     private fun initRecycleyView() {
 
         orderLeftRecyAdapter = object :
-            BaseQuickAdapter<WriteoffhistoryPageData?, BaseViewHolder>(R.layout.item_recy_stock_list) {
+            BaseQuickAdapter<WriteoffhistoryPageData?, BaseViewHolder>(R.layout.item_recy_stock_list),
+            LoadMoreModule {
             override fun convert(
                 holder: BaseViewHolder,
                 item: WriteoffhistoryPageData?
@@ -136,6 +201,35 @@ class VoucherInspectionHistoryActivity :
 
         }
 
+
+    }
+
+    var startDate: String = "2023-04-10"
+    var endDate: String = "2023-04-10"
+    var pageIndex: Int = 1
+    fun setcoupon() {
+
+
+        if (!TextUtils.isEmpty(shop?.poiId)) {
+            mViewModel.coupon(
+                shop?.poiId!!,
+                startDate,
+                endDate,
+                mDatabind.edtSearch.text.toString(),
+                pageIndex,
+                Constant.size
+            )
+        } else {
+            mViewModel.coupon(
+                "",
+                startDate,
+                endDate,
+                mDatabind.edtSearch.text.toString(),
+                pageIndex,
+                Constant.size
+            )
+
+        }
 
     }
 }

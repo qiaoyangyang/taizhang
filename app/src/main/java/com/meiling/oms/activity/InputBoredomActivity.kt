@@ -16,6 +16,7 @@ import com.meiling.common.activity.BaseActivity
 import com.meiling.oms.databinding.ActivityInputBoredomBinding
 import com.meiling.oms.dialog.CheckCouponInformationDidalog
 import com.meiling.oms.viewmodel.InputBoredomViewModel
+import com.meiling.oms.widget.showToast
 
 // 手动输入
 class InputBoredomActivity : BaseActivity<InputBoredomViewModel, ActivityInputBoredomBinding>() {
@@ -46,13 +47,13 @@ class InputBoredomActivity : BaseActivity<InputBoredomViewModel, ActivityInputBo
         }
 
         mDatabind.tv7.setOnClickListener {
-            setStockCode(mDatabind.tv6)
+            setStockCode(mDatabind.tv7)
         }
         mDatabind.tv8.setOnClickListener {
-            setStockCode(mDatabind.tv6)
+            setStockCode(mDatabind.tv8)
         }
         mDatabind.tv9.setOnClickListener {
-            setStockCode(mDatabind.tv6)
+            setStockCode(mDatabind.tv9)
         }
         mDatabind.ivSearchCloseEdt.setOnClickListener {
             StockCode = ""
@@ -70,8 +71,7 @@ class InputBoredomActivity : BaseActivity<InputBoredomViewModel, ActivityInputBo
             }
             mViewModel.prepare(shopId, 0, mDatabind.tvStockCode.text.toString())
 
-            var checkCouponInformationDidalog = CheckCouponInformationDidalog()
-            checkCouponInformationDidalog.show(supportFragmentManager)
+
         }
 
     }
@@ -121,6 +121,9 @@ class InputBoredomActivity : BaseActivity<InputBoredomViewModel, ActivityInputBo
             }
 
 
+        }
+        mViewModel.thrillBen.onError.observe(this){
+            showToast("${it.message}")
         }
         mViewModel.shopBean.onSuccess.observe(this){
             shopId=it.get(0).shopList?.get(0)?.id!!

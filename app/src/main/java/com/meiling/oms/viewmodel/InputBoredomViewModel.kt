@@ -5,12 +5,14 @@ import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
 import com.meiling.common.network.data.ShopBean
 import com.meiling.common.network.data.ThrillBen
+import com.meiling.common.network.data.ThrillItem
 import com.meiling.common.network.service.acceptanceCheckService
 import com.meiling.common.network.service.loginService
 
 class InputBoredomViewModel(application: Application) : BaseViewModel(application) {
     val shopBean = BaseLiveData<ArrayList<ShopBean>>()
     val thrillBen = BaseLiveData<ArrayList<ThrillBen>>()
+    val ThrillItem = BaseLiveData<ArrayList<ThrillItem>>()
     fun cityshop(type: String) {
         var channelId = ""
         if (type == "1") {
@@ -27,7 +29,7 @@ class InputBoredomViewModel(application: Application) : BaseViewModel(applicatio
 
     fun verify(shopId:String,code:String){
 
-        request({ acceptanceCheckService.verify( code, shopId) }, thrillBen)
+        request({ acceptanceCheckService.verify( code, shopId) }, ThrillItem)
 
     }
 

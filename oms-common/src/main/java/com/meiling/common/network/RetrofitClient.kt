@@ -2,6 +2,7 @@ package com.meiling.common.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import java.util.concurrent.TimeUnit
@@ -18,8 +19,12 @@ class RetrofitClient {
     }
 
     private fun provideOkHttpClient(): OkHttpClient {
+        val httpLoggingInterceptor = HttpLoggingInterceptor()
+            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+
         val client: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(LoggerInterceptor())
+            .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(AccessTokenInterceptor())
             .connectTimeout(DEFAULT_TIME_OUT.toLong(), TimeUnit.SECONDS)
             .readTimeout(DEFAULT_TIME_OUT.toLong(), TimeUnit.SECONDS)

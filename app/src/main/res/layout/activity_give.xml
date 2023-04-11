@@ -2,9 +2,120 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/order_remark_F4F4F4"
     android:layout_height="match_parent">
 
+    <com.hjq.bar.TitleBar
+        android:id="@+id/TitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        app:layout_constraintTop_toTopOf="parent"
+        app:leftIcon="@drawable/bar_arrows_left_white"
+        app:lineVisible="false"
+        app:rightTitleSize="@dimen/sp_14"
+        app:title=""
+        app:titleColor="@color/white" />
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/slbg"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/my_recharge_bg_red"
+        app:layout_constraintTop_toBottomOf="@+id/TitleBar"
+        app:shape_bottomLeftRadius="@dimen/dp_60"
+        app:shape_bottomRightRadius="@dimen/dp_60">
+        <TextView
+            android:id="@+id/tv_succeed"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:drawableLeft="@drawable/succeed"
+            android:text="核销成功"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@color/white"
+            android:textSize="21sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginTop="13dp"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/tv_succeed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="您可在20分钟内撤销核销"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.hjq.shape.layout.ShapeRecyclerView
+        app:layout_constraintBottom_toTopOf="@+id/ll_btn"
+
+        android:id="@+id/recyclerView"
+        android:layout_marginTop="88dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        app:layout_constraintTop_toTopOf="@+id/slbg"
+        app:shape_solidColor="@color/white"
+        app:shape_radius="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+    </com.hjq.shape.layout.ShapeRecyclerView>
+
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/tv_revocation"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_width="0dp"
+            android:textColor="#FF4C4A"
+            app:shape_radius="10dp"
+            app:shape_strokeColor="#FF4C4A"
+            app:shape_strokeWidth="1dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            app:shape_shadowColor="@color/white"
+            android:text="撤销核销"
+            android:gravity="center"
+
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+        <com.hjq.shape.view.ShapeButton
+                android:id="@+id/tv_go_on"
+            android:layout_marginTop="10dp"
+
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_width="0dp"
+            app:shape_radius="10dp"
+            android:textColor="@color/white"
+            app:shape_solidColor="#FF4C4A"
+            android:text="继续核销"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

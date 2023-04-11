@@ -57,7 +57,7 @@ class WriteOffDetailsActivity :
             //核销时间
             mDatabind.tvCouponUseTime.text = serializableExtra?.coupon?.couponUseTime
             //订单编号
-            mDatabind.tvCouponUseTime.text = serializableExtra?.coupon?.couponUseTime
+            mDatabind.tvOrderId.text = serializableExtra?.coupon?.orderId
 
 
             if (serializableExtra?.coupon?.undoType == 1) {
@@ -72,6 +72,32 @@ class WriteOffDetailsActivity :
                 mDatabind.tvStatus.shapeDrawableBuilder.setSolidColor(Color.parseColor("#FFF1DF"))
                     .intoBackground()
                 mDatabind.tvStatus.text = "已核销"
+                var string2Millis = TimeUtils.string2Millis(serializableExtra?.coupon?.couponUseTime)
+                var nowMills = TimeUtils.getNowMills()
+                val b: Boolean = (nowMills - string2Millis) / 60000 > 20
+                if (b) {
+                    mDatabind.tvOk.visibility = View.GONE
+
+                } else {
+
+                    mDatabind.tvOk.visibility = View.VISIBLE
+                    mDatabind.tvOk.setOnClickListener {
+
+                        val dialog: MineExitDialog =
+                            MineExitDialog().newInstance("温馨提示", "确认撤销核销吗？", "我再想想","确定撤销",false)
+                        dialog.setOkClickLister {
+                            dialog.dismiss()
+                            mViewModel.cancel(
+                                serializableExtra.coupon?.couponCode!!,
+                                serializableExtra.coupon?.shopId!!
+                            )
+
+                        }
+                        dialog.show(supportFragmentManager)
+//
+//
+                    }
+                }
 
             } else {
 
@@ -103,37 +129,11 @@ class WriteOffDetailsActivity :
 
 
             }
-            //1200000
-            var string2Millis = TimeUtils.string2Millis("2023-04-07 19:43:01")
-            var nowMills = TimeUtils.getNowMills()
-            val b: Boolean = (nowMills - string2Millis) / 60000 > 20
-            if (b) {
-                mDatabind.tvOk.visibility = View.GONE
-
-            } else {
-
-                mDatabind.tvOk.visibility = View.VISIBLE
-                mDatabind.tvOk.setOnClickListener {
-
-                    val dialog: MineExitDialog =
-                        MineExitDialog().newInstance("温馨提示", "注销后，该账号将不可用。\n 请确认操作～", false)
-                    dialog.setOkClickLister {
-                        mViewModel.cancel(
-                            serializableExtra.coupon?.couponCode!!,
-                            serializableExtra.coupon?.shopId!!
-                        )
-
-                    }
-                    dialog.show(supportFragmentManager)
-//
-//
-                }
-            }
 
 
 
 
-            Log.d("yjk", "initData: ${(b)}")
+
 
 
         }

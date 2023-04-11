@@ -4,16 +4,21 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
-import com.meiling.common.network.data.Shop
-import com.meiling.common.network.data.ShopBean
-import com.meiling.common.network.data.ThrillBen
+import com.meiling.common.network.data.*
 import com.meiling.common.network.service.acceptanceCheckService
 
 class VoucherinspectionViewModel(application: Application) :BaseViewModel(application) {
 
     val shopBean = BaseLiveData<ArrayList<ShopBean>>()
+
     val thrillBen = BaseLiveData<ArrayList<ThrillBen>>()
+    val verifythrillBen = BaseLiveData<ArrayList<ThrillItem>>()
+
+    val meituan = BaseLiveData<String>()
+    val consume = BaseLiveData<String>()
+
     var Shop = BaseLiveData<Shop>()
+
     fun cityshop(type: String) {
         var channelId = ""
         if (type == "1") {//抖音
@@ -34,7 +39,15 @@ class VoucherinspectionViewModel(application: Application) :BaseViewModel(applic
     }
     fun verify(shopId:String,code:String){
 
-        request({ acceptanceCheckService.verify( code, shopId) }, thrillBen)
+        request({ acceptanceCheckService.verify( code, shopId) }, verifythrillBen)
 
     }
+
+    fun mttgprepare(couponCode:String,shopId:String){
+        request({ acceptanceCheckService.mttgprepare( couponCode, shopId) }, meituan)
+    }
+    fun consume(couponCode:String,count:String,shopId:String){
+        request({ acceptanceCheckService.consume( couponCode, count,shopId) }, consume)
+    }
+
 }

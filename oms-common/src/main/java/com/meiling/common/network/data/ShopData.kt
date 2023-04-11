@@ -137,7 +137,7 @@ data class Coupon(
     @SerializedName("operateSource")
     val operateSource: Int? = 0,
     @SerializedName("orderId")
-    val orderId: Int? = 0,//券码补单订单id
+    val orderId: String = "",//券码补单订单id
     @SerializedName("poiId")
     val poiId: Int? = 0,
     @SerializedName("requestId")
@@ -166,8 +166,116 @@ data class Coupon(
     val viewId: Long? = 0
 ):Serializable
 
-data class Test(
-    var name:String
+
+data class ThrillItem(
+    @SerializedName("adminViewId")
+    val adminViewId: String? = "",
+    @SerializedName("cancelType")
+    val cancelType: Int? = 0,
+    @SerializedName("couponBuyPrice")
+    val couponBuyPrice: String? = "",
+    @SerializedName("couponCode")
+    val couponCode: String? = "",
+    @SerializedName("couponCount")
+    val couponCount: Int? = 0,
+    @SerializedName("couponGoodsOrderSnapshot")
+    val couponGoodsOrderSnapshot: Any? = Any(),
+    @SerializedName("couponUseOrderViewId")
+    val couponUseOrderViewId: Any? = Any(),
+    @SerializedName("couponUseTime")
+    val couponUseTime: String? = "",
+    @SerializedName("createTime")
+    val createTime: Long? = 0,
+    @SerializedName("dealMenu")
+    val dealMenu: String? = "",
+    @SerializedName("dealTitle")
+    val dealTitle: String? = "",
+    @SerializedName("dealValue")
+    val dealValue: String? = "",
+    @SerializedName("id")
+    val id: Int? = 0,
+    @SerializedName("isVoucher")
+    val isVoucher: Int? = 0,
+    @SerializedName("operateSource")
+    val operateSource: Int? = 0,
+    @SerializedName("orderId")
+    val orderId: String? = "",
+    @SerializedName("poiId")
+    val poiId: Int? = 0,
+    @SerializedName("requestId")
+    val requestId: Any? = Any(),
+    @SerializedName("shopId")
+    val shopId: Int? = 0,
+    @SerializedName("shopName")
+    val shopName: String? = "",
+    @SerializedName("spuViewId")
+    val spuViewId: Any? = Any(),
+    @SerializedName("status")
+    val status: Int? = 0,
+    @SerializedName("tenantId")
+    val tenantId: Int? = 0,
+    @SerializedName("ticketTransId")
+    val ticketTransId: String? = "",
+    @SerializedName("type")
+    val type: Int? = 0,
+    @SerializedName("undoType")
+    val undoType: Int? = 0,
+    @SerializedName("updateTime")
+    val updateTime: Long? = 0,
+    @SerializedName("userId")
+    val userId: Any? = Any(),
+    @SerializedName("viewId")
+    val viewId: Long? = 0
 ):Serializable
 
+
+data class Meituan(
+
+
+    @SerializedName("count")
+    val count: String? = "",
+    @SerializedName("couponBuyPrice")
+    val couponBuyPrice: String? = "",//购买金额
+    @SerializedName("couponCode")
+    val couponCode: String? = "",
+    @SerializedName("couponEndTime")
+    val couponEndTime: String? = "",
+    @SerializedName("couponUseTime")
+    val couponUseTime: String? = "",
+    @SerializedName("dealBeginTime")
+    val dealBeginTime: String? = "",
+    @SerializedName("dealId")
+    val dealId: Int? = 0,
+    @SerializedName("dealMenu")
+    val dealMenu: List<List<DealMenu?>?>? = listOf(),
+    @SerializedName("dealPrice")
+    val dealPrice: String? = "",
+    @SerializedName("dealTitle")
+    val dealTitle: String? = "",
+    @SerializedName("dealValue")
+    val dealValue: String? = "",
+    @SerializedName("isVoucher")
+    val isVoucher: Int? = 0,
+    @SerializedName("message")
+    val message: String? = "",
+    @SerializedName("minConsume")
+    val minConsume: Int? = 0,
+    @SerializedName("result")
+    val result: Int? = 0,
+    @SerializedName("shopName")
+    val shopName: String? = ""
+):Serializable
+
+data class DealMenu(
+    @SerializedName("content")
+    val content: String? = "",
+    @SerializedName("price")
+    val price: String? = "",
+    @SerializedName("specification")
+    val specification: String? = "",
+    @SerializedName("total")
+    val total: String? = "",
+    @SerializedName("type")
+    val type: String? = ""
+):Serializable
 

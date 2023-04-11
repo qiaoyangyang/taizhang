@@ -50,6 +50,7 @@
 
             <EditText
                 android:id="@+id/edt_search"
+                android:imeOptions="actionSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
