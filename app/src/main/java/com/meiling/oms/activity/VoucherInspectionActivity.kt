@@ -30,22 +30,23 @@ class VoucherInspectionActivity :
     var type = ""
     var thrillBen = ArrayList<ThrillBen>()
     var shopBean = ArrayList<ShopBean>()
-    var meituan:Meituan?=null
+    var meituan: Meituan? = null
     override fun initView(savedInstanceState: Bundle?) {
         TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
         //验券历史
         mDatabind.tvVoucherInspectionHistory.setOnClickListener {
-            startActivity(
-                Intent(this, VoucherInspectionHistoryActivity::class.java).putExtra(
-                    "shop",
-                    shopdata
+            if (shopdata != null) {
+                startActivity(
+                    Intent(this, VoucherInspectionHistoryActivity::class.java)
+                        .putExtra("shop", shopdata)
+                        .putExtra("type",type)
                 )
-            )
+            }
         }
         //  输码验券
         mDatabind.tvInputBoredom.setOnClickListener {
             startActivity(
-                Intent(this, InputBoredomActivity::class.java)
+                Intent(this, InputBoredomActivity::class.java).putExtra("type",type)
             )
         }
 
@@ -82,6 +83,9 @@ class VoucherInspectionActivity :
                         shopId = shop?.id.toString()
                         shopdata = shop
                         mDatabind.TitleBar.titleView.text = shop.name
+                    }
+
+                    override fun Ondismiss() {
                     }
 
                 })
@@ -149,21 +153,25 @@ class VoucherInspectionActivity :
             var checkCouponInformationDidalog = CheckCouponInformationDidalog1().newInstance(it)
             checkCouponInformationDidalog.setOnresilience(object :
                 CheckCouponInformationDidalog1.Onresilience {
-                override fun resilience(encryptedCode: String,count:String,mode: Meituan) {
-                    meituan=mode
-                    mViewModel.consume(encryptedCode,count,shopId)
+                override fun resilience(encryptedCode: String, count: String, mode: Meituan) {
+                    meituan = mode
+                    mViewModel.consume(encryptedCode, count, shopId)
                 }
 
             })
 
             checkCouponInformationDidalog.show(supportFragmentManager)
         }
-        mViewModel.meituan.onSuccess.observe(this){
+        mViewModel.meituan.onError.observe(this){
+            showToast("${it.msg}")
+        }
+
+        mViewModel.consume.onSuccess.observe(this) {
             startActivity(
-                Intent(this, WriteOffActivity::class.java).putExtra(
+                Intent(this, MeituanActivity::class.java).putExtra(
                     "meituan",
                     meituan
-                ).putExtra("shopId", shopId)
+                ).putExtra("shopId", shopId).putExtra("code",it)
             )
         }
 

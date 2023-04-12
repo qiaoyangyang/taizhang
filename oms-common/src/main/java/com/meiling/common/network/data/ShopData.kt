@@ -3,6 +3,7 @@ package com.meiling.common.network.data
 import com.google.gson.annotations.SerializedName
 import com.meiling.common.base.IWheel
 import java.io.Serializable
+import java.math.BigDecimal
 
 
 data class ShopBean(
@@ -32,7 +33,7 @@ data class Shop(
     val status: String? = ""
 
 
-) :Serializable, IWheel {
+) : Serializable, IWheel {
     override fun getShowText(): String {
         return name.toString()
     }
@@ -103,7 +104,7 @@ data class WriteoffhistoryPageData(
     val shopName: String? = "",
     @SerializedName("sku")
     val sku: Any? = Any()
-): Serializable
+) : Serializable
 
 data class Coupon(
     @SerializedName("adminViewId")
@@ -164,7 +165,7 @@ data class Coupon(
     val userId: String? = "",
     @SerializedName("viewId")
     val viewId: Long? = 0
-):Serializable
+) : Serializable
 
 
 data class ThrillItem(
@@ -226,16 +227,15 @@ data class ThrillItem(
     val userId: Any? = Any(),
     @SerializedName("viewId")
     val viewId: Long? = 0
-):Serializable
+) : Serializable
 
 
 data class Meituan(
 
-
     @SerializedName("count")
     val count: String? = "",
     @SerializedName("couponBuyPrice")
-    val couponBuyPrice: String? = "",//购买金额
+    val couponBuyPrice: String? = "",
     @SerializedName("couponCode")
     val couponCode: String? = "",
     @SerializedName("couponEndTime")
@@ -245,30 +245,44 @@ data class Meituan(
     @SerializedName("dealBeginTime")
     val dealBeginTime: String? = "",
     @SerializedName("dealId")
-    val dealId: Int? = 0,
+    val dealId: String? = "",
     @SerializedName("dealMenu")
     val dealMenu: List<List<DealMenu?>?>? = listOf(),
     @SerializedName("dealPrice")
-    val dealPrice: String? = "",
+    val dealPrice: String? ="",
     @SerializedName("dealTitle")
     val dealTitle: String? = "",
     @SerializedName("dealValue")
-    val dealValue: String? = "",
+    val dealValue: Int? = 0,
     @SerializedName("isVoucher")
     val isVoucher: Int? = 0,
     @SerializedName("message")
     val message: String? = "",
     @SerializedName("minConsume")
     val minConsume: Int? = 0,
+    @SerializedName("platformTitle")
+    val platformTitle: String? = "",
+    @SerializedName("rawTitle")
+    val rawTitle: String? = "",
     @SerializedName("result")
     val result: Int? = 0,
     @SerializedName("shopName")
-    val shopName: String? = ""
-):Serializable
+    val shopName: String? = "",
+    @SerializedName("singleValue")
+    val singleValue: Int? = 0,
+    @SerializedName("volume")
+    val volume: Int? = 0
+): Serializable
 
 data class DealMenu(
     @SerializedName("content")
     val content: String? = "",
+    @SerializedName("desc")
+    val desc: String? = "",
+    @SerializedName("images")
+    val images: String? = "",
+    @SerializedName("notDishes")
+    val notDishes: String? = "",
     @SerializedName("price")
     val price: String? = "",
     @SerializedName("specification")
@@ -277,5 +291,28 @@ data class DealMenu(
     val total: String? = "",
     @SerializedName("type")
     val type: String? = ""
-):Serializable
 
+) : Serializable
+
+
+data class RecordCodeNumber(
+//    "total":71111.02,"count":604
+    @SerializedName("total")
+    val total: String,//来源
+    @SerializedName("count")
+    val count: String//来源
+)
+
+data class VerificationScreening(
+    var startDate: String,//开始时间
+    var endDate: String,//结束时间
+    var timetype: Int,//时间类型 0自定义时间 1 昨天 2 今天 3 近七天 4 进30天
+
+    var poiId: String,// 门店ID
+    var poiIdtype: String,// 门店类型 0 全部门店 1 定义门店
+
+    var status: String,// 验券类型  2.已核销 -1.已撤销 0全部
+    var isVoucher: String,// 验券状态  1.团购券 2.代金券 0 全部
+
+
+) : Serializable

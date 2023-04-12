@@ -16,6 +16,7 @@ class VoucherinspectionViewModel(application: Application) :BaseViewModel(applic
 
     val meituan = BaseLiveData<String>()
     val consume = BaseLiveData<String>()
+    val cancel = BaseLiveData<String>()
 
     var Shop = BaseLiveData<Shop>()
 
@@ -48,6 +49,10 @@ class VoucherinspectionViewModel(application: Application) :BaseViewModel(applic
     }
     fun consume(couponCode:String,count:String,shopId:String){
         request({ acceptanceCheckService.consume( couponCode, count,shopId) }, consume)
+    }
+
+    fun cancel(shopId:String){
+        request({ acceptanceCheckService.cancel( shopId) }, cancel)
     }
 
 }

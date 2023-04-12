@@ -8,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,7 +34,7 @@ public class GsonUtils {
         return t;
     }
 
-    public static  <T> List<T> getPersons(String jsonString, Class<T> cls) {
+    public static <T> List<T> getPersons(String jsonString, Class<T> cls) {
         List<T> list = new ArrayList<T>();
         try {
             //创建解析对象
@@ -54,6 +55,44 @@ public class GsonUtils {
         return list;
     }
 
+    public static <T> List<T> getPersons1(String jsonString, Class<T> cls) {
+        List<T> list = new ArrayList<T>();
+        try {
+            Gson gson = new Gson();
+            JSONArray jsonArray = new JSONArray(jsonString);
+            if (jsonArray.length() > 0) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+
+                    JSONArray innerJsonArray = jsonArray.getJSONArray(i);
+
+                    if (innerJsonArray.length() > 1) { // 获取两个对象
+
+                        JSONObject jsonObject1 = innerJsonArray.getJSONObject(0);
+                        JSONObject jsonObject2 = innerJsonArray.getJSONObject(1);
+
+                        T messageCenterDTO = gson.fromJson(jsonObject2.toString(), cls);
+                        list.add(messageCenterDTO);
+                        // 从第一个对象中获取content字段的值
+                        String content1 = jsonObject1.getString("content");
+                        System.out.println("content1: " + content1);
+
+                        // 从第二个对象中获取content字段的值
+                        String content2 = jsonObject2.getString("content");
+                        System.out.println("content2: " + content2);
+                    } else {
+                        System.out.println("Inner JSONArray does not contain at least two objects");
+                    }
+                }
+            } else {
+                System.out.println("JSONArray is empty");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public static List<Map<String, Object>> listKeyMaps(String jsonString) {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         try {
@@ -69,7 +108,7 @@ public class GsonUtils {
     }
 
     public static String getJsonData(String jsonData) {
-        String data="";
+        String data = "";
         try {
             JSONObject obj = new JSONObject(jsonData);
             data = obj.optString("data");

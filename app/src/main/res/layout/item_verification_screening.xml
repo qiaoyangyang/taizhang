@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjq.shape.layout.ShapeConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:shape_solidColor="@color/white"
+    app:shape_topLeftRadius="10dp"
+    app:shape_topRightRadius="10dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="筛选"
+        android:textColor="@color/home_333333"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_close_recharge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_title"
+        android:layout_alignBottom="@+id/tv_title"
+        android:layout_alignParentEnd="true"
+        android:paddingHorizontal="@dimen/dp_20"
+        android:src="@drawable/search_close_edt"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="16dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="验券日期"
+
+                android:textColor="@color/home_333333"
+                android:textSize="16sp" />
+
+
+            <RadioGroup
+                android:id="@+id/RG_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_yesterday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkbox_normal"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+
+                    android:text="昨日"
+                    android:textColor="@color/radiobutton_textcolor"
+
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_today"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkbox_normal"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="今日"
+                    android:textColor="@color/radiobutton_textcolor"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_About_seven_days"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkbox_normal"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="近七日"
+                    android:textColor="@color/radiobutton_textcolor"
+
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_nearly_days"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/checkbox_normal"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:paddingTop="6dp"
+
+                    android:paddingBottom="6dp"
+                    android:text="近30天"
+                    android:textColor="@color/radiobutton_textcolor"
+
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                />
+
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/rb_starting_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+
+                    android:background="@drawable/selected_false"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingTop="6dp"
+
+                    android:paddingBottom="6dp"
+                    android:text="起始时间"
+                    android:textColor="@color/home_333333"
+
+
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/tv_final_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/selected_false"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="终止时间"
+
+                    android:textColor="@color/home_333333"
+                    android:textSize="16sp"
+
+
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="验券门店"
+
+                android:textColor="@color/home_333333"
+                android:textSize="16sp" />
+
+            <RadioGroup
+                android:id="@+id/Rb_shop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_shop_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkbox_normal"
+                    android:button="@null"
+
+                    android:gravity="center"
+
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="所有门店 "
+                    android:textColor="@color/radiobutton_textcolor"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_shop_name_custom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkbox_normal"
+                    android:button="@null"
+                    android:checked="false"
+
+                    android:gravity="center"
+                    android:paddingTop="6dp"
+
+
+                    android:paddingBottom="6dp"
+                    android:text="自定义门店"
+                    android:textColor="@color/radiobutton_textcolor"
+                    android:textSize="16sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkbox_normal"
+                    android:button="@null"
+                    android:gravity="center"
+
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+
+
+                    android:text="近七日"
+                    android:textColor="@color/radiobutton_textcolor"
+                    android:textSize="16sp"
+                    android:visibility="invisible" />
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="验券类型"
+
+                android:textColor="@color/home_333333"
+                android:textSize="16sp" />
+
+            <RadioGroup
+                android:id="@+id/Rg_isVoucher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_isVoucher"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkbox_normal"
+                    android:button="@null"
+
+                    android:gravity="center"
+
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="所有类型 "
+                    android:textColor="@color/radiobutton_textcolor"
+                    android:textSize="16sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <RadioButton
+                    android:id="@+id/rb_voucher"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkbox_normal"
+                    android:button="@null"
+                    android:checked="false"
+
+                    android:gravity="center"
+                    android:paddingTop="6dp"
+
+
+                    android:paddingBottom="6dp"
+                    android:text="代金券"
+                    android:textColor="@color/radiobutton_textcolor"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_meal_voucher"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkbox_normal"
+                    android:button="@null"
+
+                    android:gravity="center"
+                    android:paddingTop="6dp"
+
+
+                    android:paddingBottom="6dp"
+                    android:text="套餐券"
+                    android:textColor="@color/radiobutton_textcolor"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkbox_normal"
+                    android:button="@null"
+                    android:checked="false"
+
+                    android:gravity="center"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+
+
+                    android:text="近30天"
+                    android:textColor="@color/radiobutton_textcolor"
+                    android:textSize="16sp"
+                    android:visibility="invisible" />
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="验券状态"
+
+                android:textColor="@color/home_333333"
+                android:textSize="16sp" />
+
+            <RadioGroup
+                android:id="@+id/Rg_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkbox_normal"
+                    android:button="@null"
+
+                    android:gravity="center"
+
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="所有状态 "
+                    android:textColor="@color/radiobutton_textcolor"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_Written_off"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkbox_normal"
+                    android:button="@null"
+                    android:checked="false"
+
+                    android:gravity="center"
+                    android:paddingTop="6dp"
+
+
+                    android:paddingBottom="6dp"
+                    android:text="已核销"
+                    android:textColor="@color/radiobutton_textcolor"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_revoked"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkbox_normal"
+                    android:button="@null"
+
+                    android:gravity="center"
+                    android:paddingTop="6dp"
+
+
+                    android:paddingBottom="6dp"
+                    android:text="已撤销"
+                    android:textColor="@color/radiobutton_textcolor"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkbox_normal"
+                    android:button="@null"
+                    android:checked="false"
+
+                    android:gravity="center"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+
+
+                    android:text=""
+                    android:textColor="@color/radiobutton_textcolor"
+                    android:textSize="16sp"
+                    android:visibility="invisible" />
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="20dp"
+            android:background="@color/white">
+
+            <com.hjq.shape.view.ShapeButton
+                android:id="@+id/tv_revocation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="重置"
+                android:textColor="#FF4C4A"
+                app:shape_radius="10dp"
+                app:shape_shadowColor="@color/white"
+
+                app:shape_strokeColor="#FF4C4A"
+                app:shape_strokeWidth="1dp" />
+
+            <com.hjq.shape.view.ShapeButton
+                android:id="@+id/tv_go_on"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="筛选"
+                android:textColor="@color/white"
+
+                app:shape_radius="10dp"
+                app:shape_solidColor="#FF4C4A" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</com.hjq.shape.layout.ShapeConstraintLayout>

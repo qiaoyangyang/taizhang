@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
+import android.view.View
+import android.view.View.OnClickListener
 import com.hjq.shape.view.ShapeButton
 import com.meiling.common.base.WheelItem
 import com.meiling.common.base.WheelItemView
@@ -19,7 +21,7 @@ import com.shehuan.nicedialog.ViewHolder
 class ShopDialog : BaseNiceDialog() {
     init {
         setGravity(Gravity.BOTTOM)
-        setOutCancel(true)
+        setOutCancel(false)
     }
 
     override fun intLayoutId(): Int {
@@ -39,6 +41,13 @@ class ShopDialog : BaseNiceDialog() {
         var cityid_view = holder?.getView<WheelItemView>(R.id.wheel_view_left)
         var wheel_view_center = holder?.getView<WheelItemView>(R.id.wheel_view_center)
         var btn_ok_exit = holder?.getView<ShapeButton>(R.id.btn_ok_exit)
+        holder?.setOnClickListener(R.id.iv_close_recharge, object : OnClickListener {
+            override fun onClick(v: View?) {
+                dismiss()
+                onresilience?.Ondismiss()
+            }
+
+        })
         cityid_view?.setOnSelectedListener { context, selectedIndex ->
             //loadData1(wheel_view_center!!, shopBean, selectedIndex)
         }
@@ -93,5 +102,6 @@ class ShopDialog : BaseNiceDialog() {
 
     interface Onresilience {
         fun resilience(cityid: Int, shopid: Int, shop: Shop)
+        fun Ondismiss()
     }
 }

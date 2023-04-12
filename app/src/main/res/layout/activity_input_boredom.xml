@@ -15,7 +15,7 @@
         app:leftIcon="@drawable/bar_arrows_left_white"
         app:lineVisible="false"
         app:rightTitleSize="@dimen/sp_14"
-        app:title="浮光之丘大都会门店"
+        app:title=""
         app:titleColor="@color/white" />
 
     <com.hjq.shape.layout.ShapeLinearLayout
@@ -53,7 +53,14 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <EditText
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:background="@null"
+            android:focusable="false"
+            android:textSize="18sp"
             android:textColor="@color/home_333333"
             android:id="@+id/tv_Stock_Code"
             app:layout_constraintRight_toRightOf="@+id/iv_search_close_edt"

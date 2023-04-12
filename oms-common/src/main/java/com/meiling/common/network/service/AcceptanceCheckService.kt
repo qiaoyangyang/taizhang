@@ -43,10 +43,17 @@ interface AcceptanceCheckService {
 
 
     //美团开始核销
-    @GET("saas/mttg/consume/{couponCode}")
+    @POST("saas/mttg/consume/{couponCode}")
     suspend fun consume(
         @Path("couponCode") couponCode: String,
         @Query("count") count: String? = "",//
+        @Query("shopId") shopId: String? = "",//
+    ): ResultData<String>
+
+    // 美团撤销
+    @POST("saas/mttg/cancel/{couponCode}")
+    suspend fun mttgcancel(
+        @Path("couponCode") couponCode: String,
         @Query("shopId") shopId: String? = "",//
     ): ResultData<String>
 
@@ -79,6 +86,18 @@ interface AcceptanceCheckService {
         @Query("type") type: String = "",//20
         @Query("isVoucher") isVoucher: String = "",//20
     ): ResultData<Writeoffhistory>
+
+    @GET("saas/mttg/coupon/data")
+    suspend fun codeNumber(
+        @Query("startDate") startDate: String = "",//开始时间
+        @Query("endDate") endDate: String = "",//结束时间
+        @Query("poiId") poiId: String = "",//门店id
+        @Query("selectText") selectText: String = "",//搜索券码
+        @Query("status") status: String = "",//20
+        @Query("type") type: String = "",//20
+        @Query("isVoucher") isVoucher: String = "",//20
+
+        ): ResultData<RecordCodeNumber>
 
 
 }

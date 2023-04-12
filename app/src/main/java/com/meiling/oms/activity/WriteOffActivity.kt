@@ -1,5 +1,6 @@
 package com.meiling.oms.activity
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
@@ -70,7 +71,7 @@ class WriteOffActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activit
 
         mViewModel.cancelstring.onSuccess.observe(this){
             finish()
-
+            startActivity(Intent(this, WriteDetailsActivity::class.java))
 
         }
     }
