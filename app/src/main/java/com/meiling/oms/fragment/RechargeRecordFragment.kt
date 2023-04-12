@@ -101,6 +101,9 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
     override fun onResume() {
         super.onResume()
         EventBus.getDefault().post(MessageEventTimeShow())
+        pageIndex = 1
+        startDate = formatCurrentDateBeforeWeek()
+        initViewData()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

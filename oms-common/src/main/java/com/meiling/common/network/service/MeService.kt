@@ -46,7 +46,7 @@ interface MeService {
     suspend fun getFinancialRecordDetail(
         @Query("viewId") viewId: String,
         @Query("pageIndex") pageIndex: String,
-        @Query("viewId") pageSize: String
+        @Query("pageSize") pageSize: String
     ): ResultData<FinancialRecordDetail>
 
 
