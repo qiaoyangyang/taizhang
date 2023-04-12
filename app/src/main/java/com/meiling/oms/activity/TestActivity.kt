@@ -17,7 +17,7 @@ class TestActivity : BaseActivity<TestViewModel, ActivityTestBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         val fragments: MutableList<Fragment> = arrayListOf()
         fragments.add(
-            OrderDisFragment1.newInstance()
+            DataFragment.newInstance()
         )
         fragments.add(
             DataFragment.newInstance()

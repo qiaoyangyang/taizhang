@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/app_themes_f7f7f7"
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,14 +25,13 @@
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_28"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBaseline_toBaselineOf="@+id/txt_rec_name"
+            app:layout_constraintBaseline_toBaselineOf="@+id/edt_rec_name"
             />
         <EditText
-            android:id="@+id/txt_rec_name"
+            android:id="@+id/edt_rec_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/dp_10"
-            android:text="李"
             android:maxLength="10"
             android:background="@null"
             android:hint="请输入配送员姓名"
@@ -50,7 +48,7 @@
             android:layout_height="1dp"
             android:layout_marginVertical="@dimen/dp_20"
             android:background="@color/app_themes_f7f7f7"
-            app:layout_constraintTop_toBottomOf="@+id/txt_rec_name" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_rec_name" />
 
         <TextView
             android:id="@+id/txt_rec_time_tip"
@@ -63,7 +61,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_line" />
         <EditText
-            android:id="@+id/txt_rec_time"
+            android:id="@+id/edt_rec_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/dp_10"

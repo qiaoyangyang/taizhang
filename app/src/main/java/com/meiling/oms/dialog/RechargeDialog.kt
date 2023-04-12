@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.meiling.common.network.data.OrderSendChannel
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.widget.setSingleClickListener
@@ -25,8 +26,8 @@ class RechargeDialog : BaseNiceDialog() {
         setOutCancel(false)
     }
 
-    var okSelectClickLister: (() -> Unit)? = null
-    fun setOkClickLister(okClickLister: () -> Unit) {
+    var okSelectClickLister: ((money: String, channel: String) -> Unit)? = null
+    fun setOkClickLister(okClickLister: (money: String, channel: String) -> Unit) {
         this.okSelectClickLister = okClickLister
     }
 
@@ -50,10 +51,13 @@ class RechargeDialog : BaseNiceDialog() {
 
     lateinit var rechargeAdapter: BaseQuickAdapter<rechDto, BaseViewHolder>
 
+    var money = "0.01"
+    var channel = "2"
+
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
 //        val title = arguments?.getString("title") as String
 //        val content = arguments?.getString("content") as String
-        list.add(rechDto("200"))
+        list.add(rechDto("0.01"))
         list.add(rechDto("500"))
         list.add(rechDto("1000"))
         list.add(rechDto("2000"))
@@ -92,6 +96,7 @@ class RechargeDialog : BaseNiceDialog() {
                             R.drawable.recharge_bg_select_true
                         )
                         rechargeSum.setTextColor(resources.getColor(R.color.red))
+                        money = item.money
                     } else {
                         holder.setBackgroundResource(
                             R.id.txt_recharge_sum,
@@ -99,20 +104,25 @@ class RechargeDialog : BaseNiceDialog() {
                         )
                         rechargeSum.setTextColor(resources.getColor(R.color.home_666666))
                     }
-
                 }
             }
+
+        rechargeAdapter.setOnItemClickListener { adapter, view, position ->
+            var data = adapter.data[position] as rechDto
+            for (xx in adapter.data) {
+                (xx as rechDto).select = xx == data
+            }
+            rechargeAdapter.notifyDataSetChanged()
+        }
+
         rvRecharge?.adapter = rechargeAdapter
         rechargeAdapter.setList(list)
-//        holder?.setText(R.id.tv_title, title)
-//        holder?.setText(R.id.tv_content, content)
-
         cancel?.setSingleClickListener {
             dismiss()
         }
         ok?.setSingleClickListener {
             dismiss()
-            okSelectClickLister?.invoke()
+            okSelectClickLister?.invoke(money, channel)
         }
 
     }

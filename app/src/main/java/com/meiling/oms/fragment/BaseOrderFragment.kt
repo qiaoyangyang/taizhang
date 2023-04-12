@@ -18,6 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
+import com.meiling.common.network.data.NewGoodsVo
 import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.EventBusData.MessageEvent
@@ -55,7 +56,6 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        EventBus.getDefault().unregister(this);
         requireArguments().getString("type").toString()
         orderDisAdapter =
             object : BaseQuickAdapter<OrderDto.Content, BaseViewHolder>(R.layout.item_home_order),
@@ -79,18 +79,13 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     holder.setText(R.id.txt_pay_money, "¥${item.order?.payPrice}")
                     holder.setText(R.id.txt_pay_fee, "¥${item.order?.platformServiceFee}")
                     holder.setText(R.id.txt_order_total_money, "¥${item.order?.actualIncome}")
-                    val options = RequestOptions()
-                        .format(DecodeFormat.PREFER_ARGB_8888)
+                    val options = RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)
                     //加载svg图片
-                    Glide.with(context).`as`(PictureDrawable::class.java)
-                        .load(item.channelLogo)
-                        .apply(options)
-                        .listener(SvgSoftwareLayerSetter())
-                        .into(channelLogoImg)
+                    Glide.with(context).`as`(PictureDrawable::class.java).load(item.channelLogo)
+                        .apply(options).listener(SvgSoftwareLayerSetter()).into(channelLogoImg)
 
                     holder.setText(
-                        R.id.txt_order_delivery_state,
-                        "${item.order?.deliveryStatusName}"
+                        R.id.txt_order_delivery_state, "${item.order?.deliveryStatusName}"
                     )
                     orderId.text = "${item.order?.viewId}"
                     holder.setText(R.id.txt_order_remark, "${item.order?.remark}")
@@ -128,27 +123,28 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             .withString("receivePhone", item.order?.recvPhone)
                             .withString("receiveAddress", item.order?.recvAddr)
                             .withString("receiveRemark", item.order?.remark)
-                            .withString("lat", item.order?.lat)
-                            .withString("lon", item.order?.lon)
+                            .withString("lat", item.order?.lat).withString("lon", item.order?.lon)
                             .withString("orderId", item.order?.viewId)
-                            .withInt("index", holder.adapterPosition)
-                            .navigation()
+                            .withInt("index", holder.adapterPosition).navigation()
+                    }
+
+
+                    var listGoods = item.goodsVoList
+                    var listNew = ArrayList<NewGoodsVo>()
+                    var x = ""
+                    for (goods in listGoods!!) {
+                        x += "名称" + goods?.gname + "\n数量" + goods?.number + "\n价格" + goods?.price
+                    }
+                    val filteredData = listGoods!!.map { goods ->
+                        NewGoodsVo(goods?.gname, goods?.number, goods?.price)
                     }
 
                     imgShopCopy.setSingleClickListener {
                         copyText(
                             context,
-                            "订单来源：" + "${item.channelName} \n" +
-                                    "门店名称${item.shopName}\n" +
-                                    "订单编号${item.order?.viewId}\n" +
-                                    "-------\n" +
-                                    "商品信息${item.goodsVoList.toString()}\n" +
-                                    "-------\n" +
-                                    "收货时间${item.order?.arriveTimeDate}\n" +
-                                    "收货人${item.order?.recvName}${item.order?.recvPhone}\n" +
-                                    "收货地址${item.order?.recvAddr}\n" +
-                                    "-------\n" +
-                                    "备注${item.order?.remark}\n"
+                            "订单来源：" + "${item.channelName} \n" + "门店名称${item.shopName}\n" + "订单编号${item.order?.viewId}\n" + "-------\n" + "商品信息${x}\n" +
+//                                    "商品信息${Gson().fromJson(filteredData.toString(),Array<NewGoodsVo>::class.java).toList()}\n" +
+                                    "-------\n" + "收货时间${item.order?.arriveTimeDate}\n" + "收货人${item.order?.recvName}${item.order?.recvPhone}\n" + "收货地址${item.order?.recvAddr}\n" + "-------\n" + "备注${item.order?.remark}\n"
                         )
 //                        ToastUtils.showLong("复制成功")
                         showToast("复制成功")
@@ -158,39 +154,30 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             ARouter.getInstance().build("/app/OrderDisActivity")
                                 .withSerializable("kk", item).navigation()
                         } else {
-                            ARouter.getInstance().build("/app/OrderDisAddTipActivity")
-                                .navigation()
+                            ARouter.getInstance().build("/app/OrderDisAddTipActivity").navigation()
                         }
                     }
 
-                    var ryOrderSendDisDetail =
-                        holder.getView<RecyclerView>(R.id.rv_shop)
+                    var ryOrderSendDisDetail = holder.getView<RecyclerView>(R.id.rv_shop)
                     if (ryOrderSendDisDetail.layoutManager == null) {
-                        ryOrderSendDisDetail.layoutManager =
-                            LinearLayoutManager(
-                                requireContext(),
-                                LinearLayoutManager.VERTICAL,
-                                false
-                            )
+                        ryOrderSendDisDetail.layoutManager = LinearLayoutManager(
+                            requireContext(), LinearLayoutManager.VERTICAL, false
+                        )
                     }
-                    orderGoodsListAdapter =
-                        object :
-                            BaseQuickAdapter<OrderDto.Content.GoodsVo, BaseViewHolder>(R.layout.item_home_order_shop),
-                            LoadMoreModule {
-                            override fun convert(
-                                holder: BaseViewHolder,
-                                item: OrderDto.Content.GoodsVo
-                            ) {
-                                val view = holder.getView<ImageView>(R.id.img_order_shop_icon)
-                                holder.setText(R.id.txt_order_shop_name, item.gname)
-                                holder.setText(R.id.txt_order_shop_spec, item.specs)
-                                holder.setText(R.id.txt_order_shop_num, "X" + item.number)
-                                holder.setText(R.id.txt_order_shop_price, "¥" + item.price)
-                                Glide.with(context)
-                                    .load(item.avater)
-                                    .into(view)
-                            }
+                    orderGoodsListAdapter = object :
+                        BaseQuickAdapter<OrderDto.Content.GoodsVo, BaseViewHolder>(R.layout.item_home_order_shop),
+                        LoadMoreModule {
+                        override fun convert(
+                            holder: BaseViewHolder, item: OrderDto.Content.GoodsVo
+                        ) {
+                            val view = holder.getView<ImageView>(R.id.img_order_shop_icon)
+                            holder.setText(R.id.txt_order_shop_name, item.gname)
+                            holder.setText(R.id.txt_order_shop_spec, item.specs)
+                            holder.setText(R.id.txt_order_shop_num, "X" + item.number)
+                            holder.setText(R.id.txt_order_shop_price, "¥" + item.price)
+                            Glide.with(context).load(item.avater).into(view)
                         }
+                    }
                     ryOrderSendDisDetail!!.adapter = orderGoodsListAdapter
                     if (item.goodsVoList?.isNotEmpty() == true) {
                         orderGoodsListAdapter.setList(item.goodsVoList as MutableList<OrderDto.Content.GoodsVo>)
@@ -201,8 +188,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             sumNumber += ne?.number!!
                         }
                         holder.setText(
-                            R.id.txt_order_shop_msg,
-                            "${item.goodsVoList?.size}种商品，共${sumNumber}件"
+                            R.id.txt_order_shop_msg, "${item.goodsVoList?.size}种商品，共${sumNumber}件"
                         )
                         holder.setText(R.id.txt_total_money, "¥${sum}")
                     }
@@ -271,13 +257,13 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 orderDisAdapter.footerWithEmptyEnable = false
                 orderDisAdapter.loadMoreModule.loadMoreEnd()
             } else {
-                orderDisAdapter.loadMoreModule.loadMoreComplete()
+
             }
         }
         mViewModel.orderList.onError.observe(this) {
             dismissLoading()
             mDatabind.sflLayout.finishRefresh()
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
     }
 
@@ -299,6 +285,5 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         showToast("======${message}")
         orderDisAdapter.notifyItemChanged(message)
     }
-
 
 }
