@@ -25,7 +25,8 @@ import com.meiling.oms.viewmodel.VoucherinspectionViewModel
 import com.meiling.oms.widget.showToast
 
 // 手动输入
-class InputBoredomActivity : BaseActivity<VoucherinspectionViewModel, ActivityInputBoredomBinding>() {
+class InputBoredomActivity :
+    BaseActivity<VoucherinspectionViewModel, ActivityInputBoredomBinding>() {
 
 
     var StockCode = ""
@@ -97,11 +98,13 @@ class InputBoredomActivity : BaseActivity<VoucherinspectionViewModel, ActivityIn
                 var shopDialog = ShopDialog().newInstance(it)
 
                 shopDialog.setOnresilience(object : ShopDialog.Onresilience {
-                    override fun resilience(cityid: Int, shopid: Int, shop: Shop) {
+
+
+                    override fun resilience(cityid: Int, cityidname: String, shopid: Int, shop: Shop) {
                         mViewModel.Shop.onSuccess.postValue(shop)
                         shopId = shop?.id.toString()
                         shopdata = shop
-                        mDatabind.TitleBar.titleView.text = shop.name
+                        mDatabind.TitleBar.titleView.text = cityidname+shop.name
                     }
 
                     override fun Ondismiss() {
@@ -151,6 +154,13 @@ class InputBoredomActivity : BaseActivity<VoucherinspectionViewModel, ActivityIn
         textWatcher.setRULES(intArrayOf(4, 4, 4, 4, 4))
         textWatcher.separator = ' '
         mDatabind.tvStockCode.addTextChangedListener(textWatcher)
+        if (type == "1") {
+            mDatabind.tvTypeName.text = "抖音团购验券"
+            TextDrawableUtils.setLeftDrawable(mDatabind.tvTypeName, R.drawable.douyinx)
+        } else {
+            mDatabind.tvTypeName.text = "美团团购验券"
+            TextDrawableUtils.setLeftDrawable(mDatabind.tvTypeName, R.drawable.meituan)
+        }
 
     }
 
@@ -178,7 +188,7 @@ class InputBoredomActivity : BaseActivity<VoucherinspectionViewModel, ActivityIn
             if (it.size != 0) {
                 shopdata = it[0].shopList?.get(0)
                 shopId = it.get(0).shopList?.get(0)?.id!!
-                mDatabind.TitleBar.titleView.text = it.get(0).shopList?.get(0)?.name
+                mDatabind.TitleBar.titleView.text = it.get(0).name+"/"+it.get(0).shopList?.get(0)?.name
             }
         }
 
@@ -221,7 +231,7 @@ class InputBoredomActivity : BaseActivity<VoucherinspectionViewModel, ActivityIn
 
             checkCouponInformationDidalog.show(supportFragmentManager)
         }
-        mViewModel.meituan.onError.observe(this){
+        mViewModel.meituan.onError.observe(this) {
             showToast("${it.msg}")
         }
 
@@ -230,13 +240,12 @@ class InputBoredomActivity : BaseActivity<VoucherinspectionViewModel, ActivityIn
                 Intent(this, MeituanActivity::class.java).putExtra(
                     "meituan",
                     meituan
-                ).putExtra("shopId", shopId).putExtra("code",it)
+                ).putExtra("shopId", shopId).putExtra("code", it)
             )
         }
 
 
     }
-
 
 
 }

@@ -39,14 +39,14 @@ class VoucherInspectionActivity :
                 startActivity(
                     Intent(this, VoucherInspectionHistoryActivity::class.java)
                         .putExtra("shop", shopdata)
-                        .putExtra("type",type)
+                        .putExtra("type", type)
                 )
             }
         }
         //  输码验券
         mDatabind.tvInputBoredom.setOnClickListener {
             startActivity(
-                Intent(this, InputBoredomActivity::class.java).putExtra("type",type)
+                Intent(this, InputBoredomActivity::class.java).putExtra("type", type)
             )
         }
 
@@ -78,11 +78,16 @@ class VoucherInspectionActivity :
                 var shopDialog = ShopDialog().newInstance(it)
 
                 shopDialog.setOnresilience(object : ShopDialog.Onresilience {
-                    override fun resilience(cityid: Int, shopid: Int, shop: Shop) {
+                    override fun resilience(
+                        cityid: Int,
+                        cityidname: String,
+                        shopid: Int,
+                        shop: Shop
+                    ) {
                         mViewModel.Shop.onSuccess.postValue(shop)
                         shopId = shop?.id.toString()
                         shopdata = shop
-                        mDatabind.TitleBar.titleView.text = shop.name
+                        mDatabind.TitleBar.titleView.text = cityidname + shop.name
                     }
 
                     override fun Ondismiss() {
@@ -119,7 +124,8 @@ class VoucherInspectionActivity :
             if (it.size != 0) {
                 shopdata = it[0].shopList?.get(0)
                 shopId = it.get(0).shopList?.get(0)?.id!!
-                mDatabind.TitleBar.titleView.text = it.get(0).shopList?.get(0)?.name
+                mDatabind.TitleBar.titleView.text =
+                    it.get(0).name + "/" + it.get(0).shopList?.get(0)?.name
             }
         }
 
@@ -162,7 +168,7 @@ class VoucherInspectionActivity :
 
             checkCouponInformationDidalog.show(supportFragmentManager)
         }
-        mViewModel.meituan.onError.observe(this){
+        mViewModel.meituan.onError.observe(this) {
             showToast("${it.msg}")
         }
 
@@ -171,7 +177,7 @@ class VoucherInspectionActivity :
                 Intent(this, MeituanActivity::class.java).putExtra(
                     "meituan",
                     meituan
-                ).putExtra("shopId", shopId).putExtra("code",it)
+                ).putExtra("shopId", shopId).putExtra("code", it)
             )
         }
 

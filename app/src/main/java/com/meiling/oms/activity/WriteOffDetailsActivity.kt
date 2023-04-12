@@ -106,8 +106,8 @@ class WriteOffDetailsActivity :
             }
 
             if (serializableExtra?.coupon?.type == 2) {//美团
-
-                var conet = "由${serializableExtra.shopName}店验证"
+                mDatabind.meiRecyclerView.visibility=View.VISIBLE
+                var conet = "由 ${serializableExtra.shopName} 店验证"
                 SpannableUtils.setTextcolor(
                     this,
                     conet,
@@ -118,8 +118,9 @@ class WriteOffDetailsActivity :
                 )
 
             } else if (serializableExtra?.coupon?.type == 5) {//抖音
+                mDatabind.meiRecyclerView.visibility=View.GONE
                 //  holder.setText(R.id.tv_shopName, "由"+item?.coupon?.shopName+"验证")
-                var conet = "由${serializableExtra?.coupon?.shopName}店验证"
+                var conet = "由 ${serializableExtra?.coupon?.shopName} 店验证"
                 SpannableUtils.setTextcolor(
                     this,
                     conet,

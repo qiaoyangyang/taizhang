@@ -56,10 +56,11 @@ class ShopDialog : BaseNiceDialog() {
         }
         btn_ok_exit?.setOnClickListener {
             if (onresilience != null) {
-                var shop =
-                    shopBean[cityid_view?.selectedIndex!!].shopList?.get(wheel_view_center!!.selectedIndex) as Shop
+                var shop = shopBean[cityid_view?.selectedIndex!!].shopList?.get(wheel_view_center!!.selectedIndex) as Shop
+
                 onresilience?.resilience(
                     cityid_view?.selectedIndex!!,
+                    shopBean.get(cityid_view?.selectedIndex!!).name!!,
                     wheel_view_center?.selectedIndex!!,
                     shop!!
                 )
@@ -101,7 +102,7 @@ class ShopDialog : BaseNiceDialog() {
     private var onresilience: Onresilience? = null
 
     interface Onresilience {
-        fun resilience(cityid: Int, shopid: Int, shop: Shop)
+        fun resilience(cityid: Int,cityidname: String, shopid: Int, shop: Shop)
         fun Ondismiss()
     }
 }

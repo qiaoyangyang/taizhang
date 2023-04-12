@@ -69,6 +69,7 @@ public class GsonUtils {
                     if (innerJsonArray.length() > 1) { // 获取两个对象
 
                         JSONObject jsonObject1 = innerJsonArray.getJSONObject(0);
+
                         JSONObject jsonObject2 = innerJsonArray.getJSONObject(1);
 
                         T messageCenterDTO = gson.fromJson(jsonObject2.toString(), cls);

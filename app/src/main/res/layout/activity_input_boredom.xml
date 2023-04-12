@@ -54,23 +54,24 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+
+            android:id="@+id/tv_Stock_Code"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginBottom="@dimen/dp_10"
             android:background="@null"
             android:focusable="false"
-            android:textSize="18sp"
-            android:textColor="@color/home_333333"
-            android:id="@+id/tv_Stock_Code"
-            app:layout_constraintRight_toRightOf="@+id/iv_search_close_edt"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
             android:gravity="center|left"
             android:hint="请输入顾客提供的券码"
-
+            android:textColor="@color/home_333333"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
+
             app:layout_constraintLeft_toRightOf="@+id/iv_search"
+            app:layout_constraintRight_toRightOf="@+id/iv_search_close_edt"
 
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -89,109 +90,154 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/cl_keyboard"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <TextView
+
+            android:id="@+id/tv_left"
+            android:layout_width="32dp"
+            android:layout_height="1dp"
+            android:background="#E2E2E2"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_type_name"
+            android:layout_marginRight="10dp"
+            app:layout_constraintRight_toLeftOf="@+id/tv_type_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_type_name" />
+
+        <TextView
+            android:textSize="14sp"
+            android:textColor="#999999"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:text=""
+            android:id="@+id/tv_type_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_width="32dp"
+            android:layout_height="1dp"
+            android:background="#E2E2E2"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_type_name"
+            app:layout_constraintLeft_toRightOf="@+id/tv_type_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_type_name" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_keyboard"
 
         android:layout_width="0dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingRight="5dp"
-        android:paddingLeft="5dp"
-
         android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_1"
             style="@style/tv_pay_key"
 
+            android:text="1"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="1" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_2"
             style="@style/tv_pay_key"
             android:layout_marginLeft="5dp"
+            android:text="2"
             app:layout_constraintLeft_toRightOf="@+id/tv_1"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="2" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_3"
             style="@style/tv_pay_key"
             android:layout_marginLeft="5dp"
+            android:text="3"
             app:layout_constraintLeft_toRightOf="@+id/tv_2"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="3" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            app:layout_constraintLeft_toRightOf="@+id/tv_3"
             android:id="@+id/tv_0"
             style="@style/tv_pay_key"
             android:layout_marginLeft="5dp"
             android:text="0"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintLeft_toRightOf="@+id/tv_3"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_4"
             style="@style/tv_pay_key"
             android:layout_marginTop="5dp"
+            android:text="4"
             app:layout_constraintLeft_toLeftOf="@+id/tv_1"
-            app:layout_constraintTop_toBottomOf="@+id/tv_0"
-            android:text="4" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_0" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_5"
             style="@style/tv_pay_key"
             android:layout_marginTop="5dp"
+            android:text="5"
             app:layout_constraintLeft_toLeftOf="@+id/tv_2"
-            app:layout_constraintTop_toBottomOf="@+id/tv_0"
-            android:text="5" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_0" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_6"
             style="@style/tv_pay_key"
             android:layout_marginTop="5dp"
+            android:text="6"
             app:layout_constraintLeft_toLeftOf="@+id/tv_3"
-            app:layout_constraintTop_toBottomOf="@+id/tv_0"
-            android:text="6" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_0" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_7"
             style="@style/tv_pay_key"
             android:layout_marginTop="5dp"
+            android:text="7"
             app:layout_constraintLeft_toLeftOf="@+id/tv_4"
-            app:layout_constraintTop_toBottomOf="@+id/tv_4"
-            android:text="7" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_4" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_8"
             style="@style/tv_pay_key"
-            app:layout_constraintLeft_toLeftOf="@+id/tv_2"
             android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_4"
-            android:text="8" />
+            android:text="8"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_4" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_9"
             style="@style/tv_pay_key"
             android:layout_marginTop="5dp"
+            android:text="9"
             app:layout_constraintLeft_toLeftOf="@+id/tv_3"
-            app:layout_constraintTop_toBottomOf="@+id/tv_4"
-            android:text="9" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_4" />
 
         <ImageView
-            android:src="@drawable/ic_numdel"
             android:id="@+id/tv_clear"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:background="@drawable/bg_pay"
             android:focusable="true"
             android:gravity="center"
+            android:src="@drawable/ic_numdel"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_36"
             app:layout_constraintLeft_toLeftOf="@+id/tv_0"
@@ -204,17 +250,17 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
 
-            android:background="@drawable/indicator_bottom_line"
             android:layout_marginTop="5dp"
+            android:background="@drawable/indicator_bottom_line"
             android:focusable="true"
             android:gravity="center"
+            android:text="验\n证"
             android:textColor="@color/white"
             android:textSize="32sp"
-            app:layout_constraintLeft_toLeftOf="@+id/tv_0"
             app:layout_constraintBottom_toBottomOf="@+id/tv_9"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_0"
             app:layout_constraintRight_toRightOf="@+id/tv_0"
-            app:layout_constraintTop_toBottomOf="@+id/tv_clear"
-            android:text="验\n证" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_clear" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

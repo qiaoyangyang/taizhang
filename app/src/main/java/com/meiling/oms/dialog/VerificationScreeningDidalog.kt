@@ -51,6 +51,8 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
     private var rb_today: RadioButton? = null
     private var rb_About_seven_days: RadioButton? = null
     private var rb_nearly_days: RadioButton? = null
+    private var rb_starting_time: RadioButton? = null
+    private var tv_final_time: RadioButton? = null
     var iscustom = 0//是否自定义时间
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
         val verificationScreening =
@@ -70,8 +72,8 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
         var rb_shop_name = holder?.getView<RadioButton>(R.id.rb_shop_name)
         var rb_shop_name_custom = holder?.getView<RadioButton>(R.id.rb_shop_name_custom)
 
-        var rb_starting_time = holder?.getView<RadioButton>(R.id.rb_starting_time)
-        var tv_final_time = holder?.getView<RadioButton>(R.id.tv_final_time)
+        rb_starting_time = holder?.getView<RadioButton>(R.id.rb_starting_time)
+        tv_final_time = holder?.getView<RadioButton>(R.id.tv_final_time)
 
         var rb_isVoucher = holder?.getView<RadioButton>(R.id.rb_isVoucher)
         var rb_voucher = holder?.getView<RadioButton>(R.id.rb_voucher)
@@ -153,7 +155,12 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
                         var shopDialog = ShopDialog().newInstance(shopBean)
 
                         shopDialog.setOnresilience(object : ShopDialog.Onresilience {
-                            override fun resilience(cityid: Int, shopid: Int, shop: Shop) {
+                            override fun resilience(
+                                cityid: Int,
+                                cityidname: String,
+                                shopid: Int,
+                                shop: Shop
+                            ) {
                                 if (TextUtils.isEmpty(shop.poiId)) {
                                     verificationScreening.poiId = ""
                                 } else {
@@ -187,8 +194,8 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
         } else if (verificationScreening.timetype == 4) {//近30天
             rb_nearly_days?.isChecked = true
         } else if (verificationScreening.timetype == 5) {
-            iscustom=1
-            rb_starting_time?.text = verificationScreening.status
+            iscustom = 1
+            rb_starting_time?.text = verificationScreening.startDate
             setba(rb_starting_time!!, true)
             tv_final_time?.text = verificationScreening.endDate
             setba(tv_final_time!!, true)
@@ -198,16 +205,12 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
             showDatePickDialog(
                 DateType.TYPE_YMD,
                 rb_starting_time!!,
-                verificationScreening,
-                1
             )
         }
         tv_final_time?.setOnClickListener {
             showDatePickDialog(
                 DateType.TYPE_YMD,
                 tv_final_time!!,
-                verificationScreening,
-                2
             )
         }
 
@@ -216,23 +219,23 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
             setba(tv_final_time!!, false)
             when (checkedId) {
                 R.id.rb_yesterday -> {
-                    verificationScreening.status = formatCurrentDateBeforeDay()
+                    verificationScreening.startDate = formatCurrentDateBeforeDay()
                     verificationScreening.endDate = formatCurrentDateBeforeDay()
                     verificationScreening.timetype = 1
                 }
                 R.id.rb_today -> {
-                    verificationScreening.status = formatCurrentDate()
+                    verificationScreening.startDate = formatCurrentDate()
                     verificationScreening.endDate = formatCurrentDate()
                     verificationScreening.timetype = 2
                 }
                 R.id.rb_About_seven_days -> {
-                    verificationScreening.status = formatCurrentDateBeforeWeek()
-                    verificationScreening.endDate = formatCurrentDateBeforeWeek()
+                    verificationScreening.startDate = getBeforeSevenDate()
+                    verificationScreening.endDate = formatCurrentDate()
                     verificationScreening.timetype = 3
                 }
                 R.id.rb_nearly_days -> {
-                    verificationScreening.status = formatCurrentDateBeforeMouth()
-                    verificationScreening.endDate = formatCurrentDateBeforeMouth()
+                    verificationScreening.startDate = getBeforeMonthDate()
+                    verificationScreening.endDate = formatCurrentDate()
                     verificationScreening.timetype = 4
                 }
 
@@ -256,8 +259,9 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
                 verificationScreening.endDate = tv_final_time?.text.toString()
             }
 
-            dismiss()
+
             onresilience?.resilience(verificationScreening)
+            dismiss()
         }
 
 
@@ -270,8 +274,6 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
     private fun showDatePickDialog(
         type: DateType,
         textView: RadioButton,
-        verificationScreening: VerificationScreening,
-        int: Int
     ) {
         val dialog = DatePickDialog(context)
         //设置上下年分限制
@@ -287,6 +289,9 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
         dialog.setOnChangeLisener(null)
         //设置点击确定按钮回调
         dialog.setOnSureLisener { date ->
+            // TODO: 时间校验
+
+
             iscustom = 1
             rb_today?.isChecked = false
             rb_yesterday?.isChecked = false
@@ -305,11 +310,11 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
             textView.setBackgroundResource(R.drawable.selected_true)
             textView.setTextColor(Color.parseColor("#FFFFFFFF"))
         } else {
-            iscustom=0
-            if (textView.id==R.id.rb_starting_time){
-                textView.text="起始时间"
-            }else{
-                textView.text="终止时间"
+            iscustom = 0
+            if (textView.id == R.id.rb_starting_time) {
+                textView.text = "起始时间"
+            } else {
+                textView.text = "终止时间"
             }
             textView.setBackgroundResource(R.drawable.selected_false)
             textView.setTextColor(Color.parseColor("#333333"))

@@ -88,7 +88,7 @@ class MeituanActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activity
             } else if (meituan?.isVoucher == 2) {
                 mDatabind.tvType.text = "代金券"
             }
-            var conet = "由${meituan?.shopName}店验证"
+            var conet = "由 ${meituan?.shopName} 店验证"
             SpannableUtils.setTextcolor(
                 this,
                 conet,

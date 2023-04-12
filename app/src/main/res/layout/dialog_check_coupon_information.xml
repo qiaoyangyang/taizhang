@@ -7,6 +7,7 @@
     android:background="@drawable/scan_bg_input">
 
     <TextView
+        android:textStyle="bold"
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,6 +91,8 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
     <TextView
+        android:textSize="17sp"
+        android:textStyle="bold"
         android:id="@+id/num"
         android:layout_marginTop="12dp"
         android:textColor="#1F2333"
@@ -214,7 +217,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:shadowColor="@color/home_666666"
-            android:text="确认"
+            android:text="确定验券"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_25"
             app:shape_radius="@dimen/sp_15"
