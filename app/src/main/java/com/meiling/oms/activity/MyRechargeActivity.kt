@@ -2,12 +2,14 @@ package com.meiling.oms.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.blankj.utilcode.util.ToastUtils
+import com.google.gson.Gson
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.RechargeRequest
 import com.meiling.oms.EventBusData.MessageEventTime
@@ -26,6 +28,8 @@ import io.reactivex.rxjava3.disposables.Disposable
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.json.JSONException
+import org.json.JSONObject
 
 /**
  * 充值
@@ -44,7 +48,6 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
         mDatabind.viewPager.adapter =
             BaseFragmentPagerAdapter(supportFragmentManager, lifecycle, fragmentList)
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
-        mViewModel.getBalance()
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityRechargeBinding {
@@ -81,12 +84,19 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        mViewModel.getBalance()
+    }
+
     @SuppressLint("SetTextI18n")
     override fun createObserver() {
         mViewModel.rechargeDto.onStart.observe(this) {}
         mViewModel.rechargeDto.onSuccess.observe(this) {
+            val jsonObject = JSONObject(it)
+            var from = jsonObject.get("form")
             PayUtils.aliPay(this,
-                it,
+                from.toString(),
                 object : Observer<AliPayResp> {
                     override fun onSubscribe(d: Disposable) {
                     }
@@ -98,18 +108,11 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
                     }
 
                     override fun onNext(t: AliPayResp) {
-                        when (t.message) {
-                            "9000" -> {
-                                ARouter.getInstance().build("/app/RechargeFinishActivity")
-                                    .navigation()
-                            }
-                            "8000" -> showToast("正在处理中")
-                            "4000" -> showToast("订单支付失败")
-                            "5000" -> showToast("重复请求")
-                            "6001" -> showToast("已取消支付")
-                            "6002" -> showToast("网络连接出错")
-                            "6004" -> showToast("正在处理中")
-                            else -> showToast("支付失败")
+                        if (t.isSuccess) {
+                            ARouter.getInstance().build("/app/RechargeFinishActivity")
+                                .navigation()
+                        } else {
+                            showToast(t.message)
                         }
                     }
 
@@ -132,5 +135,6 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun eventDay(messageEventTime: MessageEventTimeShow) {
         mDatabind.radioButton1.isChecked = true
+
     }
 }
