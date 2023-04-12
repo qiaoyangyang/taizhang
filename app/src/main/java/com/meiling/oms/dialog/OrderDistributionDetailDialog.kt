@@ -41,7 +41,7 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
 
     init {
         setGravity(Gravity.BOTTOM)
-        setWidth(600)
+        setHeight(600)
         setOutCancel(true)
     }
 
@@ -52,7 +52,6 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
     fun newInstance(
         type: Boolean,
         orderId: String,
-        orderSendDetail: ArrayList<OrderSendDetail>
     ): OrderDistributionDetailDialog {
         var bundle = Bundle()
         bundle.putBoolean("type", type)
@@ -109,106 +108,108 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
                             ) {
                                 holder.setText(R.id.txtOperateRemark, item.createTime)
                                 holder.setText(R.id.txtOperateName, item.statusName)
+                                holder.setText(R.id.txtOperate, item.remark)
+                                holder.setText(R.id.txt_order_dis, "张三")
 
-                                var txtOperate = holder.getView<TextView>(R.id.txtOperate)
-//                                var txtOrderDisCode = holder.getView<TextView>(R.id.txtOrderDisCode)
-                                var txtOperateRemark =
-                                    holder.getView<TextView>(R.id.txtOperateRemark)
-//                                txtOperate.text = "骑手${item.deliveryName}/${item.deliveryPhone}"
-                                //10 。发布订单（不做处理）
-                                // 20//待骑手接单
-                                //30 待骑手取货
-                                //40 骑手已到店
-                                //50 配送中
-                                //70 已取消
-                                //80 已收货
-                                var view = holder.getView<ImageView>(R.id.imgView)
-                                var viewLine = holder.getView<View>(R.id.viewLine)
-                                var imgIcon = holder.getView<ImageView>(R.id.imgView)
-
-                                when (item.status) {
-                                    "20" -> {
-                                        txtOperate.visibility = View.GONE
-//                                        txtOrderDisCode.visibility = View.GONE
-                                        view.setImageResource(R.mipmap.check_false)
-                                        imgIcon.visibility = View.VISIBLE
-                                        if (orderSendDetail.icon == "") {
-                                            imgIcon.visibility = View.GONE
-                                        } else {
-                                            Glide.with(context)
-                                                .load(orderSendDetail.icon)
-                                                .transition(DrawableTransitionOptions().crossFade())
-                                                .apply(
-                                                    RequestOptions()
-                                                        .diskCacheStrategy(DiskCacheStrategy.DATA)
-                                                )
-                                                .into(imgIcon)
-                                        }
-                                        if (orderSendDetail.channelDelNum != null || orderSendDetail.channelDelNum != "") {
-                                            txtOperateRemark.visibility = View.VISIBLE
-                                            txtOperateRemark.setText("物流单号: ${orderSendDetail.channelDelNum}")
-                                        } else {
-                                            txtOperateRemark.visibility = View.GONE
-                                        }
-                                    }
-                                    "30", "40", "50", "60" -> {
-//                                        txtOrderDisCode.visibility = View.VISIBLE
-                                        txtOperate.visibility = View.VISIBLE
-                                        txtOperate.visibility = View.VISIBLE
-                                        txtOperate.text =
-                                            "骑手${orderSendDetail.deliveryName}/${orderSendDetail.deliveryPhone}"
-                                        if (orderSendDetail.pickupPassword == null || orderSendDetail.pickupPassword == "") {
-//                                            txtOrderDisCode.visibility = View.GONE
-                                        } else {
-//                                            txtOrderDisCode.visibility = View.VISIBLE
-//                                            txtOrderDisCode.text =
-//                                                "取件码:${orderSendDetail.pickupPassword}"
-                                        }
-                                        view.setImageResource(R.mipmap.check_false)
-                                        imgIcon.visibility = View.VISIBLE
-                                        Glide.with(context)
-                                            .load(orderSendDetail.icon)
-                                            .transition(DrawableTransitionOptions().crossFade())
-                                            .apply(
-                                                RequestOptions()
-                                                    .diskCacheStrategy(DiskCacheStrategy.DATA)
-                                            )
-                                            .into(imgIcon)
-                                        if (orderSendDetail.channelDelNum != null || orderSendDetail.channelDelNum != "") {
-                                            txtOperateRemark.visibility = View.VISIBLE
-                                            txtOperateRemark.setText("物流单号: ${orderSendDetail.channelDelNum}")
-                                        } else {
-                                            txtOperateRemark.visibility = View.GONE
-                                        }
-                                    }
-                                    "70" -> {
-                                        txtOperate.visibility = View.VISIBLE
-//                                        txtOrderDisCode.visibility = View.GONE
-                                        txtOperateRemark.visibility = View.GONE
-                                        txtOperateRemark.text = "配送取消，原因：您已成功取消配送"
-                                        txtOperate.text = "配送取消"
-                                        imgIcon.visibility = View.VISIBLE
-                                        view.setImageResource(R.mipmap.icon_dis_cancel)
-                                        imgIcon.setImageResource(R.mipmap.icon_dis_cancel)
-                                    }
-                                    "80" -> {
-                                        txtOperate.visibility = View.GONE
-//                                        txtOrderDisCode.visibility = View.GONE
-                                        txtOperateRemark.visibility = View.GONE
-                                        view.setImageResource(R.mipmap.icon_finish)
-                                        imgIcon.visibility = View.GONE
-                                    }
-
-
-                                }
-
-                                if (holder.adapterPosition == ryOrderDisDetailAdapter.data.size - 1) {
-                                    viewLine.visibility = View.GONE
-                                } else {
-                                    viewLine.visibility = View.VISIBLE
-                                }
-
-//                viewLine.background = resources.getColor(R.color.Red,Resources.Theme)
+//                                var txtOperate = holder.getView<TextView>(R.id.txtOperate)
+////                                var txtOrderDisCode = holder.getView<TextView>(R.id.txtOrderDisCode)
+//                                var txtOperateRemark =
+//                                    holder.getView<TextView>(R.id.txtOperateRemark)
+////                                txtOperate.text = "骑手${item.deliveryName}/${item.deliveryPhone}"
+//                                //10 。发布订单（不做处理）
+//                                // 20//待骑手接单
+//                                //30 待骑手取货
+//                                //40 骑手已到店
+//                                //50 配送中
+//                                //70 已取消
+//                                //80 已收货
+//                                var view = holder.getView<ImageView>(R.id.imgView)
+//                                var viewLine = holder.getView<View>(R.id.viewLine)
+//                                var imgIcon = holder.getView<ImageView>(R.id.imgView)
+//
+//                                when (item.status) {
+//                                    "20" -> {
+//                                        txtOperate.visibility = View.GONE
+////                                        txtOrderDisCode.visibility = View.GONE
+//                                        view.setImageResource(R.mipmap.check_false)
+//                                        imgIcon.visibility = View.VISIBLE
+//                                        if (orderSendDetail.icon == "") {
+//                                            imgIcon.visibility = View.GONE
+//                                        } else {
+//                                            Glide.with(context)
+//                                                .load(orderSendDetail.icon)
+//                                                .transition(DrawableTransitionOptions().crossFade())
+//                                                .apply(
+//                                                    RequestOptions()
+//                                                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+//                                                )
+//                                                .into(imgIcon)
+//                                        }
+////                                        if (orderSendDetail.channelDelNum != null || orderSendDetail.channelDelNum != "") {
+////                                            txtOperateRemark.visibility = View.VISIBLE
+////                                            txtOperateRemark.setText("物流单号: ${orderSendDetail.channelDelNum}")
+////                                        } else {
+////                                            txtOperateRemark.visibility = View.GONE
+////                                        }
+//                                    }
+//                                    "30", "40", "50", "60" -> {
+////                                        txtOrderDisCode.visibility = View.VISIBLE
+//                                        txtOperate.visibility = View.VISIBLE
+//                                        txtOperate.visibility = View.VISIBLE
+////                                        txtOperate.text =
+////                                            "骑手${orderSendDetail.deliveryName}/${orderSendDetail.deliveryPhone}"
+////                                        if (orderSendDetail.pickupPassword == null || orderSendDetail.pickupPassword == "") {
+//////                                            txtOrderDisCode.visibility = View.GONE
+////                                        } else {
+////                                            txtOrderDisCode.visibility = View.VISIBLE
+////                                            txtOrderDisCode.text =
+////                                                "取件码:${orderSendDetail.pickupPassword}"
+////                                        }
+////                                        view.setImageResource(R.mipmap.check_false)
+////                                        imgIcon.visibility = View.VISIBLE
+////                                        Glide.with(context)
+////                                            .load(orderSendDetail.icon)
+////                                            .transition(DrawableTransitionOptions().crossFade())
+////                                            .apply(
+////                                                RequestOptions()
+////                                                    .diskCacheStrategy(DiskCacheStrategy.DATA)
+////                                            )
+////                                            .into(imgIcon)
+////                                        if (orderSendDetail.channelDelNum != null || orderSendDetail.channelDelNum != "") {
+////                                            txtOperateRemark.visibility = View.VISIBLE
+////                                            txtOperateRemark.setText("物流单号: ${orderSendDetail.channelDelNum}")
+////                                        } else {
+////                                            txtOperateRemark.visibility = View.GONE
+////                                        }
+//                                    }
+//                                    "70" -> {
+//                                        txtOperate.visibility = View.VISIBLE
+////                                        txtOrderDisCode.visibility = View.GONE
+//                                        txtOperateRemark.visibility = View.GONE
+//                                        txtOperateRemark.text = "配送取消，原因：您已成功取消配送"
+//                                        txtOperate.text = "配送取消"
+//                                        imgIcon.visibility = View.VISIBLE
+//                                        view.setImageResource(R.mipmap.icon_dis_cancel)
+//                                        imgIcon.setImageResource(R.mipmap.icon_dis_cancel)
+//                                    }
+//                                    "80" -> {
+//                                        txtOperate.visibility = View.GONE
+////                                        txtOrderDisCode.visibility = View.GONE
+//                                        txtOperateRemark.visibility = View.GONE
+//                                        view.setImageResource(R.mipmap.icon_finish)
+//                                        imgIcon.visibility = View.GONE
+//                                    }
+//
+//
+//                                }
+//
+//                                if (holder.adapterPosition == ryOrderDisDetailAdapter.data.size - 1) {
+//                                    viewLine.visibility = View.GONE
+//                                } else {
+//                                    viewLine.visibility = View.VISIBLE
+//                                }
+//
+////                viewLine.background = resources.getColor(R.color.Red,Resources.Theme)
                             }
 
                         }
@@ -225,25 +226,15 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
         )
 
         bs.onSuccess.observe(this) {
-            ryOrderDisDetailAllAdapter.setList(it)
+            if (!it.isNullOrEmpty()) {
+                ryOrderDisDetailAllAdapter.setList(it)
+                txtOrderAddress!!.text = it.get(0).recvAddr
+                txtOrderName!!.text = "${it.get(0).recvName}"
+                txtOrderNameAddPhone!!.text = "${it.get(0).recvPhone}"
+            }
         }
 
 
-//        MainRetrofit.service.getLogisticsOrderDetail(orderId!!)
-//            .ss(null, null, false, onSuccess = {
-////                if (it.data[0].type == "30"&&it.data[0].status!="80") {
-////                    rlOrderDisSendFinish?.visibility = View.VISIBLE
-////                } else {
-////                    rlOrderDisSendFinish?.visibility = View.GONE
-////                }
-//                if (!it.data.isNullOrEmpty()) {
-//                    ryOrderDisDetailAllAdapter.setList(it.data)
-//                    txtOrderAddress!!.text = it.data[0].recvAddr
-//                    txtOrderNameAddPhone!!.text = "${it.data[0].recvName}/${it.data[0].recvPhone}"
-//
-//                }
-//            }, onError = {
-//            })
 //
 //        if (type) {
 //            rlOrderDisSendFinish!!.visibility = View.VISIBLE
@@ -265,7 +256,6 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
         imgOrderDisClose!!.setOnClickListener {
             dismiss()
         }
-
 
     }
 

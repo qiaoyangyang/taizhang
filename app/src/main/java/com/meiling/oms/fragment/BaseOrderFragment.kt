@@ -17,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.meihao.kotlin.cashier.widgets.orderv4dialog.OrderDistributionDetailDialog
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
@@ -189,7 +190,8 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             )
                         )
                     }
-                    var orderDisDialog = OrderDisDetailDialog().newInstance()
+                    var orderDisDialog =
+                        OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
                     btnSendDis.setSingleClickListener {
                         when (item.order!!.logisticsStatus) {
                             "0" -> {
