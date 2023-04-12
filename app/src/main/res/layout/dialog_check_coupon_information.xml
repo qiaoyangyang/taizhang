@@ -40,14 +40,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:id="@+id/tv_payAmount"
         android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="@+id/tv_bg_subtract"
-        android:textSize="32sp"
+        android:textSize="28sp"
         app:layout_constraintRight_toRightOf="@+id/tv_bg_subtract"
-        android:text="456"
+        android:text=""
         app:layout_constraintTop_toBottomOf="@+id/tv_RMB"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"/>
     <TextView
         android:layout_marginRight="16dp"
@@ -60,15 +65,17 @@
         android:layout_width="0dp"
         android:layout_height="0dp"/>
     <TextView
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constraintRight_toRightOf="@+id/tv_youhui"
         android:id="@+id/tv_name"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="5dp"
         android:textSize="16sp"
         android:textColor="#333333"
-        android:text="单人特惠至尊套餐"
         app:layout_constraintLeft_toLeftOf="@+id/tv_youhui"
         app:layout_constraintTop_toTopOf="@+id/tv_RMB"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"/>
 
     <TextView
@@ -76,7 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="原价:678"
+        android:text=""
         android:textColor="#999999"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="@+id/tv_name"
@@ -95,12 +102,71 @@
     <TextView
         android:id="@+id/tv_num"
         android:textSize="14sp"
-        android:text="顾客共购买2张"
+        android:text="顾客共购买张"
         android:textColor="#1F2333"
         app:layout_constraintTop_toBottomOf="@+id/num"
         app:layout_constraintLeft_toLeftOf="@+id/num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        app:layout_constraintRight_toRightOf="@+id/tv_youhui"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_num"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="wrap_content"
+        android:id="@+id/ll_count"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="14dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:background="@drawable/jian"
+            android:id="@+id/stock_add_jian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="4dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:layout_marginBottom="6dp"
+            android:gravity="center"
+            android:text="一"
+            android:textSize="14sp" />
+
+
+
+        <TextView
+
+            android:textColor="@color/home_333333"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:minWidth="38dp"
+            android:id="@+id/stock_add_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="numberDecimal"
+            android:maxLength="8"
+            android:paddingVertical="6dp"
+            android:text=""
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/stock_add_jia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/jiad"
+            android:gravity="center"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 
 

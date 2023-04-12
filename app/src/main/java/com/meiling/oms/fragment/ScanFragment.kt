@@ -38,7 +38,15 @@ class ScanFragment : BaseFragment<FindViewModel, FragmentScanBinding>() {
             )
         }
         mDatabind.rlKouBei.setSingleClickListener { showToast("开发中。。。") }
-        mDatabind.rlMeiTuan.setSingleClickListener { showToast("开发中。。。") }
+        mDatabind.rlMeiTuan.setSingleClickListener {
+            startActivity(
+                Intent(mActivity, VoucherInspectionActivity::class.java).putExtra(
+                    "type",
+                    "2"
+                )
+            )
+
+        }
 
     }
 

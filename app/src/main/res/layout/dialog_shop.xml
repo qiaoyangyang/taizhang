@@ -30,6 +30,8 @@
 
 
     <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         android:background="@color/white"
         android:id="@+id/ll_btn"
         app:layout_constraintTop_toBottomOf="@+id/tv_title"
@@ -39,7 +41,8 @@
         android:orientation="horizontal"
         >
 
-        <com.meiling.common.base.WheelItemView
+            <com.meiling.common.base.WheelItemView
+
             android:id="@+id/wheel_view_left"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -49,7 +52,7 @@
             app:wheelMaskLineColor="#F5F5F5"
 
             app:wheelTextSize="16sp"
-            app:wheelTotalOffsetX="3dp" />
+            />
 
         <com.meiling.common.base.WheelItemView
             app:wheelMaskLineColor="#F5F5F5"
@@ -60,7 +63,7 @@
             app:wheelItemVerticalSpace="16dp"
             app:wheelTextColor="#333333"
             app:wheelTextSize="16sp"
-            app:wheelTotalOffsetX="3dp" />
+            />
 
 
     </LinearLayout>

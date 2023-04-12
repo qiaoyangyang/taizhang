@@ -11,7 +11,6 @@ import com.meiling.common.constant.ARouteConstants
 import com.meiling.common.network.APIException
 import com.meiling.common.network.ExceptionHandle
 import com.meiling.common.network.ResultData
-import com.meiling.common.utils.MMKVUtils
 import com.orhanobut.logger.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -28,30 +27,19 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     ): Job {
         return viewModelScope.launch(Dispatchers.IO) {
             runCatching {
-                Logger.d("responseBody's contentType : $111111")
                 resultState.onStart.postValue("")
                 block()
             }.onSuccess {
-                Log.d("yjk", "request: ${Gson().toJson(it.toString())}")
                 if (it.code == 200) {
+
                     resultState.onSuccess.postValue(it.data)
                 } else if (it.code == 403) {
-                    MMKVUtils.clear()
                     ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
                 } else {
-                    Logger.d("responseBody's contentType : $22222")
-                    resultState.onError.postValue(
-                        ExceptionHandle.handleException(
-                            APIException(
-                                it.code,
-                                it.msg
-                            )
-                        )
-                    )
+                    resultState.onError.postValue(ExceptionHandle.handleException(APIException(it.code, it.msg)))
                 }
 
             }.onFailure {
-                Logger.d("responseBody's contentType : $333333${it.message}")
                 resultState.onError.postValue(ExceptionHandle.handleException(it))
             }
         }

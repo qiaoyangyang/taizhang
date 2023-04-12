@@ -5,11 +5,8 @@ import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.meiling.common.fragment.BaseFragment
-import com.meiling.common.network.data.Shop
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentDataBinding
-import com.meiling.oms.dialog.ShopDialog
-import com.meiling.oms.liveData.LiveDataShopData
 import com.meiling.oms.viewmodel.DataViewModel
 
 

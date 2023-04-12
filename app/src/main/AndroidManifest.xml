@@ -73,6 +73,8 @@
         <activity android:name=".activity.PostDetailActivity" />
         <activity android:name=".activity.MyRechargeActivity" />
         <activity android:name=".activity.WriteOffActivity" />
+        <activity android:name=".activity.MeituanActivity" />
+        <activity android:name=".activity.WriteDetailsActivity" />
         <activity android:name=".activity.MySettlementDetailActivity" />
         <activity android:name=".activity.ReleasePostActivity" />
         <activity android:name=".activity.RechargeFinishActivity" />

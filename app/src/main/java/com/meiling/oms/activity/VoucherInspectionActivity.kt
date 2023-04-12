@@ -12,15 +12,15 @@ import com.huawei.hms.hmsscankit.ScanUtil
 import com.huawei.hms.ml.scan.HmsScan
 import com.huawei.hms.ml.scan.HmsScanAnalyzerOptions
 import com.meiling.common.activity.BaseActivity
-import com.meiling.common.network.data.Shop
-import com.meiling.common.network.data.ShopBean
-import com.meiling.common.network.data.ThrillBen
+import com.meiling.common.network.data.*
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityVoucherinspectionBinding
 import com.meiling.oms.dialog.CheckCouponInformationDidalog
+import com.meiling.oms.dialog.CheckCouponInformationDidalog1
 import com.meiling.oms.dialog.ShopDialog
 import com.meiling.oms.viewmodel.VoucherinspectionViewModel
+import com.meiling.oms.widget.showToast
 
 
 //验券
@@ -30,18 +30,23 @@ class VoucherInspectionActivity :
     var type = ""
     var thrillBen = ArrayList<ThrillBen>()
     var shopBean = ArrayList<ShopBean>()
+    var meituan: Meituan? = null
     override fun initView(savedInstanceState: Bundle?) {
         TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
         //验券历史
         mDatabind.tvVoucherInspectionHistory.setOnClickListener {
-            startActivity(
-                Intent(this, VoucherInspectionHistoryActivity::class.java).putExtra("shop",shopdata)
-            )
+            if (shopdata != null) {
+                startActivity(
+                    Intent(this, VoucherInspectionHistoryActivity::class.java)
+                        .putExtra("shop", shopdata)
+                        .putExtra("type",type)
+                )
+            }
         }
         //  输码验券
         mDatabind.tvInputBoredom.setOnClickListener {
             startActivity(
-                Intent(this, InputBoredomActivity::class.java)
+                Intent(this, InputBoredomActivity::class.java).putExtra("type",type)
             )
         }
 
@@ -69,15 +74,18 @@ class VoucherInspectionActivity :
 
         mViewModel.shopBean.onSuccess.observe(this) {
             //DataPickerUtitl.setpickData(this,it)
-            if (it.size!=0) {
+            if (it.size != 0) {
                 var shopDialog = ShopDialog().newInstance(it)
 
                 shopDialog.setOnresilience(object : ShopDialog.Onresilience {
                     override fun resilience(cityid: Int, shopid: Int, shop: Shop) {
                         mViewModel.Shop.onSuccess.postValue(shop)
                         shopId = shop?.id.toString()
-                        shopdata= shop
+                        shopdata = shop
                         mDatabind.TitleBar.titleView.text = shop.name
+                    }
+
+                    override fun Ondismiss() {
                     }
 
                 })
@@ -85,15 +93,18 @@ class VoucherInspectionActivity :
             }
 
         }
+
     }
 
     override fun createObserver() {
+
         mViewModel.thrillBen.onSuccess.observe(this) {
-            if (it.size!=0) {
+            if (it.size != 0) {
                 var checkCouponInformationDidalog = CheckCouponInformationDidalog().newInstance(it)
-                checkCouponInformationDidalog.setOnresilience(object :CheckCouponInformationDidalog.Onresilience{
+                checkCouponInformationDidalog.setOnresilience(object :
+                    CheckCouponInformationDidalog.Onresilience {
                     override fun resilience(encryptedCode: String) {
-                        mViewModel.verify(shopId,encryptedCode)
+                        mViewModel.verify(shopId, encryptedCode)
                     }
 
                 })
@@ -103,10 +114,65 @@ class VoucherInspectionActivity :
 
 
         }
-        mViewModel.shopBean.onSuccess.observe(this){
-            shopdata= it[0].shopList?.get(0)
-            shopId=it.get(0).shopList?.get(0)?.id!!
-            mDatabind.TitleBar.titleView.text=it.get(0).shopList?.get(0)?.name
+
+        mViewModel.shopBean.onSuccess.observe(this) {
+            if (it.size != 0) {
+                shopdata = it[0].shopList?.get(0)
+                shopId = it.get(0).shopList?.get(0)?.id!!
+                mDatabind.TitleBar.titleView.text = it.get(0).shopList?.get(0)?.name
+            }
+        }
+
+        //核销成功
+        mViewModel.verifythrillBen.onSuccess.observe(this) {
+            if (type == "1") {
+                var it1 = it as ArrayList<ThrillItem>
+                startActivity(
+                    Intent(this, WriteOffActivity::class.java).putExtra(
+                        "thrillitem",
+                        it1
+                    ).putExtra("shopId", shopId)
+                )
+            } else {
+                Log.d("yjk", "核销成功mei---")
+
+            }
+
+        }
+        //确认核销失败
+        mViewModel.verifythrillBen.onError.observe(this) {
+            showToast("${it.msg}")
+        }
+        //扫码核销失败
+        mViewModel.thrillBen.onError.observe(this) {
+            showToast("${it.msg}")
+        }
+        //美团扫码返回
+        mViewModel.meituan.onSuccess.observe(this) {
+
+            var checkCouponInformationDidalog = CheckCouponInformationDidalog1().newInstance(it)
+            checkCouponInformationDidalog.setOnresilience(object :
+                CheckCouponInformationDidalog1.Onresilience {
+                override fun resilience(encryptedCode: String, count: String, mode: Meituan) {
+                    meituan = mode
+                    mViewModel.consume(encryptedCode, count, shopId)
+                }
+
+            })
+
+            checkCouponInformationDidalog.show(supportFragmentManager)
+        }
+        mViewModel.meituan.onError.observe(this){
+            showToast("${it.msg}")
+        }
+
+        mViewModel.consume.onSuccess.observe(this) {
+            startActivity(
+                Intent(this, MeituanActivity::class.java).putExtra(
+                    "meituan",
+                    meituan
+                ).putExtra("shopId", shopId).putExtra("code",it)
+            )
         }
 
 
@@ -148,7 +214,7 @@ class VoucherInspectionActivity :
     }
 
     var shopId: String = ""
-    var shopdata: Shop? =null
+    var shopdata: Shop? = null
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -156,7 +222,11 @@ class VoucherInspectionActivity :
         if (requestCode == REQUEST_CODE_SCAN_ONE) {
             if (data != null) {
                 val obj: HmsScan? = data!!.getParcelableExtra(ScanUtil.RESULT)
-                mViewModel.prepare(shopId, 0, obj!!.originalValue)
+                if (type == "1") {
+                    mViewModel.prepare(shopId, 0, obj!!.originalValue)
+                } else {
+                    mViewModel.mttgprepare(obj!!.originalValue, shopId)
+                }
 
 
                 Log.d("yjk-----", obj!!.originalValue)
