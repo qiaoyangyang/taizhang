@@ -61,7 +61,6 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
             var rechargeDialog = RechargeDialog().newInstance()
             rechargeDialog.setOkClickLister { money, channel ->
                 mViewModel.rechargeRequest(RechargeRequest(money, "3", channel, ""))
-//                ARouter.getInstance().build("/app/RechargeFinishActivity").navigation()
             }
             rechargeDialog.show(supportFragmentManager)
         }
