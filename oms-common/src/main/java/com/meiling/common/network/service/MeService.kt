@@ -2,9 +2,7 @@ package com.meiling.common.network.service
 
 import com.meiling.common.network.ResultData
 import com.meiling.common.network.RetrofitClient
-import com.meiling.common.network.data.BalanceDto
-import com.meiling.common.network.data.RechargeRecordListReq
-import com.meiling.common.network.data.RechargeRequest
+import com.meiling.common.network.data.*
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -32,7 +30,19 @@ interface MeService {
      * 充值记录
      * */
     @POST("/saas/payAccountAmount/getRecordList")
-    suspend fun getRecord(@Body rechargeRecordListReq: RechargeRecordListReq): ResultData<Any>
+    suspend fun getRecord(@Body rechargeRecordListReq: RechargeRecordListReq): ResultData<RechargeRecordDto>
+
+    /**
+     * 财务结算明细
+     * */
+    @POST("/saas/financial/getRecordList")
+    suspend fun getFinancialRecord(@Body rechargeRecordListReq: RechargeRecordListReq): ResultData<FinancialRecord>
+
+    /**
+     * 财务结算记录明细
+     * */
+    @POST("/saas/financial/getRecordListByViewId")
+    suspend fun getFinancialRecordDetail(@Body financialRecordDetailListReq: FinancialRecordDetailListReq): ResultData<FinancialRecordDetail>
 
 
 }

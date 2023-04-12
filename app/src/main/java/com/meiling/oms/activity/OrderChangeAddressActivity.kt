@@ -23,7 +23,6 @@ class OrderChangeAddressActivity :
 
     override fun initView(savedInstanceState: Bundle?) {
         setBar(this, mDatabind.cosChangeOrder)
-        EventBus.getDefault().unregister(this);
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityOrderChengeAddredssBinding {
