@@ -224,9 +224,17 @@ class VoucherInspectionHistoryActivity :
                         .intoBackground()
                     holder.setText(R.id.tv_status, "已核销")
                 }
+                if (item?.coupon?.isVoucher == 1) {//团购 2。代金
+                    holder.setText(R.id.tv_y,"团购(元)")
+                } else {
+                    holder.setText(R.id.tv_y,"代金(元)")
+                }
+
+
+
 
                 if (item?.coupon?.type == 2) {//美团
-                    var conet = "由${item.shopName}店验证"
+                    var conet = "由 ${item.shopName}店 验证"
                     SpannableUtils.setTextcolor(
                         holder.itemView.context,
                         conet,
@@ -238,7 +246,7 @@ class VoucherInspectionHistoryActivity :
 
                 } else if (item?.coupon?.type == 5) {//抖音
                     //  holder.setText(R.id.tv_shopName, "由"+item?.coupon?.shopName+"验证")
-                    var conet = "由${item?.coupon?.shopName}店验证"
+                    var conet = "由 ${item?.coupon?.shopName}店 验证"
                     SpannableUtils.setTextcolor(
                         holder.itemView.context,
                         conet,
@@ -249,6 +257,7 @@ class VoucherInspectionHistoryActivity :
                     )
 
                 }
+
 
 //
 //

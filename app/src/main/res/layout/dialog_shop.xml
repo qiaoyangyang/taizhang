@@ -43,11 +43,11 @@
 
             <com.meiling.common.base.WheelItemView
 
+
             android:id="@+id/wheel_view_left"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            app:wheelItemVerticalSpace="16dp"
             app:wheelTextColor="#333333"
             app:wheelMaskLineColor="#F5F5F5"
 
@@ -60,7 +60,6 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            app:wheelItemVerticalSpace="16dp"
             app:wheelTextColor="#333333"
             app:wheelTextSize="16sp"
             />
