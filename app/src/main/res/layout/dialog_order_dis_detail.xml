@@ -23,6 +23,20 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/iv_detail_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
+        android:src="@drawable/search_close_edt"
+        android:text="配送详情"
+        android:textColor="#1F1F1F"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <RelativeLayout
         android:id="@+id/rl_order_receive_address"
         android:layout_width="match_parent"
@@ -40,7 +54,7 @@
             android:src="@drawable/order_dis_shou_icon" />
 
         <TextView
-            android:id="@+id/txt_order_dis_name"
+            android:id="@+id/txt_order_dis_detail_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/img_dis"
@@ -54,23 +68,23 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txt_order_dis_phone"
+            android:id="@+id/txt_order_dis_detail_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/img_dis"
             android:layout_alignBottom="@+id/img_dis"
-            android:layout_toEndOf="@+id/txt_order_dis_name"
+            android:layout_toEndOf="@+id/txt_order_dis_detail_name"
             android:gravity="center"
             android:text="188****8888"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_20" />
 
         <TextView
-            android:id="@+id/txt_order_dis_address"
+            android:id="@+id/txt_order_dis_detail_address"
             android:layout_width="299dp"
             android:layout_height="40dp"
-            android:layout_below="@+id/txt_order_dis_name"
-            android:layout_alignLeft="@+id/txt_order_dis_name"
+            android:layout_below="@+id/txt_order_dis_detail_name"
+            android:layout_alignLeft="@+id/txt_order_dis_detail_name"
             android:layout_marginBottom="@dimen/dp_30"
             android:text="内蒙古自治区鄂尔多斯市伊金霍洛旗伊金霍洛旗札萨克物流园区 14 幢 158 室"
             android:textColor="@color/home_666666"
@@ -80,11 +94,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_order_dis"
-        android:layout_below="@+id/rl_order_receive_address"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_order_receive_address"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_distribution"
-        android:layout_height="wrap_content"/>
+        tools:listitem="@layout/item_order_send_detail" />
 
 
 </com.hjq.shape.layout.ShapeRelativeLayout>

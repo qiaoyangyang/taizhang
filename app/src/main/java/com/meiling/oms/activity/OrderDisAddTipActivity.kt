@@ -55,7 +55,7 @@ class OrderDisAddTipActivity :
                     var editText = holder.getView<TextView>(R.id.edtAddTipShow)
                     var iconAddTip = holder.getView<ImageView>(R.id.iconAddTip)
 //                    item.addtip = item.tip
-                    editText.text = "${item.tip}"
+                    editText.text = "${item.Addtip}"
                     Glide.with(context)
                         .load(item.iconUrl)
                         .transition(DrawableTransitionOptions().crossFade())
@@ -75,13 +75,13 @@ class OrderDisAddTipActivity :
             R.id.txt_add
         )
         ryOrderDisAddTipAdapter.setOnItemChildClickListener { adapter, view, position ->
-            var addTipShow = ryOrderDisAddTipAdapter.data[position].tip.toInt()
+            var addTipShow = ryOrderDisAddTipAdapter.data[position].Addtip.toInt()
             when (view.id) {
                 R.id.txtAddTipMinus -> {
                     if (addTipShow == 1) {
 //                        showToast("不能在减了")
                     } else {
-                        ryOrderDisAddTipAdapter.data[position].tip =
+                        ryOrderDisAddTipAdapter.data[position].Addtip =
                             (addTipShow - 1).toString()
                     }
                     ryOrderDisAddTipAdapter.notifyItemChanged(position)
@@ -90,12 +90,12 @@ class OrderDisAddTipActivity :
 //                    if (addTipShow+ryOrderDisAddTipAdapter.data[position].tip > ryOrderDisAddTipAdapter.data[position].channelAmount.toInt()) {
 //                        showToast("加小费金额不能大于配送金额")
 //                    }
-                    ryOrderDisAddTipAdapter.data[position].tip = (addTipShow + 1).toString()
+                    ryOrderDisAddTipAdapter.data[position].Addtip = (addTipShow + 1).toString()
                     ryOrderDisAddTipAdapter.notifyItemChanged(position)
                 }
                 R.id.txt_add -> {
-                    if (ryOrderDisAddTipAdapter.data[position].tip.toInt() + ryOrderDisAddTipAdapter.data[position].tip.toInt() > 30) {
-                        showToast("您已添加${ryOrderDisAddTipAdapter.data[position].tip}元小费，最多还能添加${30 - ryOrderDisAddTipAdapter.data[position].tip.toInt()}元")
+                    if (ryOrderDisAddTipAdapter.data[position].tip.toInt() + ryOrderDisAddTipAdapter.data[position].Addtip.toInt() > 30) {
+                        showToast("您已添加${ryOrderDisAddTipAdapter.data[position].tip}元小费，最多还能添加${30 - ryOrderDisAddTipAdapter.data[position].Addtip.toInt()}元")
                         return@setOnItemChildClickListener
                     }
 
@@ -104,7 +104,7 @@ class OrderDisAddTipActivity :
                             content.deliveryConsume?.id ?: "0",
                             content.order?.poiId ?: "0",
                             ryOrderDisAddTipAdapter.data[position].channelType,
-                            ryOrderDisAddTipAdapter.data[position].tip
+                            ryOrderDisAddTipAdapter.data[position].Addtip
                         )
                     )
                 }
@@ -148,7 +148,9 @@ class OrderDisAddTipActivity :
         mViewModel.addDtoPat.onStart.observe(this) {
         }
         mViewModel.addDtoPat.onSuccess.observe(this) {
-            showToast("sss${it.size}")
+            it.forEach { orderTip ->
+                orderTip.Addtip = "5"
+            }
             ryOrderDisAddTipAdapter.setList(it as MutableList<OrderSendAddTips>)
             ryOrderDisAddTipAdapter.notifyDataSetChanged()
         }

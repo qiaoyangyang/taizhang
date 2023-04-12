@@ -343,6 +343,7 @@ data class OrderSendAddTips(
     var receiverPhone: String,
     @SerializedName("tip")
     var tip: String,
+    var Addtip: String = "1",
 ){
 
 }
