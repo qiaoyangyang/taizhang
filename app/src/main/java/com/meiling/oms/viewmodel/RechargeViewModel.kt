@@ -5,6 +5,7 @@ import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
 import com.meiling.common.network.data.*
 import com.meiling.common.network.service.meService
+import retrofit2.http.Query
 
 class RechargeViewModel(application: Application) : BaseViewModel(application) {
 
@@ -30,7 +31,14 @@ class RechargeViewModel(application: Application) : BaseViewModel(application) {
         request({ meService.getFinancialRecord(rechargeRecordListReq) }, financialRecord)
     }
 
-    fun getFinancialRecordDetail(financialRecordDetailListReq: FinancialRecordDetailListReq) {
-        request({ meService.getFinancialRecordDetail(financialRecordDetailListReq) }, financialRecordDetail)
+    fun getFinancialRecordDetail(
+        viewId: String,
+        pageIndex: String,
+        pageSize: String
+    ) {
+        request(
+            { meService.getFinancialRecordDetail(viewId, pageIndex, pageSize) },
+            financialRecordDetail
+        )
     }
 }

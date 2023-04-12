@@ -31,7 +31,7 @@ data class RechargeRecordListReq(
 
 data class FinancialRecordDetailListReq(
     @SerializedName("viewId")
-    var viewId: String?,
+    var viewId: Int?,
     @SerializedName("pageIndex")
     var pageIndex: Int?,
     @SerializedName("pageSize")

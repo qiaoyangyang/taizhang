@@ -257,7 +257,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 orderDisAdapter.footerWithEmptyEnable = false
                 orderDisAdapter.loadMoreModule.loadMoreEnd()
             } else {
-                orderDisAdapter.loadMoreModule.loadMoreComplete()
+
             }
         }
         mViewModel.orderList.onError.observe(this) {

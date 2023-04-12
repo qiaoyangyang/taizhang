@@ -69,28 +69,56 @@ class RechargeSettlementFragment :
         }
 
         mDatabind.srfRechargeFeeRecord.setOnRefreshListener {
+            pageIndex = 1
             initViewData()
             EventBus.getDefault().post(MessageEventTimeShow())
         }
     }
 
+    var pageIndex = 1
+    var startDate = formatCurrentDateBeforeWeek()
     private fun initViewData() {
         mViewModel.getFinancialRecord(
             RechargeRecordListReq(
                 createUserId = "",
-                startDate = formatCurrentDateBeforeWeek(),
+                startDate = startDate,
                 endDate = formatCurrentDate(),
                 pageIndex = 1,
                 pageSize = "20",
                 tenantId = MMKVUtils.getString(SPConstants.tenantId)
             )
         )
+        chargeAdapter.loadMoreModule.setOnLoadMoreListener {
+            pageIndex++
+            mViewModel.getFinancialRecord(
+                RechargeRecordListReq(
+                    createUserId = "",
+                    startDate = startDate,
+                    endDate = formatCurrentDate(),
+                    pageIndex = pageIndex,
+                    pageSize = "20",
+                    tenantId = MMKVUtils.getString(SPConstants.tenantId)
+                )
+            )
+        }
     }
 
     override fun createObserver() {
         mViewModel.financialRecord.onSuccess.observe(this) {
             mDatabind.srfRechargeFeeRecord.isRefreshing = false
-            chargeAdapter.setList(it.pageResult?.pageData as MutableList<FinancialRecord.PageResult.PageData>)
+            if (it.pageResult?.pageNum == 1) {
+                chargeAdapter.setList(it.pageResult?.pageData as MutableList<FinancialRecord.PageResult.PageData>)
+            } else {
+                chargeAdapter.addData(it.pageResult?.pageData as MutableList<FinancialRecord.PageResult.PageData>)
+            }
+
+            if (it.pageResult?.pageData!!.size < 20) {
+                chargeAdapter.loadMoreModule.loadMoreEnd()
+
+            } else {
+                chargeAdapter.loadMoreModule.loadMoreComplete()
+            }
+
         }
         mViewModel.financialRecord.onError.observe(this) {
             mDatabind.srfRechargeFeeRecord.isRefreshing = false
@@ -102,6 +130,7 @@ class RechargeSettlementFragment :
     override fun onResume() {
         super.onResume()
         EventBus.getDefault().post(MessageEventTimeShow())
+        pageIndex = 1
         initViewData()
     }
 
@@ -115,16 +144,9 @@ class RechargeSettlementFragment :
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun eventDay(messageEventTime: MessageEventTime) {
-        mViewModel.getFinancialRecord(
-            RechargeRecordListReq(
-                createUserId = "",
-                startDate = messageEventTime.starTime,
-                endDate = formatCurrentDate(),
-                pageIndex = 1,
-                pageSize = "20",
-                tenantId = MMKVUtils.getString(SPConstants.tenantId)
-            )
-        )
+        pageIndex = 1
+        startDate = messageEventTime.starTime
+        initViewData()
     }
 
     override fun onDestroy() {

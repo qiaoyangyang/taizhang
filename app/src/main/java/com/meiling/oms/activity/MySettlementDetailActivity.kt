@@ -55,17 +55,15 @@ class MySettlementDetailActivity :
     }
 
     override fun initData() {
-        var settlementName = intent.getStringExtra("settlementName")
-        var settlementData = intent.getStringExtra("settlementData")
-        var viewId = intent.getStringExtra("viewId")
+        val settlementName = intent.getStringExtra("settlementName")
+        val settlementDate = intent.getStringExtra("settlementDate")
+        val viewId = intent.getStringExtra("viewId")
         mDatabind.txtSettlementName.text = settlementName
-        mDatabind.txtSettlementTime.text = settlementData + viewId
+        mDatabind.txtSettlementTime.text = settlementDate + viewId
         mViewModel.getFinancialRecordDetail(
-            FinancialRecordDetailListReq(
-                viewId = viewId,
-                pageIndex = 1,
-                pageSize = "20",
-            )
+            viewId = viewId!!,
+            pageIndex = "1",
+            pageSize = "20",
         )
     }
 

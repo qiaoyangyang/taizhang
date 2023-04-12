@@ -49,21 +49,38 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
         mDatabind.rvRechargeRecord.adapter = rechargeAdapter
 
         mDatabind.srfRechargeRecord.setOnRefreshListener {
-            initData()
+            pageIndex = 1
+            initViewData()
+            EventBus.getDefault().post(MessageEventTimeShow())
         }
     }
 
-    override fun initData() {
+    var pageIndex = 1
+    var startDate = formatCurrentDateBeforeWeek()
+    private fun initViewData() {
         mViewModel.getRecord(
             RechargeRecordListReq(
                 createUserId = "",
-                startDate = formatCurrentDateBeforeWeek(),
+                startDate = startDate,
                 endDate = formatCurrentDate(),
                 pageIndex = 1,
                 pageSize = "20",
                 tenantId = MMKVUtils.getString(SPConstants.tenantId)
             )
         )
+        rechargeAdapter.loadMoreModule.setOnLoadMoreListener {
+            pageIndex++
+            mViewModel.getFinancialRecord(
+                RechargeRecordListReq(
+                    createUserId = "",
+                    startDate = startDate,
+                    endDate = formatCurrentDate(),
+                    pageIndex = pageIndex,
+                    pageSize = "20",
+                    tenantId = MMKVUtils.getString(SPConstants.tenantId)
+                )
+            )
+        }
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentRechargeRecordBinding {
@@ -88,16 +105,9 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun eventDay(messageEventTime: MessageEventTime) {
-        mViewModel.getRecord(
-            RechargeRecordListReq(
-                createUserId = "",
-                startDate = messageEventTime.starTime,
-                endDate = formatCurrentDate(),
-                pageIndex = 1,
-                pageSize = "20",
-                tenantId = MMKVUtils.getString(SPConstants.tenantId)
-            )
-        )
+        pageIndex = 1
+        startDate = messageEventTime.starTime
+        initViewData()
     }
 
     override fun onDestroy() {

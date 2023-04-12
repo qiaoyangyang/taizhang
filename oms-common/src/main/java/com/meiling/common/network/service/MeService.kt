@@ -6,6 +6,7 @@ import com.meiling.common.network.data.*
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 
 val meService: MeService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
@@ -42,7 +43,11 @@ interface MeService {
      * 财务结算记录明细
      * */
     @POST("/saas/financial/getRecordListByViewId")
-    suspend fun getFinancialRecordDetail(@Body financialRecordDetailListReq: FinancialRecordDetailListReq): ResultData<FinancialRecordDetail>
+    suspend fun getFinancialRecordDetail(
+        @Query("viewId") viewId: String,
+        @Query("pageIndex") pageIndex: String,
+        @Query("viewId") pageSize: String
+    ): ResultData<FinancialRecordDetail>
 
 
 }
