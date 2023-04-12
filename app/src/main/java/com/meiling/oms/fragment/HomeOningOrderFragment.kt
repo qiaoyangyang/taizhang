@@ -108,7 +108,7 @@ class HomeOningOrderFragment :
                     badgeTextSize = 30f
                     badgeGravity = Gravity.RIGHT or Gravity.TOP
                     badgeText = it.deliveryCancel.toString()
-                    badgeOffsetX = 5
+                    badgeOffsetX = 20
                     badgeOffsetY = 30
 
                 }
@@ -118,7 +118,7 @@ class HomeOningOrderFragment :
                     badgeTextSize = 30f
                     badgeGravity = Gravity.RIGHT or Gravity.TOP
                     badgeText = it.deliveryComplete.toString()
-                    badgeOffsetX = 5
+                    badgeOffsetX = 10
                     badgeOffsetY = 30
 
                 }

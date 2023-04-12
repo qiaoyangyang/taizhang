@@ -110,6 +110,7 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             showToast("已成功发起配送 请在订单页面，查看配送详情")
+            mActivity.finish()
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             showToast("发起配送失败 , 失败原因：${it.toString()}")

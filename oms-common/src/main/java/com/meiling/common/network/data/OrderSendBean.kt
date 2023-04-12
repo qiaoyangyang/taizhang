@@ -7,11 +7,11 @@ import java.io.Serializable
 
 data class OrderSendAddress(
     @SerializedName("cargoType")
-    var cargoType: String,
+    var cargoType: String?,
     @SerializedName("channelType")
-    var channelType: String,
+    var channelType: String?,
     @SerializedName("cityCode")
-    var cityCode: String,
+    var cityCode: String?,
     @SerializedName("deliverId")
     var deliverId: String?,
     @SerializedName("deliveryName")
@@ -19,15 +19,15 @@ data class OrderSendAddress(
     @SerializedName("deliveryPhone")
     var deliveryPhone: String?,
     @SerializedName("districtCode")
-    var districtCode: String,
+    var districtCode: String?,
     @SerializedName("exitChannel")
     var exitChannel: Boolean,
     @SerializedName("goodsWeight")
-    var goodsWeight: String,
+    var goodsWeight: String?,
     @SerializedName("lat")
-    var lat: String,
+    var lat: String?,
     @SerializedName("lon")
-    var lon: String,
+    var lon: String?,
     @SerializedName("merchantId")
     var merchantId: String,
     @SerializedName("method")
@@ -35,43 +35,43 @@ data class OrderSendAddress(
     @SerializedName("originId")
     var originId: Any,
     @SerializedName("poiAddr")
-    var poiAddr: String,
+    var poiAddr: String?,
     @SerializedName("poiCityCode")
-    var poiCityCode: String,
+    var poiCityCode: String?,
     @SerializedName("poiDistrictCode")
-    var poiDistrictCode: String,
+    var poiDistrictCode: String?,
     @SerializedName("poiId")
-    var poiId: String,
+    var poiId: String?,
     @SerializedName("poiLat")
-    var poiLat: String,
+    var poiLat: String?,
     @SerializedName("poiLon")
-    var poiLon: String,
+    var poiLon: String?,
     @SerializedName("poiName")
-    var poiName: String,
+    var poiName: String?,
     @SerializedName("poiPhone")
-    var poiPhone: String,
+    var poiPhone: String?,
     @SerializedName("poiProvinceCode")
-    var poiProvinceCode: String,
+    var poiProvinceCode: String?,
     @SerializedName("provinceCode")
-    var provinceCode: String,
+    var provinceCode: String?,
     @SerializedName("recvAddr")
-    var recvAddr: String,
+    var recvAddr: String?,
     @SerializedName("recvName")
-    var recvName: String,
+    var recvName: String?,
     @SerializedName("recvPhone")
-    var recvPhone: String,
+    var recvPhone: String?,
     @SerializedName("sendCity")
-    var sendCity: String,
+    var sendCity: String?,
     @SerializedName("stationChannelId")
     var stationChannelId: String?,
     @SerializedName("stationCommonId")
-    var stationCommonId: String,
+    var stationCommonId: String?,
     @SerializedName("tips")
-    var tips: String,
+    var tips: String?,
 //    @SerializedName("recvAddrDetail")
 //    var recvAddrDetail: String,
     @SerializedName("arriveTime")
-    var arriveTime: String
+    var arriveTime: String?
 ) : Serializable
 
 data class OrderSendRequest(
@@ -342,10 +342,7 @@ data class OrderSendAddTips(
     @SerializedName("receiverPhone")
     var receiverPhone: String,
     @SerializedName("tip")
-    var tip: Int,
-    @SerializedName("defaultTip")
-    var defaultTip: String,
-    var addtip:Int = 5
+    var tip: String,
 ){
 
 }

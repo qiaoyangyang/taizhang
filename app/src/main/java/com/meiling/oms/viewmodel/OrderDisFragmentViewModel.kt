@@ -10,7 +10,7 @@ import com.meiling.common.network.service.orderDisService
 class OrderDisFragmentViewModel(application: Application) : BaseViewModel(application) {
 
     /**
-     * 配送
+     * 配送地址获取
      * */
     var orderSendAddress = BaseLiveData<OrderSendAddress>()
     fun getOrderAndPoiDeliveryDate(poiId: String, orderId: String, logisticsType: String) {
@@ -41,6 +41,22 @@ class OrderDisFragmentViewModel(application: Application) : BaseViewModel(applic
             sendSuccess
         )
     }
+
+    var addDto = BaseLiveData<Any>()
+    var addDtoPat = BaseLiveData<ArrayList<OrderSendAddTips>>()
+    fun setAddTips(orderSendAddTipRequest: OrderSendAddTipRequest) {
+        request({ orderDisService.setAddTips(orderSendAddTipRequest) }, addDto)
+    }
+
+    fun getLogisticsOrder(orderId: String) {
+        request({ orderDisService.getLogisticsOrder(orderId) }, addDtoPat)
+    }
+
+    var cancelOrderDto = BaseLiveData<String>()
+    fun cancelOrder(cancelCouponSum: CancelOrderSend) {
+        request({ orderDisService.cancelOrderSend(cancelCouponSum) }, cancelOrderDto)
+    }
+
 //    /**
 //     * 配送
 //     * */
