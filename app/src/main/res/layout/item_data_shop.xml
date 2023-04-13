@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dp_20"
+    android:layout_weight="1"
+    android:paddingVertical="@dimen/dp_20"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/dp_30">
+
+    <TextView
+        android:id="@+id/txt_data_time"
+        android:layout_width="0dp"
+        android:layout_height="17dp"
+        android:layout_weight="1"
+        android:text="时间"
+        android:textColor="@color/home_333333"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/txt_all_data_order_num"
+        android:layout_width="0dp"
+        android:layout_height="17dp"
+        android:layout_weight="1"
+        android:text="2874"
+        android:gravity="end"
+        android:textColor="#ff777777"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/txt_data_receive_money"
+        android:layout_width="0dp"
+        android:layout_height="17dp"
+        android:layout_gravity="end"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:text="9527"
+        android:textColor="#ff777777"
+        android:textSize="12sp" />
+</LinearLayout>
+
+

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/order_remark_F4F4F4"
+    android:layout_height="match_parent">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/TitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        app:layout_constraintTop_toTopOf="parent"
+        app:leftIcon="@drawable/bar_arrows_left_white"
+        app:lineVisible="false"
+        app:rightTitleSize="@dimen/sp_14"
+        app:title=""
+        app:titleColor="@color/white" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/slbg"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/my_recharge_bg_red"
+        app:layout_constraintTop_toBottomOf="@+id/TitleBar"
+        app:shape_bottomLeftRadius="@dimen/dp_60"
+        app:shape_bottomRightRadius="@dimen/dp_60">
+        <TextView
+            android:id="@+id/tv_succeed"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:drawableLeft="@drawable/succeed"
+            android:text="核销成功"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@color/white"
+            android:textSize="21sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginTop="13dp"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/tv_succeed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="您可在20分钟内撤销核销"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.hjq.shape.layout.ShapeConstraintLayout
+        android:id="@+id/shapecl"
+        android:paddingTop="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        app:layout_constraintTop_toTopOf="@+id/slbg"
+        app:shape_solidColor="@color/white"
+        app:shape_radius="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textSize="16sp"
+            android:textColor="#2B2A2A"
+            android:text="浮光之丘疯狂星期四单人特惠套餐8英寸经典水果蛋糕，保证现做，分享快乐，经典传送传递幸福，全国连锁，品质保障，售后安心建议5-8人分享【仅支持美团点评上订购】10选1"
+            android:id="@+id/tv_name"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:id="@+id/order_price"
+            android:layout_marginTop="13dp"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+            android:text="订单价格："
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+
+            android:id="@+id/tv_dealValue"
+            android:textSize="16sp"
+            android:text="￥534"
+            app:layout_constraintBottom_toBottomOf="@+id/order_price"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="#999999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_couponBuyPrice"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toLeftOf="@+id/tv_dealValue"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_dealValue"
+            android:textSize="16sp"
+            android:textColor="#FF4C4A"
+            android:text="￥534"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/couponCode"
+            android:layout_marginTop="9dp"
+            app:layout_constraintLeft_toLeftOf="@+id/order_price"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:text="券码编号："
+            app:layout_constraintTop_toBottomOf="@+id/order_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+
+            android:id="@+id/tv_couponCode"
+            android:textSize="14sp"
+            android:text="290655641600"
+            app:layout_constraintBottom_toBottomOf="@+id/couponCode"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="#333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/type"
+            android:layout_marginTop="9dp"
+            android:text="券码类型："
+            app:layout_constraintTop_toBottomOf="@+id/couponCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+
+            android:id="@+id/tv_type"
+            android:textSize="14sp"
+            android:text="套餐券/团购券"
+            app:layout_constraintBottom_toBottomOf="@+id/type"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="#333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/couponUseTime"
+            android:layout_marginTop="9dp"
+            android:text="核销时间："
+            app:layout_constraintTop_toBottomOf="@+id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+
+            android:id="@+id/tv_couponUseTime"
+            android:textSize="14sp"
+            android:text="2023-10-10 12:23:45"
+            app:layout_constraintBottom_toBottomOf="@+id/couponUseTime"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="#333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/orderId"
+            android:layout_marginTop="9dp"
+            android:text="订单编号："
+            app:layout_constraintTop_toBottomOf="@+id/couponUseTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+
+            android:id="@+id/tv_orderId"
+            android:textSize="14sp"
+            android:text="290655641600432432"
+            app:layout_constraintBottom_toBottomOf="@+id/orderId"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="#333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:id="@+id/View_lin"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/orderId"
+            android:background="#F4F4F4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <com.hjq.shape.view.ShapeTextView
+            android:textSize="12sp"
+            android:id="@+id/tv_status"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            app:shape_radius="5dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:text="已核销"
+            android:layout_width="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/View_lin"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_shopName"
+            android:textColor="#999999"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintLeft_toRightOf="@+id/tv_status"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_status"
+            android:layout_width="0dp"
+            android:text="由浮光之丘MoonCake SKP 店"
+            android:layout_height="wrap_content"/>
+
+
+    </com.hjq.shape.layout.ShapeConstraintLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/tv_revocation"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_width="0dp"
+            android:textColor="#FF4C4A"
+            app:shape_radius="10dp"
+            app:shape_strokeColor="#FF4C4A"
+            app:shape_strokeWidth="1dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            app:shape_shadowColor="@color/white"
+            android:text="撤销核销"
+            android:gravity="center"
+
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/tv_go_on"
+            android:layout_marginTop="10dp"
+
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_width="0dp"
+            app:shape_radius="10dp"
+            android:textColor="@color/white"
+            app:shape_solidColor="#FF4C4A"
+            android:text="继续核销"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

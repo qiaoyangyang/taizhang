@@ -2,9 +2,10 @@
 <androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/home_1F2333"
+    android:background="@color/app_themes_1f2333"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -38,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingBottom="@dimen/dp_10"
-                android:text="进行中"
+                android:text="待配送"
                 android:textColor="#ff9b9b9b"
                 android:textSize="@dimen/sp_30" />
             <TextView
@@ -46,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingBottom="@dimen/dp_10"
-                android:text="进行中"
+                android:text="待抢单"
                 android:textColor="#ff9b9b9b"
                 android:textSize="@dimen/sp_30" />
             <TextView
@@ -54,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingBottom="@dimen/dp_10"
-                android:text="进行中"
+                android:text="待取货"
                 android:textColor="#ff9b9b9b"
                 android:textSize="@dimen/sp_30" />
             <TextView
@@ -62,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingBottom="@dimen/dp_10"
-                android:text="进行中"
+                android:text="配送中"
                 android:textColor="#ff9b9b9b"
                 android:textSize="@dimen/sp_30" />
             <TextView
@@ -70,17 +71,20 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingBottom="@dimen/dp_10"
-                android:text="进行中"
+                android:text="取消"
                 android:textColor="#ff9b9b9b"
                 android:textSize="@dimen/sp_30" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:paddingEnd="@dimen/dp_10"
                 android:paddingBottom="@dimen/dp_10"
-                android:text="进行中"
+                android:text="已送达"
+                android:maxLines="1"
                 android:textColor="#ff9b9b9b"
-                android:textSize="@dimen/sp_30" />
+                android:textSize="@dimen/sp_30"
+                tools:ignore="RtlSymmetry" />
 
 <!--           <RelativeLayout-->
 <!--               android:layout_width="wrap_content"-->

@@ -3,36 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name=".TarkaoApplication"
+        android:name=".OmsApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Tarket"
         android:usesCleartextTraffic="true"
-        android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="31">
 
-        <!--适配全面屏-->
+        <!-- 适配全面屏 -->
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.4" />
-        <!--适配华为（huawei）刘海屏-->
+            android:value="2.4" /> <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
             android:name="android.notch_support"
-            android:value="true" />
-
-        <!--适配小米（xiaomi）刘海屏-->
+            android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />
 
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -40,32 +38,120 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".activity.MessageCenterActivity" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AgreementActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ForgetPwdActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ForgetPwdResetActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ForgetPwdFinishActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ForgetPwdGetCodeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleInstance" />
+        <activity android:name=".activity.OrderDisAddTipActivity" />
         <activity android:name=".activity.OrderChangeAddressActivity" />
+        <activity android:name=".activity.OrderChangeAddressMapActivity" />
         <activity android:name=".activity.SearchActivity" />
-        <activity android:name=".activity.OrderDisActivity"
+        <activity
+            android:name=".activity.OrderDisActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
-            />
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".activity.Search1Activity" />
         <activity android:name=".activity.PostDetailActivity" />
         <activity android:name=".activity.MyRechargeActivity" />
         <activity android:name=".activity.WriteOffActivity" />
+        <activity android:name=".activity.MeituanActivity" />
+        <activity android:name=".activity.WriteDetailsActivity" />
         <activity android:name=".activity.MySettlementDetailActivity" />
         <activity android:name=".activity.ReleasePostActivity" />
-        <activity android:name=".activity.ShareActivity" />
-        <activity android:name=".activity.ModifyInformationActivity" />
+        <activity android:name=".activity.RechargeFinishActivity" />
+        <activity android:name=".activity.ModifyPassWordActivity" />
+        <activity android:name=".activity.VoucherInspectionActivity" />
+        <activity android:name=".activity.VoucherInspectionHistoryActivity" />
+        <activity android:name=".activity.WriteOffDetailsActivity" />
+        <activity android:name=".activity.InputBoredomActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.meiling.oms.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="9a26d944277356b653bc2657adc35059"></meta-data>
+
+        <service android:name="com.amap.api.location.APSService" />
+        <!--        <service-->
+        <!--            android:name="com.umeng.message.UmengMessageIntentReceiverService"-->
+        <!--            android:exported="true"-->
+        <!--            android:process=":channel">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="org.android.agoo.client.MessageReceiverService" />-->
+        <!--            </intent-filter>-->
+        <!--        </service>-->
+
+        <!--        <receiver-->
+        <!--            android:name="com.umeng.message.NotificationProxyBroadcastReceiver"-->
+        <!--            android:exported="false" />-->
+
+        <service
+            android:name="com.umeng.message.UmengMessageCallbackHandlerService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE">
+            <intent-filter>
+                <action android:name="com.umeng.messge.registercallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.enablecallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.disablecallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.message.handler.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.message.sendmessage.action" />
+            </intent-filter>
+        </service>
+        <!--        <service-->
+        <!--            android:name="com.umeng.message.UmengDownloadResourceService"-->
+        <!--            android:exported="false"-->
+        <!--            android:permission="android.permission.BIND_JOB_SERVICE" />-->
+
+        <!--        <provider-->
+        <!--            android:name="com.umeng.message.provider.MessageProvider"-->
+        <!--            android:authorities="${applicationId}.umeng.message"-->
+        <!--            android:exported="false">-->
+        <!--            <grant-uri-permission android:pathPattern=".*" />-->
+        <!--        </provider> &lt;!&ndash; 以下为基本配置信息，需要自行添加至您的AndroidManifest文件中 end &ndash;&gt;-->
+
     </application>
+    <queries>
+        <package android:name="com.tencent.mm" />
+        <package android:name="com.eg.android.AlipayGphone" />
+        <package android:name="hk.alipay.wallet" />
+    </queries>
 
 </manifest>

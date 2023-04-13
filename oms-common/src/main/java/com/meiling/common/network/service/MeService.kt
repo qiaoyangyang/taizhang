@@ -2,8 +2,7 @@ package com.meiling.common.network.service
 
 import com.meiling.common.network.ResultData
 import com.meiling.common.network.RetrofitClient
-import com.meiling.common.network.data.UserDataVO
-import com.meiling.common.network.data.UserInfoVO
+import com.meiling.common.network.data.*
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -17,15 +16,38 @@ val meService: MeService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
 interface MeService {
 
 
-    @GET("/api/v1/app/user/userData")
-    suspend fun userData(@Query("userId") userId: String): ResultData<UserDataVO>
+    //充值
+    @POST("/saas/payAccountAmount/paymentApp")
+    suspend fun rechargeRequest(@Body rechargeDto: RechargeRequest): ResultData<String>
 
 
-    @GET("/api/v1/app/user/userInfo")
-    suspend fun userInfo(): ResultData<UserInfoVO>
+    /**
+     * 余额
+     * **/
+    @GET("/saas/payAccountAmount/getPayAccountAmountVo")
+    suspend fun getPayAccountAmountVo(): ResultData<BalanceDto>
 
-    @POST("/api/v1/app/user/modifyInfo")
-    suspend fun modifyInfo(@Body map: Map<String, String>): ResultData<String>
+    /**
+     * 充值记录
+     * */
+    @POST("/saas/payAccountAmount/getRecordList")
+    suspend fun getRecord(@Body rechargeRecordListReq: RechargeRecordListReq): ResultData<RechargeRecordDto>
+
+    /**
+     * 财务结算明细
+     * */
+    @POST("/saas/financial/getRecordList")
+    suspend fun getFinancialRecord(@Body rechargeRecordListReq: RechargeRecordListReq): ResultData<FinancialRecord>
+
+    /**
+     * 财务结算记录明细
+     * */
+    @POST("/saas/financial/getRecordListByViewId")
+    suspend fun getFinancialRecordDetail(
+        @Query("viewId") viewId: String,
+        @Query("pageIndex") pageIndex: String,
+        @Query("pageSize") pageSize: String
+    ): ResultData<FinancialRecordDetail>
 
 
 }

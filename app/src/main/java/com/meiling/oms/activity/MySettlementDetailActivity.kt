@@ -6,21 +6,30 @@ import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.constant.SPConstants
+import com.meiling.common.network.data.FinancialRecord
+import com.meiling.common.network.data.FinancialRecordDetailListReq
+import com.meiling.common.network.data.PageResult
+import com.meiling.common.network.data.RechargeRecordListReq
+import com.meiling.common.utils.MMKVUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityRechargeSettlementDetailBinding
 import com.meiling.oms.fragment.CommunityFragment
-import com.meiling.oms.viewmodel.CommunityViewModel
+import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
+import com.meiling.oms.viewmodel.RechargeViewModel
+import com.meiling.oms.widget.formatCurrentDate
+import com.meiling.oms.widget.formatCurrentDateBeforeWeek
+import com.meiling.oms.widget.showToast
 
 /**
  * 结算明细
  * **/
 @Route(path = "/app/MySettlementDetailActivity")
 class MySettlementDetailActivity :
-    BaseActivity<CommunityViewModel, ActivityRechargeSettlementDetailBinding>() {
+    BaseActivity<RechargeViewModel, ActivityRechargeSettlementDetailBinding>() {
 
-    lateinit var settlementAdapter: BaseQuickAdapter<String, BaseViewHolder>
+    lateinit var settlementAdapter: BaseQuickAdapter<PageResult.PageData, BaseViewHolder>
 
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -28,28 +37,34 @@ class MySettlementDetailActivity :
         fragments.add(
             CommunityFragment.newInstance()
         )
-        setBar(this,mDatabind.cosTitle)
-        ImmersionBar.with(this).init()
-        ImmersionBar.setTitleBar(this, mDatabind.cosTitle)
+        setBar(this, mDatabind.cosTitle)
+
+        settlementAdapter =
+            object :
+                BaseQuickAdapter<PageResult.PageData, BaseViewHolder>(R.layout.item_recharge_record) {
+                override fun convert(holder: BaseViewHolder, item: PageResult.PageData) {
+                    holder.setText(
+                        R.id.txt_channel_name,
+                        item.orderChannelName + "#" + item.orderChannel
+                    )
+                    holder.setText(R.id.txt_service_charge_money, item.settlementAmount)
+                    holder.setText(R.id.txt_recharge_name, item.createTime)
+                }
+            }
+        mDatabind.rvSettlement.adapter = settlementAdapter
     }
 
     override fun initData() {
-
-        var settlementName = intent.getStringExtra("settlementName")
+        val settlementName = intent.getStringExtra("settlementName")
+        val settlementDate = intent.getStringExtra("settlementDate")
+        val viewId = intent.getStringExtra("viewId")
         mDatabind.txtSettlementName.text = settlementName
-        settlementAdapter =
-            object : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_recharge_record) {
-                override fun convert(holder: BaseViewHolder, item: String) {
-                    holder.setText(R.id.txt_channel_name, item + "#${1}")
-                }
-
-            }
-        var list = ArrayList<String>()
-        list.add("美团")
-        list.add("饿了么")
-        list.add("美团购物")
-        mDatabind.rvSettlement.adapter = settlementAdapter
-        settlementAdapter.setList(list)
+        mDatabind.txtSettlementTime.text = settlementDate + viewId
+        mViewModel.getFinancialRecordDetail(
+            viewId = viewId!!,
+            pageIndex = "1",
+            pageSize = "20",
+        )
     }
 
 
@@ -57,6 +72,14 @@ class MySettlementDetailActivity :
         return ActivityRechargeSettlementDetailBinding.inflate(layoutInflater)
     }
 
+    override fun createObserver() {
+        mViewModel.financialRecordDetail.onSuccess.observe(this) {
+            settlementAdapter.setList(it.pageResult?.pageData as MutableList<PageResult.PageData>)
+        }
+        mViewModel.financialRecord.onError.observe(this) {
+            showToast(it.msg)
+        }
+    }
 
     override fun initListener() {
         mDatabind.imgSettlememtBack.setOnClickListener { finish() }

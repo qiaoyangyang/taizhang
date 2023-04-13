@@ -19,34 +19,34 @@
             android:id="@+id/txt_channel_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="微信"
+            android:paddingVertical="@dimen/dp_10"
             android:textColor="@color/home_333333"
             android:textSize="@dimen/sp_32"
-            android:paddingVertical="@dimen/dp_10"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="微信" />
 
 
         <TextView
             android:id="@+id/txt_recharge_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2023-03-26 13:24:26"
             android:textColor="@color/home_999999"
             android:textSize="@dimen/sp_32"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_channel_name" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_channel_name"
+            tools:text="2023-03-26 13:24:26" />
 
         <TextView
             android:id="@+id/txt_service_charge_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+200"
             android:textColor="@color/home_333333"
             android:textSize="@dimen/sp_32"
             app:layout_constraintBottom_toBottomOf="@+id/txt_recharge_name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txt_channel_name" />
+            app:layout_constraintTop_toTopOf="@+id/txt_channel_name"
+            tools:text="+200" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

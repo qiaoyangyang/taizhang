@@ -1,0 +1,2574 @@
+[
+  {
+    "initials" : "AQ",
+    "lower" : "aq",
+    "pinyin" : "anqing",
+    "name" : "安庆",
+    "letter" : "A"
+  },
+  {
+    "initials" : "AK",
+    "lower" : "ak",
+    "name" : "安康",
+    "pinyin" : "ankang",
+    "letter" : "A"
+  },
+  {
+    "initials" : "AY",
+    "lower" : "ay",
+    "name" : "安阳",
+    "pinyin" : "anyang",
+    "letter" : "A"
+  },
+  {
+    "initials" : "AS",
+    "lower" : "as",
+    "pinyin" : "anshun",
+    "name" : "安顺",
+    "letter" : "A"
+  },
+  {
+    "initials" : "AMBD",
+    "lower" : "ambd",
+    "name" : "澳门半岛",
+    "pinyin" : "aomenbandao",
+    "letter" : "A"
+  },
+  {
+    "initials" : "AKS",
+    "lower" : "aks",
+    "name" : "阿克苏",
+    "pinyin" : "akesu",
+    "letter" : "A"
+  },
+  {
+    "initials" : "ALT",
+    "lower" : "alt",
+    "name" : "阿勒泰",
+    "pinyin" : "aletai",
+    "letter" : "A"
+  },
+  {
+    "initials" : "AB",
+    "lower" : "ab",
+    "pinyin" : "aba",
+    "name" : "阿坝",
+    "letter" : "A"
+  },
+  {
+    "initials" : "ALSM",
+    "lower" : "alsm",
+    "pinyin" : "alashanmeng",
+    "name" : "阿拉善盟",
+    "letter" : "A"
+  },
+  {
+    "initials" : "AL",
+    "lower" : "al",
+    "pinyin" : "ali",
+    "name" : "阿里",
+    "letter" : "A"
+  },
+  {
+    "initials" : "AS",
+    "lower" : "as",
+    "pinyin" : "anshan",
+    "name" : "鞍山",
+    "letter" : "A"
+  },
+  {
+    "initials" : "BD",
+    "lower" : "bd",
+    "name" : "保定",
+    "pinyin" : "baoding",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BS",
+    "lower" : "bs",
+    "name" : "保山",
+    "pinyin" : "baoshan",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BT",
+    "lower" : "bt",
+    "name" : "包头",
+    "pinyin" : "baotou",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BJ",
+    "lower" : "bj",
+    "name" : "北京",
+    "pinyin" : "beijing",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BH",
+    "lower" : "bh",
+    "name" : "北海",
+    "pinyin" : "beihai",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BETL",
+    "lower" : "betl",
+    "name" : "博尔塔拉",
+    "pinyin" : "boertala",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BJ",
+    "lower" : "bj",
+    "name" : "宝鸡",
+    "pinyin" : "baoji",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BZ",
+    "lower" : "bz",
+    "name" : "巴中",
+    "pinyin" : "bazhong",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BYNE",
+    "lower" : "byne",
+    "name" : "巴彦淖尔",
+    "pinyin" : "bayannaoer",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BYGL",
+    "lower" : "bygl",
+    "pinyin" : "bayinguoleng",
+    "name" : "巴音郭楞",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BX",
+    "lower" : "bx",
+    "name" : "本溪",
+    "pinyin" : "benxi",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BJ",
+    "lower" : "bj",
+    "name" : "毕节",
+    "pinyin" : "bijie",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BZ",
+    "lower" : "bz",
+    "name" : "滨州",
+    "pinyin" : "binzhou",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BC",
+    "lower" : "bc",
+    "name" : "白城",
+    "pinyin" : "baicheng",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BS",
+    "lower" : "bs",
+    "name" : "白山",
+    "pinyin" : "baishan",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BY",
+    "lower" : "by",
+    "pinyin" : "baiyin",
+    "name" : "白银",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BS",
+    "lower" : "bs",
+    "name" : "百色",
+    "pinyin" : "baise",
+    "letter" : "B"
+  },
+  {
+    "initials" : "BB",
+    "lower" : "bb",
+    "pinyin" : "bangbu",
+    "name" : "蚌埠",
+    "letter" : "B"
+  },
+  {
+    "initials" : "CZ",
+    "lower" : "cz",
+    "pinyin" : "chongzuo",
+    "name" : "崇左",
+    "letter" : "C"
+  },
+  {
+    "initials" : "CZ",
+    "lower" : "cz",
+    "pinyin" : "changzhou",
+    "name" : "常州",
+    "letter" : "C"
+  },
+  {
+    "initials" : "CD",
+    "lower" : "cd",
+    "name" : "常德",
+    "pinyin" : "changde",
+    "letter" : "C"
+  },
+  {
+    "initials" : "CD",
+    "lower" : "cd",
+    "pinyin" : "chengdou",
+    "name" : "成都",
+    "letter" : "C"
+  },
+  {
+    "initials" : "CD",
+    "lower" : "cd",
+    "pinyin" : "chengde",
+    "name" : "承德",
+    "letter" : "C"
+  },
+  {
+    "initials" : "CJ",
+    "lower" : "cj",
+    "name" : "昌吉",
+    "pinyin" : "changji",
+    "letter" : "C"
+  },
+  {
+    "initials" : "CD",
+    "lower" : "cd",
+    "pinyin" : "changdou",
+    "name" : "昌都",
+    "letter" : "C"
+  },
+  {
+    "initials" : "CY",
+    "lower" : "cy",
+    "name" : "朝阳",
+    "pinyin" : "chaoyang",
+    "letter" : "C"
+  },
+  {
+    "initials" : "CX",
+    "lower" : "cx",
+    "name" : "楚雄",
+    "pinyin" : "chuxiong",
+    "letter" : "C"
+  },
+  {
+    "initials" : "CZ",
+    "lower" : "cz",
+    "pinyin" : "chizhou",
+    "name" : "池州",
+    "letter" : "C"
+  },
+  {
+    "initials" : "CZ",
+    "lower" : "cz",
+    "pinyin" : "cangzhou",
+    "name" : "沧州",
+    "letter" : "C"
+  },
+  {
+    "initials" : "CZ",
+    "lower" : "cz",
+    "name" : "滁州",
+    "pinyin" : "chuzhou",
+    "letter" : "C"
+  },
+  {
+    "initials" : "CZ",
+    "lower" : "cz",
+    "pinyin" : "chaozhou",
+    "name" : "潮州",
+    "letter" : "C"
+  },
+  {
+    "initials" : "CF",
+    "lower" : "cf",
+    "pinyin" : "chifeng",
+    "name" : "赤峰",
+    "letter" : "C"
+  },
+  {
+    "initials" : "CZ",
+    "lower" : "cz",
+    "name" : "郴州",
+    "pinyin" : "chenzhou",
+    "letter" : "C"
+  },
+  {
+    "initials" : "ZC",
+    "lower" : "zc",
+    "pinyin" : "zhangchun",
+    "name" : "长春",
+    "letter" : "C"
+  },
+  {
+    "initials" : "ZS",
+    "lower" : "zs",
+    "pinyin" : "zhangsha",
+    "name" : "长沙",
+    "letter" : "C"
+  },
+  {
+    "initials" : "ZZ",
+    "lower" : "zz",
+    "pinyin" : "zhangzhi",
+    "name" : "长治",
+    "letter" : "C"
+  },
+  {
+    "initials" : "DG",
+    "lower" : "dg",
+    "pinyin" : "dongguan",
+    "name" : "东莞",
+    "letter" : "D"
+  },
+  {
+    "initials" : "DY",
+    "lower" : "dy",
+    "name" : "东营",
+    "pinyin" : "dongying",
+    "letter" : "D"
+  },
+  {
+    "initials" : "DD",
+    "lower" : "dd",
+    "name" : "丹东",
+    "pinyin" : "dandong",
+    "letter" : "D"
+  },
+  {
+    "initials" : "DXAL",
+    "lower" : "dxal",
+    "pinyin" : "daxinganling",
+    "name" : "大兴安岭",
+    "letter" : "D"
+  },
+  {
+    "initials" : "DT",
+    "lower" : "dt",
+    "pinyin" : "datong",
+    "name" : "大同",
+    "letter" : "D"
+  },
+  {
+    "initials" : "DQ",
+    "lower" : "dq",
+    "name" : "大庆",
+    "pinyin" : "daqing",
+    "letter" : "D"
+  },
+  {
+    "initials" : "DL",
+    "lower" : "dl",
+    "pinyin" : "dali",
+    "name" : "大理",
+    "letter" : "D"
+  },
+  {
+    "initials" : "DL",
+    "lower" : "dl",
+    "name" : "大连",
+    "pinyin" : "dalian",
+    "letter" : "D"
+  },
+  {
+    "initials" : "DX",
+    "lower" : "dx",
+    "name" : "定西",
+    "pinyin" : "dingxi",
+    "letter" : "D"
+  },
+  {
+    "initials" : "DH",
+    "lower" : "dh",
+    "pinyin" : "dehong",
+    "name" : "德宏",
+    "letter" : "D"
+  },
+  {
+    "initials" : "DZ",
+    "lower" : "dz",
+    "name" : "德州",
+    "pinyin" : "dezhou",
+    "letter" : "D"
+  },
+  {
+    "initials" : "DY",
+    "lower" : "dy",
+    "name" : "德阳",
+    "pinyin" : "deyang",
+    "letter" : "D"
+  },
+  {
+    "initials" : "DZ",
+    "lower" : "dz",
+    "pinyin" : "dazhou",
+    "name" : "达州",
+    "letter" : "D"
+  },
+  {
+    "initials" : "DQ",
+    "lower" : "dq",
+    "pinyin" : "diqing",
+    "name" : "迪庆",
+    "letter" : "D"
+  },
+  {
+    "initials" : "ES",
+    "lower" : "es",
+    "pinyin" : "enshi",
+    "name" : "恩施",
+    "letter" : "E"
+  },
+  {
+    "initials" : "EEDS",
+    "lower" : "eeds",
+    "name" : "鄂尔多斯",
+    "pinyin" : "eerduosi",
+    "letter" : "E"
+  },
+  {
+    "initials" : "EZ",
+    "lower" : "ez",
+    "pinyin" : "ezhou",
+    "name" : "鄂州",
+    "letter" : "E"
+  },
+  {
+    "initials" : "FS",
+    "lower" : "fs",
+    "pinyin" : "foshan",
+    "name" : "佛山",
+    "letter" : "F"
+  },
+  {
+    "initials" : "FZ",
+    "lower" : "fz",
+    "pinyin" : "fuzhou",
+    "name" : "抚州",
+    "letter" : "F"
+  },
+  {
+    "initials" : "FS",
+    "lower" : "fs",
+    "pinyin" : "fushun",
+    "name" : "抚顺",
+    "letter" : "F"
+  },
+  {
+    "initials" : "FZ",
+    "lower" : "fz",
+    "name" : "福州",
+    "pinyin" : "fuzhou",
+    "letter" : "F"
+  },
+  {
+    "initials" : "FX",
+    "lower" : "fx",
+    "pinyin" : "fuxin",
+    "name" : "阜新",
+    "letter" : "F"
+  },
+  {
+    "initials" : "FY",
+    "lower" : "fy",
+    "name" : "阜阳",
+    "pinyin" : "fuyang",
+    "letter" : "F"
+  },
+  {
+    "initials" : "FCG",
+    "lower" : "fcg",
+    "name" : "防城港",
+    "pinyin" : "fangchenggang",
+    "letter" : "F"
+  },
+  {
+    "initials" : "GY",
+    "lower" : "gy",
+    "pinyin" : "guyuan",
+    "name" : "固原",
+    "letter" : "G"
+  },
+  {
+    "initials" : "GY",
+    "lower" : "gy",
+    "name" : "广元",
+    "pinyin" : "guangyuan",
+    "letter" : "G"
+  },
+  {
+    "initials" : "GA",
+    "lower" : "ga",
+    "pinyin" : "guangan",
+    "name" : "广安",
+    "letter" : "G"
+  },
+  {
+    "initials" : "GZ",
+    "lower" : "gz",
+    "name" : "广州",
+    "pinyin" : "guangzhou",
+    "letter" : "G"
+  },
+  {
+    "initials" : "GL",
+    "lower" : "gl",
+    "name" : "果洛",
+    "pinyin" : "guoluo",
+    "letter" : "G"
+  },
+  {
+    "initials" : "GL",
+    "lower" : "gl",
+    "pinyin" : "guilin",
+    "name" : "桂林",
+    "letter" : "G"
+  },
+  {
+    "initials" : "GN",
+    "lower" : "gn",
+    "pinyin" : "gannan",
+    "name" : "甘南",
+    "letter" : "G"
+  },
+  {
+    "initials" : "GZ",
+    "lower" : "gz",
+    "pinyin" : "ganzi",
+    "name" : "甘孜",
+    "letter" : "G"
+  },
+  {
+    "initials" : "GG",
+    "lower" : "gg",
+    "name" : "贵港",
+    "pinyin" : "guigang",
+    "letter" : "G"
+  },
+  {
+    "initials" : "GY",
+    "lower" : "gy",
+    "name" : "贵阳",
+    "pinyin" : "guiyang",
+    "letter" : "G"
+  },
+  {
+    "initials" : "GZ",
+    "lower" : "gz",
+    "name" : "赣州",
+    "pinyin" : "ganzhou",
+    "letter" : "G"
+  },
+  {
+    "initials" : "GX",
+    "lower" : "gx",
+    "name" : "高雄",
+    "pinyin" : "gaoxiong",
+    "letter" : "G"
+  },
+  {
+    "initials" : "HF",
+    "lower" : "hf",
+    "name" : "合肥",
+    "pinyin" : "hefei",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HLBE",
+    "lower" : "hlbe",
+    "pinyin" : "hulunbeier",
+    "name" : "呼伦贝尔",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HHHT",
+    "lower" : "hhht",
+    "pinyin" : "huhehaote",
+    "name" : "呼和浩特",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HT",
+    "lower" : "ht",
+    "name" : "和田",
+    "pinyin" : "hetian",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HM",
+    "lower" : "hm",
+    "pinyin" : "hami",
+    "name" : "哈密",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HEB",
+    "lower" : "heb",
+    "name" : "哈尔滨",
+    "pinyin" : "haerbin",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HH",
+    "lower" : "hh",
+    "pinyin" : "huaihua",
+    "name" : "怀化",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HZ",
+    "lower" : "hz",
+    "name" : "惠州",
+    "pinyin" : "huizhou",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HZ",
+    "lower" : "hz",
+    "name" : "杭州",
+    "pinyin" : "hangzhou",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HZ",
+    "lower" : "hz",
+    "name" : "汉中",
+    "pinyin" : "hanzhong",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HC",
+    "lower" : "hc",
+    "name" : "河池",
+    "pinyin" : "hechi",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HY",
+    "lower" : "hy",
+    "name" : "河源",
+    "pinyin" : "heyuan",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HD",
+    "lower" : "hd",
+    "name" : "海东",
+    "pinyin" : "haidong",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HB",
+    "lower" : "hb",
+    "name" : "海北",
+    "pinyin" : "haibei",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HN",
+    "lower" : "hn",
+    "name" : "海南",
+    "pinyin" : "hainan",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HK",
+    "lower" : "hk",
+    "name" : "海口",
+    "pinyin" : "haikou",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HX",
+    "lower" : "hx",
+    "name" : "海西",
+    "pinyin" : "haixi",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HB",
+    "lower" : "hb",
+    "name" : "淮北",
+    "pinyin" : "huaibei",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HN",
+    "lower" : "hn",
+    "pinyin" : "huainan",
+    "name" : "淮南",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HA",
+    "lower" : "ha",
+    "name" : "淮安",
+    "pinyin" : "huaian",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HZ",
+    "lower" : "hz",
+    "pinyin" : "huzhou",
+    "name" : "湖州",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HH",
+    "lower" : "hh",
+    "name" : "红河",
+    "pinyin" : "honghe",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HWT",
+    "lower" : "hwt",
+    "pinyin" : "huawangtang",
+    "name" : "花王堂",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HL",
+    "lower" : "hl",
+    "name" : "花莲",
+    "pinyin" : "hualian",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HZ",
+    "lower" : "hz",
+    "pinyin" : "heze",
+    "name" : "菏泽",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HLD",
+    "lower" : "hld",
+    "pinyin" : "huludao",
+    "name" : "葫芦岛",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HS",
+    "lower" : "hs",
+    "name" : "衡水",
+    "pinyin" : "hengshui",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HY",
+    "lower" : "hy",
+    "name" : "衡阳",
+    "pinyin" : "hengyang",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HZ",
+    "lower" : "hz",
+    "name" : "贺州",
+    "pinyin" : "hezhou",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HD",
+    "lower" : "hd",
+    "pinyin" : "handan",
+    "name" : "邯郸",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HB",
+    "lower" : "hb",
+    "pinyin" : "hebi",
+    "name" : "鹤壁",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HG",
+    "lower" : "hg",
+    "name" : "鹤岗",
+    "pinyin" : "hegang",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HG",
+    "lower" : "hg",
+    "name" : "黄冈",
+    "pinyin" : "huanggang",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HN",
+    "lower" : "hn",
+    "name" : "黄南",
+    "pinyin" : "huangnan",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HS",
+    "lower" : "hs",
+    "pinyin" : "huangshan",
+    "name" : "黄山",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HS",
+    "lower" : "hs",
+    "pinyin" : "huangshi",
+    "name" : "黄石",
+    "letter" : "H"
+  },
+  {
+    "initials" : "HH",
+    "lower" : "hh",
+    "name" : "黑河",
+    "pinyin" : "heihe",
+    "letter" : "H"
+  },
+  {
+    "initials" : "JJ",
+    "lower" : "jj",
+    "pinyin" : "jiujiang",
+    "name" : "九江",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JL",
+    "lower" : "jl",
+    "name" : "九龙",
+    "pinyin" : "jiulong",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JMS",
+    "lower" : "jms",
+    "name" : "佳木斯",
+    "pinyin" : "jiamusi",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JA",
+    "lower" : "ja",
+    "name" : "吉安",
+    "pinyin" : "jian",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JL",
+    "lower" : "jl",
+    "pinyin" : "jilin",
+    "name" : "吉林",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JY",
+    "lower" : "jy",
+    "pinyin" : "jiayi",
+    "name" : "嘉义",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JX",
+    "lower" : "jx",
+    "name" : "嘉兴",
+    "pinyin" : "jiaxing",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JYG",
+    "lower" : "jyg",
+    "name" : "嘉峪关",
+    "pinyin" : "jiayuguan",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JL",
+    "lower" : "jl",
+    "name" : "基隆",
+    "pinyin" : "jilong",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JY",
+    "lower" : "jy",
+    "name" : "揭阳",
+    "pinyin" : "jieyang",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JZ",
+    "lower" : "jz",
+    "pinyin" : "jinzhong",
+    "name" : "晋中",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JC",
+    "lower" : "jc",
+    "name" : "晋城",
+    "pinyin" : "jincheng",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JDZ",
+    "lower" : "jdz",
+    "name" : "景德镇",
+    "pinyin" : "jingdezhen",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JM",
+    "lower" : "jm",
+    "pinyin" : "jiangmen",
+    "name" : "江门",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JN",
+    "lower" : "jn",
+    "name" : "济南",
+    "pinyin" : "jinan",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JN",
+    "lower" : "jn",
+    "pinyin" : "jining",
+    "name" : "济宁",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JZ",
+    "lower" : "jz",
+    "name" : "焦作",
+    "pinyin" : "jiaozuo",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JZ",
+    "lower" : "jz",
+    "pinyin" : "jingzhou",
+    "name" : "荆州",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JM",
+    "lower" : "jm",
+    "name" : "荆门",
+    "pinyin" : "jingmen",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JQ",
+    "lower" : "jq",
+    "pinyin" : "jiuquan",
+    "name" : "酒泉",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JH",
+    "lower" : "jh",
+    "name" : "金华",
+    "pinyin" : "jinhua",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JC",
+    "lower" : "jc",
+    "name" : "金昌",
+    "pinyin" : "jinchang",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JPXQ",
+    "lower" : "jpxq",
+    "pinyin" : "jinpuxinqu",
+    "name" : "金普新区",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JM",
+    "lower" : "jm",
+    "name" : "金门",
+    "pinyin" : "jinmen",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JZ",
+    "lower" : "jz",
+    "pinyin" : "jinzhou",
+    "name" : "锦州",
+    "letter" : "J"
+  },
+  {
+    "initials" : "JX",
+    "lower" : "jx",
+    "name" : "鸡西",
+    "pinyin" : "jixi",
+    "letter" : "J"
+  },
+  {
+    "initials" : "KZLS",
+    "lower" : "kzls",
+    "pinyin" : "kezilesu",
+    "name" : "克孜勒苏",
+    "letter" : "K"
+  },
+  {
+    "initials" : "KLMY",
+    "lower" : "klmy",
+    "pinyin" : "kelamayi",
+    "name" : "克拉玛依",
+    "letter" : "K"
+  },
+  {
+    "initials" : "KS",
+    "lower" : "ks",
+    "name" : "喀什",
+    "pinyin" : "kashen",
+    "letter" : "K"
+  },
+  {
+    "initials" : "KF",
+    "lower" : "kf",
+    "name" : "开封",
+    "pinyin" : "kaifeng",
+    "letter" : "K"
+  },
+  {
+    "initials" : "KM",
+    "lower" : "km",
+    "name" : "昆明",
+    "pinyin" : "kunming",
+    "letter" : "K"
+  },
+  {
+    "initials" : "LJXQ",
+    "lower" : "ljxq",
+    "pinyin" : "liangjiangxinqu",
+    "name" : "两江新区",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LX",
+    "lower" : "lx",
+    "name" : "临夏",
+    "pinyin" : "linxia",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LF",
+    "lower" : "lf",
+    "name" : "临汾",
+    "pinyin" : "linfen",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LY",
+    "lower" : "ly",
+    "name" : "临沂",
+    "pinyin" : "linyi",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LC",
+    "lower" : "lc",
+    "pinyin" : "lincang",
+    "name" : "临沧",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LS",
+    "lower" : "ls",
+    "pinyin" : "lishui",
+    "name" : "丽水",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LJ",
+    "lower" : "lj",
+    "pinyin" : "lijiang",
+    "name" : "丽江",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LS",
+    "lower" : "ls",
+    "pinyin" : "leshan",
+    "name" : "乐山",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LA",
+    "lower" : "la",
+    "name" : "六安",
+    "pinyin" : "liuan",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LPS",
+    "lower" : "lps",
+    "name" : "六盘水",
+    "pinyin" : "liupanshui",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LZ",
+    "lower" : "lz",
+    "name" : "兰州",
+    "pinyin" : "lanzhou",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LS",
+    "lower" : "ls",
+    "name" : "凉山",
+    "pinyin" : "liangshan",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LL",
+    "lower" : "ll",
+    "pinyin" : "lu:liang",
+    "name" : "吕梁",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LD",
+    "lower" : "ld",
+    "name" : "娄底",
+    "pinyin" : "loudi",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LF",
+    "lower" : "lf",
+    "pinyin" : "langfang",
+    "name" : "廊坊",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LS",
+    "lower" : "ls",
+    "name" : "拉萨",
+    "pinyin" : "lasa",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LB",
+    "lower" : "lb",
+    "name" : "来宾",
+    "pinyin" : "laibin",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LZ",
+    "lower" : "lz",
+    "pinyin" : "linzhi",
+    "name" : "林芝",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LZ",
+    "lower" : "lz",
+    "name" : "柳州",
+    "pinyin" : "liuzhou",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LY",
+    "lower" : "ly",
+    "pinyin" : "luoyang",
+    "name" : "洛阳",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LC",
+    "lower" : "lc",
+    "pinyin" : "liaocheng",
+    "name" : "聊城",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LW",
+    "lower" : "lw",
+    "pinyin" : "laiwu",
+    "name" : "莱芜",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LDTH",
+    "lower" : "ldth",
+    "name" : "路氹填海",
+    "pinyin" : "ludangtianhai",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LHD",
+    "lower" : "lhd",
+    "name" : "路环岛",
+    "pinyin" : "luhuandao",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LY",
+    "lower" : "ly",
+    "name" : "辽源",
+    "pinyin" : "liaoyuan",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LY",
+    "lower" : "ly",
+    "name" : "辽阳",
+    "pinyin" : "liaoyang",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LYG",
+    "lower" : "lyg",
+    "pinyin" : "lianyungang",
+    "name" : "连云港",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LJ",
+    "lower" : "lj",
+    "name" : "连江",
+    "pinyin" : "lianjiang",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LN",
+    "lower" : "ln",
+    "name" : "陇南",
+    "pinyin" : "longnan",
+    "letter" : "L"
+  },
+  {
+    "initials" : "LY",
+    "lower" : "ly",
+    "name" : "龙岩",
+    "pinyin" : "longyan",
+    "letter" : "L"
+  },
+  {
+    "initials" : "MZ",
+    "lower" : "mz",
+    "pinyin" : "meizhou",
+    "name" : "梅州",
+    "letter" : "M"
+  },
+  {
+    "initials" : "MDJ",
+    "lower" : "mdj",
+    "pinyin" : "mudanjiang",
+    "name" : "牡丹江",
+    "letter" : "M"
+  },
+  {
+    "initials" : "MS",
+    "lower" : "ms",
+    "pinyin" : "meishan",
+    "name" : "眉山",
+    "letter" : "M"
+  },
+  {
+    "initials" : "MY",
+    "lower" : "my",
+    "name" : "绵阳",
+    "pinyin" : "mianyang",
+    "letter" : "M"
+  },
+  {
+    "initials" : "ML",
+    "lower" : "ml",
+    "pinyin" : "miaoli",
+    "name" : "苗栗",
+    "letter" : "M"
+  },
+  {
+    "initials" : "MM",
+    "lower" : "mm",
+    "name" : "茂名",
+    "pinyin" : "maoming",
+    "letter" : "M"
+  },
+  {
+    "initials" : "MAS",
+    "lower" : "mas",
+    "name" : "马鞍山",
+    "pinyin" : "maanshan",
+    "letter" : "M"
+  },
+  {
+    "initials" : "NJ",
+    "lower" : "nj",
+    "name" : "内江",
+    "pinyin" : "neijiang",
+    "letter" : "N"
+  },
+  {
+    "initials" : "NJ",
+    "lower" : "nj",
+    "pinyin" : "nanjing",
+    "name" : "南京",
+    "letter" : "N"
+  },
+  {
+    "initials" : "NC",
+    "lower" : "nc",
+    "pinyin" : "nanchong",
+    "name" : "南充",
+    "letter" : "N"
+  },
+  {
+    "initials" : "NN",
+    "lower" : "nn",
+    "name" : "南宁",
+    "pinyin" : "nanning",
+    "letter" : "N"
+  },
+  {
+    "initials" : "NP",
+    "lower" : "np",
+    "pinyin" : "nanping",
+    "name" : "南平",
+    "letter" : "N"
+  },
+  {
+    "initials" : "NT",
+    "lower" : "nt",
+    "name" : "南投",
+    "pinyin" : "nantou",
+    "letter" : "N"
+  },
+  {
+    "initials" : "NC",
+    "lower" : "nc",
+    "name" : "南昌",
+    "pinyin" : "nanchang",
+    "letter" : "N"
+  },
+  {
+    "initials" : "NT",
+    "lower" : "nt",
+    "name" : "南通",
+    "pinyin" : "nantong",
+    "letter" : "N"
+  },
+  {
+    "initials" : "NY",
+    "lower" : "ny",
+    "name" : "南阳",
+    "pinyin" : "nanyang",
+    "letter" : "N"
+  },
+  {
+    "initials" : "ND",
+    "lower" : "nd",
+    "name" : "宁德",
+    "pinyin" : "ningde",
+    "letter" : "N"
+  },
+  {
+    "initials" : "NB",
+    "lower" : "nb",
+    "name" : "宁波",
+    "pinyin" : "ningbo",
+    "letter" : "N"
+  },
+  {
+    "initials" : "NJ",
+    "lower" : "nj",
+    "pinyin" : "nujiang",
+    "name" : "怒江",
+    "letter" : "N"
+  },
+  {
+    "initials" : "NQ",
+    "lower" : "nq",
+    "name" : "那曲",
+    "pinyin" : "neiqu",
+    "letter" : "N"
+  },
+  {
+    "initials" : "PD",
+    "lower" : "pd",
+    "name" : "屏东",
+    "pinyin" : "pingdong",
+    "letter" : "P"
+  },
+  {
+    "initials" : "PL",
+    "lower" : "pl",
+    "pinyin" : "pingliang",
+    "name" : "平凉",
+    "letter" : "P"
+  },
+  {
+    "initials" : "PDS",
+    "lower" : "pds",
+    "pinyin" : "pingdingshan",
+    "name" : "平顶山",
+    "letter" : "P"
+  },
+  {
+    "initials" : "PZH",
+    "lower" : "pzh",
+    "name" : "攀枝花",
+    "pinyin" : "panzhihua",
+    "letter" : "P"
+  },
+  {
+    "initials" : "PE",
+    "lower" : "pe",
+    "pinyin" : "puer",
+    "name" : "普洱",
+    "letter" : "P"
+  },
+  {
+    "initials" : "PH",
+    "lower" : "ph",
+    "pinyin" : "penghu",
+    "name" : "澎湖",
+    "letter" : "P"
+  },
+  {
+    "initials" : "PJ",
+    "lower" : "pj",
+    "name" : "盘锦",
+    "pinyin" : "panjin",
+    "letter" : "P"
+  },
+  {
+    "initials" : "PT",
+    "lower" : "pt",
+    "name" : "莆田",
+    "pinyin" : "putian",
+    "letter" : "P"
+  },
+  {
+    "initials" : "PX",
+    "lower" : "px",
+    "pinyin" : "pingxiang",
+    "name" : "萍乡",
+    "letter" : "P"
+  },
+  {
+    "initials" : "QTH",
+    "lower" : "qth",
+    "name" : "七台河",
+    "pinyin" : "qitaihe",
+    "letter" : "Q"
+  },
+  {
+    "initials" : "QY",
+    "lower" : "qy",
+    "pinyin" : "qingyang",
+    "name" : "庆阳",
+    "letter" : "Q"
+  },
+  {
+    "initials" : "QJ",
+    "lower" : "qj",
+    "name" : "曲靖",
+    "pinyin" : "qujing",
+    "letter" : "Q"
+  },
+  {
+    "initials" : "QZ",
+    "lower" : "qz",
+    "name" : "泉州",
+    "pinyin" : "quanzhou",
+    "letter" : "Q"
+  },
+  {
+    "initials" : "QY",
+    "lower" : "qy",
+    "pinyin" : "qingyuan",
+    "name" : "清远",
+    "letter" : "Q"
+  },
+  {
+    "initials" : "QHD",
+    "lower" : "qhd",
+    "pinyin" : "qinhuangdao",
+    "name" : "秦皇岛",
+    "letter" : "Q"
+  },
+  {
+    "initials" : "QZ",
+    "lower" : "qz",
+    "pinyin" : "qinzhou",
+    "name" : "钦州",
+    "letter" : "Q"
+  },
+  {
+    "initials" : "QD",
+    "lower" : "qd",
+
+    "pinyin" : "qingdao",
+    "name" : "青岛",
+    "letter" : "Q"
+  },
+  {
+    "initials" : "QDN",
+    "lower" : "qdn",
+    "name" : "黔东南",
+    "pinyin" : "qiandongnan",
+    "letter" : "Q"
+  },
+  {
+    "initials" : "QN",
+    "lower" : "qn",
+    "name" : "黔南",
+    "pinyin" : "qiannan",
+    "letter" : "Q"
+  },
+  {
+    "initials" : "QXN",
+    "lower" : "qxn",
+    "pinyin" : "qianxinan",
+    "name" : "黔西南",
+    "letter" : "Q"
+  },
+  {
+    "initials" : "QQHE",
+    "lower" : "qqhe",
+    "name" : "齐齐哈尔",
+    "pinyin" : "qiqihaer",
+    "letter" : "Q"
+  },
+  {
+    "initials" : "RKZ",
+    "lower" : "rkz",
+    "pinyin" : "rikaze",
+    "name" : "日喀则",
+    "letter" : "R"
+  },
+  {
+    "initials" : "RZ",
+    "lower" : "rz",
+    "name" : "日照",
+    "pinyin" : "rizhao",
+    "letter" : "R"
+  },
+  {
+    "initials" : "SY",
+    "lower" : "sy",
+    "pinyin" : "sanya",
+    "name" : "三亚",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SM",
+
+    "lower" : "sm",
+    "name" : "三明",
+    "pinyin" : "sanming",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SS",
+    "lower" : "ss",
+    "name" : "三沙",
+    "pinyin" : "sansha",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SMX",
+    "lower" : "smx",
+    "name" : "三门峡",
+    "pinyin" : "sanmenxia",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SH",
+    "lower" : "sh",
+    "name" : "上海",
+    "pinyin" : "shanghai",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SR",
+    "lower" : "sr",
+    "pinyin" : "shangrao",
+    "name" : "上饶",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SY",
+    "lower" : "sy",
+    "name" : "十堰",
+    "pinyin" : "shiyan",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SYS",
+    "lower" : "sys",
+    "name" : "双鸭山",
+    "pinyin" : "shuangyashan",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SQ",
+    "lower" : "sq",
+    "name" : "商丘",
+    "pinyin" : "shangqiu",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SL",
+    "lower" : "sl",
+    "name" : "商洛",
+    "pinyin" : "shangluo",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SP",
+    "lower" : "sp",
+    "name" : "四平",
+    "pinyin" : "siping",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SZ",
+    "lower" : "sz",
+    "name" : "宿州",
+    "pinyin" : "suzhou",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SQ",
+    "lower" : "sq",
+    "name" : "宿迁",
+    "pinyin" : "suqian",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SN",
+    "lower" : "sn",
+    "name" : "山南",
+    "pinyin" : "shannan",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SZ",
+    "lower" : "sz",
+    "name" : "朔州",
+    "pinyin" : "shuozhou",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SY",
+    "lower" : "sy",
+    "pinyin" : "songyuan",
+    "name" : "松原",
+    "letter" : "S"
+  },
+  {
+    "initials" : "ST",
+    "lower" : "st",
+    "name" : "汕头",
+    "pinyin" : "shantou",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SW",
+    "lower" : "sw",
+    "name" : "汕尾",
+    "pinyin" : "shanwei",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SY",
+    "lower" : "sy",
+    "pinyin" : "shenyang",
+    "name" : "沈阳",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SZ",
+    "lower" : "sz",
+    "pinyin" : "shenzhen",
+    "name" : "深圳",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SZS",
+    "lower" : "szs",
+    "name" : "石嘴山",
+    "pinyin" : "shizuishan",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SJZ",
+    "lower" : "sjz",
+    "name" : "石家庄",
+    "pinyin" : "shijiazhuang",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SX",
+    "lower" : "sx",
+    "name" : "绍兴",
+    "pinyin" : "shaoxing",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SH",
+    "lower" : "sh",
+    "name" : "绥化",
+    "pinyin" : "suihua",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SZ",
+    "lower" : "sz",
+    "pinyin" : "suzhou",
+    "name" : "苏州",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SN",
+    "lower" : "sn",
+    "name" : "遂宁",
+    "pinyin" : "suining",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SY",
+    "lower" : "sy",
+    "name" : "邵阳",
+    "pinyin" : "shaoyang",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SZ",
+    "lower" : "sz",
+    "name" : "随州",
+    "pinyin" : "suizhou",
+    "letter" : "S"
+  },
+  {
+    "initials" : "SG",
+    "lower" : "sg",
+    "pinyin" : "shaoguan",
+    "name" : "韶关",
+    "letter" : "S"
+  },
+  {
+    "initials" : "TD",
+    "lower" : "td",
+    "name" : "台东",
+    "pinyin" : "taidong",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TZ",
+    "lower" : "tz",
+    "pinyin" : "taizhong",
+    "name" : "台中",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TB",
+    "lower" : "tb",
+    "name" : "台北",
+    "pinyin" : "taibei",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TN",
+    "lower" : "tn",
+    "name" : "台南",
+    "pinyin" : "tainan",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TZ",
+    "lower" : "tz",
+    "name" : "台州",
+    "pinyin" : "taizhou",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TLF",
+    "lower" : "tlf",
+    "pinyin" : "tulufan",
+    "name" : "吐鲁番",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TS",
+    "lower" : "ts",
+    "name" : "唐山",
+    "pinyin" : "tangshan",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TC",
+    "lower" : "tc",
+    "pinyin" : "tacheng",
+    "name" : "塔城",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TS",
+    "lower" : "ts",
+    "pinyin" : "tianshui",
+    "name" : "天水",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TJ",
+    "lower" : "tj",
+    "pinyin" : "tianjin",
+    "name" : "天津",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TY",
+    "lower" : "ty",
+    "name" : "太原",
+    "pinyin" : "taiyuan",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TY",
+    "lower" : "ty",
+    "pinyin" : "taoyuan",
+    "name" : "桃园",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TA",
+    "lower" : "ta",
+    "name" : "泰安",
+    "pinyin" : "taian",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TZ",
+    "lower" : "tz",
+    "pinyin" : "taizhou",
+    "name" : "泰州",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TH",
+    "lower" : "th",
+    "pinyin" : "tonghua",
+    "name" : "通化",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TL",
+    "lower" : "tl",
+    "pinyin" : "tongliao",
+    "name" : "通辽",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TL",
+    "lower" : "tl",
+    "name" : "铁岭",
+    "pinyin" : "tieling",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TR",
+    "lower" : "tr",
+    "name" : "铜仁",
+    "pinyin" : "tongren",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TC",
+    "lower" : "tc",
+    "name" : "铜川",
+    "pinyin" : "tongchuan",
+    "letter" : "T"
+  },
+  {
+    "initials" : "TL",
+    "lower" : "tl",
+    "name" : "铜陵",
+    "pinyin" : "tongling",
+    "letter" : "T"
+  },
+  {
+    "initials" : "WLCB",
+    "lower" : "wlcb",
+    "name" : "乌兰察布",
+    "pinyin" : "wulanchabu",
+    "letter" : "W"
+  },
+  {
+    "initials" : "WH",
+    "lower" : "wh",
+    "name" : "乌海",
+    "pinyin" : "wuhai",
+    "letter" : "W"
+  },
+  {
+    "initials" : "WLMQ",
+    "lower" : "wlmq",
+    "name" : "乌鲁木齐",
+    "pinyin" : "wulumuqi",
+    "letter" : "W"
+  },
+  {
+    "initials" : "WZ",
+    "lower" : "wz",
+    "name" : "吴忠",
+    "pinyin" : "wuzhong",
+    "letter" : "W"
+  },
+  {
+    "initials" : "WH",
+    "lower" : "wh",
+    "pinyin" : "weihai",
+    "name" : "威海",
+    "letter" : "W"
+  },
+  {
+    "initials" : "WS",
+    "lower" : "ws",
+    "name" : "文山",
+    "pinyin" : "wenshan",
+    "letter" : "W"
+  },
+  {
+    "initials" : "WX",
+    "lower" : "wx",
+    "pinyin" : "wuxi",
+    "name" : "无锡",
+    "letter" : "W"
+  },
+  {
+    "initials" : "WZ",
+    "lower" : "wz",
+    "pinyin" : "wuzhou",
+    "name" : "梧州",
+    "letter" : "W"
+  },
+  {
+    "initials" : "WW",
+    "lower" : "ww",
+    "name" : "武威",
+    "pinyin" : "wuwei",
+    "letter" : "W"
+  },
+  {
+    "initials" : "WH",
+    "lower" : "wh",
+    "pinyin" : "wuhan",
+    "name" : "武汉",
+    "letter" : "W"
+  },
+  {
+    "initials" : "WZ",
+    "lower" : "wz",
+    "name" : "温州",
+    "pinyin" : "wenzhou",
+    "letter" : "W"
+  },
+  {
+    "initials" : "WN",
+    "lower" : "wn",
+    "pinyin" : "weinan",
+    "name" : "渭南",
+    "letter" : "W"
+  },
+  {
+    "initials" : "WF",
+    "lower" : "wf",
+
+    "name" : "潍坊",
+    "pinyin" : "weifang",
+    "letter" : "W"
+  },
+  {
+    "initials" : "WH",
+    "lower" : "wh",
+    "name" : "芜湖",
+    "pinyin" : "wuhu",
+    "letter" : "W"
+  },
+  {
+    "initials" : "XY",
+    "lower" : "xy",
+    "name" : "信阳",
+    "pinyin" : "xinyang",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XAM",
+    "lower" : "xam",
+    "name" : "兴安盟",
+    "pinyin" : "xinganmeng",
+    "letter" : "X"
+  },
+  {
+    "initials" : "SM",
+    "lower" : "sm",
+    "name" : "厦门",
+    "pinyin" : "shamen",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XN",
+    "lower" : "xn",
+    "pinyin" : "xianning",
+    "name" : "咸宁",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XY",
+    "lower" : "xy",
+    "name" : "咸阳",
+    "pinyin" : "xianyang",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XG",
+    "lower" : "xg",
+    "pinyin" : "xiaogan",
+    "name" : "孝感",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XC",
+    "lower" : "xc",
+    "pinyin" : "xuancheng",
+    "name" : "宣城",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XZ",
+    "lower" : "xz",
+    "name" : "徐州",
+    "pinyin" : "xuzhou",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XZ",
+    "lower" : "xz",
+    "name" : "忻州",
+    "pinyin" : "xinzhou",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XX",
+    "lower" : "xx",
+    "pinyin" : "xinxiang",
+    "name" : "新乡",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XY",
+    "lower" : "xy",
+    "name" : "新余",
+    "pinyin" : "xinyu",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XB",
+    "lower" : "xb",
+    "pinyin" : "xinbei",
+    "name" : "新北",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XJ",
+    "lower" : "xj",
+    "name" : "新界",
+    "pinyin" : "xinjie",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XZ",
+    "lower" : "xz",
+    "pinyin" : "xinzhu",
+    "name" : "新竹",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XT",
+    "lower" : "xt",
+    "pinyin" : "xiangtan",
+    "name" : "湘潭",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XX",
+    "lower" : "xx",
+    "pinyin" : "xiangxi",
+    "name" : "湘西",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XY",
+    "lower" : "xy",
+    "name" : "襄阳",
+    "pinyin" : "xiangyang",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XSBN",
+    "lower" : "xsbn",
+    "name" : "西双版纳",
+    "pinyin" : "xishuangbanna",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XX",
+    "lower" : "xx",
+    "name" : "西咸",
+    "pinyin" : "xixian",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XN",
+    "lower" : "xn",
+    "name" : "西宁",
+    "pinyin" : "xining",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XA",
+    "lower" : "xa",
+    "pinyin" : "xian",
+    "name" : "西安",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XC",
+    "lower" : "xc",
+    "name" : "许昌",
+    "pinyin" : "xuchang",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XT",
+    "lower" : "xt",
+    "name" : "邢台",
+    "pinyin" : "xingtai",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XLGLM",
+    "lower" : "xlglm",
+    "name" : "锡林郭勒盟",
+    "pinyin" : "xilinguolemeng",
+    "letter" : "X"
+  },
+  {
+    "initials" : "XGD",
+    "lower" : "xgd",
+    "pinyin" : "xianggangdao",
+    "name" : "香港岛",
+    "letter" : "X"
+  },
+  {
+    "initials" : "YL",
+    "lower" : "yl",
+    "name" : "云林",
+    "pinyin" : "yunlin",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YF",
+    "lower" : "yf",
+    "name" : "云浮",
+    "pinyin" : "yunfu",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YC",
+    "lower" : "yc",
+    "pinyin" : "yichun",
+    "name" : "伊春",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YL",
+    "lower" : "yl",
+    "name" : "伊犁",
+    "pinyin" : "yili",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YL",
+    "lower" : "yl",
+    "name" : "宜兰",
+    "pinyin" : "yilan",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YB",
+    "lower" : "yb",
+    "pinyin" : "yibin",
+    "name" : "宜宾",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YC",
+    "lower" : "yc",
+    "name" : "宜昌",
+    "pinyin" : "yichang",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YC",
+    "lower" : "yc",
+    "name" : "宜春",
+    "pinyin" : "yichun",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YY",
+    "lower" : "yy",
+    "name" : "岳阳",
+    "pinyin" : "yueyang",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YA",
+    "lower" : "ya",
+    "pinyin" : "yanan",
+    "name" : "延安",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YB",
+    "lower" : "yb",
+    "name" : "延边",
+    "pinyin" : "yanbian",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YZ",
+    "lower" : "yz",
+    "pinyin" : "yangzhou",
+    "name" : "扬州",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YL",
+    "lower" : "yl",
+    "name" : "榆林",
+    "pinyin" : "yulin",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YZ",
+    "lower" : "yz",
+    "pinyin" : "yongzhou",
+    "name" : "永州",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YT",
+    "lower" : "yt",
+    "name" : "烟台",
+    "pinyin" : "yantai",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YL",
+    "lower" : "yl",
+    "name" : "玉林",
+    "pinyin" : "yulin",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YS",
+    "lower" : "ys",
+    "pinyin" : "yushu",
+    "name" : "玉树",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YX",
+    "lower" : "yx",
+    "pinyin" : "yuxi",
+    "name" : "玉溪",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YY",
+    "lower" : "yy",
+    "name" : "益阳",
+    "pinyin" : "yiyang",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YC",
+    "lower" : "yc",
+    "pinyin" : "yancheng",
+    "name" : "盐城",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YK",
+    "lower" : "yk",
+    "name" : "营口",
+    "pinyin" : "yingkou",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YC",
+    "lower" : "yc",
+    "pinyin" : "yuncheng",
+    "name" : "运城",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YC",
+    "lower" : "yc",
+    "pinyin" : "yinchuan",
+    "name" : "银川",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YJ",
+    "lower" : "yj",
+    "name" : "阳江",
+    "pinyin" : "yangjiang",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YQ",
+    "lower" : "yq",
+    "name" : "阳泉",
+    "pinyin" : "yangquan",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YA",
+    "lower" : "ya",
+    "pinyin" : "yaan",
+    "name" : "雅安",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "YT",
+    "lower" : "yt",
+    "name" : "鹰潭",
+    "pinyin" : "yingtan",
+    "letter" : "Y"
+  },
+  {
+    "initials" : "ZW",
+    "lower" : "zw",
+    "name" : "中卫",
+    "pinyin" : "zhongwei",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZS",
+    "lower" : "zs",
+    "pinyin" : "zhongshan",
+    "name" : "中山",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZK",
+    "lower" : "zk",
+    "name" : "周口",
+    "pinyin" : "zhoukou",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZJK",
+    "lower" : "zjk",
+    "pinyin" : "zhangjiakou",
+    "name" : "张家口",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZJJ",
+    "lower" : "zjj",
+    "pinyin" : "zhangjiajie",
+    "name" : "张家界",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZY",
+    "lower" : "zy",
+    "pinyin" : "zhangye",
+    "name" : "张掖",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZH",
+    "lower" : "zh",
+    "name" : "彰化",
+    "pinyin" : "zhanghua",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "XZXX",
+    "lower" : "xzxx",
+    "name" : "新直辖县",
+    "pinyin" : "xinzhixiaxian",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZT",
+    "lower" : "zt",
+    "pinyin" : "zhaotong",
+    "name" : "昭通",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZZ",
+    "lower" : "zz",
+    "name" : "枣庄",
+    "pinyin" : "zaozhuang",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZZ",
+    "lower" : "zz",
+    "pinyin" : "zhuzhou",
+    "name" : "株洲",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZB",
+    "lower" : "zb",
+    "name" : "淄博",
+    "pinyin" : "zibo",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZJ",
+    "lower" : "zj",
+    "pinyin" : "zhanjiang",
+    "name" : "湛江",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZZ",
+    "lower" : "zz",
+    "name" : "漳州",
+    "pinyin" : "zhangzhou",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZH",
+    "lower" : "zh",
+    "pinyin" : "zhuhai",
+    "name" : "珠海",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "QZXX",
+    "lower" : "qzxx",
+    "pinyin" : "qiongzhixiaxian",
+    "name" : "琼直辖县",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZQ",
+    "lower" : "zq",
+    "pinyin" : "zhaoqing",
+    "name" : "肇庆",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZG",
+    "lower" : "zg",
+    "name" : "自贡",
+    "pinyin" : "zigong",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZS",
+    "lower" : "zs",
+    "pinyin" : "zhoushan",
+    "name" : "舟山",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZSXQ",
+    "lower" : "zsxq",
+    "name" : "舟山新区",
+    "pinyin" : "zhoushanxinqu",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "YZXX",
+    "lower" : "yzxx",
+    "name" : "豫直辖县",
+    "pinyin" : "yuzhixiaxian",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZY",
+    "lower" : "zy",
+    "pinyin" : "ziyang",
+    "name" : "资阳",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZY",
+    "lower" : "zy",
+    "name" : "遵义",
+    "pinyin" : "zunyi",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZZ",
+    "lower" : "zz",
+    "pinyin" : "zhengzhou",
+    "name" : "郑州",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "EZXX",
+    "lower" : "ezxx",
+    "pinyin" : "ezhixiaxian",
+    "name" : "鄂直辖县",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZQ",
+    "lower" : "zq",
+    "name" : "重庆",
+    "pinyin" : "zhongqing",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZJ",
+    "lower" : "zj",
+    "name" : "镇江",
+    "pinyin" : "zhenjiang",
+    "letter" : "Z"
+  },
+  {
+    "initials" : "ZMD",
+    "lower" : "zmd",
+    "name" : "驻马店",
+    "pinyin" : "zhumadian",
+    "letter" : "Z"
+  }
+]

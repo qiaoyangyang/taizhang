@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:paddingVertical="15dp">
+
+    <ImageView
+        android:id="@+id/iconAddTip"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:src="@mipmap/icon_dis_shunfeng"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtSendName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:text="顺丰速运"
+        app:layout_constraintBottom_toBottomOf="@+id/iconAddTip"
+        app:layout_constraintLeft_toRightOf="@+id/iconAddTip"
+        app:layout_constraintTop_toTopOf="@+id/iconAddTip" />
+
+    <TextView
+        android:id="@+id/txtSendMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:text="¥ 0"
+        android:textColor="@color/home_000000"
+        app:layout_constraintBottom_toBottomOf="@+id/iconAddTip"
+        app:layout_constraintLeft_toRightOf="@+id/txtSendName"
+        app:layout_constraintTop_toTopOf="@+id/iconAddTip" />
+
+    <TextView
+        android:id="@+id/txtAddTipsMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/dp_10"
+        android:textColor="@color/home_000000"
+        android:textSize="@dimen/sp_28"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_add"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_add"
+        tools:text="已加小费 ¥5" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/txtAddTipMinus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="6dp"
+            android:gravity="center"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:text="一"
+            android:textColor="@color/red"
+            android:textSize="14sp"
+            app:shape_radius="@dimen/dp_50"
+            app:shape_strokeColor="@color/red"
+            app:shape_strokeWidth="@dimen/dp_2" />
+
+
+        <TextView
+            android:id="@+id/edtAddTipShow"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="8"
+            android:paddingVertical="6dp"
+            android:text="5"
+            android:textSize="16sp" />
+
+
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/txtAddTipPlus"
+            android:layout_width="26dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="6dp"
+            android:gravity="center"
+            android:text="+"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:shape_radius="@dimen/dp_50"
+            app:shape_solidColor="@color/red"
+            app:shape_strokeWidth="@dimen/dp_2" />
+    </LinearLayout>
+
+
+    <com.hjq.shape.view.ShapeButton
+        android:id="@+id/txt_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_20"
+        android:layout_marginStart="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:paddingHorizontal="@dimen/dp_25"
+        android:paddingVertical="@dimen/dp_10"
+        android:text="加小费"
+        android:textColor="@color/red"
+        android:textSize="@dimen/sp_28"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_count"
+        app:shape_radius="@dimen/dp_20"
+        app:shape_strokeColor="@color/red"
+        app:shape_strokeWidth="@dimen/dp_2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

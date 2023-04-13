@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rlSelect"
     android:layout_width="100dp"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:layout_marginVertical="@dimen/dp_10"
+    android:layout_centerHorizontal="true"
     android:layout_marginHorizontal="@dimen/dp_10"
-    android:background="@drawable/order_bg_dis_rv">
+    android:layout_marginVertical="@dimen/dp_10"
+    android:background="@drawable/order_bg_dis_rv"
+    android:gravity="center">
 
 
     <ImageView
@@ -27,9 +27,9 @@
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/imgSelectIcon"
         android:gravity="center_vertical"
-        android:text="顺丰同城"
         android:textColor="@color/home_999999"
-        android:textSize="@dimen/sp_20" />
+        android:textSize="@dimen/sp_20"
+        tools:text="顺丰同城" />
 
     <TextView
         android:id="@+id/txt_money_tip"
@@ -55,18 +55,20 @@
         android:textColor="@color/home_333333"
         android:textSize="@dimen/sp_40" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginHorizontal="@dimen/dp_2"
-            android:gravity="center"
-            android:paddingStart="@dimen/dp_10"
-            android:background="@drawable/order_bg_dis"
-            android:text="手机号格式异常"
-            android:drawableStart="@drawable/order_dis_tip_icon"
-            android:layout_below="@+id/txt_money"
-            android:paddingVertical="@dimen/dp_5"
-            android:textColor="@color/red_FF4C4A"
-            android:textSize="@dimen/sp_20" />
+    <TextView
+        android:id="@+id/txtTip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_money"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/dp_2"
+        android:background="@drawable/order_bg_dis"
+        android:drawableStart="@drawable/order_dis_tip_icon"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingVertical="@dimen/dp_5"
+        android:paddingStart="@dimen/dp_10"
+        android:text="手机号格式异常"
+        android:textColor="@color/red_FF4C4A"
+        android:textSize="@dimen/sp_20" />
 </RelativeLayout>

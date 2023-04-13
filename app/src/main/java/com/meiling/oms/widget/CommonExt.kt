@@ -1,6 +1,8 @@
 package com.meiling.oms.widget
 
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -15,13 +17,13 @@ fun androidx.fragment.app.Fragment.showToast(content: String, type: CustomToast.
     CustomToast(this.activity?.applicationContext, content, type).show()
 }
 
-fun androidx.fragment.app.Fragment.showToast(content: String, type: Int) {
-    CustomToast(this.activity?.applicationContext, content, type).show()
+fun androidx.fragment.app.Fragment.showToast(content: String) {
+    CustomToast(this.activity?.applicationContext, content).show()
 }
 
 
-fun Context.showToast(content: String, type: CustomToast.CustomType) {
-    CustomToast(this, content, type).show()
+fun Context.showToast(content: String) {
+    CustomToast(this, content).show()
 }
 
 fun Context.openBrowser(url: String) {
@@ -68,14 +70,54 @@ fun formatCurrentMDate(): String {
     return sdf.format(Date())
 }
 
-//之前一周的时间
+/**
+ * 之前一周的时间
+ */
 fun formatCurrentDateBeforeWeek(): String {
     val sdf = SimpleDateFormat("yyyy-MM-dd")
     var cal = Calendar.getInstance()
     cal.add(Calendar.DAY_OF_MONTH, -7)
     return sdf.format(cal.time)
 }
-
+/**
+ * 之前一天的时间
+ */
+fun formatCurrentDateBeforeDay(): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH, -1)
+    return sdf.format(cal.time)
+}
+/**
+ * 之前15天的时间
+ */
+fun formatCurrentDateBefore15(): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH, -15)
+    return sdf.format(cal.time)
+}
+/**
+ * 之前30天的时间
+ */
+fun formatCurrentDateBeforeMouth(): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH, -30)
+    return sdf.format(cal.time)
+}
+/**
+ * 之前90天的时间
+ */
+fun formatCurrentDateBefore90(): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    var cal = Calendar.getInstance()
+    cal.add(Calendar.DAY_OF_MONTH, -30)
+    return sdf.format(cal.time)
+}
+/**
+ * 明天
+ * */
 fun getTomorrowDate(): String {
     var sdf = SimpleDateFormat("yyyy-MM-dd")
     var cal = Calendar.getInstance()
@@ -178,13 +220,7 @@ fun calculationWorkLongTime(starTime: String?): String {
     return "${longHH}小时${longMM}分钟"
 }
 
-//之前一月的时间
-fun formatCurrentDateBeforeMouth(): String {
-    val sdf = SimpleDateFormat("yyyy-MM-dd")
-    var cal = Calendar.getInstance()
-    cal.add(Calendar.DAY_OF_MONTH, -30)
-    return sdf.format(cal.time)
-}
+
 
 /**
  * 计算时间
@@ -222,4 +258,16 @@ fun calculationClickableTime(): Boolean {
 //        }
 //    }
     return false
+}
+
+
+
+fun copyText(context: Context,str: String) {
+    // 获取剪贴板管理器
+    val clipboard =
+        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    // 创建剪贴板数据对象
+    val clip = ClipData.newPlainText("label", str)
+    // 将剪贴板数据设置到剪贴板管理器中
+    clipboard.setPrimaryClip(clip)
 }

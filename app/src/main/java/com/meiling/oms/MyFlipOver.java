@@ -456,7 +456,7 @@ public class MyFlipOver extends View {
         int windowWidth = bgView.getWidth();
         int windowHeight = bgView.getHeight();
         if (background == null) {
-            background = BitmapFactory.decodeResource(getResources(), R.mipmap.bg_goods).copy(Bitmap.Config.ALPHA_8, true);
+//            background = BitmapFactory.decodeResource(getResources(), R.mipmap.bg_goods).copy(Bitmap.Config.ALPHA_8, true);
         }
 
         int width = background.getWidth();

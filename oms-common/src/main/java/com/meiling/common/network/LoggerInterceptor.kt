@@ -1,12 +1,13 @@
-package com.friendwing.universe.common.network
+package com.meiling.common.network
 
 import android.text.TextUtils
-import com.orhanobut.logger.Logger
+import android.util.Log
 import okhttp3.*
 import java.lang.Exception
 import okhttp3.ResponseBody
 import okio.Buffer
 import java.io.IOException
+import kotlin.math.log
 
 
 class LoggerInterceptor : Interceptor {
@@ -37,19 +38,19 @@ class LoggerInterceptor : Interceptor {
         try {
             val url = request.url.toString()
             val headers: Headers? = request.headers
-            Logger.d("method : " + request.method + "  ║  url : " + url)
+            Log.d(tag,"method : " + request.method + "  ║  url : " + url)
             if (headers != null && headers.size > 0) {
-                Logger.d("headers : " + headers.toString())
+                Log.d(tag,"headers : " + headers.toString())
             }
             val requestBody = request.body
             if (requestBody != null) {
                 val mediaType: MediaType? = requestBody.contentType()
                 if (mediaType != null) {
-                    Logger.d("requestBody's contentType : " + mediaType.toString())
+                    Log.d(tag,"requestBody's contentType : " + mediaType.toString())
                     if (isText(mediaType)) {
-                        Logger.d("requestBody's content : " + bodyToString(request))
+                        Log.d(tag,"requestBody's content : " + bodyToString(request))
                     } else {
-                        Logger.e("requestBody's content : " + " maybe [file part] , too large too print , ignored!")
+                        Log.e(tag,"requestBody's content : " + " maybe [file part] , too large too print , ignored!")
                     }
                 }
             }
@@ -62,30 +63,30 @@ class LoggerInterceptor : Interceptor {
         try {
             val builder = response.newBuilder()
             val clone = builder.build()
-            Logger.d(
+            Log.d(tag,
                 "url : " + clone.request.url.toString() + "  ║  code : " + clone.code
                     .toString() + "  ║  protocol : " + clone.protocol
             )
             if (!TextUtils.isEmpty(clone.message)) {
-                Logger.d("message : " + clone.message)
+                Log.d(tag,"message : " + clone.message)
             }
             if (showResponse) {
                 var body = clone.body
                 if (body != null) {
                     val mediaType = body.contentType()
                     if (mediaType != null) {
-                        Logger.d("responseBody's contentType : $mediaType")
+                        Log.d(tag,"responseBody's contentType : $mediaType")
                         if (isText(mediaType)) {
                             val resp = body.string()
                             when (mediaType.subtype) {
-                                "xml" -> Logger.xml(resp)
-                                "json" -> Logger.json(resp)
-                                else -> Logger.d(resp)
+                                "xml" -> Log.d("json_xml",resp)
+                                "json" -> Log.d("json",resp)
+                                else -> Log.d("json-",resp)
                             }
                             body = ResponseBody.create(mediaType, resp)
                             return response.newBuilder().body(body).build()
                         } else {
-                            Logger.e("responseBody's content : " + " maybe [file part] , too large too print , ignored!")
+                            Log.e(tag,"responseBody's content : " + " maybe [file part] , too large too print , ignored!")
                         }
                     }
                 }

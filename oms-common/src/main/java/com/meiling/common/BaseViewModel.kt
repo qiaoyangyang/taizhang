@@ -1,14 +1,17 @@
 package com.meiling.common
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.alibaba.android.arouter.launcher.ARouter
+import com.google.gson.Gson
 import com.meiling.common.constant.ARouteConstants
 import com.meiling.common.network.APIException
 import com.meiling.common.network.ExceptionHandle
 import com.meiling.common.network.ResultData
+import com.orhanobut.logger.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -27,19 +30,13 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                 resultState.onStart.postValue("")
                 block()
             }.onSuccess {
-                if (it.code == 0) {
+                if (it.code == 200) {
+
                     resultState.onSuccess.postValue(it.data)
                 } else if (it.code == 403) {
                     ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
                 } else {
-                    resultState.onError.postValue(
-                        ExceptionHandle.handleException(
-                            APIException(
-                                it.code,
-                                it.message
-                            )
-                        )
-                    )
+                    resultState.onError.postValue(ExceptionHandle.handleException(APIException(it.code, it.msg)))
                 }
 
             }.onFailure {
@@ -63,7 +60,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                 } else if (it.code == 403) {
                     ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
                 } else {
-                    onError(ExceptionHandle.handleException(APIException(it.code, it.message)))
+                    onError(ExceptionHandle.handleException(APIException(it.code, it.msg)))
                 }
             }.onFailure {
                 onError(ExceptionHandle.handleException(it))
@@ -85,11 +82,12 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                 } else if (it.code == 403) {
                     ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
                 } else {
-                    onError.postValue(APIException(it.code, it.message))
+                    onError.postValue(APIException(it.code, it.msg))
                 }
             }.onFailure {
                 onError.postValue(ExceptionHandle.handleException(it))
             }
         }
     }
+
 }

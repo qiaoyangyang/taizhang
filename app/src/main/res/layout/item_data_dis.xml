@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dp_20"
+    android:layout_weight="1"
+    android:orientation="horizontal"
+    android:layout_marginVertical="@dimen/dp_20"
+    android:paddingHorizontal="@dimen/dp_30">
+
+
+    <TextView
+        android:id="@+id/txt_data_platform"
+        android:layout_width="0dp"
+        android:layout_height="17dp"
+        android:layout_weight="1"
+        android:text="配送平台"
+        android:textColor="#ff777777"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/txt_data_order_num"
+        android:layout_width="0dp"
+        android:layout_height="17dp"
+        android:layout_weight="1"
+        android:text="9525.00"
+        android:textColor="#ff777777"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/txt_data_order_dis_amount"
+        android:layout_width="0dp"
+        android:layout_height="17dp"
+        android:layout_weight="1"
+        android:text="2784"
+        android:textColor="#ff777777"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/txt_data_order_tips"
+        android:layout_width="0dp"
+        android:layout_height="17dp"
+        android:layout_weight="1"
+        android:text="9827.00"
+        android:textColor="#ff777777"
+        android:textSize="12sp" />
+
+
+    <TextView
+        android:id="@+id/txt_data_order_dis_avgAmount"
+        android:layout_width="0dp"
+        android:layout_height="17dp"
+        android:layout_gravity="end"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:text="9527.00"
+        android:textColor="#ff777777"
+        android:textSize="12sp" />
+</LinearLayout>
+
+
+

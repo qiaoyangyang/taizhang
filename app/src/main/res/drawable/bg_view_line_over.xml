@@ -5,7 +5,7 @@
         android:height="100dp" />
     <stroke
         android:width="0dp"
-        android:color="@color/home_1F2333"
+        android:color="@color/app_themes_1f2333"
         android:dashGap="3dp"
         android:dashWidth="3dp" />
 </shape>

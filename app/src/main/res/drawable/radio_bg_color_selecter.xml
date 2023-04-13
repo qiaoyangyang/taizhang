@@ -6,7 +6,7 @@
             <!-- 圆角 -->
             <corners android:radius="8dp" />
             <!-- 背景颜色 -->
-            <solid android:color="@color/my_rec_414364" />
+            <solid android:color="@color/red" />
         </shape>
     </item>
 
