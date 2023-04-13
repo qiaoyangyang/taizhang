@@ -42,9 +42,9 @@ data class OrderDto(
         @SerializedName("commission")
         var commission: Any?,
         @SerializedName("deliveryConsume")
-        var deliveryConsume: Any?,
+        var deliveryConsume: DeliveryConsume?,
         @SerializedName("deliveryConsumeLog")
-        var deliveryConsumeLog: Any?,
+        var deliveryConsumeLog: DeliveryConsumeLog?,
         @SerializedName("depositPrice")
         var depositPrice: Int?,
         @SerializedName("discountAmount")
@@ -285,7 +285,7 @@ data class OrderDto(
             @SerializedName("deliveryTime")
             var deliveryTime: Any?,
             @SerializedName("deliveryType")
-            var deliveryType: Int?,
+            var deliveryType: String?,
             @SerializedName("depositPhone")
             var depositPhone: String?,
             @SerializedName("districtCode")
@@ -391,7 +391,9 @@ data class OrderDto(
             @SerializedName("deliveryStatusName")
             var deliveryStatusName: String?,
             @SerializedName("deliveryStatus")
-            var deliveryStatus: String?
+            var deliveryStatus: String?,
+            @SerializedName("logisticsStatus")
+            var logisticsStatus: String?
         ) : Serializable
     }
 
@@ -412,4 +414,100 @@ data class StatusCountDto(
     var deliverying: Int?//配送中
 )
 
-data class NewGoodsVo(val goodNames: String?, val gooNumber: Int?, val goodsPrice: String?)
+data class DeliveryConsumeLog(
+    @SerializedName("createTime")
+    var createTime: String?,
+    @SerializedName("deliveryConsumeId")
+    var deliveryConsumeId: Int?,
+    @SerializedName("id")
+    var id: Int?,
+    @SerializedName("remark")
+    var remark: String?,
+    @SerializedName("status")
+    var status: Int?,
+    @SerializedName("statusName")
+    var statusName: Any?,
+    @SerializedName("updateTime")
+    var updateTime: Long?
+) : Serializable
+
+data class DeliveryConsume(
+    @SerializedName("actualAmount")
+    var actualAmount: Double?,
+    @SerializedName("addition")
+    var addition: Int?,
+    @SerializedName("adminUserId")
+    var adminUserId: Int?,
+    @SerializedName("amount")
+    var amount: Double?,
+    @SerializedName("appointTime")
+    var appointTime: String?,
+    @SerializedName("channelDelNum")
+    var channelDelNum: String?,
+    @SerializedName("channelType")
+    var channelType: String?,
+    @SerializedName("createTime")
+    var createTime: Long?,
+    @SerializedName("cutAmount")
+    var cutAmount: Int?,
+    @SerializedName("deliveryName")
+    var deliveryName: String?,
+    @SerializedName("deliveryPhone")
+    var deliveryPhone: String?,
+    @SerializedName("distance")
+    var distance: String?,
+    @SerializedName("icon")
+    var icon: String?,
+    @SerializedName("id")
+    var id: String?,
+    @SerializedName("lat")
+    var lat: String?,
+    @SerializedName("lng")
+    var lng: String?,
+    @SerializedName("orderId")
+    var orderId: String?,
+    @SerializedName("pickupPassword")
+    var pickupPassword: String?,
+    @SerializedName("poiId")
+    var poiId: String?,
+    @SerializedName("random")
+    var random: Int?,
+    @SerializedName("recvAddr")
+    var recvAddr: String?,
+    @SerializedName("recvName")
+    var recvName: String?,
+    @SerializedName("recvPhone")
+    var recvPhone: String?,
+    @SerializedName("remark")
+    var remark: String?,
+    @SerializedName("senderAddr")
+    var senderAddr: String?,
+    @SerializedName("senderName")
+    var senderName: String?,
+    @SerializedName("senderPhone")
+    var senderPhone: String?,
+    @SerializedName("shopId")
+    var shopId: Int?,
+    @SerializedName("source")
+    var source: Int?,
+    @SerializedName("stationChannelId")
+    var stationChannelId: String?,
+    @SerializedName("status")
+    var status: Int?,
+    @SerializedName("statusName")
+    var statusName: String?,
+    @SerializedName("tenantId")
+    var tenantId: Int?,
+    @SerializedName("tips")
+    var tips: Double?,
+    @SerializedName("type")
+    var type: Int?,
+    @SerializedName("updateTime")
+    var updateTime: Long?,
+    @SerializedName("viewId")
+    var viewId: String?,
+    @SerializedName("vrcId")
+    var vrcId: Int?,
+    @SerializedName("weight")
+    var weight: String?
+) : Serializable

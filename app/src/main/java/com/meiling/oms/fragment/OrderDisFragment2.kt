@@ -112,8 +112,8 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
         )
     }
 
-     private fun initViewData() {
-        var text = orderSendAddress.goodsWeight.toInt()
+    private fun initViewData() {
+        var text = orderSendAddress.goodsWeight!!.toInt()
 
         mDatabind.btnSendDis.setSingleClickListener {
             var insertOrderSendList = ArrayList<LogisticsInsertDto>()
@@ -165,7 +165,7 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
             }
             shopSelectDisWayAdapter.notifyDataSetChanged()
         }
-        var weight = orderSendAddress.goodsWeight.toInt()
+        var weight = orderSendAddress.goodsWeight!!.toInt()
         mDatabind.txtAddTipPlus.setSingleClickListener {
             mDatabind.edtAddTipShow.text = "${weight++}"
             var orderSendRequest = OrderSendRequest(
@@ -222,6 +222,7 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             showToast("已成功发起配送 请在订单页面，查看配送详情")
+            mActivity.finish()
         }
         mViewModel.sendSuccess.onError.observe(this) {
             showToast("发起配送失败 , 失败原因：${it.toString()}")
@@ -260,8 +261,8 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
             deliveryTime = "",
             deliveryType = "2",
             orderId = orderId!!,
-            wight = if (orderSendAddress.goodsWeight != null) {
-                orderSendAddress.goodsWeight
+            wight = if (orderSendAddress.goodsWeight!! != null) {
+                orderSendAddress.goodsWeight!!
             } else {
                 "1"
             },

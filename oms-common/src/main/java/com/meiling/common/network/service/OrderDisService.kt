@@ -31,12 +31,12 @@ interface OrderDisService {
     suspend fun orderSendConfirm(@Body orderSendRequest: OrderSendRequest): ResultData<ArrayList<OrderSendChannel>>
 
     //取消配送订单
-    @POST("logistics/cancelOrder")
-    suspend fun cancelOrderSend(@Body cancelCouponSum: CancelOrderSend): ResultData<Any>
+    @POST("saas/logistics/cancelOrder")
+    suspend fun cancelOrderSend(@Body cancelCouponSum: CancelOrderSend): ResultData<String>
 
 
     //发起配送
-    @POST("/saas/logistics/insertOrder")
+    @POST("/saas/logistics/insertOrderApp")
     suspend fun insertOrderSend(@Body logisticsConfirmDtoList: LogisticsConfirmDtoList): ResultData<Any>
 
     //配送详情
@@ -46,8 +46,7 @@ interface OrderDisService {
     //配送加小费显示
     @GET("/saas/logistics/getLogisticsOrder")
     suspend fun getLogisticsOrder(
-        @Query("orderId") orderId: String, @Query("poiId") poiId: String,
-        @Query("logisticsType") logisticsType: String
+        @Query("orderId") orderId: String
     ): ResultData<ArrayList<OrderSendAddTips>>
 
     //配送加小费
