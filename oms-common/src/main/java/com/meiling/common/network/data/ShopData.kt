@@ -15,7 +15,7 @@ data class ShopBean(
     val name: String? = "",
     @SerializedName("shopList")
     val shopList: List<Shop?>? = listOf()
-) : IWheel,Serializable {
+) : IWheel, Serializable {
     override fun getShowText(): String {
         return name.toString()
     }
@@ -249,7 +249,7 @@ data class Meituan(
     @SerializedName("dealMenu")
     val dealMenu: List<List<DealMenu?>?>? = listOf(),
     @SerializedName("dealPrice")
-    val dealPrice: String? ="",
+    val dealPrice: String? = "",
     @SerializedName("dealTitle")
     val dealTitle: String? = "",
     @SerializedName("dealValue")
@@ -272,7 +272,7 @@ data class Meituan(
     val singleValue: Int? = 0,
     @SerializedName("volume")
     val volume: Int? = 0
-): Serializable
+) : Serializable
 
 data class DealMenu(
     @SerializedName("content")
@@ -311,8 +311,8 @@ data class VerificationScreening(
     var poiId: String,// 门店ID
     var poiIdtype: String,// 门店类型 0 全部门店 1 定义门店
 
-    var status: String,// 验券类型  2.已核销 -1.已撤销 0全部
-    var isVoucher: String,// 验券状态  1.团购券 2.代金券 0 全部
+    var status: String,// 日期类型  2.收货 -1.来单子 0出货
+    var isVoucher: String,// 订单平台  1.美团 2.饿了么 0 全部
 
 
 ) : Serializable

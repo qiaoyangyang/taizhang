@@ -42,7 +42,7 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
         mDatabind.rvDataShop.adapter = dataShopAdapter
 
         mDatabind.refDataShop.setOnRefreshListener {
-            initData()
+            initViewData()
         }
 
     }
@@ -52,7 +52,7 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
     }
 
 
-    override fun initData() {
+    fun initViewData() {
         mViewModel.shopDataList(
             DataListDto(
                 startTime = formatCurrentDate() + " 00:00:00",
@@ -103,12 +103,16 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
         )
     }
 
+    override fun onResume() {
+        super.onResume()
+        initViewData()
+    }
+
     override fun initListener() {
         mDatabind.txtDataHistoryShopTime.setSingleClickListener {
             var dataSelectTimeDialog = DataSelectTimeDialog().newInstance()
             dataSelectTimeDialog.show(childFragmentManager)
             dataSelectTimeDialog.setSelectTime { it, name ->
-                showToast("1212" + it)
                 mDatabind.txtDataHistoryShopTime.text = name
                 mViewModel.shopHistoryDataList(
                     DataShop(

@@ -159,13 +159,15 @@ class OrderDisAddTipActivity :
         }
 
         mViewModel.cancelOrderDto.onStart.observe(this) {
-            showLoading("请求中。。。")
+            showLoading("请求中")
         }
         mViewModel.cancelOrderDto.onSuccess.observe(this) {
+            disLoading()
             showToast("订单已取消")
             finish()
         }
         mViewModel.cancelOrderDto.onError.observe(this) {
+            disLoading()
             showToast(it.msg)
         }
 

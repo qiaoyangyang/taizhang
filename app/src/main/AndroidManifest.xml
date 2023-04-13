@@ -90,7 +90,7 @@
         <activity android:name=".activity.OrderDisAddTipActivity" />
         <activity android:name=".activity.OrderChangeAddressActivity" />
         <activity android:name=".activity.OrderChangeAddressMapActivity" />
-        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.MessageCenterActivity" />
         <activity
             android:name=".activity.OrderDisActivity"
             android:screenOrientation="portrait"

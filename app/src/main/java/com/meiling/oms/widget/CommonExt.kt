@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-
 fun androidx.fragment.app.Fragment.showToast(content: String, type: CustomToast.CustomType) {
     CustomToast(this.activity?.applicationContext, content, type).show()
 }
@@ -54,6 +53,7 @@ fun formatCurrentDate(): String {
     val sdf = SimpleDateFormat("yyyy-MM-dd")
     return sdf.format(Date())
 }
+
 /**
  * 格式化当前日期
  */
@@ -79,6 +79,7 @@ fun formatCurrentDateBeforeWeek(): String {
     cal.add(Calendar.DAY_OF_MONTH, -7)
     return sdf.format(cal.time)
 }
+
 /**
  * 之前一天的时间
  */
@@ -88,6 +89,7 @@ fun formatCurrentDateBeforeDay(): String {
     cal.add(Calendar.DAY_OF_MONTH, -1)
     return sdf.format(cal.time)
 }
+
 /**
  * 之前15天的时间
  */
@@ -97,6 +99,7 @@ fun formatCurrentDateBefore15(): String {
     cal.add(Calendar.DAY_OF_MONTH, -15)
     return sdf.format(cal.time)
 }
+
 /**
  * 之前30天的时间
  */
@@ -106,6 +109,7 @@ fun formatCurrentDateBeforeMouth(): String {
     cal.add(Calendar.DAY_OF_MONTH, -30)
     return sdf.format(cal.time)
 }
+
 /**
  * 之前90天的时间
  */
@@ -115,6 +119,7 @@ fun formatCurrentDateBefore90(): String {
     cal.add(Calendar.DAY_OF_MONTH, -30)
     return sdf.format(cal.time)
 }
+
 /**
  * 明天
  * */
@@ -131,10 +136,11 @@ fun getBeforeSevenDate(): String {
     cal.add(Calendar.DAY_OF_MONTH, -6)
     return sdf.format(cal.time)
 }
+
 fun getassignSevenDate(int: Int): String {
     var sdf = SimpleDateFormat("yyyy-MM-dd")
     var cal = Calendar.getInstance()
-    cal.add(Calendar.DAY_OF_MONTH,int )
+    cal.add(Calendar.DAY_OF_MONTH, int)
 
     return sdf.format(cal.time)
 }
@@ -187,11 +193,27 @@ fun formatCurrentDateMM(): String {
     return sdf.format(Date())
 }
 
-fun formatCurrentDateGeshi(str: String): String {
-    val sdf2 = SimpleDateFormat("yyyy-MM-dd HH:mm")
-    val sdf1 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-    var d: Date = sdf1.parse(str)
-    return sdf2.format(d)
+@SuppressLint("SimpleDateFormat")
+fun formatCurrentDateMM(str: String?): String {
+    return try {
+        val sdf2 = SimpleDateFormat("yyyy-MM-dd")
+        val sdf1 = SimpleDateFormat("MM")
+        var d: Date = sdf2.parse(str)
+        sdf1.format(d)
+    } catch (e: Exception) {
+        "--"
+    }
+}
+
+fun formatCurrentDateDay(str: String?): String {
+    return try {
+        val sdf2 = SimpleDateFormat("yyyy-MM-dd")
+        val sdf1 = SimpleDateFormat("dd")
+        var d: Date = sdf2.parse(str)
+        return sdf1.format(d)
+    } catch (e: Exception) {
+        "--"
+    }
 }
 
 fun formatCurrentDateGeshiMM(str: String): String {
@@ -207,7 +229,7 @@ fun transToString(time: Long): String {
 
 @SuppressLint("SimpleDateFormat")
 fun calculationWorkLongTime(starTime: String?): String {
-    if (starTime.isNullOrEmpty()){
+    if (starTime.isNullOrEmpty()) {
         return "--"
     }
     val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -219,7 +241,6 @@ fun calculationWorkLongTime(starTime: String?): String {
 
     return "${longHH}小时${longMM}分钟"
 }
-
 
 
 /**
@@ -261,8 +282,7 @@ fun calculationClickableTime(): Boolean {
 }
 
 
-
-fun copyText(context: Context,str: String) {
+fun copyText(context: Context, str: String) {
     // 获取剪贴板管理器
     val clipboard =
         context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager

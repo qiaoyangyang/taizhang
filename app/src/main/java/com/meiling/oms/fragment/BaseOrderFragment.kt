@@ -2,7 +2,6 @@ package com.meiling.oms.fragment
 
 import android.graphics.drawable.PictureDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -17,15 +16,15 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.meihao.kotlin.cashier.widgets.orderv4dialog.OrderDistributionDetailDialog
+import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.EventBusData.MessageEvent
+import com.meiling.oms.EventBusData.MessageEventUpDataTip
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
-import com.meiling.oms.dialog.OrderDisDetailDialog
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.*
 import org.greenrobot.eventbus.EventBus
@@ -202,8 +201,12 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                                 ARouter.getInstance().build("/app/OrderDisAddTipActivity")
                                     .withSerializable("kk", item).navigation()
                             }
-                            "30", "50",
-                            "70", "80" -> {
+
+                            "70" -> {
+                                ARouter.getInstance().build("/app/OrderDisActivity")
+                                    .withSerializable("kk", item).navigation()
+                            }
+                            "30", "50", "80" -> {
                                 orderDisDialog.show(childFragmentManager)
                             }
 
@@ -234,7 +237,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         "70" -> {
                             btnCancelDis.visibility = View.GONE
                             changeOrder.visibility = View.GONE
-                            btnSendDis.text = "配送详情"
+                            btnSendDis.text = "重新配送"
                         }
                         "80" -> {
                             btnCancelDis.visibility = View.GONE
@@ -251,6 +254,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         mDatabind.sflLayout.setOnRefreshListener {
             pageIndex = 1
             initViewData()
+            EventBus.getDefault().post(MessageEventUpDataTip())
         }
     }
 
@@ -292,12 +296,6 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         mViewModel.orderList.onStart.observe(this) {
             showLoading("请求中。。。")
         }
-        mViewModel.cancelOrderDto.onSuccess.observe(this) {
-            showToast("订单已取消")
-        }
-        mViewModel.cancelOrderDto.onError.observe(this) {
-            showToast(it.msg)
-        }
         mViewModel.orderList.onSuccess.observe(this) {
             dismissLoading()
             mDatabind.sflLayout.finishRefresh()
@@ -322,6 +320,20 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             mDatabind.sflLayout.finishRefresh()
             showToast("${it.msg}")
         }
+
+        mViewModel.cancelOrderDto.onStart.observe(this) {
+            showLoading("取消订单。。。")
+        }
+        mViewModel.cancelOrderDto.onSuccess.observe(this) {
+            dismissLoading()
+            EventBus.getDefault().post(MessageEventUpDataTip())
+            showToast("订单已取消")
+        }
+        mViewModel.cancelOrderDto.onError.observe(this) {
+            dismissLoading()
+            showToast(it.msg)
+        }
+
     }
 
 
@@ -340,6 +352,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         // 在这里处理事件
         val message: Int = event.message
         orderDisAdapter.notifyItemChanged(message)
+
     }
 
 }

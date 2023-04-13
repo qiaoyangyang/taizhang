@@ -2,7 +2,6 @@ package com.meiling.oms.fragment
 
 import android.graphics.drawable.PictureDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -17,7 +16,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.meihao.kotlin.cashier.widgets.orderv4dialog.OrderDistributionDetailDialog
+import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
@@ -25,7 +24,6 @@ import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.EventBusData.MessageEvent
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
-import com.meiling.oms.dialog.OrderDisDetailDialog
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.*
 import org.greenrobot.eventbus.EventBus

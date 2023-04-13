@@ -49,5 +49,24 @@ interface MeService {
         @Query("pageSize") pageSize: String
     ): ResultData<FinancialRecordDetail>
 
+    /**
+     * 注销账号
+     * */
+    @POST("/saas/financial/getRecordListByViewId")
+    suspend fun getMsgCenter(
+        @Query("viewId") viewId: String,
+        @Query("pageIndex") pageIndex: String,
+        @Query("pageSize") pageSize: String
+    ): ResultData<Any>
+
+    /**
+     * 消息中心
+     * */
+    @POST("/uc/adminuser/disableAccount")
+    suspend fun disableAccount(
+        @Query("userViewId") userViewId: String,
+        @Query("accountStatus") accountStatus: String = "0",
+    ): ResultData<Any>
+
 
 }
