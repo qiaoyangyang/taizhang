@@ -95,6 +95,17 @@ class InputBoredomActivity :
         mViewModel.shopBean.onSuccess.observe(this) {
             //DataPickerUtitl.setpickData(this,it)
             if (it.size != 0) {
+                it.forEach {
+                    it.shopList?.forEach { shop->
+                        if (TextUtils.isEmpty(shop?.poiId)){
+                            shop?.poiId=""
+                        }
+                        if (TextUtils.isEmpty(shop?.status)){
+                            shop?.status=""
+                        }
+
+                    }
+                }
                 var shopDialog = ShopDialog().newInstance(it)
 
                 shopDialog.setOnresilience(object : ShopDialog.Onresilience {

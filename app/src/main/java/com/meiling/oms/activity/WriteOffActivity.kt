@@ -106,6 +106,7 @@ class WriteOffActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activit
                 holder.setText(R.id.tv_couponCode, item?.couponCode)
                 holder.setText(R.id.tv_couponUseTime, item?.couponUseTime)
                 holder.setText(R.id.tv_orderId, item?.orderId)
+                holder.getView<TextView>(R.id.tv_dealValue).paint?.flags = Paint.STRIKE_THRU_TEXT_FLAG
                 if (item?.undoType == 1) {
                     holder.setTextColor(R.id.tv_status,Color.parseColor("#31D288"))
                     var tv_status = holder.getView<ShapeTextView>(R.id.tv_status)

@@ -12,7 +12,7 @@
         android:id="@+id/tv_name"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="8英寸水果蛋糕一块"
+        android:text=""
 
         android:layout_width="0dp"
         android:layout_height="wrap_content"/>
@@ -24,7 +24,7 @@
 
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/tv_name"
-        android:text="￥234"
+        android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView

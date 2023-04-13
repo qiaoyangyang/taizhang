@@ -15,7 +15,7 @@ data class ShopBean(
     val name: String? = "",
     @SerializedName("shopList")
     val shopList: List<Shop?>? = listOf()
-) : IWheel {
+) : IWheel,Serializable {
     override fun getShowText(): String {
         return name.toString()
     }
@@ -24,13 +24,13 @@ data class ShopBean(
 
 data class Shop(
     @SerializedName("id")
-    val id: String? = "",
+    var id: String? = "",
     @SerializedName("name")
-    val name: String? = "",
+    var name: String? = "",
     @SerializedName("poiId")
-    val poiId: String? = "",
+    var poiId: String? = "",
     @SerializedName("status")
-    val status: String? = ""
+    var status: String? = ""
 
 
 ) : Serializable, IWheel {

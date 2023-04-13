@@ -3,6 +3,7 @@ package com.meiling.oms.activity
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -71,7 +72,11 @@ class WriteOffDetailsActivity :
             //核销时间
             mDatabind.tvCouponUseTime.text = serializableExtra?.coupon?.couponUseTime
             //订单编号
-            mDatabind.tvOrderId.text = serializableExtra?.coupon?.orderId
+            if (TextUtils.isEmpty(serializableExtra?.coupon?.orderId) || serializableExtra?.coupon?.orderId == "0") {
+                mDatabind.tvOrderId.text = "暂无"
+            } else {
+                mDatabind.tvOrderId.text = serializableExtra?.coupon?.orderId
+            }
 
 
             if (serializableExtra?.coupon?.undoType == 1) {
@@ -106,7 +111,7 @@ class WriteOffDetailsActivity :
             }
 
             if (serializableExtra?.coupon?.type == 2) {//美团
-                mDatabind.meiRecyclerView.visibility=View.VISIBLE
+                mDatabind.meiRecyclerView.visibility = View.VISIBLE
                 var conet = "由 ${serializableExtra.shopName} 店验证"
                 SpannableUtils.setTextcolor(
                     this,
@@ -118,7 +123,7 @@ class WriteOffDetailsActivity :
                 )
 
             } else if (serializableExtra?.coupon?.type == 5) {//抖音
-                mDatabind.meiRecyclerView.visibility=View.GONE
+                mDatabind.meiRecyclerView.visibility = View.GONE
                 //  holder.setText(R.id.tv_shopName, "由"+item?.coupon?.shopName+"验证")
                 var conet = "由 ${serializableExtra?.coupon?.shopName} 店验证"
                 SpannableUtils.setTextcolor(
