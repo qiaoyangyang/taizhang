@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.meiling.common.activity.BaseActivity
 import com.meiling.oms.EventBusData.MessageEvent
 import com.meiling.oms.databinding.ActivityOrderChengeAddredssBinding
+import com.meiling.oms.dialog.OrderDisSelectTimeDialog
 import com.meiling.oms.viewmodel.ChangeAddressModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
@@ -45,7 +46,7 @@ class OrderChangeAddressActivity :
         mDatabind.txtOrderChangePhone.setText(intent.getStringExtra("receivePhone"))
         mDatabind.txtOrderChangeName.setText(intent.getStringExtra("receiveName"))
         address = intent.getStringExtra("receiveAddress").toString()
-        index = intent.getIntExtra("index",1)
+        index = intent.getIntExtra("index", 1)
         orderId = intent.getStringExtra("orderId").toString()
         lat = intent.getStringExtra("lat").toString()
         lon = intent.getStringExtra("lon").toString()
@@ -59,6 +60,11 @@ class OrderChangeAddressActivity :
         }
         mDatabind.edtOrderChangeRemark.setText(intent.getStringExtra("receiveRemark"))
 
+
+        mDatabind.txtOrderChangeTime.setSingleClickListener {
+            var orderDisSelectTimeDialog = OrderDisSelectTimeDialog().newInstance()
+            orderDisSelectTimeDialog.show(supportFragmentManager)
+        }
 
 //        mViewModel.lon.onSuccess.value = mDatabind.txtOrderChangeAddress.text.toString()
 //        mViewModel.lat.onSuccess.value = mDatabind.txtOrderChangeAddress.text.toString()
@@ -101,7 +107,7 @@ class OrderChangeAddressActivity :
         mViewModel.changeAddressSuccess.onSuccess.observe(this) {
             disLoading()
             showToast("修改成功")
-            EventBus.getDefault().post( MessageEvent(index));
+            EventBus.getDefault().post(MessageEvent(index));
             finish()
         }
         mViewModel.changeAddressSuccess.onError.observe(this) {
@@ -127,6 +133,7 @@ class OrderChangeAddressActivity :
             showToast("===lon=======${it}")
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
@@ -137,6 +144,7 @@ class OrderChangeAddressActivity :
             mDatabind.txtOrderChangeAddress.text = address
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         EventBus.getDefault().unregister(this)
