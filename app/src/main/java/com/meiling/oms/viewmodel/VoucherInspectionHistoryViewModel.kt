@@ -23,7 +23,7 @@ class VoucherInspectionHistoryViewModel(application: Application) : BaseViewMode
 
         }
 
-        request({ acceptanceCheckService.cityshop("1,2", channelId, "1") }, shopBean)
+        request({ acceptanceCheckService.cityshop( channelId, "0") }, shopBean)
     }
     fun coupon(poiId: String,startDate:String,endDate:String,selectText:String,pageIndex:Int,pageSize:String,type:String,status:String,isVoucher:String) {
         request({

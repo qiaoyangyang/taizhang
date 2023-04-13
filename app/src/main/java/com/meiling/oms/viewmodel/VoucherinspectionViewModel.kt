@@ -29,13 +29,16 @@ class VoucherinspectionViewModel(application: Application) :BaseViewModel(applic
 
         }
 
-        request({ acceptanceCheckService.cityshop("1,2", channelId, "1") }, shopBean)
+        request({ acceptanceCheckService.cityshop( channelId, "0") }, shopBean)
     }
     fun prepare(shopId:String,int: Int,codeurl:String){
         if (int==0){
+            request({ acceptanceCheckService.prepare("", codeurl, shopId) }, thrillBen)
+
+        }else{
+            request({ acceptanceCheckService.prepare(codeurl, "", shopId) }, thrillBen)
 
         }
-        request({ acceptanceCheckService.prepare("", codeurl, shopId) }, thrillBen)
 
     }
     fun verify(shopId:String,code:String){

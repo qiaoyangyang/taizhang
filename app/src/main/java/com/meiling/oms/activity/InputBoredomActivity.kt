@@ -78,13 +78,15 @@ class InputBoredomActivity :
                 return@setOnClickListener
             }
             if (type == "1") {
-                mViewModel.prepare(shopId, 0, mDatabind.tvStockCode.text.toString())
+                mViewModel.prepare(shopId, 1, mDatabind.tvStockCode.text.toString())
             } else {
                 mViewModel.mttgprepare(mDatabind.tvStockCode.text.toString(), shopId)
             }
 
 
         }
+
+        mDatabind.tvStockCode.isLongClickable=false
 
 
     }

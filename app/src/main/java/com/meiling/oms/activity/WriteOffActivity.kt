@@ -105,22 +105,27 @@ class WriteOffActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activit
                 holder.setText(R.id.tv_couponBuyPrice, item?.couponBuyPrice)
                 holder.setText(R.id.tv_couponCode, item?.couponCode)
                 holder.setText(R.id.tv_couponUseTime, item?.couponUseTime)
-                holder.setText(R.id.tv_orderId, item?.orderId)
+                if (TextUtils.isEmpty(item?.orderId)||item?.orderId=="0"){
+                    holder.setText(R.id.tv_orderId, "暂无")
+                }else {
+                    holder.setText(R.id.tv_orderId, item?.orderId)
+                }
                 holder.getView<TextView>(R.id.tv_dealValue).paint?.flags = Paint.STRIKE_THRU_TEXT_FLAG
                 if (item?.undoType == 1) {
-                    holder.setTextColor(R.id.tv_status,Color.parseColor("#31D288"))
-                    var tv_status = holder.getView<ShapeTextView>(R.id.tv_status)
+                    holder.setTextColor(R.id.tv_status,Color.parseColor("#FB9716"))
 
-                    tv_status.shapeDrawableBuilder.setSolidColor(Color.parseColor("#EDFFF4"))
+                    var tv_status = holder.getView<ShapeTextView>(R.id.tv_status)
+                    tv_status.shapeDrawableBuilder.setSolidColor(Color.parseColor("#FFF1DF"))
                         .intoBackground()
+
                     tv_status.text = "已撤销"
 
                 } else if (item?.undoType == 0) {
-                    holder.setTextColor(R.id.tv_status,Color.parseColor("#FB9716"))
+                    holder.setTextColor(R.id.tv_status,Color.parseColor("#31D288"))
                     var tv_status = holder.getView<ShapeTextView>(R.id.tv_status)
-
-                    tv_status.shapeDrawableBuilder.setSolidColor(Color.parseColor("#FFF1DF"))
+                    tv_status.shapeDrawableBuilder.setSolidColor(Color.parseColor("#EDFFF4"))
                         .intoBackground()
+
                     tv_status.text = "已核销"
 
 
@@ -133,7 +138,7 @@ class WriteOffActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activit
                 }
                 var tv_shopName = holder.getView<TextView>(R.id.tv_shopName)
 
-                var conet = "由 ${item?.shopName} 店验证"
+                var conet = "由 ${item?.shopName} 验证"
                 SpannableUtils.setTextcolor(
                     holder.itemView.context,
                     conet,

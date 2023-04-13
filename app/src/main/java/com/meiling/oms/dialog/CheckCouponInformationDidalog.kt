@@ -94,7 +94,7 @@ class CheckCouponInformationDidalog : BaseNiceDialog() {
 
         var tv_original_cost = holder?.getView<TextView>(R.id.tv_original_cost)
         tv_original_cost?.paint?.flags = Paint.STRIKE_THRU_TEXT_FLAG
-        tv_original_cost?.text=thrillBen.get(0).amount?.originalAmount
+        tv_original_cost?.text="原价:"+thrillBen.get(0).amount?.originalAmount
 
         holder?.setOnClickListener(
             R.id.btn_cancel_exit

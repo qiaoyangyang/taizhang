@@ -137,9 +137,9 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
 
         if (verificationScreening.isVoucher == "0") {
             rb_isVoucher?.isChecked = true
-        } else if (verificationScreening.isVoucher == "1") {
-            rb_voucher?.isChecked = true
         } else if (verificationScreening.isVoucher == "2") {
+            rb_voucher?.isChecked = true
+        } else if (verificationScreening.isVoucher == "1") {
             rb_meal_voucher?.isChecked = true
         }
 
@@ -149,10 +149,10 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
                     verificationScreening.isVoucher = "0"
                 }
                 R.id.rb_voucher -> {
-                    verificationScreening.isVoucher = "1"
+                    verificationScreening.isVoucher = "2"
                 }
                 R.id.rb_meal_voucher -> {
-                    verificationScreening.isVoucher = "2"
+                    verificationScreening.isVoucher = "1"
                 }
 
             }

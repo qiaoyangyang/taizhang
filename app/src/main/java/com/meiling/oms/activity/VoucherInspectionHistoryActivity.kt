@@ -21,18 +21,24 @@ import com.meiling.common.network.data.WriteoffhistoryPageData
 import com.meiling.common.utils.Constant
 import com.meiling.common.utils.RecyclerViewDivider
 import com.meiling.common.utils.SpannableUtils
+import com.meiling.oms.EventBusData.MessageEvent
+import com.meiling.oms.EventBusData.MessageEventVoucherInspectionHistory
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityHistoryBinding
 import com.meiling.oms.dialog.VerificationScreeningDidalog
 import com.meiling.oms.viewmodel.VoucherInspectionHistoryViewModel
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.showToast
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 //验券历史
 class VoucherInspectionHistoryActivity :
     BaseActivity<VoucherInspectionHistoryViewModel, ActivityHistoryBinding>() {
     lateinit var orderLeftRecyAdapter: BaseQuickAdapter<WriteoffhistoryPageData?, BaseViewHolder>
     override fun initView(savedInstanceState: Bundle?) {
+        EventBus.getDefault().register(this)
         initRecycleyView()
         mDatabind.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -213,28 +219,30 @@ class VoucherInspectionHistoryActivity :
                 holder.setText(R.id.tv_couponCode, "券码号:" + item?.coupon?.couponCode)
                 var tv_status = holder.getView<ShapeTextView>(R.id.tv_status)
                 if (item?.coupon?.undoType == 1) {
-                    tv_status.setTextColor(Color.parseColor("#31D288"))
-                    tv_status.shapeDrawableBuilder.setSolidColor(Color.parseColor("#EDFFF4"))
-                        .intoBackground()
-                    holder.setText(R.id.tv_status, "已撤销")
-                } else if (item?.coupon?.undoType == 0) {
                     tv_status.setTextColor(Color.parseColor("#FB9716"))
                     //  tv_status.setBackgroundColor(Color.parseColor("#FFF1DF"))
                     tv_status.shapeDrawableBuilder.setSolidColor(Color.parseColor("#FFF1DF"))
                         .intoBackground()
+                    holder.setText(R.id.tv_status, "已撤销")
+                } else if (item?.coupon?.undoType == 0) {
+
+                    tv_status.setTextColor(Color.parseColor("#31D288"))
+                    tv_status.shapeDrawableBuilder.setSolidColor(Color.parseColor("#EDFFF4"))
+                        .intoBackground()
+
                     holder.setText(R.id.tv_status, "已核销")
                 }
                 if (item?.coupon?.isVoucher == 1) {//团购 2。代金
-                    holder.setText(R.id.tv_y,"团购(元)")
+                    holder.setText(R.id.tv_y,"团购券(元)")
                 } else {
-                    holder.setText(R.id.tv_y,"代金(元)")
+                    holder.setText(R.id.tv_y,"代金券(元)")
                 }
 
 
 
 
                 if (item?.coupon?.type == 2) {//美团
-                    var conet = "由 ${item.shopName}店 验证"
+                    var conet = "由 ${item.shopName} 验证"
                     SpannableUtils.setTextcolor(
                         holder.itemView.context,
                         conet,
@@ -246,7 +254,7 @@ class VoucherInspectionHistoryActivity :
 
                 } else if (item?.coupon?.type == 5) {//抖音
                     //  holder.setText(R.id.tv_shopName, "由"+item?.coupon?.shopName+"验证")
-                    var conet = "由 ${item?.coupon?.shopName}店 验证"
+                    var conet = "由 ${item?.shopName}店 验证"
                     SpannableUtils.setTextcolor(
                         holder.itemView.context,
                         conet,
@@ -274,6 +282,7 @@ class VoucherInspectionHistoryActivity :
         orderLeftRecyAdapter.setOnItemClickListener { adapter, view, position ->
             var writeoffhistoryPageData = orderLeftRecyAdapter.data[position]
             ARouter.getInstance().build("/app/WriteOffDetailsActivity")
+                .withInt("id",position)
                 .withSerializable(
                     "writeoffhistoryPageData",
                     writeoffhistoryPageData
@@ -329,6 +338,24 @@ class VoucherInspectionHistoryActivity :
         )
 
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageEventVoucherInspectionHistory) {
+        // 在这里处理事件
+        val message: Int = event.id
+        var data = orderLeftRecyAdapter.data.get(message)
+        if (data?.coupon?.undoType == 0){
+            data?.coupon?.undoType=1
+        }
+        orderLeftRecyAdapter.notifyItemChanged(message)
+        //orderDisAdapter.notifyItemChanged(message)
+    }
+
 }
 
 
