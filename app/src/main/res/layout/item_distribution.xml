@@ -79,6 +79,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="@dimen/dp_20"
             android:textColor="@color/home_666666"
+            android:visibility="gone"
             tools:text="配送员:张三" />
 
         <TextView
@@ -86,11 +87,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtOperate"
-            android:layout_alignBottom="@+id/txtOperate"
+            android:layout_alignBottom="@+id/txt_order_dis"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_toEndOf="@+id/txt_order_dis"
             android:textColor="@color/order_dis_5498FE"
+            android:visibility="gone"
             tools:text="1*******" />
 
     </RelativeLayout>

@@ -35,8 +35,11 @@ interface LoginService {
         @Query("state") state: String = "",
     ): ResultData<LoginDto>
 
-    @GET("/api/v1/app/login/imToken")
-    suspend fun imToken(): ResultData<String>
+    /**
+     * 友盟Token
+     * */
+    @POST("/uc/admin/setUmengToken")
+    suspend fun imToken(@Query("deviceToken") deviceToken: String): ResultData<Any>
 
     /**
      * 手机号登录

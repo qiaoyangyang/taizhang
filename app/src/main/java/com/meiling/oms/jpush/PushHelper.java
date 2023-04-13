@@ -12,9 +12,11 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import com.meiling.common.BuildConfig;
+import com.meiling.common.utils.MMKVUtils;
 import com.taobao.accs.ACCSClient;
 import com.taobao.accs.AccsClientConfig;
 import com.taobao.agoo.TaobaoRegister;
+import com.tencent.mmkv.MMKV;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.commonsdk.utils.UMUtils;
 import com.umeng.message.IUmengRegisterCallback;
@@ -49,7 +51,7 @@ public class PushHelper {
      */
     public static void preInit(Context context) {
         try {
-            Log.e("TAG", "register 1111：--> " );
+            Log.e("TAG", "register 1111：--> ");
             //解决推送消息显示乱码的问题
             AccsClientConfig.Builder builder = new AccsClientConfig.Builder();
             builder.setAppKey("umeng:" + PushConstants.APP_KEY);
@@ -109,7 +111,7 @@ public class PushHelper {
                 //注册成功会返回deviceToken deviceToken是推送消息的唯一标志
                 Log.i("TAG", "deviceToken --> " + deviceToken);
                 deviceTokenStr = deviceToken;
-
+                MMKV.defaultMMKV().putString("UmengToken", deviceTokenStr);
 //                SharedPreferences sharedPreferences = AppConfig.INSTANCE.getApplication().getSharedPreferences("cashier_file", Context.MODE_PRIVATE);
 //                sharedPreferences.edit().putString("deviceToken", deviceToken).apply();
 
@@ -120,6 +122,7 @@ public class PushHelper {
                     @Override
                     public void onMessage(boolean success, String message) {
                         Log.i("TAG", "setAlias " + success + " msg:" + message);
+
                     }
                 });
             }

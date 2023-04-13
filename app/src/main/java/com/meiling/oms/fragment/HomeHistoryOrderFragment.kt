@@ -2,25 +2,26 @@ package com.meiling.oms.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
-import android.view.Gravity.RIGHT
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.meiling.common.fragment.BaseFragment
+import com.meiling.oms.EventBusData.MessageHistoryEventTime
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentHomeOrderHistoryBinding
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
-import com.meiling.oms.viewmodel.RankingViewModel
 import com.meiling.oms.widget.formatCurrentDate
-import com.meiling.oms.widget.formatCurrentDateBeforeWeek
+import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * 历史订单
  * **/
-class HomeHistoryOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentHomeOrderHistoryBinding>() {
+class HomeHistoryOrderFragment :
+    BaseFragment<BaseOrderFragmentViewModel, FragmentHomeOrderHistoryBinding>() {
 
     private val fragmentList: MutableList<Fragment> = ArrayList()
 
@@ -38,15 +39,15 @@ class HomeHistoryOrderFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
     @SuppressLint("RtlHardcoded")
     override fun initData() {
         var isSelect = arguments?.getBoolean("isSelect", true)
-        fragmentList.add(BaseOrderFragment.newInstance("", true))
-        fragmentList.add(BaseOrderFragment.newInstance("70", true))
+        fragmentList.add(BaseHistoryOrderFragment.newInstance("", true))
+        fragmentList.add(BaseHistoryOrderFragment.newInstance("70", true))
         mDatabind.viewPager.adapter =
             BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
         mDatabind.viewPager.setCurrentItem(0, false)
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
         mViewModel.statusCount(
             logisticsStatus = "",
-            startTime = formatCurrentDateBeforeWeek(),
+            startTime = formatCurrentDate(),
             endTime = formatCurrentDate(),
             businessNumberType = "1",
             pageIndex = "1",
@@ -56,16 +57,19 @@ class HomeHistoryOrderFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
             isValid = "0",
             businessNumber = ""
         )
+
+        mDatabind.txtSelectOrder.setSingleClickListener { }
     }
+
     override fun createObserver() {
 
         mViewModel.statusCountDto.onSuccess.observe(this) {
             dismissLoading()
-            if (it.deliveryNot != 0) {
+            if (it.deliveryAll != 0) {
                 mDatabind.tabLayout.updateTabBadge(0) {
                     badgeTextSize = 30f
                     badgeGravity = Gravity.RIGHT or Gravity.TOP
-                    badgeText = it.deliveryNot.toString()
+                    badgeText = it.deliveryAll.toString()
                     badgeOffsetX = 5
                     badgeOffsetY = 30
 
@@ -92,6 +96,22 @@ class HomeHistoryOrderFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
 
     override fun getBind(inflater: LayoutInflater): FragmentHomeOrderHistoryBinding {
         return FragmentHomeOrderHistoryBinding.inflate(inflater)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun eventSelectTime(messageHistoryEventTime: MessageHistoryEventTime) {
+        mViewModel.statusCount(
+            logisticsStatus = "",
+            startTime = messageHistoryEventTime.starTime,
+            endTime = messageHistoryEventTime.endTime,
+            businessNumberType = "1",
+            pageIndex = "1",
+            pageSize = "20",
+            orderTime = "1",
+            deliverySelect = "0",
+            isValid = "0",
+            businessNumber = ""
+        )
     }
 
 }

@@ -66,12 +66,13 @@
     </com.angcyo.tablayout.DslTabLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_select_order"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:drawableStart="@drawable/order_select_icon"
-        android:text="筛选"
-        android:gravity="center"
         android:layout_marginHorizontal="@dimen/dp_20"
+        android:drawableStart="@drawable/order_select_icon"
+        android:gravity="center"
+        android:text="筛选"
         android:textColor="@color/home_999999"
         app:layout_constraintBottom_toBottomOf="@+id/tab_layout"
         app:layout_constraintRight_toRightOf="parent"

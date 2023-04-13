@@ -44,16 +44,21 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
 
-
-        var conet = "登录即代表同意《美零云店用户协议及隐私政策》"
-        SpannableUtils.setTextcolor(
+        var conet = "登录即代表同意小喵来客《用户协议》及《隐私政策》"
+        SpannableUtils.setText(
             this,
             conet,
             mDatabind.tvAgreement,
-            7,
-            conet.length,
-            R.color.red
+            R.color.pwd_1180FF
         )
+//        SpannableUtils.setTextLoginYSColor(
+//            this,
+//            conet,
+//            mDatabind.tvAgreement,
+//            17,
+//            conet.length,
+//            R.color.pwd_1180FF
+//        )
         mDatabind.tvTitle.text = "账号密码登录"
         mDatabind.cbPwdShow.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
@@ -128,15 +133,15 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         })
         mDatabind.ivClearPwd.setSingleClickListener {
             mDatabind.etPassword.text.clear()
-            mDatabind.etPhone.setSelection( mDatabind.etPassword.text.length)
+            mDatabind.etPhone.setSelection(mDatabind.etPassword.text.length)
         }
         mDatabind.ivClearCode.setSingleClickListener {
             mDatabind.etPassword.text.clear()
-            mDatabind.etPhone.setSelection( mDatabind.etPassword.text.length)
+            mDatabind.etPhone.setSelection(mDatabind.etPassword.text.length)
         }
         mDatabind.ivClearAccount.setSingleClickListener {
             mDatabind.etPhone.text.clear()
-            mDatabind.etPhone.setSelection( mDatabind.etPhone.text.length)
+            mDatabind.etPhone.setSelection(mDatabind.etPhone.text.length)
         }
 
         mDatabind.btnLogin.setSingleClickListener {

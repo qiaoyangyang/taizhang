@@ -18,15 +18,14 @@ import com.meiling.oms.widget.showToast
 @Route(path = "/app/ForgetPwdFinishActivity")
 class ForgetPwdFinishActivity : BaseActivity<LoginViewModel, ActivityForgetPwdSuccessBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
-        var conet = "登录即代表同意《美零云店用户协议及隐私政策》"
-        SpannableUtils.setTextcolor(
+        var conet = "登录即代表同意小喵来客《用户协议》及《隐私政策》"
+        SpannableUtils.setText(
             this,
             conet,
             mDatabind.tvAgreement,
-            7,
-            conet.length,
-            R.color.red
+            R.color.pwd_1180FF
         )
+
     }
     override fun isStatusBarDarkFont(): Boolean {
         return true

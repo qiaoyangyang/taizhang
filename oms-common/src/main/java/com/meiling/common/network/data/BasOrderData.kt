@@ -411,7 +411,9 @@ data class StatusCountDto(
     @SerializedName("deliveryOrder")
     var deliveryOrder: Int?,//抢单
     @SerializedName("deliverying")
-    var deliverying: Int?//配送中
+    var deliverying: Int?,//配送中,
+    @SerializedName("deliveryAll")
+    var deliveryAll: Int?//全部,
 )
 
 data class DeliveryConsumeLog(

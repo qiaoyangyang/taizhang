@@ -43,6 +43,10 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.AgreementActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.ForgetPwdActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
@@ -93,22 +97,23 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="9a26d944277356b653bc2657adc35059">
-        </meta-data>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="9a26d944277356b653bc2657adc35059"></meta-data>
 
-        <service android:name="com.amap.api.location.APSService"/>
-<!--        <service-->
-<!--            android:name="com.umeng.message.UmengMessageIntentReceiverService"-->
-<!--            android:exported="true"-->
-<!--            android:process=":channel">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="org.android.agoo.client.MessageReceiverService" />-->
-<!--            </intent-filter>-->
-<!--        </service>-->
+        <service android:name="com.amap.api.location.APSService" />
+        <!--        <service-->
+        <!--            android:name="com.umeng.message.UmengMessageIntentReceiverService"-->
+        <!--            android:exported="true"-->
+        <!--            android:process=":channel">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="org.android.agoo.client.MessageReceiverService" />-->
+        <!--            </intent-filter>-->
+        <!--        </service>-->
 
-<!--        <receiver-->
-<!--            android:name="com.umeng.message.NotificationProxyBroadcastReceiver"-->
-<!--            android:exported="false" />-->
+        <!--        <receiver-->
+        <!--            android:name="com.umeng.message.NotificationProxyBroadcastReceiver"-->
+        <!--            android:exported="false" />-->
 
         <service
             android:name="com.umeng.message.UmengMessageCallbackHandlerService"
@@ -130,17 +135,17 @@
                 <action android:name="com.umeng.message.message.sendmessage.action" />
             </intent-filter>
         </service>
-<!--        <service-->
-<!--            android:name="com.umeng.message.UmengDownloadResourceService"-->
-<!--            android:exported="false"-->
-<!--            android:permission="android.permission.BIND_JOB_SERVICE" />-->
+        <!--        <service-->
+        <!--            android:name="com.umeng.message.UmengDownloadResourceService"-->
+        <!--            android:exported="false"-->
+        <!--            android:permission="android.permission.BIND_JOB_SERVICE" />-->
 
-<!--        <provider-->
-<!--            android:name="com.umeng.message.provider.MessageProvider"-->
-<!--            android:authorities="${applicationId}.umeng.message"-->
-<!--            android:exported="false">-->
-<!--            <grant-uri-permission android:pathPattern=".*" />-->
-<!--        </provider> &lt;!&ndash; 以下为基本配置信息，需要自行添加至您的AndroidManifest文件中 end &ndash;&gt;-->
+        <!--        <provider-->
+        <!--            android:name="com.umeng.message.provider.MessageProvider"-->
+        <!--            android:authorities="${applicationId}.umeng.message"-->
+        <!--            android:exported="false">-->
+        <!--            <grant-uri-permission android:pathPattern=".*" />-->
+        <!--        </provider> &lt;!&ndash; 以下为基本配置信息，需要自行添加至您的AndroidManifest文件中 end &ndash;&gt;-->
 
     </application>
     <queries>

@@ -38,18 +38,13 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "UmPushAppKey", '"6103bed66aac3162c742b52e"'//正式
-            buildConfigField "String", "UmPushMessageSecret", '"2fe41ef29a377781c6ea1cb6291c7660"'
         }
         release {
             minifyEnabled false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "UmPushAppKey", '"6103bed66aac3162c742b52e"'//正式
-            buildConfigField "String", "UmPushMessageSecret", '"2fe41ef29a377781c6ea1cb6291c7660"'
         }
     }
 
