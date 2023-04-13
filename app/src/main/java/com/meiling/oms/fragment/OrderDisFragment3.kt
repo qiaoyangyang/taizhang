@@ -7,11 +7,13 @@ import com.meiling.common.network.data.EventBusChangeAddress
 import com.meiling.common.network.data.LogisticsConfirmDtoList
 import com.meiling.common.network.data.LogisticsInsertDto
 import com.meiling.common.network.data.OrderSendAddress
+import com.meiling.oms.EventBusData.MessageEventUpDataTip
 import com.meiling.oms.databinding.FragmentDis3Binding
 import com.meiling.oms.viewmodel.DataFragmentViewModel
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
+import org.greenrobot.eventbus.EventBus
 
 class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Binding>() {
 
@@ -106,13 +108,16 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
         }
 
         mViewModel.sendSuccess.onStart.observe(this) {
-
+            showLoading("正在请求。。。")
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
+            dismissLoading()
+            EventBus.getDefault().post(MessageEventUpDataTip())
             showToast("已成功发起配送 请在订单页面，查看配送详情")
             mActivity.finish()
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
+            dismissLoading()
             showToast("发起配送失败 , 失败原因：${it.toString()}")
         }
     }

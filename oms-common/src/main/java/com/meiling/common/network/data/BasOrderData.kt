@@ -513,3 +513,12 @@ data class DeliveryConsume(
     @SerializedName("weight")
     var weight: String?
 ) : Serializable
+
+data class SelectDialogDto(
+    var startDate: String,//开始时间
+    var endDate: String,//结束时间
+    var timetype: Int,//时间类型 0自定义时间 1 昨天 2 今天 3 近七天 4 进30天
+    var status: String,// 验券类型  2.已核销 -1.已撤销 0全部
+    var isVoucher: String,// 验券状态  1.团购券 2.代金券 0 全部
+
+) : Serializable

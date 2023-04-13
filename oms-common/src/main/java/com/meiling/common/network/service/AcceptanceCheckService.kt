@@ -22,7 +22,7 @@ interface AcceptanceCheckService {
         @Query("hasCityAll") hasCityAll: String? = "1",
     ): ResultData<ArrayList<ShopBean>>
 
-    @GET("saas/poi/citypoi")
+    @GET("/saas/poi/citypoi")
     suspend fun cityPoi(
     ): ResultData<ArrayList<ShopBean>>
 

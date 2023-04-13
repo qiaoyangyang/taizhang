@@ -1,13 +1,17 @@
 package com.meiling.oms.fragment
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.meiling.common.fragment.BaseFragment
+import com.meiling.common.network.data.Shop
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentDataBinding
+import com.meiling.oms.dialog.ShopDialog
 import com.meiling.oms.viewmodel.DataViewModel
+import com.meiling.oms.widget.setSingleClickListener
 
 
 class DataFragment : BaseFragment<DataViewModel, FragmentDataBinding>() {
@@ -30,8 +34,15 @@ class DataFragment : BaseFragment<DataViewModel, FragmentDataBinding>() {
 
     }
 
+    lateinit var shopDialog: ShopDialog
+
     override fun initData() {
         mViewModel.cityShop("1")
+        mDatabind.TitleBar.setSingleClickListener {
+            mViewModel.cityShop("1")
+
+            shopDialog.show(childFragmentManager)
+        }
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentDataBinding {
@@ -44,16 +55,25 @@ class DataFragment : BaseFragment<DataViewModel, FragmentDataBinding>() {
     }
 
     override fun createObserver() {
-//        mViewModel.shopBean.onSuccess.observe(this) {
-//            var shopDialog = ShopDialog().newInstance(it)
-//            shopDialog.setOnresilience(object : ShopDialog.Onresilience {
-//                override fun resilience(cityid: Int, shopid: Int, shop: Shop) {
-//                    LiveDataShopData.INSTANCE.value = shop.name
-//                    mDatabind.TitleBar.text = shop.name
-//                }
-//            })
-//            shopDialog.show(childFragmentManager)
-//        }
+        mViewModel.shopBean.onSuccess.observe(this) {
+            if (it.isNotEmpty()) {
+                mDatabind.TitleBar.text = it[0].shopList?.get(0)!!.name
+                shopDialog = ShopDialog().newInstance(it)
+                shopDialog.setOnresilience(object : ShopDialog.Onresilience {
+                    override fun resilience(
+                        cityid: Int,
+                        cityidname: String,
+                        shopid: Int,
+                        shop: Shop
+                    ) {
+                        mDatabind.TitleBar.text = shop.name
+                    }
+
+                    override fun Ondismiss() {
+                    }
+                })
+            }
+        }
     }
 
 }

@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.meiling.common.fragment.BaseFragment
+import com.meiling.common.network.data.SelectDialogDto
 import com.meiling.oms.EventBusData.MessageHistoryEventTime
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentHomeOrderHistoryBinding
+import com.meiling.oms.dialog.OrderSelectDialog
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.setSingleClickListener
@@ -58,7 +60,19 @@ class HomeHistoryOrderFragment :
             businessNumber = ""
         )
 
-        mDatabind.txtSelectOrder.setSingleClickListener { }
+        mDatabind.txtSelectOrder.setSingleClickListener {
+
+            var orderSelectDialog = OrderSelectDialog().newInstance(
+                SelectDialogDto(
+                    startDate = formatCurrentDate(),
+                    endDate = formatCurrentDate(),
+                    timetype = 2,
+                    status = "1", isVoucher = "1"
+                )
+            )
+            orderSelectDialog.show(childFragmentManager)
+
+        }
     }
 
     override fun createObserver() {
