@@ -150,6 +150,7 @@
             android:id="@+id/txt_order_delivery_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
             android:textColor="@color/home_333333"
             android:textSize="@dimen/dp_26"
             app:layout_constraintEnd_toEndOf="@+id/txt_change_order"
@@ -161,6 +162,7 @@
             android:id="@+id/ll_remark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_10"
             android:background="@color/home_FEFAF0"
             android:orientation="horizontal"
             android:paddingTop="@dimen/dp_20"
@@ -171,6 +173,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/dp_10"
                 android:background="@color/home_FAAD14"
                 android:gravity="center_vertical"
@@ -178,7 +181,7 @@
                 android:paddingVertical="@dimen/dp_5"
                 android:text="备注"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_20" />
+                android:textSize="@dimen/sp_24" />
 
             <TextView
                 android:id="@+id/txt_order_remark"
