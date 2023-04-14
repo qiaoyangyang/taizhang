@@ -119,19 +119,18 @@
                     android:layout_width="0dp"
 
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@drawable/checkbox_normal"
                     android:button="@null"
                     android:checked="false"
                     android:gravity="center"
-                    android:paddingTop="6dp"
 
+                    android:paddingTop="6dp"
                     android:paddingBottom="6dp"
                     android:text="近30天"
-                    android:textColor="@color/radiobutton_textcolor"
 
-                    android:layout_weight="1"
-                    android:textSize="16sp"
-                />
+                    android:textColor="@color/radiobutton_textcolor"
+                    android:textSize="16sp" />
 
 
             </RadioGroup>
@@ -338,7 +337,7 @@
 
 
                     android:paddingBottom="6dp"
-                    android:text="套餐券"
+                    android:text="团购券"
                     android:textColor="@color/radiobutton_textcolor"
                     android:textSize="16sp" />
 

@@ -8,11 +8,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.app.ActivityCompat
+import com.hjq.permissions.OnPermissionCallback
+import com.hjq.permissions.Permission
+import com.hjq.permissions.XXPermissions
 import com.huawei.hms.hmsscankit.ScanUtil
 import com.huawei.hms.ml.scan.HmsScan
 import com.huawei.hms.ml.scan.HmsScanAnalyzerOptions
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.*
+import com.meiling.common.utils.PermissionUtilis
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityVoucherinspectionBinding
@@ -52,7 +56,28 @@ class VoucherInspectionActivity :
 
 
         mDatabind.clScan.setOnClickListener {
-            requestPermission(CAMERA_REQ_CODE, DECODE)
+            //requestPermission(CAMERA_REQ_CODE, DECODE)
+            XXPermissions.with(this).permission(PermissionUtilis.Group.RICHSCAN).request(object :OnPermissionCallback{
+                override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
+                    if (!allGranted) {
+                        showToast("获取部分权限成功，但部分权限未正常授予")
+                        return
+                    }
+                    setstartScan()
+
+                }
+
+                override fun onDenied(permissions: MutableList<String>, doNotAskAgain: Boolean) {
+                    if (doNotAskAgain) {
+                        showToast("被永久拒绝授权，请手动授予录音和日历权限")
+                        // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                        XXPermissions.startPermissionActivity(this@VoucherInspectionActivity,permissions)
+                    } else {
+                        showToast("获取录音和日历权限失败")
+                    }
+                }
+
+            })
         }
 
     }
@@ -221,7 +246,13 @@ class VoucherInspectionActivity :
 
     var shopId: String = ""
     var shopdata: Shop? = null
-
+    fun setstartScan(){
+        ScanUtil.startScan(
+            this,
+            REQUEST_CODE_SCAN_ONE,
+            HmsScanAnalyzerOptions.Creator().create()
+        )
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

@@ -22,7 +22,7 @@ class InputBoredomViewModel(application: Application) : BaseViewModel(applicatio
             channelId="32"
         }
 
-        request({ acceptanceCheckService.cityshop("1,2", channelId, "1") }, shopBean)
+        request({ acceptanceCheckService.cityshop( channelId, "0") }, shopBean)
     }
     fun prepare(shopId:String,int: Int,codeurl:String){
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,19 +7,36 @@
     android:background="@color/scan_FBF8F7"
     android:orientation="vertical">
 
+    <com.hjq.bar.TitleBar
+        android:background="#00000000"
+        android:id="@+id/TitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:barStyle="transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:leftIcon="@null"
+        app:rightBackground="@null"
+        app:rightTitleSize="@dimen/sp_14"
+        app:title="" />
+
     <RelativeLayout
+
         android:id="@+id/rel_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@mipmap/scan_bg"
-        android:padding="@dimen/dp_40">
+        android:background="@mipmap/hebg"
+        android:padding="@dimen/dp_40"
+        app:layout_constraintTop_toTopOf="@+id/TitleBar">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:visibility="gone"
+            android:id="@+id/iv_scan_icon1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/scan_icon1" />
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -33,7 +50,8 @@
         android:layout_marginStart="@dimen/dp_40"
         android:layout_marginTop="-60dp"
         android:layout_marginEnd="@dimen/dp_40"
-        android:background="@drawable/scan_bg_input">
+        android:background="@drawable/scan_bg_input"
+        app:layout_constraintTop_toBottomOf="@+id/rel_title">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_meituan"
@@ -50,6 +68,7 @@
             android:layout_toEndOf="@+id/img_meituan"
             android:src="@mipmap/scan_meituan"
             android:text="美团 | 点评验券"
+            android:textSize="18sp"
             android:textColor="@color/home_333333" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -72,7 +91,8 @@
         android:layout_marginStart="@dimen/dp_40"
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_40"
-        android:background="@drawable/scan_bg_input">
+        android:background="@drawable/scan_bg_input"
+        app:layout_constraintTop_toBottomOf="@+id/rl_mei_tuan">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_koubei"
@@ -89,6 +109,7 @@
             android:layout_toEndOf="@+id/img_koubei"
             android:src="@mipmap/scan_meituan"
             android:text="口碑验券"
+            android:textSize="18sp"
             android:textColor="@color/home_333333" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -110,7 +131,8 @@
         android:layout_marginStart="@dimen/dp_40"
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_40"
-        android:background="@drawable/scan_bg_input">
+        android:background="@drawable/scan_bg_input"
+        app:layout_constraintTop_toBottomOf="@+id/rl_kou_bei">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_douyin"
@@ -118,8 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/dp_40"
             android:padding="@dimen/dp_40"
-            android:src="@drawable/douyin"
-           />
+            android:src="@drawable/douyin" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -127,6 +148,7 @@
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/img_douyin"
             android:text="抖音验券"
+            android:textSize="18sp"
             android:textColor="@color/home_333333" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -140,4 +162,4 @@
             android:layout_marginBottom="@dimen/dp_20"
             android:src="@drawable/icon_back" />
     </RelativeLayout>
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

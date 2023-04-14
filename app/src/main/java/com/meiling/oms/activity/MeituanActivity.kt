@@ -81,14 +81,18 @@ class MeituanActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activity
             mDatabind.tvDealValue?.paint?.flags = Paint.STRIKE_THRU_TEXT_FLAG
             mDatabind.tvCouponCode.text = code
             mDatabind.tvCouponUseTime.text = meituan!!.couponUseTime
-            mDatabind.tvOrderId.text = meituan!!.dealId
+            if (TextUtils.isEmpty(meituan?.dealId) || meituan?.dealId == "0") {
+                mDatabind.tvOrderId.text = "暂无"
+            } else {
+                mDatabind.tvOrderId.text = meituan!!.dealId
+            }
             if (meituan?.isVoucher == 1) {
                 // holder.setText(R.id.tv_type, "")
                 mDatabind.tvType.text = "团购券"
             } else if (meituan?.isVoucher == 2) {
                 mDatabind.tvType.text = "代金券"
             }
-            var conet = "由 ${meituan?.shopName} 店验证"
+            var conet = "由 ${meituan?.shopName} 验证"
             SpannableUtils.setTextcolor(
                 this,
                 conet,

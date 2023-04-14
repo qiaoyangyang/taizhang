@@ -158,7 +158,7 @@ data class Coupon(
     @SerializedName("type")
     val type: Int? = 0, // 2。美团 5。抖音
     @SerializedName("undoType")
-    val undoType: Int? = 0, //1。已撤销 0。未撤销
+    var undoType: Int? = 0, //1。已撤销 0。未撤销
     @SerializedName("updateTime")
     val updateTime: Long? = 0,
     @SerializedName("userId")
