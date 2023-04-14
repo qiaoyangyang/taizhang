@@ -93,7 +93,7 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
                     }
                     if (item.errMsg == null) {
 //                        viewPrice.textSize = 14f
-                        viewPrice.visibility = View.GONE
+                        viewPrice.visibility = View.INVISIBLE
                     } else {
                         viewPrice.visibility = View.VISIBLE
                         viewPrice.textSize = 11f
@@ -224,13 +224,13 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             dismissLoading()
-            showToast("已成功发起配送 请在订单页面，查看配送详情")
+            showToast("发起配送成功")
             EventBus.getDefault().post(MessageEventUpDataTip())
             mActivity.finish()
         }
         mViewModel.sendSuccess.onError.observe(this) {
             dismissLoading()
-            showToast("发起配送失败 , 失败原因：${it.toString()}")
+            showToast("发起配送失败")
         }
         mViewModel.orderSendConfirmList.onStart.observe(this) {
 

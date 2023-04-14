@@ -271,7 +271,7 @@ class BaseHistoryOrderFragment :
             pageSize = "20",
             orderTime = orderTime,
             deliverySelect = "0",
-            isValid = "0",
+            isValid = "",
             businessNumber = "",
             channelId = channelId
         )
@@ -287,7 +287,7 @@ class BaseHistoryOrderFragment :
                 pageSize = "20",
                 orderTime = orderTime,
                 deliverySelect = "0",
-                isValid = "0",
+                isValid = "",
                 businessNumber = "",
                 selectText = "",
                 channelId = channelId

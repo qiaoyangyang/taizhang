@@ -281,7 +281,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                 pageSize = "50",
                 orderTime = "1",
                 deliverySelect = "0",
-                isValid = "0",
+                isValid = "",
                 businessNumber = "",
                 selectText = mDatabind.edtSearch.text.trim().toString()
             )

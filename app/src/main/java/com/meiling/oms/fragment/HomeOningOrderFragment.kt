@@ -35,7 +35,6 @@ class HomeOningOrderFragment :
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewPager.isUserInputEnabled = false
-        EventBus.getDefault().register(this)
     }
 
     //    logisticsStatus：0.待配送  20.带抢单 30.待取货 50.配送中 70.取消 80.已送达
@@ -59,7 +58,7 @@ class HomeOningOrderFragment :
             pageSize = "20",
             orderTime = "1",
             deliverySelect = "0",
-            isValid = "0",
+            isValid = "",
             businessNumber = ""
         )
 
@@ -86,7 +85,7 @@ class HomeOningOrderFragment :
             pageSize = "20",
             orderTime = "1",
             deliverySelect = "0",
-            isValid = "0",
+            isValid = "",
             businessNumber = ""
         )
     }

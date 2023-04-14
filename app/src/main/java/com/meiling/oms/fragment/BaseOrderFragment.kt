@@ -270,7 +270,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             pageSize = "20",
             orderTime = "1",
             deliverySelect = "0",
-            isValid = "0",
+            isValid = "",
             businessNumber = "",
         )
 
@@ -285,7 +285,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 pageSize = "20",
                 orderTime = "1",
                 deliverySelect = "0",
-                isValid = "0",
+                isValid = "",
                 businessNumber = "",
                 selectText = ""
             )

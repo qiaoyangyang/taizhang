@@ -78,7 +78,7 @@ class HomeHistoryOrderFragment :
                     pageSize = "20",
                     orderTime = it.orderTime,
                     deliverySelect = "0",
-                    isValid = "0",
+                    isValid = "",
                     businessNumber = "",
                     channelId = it.channelId!!
                 )
@@ -99,7 +99,7 @@ class HomeHistoryOrderFragment :
             pageSize = "20",
             orderTime = "1",
             deliverySelect = "0",
-            isValid = "0",
+            isValid = "",
             businessNumber = "",
             channelId = "0"
         )
@@ -158,7 +158,7 @@ class HomeHistoryOrderFragment :
             pageSize = "20",
             orderTime = selectDialogDto.orderTime,
             deliverySelect = "0",
-            isValid = "0",
+            isValid = "",
             businessNumber = "",
             channelId = selectDialogDto.channelId!!
         )
