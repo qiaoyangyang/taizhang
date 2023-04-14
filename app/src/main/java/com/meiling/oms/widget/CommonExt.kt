@@ -227,6 +227,38 @@ fun transToString(time: Long): String {
     return SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(time)
 }
 
+fun formatCurrentDateToString(time: Date): String {
+    val sdf1 = SimpleDateFormat("yyyy-MM-dd HH:mm")
+    return sdf1.format(time)
+}
+
+/**
+ * 对比传入时间和当前时间比较
+ * 传入时间大于当前时间 返回true
+ * **/
+@SuppressLint("SimpleDateFormat")
+fun isSelectTimeCompare(time: String): Boolean {
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    var checkTime = sdf.parse(time).time
+    var checkCurrentTime = sdf.parse(formatCurrentDate2()).time
+    return checkTime > checkCurrentTime
+}
+
+/**
+ * 传入时间和当前时间比较
+ * time1
+ * time2 比较
+ * time2时间大于time1 返回true
+ * **/
+@SuppressLint("SimpleDateFormat")
+fun compareTimeCompare(time1: String, time2: String): Boolean {
+    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    var checkTime1 = sdf.parse(time1).time
+    var checkTime2 = sdf.parse(time2).time
+    return checkTime2 >= checkTime1
+}
+
+
 @SuppressLint("SimpleDateFormat")
 fun calculationWorkLongTime(starTime: String?): String {
     if (starTime.isNullOrEmpty()) {

@@ -68,12 +68,15 @@ class HomeOningOrderFragment :
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBus.getDefault().register(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        eventDay(MessageEventUpDataTip())
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun eventDay(messageEventTime: MessageEventUpDataTip) {
-        showToast("更新气泡")
         mViewModel.statusCount(
             logisticsStatus = "",
             startTime = formatCurrentDateBeforeWeek(),
