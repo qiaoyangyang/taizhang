@@ -76,7 +76,7 @@ fun formatCurrentMDate(): String {
 fun formatCurrentDateBeforeWeek(): String {
     val sdf = SimpleDateFormat("yyyy-MM-dd")
     var cal = Calendar.getInstance()
-    cal.add(Calendar.DAY_OF_MONTH, -7)
+    cal.add(Calendar.DAY_OF_MONTH, -6)
     return sdf.format(cal.time)
 }
 
@@ -106,7 +106,7 @@ fun formatCurrentDateBefore15(): String {
 fun formatCurrentDateBeforeMouth(): String {
     val sdf = SimpleDateFormat("yyyy-MM-dd")
     var cal = Calendar.getInstance()
-    cal.add(Calendar.DAY_OF_MONTH, -30)
+    cal.add(Calendar.DAY_OF_MONTH, -29)
     return sdf.format(cal.time)
 }
 
@@ -116,7 +116,7 @@ fun formatCurrentDateBeforeMouth(): String {
 fun formatCurrentDateBefore90(): String {
     val sdf = SimpleDateFormat("yyyy-MM-dd")
     var cal = Calendar.getInstance()
-    cal.add(Calendar.DAY_OF_MONTH, -30)
+    cal.add(Calendar.DAY_OF_MONTH, -89)
     return sdf.format(cal.time)
 }
 

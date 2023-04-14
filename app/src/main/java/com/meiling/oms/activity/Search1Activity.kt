@@ -28,6 +28,7 @@ import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivitySearch1Binding
+import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.*
 
@@ -170,6 +171,8 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                             )
                         )
                     }
+                    var orderDisDialog =
+                        OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
                     btnSendDis.setSingleClickListener {
                         when (item.order!!.logisticsStatus) {
                             "0" -> {
@@ -180,35 +183,32 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                                 ARouter.getInstance().build("/app/OrderDisAddTipActivity")
                                     .withSerializable("kk", item).navigation()
                             }
-                            "30" -> {
 
-                            }
-                            "50" -> {
-
-                            }
                             "70" -> {
-
+                                ARouter.getInstance().build("/app/OrderDisActivity")
+                                    .withSerializable("kk", item).navigation()
                             }
-                            "80" -> {
-
+                            "30", "50", "80" -> {
+                                orderDisDialog.show(supportFragmentManager)
                             }
+
                         }
                     }
                     //0.待配送  20.待抢单 30.待取货 50.配送中 70.取消 80.已送达
                     when (item.order!!.logisticsStatus) {
                         "0" -> {
                             btnCancelDis.visibility = View.GONE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.VISIBLE
                             btnSendDis.text = "发起配送"
                         }
                         "20" -> {
                             btnCancelDis.visibility = View.VISIBLE
-                            changeOrder.visibility = View.VISIBLE
-                            btnSendDis.text = "配送详情"
+                            changeOrder.visibility = View.GONE
+                            btnSendDis.text = "加小费"
                         }
                         "30" -> {
                             btnCancelDis.visibility = View.VISIBLE
-                            changeOrder.visibility = View.VISIBLE
+                            changeOrder.visibility = View.GONE
                             btnSendDis.text = "配送详情"
                         }
                         "50" -> {
@@ -219,7 +219,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                         "70" -> {
                             btnCancelDis.visibility = View.GONE
                             changeOrder.visibility = View.GONE
-                            btnSendDis.text = "配送详情"
+                            btnSendDis.text = "重新配送"
                         }
                         "80" -> {
                             btnCancelDis.visibility = View.GONE

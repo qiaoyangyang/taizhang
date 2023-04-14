@@ -50,7 +50,7 @@ interface MeService {
     ): ResultData<FinancialRecordDetail>
 
     /**
-     * 注销账号
+     * 消息中心
      * */
     @POST("/saas/financial/getRecordListByViewId")
     suspend fun getMsgCenter(
@@ -60,12 +60,12 @@ interface MeService {
     ): ResultData<Any>
 
     /**
-     * 消息中心
+     * 注销账号
      * */
     @POST("/uc/adminuser/disableAccount")
     suspend fun disableAccount(
         @Query("userViewId") userViewId: String,
-        @Query("accountStatus") accountStatus: String = "0",
+        @Query("accountStatus") accountStatus: String = "9",
     ): ResultData<Any>
 
 

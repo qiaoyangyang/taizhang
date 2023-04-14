@@ -27,6 +27,7 @@ interface HomeService {
         @Query("isValid") isValid: String = "",
         @Query("businessNumber") businessNumber: String = "",
         @Query("selectText") selectText: String = "",
+        @Query("channelId") channelId: String = "0",
     ): ResultData<OrderDto>
 
     @GET("/saas/order/statusCount")
@@ -42,6 +43,7 @@ interface HomeService {
         @Query("orderStatus") orderStatus: String = "300",
         @Query("isValid") isValid: String = "",
         @Query("businessNumber") businessNumber: String = "",
+        @Query("channelId") channelId: String = "0",
     ): ResultData<StatusCountDto>
 
     @GET("/saas/order/shop/updateRemark")

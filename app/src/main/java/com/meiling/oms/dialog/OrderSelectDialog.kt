@@ -76,7 +76,6 @@ class OrderSelectDialog : BaseNiceDialog() {
 
         RG_time = holder?.getView<RadioGroup>(R.id.RG_time)
         var Rg_isVoucher = holder?.getView<RadioGroup>(R.id.Rg_isVoucher)
-        var Rg_status = holder?.getView<RadioGroup>(R.id.Rg_status)
 
         rb_starting_time = holder?.getView<RadioButton>(R.id.rb_starting_time)
         tv_final_time = holder?.getView<RadioButton>(R.id.tv_final_time)
@@ -84,10 +83,6 @@ class OrderSelectDialog : BaseNiceDialog() {
         var rb_isVoucher = holder?.getView<RadioButton>(R.id.rb_isVoucher)
         var rb_voucher = holder?.getView<RadioButton>(R.id.rb_voucher)
         var rb_meal_voucher = holder?.getView<RadioButton>(R.id.rb_meal_voucher)
-
-        var rb_status = holder?.getView<RadioButton>(R.id.rb_status)
-        var rb_Written_off = holder?.getView<RadioButton>(R.id.rb_Written_off)
-        var rb_revoked = holder?.getView<RadioButton>(R.id.rb_revoked)
 
 
         var tv_go_on = holder?.getView<ShapeButton>(R.id.tv_go_on)
@@ -101,59 +96,30 @@ class OrderSelectDialog : BaseNiceDialog() {
             selectDialogDto.timetype = 2
 
             rb_isVoucher?.isChecked = true
-            selectDialogDto.isVoucher = "0"
-
-            rb_status?.isChecked = true
-            selectDialogDto.status = ""
-
+            selectDialogDto.orderTime = "1"
         }
 
-        //验券状态 2.已核销 -1.已撤销
-
-        if (selectDialogDto.status == "") {
-            rb_status?.isChecked = true
-        } else if (selectDialogDto.status == "2") {
-            rb_Written_off?.isChecked = true
-        } else if (selectDialogDto.status == "-1") {
-            rb_revoked?.isChecked = true
-        }
-
-        Rg_status?.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.rb_status -> {
-                    selectDialogDto.status = ""
-                }
-                R.id.rb_Written_off -> {
-                    selectDialogDto.status = "2"
-                }
-                R.id.rb_revoked -> {
-                    selectDialogDto.status = "-1"
-                }
-
-            }
-        }
-
-
-        //验券类型
-
-        if (selectDialogDto.isVoucher == "0") {
+//        var timetype: Int,//时间类型 0自定义时间 1 昨天 2 今天 3 近七天 4 进30天
+//        var dateStatus: String,// 日期类型  1.下单时间，2 收货时间，出货时间 4,完成时间
+//        var channelId: String,// 平台  渠道全部传null,根据返回渠道
+        // 下单时间
+        if (selectDialogDto.orderTime == "1") {
             rb_isVoucher?.isChecked = true
-        } else if (selectDialogDto.isVoucher == "1") {
+        } else if (selectDialogDto.orderTime == "2") {
             rb_voucher?.isChecked = true
-        } else if (selectDialogDto.isVoucher == "2") {
+        } else if (selectDialogDto.orderTime == "3") {
             rb_meal_voucher?.isChecked = true
         }
-
         Rg_isVoucher?.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.rb_isVoucher -> {
-                    selectDialogDto.isVoucher = "0"
+                    selectDialogDto.orderTime = "0"
                 }
                 R.id.rb_voucher -> {
-                    selectDialogDto.isVoucher = "1"
+                    selectDialogDto.orderTime = "1"
                 }
                 R.id.rb_meal_voucher -> {
-                    selectDialogDto.isVoucher = "2"
+                    selectDialogDto.orderTime = "2"
                 }
 
             }
@@ -296,7 +262,6 @@ class OrderSelectDialog : BaseNiceDialog() {
             }
         }
 
-
         selectOrderPlatformAdapter =
             object :
                 BaseQuickAdapter<OrderSelectPlatform, BaseViewHolder>(R.layout.item_recy_order_select_platform) {
@@ -308,8 +273,8 @@ class OrderSelectDialog : BaseNiceDialog() {
                             R.id.txt_recharge_sum,
                             R.drawable.selected_true
                         )
-                        rechargeSum.setTextColor(resources.getColor(R.color.home_999999))
-//                        money = item.money
+                        rechargeSum.setTextColor(resources.getColor(R.color.white))
+                        selectDialogDto.channelId = item.id
                     } else {
                         holder.setBackgroundResource(
                             R.id.txt_recharge_sum,
@@ -323,7 +288,7 @@ class OrderSelectDialog : BaseNiceDialog() {
         selectOrderPlatformAdapter.setOnItemClickListener { adapter, view, position ->
             var data = adapter.data[position] as OrderSelectPlatform
             for (xx in adapter.data) {
-                (xx as RechargeDialog.rechDto).select = xx == data
+                (xx as OrderSelectPlatform).select = xx == data
             }
             selectOrderPlatformAdapter.notifyDataSetChanged()
         }
@@ -338,7 +303,7 @@ class OrderSelectDialog : BaseNiceDialog() {
         bs.onSuccess.observe(this) {
             if (!it.isNullOrEmpty()) {
                 var orderPlatformList = ArrayList<OrderSelectPlatform>()
-                orderPlatformList.add(OrderSelectPlatform(viewId = 0, name = "全部"))
+                orderPlatformList.add(OrderSelectPlatform(id = "0", name = "全部"))
                 orderPlatformList.addAll(it)
                 orderPlatformList[0].select = true
                 selectOrderPlatformAdapter.setList(orderPlatformList)
