@@ -18,7 +18,6 @@ import com.meiling.oms.viewmodel.MainViewModel
 import com.meiling.oms.widget.showToast
 
 
-@Suppress("DEPRECATION")
 @Route(path = "/app/MainActivity")
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 

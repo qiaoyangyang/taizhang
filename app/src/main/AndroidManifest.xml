@@ -86,7 +86,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleInstance" />
+            />
         <activity android:name=".activity.OrderDisAddTipActivity" />
         <activity android:name=".activity.OrderChangeAddressActivity" />
         <activity android:name=".activity.OrderChangeAddressMapActivity" />
