@@ -46,7 +46,7 @@ class WriteOffActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activit
                 if (TextUtils.isEmpty(code)) {
                     code = it?.couponCode!!
                 } else {
-                    code = "," + code + it?.couponCode
+                    code =code+ "," + it?.couponCode
                 }
             }
 
