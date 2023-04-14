@@ -68,7 +68,7 @@ class HomeOningOrderFragment :
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBus.getDefault().register(this)
+        EventBus.getDefault().unregister(this)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

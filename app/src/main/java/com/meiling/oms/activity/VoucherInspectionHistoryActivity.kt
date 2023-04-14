@@ -254,7 +254,7 @@ class VoucherInspectionHistoryActivity :
 
                 } else if (item?.coupon?.type == 5) {//抖音
                     //  holder.setText(R.id.tv_shopName, "由"+item?.coupon?.shopName+"验证")
-                    var conet = "由 ${item?.shopName}店 验证"
+                    var conet = "由 ${item?.shopName} 验证"
                     SpannableUtils.setTextcolor(
                         holder.itemView.context,
                         conet,
