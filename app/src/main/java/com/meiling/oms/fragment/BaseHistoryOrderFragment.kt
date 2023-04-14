@@ -22,6 +22,7 @@ import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.EventBusData.MessageEvent
+import com.meiling.oms.EventBusData.MessageEventHistoryUpDataTip
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
@@ -249,6 +250,7 @@ class BaseHistoryOrderFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
         mDatabind.sflLayout.setOnRefreshListener {
             pageIndex = 1
             initViewData()
+            EventBus.getDefault().post(MessageEventHistoryUpDataTip())
         }
     }
 
@@ -288,14 +290,9 @@ class BaseHistoryOrderFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
 
     override fun createObserver() {
         mViewModel.orderList.onStart.observe(this) {
-            showLoading("请求中。。。")
+            showLoading("请求中")
         }
-        mViewModel.cancelOrderDto.onSuccess.observe(this) {
-            showToast("订单已取消")
-        }
-        mViewModel.cancelOrderDto.onError.observe(this) {
-            showToast(it.msg)
-        }
+
         mViewModel.orderList.onSuccess.observe(this) {
             dismissLoading()
             mDatabind.sflLayout.finishRefresh()
@@ -319,6 +316,20 @@ class BaseHistoryOrderFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
             dismissLoading()
             mDatabind.sflLayout.finishRefresh()
             showToast("${it.msg}")
+        }
+
+        mViewModel.cancelOrderDto.onStart.observe(this) {
+            showLoading("取消订单")
+        }
+
+        mViewModel.cancelOrderDto.onSuccess.observe(this) {
+            dismissLoading()
+            EventBus.getDefault().post(MessageEventHistoryUpDataTip())
+            showToast("订单已取消")
+        }
+        mViewModel.cancelOrderDto.onError.observe(this) {
+            dismissLoading()
+            showToast(it.msg)
         }
     }
 

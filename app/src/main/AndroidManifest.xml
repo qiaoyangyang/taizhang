@@ -9,16 +9,15 @@
 
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"
-        android:maxSdkVersion="33"
-        />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_VIDEO"
+        android:maxSdkVersion="33" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <meta-data
         android:name="ScopedStorage"
@@ -49,7 +48,8 @@
 
         <activity
             android:name=".activity.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,6 +59,7 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+
         </activity>
         <activity
             android:name=".activity.LoginActivity"
@@ -84,31 +85,63 @@
             android:name=".activity.ForgetPwdGetCodeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.MainActivity" />
         <activity
-            android:name=".activity.MainActivity"
-            android:launchMode="singleInstance" />
-        <activity android:name=".activity.OrderDisAddTipActivity" />
-        <activity android:name=".activity.OrderChangeAddressActivity" />
-        <activity android:name=".activity.OrderChangeAddressMapActivity" />
-        <activity android:name=".activity.MessageCenterActivity" />
+            android:name=".activity.OrderDisAddTipActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.OrderChangeAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.OrderChangeAddressMapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MessageCenterActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.OrderDisActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".activity.Search1Activity" />
-        <activity android:name=".activity.PostDetailActivity" />
-        <activity android:name=".activity.MyRechargeActivity" />
-        <activity android:name=".activity.WriteOffActivity" />
-        <activity android:name=".activity.MeituanActivity" />
-        <activity android:name=".activity.WriteDetailsActivity" />
-        <activity android:name=".activity.MySettlementDetailActivity" />
-        <activity android:name=".activity.ReleasePostActivity" />
-        <activity android:name=".activity.RechargeFinishActivity" />
-        <activity android:name=".activity.ModifyPassWordActivity" />
-        <activity android:name=".activity.VoucherInspectionActivity" />
-        <activity android:name=".activity.VoucherInspectionHistoryActivity" />
+        <activity
+            android:name=".activity.Search1Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PostDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyRechargeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.WriteOffActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MeituanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.WriteDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MySettlementDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ReleasePostActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RechargeFinishActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ModifyPassWordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.VoucherInspectionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.VoucherInspectionHistoryActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.WriteOffDetailsActivity" />
-        <activity android:name=".activity.InputBoredomActivity" />
+        <activity
+            android:name=".activity.InputBoredomActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

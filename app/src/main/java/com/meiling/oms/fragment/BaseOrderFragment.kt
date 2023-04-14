@@ -322,7 +322,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         }
 
         mViewModel.cancelOrderDto.onStart.observe(this) {
-            showLoading("取消订单。。。")
+            showLoading("取消订单")
         }
         mViewModel.cancelOrderDto.onSuccess.observe(this) {
             dismissLoading()

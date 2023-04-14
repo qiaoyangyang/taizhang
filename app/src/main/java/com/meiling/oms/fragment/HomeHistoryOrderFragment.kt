@@ -14,6 +14,7 @@ import com.meiling.oms.databinding.FragmentHomeOrderHistoryBinding
 import com.meiling.oms.dialog.OrderSelectDialog
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.formatCurrentDate
+import com.meiling.oms.widget.formatCurrentDateBeforeWeek
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.Subscribe
@@ -47,18 +48,6 @@ class HomeHistoryOrderFragment :
             BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
         mDatabind.viewPager.setCurrentItem(0, false)
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
-        mViewModel.statusCount(
-            logisticsStatus = "",
-            startTime = formatCurrentDate(),
-            endTime = formatCurrentDate(),
-            businessNumberType = "1",
-            pageIndex = "1",
-            pageSize = "20",
-            orderTime = "1",
-            deliverySelect = "0",
-            isValid = "0",
-            businessNumber = ""
-        )
 
         mDatabind.txtSelectOrder.setSingleClickListener {
 
@@ -73,6 +62,22 @@ class HomeHistoryOrderFragment :
             orderSelectDialog.show(childFragmentManager)
 
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mViewModel.statusCount(
+            logisticsStatus = "",
+            startTime = formatCurrentDateBeforeWeek(),
+            endTime = formatCurrentDate(),
+            businessNumberType = "1",
+            pageIndex = "1",
+            pageSize = "20",
+            orderTime = "1",
+            deliverySelect = "0",
+            isValid = "0",
+            businessNumber = ""
+        )
     }
 
     override fun createObserver() {
@@ -103,7 +108,7 @@ class HomeHistoryOrderFragment :
         }
         mViewModel.statusCountDto.onError.observe(this) {
             dismissLoading()
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
 
     }

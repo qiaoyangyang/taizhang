@@ -49,7 +49,7 @@ class ShopDialog : BaseNiceDialog() {
 
         })
         cityid_view?.setOnSelectedListener { context, selectedIndex ->
-            //loadData1(wheel_view_center!!, shopBean, selectedIndex)
+            loadData1(wheel_view_center!!, shopBean, selectedIndex)
         }
         wheel_view_center?.setOnSelectedListener { context, selectedIndex ->
             Log.d("yjk", "convertView: $selectedIndex")
