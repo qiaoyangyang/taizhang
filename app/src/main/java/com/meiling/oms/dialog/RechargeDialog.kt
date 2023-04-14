@@ -1,7 +1,10 @@
 package com.meiling.oms.dialog
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Gravity
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +14,7 @@ import com.meiling.common.network.data.OrderSendChannel
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.widget.setSingleClickListener
+import com.meiling.oms.widget.showToast
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
 
@@ -51,8 +55,10 @@ class RechargeDialog : BaseNiceDialog() {
 
     lateinit var rechargeAdapter: BaseQuickAdapter<rechDto, BaseViewHolder>
 
-    var money = "0.01"
+    var money = ""
     var channel = "2"
+
+    var isSelectMoney = false
 
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
 //        val title = arguments?.getString("title") as String
@@ -64,6 +70,7 @@ class RechargeDialog : BaseNiceDialog() {
         list.add(rechDto("5000"))
         list.add(rechDto("10000"))
         var isPayType = true
+        val edtMoney = holder?.getView<EditText>(R.id.txt_recharge_other)
         val cancel = holder?.getView<Button>(R.id.btn_cancel_recharge)
         val close = holder?.getView<ImageView>(R.id.iv_close_recharge)
         val ok = holder?.getView<Button>(R.id.btn_ok_recharge)
@@ -74,15 +81,35 @@ class RechargeDialog : BaseNiceDialog() {
             dismiss()
         }
 
+        edtMoney?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString().isNotEmpty()) {
+                    for (moneyDto in rechargeAdapter.data) {
+                        moneyDto.select = false
+                        isSelectMoney = false
+                        rechargeAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
+        })
+
         btnWeixin?.setSingleClickListener {
             isPayType = true
             TextDrawableUtils.setRightDrawable(btnWeixin, R.drawable.ic_spu_true)
             TextDrawableUtils.setRightDrawable(btnZhifubao, R.drawable.ic_spu_fase)
+            channel = "3"
         }
         btnZhifubao?.setSingleClickListener {
             isPayType = false
             TextDrawableUtils.setRightDrawable(btnZhifubao, R.drawable.ic_spu_true)
             TextDrawableUtils.setRightDrawable(btnWeixin, R.drawable.ic_spu_fase)
+            channel = "2"
         }
 
         rechargeAdapter =
@@ -97,6 +124,7 @@ class RechargeDialog : BaseNiceDialog() {
                         )
                         rechargeSum.setTextColor(resources.getColor(R.color.red))
                         money = item.money
+                        isSelectMoney = true
                     } else {
                         holder.setBackgroundResource(
                             R.id.txt_recharge_sum,
@@ -112,6 +140,7 @@ class RechargeDialog : BaseNiceDialog() {
             for (xx in adapter.data) {
                 (xx as rechDto).select = xx == data
             }
+            edtMoney?.setText("")
             rechargeAdapter.notifyDataSetChanged()
         }
 
@@ -121,8 +150,18 @@ class RechargeDialog : BaseNiceDialog() {
             dismiss()
         }
         ok?.setSingleClickListener {
+
+            if (!isSelectMoney) {
+                money = edtMoney?.text.toString()
+            }
+
+            if (money.isNullOrBlank()) {
+                showToast("请选择或者输入金额")
+                return@setSingleClickListener
+            }
             dismiss()
             okSelectClickLister?.invoke(money, channel)
+
         }
 
     }

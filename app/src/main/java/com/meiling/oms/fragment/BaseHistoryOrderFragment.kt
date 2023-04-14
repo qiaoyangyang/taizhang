@@ -16,15 +16,16 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.EventBusData.MessageEvent
 import com.meiling.oms.EventBusData.MessageEventHistoryUpDataTip
+import com.meiling.oms.EventBusData.MessageHistoryEventSelect
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
+import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.*
 import org.greenrobot.eventbus.EventBus
@@ -32,7 +33,8 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-class BaseHistoryOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseOrderBinding>() {
+class BaseHistoryOrderFragment :
+    BaseFragment<BaseOrderFragmentViewModel, FragmentBaseOrderBinding>() {
 
 
     private lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
@@ -57,6 +59,7 @@ class BaseHistoryOrderFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        EventBus.getDefault().register(this)
         requireArguments().getString("type").toString()
         orderDisAdapter =
             object : BaseQuickAdapter<OrderDto.Content, BaseViewHolder>(R.layout.item_home_order),
@@ -241,10 +244,7 @@ class BaseHistoryOrderFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
                             btnSendDis.text = "配送详情"
                         }
                     }
-
                 }
-
-
             }
         mDatabind.rvOrderList.adapter = orderDisAdapter
         mDatabind.sflLayout.setOnRefreshListener {
@@ -256,34 +256,41 @@ class BaseHistoryOrderFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
 
     var list = ArrayList<String>()
 
+    var startTime = formatCurrentDate()
+    var endTime = formatCurrentDate()
+    var orderTime = "1"
+    var channelId = "0"
+
     private fun initViewData() {
         mViewModel.orderList(
             logisticsStatus = requireArguments().getString("type").toString(),
-            startTime = formatCurrentDateBeforeWeek(),
-            endTime = formatCurrentDate(),
+            startTime = startTime,
+            endTime = endTime,
             businessNumberType = "1",
             pageIndex = pageIndex,
             pageSize = "20",
-            orderTime = "1",
+            orderTime = orderTime,
             deliverySelect = "0",
             isValid = "0",
             businessNumber = "",
+            channelId = channelId
         )
 
         orderDisAdapter.loadMoreModule.setOnLoadMoreListener {
             pageIndex++
             mViewModel.orderList(
                 logisticsStatus = requireArguments().getString("type").toString(),
-                startTime = formatCurrentDateBeforeWeek(),
-                endTime = formatCurrentDate(),
+                startTime = startTime,
+                endTime = endTime,
                 businessNumberType = "1",
                 pageIndex = pageIndex,
                 pageSize = "20",
-                orderTime = "1",
+                orderTime = orderTime,
                 deliverySelect = "0",
                 isValid = "0",
                 businessNumber = "",
-                selectText = ""
+                selectText = "",
+                channelId = channelId
             )
         }
     }
@@ -299,6 +306,8 @@ class BaseHistoryOrderFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
             if (it.pageIndex == 1) {
                 if (it.content.isNullOrEmpty()) {
                     orderDisAdapter.setEmptyView(R.layout.order_search_empty)
+                    orderDisAdapter.data.clear()
+                    orderDisAdapter.notifyDataSetChanged()
                 } else {
                     orderDisAdapter.setList(it.content as MutableList<OrderDto.Content>)
                 }
@@ -341,7 +350,6 @@ class BaseHistoryOrderFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBus.getDefault().unregister(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -351,4 +359,13 @@ class BaseHistoryOrderFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
         orderDisAdapter.notifyItemChanged(message)
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun eventSelectTime(messageHistoryEventTime: MessageHistoryEventSelect) {
+        startTime = messageHistoryEventTime.selectDialogDto.startDate
+        endTime = messageHistoryEventTime.selectDialogDto.endDate
+        orderTime = messageHistoryEventTime.selectDialogDto.orderTime
+        channelId = messageHistoryEventTime.selectDialogDto.channelId!!
+        initViewData()
+    }
 }

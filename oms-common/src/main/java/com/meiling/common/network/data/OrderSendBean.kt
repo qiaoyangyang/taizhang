@@ -406,8 +406,8 @@ data class OutWareHouseList(
 data class OrderSelectPlatform(
 //    @SerializedName("createTime")
 //    var createTime: Long?,
-//    @SerializedName("id")
-//    var id: Int?,
+    @SerializedName("id")
+    var id: String?,
 //    @SerializedName("logo")
 //    var logo: String?,
 //    @SerializedName("logoBg")
@@ -431,7 +431,7 @@ data class OrderSelectPlatform(
 //    @SerializedName("updateTime")
 //    var updateTime: Long?,
 //    @SerializedName("viewId")
-    var viewId: Int?
+//    var viewId: String?
 ) {
     var select = false
 }

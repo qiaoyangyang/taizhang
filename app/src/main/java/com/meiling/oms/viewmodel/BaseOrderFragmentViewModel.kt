@@ -28,7 +28,7 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
         isValid: String = "",//全部，1。有效，0。无效
         businessNumber: String = "",
         selectText: String = "",
-        channelId: String = ""//渠道全部传null,根据返回渠道
+        channelId: String = "0"//渠道全部传null,根据返回渠道
     ) {
         request({
             homeService.orderStatus(
@@ -43,7 +43,7 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
                 isValid,
                 businessNumber,
                 selectText,
-                channelId
+                channelId = channelId
             )
         }, orderList)
     }
@@ -58,7 +58,8 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
         pageSize: String = "20",
         deliverySelect: String = "0",
         isValid: String = "",
-        businessNumber: String = ""
+        businessNumber: String = "",
+        channelId: String = "0"
     ) {
         request({
             homeService.statusCount(
@@ -71,7 +72,8 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
                 pageSize,
                 deliverySelect,
                 isValid,
-                businessNumber
+                businessNumber,
+                channelId = channelId
             )
         }, statusCountDto)
     }
