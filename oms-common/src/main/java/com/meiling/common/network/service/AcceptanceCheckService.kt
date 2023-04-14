@@ -87,6 +87,7 @@ interface AcceptanceCheckService {
         @Query("isVoucher") isVoucher: String = "",//20
     ): ResultData<Writeoffhistory>
 
+
     @GET("saas/mttg/coupon/data")
     suspend fun codeNumber(
         @Query("startDate") startDate: String = "",//开始时间

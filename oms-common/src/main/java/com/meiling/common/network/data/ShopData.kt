@@ -309,6 +309,7 @@ data class VerificationScreening(
     var timetype: Int,//时间类型 0自定义时间 1 昨天 2 今天 3 近七天 4 进30天
 
     var poiId: String,// 门店ID
+    var shopName:  String,// 门店ID
     var poiIdtype: String,// 门店类型 0 全部门店 1 定义门店
 
     var status: String,// 日期类型  2.收货 -1.来单子 0出货

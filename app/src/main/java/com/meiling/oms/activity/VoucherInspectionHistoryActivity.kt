@@ -84,6 +84,7 @@ class VoucherInspectionHistoryActivity :
                     endDate,
                     timetype,
                     poiId,
+                    shopName,
                     poiIdtype,
                     status,
                     isVoucher
@@ -101,7 +102,7 @@ class VoucherInspectionHistoryActivity :
                     startDate = verificationScreening.startDate
                     endDate = verificationScreening.endDate
                     poiIdtype = verificationScreening.poiIdtype
-                    poiIdtype = verificationScreening.poiIdtype
+                    shopName = verificationScreening.shopName
                     status = verificationScreening.status
                     isVoucher = verificationScreening.isVoucher
                     orderLeftRecyAdapter.setList(null)
@@ -299,6 +300,7 @@ class VoucherInspectionHistoryActivity :
     var timetype: Int = 2
     var poiId: String = ""
     var poiIdtype: String = "0"
+    var shopName: String = ""
     var status: String = ""
     var isVoucher: String = "0"
     var shopBean = ArrayList<ShopBean>()
@@ -307,11 +309,7 @@ class VoucherInspectionHistoryActivity :
             shopBean = it
         }
 
-        if (!TextUtils.isEmpty(shop?.poiId)) {
-            poiId = shop?.poiId!!
 
-
-        }
 
 
         mViewModel.coupon(
@@ -354,6 +352,17 @@ class VoucherInspectionHistoryActivity :
         }
         orderLeftRecyAdapter.notifyItemChanged(message)
         //orderDisAdapter.notifyItemChanged(message)
+        mViewModel.codeNumber(
+            poiId,
+            startDate,
+            endDate,
+            mDatabind.edtSearch.text.toString(),
+            pageIndex,
+            Constant.size,
+            typename,
+            status,
+            isVoucher
+        )
     }
 
 }

@@ -27,6 +27,7 @@ import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityGiveBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.VoucherInspectionHistoryViewModel
+import com.meiling.oms.widget.showToast
 
 //核销成功
 @Route(path = "/app/WriteOffActivity")
@@ -40,18 +41,18 @@ class WriteOffActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activit
         initRecycleyView()
         mDatabind.tvRevocation.setOnClickListener {
 
-            var code=""
+            var code = ""
             orderLeftRecyAdapter.data.forEach {
-                if (TextUtils.isEmpty(code)){
-                    code=it?.couponCode!!
-                }else{
-                    code=","+code+it?.couponCode
+                if (TextUtils.isEmpty(code)) {
+                    code = it?.couponCode!!
+                } else {
+                    code = "," + code + it?.couponCode
                 }
             }
 
 
             val dialog: MineExitDialog =
-                MineExitDialog().newInstance("温馨提示", "确认撤销核销吗？", "我再想想","确定撤销",false)
+                MineExitDialog().newInstance("温馨提示", "确认撤销核销吗？", "我再想想", "确定撤销", false)
             dialog.setOkClickLister {
                 dialog.dismiss()
                 mViewModel.cancel(
@@ -68,11 +69,18 @@ class WriteOffActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activit
     }
 
     override fun createObserver() {
-
-        mViewModel.cancelstring.onSuccess.observe(this){
+        mViewModel.cancelstring.onStart.observe(this) {
+            showLoading("")
+        }
+        mViewModel.cancelstring.onSuccess.observe(this) {
+            disLoading()
             finish()
             startActivity(Intent(this, WriteDetailsActivity::class.java))
 
+        }
+        mViewModel.cancelstring.onError.observe(this){
+            disLoading()
+            showToast("${it.msg}")
         }
     }
 
@@ -81,10 +89,10 @@ class WriteOffActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activit
     }
 
     var thrillitem: ArrayList<ThrillItem>? = null
-    var shopId:String=""
+    var shopId: String = ""
     override fun initData() {
         super.initData()
-        shopId=intent.getStringExtra("shopId").toString()
+        shopId = intent.getStringExtra("shopId").toString()
         thrillitem = intent.getSerializableExtra("thrillitem") as ArrayList<ThrillItem>
         orderLeftRecyAdapter.setList(thrillitem)
 
@@ -105,14 +113,17 @@ class WriteOffActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activit
                 holder.setText(R.id.tv_couponBuyPrice, item?.couponBuyPrice)
                 holder.setText(R.id.tv_couponCode, item?.couponCode)
                 holder.setText(R.id.tv_couponUseTime, item?.couponUseTime)
-                if (TextUtils.isEmpty(item?.orderId)||item?.orderId=="0"){
-                    holder.setText(R.id.tv_orderId, "暂无")
-                }else {
-                    holder.setText(R.id.tv_orderId, item?.orderId)
-                }
-                holder.getView<TextView>(R.id.tv_dealValue).paint?.flags = Paint.STRIKE_THRU_TEXT_FLAG
+//                if (TextUtils.isEmpty(item?.orderId)||item?.orderId=="0"){
+//
+//                }else {
+//                    holder.setText(R.id.tv_orderId, item?.orderId)
+//                }
+
+                holder.setText(R.id.tv_orderId, "暂无")
+                holder.getView<TextView>(R.id.tv_dealValue).paint?.flags =
+                    Paint.STRIKE_THRU_TEXT_FLAG
                 if (item?.undoType == 1) {
-                    holder.setTextColor(R.id.tv_status,Color.parseColor("#FB9716"))
+                    holder.setTextColor(R.id.tv_status, Color.parseColor("#FB9716"))
 
                     var tv_status = holder.getView<ShapeTextView>(R.id.tv_status)
                     tv_status.shapeDrawableBuilder.setSolidColor(Color.parseColor("#FFF1DF"))
@@ -121,7 +132,7 @@ class WriteOffActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activit
                     tv_status.text = "已撤销"
 
                 } else if (item?.undoType == 0) {
-                    holder.setTextColor(R.id.tv_status,Color.parseColor("#31D288"))
+                    holder.setTextColor(R.id.tv_status, Color.parseColor("#31D288"))
                     var tv_status = holder.getView<ShapeTextView>(R.id.tv_status)
                     tv_status.shapeDrawableBuilder.setSolidColor(Color.parseColor("#EDFFF4"))
                         .intoBackground()
@@ -147,8 +158,6 @@ class WriteOffActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activit
                     conet.length - 2,
                     R.color.pwd_1180FF
                 )
-
-
 
 
             }

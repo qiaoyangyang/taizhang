@@ -107,7 +107,7 @@ class CheckCouponInformationDidalog : BaseNiceDialog() {
         ) {
             if (onresilience!=null){
 
-                onresilience?.resilience(setencryptedCode(thrillBen,1))
+                onresilience?.resilience(setencryptedCode(thrillBen,stock_add_num?.text.toString().toInt()))
                 dismiss()
             }
         }
@@ -115,11 +115,15 @@ class CheckCouponInformationDidalog : BaseNiceDialog() {
     }
     fun setencryptedCode(thrillBen:ArrayList<ThrillBen>,int: Int):String{
         var encryptedCode=""
-        thrillBen.forEach {
+        for (i in 0 until int) {
             if (TextUtils.isEmpty(encryptedCode)){
-                encryptedCode=it?.encryptedCode!!
+                encryptedCode=thrillBen.get(i)?.encryptedCode!!
+            }else{
+                encryptedCode=encryptedCode+","+thrillBen.get(i).encryptedCode
             }
         }
+
+
 
         return encryptedCode
 
