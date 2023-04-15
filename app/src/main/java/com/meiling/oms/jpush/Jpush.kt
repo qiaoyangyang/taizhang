@@ -180,54 +180,63 @@ fun createAndStart(context: Context, uMessage: UMessage, x: Int, y: Int) {
 //    if (OmsApplication().getActivity() == null) {
 //        Toast.makeText(context, "请开启应用查看推送消息", Toast.LENGTH_SHORT).show()
 //    } else {
-        val map = mutableMapOf<String, String>()
-        map.put("pageIndex", "1")
-        map.put("size", "20")
-        map.put("selectText", "${uMessage.extra["orderViewId"]}")
+    val map = mutableMapOf<String, String>()
+    map.put("pageIndex", "1")
+    map.put("size", "20")
+    map.put("selectText", "${uMessage.extra["orderViewId"]}")
 //        map.put("shopIds", shopId)
 //        map.put("poiId", poiId)
 
-        val pushCode = Gson().fromJson(
-            uMessage.custom,
-            PushMsgJson::class.java
-        ).pushCode
-        //1 新订单 2, "补货单" 3, "取消单" 4, "订单修改" 5, "转工厂订单" 6,"自动接单",
-        //7, "顾客取消订单" 8, "顾客申请取消订单 退款" 9,"取消补货单"  10,"商品同步" 11,"订单超时提醒" 20,"物流妥投异常"
-        //30,"骑士取消订单" 101,"出库单生成" 102,"出库单取消" 103,"销售单修改"
-//
-        when (pushCode) {
-            "1" -> {
-                MessageManagement.get(context)?.addMessage(
-                    MessageData(
-                        R.raw.new_order,
-                        ""
-                    )
+    val pushCode = Gson().fromJson(
+        uMessage.custom,
+        PushMsgJson::class.java
+    ).pushCode
+    //1 新订单 2, "补货单" 3, "取消单" 4, "订单修改" 5, "转工厂订单" 6,"自动接单",
+    //7, "顾客取消订单" 8, "顾客申请取消订单 退款" 9,"取消补货单"  10,"商品同步" 11,"订单超时提醒" 20,"物流妥投异常"
+    //30,"骑士取消订单" 101,"出库单生成" 102,"出库单取消" 103,"销售单修改"
+//301,"骑手已接单"
+//302,"配送取消",
+//303,"配送完成
+    when (pushCode) {
+        "1" -> {
+            MessageManagement.get(context)?.addMessage(
+                MessageData(
+                    R.raw.new_order,
+                    ""
                 )
-            }
-            "3", "7" -> {
-                MessageManagement.get(context)?.addMessage(
-                    MessageData(
-                        R.raw.cancel_order,
-                        ""
-                    )
+            )
+        }
+        "301" -> {
+
+        }
+
+        "303" -> {
+
+        }
+        "3", "7", "302" -> {
+            MessageManagement.get(context)?.addMessage(
+                MessageData(
+                    R.raw.musin,
+                    ""
                 )
-            }
-            "6" -> {
-                MessageManagement.get(context)?.addMessage(
-                    MessageData(
-                        R.raw.auto_order,
-                        ""
-                    )
+            )
+        }
+        "6" -> {
+            MessageManagement.get(context)?.addMessage(
+                MessageData(
+                    R.raw.auto_order,
+                    ""
                 )
-            }
-            "8" -> {
-                MessageManagement.get(context)?.addMessage(
-                    MessageData(
-                        R.raw.refund_order,
-                        ""
-                    )
+            )
+        }
+        "8" -> {
+            MessageManagement.get(context)?.addMessage(
+                MessageData(
+                    R.raw.refund_order,
+                    ""
                 )
-            }
+            )
+        }
 
 
 //        }

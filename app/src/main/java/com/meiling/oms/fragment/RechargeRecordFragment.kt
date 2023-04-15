@@ -56,12 +56,13 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
 
     var pageIndex = 1
     var startDate = formatCurrentDateBeforeWeek()
+    var endData = formatCurrentDate()
     private fun initViewData() {
         mViewModel.getRecord(
             RechargeRecordListReq(
                 createUserId = "",
                 startDate = startDate,
-                endDate = formatCurrentDate(),
+                endDate = endData,
                 pageIndex = 1,
                 pageSize = "20",
                 tenantId = MMKVUtils.getString(SPConstants.tenantId)
@@ -73,7 +74,7 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
                 RechargeRecordListReq(
                     createUserId = "",
                     startDate = startDate,
-                    endDate = formatCurrentDate(),
+                    endDate = endData,
                     pageIndex = pageIndex,
                     pageSize = "20",
                     tenantId = MMKVUtils.getString(SPConstants.tenantId)
@@ -87,13 +88,19 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
     }
 
     override fun createObserver() {
+        mViewModel.rechargeRecord.onStart.observe(this) {
+            showLoading("请求中")
+        }
         mViewModel.rechargeRecord.onSuccess.observe(this) {
+            dismissLoading()
             mDatabind.srfRechargeRecord.isRefreshing = false
             if (it?.pageData.isNullOrEmpty()) {
                 rechargeAdapter.data.clear()
+                rechargeAdapter.footerWithEmptyEnable = false
                 rechargeAdapter.setEmptyView(R.layout.empty_record_center)
+            } else {
+                rechargeAdapter.setList(it.pageData as MutableList<PageData>)
             }
-            rechargeAdapter.setList(it.pageData as MutableList<PageData>)
         }
         mViewModel.rechargeRecord.onError.observe(this) {
             mDatabind.srfRechargeRecord.isRefreshing = false
@@ -106,6 +113,7 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
         EventBus.getDefault().post(MessageEventTimeShow())
         pageIndex = 1
         startDate = formatCurrentDateBeforeWeek()
+        endData = formatCurrentDate()
         initViewData()
     }
 
@@ -113,6 +121,7 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
     fun eventDay(messageEventTime: MessageEventTime) {
         pageIndex = 1
         startDate = messageEventTime.starTime
+        endData = messageEventTime.endTime
         initViewData()
     }
 

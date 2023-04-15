@@ -301,6 +301,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             mDatabind.sflLayout.finishRefresh()
             if (it.pageIndex == 1) {
                 if (it.content.isNullOrEmpty()) {
+                    orderDisAdapter.data.clear()
                     orderDisAdapter.setEmptyView(R.layout.order_search_empty)
                 } else {
                     orderDisAdapter.setList(it.content as MutableList<OrderDto.Content>)

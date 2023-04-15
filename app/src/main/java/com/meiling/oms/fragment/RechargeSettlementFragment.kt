@@ -103,13 +103,15 @@ class RechargeSettlementFragment :
 
     override fun createObserver() {
         mViewModel.financialRecord.onSuccess.observe(this) {
+
             mDatabind.srfRechargeFeeRecord.isRefreshing = false
-            if (it.pageResult?.pageNum == 1) {
-                if (it.pageResult?.pageData.isNullOrEmpty()){
+            if (it.pageResult?.pageNum == 1 || it.pageResult?.pageNum == 0) {
+                if (it.pageResult?.pageData.isNullOrEmpty()) {
                     chargeAdapter.data.clear()
                     chargeAdapter.setEmptyView(R.layout.empty_record_center)
+                }else{
+                    chargeAdapter.setList(it.pageResult?.pageData as MutableList<FinancialRecord.PageResult.PageData>)
                 }
-                chargeAdapter.setList(it.pageResult?.pageData as MutableList<FinancialRecord.PageResult.PageData>)
             } else {
                 chargeAdapter.addData(it.pageResult?.pageData as MutableList<FinancialRecord.PageResult.PageData>)
             }
