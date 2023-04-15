@@ -13,7 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.*
-import com.meiling.oms.EventBusData.MessageEventUpDataTip
+import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDis1Binding
 import com.meiling.oms.dialog.OrderDisGoodsSelectDialog
@@ -90,7 +90,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
                     }
                     if (item.errMsg == null) {
 //                        viewPrice.textSize = 14f
-                        viewPrice.visibility = View.GONE
+                        viewPrice.visibility = View.INVISIBLE
                     } else {
                         viewPrice.visibility = View.VISIBLE
                         viewPrice.textSize = 11f
@@ -206,12 +206,12 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
         mViewModel.sendSuccess.onSuccess.observe(this) {
             dismissLoading()
             EventBus.getDefault().post(MessageEventUpDataTip())
-            showToast("已成功发起配送 请在订单页面，查看配送详情")
+            showToast("发起配送成功")
             mActivity.finish()
         }
         mViewModel.sendSuccess.onError.observe(this) {
             dismissLoading()
-            showToast("发起配送失败 , 失败原因：${it.toString()}")
+            showToast("发起配送失败,失败原因")
         }
         mViewModel.orderSendConfirmList.onStart.observe(this) {
 

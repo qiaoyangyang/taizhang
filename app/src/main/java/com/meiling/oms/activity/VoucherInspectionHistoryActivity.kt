@@ -21,8 +21,7 @@ import com.meiling.common.network.data.WriteoffhistoryPageData
 import com.meiling.common.utils.Constant
 import com.meiling.common.utils.RecyclerViewDivider
 import com.meiling.common.utils.SpannableUtils
-import com.meiling.oms.EventBusData.MessageEvent
-import com.meiling.oms.EventBusData.MessageEventVoucherInspectionHistory
+import com.meiling.oms.eventBusData.MessageEventVoucherInspectionHistory
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityHistoryBinding
 import com.meiling.oms.dialog.VerificationScreeningDidalog

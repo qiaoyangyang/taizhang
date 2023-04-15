@@ -7,18 +7,13 @@ import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.meiling.common.fragment.BaseFragment
-import com.meiling.common.network.data.OrderDto
-import com.meiling.oms.EventBusData.MessageEventTime
-import com.meiling.oms.EventBusData.MessageEventUpDataTip
-import com.meiling.oms.R
+import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentHomeOrderOningBinding
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
-import com.meiling.oms.viewmodel.NewsViewModel
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.formatCurrentDateBeforeWeek
 import com.meiling.oms.widget.showToast
-import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -35,7 +30,6 @@ class HomeOningOrderFragment :
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewPager.isUserInputEnabled = false
-        EventBus.getDefault().register(this)
     }
 
     //    logisticsStatus：0.待配送  20.带抢单 30.待取货 50.配送中 70.取消 80.已送达
@@ -59,7 +53,7 @@ class HomeOningOrderFragment :
             pageSize = "20",
             orderTime = "1",
             deliverySelect = "0",
-            isValid = "0",
+            isValid = "",
             businessNumber = ""
         )
 
@@ -87,7 +81,7 @@ class HomeOningOrderFragment :
             pageSize = "20",
             orderTime = "1",
             deliverySelect = "0",
-            isValid = "0",
+            isValid = "",
             businessNumber = ""
         )
     }

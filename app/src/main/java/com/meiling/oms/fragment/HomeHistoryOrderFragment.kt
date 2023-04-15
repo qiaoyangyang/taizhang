@@ -2,15 +2,14 @@ package com.meiling.oms.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.SelectDialogDto
-import com.meiling.oms.EventBusData.MessageEventHistoryUpDataTip
-import com.meiling.oms.EventBusData.MessageHistoryEventSelect
+import com.meiling.oms.eventBusData.MessageEventHistoryUpDataTip
+import com.meiling.oms.eventBusData.MessageHistoryEventSelect
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentHomeOrderHistoryBinding
 import com.meiling.oms.dialog.OrderSelectDialog
@@ -78,7 +77,7 @@ class HomeHistoryOrderFragment :
                     pageSize = "20",
                     orderTime = it.orderTime,
                     deliverySelect = "0",
-                    isValid = "0",
+                    isValid = "",
                     businessNumber = "",
                     channelId = it.channelId!!
                 )
@@ -99,7 +98,7 @@ class HomeHistoryOrderFragment :
             pageSize = "20",
             orderTime = "1",
             deliverySelect = "0",
-            isValid = "0",
+            isValid = "",
             businessNumber = "",
             channelId = "0"
         )
@@ -158,7 +157,7 @@ class HomeHistoryOrderFragment :
             pageSize = "20",
             orderTime = selectDialogDto.orderTime,
             deliverySelect = "0",
-            isValid = "0",
+            isValid = "",
             businessNumber = "",
             channelId = selectDialogDto.channelId!!
         )

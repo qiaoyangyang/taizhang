@@ -1,13 +1,22 @@
 package com.meiling.oms.dialog
 
-import android.widget.Button
+import android.content.res.Resources
+import android.view.Gravity
 import android.widget.NumberPicker
+import android.widget.TextView
+import com.hjq.shape.view.ShapeTextView
 import com.meiling.oms.R
-import com.meiling.oms.widget.showToast
+import com.meiling.oms.widget.*
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
 
+
 class OrderDisSelectTimeDialog : BaseNiceDialog() {
+
+
+    init {
+        setGravity(Gravity.BOTTOM)
+    }
 
 
     fun newInstance(): OrderDisSelectTimeDialog {
@@ -19,73 +28,125 @@ class OrderDisSelectTimeDialog : BaseNiceDialog() {
         return R.layout.activity_test_select
     }
 
+    private var selectTimeLister: ((startTime: String, endTime: String, type: String) -> Unit)? =
+        null
+
+    fun setSelectTime(selectTime: ((startTime: String, endTime: String, type: String) -> Unit)) {
+        this.selectTimeLister = selectTime
+    }
+
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
         val yearPicker = holder?.getView<NumberPicker>(R.id.yearPicker)
         val monthPicker = holder?.getView<NumberPicker>(R.id.monthPicker)
         val dayPicker = holder?.getView<NumberPicker>(R.id.dayPicker)
-        val hourPicker = holder?.getView<NumberPicker>(R.id.hourPicker)
-        val minutePicker = holder?.getView<NumberPicker>(R.id.minutePicker)
-        val secondPicker = holder?.getView<NumberPicker>(R.id.secondPicker)
-        val btnTime = holder?.getView<Button>(R.id.btn_time)
+
+        val btnTime = holder?.getView<ShapeTextView>(R.id.btn_select_time_sure)
+        val btnCancelTime = holder?.getView<ShapeTextView>(R.id.btn_select_time_cancel)
+        val txtStartTime = holder?.getView<ShapeTextView>(R.id.txt_select_start_time)
+        val txtEndTime = holder?.getView<ShapeTextView>(R.id.txt_select_end_time)
 
         // 设置 NumberPicker 控件的最小值、最大值和滚动监听器
         yearPicker?.minValue = 2020
         yearPicker?.maxValue = 2025
-        yearPicker?.value = 2021
+        yearPicker?.value = formatCurrentDateYear().toInt()
 
         monthPicker?.minValue = 1
         monthPicker?.maxValue = 12
-        monthPicker?.value = 4
+        monthPicker?.value = formatCurrentDataMM().toInt()
 
         dayPicker?.minValue = 1
         dayPicker?.maxValue = 31
-        dayPicker?.value = 13
+        dayPicker?.value = formatCurrentDataDD().toInt()
 
-        hourPicker?.minValue = 0
-        hourPicker?.maxValue = 23
-        hourPicker?.value = 10
-
-        minutePicker?.minValue = 0
-        minutePicker?.maxValue = 59
-        minutePicker?.value = 30
+        var selectBtn = true
 
 
-        secondPicker?.minValue = 0
-        secondPicker?.maxValue = 59
-        secondPicker?.value = 0
 // 设置滚动监听器
         yearPicker?.setOnValueChangedListener { picker, oldVal, newVal ->
-            yearPicker?.value = picker.value
-// 处理年份选择的变化
+            if (selectBtn) {
+                txtStartTime?.text =
+                    yearPicker?.value.toString() + "-" + monthPicker?.value.toString() + "-" + dayPicker?.value.toString()
+            } else {
+                txtEndTime?.text =
+                    yearPicker?.value.toString() + "-" + monthPicker?.value.toString() + "-" + dayPicker?.value.toString()
+            }
         }
         monthPicker?.setOnValueChangedListener { picker, oldVal, newVal ->
-// 处理月份选择的变化
+            if (selectBtn) {
+                txtStartTime?.text =
+                    yearPicker?.value.toString() + "-" + monthPicker?.value.toString() + "-" + dayPicker?.value.toString()
+            } else {
+                txtEndTime?.text =
+                    yearPicker?.value.toString() + "-" + monthPicker?.value.toString() + "-" + dayPicker?.value.toString()
+            }
         }
         dayPicker?.setOnValueChangedListener { picker, oldVal, newVal ->
-// 处理日期选择的变化
+            if (selectBtn) {
+                txtStartTime?.text =
+                    yearPicker?.value.toString() + "-" + monthPicker?.value.toString() + "-" + dayPicker?.value.toString()
+            } else {
+                txtEndTime?.text =
+                    yearPicker?.value.toString() + "-" + monthPicker?.value.toString() + "-" + dayPicker?.value.toString()
+            }
         }
-        hourPicker?.setOnValueChangedListener { picker, oldVal, newVal ->
-// 处理小时选择的变化
+        txtStartTime?.text =
+            yearPicker?.value.toString() + "-" + monthPicker?.value.toString() + "-" + dayPicker?.value.toString()
+        txtStartTime?.setSingleClickListener {
+            selectBtn = true
         }
-        minutePicker?.setOnValueChangedListener { picker, oldVal, newVal ->
-            minutePicker?.value = picker.value
-// 处理分钟选择的变化
-        }
-        secondPicker?.setOnValueChangedListener { picker, oldVal, newVal ->
-// 处理秒钟选择的变化
+        txtEndTime?.setSingleClickListener {
+            selectBtn = false
+            txtEndTime?.text =
+                yearPicker?.value.toString() + "-" + monthPicker?.value.toString() + "-" + dayPicker?.value.toString()
         }
 
         btnTime?.setOnClickListener {
-            val selectedYear = yearPicker?.value
-            val selectedMonth = monthPicker?.value
-            val selectedDay = dayPicker?.value
-            val selectedHour = hourPicker?.value
-            val selectedMinute = minutePicker?.value
-            val selectedSecond = secondPicker?.value
+            if (txtStartTime?.text.toString().isNullOrBlank() || txtEndTime?.text.toString()
+                    .isNullOrBlank()
+            ) {
+                showToast("请选择时间")
+                return@setOnClickListener
+            }
 
-            showToast("selectedYear${selectedYear}" + "selectedMinute==${selectedMinute}")
+            if (!compareTimeCompare(txtStartTime?.text.toString(), txtEndTime?.text.toString())) {
+                showToast("请选择正确的时间格式")
+                return@setOnClickListener
+            }
+            selectTimeLister?.invoke(
+                txtStartTime?.text.toString(),
+                txtEndTime?.text.toString(),
+                "0"
+            )
+            dismiss()
+        }
+        btnCancelTime?.setOnClickListener {
+            selectTimeLister?.invoke(
+                txtStartTime?.text.toString(),
+                txtEndTime?.text.toString(),
+                "1"
+            )
+            dismiss()
         }
 
 
     }
+
+//    private fun setNumberPickerDivider(numberPicker: NumberPicker) {
+//        val count = numberPicker.childCount
+//        for (i in 0 until count) {
+//            try {
+//                val dividerField: Field =
+//                    numberPicker.javaClass.getDeclaredField("mSelectionDivider")
+//                dividerField.isAccessible = true
+//                val colorDrawable = ColorDrawable(
+//                    ContextCompat.getColor(requireContext(), android.R.color.holo_blue_dark)
+//                )
+//                dividerField.set(numberPicker, colorDrawable)
+//                numberPicker.invalidate()
+//            } catch (e: NoSuchFieldException) {
+//            } catch (e: IllegalAccessException) {
+//            } catch (e: IllegalArgumentException) {
+//            }
+//        }
+//    }
 }

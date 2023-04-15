@@ -4,33 +4,27 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.TimeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.hjq.shape.view.ShapeTextView
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.DealMenu
 import com.meiling.common.network.data.WriteoffhistoryPageData
 import com.meiling.common.utils.GsonUtils
-import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.RecyclerViewDivider
 import com.meiling.common.utils.SpannableUtils
-import com.meiling.oms.EventBusData.MessageEventTimeShow
-import com.meiling.oms.EventBusData.MessageEventVoucherInspectionHistory
+import com.meiling.oms.eventBusData.MessageEventVoucherInspectionHistory
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityWriteOffDetailsBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.VoucherInspectionHistoryViewModel
 import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
-import org.json.JSONArray
 
 //核销详情
 @Route(path = "/app/WriteOffDetailsActivity")

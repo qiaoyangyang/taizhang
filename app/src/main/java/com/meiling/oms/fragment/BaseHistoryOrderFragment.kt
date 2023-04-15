@@ -20,9 +20,9 @@ import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
-import com.meiling.oms.EventBusData.MessageEvent
-import com.meiling.oms.EventBusData.MessageEventHistoryUpDataTip
-import com.meiling.oms.EventBusData.MessageHistoryEventSelect
+import com.meiling.oms.eventBusData.MessageEvent
+import com.meiling.oms.eventBusData.MessageEventHistoryUpDataTip
+import com.meiling.oms.eventBusData.MessageHistoryEventSelect
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
@@ -271,7 +271,7 @@ class BaseHistoryOrderFragment :
             pageSize = "20",
             orderTime = orderTime,
             deliverySelect = "0",
-            isValid = "0",
+            isValid = "",
             businessNumber = "",
             channelId = channelId
         )
@@ -287,7 +287,7 @@ class BaseHistoryOrderFragment :
                 pageSize = "20",
                 orderTime = orderTime,
                 deliverySelect = "0",
-                isValid = "0",
+                isValid = "",
                 businessNumber = "",
                 selectText = "",
                 channelId = channelId

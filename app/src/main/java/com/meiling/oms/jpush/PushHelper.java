@@ -1,6 +1,7 @@
 package com.meiling.oms.jpush;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
 import android.content.Context;
@@ -8,11 +9,14 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 
 import com.meiling.common.BuildConfig;
 import com.meiling.common.utils.MMKVUtils;
+import com.meiling.oms.R;
 import com.taobao.accs.ACCSClient;
 import com.taobao.accs.AccsClientConfig;
 import com.taobao.agoo.TaobaoRegister;
@@ -171,6 +175,9 @@ public class PushHelper {
 
         //设置通知栏显示通知的最大个数（0～10），0：不限制个数
         pushAgent.setDisplayNotificationNumber(0);
+
+//        pushAgent.setPushIntentServiceClass();
+
         Handler handler = new Handler(context.getMainLooper());
         //推送消息处理
         UmengMessageHandler msgHandler = new UmengMessageHandler() {
@@ -189,6 +196,29 @@ public class PushHelper {
                         }
                     }
                 });
+            }
+
+            //自定义通知样式，此方法可以修改通知样式等
+            @Override
+            public Notification getNotification(Context context, UMessage msg) {
+                /**
+                 * context:上下文
+                 * uMessage:表示当前传递过来的消息，在消息中，我们通过变量builder_id判断使用哪种样式
+                 */
+                //创建通知栏对象
+
+                // 显示通知
+                Notification.Builder builder = new Notification.Builder(context);
+                @SuppressLint("RemoteViewLayout") RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.item_message_center);
+                remoteView.setTextViewText(R.id.txt_msg_center_name, msg.title);
+                remoteView.setTextViewText(R.id.txt_msg_center_spec, msg.text);
+
+                builder.setContent(remoteView)
+                        .setSmallIcon(R.mipmap.logo)
+                        .setTicker(msg.ticker)
+                        .setAutoCancel(true);
+                return builder.getNotification();
+
             }
 
             //处理透传消息

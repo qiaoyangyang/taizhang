@@ -55,18 +55,27 @@ fun formatCurrentDate(): String {
 }
 
 /**
- * 格式化当前日期
+ * 格式化当前年
  */
-fun formatCurrentDateyear(): String {
+fun formatCurrentDateYear(): String {
     val sdf = SimpleDateFormat("yyyy")
     return sdf.format(Date())
 }
 
+
 /**
- * 格式化当前日期
+ * 格式化当前月
  */
-fun formatCurrentMDate(): String {
-    val sdf = SimpleDateFormat("yyyy-M-dd")
+fun formatCurrentDataMM(): String {
+    val sdf = SimpleDateFormat("MM")
+    return sdf.format(Date())
+}
+
+/**
+ * 格式化当前日
+ */
+fun formatCurrentDataDD(): String {
+    val sdf = SimpleDateFormat("dd")
     return sdf.format(Date())
 }
 
@@ -195,6 +204,17 @@ fun formatCurrentDateMM(): String {
 
 @SuppressLint("SimpleDateFormat")
 fun formatCurrentDateMM(str: String?): String {
+    return try {
+        val sdf2 = SimpleDateFormat("yyyy-MM-dd")
+        val sdf1 = SimpleDateFormat("MM")
+        var d: Date = sdf2.parse(str)
+        sdf1.format(d)
+    } catch (e: Exception) {
+        "--"
+    }
+}
+@SuppressLint("SimpleDateFormat")
+fun formatCurrentDateMYY(str: String?): String {
     return try {
         val sdf2 = SimpleDateFormat("yyyy-MM-dd")
         val sdf1 = SimpleDateFormat("MM")

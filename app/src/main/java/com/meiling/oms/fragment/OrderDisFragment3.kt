@@ -3,13 +3,11 @@ package com.meiling.oms.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.meiling.common.fragment.BaseFragment
-import com.meiling.common.network.data.EventBusChangeAddress
 import com.meiling.common.network.data.LogisticsConfirmDtoList
 import com.meiling.common.network.data.LogisticsInsertDto
 import com.meiling.common.network.data.OrderSendAddress
-import com.meiling.oms.EventBusData.MessageEventUpDataTip
+import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.databinding.FragmentDis3Binding
-import com.meiling.oms.viewmodel.DataFragmentViewModel
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast

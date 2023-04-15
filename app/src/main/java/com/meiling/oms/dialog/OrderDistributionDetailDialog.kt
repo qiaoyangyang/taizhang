@@ -321,7 +321,7 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
     }
 
     private fun dialPhoneNumber(phoneNumber: String) {
-        val dialIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${13993365940}"))
+        val dialIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${phoneNumber}"))
         startActivity(dialIntent)
     }
 
