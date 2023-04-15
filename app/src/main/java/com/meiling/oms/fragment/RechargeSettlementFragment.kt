@@ -9,16 +9,13 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.constant.SPConstants
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.FinancialRecord
-import com.meiling.common.network.data.PageResult
 import com.meiling.common.network.data.RechargeRecordListReq
 import com.meiling.common.utils.MMKVUtils
-import com.meiling.oms.EventBusData.MessageEventTime
-import com.meiling.oms.EventBusData.MessageEventTimeShow
+import com.meiling.oms.eventBusData.MessageEventTime
+import com.meiling.oms.eventBusData.MessageEventTimeShow
 import com.meiling.oms.R
-import com.meiling.oms.adapter.RecommendAdapter
 import com.meiling.oms.databinding.FragmentRechargeSettlementBinding
 import com.meiling.oms.viewmodel.RechargeViewModel
-import com.meiling.oms.viewmodel.RecommendViewModel
 import com.meiling.oms.widget.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -77,12 +74,13 @@ class RechargeSettlementFragment :
 
     var pageIndex = 1
     var startDate = formatCurrentDateBeforeWeek()
+    var endData = formatCurrentDate()
     private fun initViewData() {
         mViewModel.getFinancialRecord(
             RechargeRecordListReq(
                 createUserId = "",
                 startDate = startDate,
-                endDate = formatCurrentDate(),
+                endDate = endData,
                 pageIndex = 1,
                 pageSize = "20",
                 tenantId = MMKVUtils.getString(SPConstants.tenantId)
@@ -94,7 +92,7 @@ class RechargeSettlementFragment :
                 RechargeRecordListReq(
                     createUserId = "",
                     startDate = startDate,
-                    endDate = formatCurrentDate(),
+                    endDate = endData,
                     pageIndex = pageIndex,
                     pageSize = "20",
                     tenantId = MMKVUtils.getString(SPConstants.tenantId)
@@ -146,6 +144,7 @@ class RechargeSettlementFragment :
     fun eventDay(messageEventTime: MessageEventTime) {
         pageIndex = 1
         startDate = messageEventTime.starTime
+        endData = messageEventTime.starTime
         initViewData()
     }
 
