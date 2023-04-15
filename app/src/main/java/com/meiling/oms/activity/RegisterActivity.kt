@@ -1,5 +1,6 @@
 package com.meiling.oms.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -106,7 +107,7 @@ class RegisterActivity : BaseActivity<RegisterViewModel, ActivityRegisterBinding
                 mDatabind.txtAuthCode.isClickable = true
                 mDatabind.txtAuthCode.text = "重新获取"
                 disLoading()
-                showToast(it)
+                it?.let { it1 -> showToast(it1) }
             })
         }
 
@@ -131,10 +132,12 @@ class RegisterActivity : BaseActivity<RegisterViewModel, ActivityRegisterBinding
                         mDatabind.etPassword.text.toString().trim())
                 }, onSuccess =  {
                     disLoading()
-
+                    startActivity(Intent(this,RegisterNextActivity::class.java))
                 }, onError = {
                     mDatabind.etPassword.text.toString().trim()
-                    showToast(it)
+                    if (it != null) {
+                        showToast(it)
+                    }
                 }
             )
         }

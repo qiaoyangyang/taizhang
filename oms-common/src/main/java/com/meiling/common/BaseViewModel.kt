@@ -95,7 +95,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
         block: suspend () -> ResultData<T>,
         isShowLoading:Boolean?=true,
         onSuccess:(T?)->Unit,
-        onError:((String)->Unit) ?= null
+        onError:((String?)->Unit) ?= null
     ): Job {
         Log.e("当前线程",""+Thread.currentThread().name)
 
@@ -116,7 +116,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                         ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
                     } else {
                         if(onError!=null){
-                            onError?.invoke(resultError.value.toString())
+                            onError?.invoke(it.msg)
                         }
                     }
                 }
