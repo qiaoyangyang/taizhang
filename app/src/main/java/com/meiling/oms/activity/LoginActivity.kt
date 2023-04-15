@@ -16,6 +16,7 @@ import com.hjq.widget.view.RegexEditText.Companion.REGEX_MOBILE
 import com.hjq.widget.view.RegexEditText.Companion.REGEX_NAME
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.constant.SPConstants
+import com.meiling.common.network.service.loginService
 import com.meiling.common.utils.InputTextManager
 import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.SpannableUtils
@@ -189,6 +190,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                 mViewModel.sendCode(
                     mDatabind.etPhone.text?.trim().toString()
                 )
+
                 captchaCountdownTool.startCountdown()
             } else {
                 showToast("请输入手机号")
@@ -205,9 +207,9 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
     override fun createObserver() {
 
         mDatabind.txtRegister.setSingleClickListener {
-            showToast("注册功能，正在开发中～")
-//            var intent=Intent(this,RegisterActivity::class.java)
-//            startActivity(intent)
+//            showToast("注册功能，正在开发中～")
+            var intent=Intent(this,RegisterActivity::class.java)
+            startActivity(intent)
 
         }
 
