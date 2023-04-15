@@ -55,7 +55,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
             runCatching {
                 block()
             }.onSuccess {
-                if (it.code == 0) {
+                if (it.code == 200) {
                     resultState.postValue(it.data)
                 } else if (it.code == 403) {
                     ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
@@ -77,7 +77,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
             runCatching {
                 block()
             }.onSuccess {
-                if (it.code == 0) {
+                if (it.code == 200) {
                     resultState.postValue(it.data)
                 } else if (it.code == 403) {
                     ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
@@ -86,6 +86,31 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                 }
             }.onFailure {
                 onError.postValue(ExceptionHandle.handleException(it))
+            }
+        }
+    }
+
+    fun <T : Any> launchRequest(
+        block: suspend () -> ResultData<T>,
+        isShowLoading:Boolean?=true,
+        onSuccess:(T)->Unit,
+        onError:((String)->Unit) ?= null
+    ): Job {
+        return viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                block()
+            }.onSuccess {
+                if (it.code == 200) {
+                    onSuccess.invoke(it.data)
+                } else if (it.code == 403) {
+                    ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
+                } else {
+                    if(onError!=null){
+                        onError?.invoke(resultError.value.toString())
+                    }
+                }
+            }.onFailure {
+                onError?.invoke(ExceptionHandle.handleException(it).msg)
             }
         }
     }

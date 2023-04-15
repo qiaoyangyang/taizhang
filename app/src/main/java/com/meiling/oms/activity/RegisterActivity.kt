@@ -8,7 +8,7 @@ import com.meiling.oms.viewmodel.RegisterViewModel
 
 class RegisterActivity:BaseActivity<RegisterViewModel,ActivityRegisterBinding>(){
     override fun initView(savedInstanceState: Bundle?) {
-
+        mViewModel.resultError
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityRegisterBinding {
