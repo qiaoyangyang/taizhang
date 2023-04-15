@@ -23,6 +23,7 @@ import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityWriteOffDetailsBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.VoucherInspectionHistoryViewModel
+import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
 
 //核销详情
@@ -202,14 +203,34 @@ class WriteOffDetailsActivity :
     }
 
     override fun createObserver() {
+
         mViewModel.cancelstring.onStart.observe(this) {
+            showLoading("")
+
+        }
+        mViewModel.cancelstring.onSuccess.observe(this){
+            disLoading()
             EventBus.getDefault().post(MessageEventVoucherInspectionHistory(id))
             finish()
+        }
+
+        mViewModel.cancelstring.onError.observe(this){
+            disLoading()
+            showToast("${it.msg}")
+        }
+
+        mViewModel.cancelmeituanstring.onStart.observe(this) {
+            showLoading("")
 
         }
         mViewModel.cancelmeituanstring.onSuccess.observe(this) {
+            disLoading()
             EventBus.getDefault().post(MessageEventVoucherInspectionHistory(id))
             finish()
+        }
+        mViewModel.cancelmeituanstring.onError.observe(this){
+            disLoading()
+            showToast("${it.msg}")
         }
 
     }

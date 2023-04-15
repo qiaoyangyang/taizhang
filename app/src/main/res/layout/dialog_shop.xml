@@ -30,6 +30,8 @@
 
 
     <LinearLayout
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:background="@color/white"
@@ -56,9 +58,11 @@
             android:id="@+id/wheel_view_center"
             android:layout_width="0dp"
             android:layout_weight="2"
+
             android:layout_height="wrap_content"
             app:wheelTextColor="#333333"
             app:wheelTextSize="16sp"
+
             />
 
 

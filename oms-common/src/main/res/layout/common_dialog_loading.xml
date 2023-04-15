@@ -14,7 +14,7 @@
         android:id="@+id/progress_bar"
         android:layout_width="@dimen/dp_60"
         android:layout_height="@dimen/dp_60"
-        android:indeterminateTint="@android:color/white" />
+        android:indeterminateTint="#FD4B48" />
 
     <TextView
         android:id="@+id/tipTextView"

@@ -99,6 +99,7 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
             rb_shop_name?.isChecked = true
             verificationScreening.poiIdtype = "0"
 
+
             rb_isVoucher?.isChecked = true
             verificationScreening.isVoucher = "0"
 
@@ -162,42 +163,52 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
         if (verificationScreening.poiIdtype == "0") {
             rb_shop_name?.isChecked = true
         } else {
+
             rb_shop_name_custom?.isChecked = true
+            rb_shop_name_custom?.text = verificationScreening.shopName
+        }
+        rb_shop_name_custom?.setOnClickListener {
+
+
+            if (shopBean.size != null) {
+                var shopDialog = ShopDialog().newInstance(shopBean)
+
+                shopDialog.setOnresilience(object : ShopDialog.Onresilience {
+                    override fun resilience(
+                        cityid: Int,
+                        cityidname: String,
+                        shopid: Int,
+                        shop: Shop
+                    ) {
+                        if (TextUtils.isEmpty(shop.poiId)) {
+                            verificationScreening.poiId = ""
+                        } else {
+                            verificationScreening.poiId = shop?.poiId!!
+
+                        }
+                        rb_shop_name_custom?.text = shop.name
+                        verificationScreening.shopName = shop?.name!!
+                        verificationScreening.poiIdtype = "1"
+
+                    }
+
+                    override fun Ondismiss() {
+                        rb_shop_name?.isChecked = true
+                    }
+
+                })
+                shopDialog.show(activity?.supportFragmentManager)
+            }
         }
 
         Rb_shop?.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.rb_shop_name -> {
+                    rb_shop_name_custom?.text="自定义门店"
                     verificationScreening.poiIdtype = "0"
                 }
                 R.id.rb_shop_name_custom -> {
-                    if (shopBean.size != null) {
-                        var shopDialog = ShopDialog().newInstance(shopBean)
 
-                        shopDialog.setOnresilience(object : ShopDialog.Onresilience {
-                            override fun resilience(
-                                cityid: Int,
-                                cityidname: String,
-                                shopid: Int,
-                                shop: Shop
-                            ) {
-                                if (TextUtils.isEmpty(shop.poiId)) {
-                                    verificationScreening.poiId = ""
-                                } else {
-                                    verificationScreening.poiId = shop?.poiId!!
-
-                                }
-                                verificationScreening.poiIdtype = "1"
-
-                            }
-
-                            override fun Ondismiss() {
-                                rb_shop_name?.isChecked = true
-                            }
-
-                        })
-                        shopDialog.show(activity?.supportFragmentManager)
-                    }
 
 
                 }
@@ -223,7 +234,7 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
             tv_final_time?.setBackgroundResource(R.drawable.selected_true)
             tv_final_time?.setTextColor(Color.parseColor("#FFFFFFFF"))
         }
-        rb_starting_time?.addTextChangedListener(object : TextWatcher{
+        rb_starting_time?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -231,11 +242,11 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (rb_starting_time?.text.toString()=="起始时间"){
+                if (rb_starting_time?.text.toString() == "起始时间") {
                     rb_starting_time?.setBackgroundResource(R.drawable.selected_false)
                     rb_starting_time?.setTextColor(Color.parseColor("#666666"))
 
-                }else{
+                } else {
                     rb_starting_time?.setBackgroundResource(R.drawable.selected_true)
                     rb_starting_time?.setTextColor(Color.parseColor("#FFFFFFFF"))
 
@@ -243,7 +254,7 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
             }
 
         })
-        tv_final_time?.addTextChangedListener(object : TextWatcher{
+        tv_final_time?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -251,11 +262,11 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (tv_final_time?.text.toString()=="终止时间"){
+                if (tv_final_time?.text.toString() == "终止时间") {
                     tv_final_time?.setBackgroundResource(R.drawable.selected_false)
                     tv_final_time?.setTextColor(Color.parseColor("#666666"))
 
-                }else{
+                } else {
                     tv_final_time?.setBackgroundResource(R.drawable.selected_true)
                     tv_final_time?.setTextColor(Color.parseColor("#FFFFFFFF"))
 
@@ -380,16 +391,17 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
             RG_time?.clearCheck()
             var dateToStrLong = dateToStrLong(date)
             textView.text = dateToStrLong
-           // setba(textView, true)
-           
+            // setba(textView, true)
+
 
         }
         dialog.show()
     }
-    fun settiet(){
+
+    fun settiet() {
         iscustom = 0
-        tv_final_time?.text="终止时间"
-        rb_starting_time?.text="起始时间"
+        tv_final_time?.text = "终止时间"
+        rb_starting_time?.text = "起始时间"
     }
 
     private var onresilience: Onresilience? = null

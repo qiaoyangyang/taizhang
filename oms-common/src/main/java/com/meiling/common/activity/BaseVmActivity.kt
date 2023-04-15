@@ -3,6 +3,7 @@ package com.meiling.common.activity
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -99,7 +100,11 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
         if (!mLoadingDialog!!.isShowing()) {
             mLoadingDialog!!.show()
         }
-        mLoadingDialog?.setContent(content)
+        if (TextUtils.isEmpty(content)){
+            mLoadingDialog?.setContent("加载中")
+        }else {
+            mLoadingDialog?.setContent(content)
+        }
     }
 
     open fun disLoading() {

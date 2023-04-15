@@ -57,27 +57,34 @@ class VoucherInspectionActivity :
 
         mDatabind.clScan.setOnClickListener {
             //requestPermission(CAMERA_REQ_CODE, DECODE)
-            XXPermissions.with(this).permission(PermissionUtilis.Group.RICHSCAN).request(object :OnPermissionCallback{
-                override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
-                    if (!allGranted) {
-                        showToast("获取部分权限成功，但部分权限未正常授予")
-                        return
+            XXPermissions.with(this).permission(PermissionUtilis.Group.RICHSCAN)
+                .request(object : OnPermissionCallback {
+                    override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
+                        if (!allGranted) {
+                            showToast("获取部分权限成功，但部分权限未正常授予")
+                            return
+                        }
+                        setstartScan()
+
                     }
-                    setstartScan()
 
-                }
-
-                override fun onDenied(permissions: MutableList<String>, doNotAskAgain: Boolean) {
-                    if (doNotAskAgain) {
-                        showToast("被永久拒绝授权，请手动授予录音和日历权限")
-                        // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                        XXPermissions.startPermissionActivity(this@VoucherInspectionActivity,permissions)
-                    } else {
-                        showToast("获取录音和日历权限失败")
+                    override fun onDenied(
+                        permissions: MutableList<String>,
+                        doNotAskAgain: Boolean
+                    ) {
+                        if (doNotAskAgain) {
+                            showToast("被永久拒绝授权，请手动授予录音和日历权限")
+                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                            XXPermissions.startPermissionActivity(
+                                this@VoucherInspectionActivity,
+                                permissions
+                            )
+                        } else {
+                            showToast("获取录音和日历权限失败")
+                        }
                     }
-                }
 
-            })
+                })
         }
 
     }
@@ -128,8 +135,13 @@ class VoucherInspectionActivity :
 
     override fun createObserver() {
 
+        mViewModel.thrillBen.onStart.observe(this) {
+            showLoading("")
+        }
+
         mViewModel.thrillBen.onSuccess.observe(this) {
             if (it.size != 0) {
+                disLoading()
                 var checkCouponInformationDidalog = CheckCouponInformationDidalog().newInstance(it)
                 checkCouponInformationDidalog.setOnresilience(object :
                     CheckCouponInformationDidalog.Onresilience {
@@ -153,11 +165,15 @@ class VoucherInspectionActivity :
                     it.get(0).name + "/" + it.get(0).shopList?.get(0)?.name
             }
         }
-
+        mViewModel.verifythrillBen.onStart.observe(this) {
+            showLoading("")
+        }
         //核销成功
         mViewModel.verifythrillBen.onSuccess.observe(this) {
+            disLoading()
             if (type == "1") {
                 var it1 = it as ArrayList<ThrillItem>
+
                 startActivity(
                     Intent(this, WriteOffActivity::class.java).putExtra(
                         "thrillitem",
@@ -172,15 +188,23 @@ class VoucherInspectionActivity :
         }
         //确认核销失败
         mViewModel.verifythrillBen.onError.observe(this) {
+            disLoading()
             showToast("${it.msg}")
         }
         //扫码核销失败
         mViewModel.thrillBen.onError.observe(this) {
+            disLoading()
             showToast("${it.msg}")
         }
+
+
+        mViewModel.meituan.onStart.observe(this) {
+            showLoading("")
+        }
+
         //美团扫码返回
         mViewModel.meituan.onSuccess.observe(this) {
-
+            disLoading()
             var checkCouponInformationDidalog = CheckCouponInformationDidalog1().newInstance(it)
             checkCouponInformationDidalog.setOnresilience(object :
                 CheckCouponInformationDidalog1.Onresilience {
@@ -194,16 +218,28 @@ class VoucherInspectionActivity :
             checkCouponInformationDidalog.show(supportFragmentManager)
         }
         mViewModel.meituan.onError.observe(this) {
+            disLoading()
             showToast("${it.msg}")
         }
 
+
+
+
+        mViewModel.consume.onStart.observe(this) {
+            showLoading("")
+        }
+
         mViewModel.consume.onSuccess.observe(this) {
+            disLoading()
             startActivity(
                 Intent(this, MeituanActivity::class.java).putExtra(
                     "meituan",
                     meituan
                 ).putExtra("shopId", shopId).putExtra("code", it)
             )
+        }
+        mViewModel.consume.onError.observe(this){
+            disLoading()
         }
 
 
@@ -246,7 +282,7 @@ class VoucherInspectionActivity :
 
     var shopId: String = ""
     var shopdata: Shop? = null
-    fun setstartScan(){
+    fun setstartScan() {
         ScanUtil.startScan(
             this,
             REQUEST_CODE_SCAN_ONE,
