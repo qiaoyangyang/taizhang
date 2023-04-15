@@ -62,7 +62,6 @@ class HomeOningOrderFragment :
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBus.getDefault().unregister(this)
     }
 
     override fun onResume() {

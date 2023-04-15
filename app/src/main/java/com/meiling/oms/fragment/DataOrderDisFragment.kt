@@ -33,11 +33,10 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
                 ) {
                     holder.setText(R.id.txt_data_platform, item.logisticsName)
                     holder.setText(R.id.txt_data_order_num, item.orderNum)
-                    holder.setText(R.id.txt_data_order_dis_amount, item.logisticsName)
+                    holder.setText(R.id.txt_data_order_dis_amount, item.amountAndTips)
                     holder.setText(R.id.txt_data_order_tips, item.tips)
                     holder.setText(R.id.txt_data_order_dis_avgAmount, item.avgAmount)
                 }
-
             }
         mDatabind.rvDataDis.adapter = dataDisAdapter
         mDatabind.srfDataDis.setOnRefreshListener {
@@ -51,17 +50,16 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
         mViewModel.dataHistoryDisList(
             DataListDto(
                 startTime = formatCurrentDateBeforeDay() + " 00:00:00",
-                endTime = formatCurrentDate() + " 23:59:59",
+                endTime = formatCurrentDateBeforeDay() + " 23:59:59",
                 ArrayList<Long>()
             )
         )
-
-
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentDataDisBinding {
         return FragmentDataDisBinding.inflate(inflater)
     }
+
     override fun onResume() {
         super.onResume()
         initData()
@@ -71,13 +69,12 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
         mDatabind.txtDataHistoryChannelTime.setSingleClickListener {
             var dataSelectTimeDialog = DataSelectTimeDialog().newInstance()
             dataSelectTimeDialog.show(childFragmentManager)
-            dataSelectTimeDialog.setSelectTime {it,name->
-                showToast("1212" + it)
+            dataSelectTimeDialog.setSelectTime { it, name ->
                 mDatabind.txtDataHistoryChannelTime.text = name
                 mViewModel.dataHistoryDisList(
                     DataListDto(
                         startTime = "$it 00:00:00",
-                        endTime = formatCurrentDate() + " 23:59:59",
+                        endTime = "$it 23:59:59",
                         ArrayList<Long>()
                     )
                 )

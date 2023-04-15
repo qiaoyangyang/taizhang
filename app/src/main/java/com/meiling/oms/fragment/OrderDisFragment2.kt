@@ -238,6 +238,7 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
             dismissLoading()
             if (!it.isNullOrEmpty()) {
                 shopSelectDisWayAdapter.setList(it)
+                it[0].select = true
                 for (bean in it) {
                     if (orderSendAddress.method == "all") {
                         shopSelectDisWayAdapter.data.forEach { bean ->
@@ -245,7 +246,7 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
                         }
                     }
 //                    else {
-//                        shopSelectDisWayAdapter.data[0].select = true
+//                        shopSelectDisWayAdapter.it[0].select = true
 //                    }
                     shopSelectDisWayAdapter.notifyDataSetChanged()
                 }

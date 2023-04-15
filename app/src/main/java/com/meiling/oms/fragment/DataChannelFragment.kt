@@ -16,10 +16,7 @@ import com.meiling.oms.databinding.FragmentDataChannelBinding
 import com.meiling.oms.dialog.DataSelectTimeDialog
 import com.meiling.oms.liveData.LiveDataShopData
 import com.meiling.oms.viewmodel.DataFragmentViewModel
-import com.meiling.oms.widget.formatCurrentDate
-import com.meiling.oms.widget.getTomorrowDate
-import com.meiling.oms.widget.setSingleClickListener
-import com.meiling.oms.widget.showToast
+import com.meiling.oms.widget.*
 
 class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChannelBinding>() {
 
@@ -70,12 +67,12 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
         )
         mViewModel.channelHistoryDataList(
             DataListDto(
-                startTime = formatCurrentDate(),
-                endTime = getTomorrowDate(),
+                startTime = formatCurrentDateBeforeDay(),
+                endTime = formatCurrentDate(),
                 ArrayList<Long>()
             )
         )
-        LiveDataShopData.INSTANCE.observe(this, changeObserver)
+//        LiveDataShopData.INSTANCE.observe(this, changeObserver)
     }
 
     override fun initListener() {
@@ -83,12 +80,11 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
             var dataSelectTimeDialog = DataSelectTimeDialog().newInstance()
             dataSelectTimeDialog.show(childFragmentManager)
             dataSelectTimeDialog.setSelectTime { it, name ->
-                showToast("1212" + it)
                 mDatabind.txtHistorySelectTime.text = name
                 mViewModel.channelHistoryDataList(
                     DataListDto(
                         startTime = it,
-                        endTime = getTomorrowDate(),
+                        endTime = formatCurrentDate(),
                         ArrayList<Long>()
                     )
                 )
@@ -134,7 +130,6 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
             dismissLoading()
             showToast(it.msg)
         }
-
 
     }
 }

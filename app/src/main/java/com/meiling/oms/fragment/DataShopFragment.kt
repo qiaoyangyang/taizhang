@@ -14,6 +14,7 @@ import com.meiling.oms.databinding.FragmentDataShopBinding
 import com.meiling.oms.dialog.DataSelectTimeDialog
 import com.meiling.oms.viewmodel.DataFragmentViewModel
 import com.meiling.oms.widget.formatCurrentDate
+import com.meiling.oms.widget.formatCurrentDateBeforeDay
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 
@@ -73,8 +74,8 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
                 orderType = ArrayList(),
                 classificationViewIds = ArrayList(),
                 poiIds = ArrayList(),
-                startTime = formatCurrentDate() + " 00:00:00",
-                endTime = formatCurrentDate() + " 23:59:59",
+                startTime = formatCurrentDateBeforeDay() + " 00:00:00",
+                endTime = formatCurrentDateBeforeDay() + " 23:59:59",
                 isValid = -1,
                 sortType = 0,
                 pageIndex = 1,
