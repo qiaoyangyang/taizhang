@@ -90,23 +90,24 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
                         .post(MessageEventTime(formatCurrentDateBefore90(), formatCurrentDate()));
                 }
                 R.id.radio_button4 -> {
-                    var orderDisSelectTimeDialog = OrderDisSelectTimeDialog().newInstance()
-                    orderDisSelectTimeDialog.show(supportFragmentManager)
-                    orderDisSelectTimeDialog.setSelectTime { startTime, endTime, type ->
-                        showToast("s${startTime},e${endTime}")
-                        EventBus.getDefault()
-                            .post(
-                                MessageEventTime(
-                                    startTime,
-                                    endTime
-                                )
-                            )
-                        if (type == "1") {
-                            mDatabind.radioButton1.isChecked = false
-                        }else{
-                            mDatabind.radioButton4.isChecked = false
-                        }
-                    }
+
+                }
+            }
+        }
+
+        mDatabind.radioButton4.setSingleClickListener {
+            var orderDisSelectTimeDialog = OrderDisSelectTimeDialog().newInstance()
+            orderDisSelectTimeDialog.show(supportFragmentManager)
+            orderDisSelectTimeDialog.setSelectTime { startTime, endTime, type ->
+                EventBus.getDefault()
+                    .post(
+                        MessageEventTime(
+                            startTime,
+                            endTime
+                        )
+                    )
+                if (type == "1") {
+                    mDatabind.radioButton1.isChecked = false
                 }
             }
         }

@@ -1,6 +1,8 @@
 package com.meiling.common
 
+import android.app.Activity
 import android.app.Application
+import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
@@ -34,7 +36,7 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
         ARouter.init(this)
         Logger.addLogAdapter(AndroidLogAdapter())
         MMKV.initialize(this);
-
+        this.registerActivityLifecycleCallbacks(lifcycleCallBack)
         QbSdk.initX5Environment(this, object : QbSdk.PreInitCallback {
             override fun onCoreInitFinished() {
 
@@ -47,6 +49,14 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
 
     }
 
+    private  var activitys: Activity? = null
+
+    fun getActivity(): Activity? {
+        if (activitys == null) {
+            return null
+        }
+        return activitys
+    }
 
     private fun getAppFactory(): ViewModelProvider.Factory {
         if (mFactory == null) {
@@ -70,6 +80,31 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
         GlideApp.get(this).onTrimMemory(level)
     }
 
+    private val lifcycleCallBack = object : Application.ActivityLifecycleCallbacks {
+        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+        }
+
+        override fun onActivityStarted(activity: Activity) {
+        }
+
+        override fun onActivityResumed(activity: Activity) {
+            activitys = activity
+        }
+
+        override fun onActivityPaused(activity: Activity) {
+        }
+
+        override fun onActivityStopped(activity: Activity) {
+        }
+
+        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+        }
+
+        override fun onActivityDestroyed(activity: Activity) {
+        }
+
+
+    }
 
     init {
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(DefaultRefreshHeaderCreator { context, layout ->

@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="选择门店"
+        android:text="配送物品"
         android:textColor="@color/home_333333"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/iv_close_recharge"
+        android:id="@+id/iv_close_select_shop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tv_title"
@@ -47,8 +47,7 @@
             app:wheelItemVerticalSpace="16dp"
             app:wheelMaskLineColor="#F5F5F5"
             app:wheelTextColor="#333333"
-            app:wheelTextSize="16sp"
-           />
+            app:wheelTextSize="16sp" />
 
     </LinearLayout>
 

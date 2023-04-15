@@ -294,7 +294,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
 
     override fun createObserver() {
         mViewModel.orderList.onStart.observe(this) {
-            showLoading("请求中。。。")
+            showLoading("请求中")
         }
         mViewModel.orderList.onSuccess.observe(this) {
             dismissLoading()
@@ -322,7 +322,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         }
 
         mViewModel.cancelOrderDto.onStart.observe(this) {
-            showLoading("取消订单")
+            showLoading("正在请求")
         }
         mViewModel.cancelOrderDto.onSuccess.observe(this) {
             dismissLoading()

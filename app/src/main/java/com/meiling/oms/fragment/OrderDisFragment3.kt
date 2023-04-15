@@ -72,7 +72,6 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
             }
             if (!insertOrderSendList.isNullOrEmpty()) {
                 mViewModel.insertOrderSend(LogisticsConfirmDtoList(logisticsConfirmDtoList = insertOrderSendList))
-
             }
         }
     }
@@ -106,17 +105,17 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
         }
 
         mViewModel.sendSuccess.onStart.observe(this) {
-            showLoading("正在请求。。。")
+            showLoading("正在请求")
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             dismissLoading()
             EventBus.getDefault().post(MessageEventUpDataTip())
-            showToast("已成功发起配送 请在订单页面，查看配送详情")
+            showToast("发起配送成功")
             mActivity.finish()
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             dismissLoading()
-            showToast("发起配送失败 , 失败原因：${it.toString()}")
+            showToast("发起配送失败 ")
         }
     }
 

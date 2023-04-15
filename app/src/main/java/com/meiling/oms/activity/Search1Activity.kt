@@ -300,7 +300,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
 
     override fun createObserver() {
         mViewModel.orderList.onStart.observe(this) {
-            showLoading("请求中。。。")
+            showLoading("请求中")
         }
         mViewModel.orderList.onSuccess.observe(this) {
             disLoading()

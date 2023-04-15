@@ -105,12 +105,17 @@ class RechargeSettlementFragment :
         mViewModel.financialRecord.onSuccess.observe(this) {
             mDatabind.srfRechargeFeeRecord.isRefreshing = false
             if (it.pageResult?.pageNum == 1) {
+                if (it.pageResult?.pageData.isNullOrEmpty()){
+                    chargeAdapter.data.clear()
+                    chargeAdapter.setEmptyView(R.layout.empty_record_center)
+                }
                 chargeAdapter.setList(it.pageResult?.pageData as MutableList<FinancialRecord.PageResult.PageData>)
             } else {
                 chargeAdapter.addData(it.pageResult?.pageData as MutableList<FinancialRecord.PageResult.PageData>)
             }
 
             if (it.pageResult?.pageData!!.size < 20) {
+                chargeAdapter.footerWithEmptyEnable = false
                 chargeAdapter.loadMoreModule.loadMoreEnd()
 
             } else {

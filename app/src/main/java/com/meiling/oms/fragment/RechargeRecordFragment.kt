@@ -89,6 +89,10 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
     override fun createObserver() {
         mViewModel.rechargeRecord.onSuccess.observe(this) {
             mDatabind.srfRechargeRecord.isRefreshing = false
+            if (it?.pageData.isNullOrEmpty()) {
+                rechargeAdapter.data.clear()
+                rechargeAdapter.setEmptyView(R.layout.empty_record_center)
+            }
             rechargeAdapter.setList(it.pageData as MutableList<PageData>)
         }
         mViewModel.rechargeRecord.onError.observe(this) {

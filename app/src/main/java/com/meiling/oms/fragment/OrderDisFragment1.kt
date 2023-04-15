@@ -138,10 +138,10 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
                 showToast("请补全收货信息")
                 return@setSingleClickListener
             }
-            if (!insertOrderSendList.isNullOrEmpty()) {
-                mViewModel.insertOrderSend(LogisticsConfirmDtoList(logisticsConfirmDtoList = insertOrderSendList))
-            } else {
+            if (insertOrderSendList.isNullOrEmpty()) {
                 showToast("请选择配送方式")
+            } else {
+                mViewModel.insertOrderSend(LogisticsConfirmDtoList(logisticsConfirmDtoList = insertOrderSendList))
             }
         }
         shopSelectDisWayAdapter.setOnItemClickListener { adapter, view, position ->
@@ -155,9 +155,8 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
             shopSelectDisWayAdapter.notifyDataSetChanged()
         }
 
-        var weight = orderSendAddress.goodsWeight!!.toInt()
         mDatabind.txtAddTipPlus.setSingleClickListener {
-            mDatabind.edtAddTipShow.text = "${weight++}"
+            mDatabind.edtAddTipShow.text = "${mDatabind.edtAddTipShow.text.toString().toInt() + 1}"
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice!!,
                 cargoType = selectShop,
@@ -170,11 +169,12 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
             mViewModel.orderSendConfirm(orderSendRequest)
         }
         mDatabind.txtAddTipMinus.setSingleClickListener {
-            if (weight <= 1) {
+
+            if (mDatabind.edtAddTipShow.text.toString().toInt() <= 1) {
                 showToast("不能在减啦")
                 return@setSingleClickListener
             }
-            mDatabind.edtAddTipShow.text = "${weight--}"
+            mDatabind.edtAddTipShow.text = "${mDatabind.edtAddTipShow.text.toString().toInt() - 1}"
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice,
                 cargoType = selectShop,
@@ -201,7 +201,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
 
     override fun createObserver() {
         mViewModel.sendSuccess.onStart.observe(this) {
-            showLoading("正在请求。。。")
+            showLoading("正在请求")
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             dismissLoading()
@@ -209,14 +209,18 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
             showToast("发起配送成功")
             mActivity.finish()
         }
+        mViewModel.sendSuccess.onStart.observe(this) {
+            showLoading("正在请求")
+        }
         mViewModel.sendSuccess.onError.observe(this) {
             dismissLoading()
-            showToast("发起配送失败,失败原因")
+            showToast(it.msg)
         }
         mViewModel.orderSendConfirmList.onStart.observe(this) {
-
+            showLoading("加载中")
         }
         mViewModel.orderSendConfirmList.onSuccess.observe(this) {
+            dismissLoading()
             if (!it.isNullOrEmpty()) {
                 shopSelectDisWayAdapter.setList(it)
                 for (bean in it) {
@@ -233,7 +237,8 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
             }
         }
         mViewModel.orderSendConfirmList.onError.observe(this) {
-            showToast("发起配送失败 , 失败原因：${it.toString()}")
+            dismissLoading()
+            showToast("发起配送失败")
         }
     }
 
