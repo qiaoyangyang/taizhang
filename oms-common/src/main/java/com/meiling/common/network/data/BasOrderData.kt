@@ -513,3 +513,12 @@ data class DeliveryConsume(
     @SerializedName("weight")
     var weight: String?
 ) : Serializable
+
+data class SelectDialogDto(
+    var startDate: String,//开始时间
+    var endDate: String,//结束时间
+    var timetype: Int,//时间类型 0自定义时间 1 昨天 2 今天 3 近七天 4 进30天
+    var channelId: String?,// 平台  渠道全部传null,根据返回渠道
+    var orderTime: String,// 日期类型  1.下单时间，2 收货时间，出货时间 4,完成时间
+
+) : Serializable

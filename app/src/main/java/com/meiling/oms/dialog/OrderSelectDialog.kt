@@ -1,45 +1,49 @@
 package com.meiling.oms.dialog
 
+import android.app.Application
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.Gravity
-import android.widget.CompoundButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.codbking.widget.DatePickDialog
 import com.codbking.widget.bean.DateType
-import com.google.android.material.internal.FlowLayout
 import com.hjq.shape.view.ShapeButton
-import com.meiling.common.network.data.Shop
-import com.meiling.common.network.data.ShopBean
-import com.meiling.common.network.data.VerificationScreening
+import com.meiling.common.BaseLiveData
+import com.meiling.common.BaseViewModel
+import com.meiling.common.network.data.OrderSelectPlatform
+import com.meiling.common.network.data.SelectDialogDto
+import com.meiling.common.network.service.orderDisService
 import com.meiling.oms.R
 import com.meiling.oms.widget.*
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
-import com.wayne.constraintradiogroup.ConstraintRadioGroup
-import com.wayne.constraintradiogroup.OnCheckedChangeListener
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class VerificationScreeningDidalog : BaseNiceDialog() {
+class OrderSelectDialog : BaseNiceDialog() {
     override fun intLayoutId(): Int {
-        return R.layout.item_verification_screening
+        return R.layout.dialog_select_order
+    }
+
+    init {
+        setHeight(500)
+        setOutCancel(false)
     }
 
     fun newInstance(
-        verificationScreening: VerificationScreening,
-        shopBean: ArrayList<ShopBean>
-    ): VerificationScreeningDidalog {
+        selectDialogDto: SelectDialogDto,
+    ): OrderSelectDialog {
         val args = Bundle()
-        args.putSerializable("verificationScreening", verificationScreening)
-        args.putSerializable("shopBean", shopBean)
-        val dialog = VerificationScreeningDidalog()
+        args.putSerializable("selectDialogDto", selectDialogDto)
+        val dialog = OrderSelectDialog()
         dialog.arguments = args
         return dialog
     }
@@ -48,6 +52,9 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
         setGravity(Gravity.BOTTOM)
         setOutCancel(true)
     }
+
+    lateinit var selectOrderPlatformAdapter: BaseQuickAdapter<OrderSelectPlatform, BaseViewHolder>
+
 
     private var rb_yesterday: RadioButton? = null
     private var rb_today: RadioButton? = null
@@ -58,22 +65,17 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
     private var RG_time: RadioGroup? = null
     var iscustom = 0//是否自定义时间
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
-        val verificationScreening =
-            arguments?.getSerializable("verificationScreening") as VerificationScreening
-        val shopBean = arguments?.getSerializable("shopBean") as ArrayList<ShopBean>
+        val selectDialogDto =
+            arguments?.getSerializable("selectDialogDto") as SelectDialogDto
 
+        val orderPlatForm = holder?.getView<RecyclerView>(R.id.rv_select_order_platform)
         rb_today = holder?.getView<RadioButton>(R.id.rb_today)
         rb_yesterday = holder?.getView<RadioButton>(R.id.rb_yesterday)
         rb_About_seven_days = holder?.getView<RadioButton>(R.id.rb_About_seven_days)
         rb_nearly_days = holder?.getView<RadioButton>(R.id.rb_nearly_days)
 
         RG_time = holder?.getView<RadioGroup>(R.id.RG_time)
-        var Rb_shop = holder?.getView<RadioGroup>(R.id.Rb_shop)
         var Rg_isVoucher = holder?.getView<RadioGroup>(R.id.Rg_isVoucher)
-        var Rg_status = holder?.getView<RadioGroup>(R.id.Rg_status)
-
-        var rb_shop_name = holder?.getView<RadioButton>(R.id.rb_shop_name)
-        var rb_shop_name_custom = holder?.getView<RadioButton>(R.id.rb_shop_name_custom)
 
         rb_starting_time = holder?.getView<RadioButton>(R.id.rb_starting_time)
         tv_final_time = holder?.getView<RadioButton>(R.id.tv_final_time)
@@ -81,10 +83,6 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
         var rb_isVoucher = holder?.getView<RadioButton>(R.id.rb_isVoucher)
         var rb_voucher = holder?.getView<RadioButton>(R.id.rb_voucher)
         var rb_meal_voucher = holder?.getView<RadioButton>(R.id.rb_meal_voucher)
-
-        var rb_status = holder?.getView<RadioButton>(R.id.rb_status)
-        var rb_Written_off = holder?.getView<RadioButton>(R.id.rb_Written_off)
-        var rb_revoked = holder?.getView<RadioButton>(R.id.rb_revoked)
 
 
         var tv_go_on = holder?.getView<ShapeButton>(R.id.tv_go_on)
@@ -95,135 +93,56 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
         holder?.setOnClickListener(R.id.tv_revocation) {
             settiet()
             rb_today?.isChecked = true
-            verificationScreening.timetype = 2
-            rb_shop_name?.isChecked = true
-            verificationScreening.poiIdtype = "0"
+            selectDialogDto.timetype = 2
 
             rb_isVoucher?.isChecked = true
-            verificationScreening.isVoucher = "0"
-
-            rb_status?.isChecked = true
-            verificationScreening.status = ""
-
+            selectDialogDto.orderTime = "1"
         }
 
-        //验券状态 2.已核销 -1.已撤销
-
-        if (verificationScreening.status == "") {
-            rb_status?.isChecked = true
-        } else if (verificationScreening.status == "2") {
-            rb_Written_off?.isChecked = true
-        } else if (verificationScreening.status == "-1") {
-            rb_revoked?.isChecked = true
-        }
-
-        Rg_status?.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.rb_status -> {
-                    verificationScreening.status = ""
-                }
-                R.id.rb_Written_off -> {
-                    verificationScreening.status = "2"
-                }
-                R.id.rb_revoked -> {
-                    verificationScreening.status = "-1"
-                }
-
-            }
-        }
-
-
-        //验券类型
-
-        if (verificationScreening.isVoucher == "0") {
+//        var timetype: Int,//时间类型 0自定义时间 1 昨天 2 今天 3 近七天 4 进30天
+//        var dateStatus: String,// 日期类型  1.下单时间，2 收货时间，出货时间 4,完成时间
+//        var channelId: String,// 平台  渠道全部传null,根据返回渠道
+        // 下单时间
+        if (selectDialogDto.orderTime == "1") {
             rb_isVoucher?.isChecked = true
-        } else if (verificationScreening.isVoucher == "2") {
+        } else if (selectDialogDto.orderTime == "2") {
             rb_voucher?.isChecked = true
-        } else if (verificationScreening.isVoucher == "1") {
+        } else if (selectDialogDto.orderTime == "3") {
             rb_meal_voucher?.isChecked = true
         }
-
         Rg_isVoucher?.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.rb_isVoucher -> {
-                    verificationScreening.isVoucher = "0"
+                    selectDialogDto.orderTime = "0"
                 }
                 R.id.rb_voucher -> {
-                    verificationScreening.isVoucher = "2"
+                    selectDialogDto.orderTime = "1"
                 }
                 R.id.rb_meal_voucher -> {
-                    verificationScreening.isVoucher = "1"
+                    selectDialogDto.orderTime = "2"
                 }
 
             }
-        }
-
-        //验券门店
-        if (verificationScreening.poiIdtype == "0") {
-            rb_shop_name?.isChecked = true
-        } else {
-            rb_shop_name_custom?.isChecked = true
-        }
-
-        Rb_shop?.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.rb_shop_name -> {
-                    verificationScreening.poiIdtype = "0"
-                }
-                R.id.rb_shop_name_custom -> {
-                    if (shopBean.size != null) {
-                        var shopDialog = ShopDialog().newInstance(shopBean)
-
-                        shopDialog.setOnresilience(object : ShopDialog.Onresilience {
-                            override fun resilience(
-                                cityid: Int,
-                                cityidname: String,
-                                shopid: Int,
-                                shop: Shop
-                            ) {
-                                if (TextUtils.isEmpty(shop.poiId)) {
-                                    verificationScreening.poiId = ""
-                                } else {
-                                    verificationScreening.poiId = shop?.poiId!!
-
-                                }
-                                verificationScreening.poiIdtype = "1"
-
-                            }
-
-                            override fun Ondismiss() {
-                                rb_shop_name?.isChecked = true
-                            }
-
-                        })
-                        shopDialog.show(activity?.supportFragmentManager)
-                    }
-
-
-                }
-            }
-
         }
         //验券日期
-
-        if (verificationScreening.timetype == 2) {//今日
+        if (selectDialogDto.timetype == 2) {//今日
             rb_today?.isChecked = true
-        } else if (verificationScreening.timetype == 1) {//昨天
+        } else if (selectDialogDto.timetype == 1) {//昨天
             rb_yesterday?.isChecked = true
-        } else if (verificationScreening.timetype == 3) {//近七天
+        } else if (selectDialogDto.timetype == 3) {//近七天
             rb_About_seven_days?.isChecked = true
-        } else if (verificationScreening.timetype == 4) {//近30天
+        } else if (selectDialogDto.timetype == 4) {//近30天
             rb_nearly_days?.isChecked = true
-        } else if (verificationScreening.timetype == 5) {
+        } else if (selectDialogDto.timetype == 5) {
             iscustom = 1
-            rb_starting_time?.text = verificationScreening.startDate
+            rb_starting_time?.text = selectDialogDto.startDate
             rb_starting_time?.setBackgroundResource(R.drawable.selected_true)
             rb_starting_time?.setTextColor(Color.parseColor("#FFFFFFFF"))
-            tv_final_time?.text = verificationScreening.endDate
+            tv_final_time?.text = selectDialogDto.endDate
             tv_final_time?.setBackgroundResource(R.drawable.selected_true)
             tv_final_time?.setTextColor(Color.parseColor("#FFFFFFFF"))
         }
-        rb_starting_time?.addTextChangedListener(object : TextWatcher{
+        rb_starting_time?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -231,11 +150,11 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (rb_starting_time?.text.toString()=="起始时间"){
+                if (rb_starting_time?.text.toString() == "起始时间") {
                     rb_starting_time?.setBackgroundResource(R.drawable.selected_false)
                     rb_starting_time?.setTextColor(Color.parseColor("#666666"))
 
-                }else{
+                } else {
                     rb_starting_time?.setBackgroundResource(R.drawable.selected_true)
                     rb_starting_time?.setTextColor(Color.parseColor("#FFFFFFFF"))
 
@@ -243,7 +162,7 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
             }
 
         })
-        tv_final_time?.addTextChangedListener(object : TextWatcher{
+        tv_final_time?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -251,11 +170,11 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (tv_final_time?.text.toString()=="终止时间"){
+                if (tv_final_time?.text.toString() == "终止时间") {
                     tv_final_time?.setBackgroundResource(R.drawable.selected_false)
                     tv_final_time?.setTextColor(Color.parseColor("#666666"))
 
-                }else{
+                } else {
                     tv_final_time?.setBackgroundResource(R.drawable.selected_true)
                     tv_final_time?.setTextColor(Color.parseColor("#FFFFFFFF"))
 
@@ -292,38 +211,35 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
         }
 
         RG_time?.setOnCheckedChangeListener { group, checkedId ->
-
-
             when (checkedId) {
                 R.id.rb_yesterday -> {
-                    verificationScreening.startDate = formatCurrentDateBeforeDay()
-                    verificationScreening.endDate = formatCurrentDateBeforeDay()
-                    verificationScreening.timetype = 1
+                    selectDialogDto.startDate = formatCurrentDateBeforeDay()
+                    selectDialogDto.endDate = formatCurrentDateBeforeDay()
+                    selectDialogDto.timetype = 1
 
                 }
                 R.id.rb_today -> {
-                    verificationScreening.startDate = formatCurrentDate()
-                    verificationScreening.endDate = formatCurrentDate()
-                    verificationScreening.timetype = 2
+                    selectDialogDto.startDate = formatCurrentDate()
+                    selectDialogDto.endDate = formatCurrentDate()
+                    selectDialogDto.timetype = 2
 
                 }
                 R.id.rb_About_seven_days -> {
-                    verificationScreening.startDate = getBeforeSevenDate()
-                    verificationScreening.endDate = formatCurrentDate()
-                    verificationScreening.timetype = 3
+                    selectDialogDto.startDate = getBeforeSevenDate()
+                    selectDialogDto.endDate = formatCurrentDate()
+                    selectDialogDto.timetype = 3
 
                 }
                 R.id.rb_nearly_days -> {
-                    verificationScreening.startDate = getBeforeMonthDate()
-                    verificationScreening.endDate = formatCurrentDate()
-                    verificationScreening.timetype = 4
+                    selectDialogDto.startDate = getBeforeMonthDate()
+                    selectDialogDto.endDate = formatCurrentDate()
+                    selectDialogDto.timetype = 4
 
                 }
 
 
             }
         }
-
 
         tv_go_on?.setOnClickListener {
             if (iscustom != 0) {
@@ -335,24 +251,66 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
                     showToast("请选择终止时间")
                     return@setOnClickListener
                 }
-                verificationScreening.timetype = 5
-                verificationScreening.startDate = rb_starting_time?.text.toString()
-                verificationScreening.endDate = tv_final_time?.text.toString()
-                onresilience?.resilience(verificationScreening)
+                selectDialogDto.timetype = 5
+                selectDialogDto.startDate = rb_starting_time?.text.toString()
+                selectDialogDto.endDate = tv_final_time?.text.toString()
+                selectOrderLister?.invoke(selectDialogDto)
                 dismiss()
             } else {
-                onresilience?.resilience(verificationScreening)
+                selectOrderLister?.invoke(selectDialogDto)
                 dismiss()
             }
+        }
 
+        selectOrderPlatformAdapter =
+            object :
+                BaseQuickAdapter<OrderSelectPlatform, BaseViewHolder>(R.layout.item_recy_order_select_platform) {
+                override fun convert(holder: BaseViewHolder, item: OrderSelectPlatform) {
+                    val rechargeSum = holder.getView<TextView>(R.id.txt_recharge_sum)
+                    rechargeSum.text = item.name
+                    if (item.select) {
+                        holder.setBackgroundResource(
+                            R.id.txt_recharge_sum,
+                            R.drawable.selected_true
+                        )
+                        rechargeSum.setTextColor(resources.getColor(R.color.white))
+                        selectDialogDto.channelId = item.id
+                    } else {
+                        holder.setBackgroundResource(
+                            R.id.txt_recharge_sum,
+                            R.drawable.selected_false
+                        )
+                        rechargeSum.setTextColor(resources.getColor(R.color.home_666666))
+                    }
+                }
+            }
 
+        selectOrderPlatformAdapter.setOnItemClickListener { adapter, view, position ->
+            var data = adapter.data[position] as OrderSelectPlatform
+            for (xx in adapter.data) {
+                (xx as OrderSelectPlatform).select = xx == data
+            }
+            selectOrderPlatformAdapter.notifyDataSetChanged()
+        }
+
+        orderPlatForm?.adapter = selectOrderPlatformAdapter
+        var bs = BaseLiveData<ArrayList<OrderSelectPlatform>>()
+        BaseViewModel(Application()).request(
+            { orderDisService.orderChannelPlatForm() },
+            bs
+        )
+
+        bs.onSuccess.observe(this) {
+            if (!it.isNullOrEmpty()) {
+                var orderPlatformList = ArrayList<OrderSelectPlatform>()
+                orderPlatformList.add(OrderSelectPlatform(id = "0", name = "全部"))
+                orderPlatformList.addAll(it)
+                orderPlatformList[0].select = true
+                selectOrderPlatformAdapter.setList(orderPlatformList)
+            }
         }
 
 
-    }
-
-    fun setOnresilience(onresilience: Onresilience) {
-        this.onresilience = onresilience
     }
 
     private fun showDatePickDialog(
@@ -374,29 +332,27 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
         //设置点击确定按钮回调
         dialog.setOnSureLisener { date ->
             // TODO: 时间校验
-
-
             iscustom = 1
             RG_time?.clearCheck()
             var dateToStrLong = dateToStrLong(date)
             textView.text = dateToStrLong
-           // setba(textView, true)
-           
+            // setba(textView, true)
 
         }
         dialog.show()
     }
-    fun settiet(){
+
+    private fun settiet() {
         iscustom = 0
-        tv_final_time?.text="终止时间"
-        rb_starting_time?.text="起始时间"
+        tv_final_time?.text = "终止时间"
+        rb_starting_time?.text = "起始时间"
     }
 
-    private var onresilience: Onresilience? = null
-
-    interface Onresilience {
-        fun resilience(verificationScreening: VerificationScreening)
+    private var selectOrderLister: ((selectDialogDto: SelectDialogDto) -> Unit)? = null
+    fun setSelectOrder(selectTime: ((selectDialogDto: SelectDialogDto) -> Unit)) {
+        this.selectOrderLister = selectTime
     }
+
 
     /**  * 将长时间格式时间转换为字符串 yyyy-MM-dd HH:mm:ss  *   * @param dateDate  * @return   */
     fun dateToStrLong(dateDate: Date?): String? {

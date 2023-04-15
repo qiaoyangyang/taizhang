@@ -95,13 +95,14 @@
                 app:drawableStartCompat="@mipmap/icon_my_recharge" />
 
             <TextView
+                android:id="@+id/txt_msg_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="@dimen/dp_10"
                 android:gravity="center_vertical"
                 android:paddingVertical="@dimen/dp_20"
-                android:text="消息通知"
+                android:text="消息中心"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_32"
                 app:drawableStartCompat="@mipmap/icon_my_msg" />

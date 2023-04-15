@@ -121,7 +121,7 @@ data class OrderSendChannel(
 data class OrderSendShopSelect(
     var id: String = "1",
     var name: String = "1"
-): IWheel {
+) : IWheel {
     override fun getShowText(): String {
         return name.toString()
     }
@@ -162,9 +162,9 @@ data class LogisticsInsertDto(
 
 class EventBusCloseOrderDistributionDialog()
 
-class EventBusChangeAddress(var orderSendAddress:OrderSendAddress,var log:String)
+class EventBusChangeAddress(var orderSendAddress: OrderSendAddress, var log: String)
 
-class EventBusChangeAddressEXPRESS(var log:String)
+class EventBusChangeAddressEXPRESS(var log: String)
 
 class EventBusRefreshOrder()//刷新数据
 
@@ -344,10 +344,17 @@ data class OrderSendAddTips(
     @SerializedName("tip")
     var tip: String,
     var Addtip: String = "1",
-){
+) {
 
 }
-data class OrderSendAddShow(var num: Int, var address: String,var city: String,var lon: String,var lat: String)
+
+data class OrderSendAddShow(
+    var num: Int,
+    var address: String,
+    var city: String,
+    var lon: String,
+    var lat: String
+)
 
 data class DefaultLogistics(var defaultLogistics: String)
 
@@ -393,5 +400,39 @@ data class OutWareHouseList(
     var lat: String,
     @SerializedName("lon")
     var lon: String,
-) :Serializable
+) : Serializable
+
+
+data class OrderSelectPlatform(
+//    @SerializedName("createTime")
+//    var createTime: Long?,
+    @SerializedName("id")
+    var id: String?,
+//    @SerializedName("logo")
+//    var logo: String?,
+//    @SerializedName("logoBg")
+//    var logoBg: String?,
+//    @SerializedName("logoColor")
+//    var logoColor: String?,
+//    @SerializedName("logoF")
+//    var logoF: String?,
+//    @SerializedName("logoText")
+//    var logoText: String?,
+    @SerializedName("name")
+    var name: String?,
+//    @SerializedName("process")
+//    var process: String?,
+//    @SerializedName("remark")
+//    var remark: String?,
+//    @SerializedName("status")
+//    var status: Int?,
+//    @SerializedName("type")
+//    var type: Int?,
+//    @SerializedName("updateTime")
+//    var updateTime: Long?,
+//    @SerializedName("viewId")
+//    var viewId: String?
+) {
+    var select = false
+}
 

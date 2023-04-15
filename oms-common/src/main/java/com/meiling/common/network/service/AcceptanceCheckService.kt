@@ -17,12 +17,12 @@ interface AcceptanceCheckService {
     // 获取该用户所有城市的店铺或工厂shop
     @GET("saas/shop/cityshop")
     suspend fun cityshop(
-        @Query("poiType") poiType: String? = "1,2",
+       // @Query("poiType") poiType: String? = "",
         @Query("channelId") channelId: String,
-        @Query("hasCityAll") hasCityAll: String? = "1",
+        @Query("hasCityAll") hasCityAll: String? = "0",
     ): ResultData<ArrayList<ShopBean>>
 
-    @GET("saas/poi/citypoi")
+    @GET("/saas/poi/citypoi")
     suspend fun cityPoi(
     ): ResultData<ArrayList<ShopBean>>
 

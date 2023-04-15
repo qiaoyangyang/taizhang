@@ -38,6 +38,7 @@ android {
 
     buildTypes {
         release {
+            minifyEnabled false
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -137,7 +138,8 @@ dependencies {
 
 
     api 'com.makeramen:roundedimageview:2.3.0'
-    api 'com.github.getActivity:XXPermissions:16.8'
+    //api 'com.github.getActivity:XXPermissions:18.0'
+   api 'com.github.getActivity:XXPermissions:18.0'
     // 状态栏沉浸：https://github.com/gyf-dev/ImmersionBar
     api 'com.gyf.immersionbar:immersionbar:3.0.0'
     //mmkv 代替SharedPreferences
@@ -167,6 +169,7 @@ dependencies {
 
 
     api 'com.wayne:constraint-radiogroup:1.0.0'
+
  }
 
 

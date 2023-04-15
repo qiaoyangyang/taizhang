@@ -20,7 +20,7 @@ class ScanFragment : BaseFragment<FindViewModel, FragmentScanBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         ImmersionBar.with(this).init()
-        ImmersionBar.setTitleBar(this, mDatabind.relTitle)
+        ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentScanBinding {
@@ -37,7 +37,7 @@ class ScanFragment : BaseFragment<FindViewModel, FragmentScanBinding>() {
                 )
             )
         }
-        mDatabind.rlKouBei.setSingleClickListener { showToast("开发中。。。") }
+        mDatabind.rlKouBei.setSingleClickListener { showToast("功能暂未开通") }
         mDatabind.rlMeiTuan.setSingleClickListener {
             startActivity(
                 Intent(mActivity, VoucherInspectionActivity::class.java).putExtra(

@@ -1,33 +1,32 @@
-package com.meihao.kotlin.cashier.widgets.orderv4dialog
+package com.meiling.oms.dialog
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Application
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.view.DragAndDropPermissionsCompat.request
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
-import com.meiling.common.network.ResultData
 import com.meiling.common.network.data.OrderSendDetail
-import com.meiling.common.network.service.homeService
 import com.meiling.common.network.service.orderDisService
 import com.meiling.oms.R
+import com.meiling.oms.widget.setSingleClickListener
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
-import io.reactivex.rxjava3.core.Observer
-import io.reactivex.rxjava3.disposables.Disposable
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -74,6 +73,9 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
         super.dismiss()
     }
 
+    private val REQUEST_CALL_PHONE_PERMISSION = 1
+
+    var telPhone = ""
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
         EventBus.getDefault().register(this)
         val type = requireArguments().getBoolean("type")
@@ -102,6 +104,7 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
                     ryOrderDisDetailAdapter =
                         object :
                             BaseQuickAdapter<OrderSendDetail.DeliveryConsumeLog, BaseViewHolder>(R.layout.item_distribution) {
+                            @SuppressLint("UseCompatLoadingForDrawables")
                             override fun convert(
                                 holder: BaseViewHolder,
                                 item: OrderSendDetail.DeliveryConsumeLog
@@ -109,7 +112,50 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
                                 holder.setText(R.id.txtOperateRemark, item.createTime)
                                 holder.setText(R.id.txtOperateName, item.statusName)
                                 holder.setText(R.id.txtOperate, item.remark)
-                                holder.setText(R.id.txt_order_dis, "张三")
+                                holder.setText(R.id.txtOperate, item.remark)
+                                var view = holder.getView<ImageView>(R.id.imgView)
+                                var phone = holder.getView<TextView>(R.id.txt_dis_detail_phone)
+                                val deliveryName = holder.getView<TextView>(R.id.txt_dis_detail_name)
+
+                                if (holder?.layoutPosition == 0) {
+                                    view.setImageDrawable(resources.getDrawable(R.drawable.icon_order_dis_finish))
+                                } else {
+                                    view.setImageDrawable(resources.getDrawable(R.drawable.icon_order_dis_ing))
+                                }
+                                when (item.status) {
+                                    "30", "40", "50", "60" -> {
+                                        deliveryName.visibility = View.VISIBLE
+                                        phone.visibility = View.VISIBLE
+                                        phone.text = orderSendDetail.deliveryPhone
+                                        deliveryName.text =
+                                            "配送员：${orderSendDetail.deliveryName}"
+                                        telPhone = orderSendDetail.deliveryPhone
+                                        phone.setSingleClickListener {
+                                            if (ContextCompat.checkSelfPermission(
+                                                    context,
+                                                    Manifest.permission.CALL_PHONE
+                                                )
+                                                == PackageManager.PERMISSION_GRANTED
+                                            ) {
+                                                // 如果有权限，拨打电话
+                                                dialPhoneNumber(telPhone)
+                                            } else {
+                                                // 如果没有权限，申请权限
+                                                ActivityCompat.requestPermissions(
+                                                    requireActivity(),
+                                                    arrayOf(Manifest.permission.CALL_PHONE),
+                                                    REQUEST_CALL_PHONE_PERMISSION
+                                                )
+                                            }
+                                        }
+
+
+                                    }
+                                    else -> {
+                                        deliveryName.visibility = View.GONE
+                                        phone.visibility = View.GONE
+                                    }
+                                }
 
 //                                var txtOperate = holder.getView<TextView>(R.id.txtOperate)
 ////                                var txtOrderDisCode = holder.getView<TextView>(R.id.txtOrderDisCode)
@@ -257,6 +303,26 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
             dismiss()
         }
 
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == REQUEST_CALL_PHONE_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 如果用户授权了权限，拨打电话
+                dialPhoneNumber(telPhone)
+            } else {
+                // 如果用户拒绝了权限，可以在这里处理相应的逻辑
+            }
+        }
+    }
+
+    private fun dialPhoneNumber(phoneNumber: String) {
+        val dialIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${phoneNumber}"))
+        startActivity(dialIntent)
     }
 
     override fun onDestroy() {

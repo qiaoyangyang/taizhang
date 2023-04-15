@@ -19,9 +19,7 @@ import com.meiling.oms.adapter.RecommendAdapter
 import com.meiling.oms.databinding.FragmentRechargeSettlementBinding
 import com.meiling.oms.viewmodel.RechargeViewModel
 import com.meiling.oms.viewmodel.RecommendViewModel
-import com.meiling.oms.widget.formatCurrentDate
-import com.meiling.oms.widget.formatCurrentDateBeforeWeek
-import com.meiling.oms.widget.showToast
+import com.meiling.oms.widget.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -51,6 +49,8 @@ class RechargeSettlementFragment :
                 holder.setText(R.id.txt_service_charge_name, item.settlementTypeName)
                 holder.setText(R.id.txt_service_charge_num, item.count + "笔")
                 holder.setText(R.id.txt_service_charge_money, item.settlementAmount)
+                holder.setText(R.id.txt_day, formatCurrentDateDay(item.settlementDate))
+                holder.setText(R.id.txt_month, formatCurrentDateMM(item.settlementDate) + "月")
             }
         }
         mDatabind.rvServerChargeList.adapter = chargeAdapter

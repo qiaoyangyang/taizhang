@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="选择时间"
+        android:textColor="#444444"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_select_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="@dimen/dp_30"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:weightSum="2.8">
+
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/txt_change_time_show"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingVertical="@dimen/dp_20"
+            android:text="2023-04-06"
+            android:textColor="@color/red"
+            android:textColorHint="@color/home_666666"
+            android:textSize="@dimen/sp_30"
+            app:shape_radius="@dimen/dp_10"
+            app:shape_strokeColor="@color/red"
+            app:shape_strokeWidth="@dimen/dp_1" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="---"
+            android:textSize="@dimen/sp_30" />
+
+        <com.hjq.shape.view.ShapeTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="请选择"
+            android:paddingVertical="@dimen/dp_20"
+            android:textColor="@color/red"
+            android:textColorHint="@color/home_666666"
+            android:textSize="@dimen/sp_30"
+            app:shape_radius="@dimen/dp_10"
+            app:shape_strokeColor="@color/red"
+            app:shape_strokeWidth="@dimen/dp_1" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <!-- 年份选择器 -->
+        <NumberPicker
+            android:id="@+id/yearPicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <!-- 月份选择器 -->
+        <NumberPicker
+            android:id="@+id/monthPicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <!-- 日选择器 -->
+        <NumberPicker
+            android:id="@+id/dayPicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <!--        &lt;!&ndash; 小时选择器 &ndash;&gt;-->
+        <!--        <NumberPicker-->
+        <!--            android:id="@+id/hourPicker"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content" />-->
+
+        <!--        &lt;!&ndash; 分钟选择器 &ndash;&gt;-->
+        <!--        <NumberPicker-->
+        <!--            android:id="@+id/minutePicker"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content" />-->
+
+        <!--        &lt;!&ndash; 秒选择器 &ndash;&gt;-->
+        <!--        <NumberPicker-->
+        <!--            android:id="@+id/secondPicker"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content" />-->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/dp_20"
+        android:weightSum="2.8">
+
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/btn_select_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingVertical="@dimen/dp_20"
+            android:text="取消"
+            android:textColor="@color/red"
+            android:textColorHint="@color/home_666666"
+            android:textSize="@dimen/sp_30"
+            app:shape_radius="@dimen/dp_10"
+            app:shape_strokeColor="@color/red"
+            app:shape_strokeWidth="@dimen/dp_1" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:textSize="@dimen/sp_30" />
+
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/btn_select_sure"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingVertical="@dimen/dp_20"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textColorHint="@color/home_666666"
+            android:textSize="@dimen/sp_30"
+            app:shape_radius="@dimen/dp_10"
+            app:shape_solidColor="@color/red" />
+    </LinearLayout>
+
+</LinearLayout>
+

@@ -12,6 +12,7 @@ import com.meiling.oms.databinding.FragmentMyBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.MyViewModel
 import com.meiling.oms.widget.setSingleClickListener
+import com.meiling.oms.widget.showToast
 
 class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
@@ -61,7 +62,8 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
         }
         mDatabind.txtExit.setSingleClickListener {
-            val dialog: MineExitDialog = MineExitDialog().newInstance("温馨提示", "确认退出当前账号吗？","取消","确认" ,false)
+            val dialog: MineExitDialog =
+                MineExitDialog().newInstance("温馨提示", "确认退出当前账号吗？", "取消", "确认", false)
             dialog.setOkClickLister {
                 MMKVUtils.clear()
                 ARouter.getInstance().build("/app/LoginActivity").navigation()
@@ -72,16 +74,19 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
         mDatabind.txtRemoveAccount.setSingleClickListener {
             val dialog: MineExitDialog =
-                MineExitDialog().newInstance("温馨提示", "注销后，该账号将不可用。\n 请确认操作～","取消","确认", false)
+                MineExitDialog().newInstance("温馨提示", "注销后，该账号将不可用。\n 请确认操作～", "取消", "确认", false)
             dialog.setOkClickLister {
-                MMKVUtils.clear()
-                ARouter.getInstance().build("/app/LoginActivity").navigation()
-                requireActivity().finish()
+
+                mViewModel.disableAccount(MMKVUtils.getString(SPConstants.adminViewId))
+
             }
             dialog.show(childFragmentManager)
         }
         mDatabind.txtModifyPwd.setSingleClickListener {
             ARouter.getInstance().build("/app/ModifyPassWordActivity").navigation()
+        }
+        mDatabind.txtMsgCenter.setSingleClickListener {
+            ARouter.getInstance().build("/app/MessageCenterActivity").navigation()
         }
 //        mDatabind.aivMore.setOnClickListener {
 ////            mDatabind.drawerLayout.openDrawer(GravityCompat.START)
@@ -92,6 +97,23 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 //        mDatabind.aivModify.setOnClickListener {
 //            ARouter.getInstance().build("/app/ModifyInformationActivity").navigation()
 //        }
+    }
+
+    override fun createObserver() {
+        mViewModel.disableAccountDto.onStart.observe(this) {
+            showLoading("正在请求")
+        }
+        mViewModel.disableAccountDto.onSuccess.observe(this) {
+            dismissLoading()
+            MMKVUtils.clear()
+            ARouter.getInstance().build("/app/LoginActivity").navigation()
+            requireActivity().finish()
+        }
+        mViewModel.disableAccountDto.onError.observe(this) {
+            dismissLoading()
+            showToast(it.msg)
+        }
+
     }
 
 }

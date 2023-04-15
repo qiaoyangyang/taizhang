@@ -22,10 +22,13 @@ import com.meiling.common.utils.GsonUtils
 import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.RecyclerViewDivider
 import com.meiling.common.utils.SpannableUtils
+import com.meiling.oms.EventBusData.MessageEventTimeShow
+import com.meiling.oms.EventBusData.MessageEventVoucherInspectionHistory
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityWriteOffDetailsBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.VoucherInspectionHistoryViewModel
+import org.greenrobot.eventbus.EventBus
 import org.json.JSONArray
 
 //核销详情
@@ -40,12 +43,13 @@ class WriteOffDetailsActivity :
     override fun getBind(layoutInflater: LayoutInflater): ActivityWriteOffDetailsBinding {
         return ActivityWriteOffDetailsBinding.inflate(layoutInflater)
     }
-
+    var id =0
 
     override fun initData() {
         var serializableExtra =
             intent.getSerializableExtra("writeoffhistoryPageData") as WriteoffhistoryPageData?
         var shopId = intent.getStringExtra("shopId")
+         id = intent.getIntExtra("id",0)
 
         var persons =
             GsonUtils.getPersons1(serializableExtra?.coupon?.dealMenu, DealMenu::class.java)
@@ -80,16 +84,18 @@ class WriteOffDetailsActivity :
 
 
             if (serializableExtra?.coupon?.undoType == 1) {
-                mDatabind.tvStatus.setTextColor(Color.parseColor("#31D288"))
-                mDatabind.tvStatus.shapeDrawableBuilder.setSolidColor(Color.parseColor("#EDFFF4"))
+                mDatabind.tvStatus.setTextColor(Color.parseColor("#FB9716"))
+                mDatabind.tvStatus.shapeDrawableBuilder.setSolidColor(Color.parseColor("#FFF1DF"))
                     .intoBackground()
                 mDatabind.tvStatus.text = "已撤销"
 
             } else if (serializableExtra?.coupon?.undoType == 0) {
-                mDatabind.tvStatus.setTextColor(Color.parseColor("#FB9716"))
-                //  tv_status.setBackgroundColor(Color.parseColor("#FFF1DF"))
-                mDatabind.tvStatus.shapeDrawableBuilder.setSolidColor(Color.parseColor("#FFF1DF"))
+
+                mDatabind.tvStatus.setTextColor(Color.parseColor("#31D288"))
+                mDatabind.tvStatus.shapeDrawableBuilder.setSolidColor(Color.parseColor("#EDFFF4"))
                     .intoBackground()
+
+
                 mDatabind.tvStatus.text = "已核销"
 
                 var string2Millis =
@@ -112,7 +118,7 @@ class WriteOffDetailsActivity :
 
             if (serializableExtra?.coupon?.type == 2) {//美团
                 mDatabind.meiRecyclerView.visibility = View.VISIBLE
-                var conet = "由 ${serializableExtra.shopName} 店验证"
+                var conet = "由 ${serializableExtra.shopName} 验证"
                 SpannableUtils.setTextcolor(
                     this,
                     conet,
@@ -125,7 +131,7 @@ class WriteOffDetailsActivity :
             } else if (serializableExtra?.coupon?.type == 5) {//抖音
                 mDatabind.meiRecyclerView.visibility = View.GONE
                 //  holder.setText(R.id.tv_shopName, "由"+item?.coupon?.shopName+"验证")
-                var conet = "由 ${serializableExtra?.coupon?.shopName} 店验证"
+                var conet = "由 ${serializableExtra?.shopName} 验证"
                 SpannableUtils.setTextcolor(
                     this,
                     conet,
@@ -203,10 +209,12 @@ class WriteOffDetailsActivity :
 
     override fun createObserver() {
         mViewModel.cancelstring.onStart.observe(this) {
+            EventBus.getDefault().post(MessageEventVoucherInspectionHistory(id))
             finish()
 
         }
         mViewModel.cancelmeituanstring.onSuccess.observe(this) {
+            EventBus.getDefault().post(MessageEventVoucherInspectionHistory(id))
             finish()
         }
 

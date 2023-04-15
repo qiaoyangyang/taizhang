@@ -57,5 +57,9 @@ interface OrderDisService {
     @GET("/saas/logistics/logisticsMenu")
     suspend fun logisticsMenu(): ResultData<ArrayList<SelectLabel>>
 
+    //配送渠道/平台
+    @GET("/saas/channel")
+    suspend fun orderChannelPlatForm(): ResultData<ArrayList<OrderSelectPlatform>>
+
 
 }

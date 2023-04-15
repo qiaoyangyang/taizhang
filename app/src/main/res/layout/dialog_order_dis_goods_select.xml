@@ -48,7 +48,7 @@
             app:wheelMaskLineColor="#F5F5F5"
             app:wheelTextColor="#333333"
             app:wheelTextSize="16sp"
-            app:wheelTotalOffsetX="3dp" />
+           />
 
     </LinearLayout>
 

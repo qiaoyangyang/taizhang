@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.*
+import com.meiling.oms.EventBusData.MessageEventUpDataTip
 import com.meiling.oms.R
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentDis1Binding
@@ -23,6 +24,7 @@ import com.meiling.oms.viewmodel.DataFragmentViewModel
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
+import org.greenrobot.eventbus.EventBus
 
 class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Binding>() {
 
@@ -91,7 +93,7 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
                     }
                     if (item.errMsg == null) {
 //                        viewPrice.textSize = 14f
-                        viewPrice.visibility = View.GONE
+                        viewPrice.visibility = View.INVISIBLE
                     } else {
                         viewPrice.visibility = View.VISIBLE
                         viewPrice.textSize = 11f
@@ -218,14 +220,17 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
         }
 
         mViewModel.sendSuccess.onStart.observe(this) {
-
+            showLoading("正在请求。。。")
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
-            showToast("已成功发起配送 请在订单页面，查看配送详情")
+            dismissLoading()
+            showToast("发起配送成功")
+            EventBus.getDefault().post(MessageEventUpDataTip())
             mActivity.finish()
         }
         mViewModel.sendSuccess.onError.observe(this) {
-            showToast("发起配送失败 , 失败原因：${it.toString()}")
+            dismissLoading()
+            showToast("发起配送失败")
         }
         mViewModel.orderSendConfirmList.onStart.observe(this) {
 

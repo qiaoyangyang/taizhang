@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
-                android:text="核销"
+                android:text="验券"
                 android:textColor="@drawable/bottom_navigation_item_selector"
                 android:textSize="@dimen/sp_20" />
 
