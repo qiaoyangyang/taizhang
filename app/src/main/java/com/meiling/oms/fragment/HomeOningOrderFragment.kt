@@ -89,65 +89,71 @@ class HomeOningOrderFragment :
 
         mViewModel.statusCountDto.onSuccess.observe(this) {
             dismissLoading()
-            if (it.deliveryNot != 0) {
                 mDatabind.tabLayout.updateTabBadge(0) {
                     badgeTextSize = 30f
                     badgeGravity = Gravity.RIGHT or Gravity.TOP
-                    badgeText = it.deliveryNot.toString()
+                    badgeText = if (it.deliveryNot == 0) {
+                        null
+                    } else {
+                        it.deliveryNot.toString()
+                    }
                     badgeOffsetX = 5
                     badgeOffsetY = 30
 
                 }
-            }
-            if (it.deliveryOrder != 0) {
                 mDatabind.tabLayout.updateTabBadge(1) {
                     badgeTextSize = 30f
                     badgeGravity = Gravity.RIGHT or Gravity.TOP
-                    badgeText = it.deliveryOrder.toString()
+                    badgeText = if (it.deliveryOrder == 0) {
+                        null
+                    } else {
+                        it.deliveryOrder.toString()
+                    }
                     badgeOffsetX = 5
                     badgeOffsetY = 30
 
                 }
-            }
-            if (it.deliveryGoods != 0) {
                 mDatabind.tabLayout.updateTabBadge(2) {
                     badgeTextSize = 30f
                     badgeGravity = Gravity.RIGHT or Gravity.TOP
-                    badgeText = it.deliveryGoods.toString()
+                    badgeText = if (it.deliveryGoods == 0) {
+                        null
+                    } else {
+                        it.deliveryGoods.toString()
+                    }
                     badgeOffsetX = 5
                     badgeOffsetY = 30
 
                 }
-            }
-            if (it.deliverying != 0) {
                 mDatabind.tabLayout.updateTabBadge(3) {
                     badgeTextSize = 30f
                     badgeGravity = Gravity.RIGHT or Gravity.TOP
-                    badgeText = it.deliverying.toString()
+                    badgeText = if (it.deliverying == 0) {
+                        null
+                    } else {it.deliverying.toString()}
                     badgeOffsetX = 5
                     badgeOffsetY = 30
 
                 }
-            }
-            if (it.deliveryCancel != 0) {
                 mDatabind.tabLayout.updateTabBadge(4) {
                     badgeTextSize = 30f
                     badgeGravity = Gravity.RIGHT or Gravity.TOP
-                    badgeText = it.deliveryCancel.toString()
+                    badgeText = if (it.deliveryCancel == 0) {
+                        null
+                    } else {it.deliveryCancel.toString()}
                     badgeOffsetX = 20
                     badgeOffsetY = 30
 
-                }
             }
-            if (it.deliveryComplete != 0) {
                 mDatabind.tabLayout.updateTabBadge(5) {
                     badgeTextSize = 30f
                     badgeGravity = Gravity.RIGHT or Gravity.TOP
-                    badgeText = it.deliveryComplete.toString()
+                    badgeText = if (it.deliveryComplete == 0) {
+                        null
+                    } else {it.deliveryComplete.toString()}
                     badgeOffsetX = 10
                     badgeOffsetY = 30
 
-                }
             }
             Log.e("order", "createObserver: " + it)
         }

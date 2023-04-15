@@ -216,7 +216,7 @@ fun createAndStart(context: Context, uMessage: UMessage, x: Int, y: Int) {
         "3", "7", "302" -> {
             MessageManagement.get(context)?.addMessage(
                 MessageData(
-                    R.raw.musin,
+                    R.raw.cancel_order,
                     ""
                 )
             )

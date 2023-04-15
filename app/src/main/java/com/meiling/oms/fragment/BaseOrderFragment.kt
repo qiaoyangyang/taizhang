@@ -54,6 +54,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
     override fun onResume() {
         super.onResume()
         initViewData()
+        EventBus.getDefault().post(MessageEventUpDataTip())
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -301,7 +302,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             mDatabind.sflLayout.finishRefresh()
             if (it.pageIndex == 1) {
                 if (it.content.isNullOrEmpty()) {
-                    orderDisAdapter.data.clear()
+                    orderDisAdapter.setList(null)
                     orderDisAdapter.setEmptyView(R.layout.order_search_empty)
                 } else {
                     orderDisAdapter.setList(it.content as MutableList<OrderDto.Content>)
@@ -353,7 +354,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         // 在这里处理事件
         val message: Int = event.message
         orderDisAdapter.notifyItemChanged(message)
-
+        EventBus.getDefault().post(MessageEventUpDataTip())
     }
 
 }
