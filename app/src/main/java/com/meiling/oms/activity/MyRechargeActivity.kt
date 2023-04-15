@@ -1,21 +1,24 @@
 package com.meiling.oms.activity
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.NumberPicker
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.RechargeRequest
-import com.meiling.oms.eventBusData.MessageEventTime
-import com.meiling.oms.eventBusData.MessageEventTimeShow
 import com.meiling.oms.R
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityRechargeBinding
 import com.meiling.oms.dialog.OrderDisSelectTimeDialog
 import com.meiling.oms.dialog.RechargeDialog
+import com.meiling.oms.eventBusData.MessageEventTime
+import com.meiling.oms.eventBusData.MessageEventTimeShow
 import com.meiling.oms.fragment.*
 import com.meiling.oms.pay.AliPayResp
 import com.meiling.oms.pay.PayUtils
@@ -27,6 +30,8 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
+import java.lang.reflect.Field
+
 
 /**
  * 充值
@@ -97,7 +102,9 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
                                 )
                             )
                         if (type == "1") {
-                            mDatabind.radioButton1.isChecked = true
+                            mDatabind.radioButton1.isChecked = false
+                        }else{
+                            mDatabind.radioButton4.isChecked = false
                         }
                     }
                 }
