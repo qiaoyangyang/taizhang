@@ -232,6 +232,9 @@ class InputBoredomActivity :
             disLoading()
             if (type == "1") {
                 var it1 = it as ArrayList<ThrillItem>
+
+                StockCode = ""
+                mDatabind.tvStockCode.setText(StockCode)
                 startActivity(
                     Intent(this, WriteOffActivity::class.java).putExtra(
                         "thrillitem",
@@ -279,6 +282,8 @@ class InputBoredomActivity :
 
         mViewModel.consume.onSuccess.observe(this) {
             disLoading()
+            StockCode = ""
+            mDatabind.tvStockCode.setText(StockCode)
             startActivity(
                 Intent(this, MeituanActivity::class.java).putExtra(
                     "meituan",

@@ -50,7 +50,7 @@ data class ThrillBen(
     val expireTime: Int? = 0,
     @SerializedName("sku")
     val sku: Sku? = Sku()
-)
+): Serializable
 
 data class Amount(
     @SerializedName("coupon_pay_amount")
@@ -61,7 +61,7 @@ data class Amount(
     val payAmount: String? = "",//购买价格
     @SerializedName("payment_discount_amount")
     val paymentDiscountAmount: Int? = 0
-)
+): Serializable
 
 data class Sku(
     @SerializedName("account_id")
@@ -78,7 +78,7 @@ data class Sku(
     val thirdSkuId: String? = "",
     @SerializedName("title")
     val title: String? = ""//券码名称
-)
+): Serializable
 
 
 data class Writeoffhistory(

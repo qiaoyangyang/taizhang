@@ -99,6 +99,7 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
             rb_shop_name?.isChecked = true
             verificationScreening.poiIdtype = "0"
 
+
             rb_isVoucher?.isChecked = true
             verificationScreening.isVoucher = "0"
 
@@ -203,6 +204,7 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
         Rb_shop?.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.rb_shop_name -> {
+                    rb_shop_name_custom?.text="自定义门店"
                     verificationScreening.poiIdtype = "0"
                 }
                 R.id.rb_shop_name_custom -> {

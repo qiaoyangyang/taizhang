@@ -15,7 +15,7 @@ import com.shehuan.nicedialog.ViewHolder
 class CheckCouponInformationDidalog : BaseNiceDialog() {
     init {
         setMargin(30)
-        setOutCancel(true)
+        setOutCancel(false)
     }
 
     override fun intLayoutId(): Int {
@@ -44,14 +44,14 @@ class CheckCouponInformationDidalog : BaseNiceDialog() {
         isadd(stock_add_num?.text.toString(), stock_add_jia!!, count)
         //加
         holder?.setOnClickListener(R.id.stock_add_jia) {
-            var count = holder.getView<TextView>(R.id.stock_add_num).text.toString()
+            var count1 = holder.getView<TextView>(R.id.stock_add_num).text.toString()
 
-            if (count == count) {
+            if (count1 == count) {
                 return@setOnClickListener
             }
 
 
-            var i = count.toInt() + 1
+            var i = count1.toInt() + 1
             holder?.setText(R.id.stock_add_num, i.toString())
 
         }
