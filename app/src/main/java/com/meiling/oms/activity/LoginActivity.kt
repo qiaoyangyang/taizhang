@@ -1,5 +1,6 @@
 package com.meiling.oms.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -204,7 +205,10 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
     override fun createObserver() {
 
         mDatabind.txtRegister.setSingleClickListener {
-            showToast("注册功能，正在开发中～")
+//            showToast("注册功能，正在开发中～")
+            var intent=Intent(this,RegisterActivity::class.java)
+            startActivity(intent)
+
         }
 
         mViewModel.sendCode.onStart.observe(this) {
