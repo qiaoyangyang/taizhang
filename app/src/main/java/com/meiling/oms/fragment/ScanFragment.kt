@@ -22,7 +22,7 @@ class ScanFragment : BaseFragment<FindViewModel, FragmentScanBinding>() {
         ImmersionBar.with(this).init()
         ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
     }
-
+    var type=""
     override fun getBind(inflater: LayoutInflater): FragmentScanBinding {
         return FragmentScanBinding.inflate(inflater)
     }
@@ -30,24 +30,44 @@ class ScanFragment : BaseFragment<FindViewModel, FragmentScanBinding>() {
     override fun initListener() {
         //抖音
         mDatabind.rlDouYin.setSingleClickListener {
-            startActivity(
-                Intent(mActivity, VoucherInspectionActivity::class.java).putExtra(
-                    "type",
-                    "1"
-                )
-            )
+            type="1"
+            mViewModel.cityshop(type)
+
         }
         mDatabind.rlKouBei.setSingleClickListener { showToast("功能暂未开通") }
         mDatabind.rlMeiTuan.setSingleClickListener {
+            type="2"
+            mViewModel.cityshop(type)
+
+
+        }
+
+    }
+
+    override fun createObserver() {
+        super.createObserver()
+        mViewModel.shopBean.onStart.observe(this) {
+            showLoading("")
+        }
+        mViewModel.shopBean.onSuccess.observe(this) {
+
+            dismissLoading()
+            if (it.isEmpty()) {
+                showToast("请先绑定门店")
+                return@observe
+            }
             startActivity(
                 Intent(mActivity, VoucherInspectionActivity::class.java).putExtra(
                     "type",
-                    "2"
+                    type
                 )
             )
 
         }
-
+        mViewModel.shopBean.onError.observe(this) {
+            dismissLoading()
+            showToast(it.msg)
+        }
     }
 
 }
