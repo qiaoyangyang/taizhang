@@ -115,11 +115,15 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
                                 holder.setText(R.id.txtOperate, item.remark)
                                 var view = holder.getView<ImageView>(R.id.imgView)
                                 var phone = holder.getView<TextView>(R.id.txt_dis_detail_phone)
-                                val deliveryName = holder.getView<TextView>(R.id.txt_dis_detail_name)
+                                val deliveryName =
+                                    holder.getView<TextView>(R.id.txt_dis_detail_name)
 
                                 if (holder?.layoutPosition == 0) {
                                     view.setImageDrawable(resources.getDrawable(R.drawable.icon_order_dis_finish))
                                 } else {
+                                    if (orderSendDetail.deliveryConsumeLogs.size-1 == (holder?.layoutPosition)) {
+                                        holder.setGone(R.id.viewLine, true)
+                                    }
                                     view.setImageDrawable(resources.getDrawable(R.drawable.icon_order_dis_ing))
                                 }
                                 when (item.status) {
@@ -271,7 +275,8 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
             bs
         )
 
-        bs.onSuccess.observe(this) {
+        bs.onSuccess.observe(this)
+        {
             if (!it.isNullOrEmpty()) {
                 ryOrderDisDetailAllAdapter.setList(it)
                 txtOrderAddress!!.text = it.get(0).recvAddr

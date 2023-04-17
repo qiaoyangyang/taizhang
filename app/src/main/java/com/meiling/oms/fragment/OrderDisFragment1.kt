@@ -19,6 +19,7 @@ import com.meiling.common.network.data.*
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDis1Binding
 import com.meiling.oms.dialog.OrderDisGoodsSelectDialog
+import com.meiling.oms.dialog.OrderDisRuleTipDialog
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
@@ -142,7 +143,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
                 return@setSingleClickListener
             }
             if (insertOrderSendList.isNullOrEmpty()) {
-                showToast("请选择配送方式")
+                showToast("请选择配送平台")
             } else {
                 mViewModel.insertOrderSend(LogisticsConfirmDtoList(logisticsConfirmDtoList = insertOrderSendList))
             }
@@ -150,8 +151,9 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
         shopSelectDisWayAdapter.setOnItemClickListener { adapter, view, position ->
             var data = adapter.data[position] as OrderSendChannel
             if (data.errMsg != null) {
-//                shopSelectDisWayAdapter.getItem(position).select = false
-//                OrderDistributionCheckRuleDialog().newInstance().show(this.childFragmentManager)
+                shopSelectDisWayAdapter.getItem(position).select = false
+                var orderDisRuleTipDialog = OrderDisRuleTipDialog().newInstance("${data.errMsg}")
+                orderDisRuleTipDialog.show(childFragmentManager)
             } else {
                 data.select = !shopSelectDisWayAdapter.getItem(position).select
             }

@@ -150,7 +150,7 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
                 return@setSingleClickListener
             }
             if (insertOrderSendList.isNullOrEmpty()) {
-                showToast("请选择配送方式")
+                showToast("请选择配送平台")
             } else {
                 mViewModel.insertOrderSend(LogisticsConfirmDtoList(logisticsConfirmDtoList = insertOrderSendList))
             }

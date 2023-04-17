@@ -15,8 +15,8 @@ class LoadingDialog(context: Context) : BaseDialog(context, R.style.LoadingDialo
         get() = R.layout.common_dialog_loading
 
     override fun initView() {
-        setCancelable(true)
-        setCanceledOnTouchOutside(true)
+        setCancelable(false)
+        setCanceledOnTouchOutside(false)
         tipTextView = findViewById<TextView>(R.id.tipTextView)
     }
 

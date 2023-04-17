@@ -108,15 +108,16 @@
                 app:drawableStartCompat="@mipmap/icon_my_msg" />
 
             <TextView
+                android:id="@+id/txt_about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/dp_10"
                 android:gravity="center_vertical"
                 android:paddingVertical="@dimen/dp_20"
-                android:text="打印设置"
+                android:text="关于小喵来客"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_32"
-                app:drawableStartCompat="@mipmap/icon_my_print" />
+                app:drawableStartCompat="@mipmap/icon_my_about" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -128,6 +129,7 @@
                 android:text="联系客服"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_32"
+                android:visibility="gone"
                 app:drawableStartCompat="@mipmap/icon_my_kf" />
 
             <TextView

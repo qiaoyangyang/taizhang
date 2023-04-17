@@ -40,11 +40,12 @@
             tools:text="物流消息" />
 
         <TextView
-            android:id="@+id/txt_msg_center_spec"
+            android:id="@+id/txt_msg_center_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_20"
-            android:maxLines="2"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:paddingVertical="@dimen/dp_10"
             android:text="121212211212122112121221121212211212122112121221121212211212122112121221"
             android:textColor="@color/home_666666"
@@ -60,6 +61,7 @@
             android:paddingEnd="@dimen/dp_20"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_24"
+            android:visibility="gone"
             app:layout_constraintBaseline_toBaselineOf="@+id/txt_msg_center_name"
             app:layout_constraintRight_toRightOf="parent"
             tools:ignore="RtlSymmetry"

@@ -45,7 +45,7 @@ class RechargeSettlementFragment :
                 holder.setText(R.id.txt_service_charge_name, item.settlementTypeName)
                 holder.setText(R.id.txt_service_charge_name, item.settlementTypeName)
                 holder.setText(R.id.txt_service_charge_num, item.count + "笔")
-                holder.setText(R.id.txt_service_charge_money, item.settlementAmount)
+                holder.setText(R.id.txt_service_charge_money, "-" + item.settlementAmount)
                 holder.setText(R.id.txt_day, formatCurrentDateDay(item.settlementDate))
                 holder.setText(R.id.txt_month, formatCurrentDateMM(item.settlementDate) + "月")
             }
@@ -102,16 +102,24 @@ class RechargeSettlementFragment :
     }
 
     override fun createObserver() {
-        mViewModel.financialRecord.onSuccess.observe(this) {
+        mViewModel.financialRecord.onStart.observe(this) {
+            showLoading("加载中")
+        }
+        mViewModel.financialRecord.onError.observe(this) {
+            dismissLoading()
+            mDatabind.srfRechargeFeeRecord.isRefreshing = false
+            showToast(it.msg)
+        }
 
+        mViewModel.financialRecord.onSuccess.observe(this) {
+            dismissLoading()
+            if (it.pageResult?.pageData.isNullOrEmpty()) {
+                chargeAdapter.setList(null)
+                chargeAdapter.setEmptyView(R.layout.empty_record_center)
+            }
             mDatabind.srfRechargeFeeRecord.isRefreshing = false
             if (it.pageResult?.pageNum == 1 || it.pageResult?.pageNum == 0) {
-                if (it.pageResult?.pageData.isNullOrEmpty()) {
-                    chargeAdapter.data.clear()
-                    chargeAdapter.setEmptyView(R.layout.empty_record_center)
-                }else{
-                    chargeAdapter.setList(it.pageResult?.pageData as MutableList<FinancialRecord.PageResult.PageData>)
-                }
+                chargeAdapter.setList(it.pageResult?.pageData as MutableList<FinancialRecord.PageResult.PageData>)
             } else {
                 chargeAdapter.addData(it.pageResult?.pageData as MutableList<FinancialRecord.PageResult.PageData>)
             }
@@ -123,19 +131,15 @@ class RechargeSettlementFragment :
             } else {
                 chargeAdapter.loadMoreModule.loadMoreComplete()
             }
-
         }
-        mViewModel.financialRecord.onError.observe(this) {
-            mDatabind.srfRechargeFeeRecord.isRefreshing = false
-            showToast(it.msg)
-        }
-
     }
 
     override fun onResume() {
         super.onResume()
         EventBus.getDefault().post(MessageEventTimeShow())
         pageIndex = 1
+        startDate = formatCurrentDateBeforeWeek()
+        endData = formatCurrentDate()
         initViewData()
     }
 
@@ -151,7 +155,7 @@ class RechargeSettlementFragment :
     fun eventDay(messageEventTime: MessageEventTime) {
         pageIndex = 1
         startDate = messageEventTime.starTime
-        endData = messageEventTime.starTime
+        endData = messageEventTime.endTime
         initViewData()
     }
 

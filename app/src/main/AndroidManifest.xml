@@ -66,6 +66,10 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.AboutActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.AgreementActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
@@ -201,15 +205,15 @@
         <!--            android:exported="false">-->
         <!--            <grant-uri-permission android:pathPattern=".*" />-->
         <!--        </provider> &lt;!&ndash; 以下为基本配置信息，需要自行添加至您的AndroidManifest文件中 end &ndash;&gt;-->
-<!--        <receiver-->
-<!--            android:name=".jpush.MyPushReceiver"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="false">-->
-<!--            <intent-filter>-->
-<!--                &lt;!&ndash; 设置接收的广播类型 &ndash;&gt;-->
-<!--                <action android:name="com.example.mypushreceiver.PUSH_MESSAGE" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
+        <!--        <receiver-->
+        <!--            android:name=".jpush.MyPushReceiver"-->
+        <!--            android:enabled="true"-->
+        <!--            android:exported="false">-->
+        <!--            <intent-filter>-->
+        <!--                &lt;!&ndash; 设置接收的广播类型 &ndash;&gt;-->
+        <!--                <action android:name="com.example.mypushreceiver.PUSH_MESSAGE" />-->
+        <!--            </intent-filter>-->
+        <!--        </receiver>-->
     </application>
     <queries>
         <package android:name="com.tencent.mm" />

@@ -41,7 +41,7 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
                 LoadMoreModule {
                 override fun convert(holder: BaseViewHolder, item: PageData) {
                     holder.setText(R.id.txt_channel_name, item.payTypeName)
-                    holder.setText(R.id.txt_service_charge_money, item.payAmount)
+                    holder.setText(R.id.txt_service_charge_money, "+" + item.payAmount)
                     holder.setText(R.id.txt_recharge_name, item.createTime)
                 }
             }
@@ -95,14 +95,25 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
             dismissLoading()
             mDatabind.srfRechargeRecord.isRefreshing = false
             if (it?.pageData.isNullOrEmpty()) {
-                rechargeAdapter.data.clear()
+                rechargeAdapter.setList(null)
                 rechargeAdapter.footerWithEmptyEnable = false
                 rechargeAdapter.setEmptyView(R.layout.empty_record_center)
-            } else {
+            }
+            if (it.pageNum == 1) {
                 rechargeAdapter.setList(it.pageData as MutableList<PageData>)
+            } else {
+                rechargeAdapter.addData(it.pageData as MutableList<PageData>)
+            }
+
+            if (it.pageData!!.size < 20) {
+                rechargeAdapter.footerWithEmptyEnable = false
+                rechargeAdapter.loadMoreModule.loadMoreEnd()
+            } else {
+                rechargeAdapter.loadMoreModule.loadMoreComplete()
             }
         }
         mViewModel.rechargeRecord.onError.observe(this) {
+            dismissLoading()
             mDatabind.srfRechargeRecord.isRefreshing = false
             showToast(it.msg)
         }

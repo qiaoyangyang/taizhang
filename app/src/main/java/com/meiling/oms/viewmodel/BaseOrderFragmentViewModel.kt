@@ -41,8 +41,8 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
                 pageSize,
                 deliverySelect,
                 isValid,
-                businessNumber,
-                selectText,
+                businessNumber = businessNumber,
+                selectText = selectText,
                 channelId = channelId
             )
         }, orderList)

@@ -10,8 +10,8 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.codbking.widget.DatePickDialog
 import com.codbking.widget.bean.DateType
 import com.meiling.common.activity.BaseActivity
-import com.meiling.oms.eventBusData.MessageEvent
 import com.meiling.oms.databinding.ActivityOrderChengeAddredssBinding
+import com.meiling.oms.eventBusData.MessageEvent
 import com.meiling.oms.viewmodel.ChangeAddressModel
 import com.meiling.oms.widget.formatCurrentDateToString
 import com.meiling.oms.widget.setSingleClickListener

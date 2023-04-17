@@ -43,7 +43,7 @@
         android:textSize="@dimen/sp_28" />
 
     <com.hjq.shape.view.ShapeButton
-        android:id="@+id/btn_ok"
+        android:id="@+id/btn_rule_ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_rule_tip2"

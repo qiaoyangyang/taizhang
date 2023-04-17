@@ -63,6 +63,7 @@
             android:layout_toStartOf="@+id/img_search_edit_clear"
             android:layout_toEndOf="@+id/img_icon"
             android:background="@null"
+            android:inputType="text"
             android:gravity="center_vertical"
             android:hint="搜订单编号、手机号、姓名"
             android:singleLine="true"

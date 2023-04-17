@@ -58,6 +58,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        EventBus.getDefault().register(this)
         requireArguments().getString("type").toString()
         orderDisAdapter =
             object : BaseQuickAdapter<OrderDto.Content, BaseViewHolder>(R.layout.item_home_order),
@@ -75,7 +76,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     val channelLogoImg = holder.getView<ImageView>(R.id.img_order_icon)
                     holder.setText(R.id.txt_order_delivery_name, item.order?.recvName)
                     holder.setText(R.id.txt_order_delivery_phone, item.order?.recvPhone)
-                    holder.setText(R.id.txt_order_delivery_address, item.order?.recvAddr)
+                    holder.setText(R.id.txt_order_delivery_address, item.order?.recvAddr!!.replace("@@",""))
                     holder.setText(R.id.txt_order_num, "#${item.order?.channelDaySn}")
                     holder.setText(R.id.txt_shop_actual_money, "${item.order?.actualIncome}")
                     holder.setText(R.id.txt_order_delivery_time, "${item.order?.arriveTimeDate}")
@@ -315,6 +316,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         }
         mViewModel.orderList.onSuccess.observe(this) {
             dismissLoading()
+            EventBus.getDefault().post(MessageEventUpDataTip())
             mDatabind.sflLayout.finishRefresh()
             if (it.pageIndex == 1) {
                 if (it.content.isNullOrEmpty()) {
@@ -345,6 +347,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         }
         mViewModel.cancelOrderDto.onSuccess.observe(this) {
             dismissLoading()
+            initViewData()
             EventBus.getDefault().post(MessageEventUpDataTip())
             showToast("订单已取消")
         }
@@ -371,7 +374,6 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         // 在这里处理事件
         val message: Int = event.message
         orderDisAdapter.notifyItemChanged(message)
-        EventBus.getDefault().post(MessageEventUpDataTip())
     }
 
 }

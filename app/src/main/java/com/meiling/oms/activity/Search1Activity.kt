@@ -56,7 +56,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                     val channelLogoImg = holder.getView<ImageView>(R.id.img_order_icon)
                     holder.setText(R.id.txt_order_delivery_name, item.order?.recvName)
                     holder.setText(R.id.txt_order_delivery_phone, item.order?.recvPhone)
-                    holder.setText(R.id.txt_order_delivery_address, item.order?.recvAddr)
+                    holder.setText(R.id.txt_order_delivery_address, item.order?.recvAddr?.replace("@@", ""))
                     holder.setText(R.id.txt_order_num, "#${item.order?.channelDaySn}")
                     holder.setText(R.id.txt_shop_actual_money, "${item.order?.actualIncome}")
                     holder.setText(R.id.txt_order_delivery_time, "${item.order?.arriveTimeDate}")
