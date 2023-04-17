@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cl_login_bg"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".activity.RegisterActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.RegisterActivity">
+    >
 
     <com.hjq.bar.TitleBar
         android:id="@+id/TitleBar"
@@ -19,14 +19,18 @@
         app:titleColor="@color/white"
         app:title="商户注册" />
 
-
-    <View
-        android:id="@+id/view_bg"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TitleBar" />
+    <androidx.core.widget.NestedScrollView
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:background="@color/white"
+    app:layout_constraintTop_toBottomOf="@+id/TitleBar"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
 
     <TextView
         android:id="@+id/tv_title"
@@ -37,10 +41,10 @@
         android:textColor="#666666"
         android:text="商家类型"
         android:textSize="16sp"
-        android:textStyle="bold"
         android:layout_marginLeft="@dimen/dp_18"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view_bg" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -203,16 +207,355 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtShopName"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_title"
         app:layout_constraintTop_toBottomOf="@+id/line2"
+        style="@style/registTitleTxt"
+        android:layout_marginTop="10dp"
         android:text="企业名称"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtShopName2"
+        android:textColor="@color/red"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtShopName"
         app:layout_constraintStart_toEndOf="@+id/txtShopName"
         app:layout_constraintTop_toBottomOf="@+id/line2"
         android:text="*"/>
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:hint="必须和营业执照的名称一致"
+        android:id="@+id/edtShopName"
+        android:layout_marginRight="10dp"
+        android:background="@null"
+        android:maxLines="1"
+        android:singleLine="true"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtShopName"
+        app:layout_constraintTop_toBottomOf="@+id/line2"
+        app:layout_constraintStart_toEndOf="@+id/txtShopName2"
+        app:layout_constraintBottom_toTopOf="@+id/line4"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/home_F1F1F1"
+        app:layout_constraintTop_toBottomOf="@+id/txtShopName"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/line4"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtShopBrandName"
+        app:layout_constraintStart_toStartOf="@+id/tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/line4"
+        style="@style/registTitleTxt"
+        android:layout_marginTop="10dp"
+        android:text="品牌名称"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtShopBrandName2"
+        android:textColor="@color/red"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtShopBrandName"
+        app:layout_constraintStart_toEndOf="@+id/txtShopBrandName"
+        app:layout_constraintTop_toBottomOf="@+id/line4"
+        android:text="*"/>
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:hint="用于对外展示"
+        android:id="@+id/edtShopBrandName"
+        android:layout_marginRight="10dp"
+        android:background="@null"
+        android:maxLines="1"
+        android:singleLine="true"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtShopBrandName"
+        app:layout_constraintTop_toBottomOf="@+id/line4"
+        app:layout_constraintStart_toEndOf="@+id/txtShopBrandName"
+        app:layout_constraintBottom_toTopOf="@+id/line5"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/home_F1F1F1"
+        app:layout_constraintTop_toBottomOf="@+id/txtShopBrandName2"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/line5"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/line5"
+        app:layout_constraintStart_toStartOf="@+id/tv_title"
+        android:text="品牌LOGO"
+        android:id="@+id/txtLogo"
+        android:layout_marginTop="10dp"
+        style="@style/registTitleTxt"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/txtLogo"
+        app:layout_constraintStart_toStartOf="@+id/tv_title"
+        android:text="只能上传jpg/jpeg/png文件,且不超过2000kb"
+        android:id="@+id/txtLogo2"
+        android:layout_marginTop="10dp"
+        android:textSize="14sp"
+        style="@style/registTitleTxt"/>
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@mipmap/addimg"
+        app:layout_constraintTop_toBottomOf="@+id/txtLogo2"
+        android:layout_marginTop="15dp"
+        android:id="@+id/addImg"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/red"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/addImg"
+        android:layout_marginTop="10dp"
+        android:id="@+id/txtAddImg"
+        android:text="使用默认样式"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/registTitleTxt"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/txtAddImg"
+        android:layout_marginTop="15dp"
+        android:id="@+id/txtIndustry"
+        android:text="所属行业"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/registTitleTxt"
+        app:layout_constraintStart_toEndOf="@id/txtIndustry"
+        app:layout_constraintTop_toBottomOf="@+id/txtAddImg"
+        android:layout_marginTop="15dp"
+        android:id="@+id/txtIndustry2"
+        android:textColor="@color/red"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtIndustry"
+        android:text="*"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/txtAddImg"
+        android:id="@+id/txtIndustryRight"
+        android:layout_marginRight="5dp"
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtIndustry"
+        app:layout_constraintEnd_toStartOf="@+id/txtIndustryRight2"
+        android:text="请选择"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/txtAddImg"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="15dp"
+        android:textSize="14sp"
+        android:id="@+id/txtIndustryRight2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtIndustry"
+        android:text=">"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/home_F1F1F1"
+        app:layout_constraintTop_toBottomOf="@+id/txtIndustry"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/line6"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtAdministratorsName"
+        style="@style/registTitleTxt"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/line6"
+        android:layout_marginTop="15dp"
+        android:text="管理员姓名"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtAdministratorsName2"
+        style="@style/registTitleTxt"
+        android:textColor="@color/red"
+        app:layout_constraintStart_toEndOf="@id/txtAdministratorsName"
+        app:layout_constraintTop_toBottomOf="@+id/line6"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtAdministratorsName"
+        android:text="*"/>
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtAdministratorsName2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtAdministratorsName"
+        android:background="@null"
+        android:layout_marginTop="15dp"
+        android:hint="请输入"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:gravity="right"
+        android:layout_marginRight="15dp"
+        android:textSize="16sp"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/home_F1F1F1"
+        app:layout_constraintTop_toBottomOf="@+id/txtAdministratorsName"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/line7"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtAdministratorsLoginName"
+        style="@style/registTitleTxt"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/line7"
+        android:layout_marginTop="15dp"
+        android:text="管理员登录账号"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtAdministratorsLoginName2"
+        style="@style/registTitleTxt"
+        android:textColor="@color/red"
+        app:layout_constraintStart_toEndOf="@id/txtAdministratorsLoginName"
+        app:layout_constraintTop_toBottomOf="@+id/line6"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtAdministratorsLoginName"
+        android:text="*"/>
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtAdministratorsLoginName2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtAdministratorsLoginName"
+        android:background="@null"
+        android:layout_marginTop="15dp"
+        android:hint="用户登录管理系统"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:gravity="right"
+        android:layout_marginRight="15dp"
+        android:id="@+id/editAdministratorsLoginName"
+        android:textSize="16sp"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/home_F1F1F1"
+        app:layout_constraintTop_toBottomOf="@+id/txtAdministratorsLoginName"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/line8"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtAdministratorsLoginPassWord"
+        style="@style/registTitleTxt"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/line8"
+        android:layout_marginTop="15dp"
+        android:text="管理员登录密码"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtAdministratorsLoginPassWord2"
+        style="@style/registTitleTxt"
+        android:textColor="@color/red"
+        app:layout_constraintStart_toEndOf="@id/txtAdministratorsLoginPassWord"
+        app:layout_constraintTop_toBottomOf="@+id/line6"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtAdministratorsLoginPassWord"
+        android:text="*"/>
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtAdministratorsLoginPassWord"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtAdministratorsLoginPassWord"
+        android:background="@null"
+        android:layout_marginTop="15dp"
+        android:hint="用户登录管理系统"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:gravity="right"
+        android:layout_marginRight="15dp"
+        android:id="@+id/editAdministratorsLoginPassWord"
+        android:textSize="16sp"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/home_F1F1F1"
+        app:layout_constraintTop_toBottomOf="@+id/txtAdministratorsLoginPassWord"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/line9"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnNext"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_90"
+        android:layout_marginTop="@dimen/dp_80"
+        android:background="@drawable/login_btn_selector"
+        android:enabled="false"
+        android:text="下一步"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line9"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
