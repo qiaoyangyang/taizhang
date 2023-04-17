@@ -27,13 +27,13 @@ class ClearEditText @JvmOverloads constructor(
     RegexEditText(context, attrs, defStyleAttr),
     OnTouchListener, OnFocusChangeListener, TextWatcher {
 
-    private val clearDrawable: Drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.input_delete_ic)!!)
+    private val clearDrawable: Drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.search_close_edt)!!)
     private var touchListener: OnTouchListener? = null
     private var focusChangeListener: OnFocusChangeListener? = null
 
     init {
         clearDrawable.setBounds(0, 0, clearDrawable.intrinsicWidth, clearDrawable.intrinsicHeight)
-        setDrawableVisible(false)
+        setDrawableVisible(true)
         super.setOnTouchListener(this)
         super.setOnFocusChangeListener(this)
         super.addTextChangedListener(this)

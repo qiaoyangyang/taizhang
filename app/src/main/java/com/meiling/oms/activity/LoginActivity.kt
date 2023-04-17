@@ -23,6 +23,7 @@ import com.meiling.common.utils.SpannableUtils
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityLoginBinding
+import com.meiling.oms.dialog.LogisticsPlatformInformationDidalog
 import com.meiling.oms.viewmodel.LoginViewModel
 import com.meiling.oms.widget.CaptchaCountdownTool
 import com.meiling.oms.widget.setSingleClickListener
@@ -179,7 +180,10 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         }
 
         mDatabind.txtForgetPwd.setSingleClickListener {
-            ARouter.getInstance().build("/app/ForgetPwdActivity").navigation()
+           // ARouter.getInstance().build("/app/ForgetPwdActivity").navigation()
+            var logisticsPlatformInformationDidalog = LogisticsPlatformInformationDidalog()
+
+            logisticsPlatformInformationDidalog.show(supportFragmentManager)
         }
         mDatabind.txtAuthCode.setSingleClickListener {
             if (mDatabind.etPhone.text?.trim().toString().isNotEmpty()) {
