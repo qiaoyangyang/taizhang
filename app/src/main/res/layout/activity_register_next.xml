@@ -10,7 +10,7 @@
     <com.hjq.bar.TitleBar
         android:id="@+id/TitleBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
+        android:layout_height="wrap_content"
         app:barStyle="transparent"
         app:layout_constraintTop_toTopOf="parent"
         app:leftIcon="@drawable/bar_arrows_left_white"
@@ -36,10 +36,183 @@
         android:layout_marginEnd="32dp"
         android:textColor="#666666"
         android:text="商家类型"
-        android:textSize="28sp"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="@dimen/dp_18"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view_bg" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="*"
+        android:textSize="16sp"
+        android:textColor="@color/red"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_title"
+        app:layout_constraintStart_toEndOf="@+id/tv_title"/>
+
+
+    <com.wayne.constraintradiogroup.ConstraintRadioGroup
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/shopTypeRG"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_title"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/login_cb_agreement"
+            android:text="企业"
+            android:paddingLeft="5dp"
+            android:checked="true"
+            android:id="@+id/checkEnterprise"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/order_dis_tip_icon"
+            app:layout_constraintStart_toEndOf="@+id/checkEnterprise"
+            app:layout_constraintTop_toTopOf="@+id/checkEnterprise"
+            app:layout_constraintBottom_toBottomOf="@+id/checkEnterprise"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/login_cb_agreement"
+            android:text="个人"
+            android:paddingLeft="5dp"
+            android:id="@+id/checkPerson"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/order_dis_tip_icon"
+            app:layout_constraintStart_toEndOf="@+id/checkPerson"
+            app:layout_constraintTop_toTopOf="@+id/checkPerson"
+            app:layout_constraintBottom_toBottomOf="@+id/checkPerson"/>
+
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/login_cb_agreement"
+            android:text="其他"
+            android:paddingLeft="5dp"
+            app:layout_constraintEnd_toStartOf="@+id/tips3"
+            android:id="@+id/checkOther"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:id="@+id/tips3"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/order_dis_tip_icon"
+            app:layout_constraintTop_toTopOf="@+id/checkOther"
+            app:layout_constraintBottom_toBottomOf="@+id/checkOther"/>
+
+    </com.wayne.constraintradiogroup.ConstraintRadioGroup>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/home_F1F1F1"
+        app:layout_constraintTop_toBottomOf="@+id/shopTypeRG"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/line"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/line"
+        android:layout_marginTop="10dp"
+        android:id="@+id/txtOperateType"
+        android:textSize="16sp"
+        android:textColor="#666666"
+        app:layout_constraintStart_toStartOf="@+id/tv_title"
+        android:text="经营类型"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/red"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtOperateType"
+        app:layout_constraintStart_toEndOf="@+id/txtOperateType"
+        android:text="*"/>
+
+    <com.wayne.constraintradiogroup.ConstraintRadioGroup
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/operateTypeRG"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtOperateType"
+        app:layout_constraintStart_toStartOf="@+id/tv_title"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/login_cb_agreement"
+            android:text="连锁"
+            android:paddingLeft="5dp"
+            android:checked="true"
+            android:id="@+id/checkChain"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/login_cb_agreement"
+            android:text="非连锁"
+            android:paddingLeft="5dp"
+            android:id="@+id/checkUnChain"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+
+    </com.wayne.constraintradiogroup.ConstraintRadioGroup>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/home_F1F1F1"
+        app:layout_constraintTop_toBottomOf="@+id/operateTypeRG"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/line2"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtShopName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line2"
+        android:text="企业名称"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtShopName2"
+        app:layout_constraintStart_toEndOf="@+id/txtShopName"
+        app:layout_constraintTop_toBottomOf="@+id/line2"
+        android:text="*"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

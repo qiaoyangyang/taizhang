@@ -63,12 +63,22 @@
         </activity>
         <activity
             android:name=".activity.LoginActivity"
+
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.RegisterNextActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--            <meta-data-->
+<!--                android:name="android.app.lib_name"-->
+<!--                android:value="" />-->
+        </activity>
 
         <activity
             android:name=".activity.RegisterActivity"
