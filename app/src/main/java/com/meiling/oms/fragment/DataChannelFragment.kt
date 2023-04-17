@@ -14,9 +14,14 @@ import com.meiling.common.network.data.Shop
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDataChannelBinding
 import com.meiling.oms.dialog.DataSelectTimeDialog
+import com.meiling.oms.eventBusData.MessageHistoryEventSelect
+import com.meiling.oms.eventBusData.MessageSelectShopPo
 import com.meiling.oms.liveData.LiveDataShopData
 import com.meiling.oms.viewmodel.DataFragmentViewModel
 import com.meiling.oms.widget.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChannelBinding>() {
 
@@ -29,6 +34,7 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        EventBus.getDefault().register(this)
         dataChannelAdapter =
             object : BaseQuickAdapter<ChannelDataList, BaseViewHolder>(R.layout.item_data_shop) {
                 override fun convert(holder: BaseViewHolder, item: ChannelDataList) {
@@ -49,7 +55,7 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
         mDatabind.rvDataChannelHistory.adapter = dataHistoryChannelAdapter
 
         mDatabind.srfDataChannel.setOnRefreshListener {
-            initData()
+            initViewData()
         }
     }
 
@@ -57,23 +63,27 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
         return FragmentDataChannelBinding.inflate(inflater)
     }
 
-    override fun initData() {
+    var poiId = ArrayList<String>()
+
+    private fun initViewData() {
         mViewModel.channelDataList(
             DataListDto(
                 startTime = formatCurrentDate(),
                 endTime = getTomorrowDate(),
-                ArrayList<Long>()
+                poiId
             )
         )
         mViewModel.channelHistoryDataList(
             DataListDto(
                 startTime = formatCurrentDateBeforeDay(),
                 endTime = formatCurrentDate(),
-                ArrayList<Long>()
+                poiId
             )
         )
 //        LiveDataShopData.INSTANCE.observe(this, changeObserver)
     }
+
+    var startTime = formatCurrentDateBeforeDay()
 
     override fun initListener() {
         mDatabind.txtHistorySelectTime.setSingleClickListener {
@@ -81,11 +91,12 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
             dataSelectTimeDialog.show(childFragmentManager)
             dataSelectTimeDialog.setSelectTime { it, name ->
                 mDatabind.txtHistorySelectTime.text = name
+                startTime = it
                 mViewModel.channelHistoryDataList(
                     DataListDto(
                         startTime = it,
                         endTime = formatCurrentDate(),
-                        ArrayList<Long>()
+                        poiId
                     )
                 )
             }
@@ -100,8 +111,15 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
 
     override fun onResume() {
         super.onResume()
-        initData()
+        initViewData()
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun eventSelectTime(messageSelectShopPo: MessageSelectShopPo) {
+        poiId = messageSelectShopPo.idArrayList
+        initViewData()
+    }
+
 
     override fun createObserver() {
         mViewModel.channelDataList.onStart.observe(this) {
@@ -110,7 +128,13 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
         mViewModel.channelDataList.onSuccess.observe(this) {
             mDatabind.srfDataChannel.isRefreshing = false
             dismissLoading()
-            dataChannelAdapter.setList(it)
+
+            if (it.isNullOrEmpty()) {
+                dataChannelAdapter.setList(ArrayList())
+            } else {
+                dataChannelAdapter.setList(it)
+            }
+
         }
         mViewModel.channelDataList.onError.observe(this) {
             dismissLoading()

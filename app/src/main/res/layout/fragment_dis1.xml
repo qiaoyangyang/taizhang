@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_themes_f7f7f7"
-   >
+    android:background="@color/app_themes_f7f7f7">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/btn_send_dis"
         app:layout_constraintTop_toTopOf="parent">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cos_dis_line"
@@ -22,6 +21,7 @@
             android:layout_margin="@dimen/dp_30"
             android:background="@drawable/scan_bg_input"
             android:padding="@dimen/dp_20"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -209,7 +209,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dp_10"
-                android:text="(配送规则)："
+                android:text="(配送规则)"
                 android:textColor="@color/home_999999"
                 android:textSize="@dimen/sp_20"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txt_rec_type_tip"
@@ -218,13 +218,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_rec_type"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="250dp"
                 android:layout_marginTop="@dimen/dp_30"
                 android:orientation="vertical"
+                app:spanCount="3"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintTop_toBottomOf="@+id/txt_rec_type_rule_tip"
-                app:spanCount="3"
-                app:layout_constraintBottom_toBottomOf="parent"
                 tools:listitem="@layout/item_dis_send" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -236,6 +235,7 @@
         android:id="@+id/btn_send_dis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_30"
         android:layout_marginEnd="@dimen/dp_30"

@@ -328,6 +328,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             }
             if (it.content.size < 20) {
                 orderDisAdapter.footerWithEmptyEnable = false
+                orderDisAdapter.footerLayout?.visibility = View.GONE
                 orderDisAdapter.loadMoreModule.loadMoreEnd()
             } else {
                 orderDisAdapter.loadMoreModule.loadMoreComplete()

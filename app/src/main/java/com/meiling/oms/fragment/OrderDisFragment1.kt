@@ -3,8 +3,11 @@ package com.meiling.oms.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnTouchListener
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -13,14 +16,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.*
-import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDis1Binding
 import com.meiling.oms.dialog.OrderDisGoodsSelectDialog
+import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
+
 
 class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Binding>() {
 
@@ -101,7 +105,6 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
             }
         mDatabind.rvRecType.adapter = shopSelectDisWayAdapter
         var text = orderSendAddress.goodsWeight?.toInt()
-
         mDatabind.btnSendDis.setSingleClickListener {
             var insertOrderSendList = ArrayList<LogisticsInsertDto>()
             for (shopSelectDis in shopSelectDisWayAdapter.data) {
@@ -154,6 +157,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
             }
             shopSelectDisWayAdapter.notifyDataSetChanged()
         }
+
 
         mDatabind.txtAddTipPlus.setSingleClickListener {
             mDatabind.edtAddTipShow.text = "${mDatabind.edtAddTipShow.text.toString().toInt() + 1}"

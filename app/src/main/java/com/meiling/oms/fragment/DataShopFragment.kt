@@ -12,11 +12,12 @@ import com.meiling.common.network.data.DataShopList
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDataShopBinding
 import com.meiling.oms.dialog.DataSelectTimeDialog
+import com.meiling.oms.eventBusData.MessageSelectShopPo
 import com.meiling.oms.viewmodel.DataFragmentViewModel
-import com.meiling.oms.widget.formatCurrentDate
-import com.meiling.oms.widget.formatCurrentDateBeforeDay
-import com.meiling.oms.widget.setSingleClickListener
-import com.meiling.oms.widget.showToast
+import com.meiling.oms.widget.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBinding>() {
 
@@ -27,7 +28,7 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
     private lateinit var dataShopAdapter: BaseQuickAdapter<DataShopList.OrderStaticsGroupByHour, BaseViewHolder>
 
     override fun initView(savedInstanceState: Bundle?) {
-
+        EventBus.getDefault().register(this)
         dataShopAdapter =
             object :
                 BaseQuickAdapter<DataShopList.OrderStaticsGroupByHour, BaseViewHolder>(R.layout.item_data_shop) {
@@ -52,13 +53,14 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
         return FragmentDataShopBinding.inflate(inflater)
     }
 
+    var startTime = formatCurrentDateBeforeDay()
 
-    fun initViewData() {
+    private fun initViewData() {
         mViewModel.shopDataList(
             DataListDto(
                 startTime = formatCurrentDate() + " 00:00:00",
                 endTime = formatCurrentDate() + " 23:59:59",
-                ArrayList<Long>()
+                poiId
             )
         )
 
@@ -73,8 +75,8 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
                 goodsType = ArrayList(),
                 orderType = ArrayList(),
                 classificationViewIds = ArrayList(),
-                poiIds = ArrayList(),
-                startTime = formatCurrentDateBeforeDay() + " 00:00:00",
+                poiIds = poiId,
+                startTime = "$startTime 00:00:00",
                 endTime = formatCurrentDateBeforeDay() + " 23:59:59",
                 isValid = -1,
                 sortType = 0,
@@ -93,7 +95,7 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
                 goodsType = ArrayList(),
                 orderType = ArrayList(),
                 classificationViewIds = ArrayList(),
-                poiIds = ArrayList(),
+                poiIds = poiId,
                 startTime = formatCurrentDate() + " 00:00:00",
                 endTime = formatCurrentDate() + " 23:59:59",
                 isValid = -1,
@@ -109,12 +111,14 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
         initViewData()
     }
 
+    var poiId = ArrayList<String>()
     override fun initListener() {
         mDatabind.txtDataHistoryShopTime.setSingleClickListener {
             var dataSelectTimeDialog = DataSelectTimeDialog().newInstance()
             dataSelectTimeDialog.show(childFragmentManager)
             dataSelectTimeDialog.setSelectTime { it, name ->
                 mDatabind.txtDataHistoryShopTime.text = name
+                startTime = it
                 mViewModel.shopHistoryDataList(
                     DataShop(
                         timeType = 1,
@@ -126,9 +130,9 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
                         goodsType = ArrayList(),
                         orderType = ArrayList(),
                         classificationViewIds = ArrayList(),
-                        poiIds = ArrayList(),
+                        poiIds = poiId,
                         startTime = "$it 00:00:00",
-                        endTime = formatCurrentDate() + " 23:59:59",
+                        endTime = formatCurrentDateBeforeDay() + " 23:59:59",
                         isValid = -1,
                         sortType = 0,
                         pageIndex = 1,
@@ -139,6 +143,12 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun eventSelectTime(messageSelectShopPo: MessageSelectShopPo) {
+        poiId = messageSelectShopPo.idArrayList
+        initViewData()
+    }
+
     override fun createObserver() {
         mViewModel.dataShopList.onStart.observe(this) {
             showLoading("正在请求")
@@ -146,10 +156,14 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
         mViewModel.dataShopList.onSuccess.observe(this) {
             mDatabind.refDataShop.isRefreshing = false
             dismissLoading()
-            mDatabind.textDataShopCount.text = it.orderCountTotal//减去
+            mDatabind.textDataShopCount.text =
+                calculationMinDataStr(it.orderCountTotal, it.orderRefundTotal)//减去
             mDatabind.textDataInsertOrderCount.text = it.orderCountTotal
             mDatabind.textDataRefundOrderCount.text = it.orderRefundTotal
-            mDatabind.textDataAvgOrderCount.text = it.costTotal//加减乘除
+            mDatabind.textDataAvgOrderCount.text = calculationDivDataStr(
+                it.validPriceTotal,
+                mDatabind.textDataShopCount.text.toString()
+            )//加减乘除
             mDatabind.textDataValidOrderCount.text = it.validPriceTotal
             mDatabind.textDataActualOrderCount.text = it.actualPayPriceTotal
             mDatabind.textDataRefundOrderMoney.text = it.refundPriceTotal
@@ -181,10 +195,14 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
         mViewModel.shopHistoryDataList.onSuccess.observe(this) {
             mDatabind.refDataShop.isRefreshing = false
             dismissLoading()
-            mDatabind.textDataHistoryShopCount.text = it.orderCountTotal//减去
+            mDatabind.textDataHistoryShopCount.text =
+                calculationMinDataStr(it.orderCountTotal, it.orderRefundTotal)//减去
             mDatabind.textDataHistoryInsertOrderCount.text = it.orderCountTotal
             mDatabind.textDataHistoryRefundOrderCount.text = it.orderRefundTotal
-            mDatabind.textDataHistoryAvgOrderCount.text = it.costTotal//加减乘除
+            mDatabind.textDataHistoryAvgOrderCount.text = calculationDivDataStr(
+                it.validPriceTotal,
+                mDatabind.textDataHistoryShopCount.text.toString()
+            )
             mDatabind.textDataHistoryValidOrderCount.text = it.validPriceTotal
             mDatabind.textDataHistoryActualOrderCount.text = it.actualPayPriceTotal
             mDatabind.textDataHistoryRefundOrderMoney.text = it.refundPriceTotal

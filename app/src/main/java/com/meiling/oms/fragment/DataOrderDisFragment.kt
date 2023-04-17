@@ -10,11 +10,15 @@ import com.meiling.common.network.data.DataListDto
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDataDisBinding
 import com.meiling.oms.dialog.DataSelectTimeDialog
+import com.meiling.oms.eventBusData.MessageSelectShopPo
 import com.meiling.oms.viewmodel.DataFragmentViewModel
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.formatCurrentDateBeforeDay
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDisBinding>() {
     lateinit var dataDisAdapter: BaseQuickAdapter<DataDisDto.DeliveryConsumeLists, BaseViewHolder>
@@ -24,6 +28,7 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        EventBus.getDefault().register(this)
         dataDisAdapter =
             object :
                 BaseQuickAdapter<DataDisDto.DeliveryConsumeLists, BaseViewHolder>(R.layout.item_data_dis) {
@@ -40,18 +45,19 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
             }
         mDatabind.rvDataDis.adapter = dataDisAdapter
         mDatabind.srfDataDis.setOnRefreshListener {
-            initData()
+            initViewData()
         }
     }
 
+    var poiId = ArrayList<String>()
 
-    override fun initData() {
-        mViewModel.dataDisList(DataListDto(startTime = "", endTime = "", ArrayList<Long>()))
+    private fun initViewData() {
+        mViewModel.dataDisList(DataListDto(startTime = "", endTime = "", poiId))
         mViewModel.dataHistoryDisList(
             DataListDto(
-                startTime = formatCurrentDateBeforeDay() + " 00:00:00",
-                endTime = formatCurrentDateBeforeDay() + " 23:59:59",
-                ArrayList<Long>()
+                startTime = "$startTime 00:00:00",
+                endTime = formatCurrentDate() + " 23:59:59",
+                poiId
             )
         )
     }
@@ -65,17 +71,26 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
         initData()
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun eventSelectTime(messageSelectShopPo: MessageSelectShopPo) {
+        poiId = messageSelectShopPo.idArrayList
+        initViewData()
+    }
+
+    var startTime = formatCurrentDateBeforeDay()
     override fun initListener() {
         mDatabind.txtDataHistoryChannelTime.setSingleClickListener {
             var dataSelectTimeDialog = DataSelectTimeDialog().newInstance()
             dataSelectTimeDialog.show(childFragmentManager)
             dataSelectTimeDialog.setSelectTime { it, name ->
                 mDatabind.txtDataHistoryChannelTime.text = name
+                startTime = it
                 mViewModel.dataHistoryDisList(
                     DataListDto(
                         startTime = "$it 00:00:00",
-                        endTime = "$it 23:59:59",
-                        ArrayList<Long>()
+                        endTime = "${formatCurrentDateBeforeDay()} 23:59:59",
+                        poiId
                     )
                 )
             }
