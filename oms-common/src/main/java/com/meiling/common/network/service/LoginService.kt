@@ -5,9 +5,8 @@ import com.meiling.common.network.ResultData
 import com.meiling.common.network.RetrofitClient
 import com.meiling.common.network.data.ForgetDto
 import com.meiling.common.network.data.LoginDto
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import okhttp3.MultipartBody
+import retrofit2.http.*
 
 val loginService: LoginService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
     RetrofitClient().getInstance().createApiClient(LoginService::class.java)
@@ -76,5 +75,11 @@ interface LoginService {
         @Query("code") code: String,
     ): ResultData<Any>
 
+    /**
+     * 上传logo图片
+     */
+    @Multipart
+    @POST("/saas/system/file/upload")
+    suspend fun upload(@Part parts: List<MultipartBody.Part> ):ResultData<String>
 
 }

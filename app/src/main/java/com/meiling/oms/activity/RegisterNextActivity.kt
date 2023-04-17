@@ -1,27 +1,23 @@
 package com.meiling.oms.activity
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
-import android.view.View
-import androidx.core.widget.addTextChangedListener
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import com.meiling.common.activity.BaseActivity
-import com.meiling.common.activity.BaseVmActivity
-import com.meiling.common.activity.BaseVmDbActivity
 import com.meiling.common.network.service.loginService
 import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.GlideEngine
-import com.meiling.common.utils.InputTextManager
-import com.meiling.oms.databinding.ActivityRegisterBinding
 import com.meiling.oms.databinding.ActivityRegisterNextBinding
 import com.meiling.oms.viewmodel.RegisterViewModel
-import com.meiling.oms.widget.CaptchaCountdownTool
 import com.meiling.oms.widget.showToast
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 
 class RegisterNextActivity : BaseActivity<RegisterViewModel, ActivityRegisterNextBinding>() {
 
@@ -48,6 +44,27 @@ class RegisterNextActivity : BaseActivity<RegisterViewModel, ActivityRegisterNex
                     override fun onResult(result: MutableList<LocalMedia>?) {
                         if(result?.isNotEmpty() == true){
                             GlideAppUtils.loadUrl(mDatabind.addImg,result.get(0).path)
+                            val file = File(result.get(0).path)
+                            val body: RequestBody =
+                                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+
+                            val multipartBody= MultipartBody.Builder()
+                                .addFormDataPart("file", file.name, body)
+                                .setType(MultipartBody.FORM)
+                                .build()
+
+                            mViewModel.launchRequest(
+                                {
+                                    loginService.upload(multipartBody.parts)
+                                },
+                                onSuccess = {
+                                    showToast("上传成功")
+
+                                },
+                                onError = {
+                                    showToast("上传失败")
+                                }
+                            )
                         }
                     }
 

@@ -3,10 +3,8 @@ package com.meiling.common.network.service
 import com.meiling.common.network.ResultData
 import com.meiling.common.network.RetrofitClient
 import com.meiling.common.network.data.*
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import okhttp3.MultipartBody
+import retrofit2.http.*
 
 
 val meService: MeService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
