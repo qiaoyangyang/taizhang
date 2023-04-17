@@ -137,7 +137,7 @@
             android:paddingEnd="4dp"
             android:layout_marginBottom="6dp"
             android:gravity="center"
-            android:text="一"
+            android:text=""
             android:textSize="14sp" />
 
 
@@ -204,7 +204,7 @@
             android:textSize="@dimen/sp_25"
             app:shape_radius="@dimen/sp_15"
             app:shape_solidColor="@color/white"
-            app:shape_strokeColor="@color/home_000000"
+            app:shape_strokeColor="@color/toast_rec_DDDDDD"
             app:shape_strokeWidth="@dimen/dp_1" />
 
         <com.hjq.shape.view.ShapeButton

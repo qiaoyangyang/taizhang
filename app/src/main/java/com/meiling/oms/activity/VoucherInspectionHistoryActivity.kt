@@ -289,7 +289,7 @@ class VoucherInspectionHistoryActivity :
         mDatabind.ryOrderLeft.addItemDecoration(recyclerViewDivider)
         mDatabind.ryOrderLeft.adapter = orderLeftRecyAdapter
         orderLeftRecyAdapter.setList(arrayListOf())
-        orderLeftRecyAdapter.setEmptyView(R.layout.empty_want_goods_recycler)
+        orderLeftRecyAdapter.setEmptyView(R.layout.order_search_empty1)
         orderLeftRecyAdapter.setOnItemClickListener { adapter, view, position ->
             var writeoffhistoryPageData = orderLeftRecyAdapter.data[position]
             ARouter.getInstance().build("/app/WriteOffDetailsActivity")

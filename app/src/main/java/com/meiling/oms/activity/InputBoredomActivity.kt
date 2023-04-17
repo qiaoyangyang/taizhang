@@ -20,7 +20,6 @@ import com.meiling.oms.databinding.ActivityInputBoredomBinding
 import com.meiling.oms.dialog.CheckCouponInformationDidalog
 import com.meiling.oms.dialog.CheckCouponInformationDidalog1
 import com.meiling.oms.dialog.ShopDialog
-import com.meiling.oms.viewmodel.InputBoredomViewModel
 import com.meiling.oms.viewmodel.VoucherinspectionViewModel
 import com.meiling.oms.widget.showToast
 

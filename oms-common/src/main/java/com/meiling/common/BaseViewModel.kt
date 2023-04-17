@@ -54,7 +54,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
         return viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 block()
-            }.onSuccess {
+             }.onSuccess {
                 if (it.code == 0) {
                     resultState.postValue(it.data)
                 } else if (it.code == 403) {
