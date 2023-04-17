@@ -1,6 +1,7 @@
 package com.meiling.oms.dialog
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import com.meiling.oms.R
 import com.meiling.oms.widget.setSingleClickListener
@@ -41,11 +42,18 @@ class MineExitDialog : BaseNiceDialog() {
         val content = arguments?.getString("content") as String
         val cancel_exit = arguments?.getString("cancel_exit") as String
         val oktext = arguments?.getString("oktext") as String
+        val type = arguments?.getBoolean("type") as Boolean
+
 
         val cancel = holder?.getView<Button>(R.id.btn_cancel_exit)
         cancel?.text=cancel_exit
-
+        if (type){
+            cancel?.visibility=View.GONE
+        }else{
+            cancel?.visibility=View.VISIBLE
+        }
         val ok = holder?.getView<Button>(R.id.btn_ok_exit)
+
         ok?.text=oktext
 
 
