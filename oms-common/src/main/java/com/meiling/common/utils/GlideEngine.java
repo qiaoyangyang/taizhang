@@ -17,6 +17,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.ImageViewTarget;
+import com.luck.picture.lib.engine.ImageEngine;
+import com.luck.picture.lib.listener.OnImageCompleteCallback;
+import com.luck.picture.lib.tools.MediaUtils;
+import com.luck.picture.lib.widget.longimage.ImageSource;
+import com.luck.picture.lib.widget.longimage.ImageViewState;
+import com.luck.picture.lib.widget.longimage.SubsamplingScaleImageView;
+import com.meiling.common.R;
 
 /**
  * @author：luck
@@ -112,7 +119,6 @@ public class GlideEngine implements ImageEngine {
      * @param longImageView
      * @ 已废弃
      */
-    @Override
     public void loadImage(@NonNull Context context, @NonNull String url,
                           @NonNull ImageView imageView,
                           SubsamplingScaleImageView longImageView) {
@@ -153,7 +159,6 @@ public class GlideEngine implements ImageEngine {
      * @param url       图片路径
      * @param imageView 承载图片ImageView
      */
-    @Override
     public void loadFolderImage(@NonNull Context context, @NonNull String url, @NonNull ImageView imageView) {
         Glide.with(context)
                 .asBitmap()
@@ -182,7 +187,6 @@ public class GlideEngine implements ImageEngine {
      * @param url       图片路径
      * @param imageView 承载图片ImageView
      */
-    @Override
     public void loadAsGifImage(@NonNull Context context, @NonNull String url,
                                @NonNull ImageView imageView) {
         Glide.with(context)

@@ -170,6 +170,10 @@ dependencies {
 
     api 'com.wayne:constraint-radiogroup:1.0.0'
 
- }
+    //https://gitcode.net/mirrors/lucksiege/pictureselector/-/blob/master/README_CN.md
+    implementation 'io.github.lucksiege:pictureselector:v2.7.3-rc10'
+
+
+}
 
 
