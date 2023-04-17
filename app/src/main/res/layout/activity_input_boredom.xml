@@ -45,8 +45,8 @@
             android:id="@+id/iv_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="17dp"
-            android:layout_marginTop="17dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="17dp"
             android:src="@drawable/home_search_icon_red"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -54,12 +54,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:maxLength="24"
 
             android:id="@+id/tv_Stock_Code"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="@dimen/dp_10"
             android:background="@null"
@@ -76,15 +77,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/iv_search_close_edt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="17dp"
             android:src="@drawable/search_close_edt"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_Stock_Code"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/tv_Stock_Code" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -154,6 +155,7 @@
             android:id="@+id/tv_1"
             style="@style/tv_pay_key"
 
+            android:layout_marginLeft="4dp"
             android:text="1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -161,7 +163,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_2"
             style="@style/tv_pay_key"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:text="2"
             app:layout_constraintLeft_toRightOf="@+id/tv_1"
             app:layout_constraintTop_toTopOf="parent" />
@@ -169,7 +171,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_3"
             style="@style/tv_pay_key"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:text="3"
             app:layout_constraintLeft_toRightOf="@+id/tv_2"
             app:layout_constraintTop_toTopOf="parent" />
@@ -177,7 +179,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_0"
             style="@style/tv_pay_key"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:text="0"
             app:layout_constraintLeft_toRightOf="@+id/tv_3"
             app:layout_constraintTop_toTopOf="parent" />
@@ -185,7 +187,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_4"
             style="@style/tv_pay_key"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="4"
             app:layout_constraintLeft_toLeftOf="@+id/tv_1"
             app:layout_constraintTop_toBottomOf="@+id/tv_0" />
@@ -193,7 +195,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_5"
             style="@style/tv_pay_key"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="5"
             app:layout_constraintLeft_toLeftOf="@+id/tv_2"
             app:layout_constraintTop_toBottomOf="@+id/tv_0" />
@@ -201,7 +203,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_6"
             style="@style/tv_pay_key"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="6"
             app:layout_constraintLeft_toLeftOf="@+id/tv_3"
             app:layout_constraintTop_toBottomOf="@+id/tv_0" />
@@ -209,7 +211,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_7"
             style="@style/tv_pay_key"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="7"
             app:layout_constraintLeft_toLeftOf="@+id/tv_4"
             app:layout_constraintTop_toBottomOf="@+id/tv_4" />
@@ -217,7 +219,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_8"
             style="@style/tv_pay_key"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="8"
             app:layout_constraintLeft_toLeftOf="@+id/tv_2"
             app:layout_constraintTop_toBottomOf="@+id/tv_4" />
@@ -225,7 +227,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_9"
             style="@style/tv_pay_key"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="9"
             app:layout_constraintLeft_toLeftOf="@+id/tv_3"
             app:layout_constraintTop_toBottomOf="@+id/tv_4" />
@@ -246,11 +248,12 @@
             tools:text="0" />
 
         <androidx.appcompat.widget.AppCompatTextView
+
             android:id="@+id/tv_ok"
             android:layout_width="0dp"
             android:layout_height="0dp"
 
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/indicator_bottom_line"
             android:focusable="true"
             android:gravity="center"

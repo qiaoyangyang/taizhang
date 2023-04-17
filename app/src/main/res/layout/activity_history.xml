@@ -6,13 +6,14 @@
     android:background="@color/order_remark_F4F4F4">
 
     <com.hjq.bar.TitleBar
+
         android:id="@+id/TitleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:leftIcon="@drawable/bar_arrows_left_black"
-        app:lineVisible="true"
+        app:lineVisible="false"
         app:rightTitleSize="@dimen/sp_14"
         app:title="验券历史"
         app:titleColor="@color/home_333333" />
@@ -70,7 +71,7 @@
                 android:layout_centerVertical="true"
                 android:visibility="gone"
                 android:layout_toStartOf="@+id/btn_search"
-                android:src="@drawable/search_close_edt" />
+                android:src="@drawable/icon_back_g" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btn_search"

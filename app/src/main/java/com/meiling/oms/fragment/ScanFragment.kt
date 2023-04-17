@@ -57,7 +57,7 @@ class ScanFragment : BaseFragment<FindViewModel, FragmentScanBinding>() {
             if (it.isEmpty()) {
                 val dialog: MineExitDialog =
                     MineExitDialog().newInstance(
-                        "温馨提示", "暂无门店，请去「我的-->门店管理」中创建门店！",
+                        "温馨提示", "暂无门店，请去门店管理中创建门店！",
                         "", "知道了", true
                     )
                 dialog.setOkClickLister {
