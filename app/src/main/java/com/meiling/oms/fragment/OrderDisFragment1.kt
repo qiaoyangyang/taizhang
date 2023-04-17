@@ -223,7 +223,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
             dismissLoading()
             if (!it.isNullOrEmpty()) {
                 shopSelectDisWayAdapter.setList(it)
-                it[0].select = true
+
                 for (bean in it) {
                     if (orderSendAddress.method == "all") {
                         shopSelectDisWayAdapter.data.forEach { bean ->
@@ -231,7 +231,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
                         }
                     }
 //                    else {
-
+//                        shopSelectDisWayAdapter.data[0].select = true
 //                    }
                     shopSelectDisWayAdapter.notifyDataSetChanged()
                 }
@@ -239,7 +239,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
         }
         mViewModel.orderSendConfirmList.onError.observe(this) {
             dismissLoading()
-            showToast("发起配送失败")
+            showToast(it.msg)
         }
     }
 

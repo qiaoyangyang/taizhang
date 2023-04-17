@@ -162,7 +162,7 @@
             android:id="@+id/ll_remark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/dp_10"
+            android:layout_marginVertical="@dimen/dp_20"
             android:background="@color/home_FEFAF0"
             android:orientation="horizontal"
             android:paddingTop="@dimen/dp_20"

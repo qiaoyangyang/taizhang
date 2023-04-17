@@ -88,10 +88,6 @@ class BaseHistoryOrderFragment :
                     //加载svg图片
                     Glide.with(context).`as`(PictureDrawable::class.java).load(item.channelLogo)
                         .apply(options).listener(SvgSoftwareLayerSetter()).into(channelLogoImg)
-
-                    holder.setText(
-                        R.id.txt_order_delivery_state, "${item.order?.deliveryStatusName}"
-                    )
                     orderId.text = "${item.order?.viewId}"
                     holder.setText(R.id.txt_order_remark, "${item.order?.remark}")
                     holder.setText(
@@ -214,31 +210,49 @@ class BaseHistoryOrderFragment :
                     //0.待配送  20.待抢单 30.待取货 50.配送中 70.取消 80.已送达
                     when (item.order!!.logisticsStatus) {
                         "0" -> {
+                            holder.setText(
+                                R.id.txt_order_delivery_state, "待配送"
+                            )
                             btnCancelDis.visibility = View.GONE
                             changeOrder.visibility = View.VISIBLE
                             btnSendDis.text = "发起配送"
                         }
                         "20" -> {
+                            holder.setText(
+                                R.id.txt_order_delivery_state, "待抢单"
+                            )
                             btnCancelDis.visibility = View.VISIBLE
                             changeOrder.visibility = View.GONE
                             btnSendDis.text = "加小费"
                         }
                         "30" -> {
+                            holder.setText(
+                                R.id.txt_order_delivery_state, "待取货"
+                            )
                             btnCancelDis.visibility = View.VISIBLE
                             changeOrder.visibility = View.GONE
                             btnSendDis.text = "配送详情"
                         }
                         "50" -> {
+                            holder.setText(
+                                R.id.txt_order_delivery_state, "配送中"
+                            )
                             btnCancelDis.visibility = View.GONE
                             changeOrder.visibility = View.GONE
                             btnSendDis.text = "配送详情"
                         }
                         "70" -> {
+                            holder.setText(
+                                R.id.txt_order_delivery_state, "取消"
+                            )
                             btnCancelDis.visibility = View.GONE
                             changeOrder.visibility = View.GONE
                             btnSendDis.text = "配送详情"
                         }
                         "80" -> {
+                            holder.setText(
+                                R.id.txt_order_delivery_state, "已送达"
+                            )
                             btnCancelDis.visibility = View.GONE
                             changeOrder.visibility = View.GONE
                             btnSendDis.text = "配送详情"
