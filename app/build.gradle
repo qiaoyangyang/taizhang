@@ -135,5 +135,6 @@ dependencies {
     implementation 'androidx.compose.runtime:runtime-livedata'
     // Optional - Integration with RxJava
     implementation 'androidx.compose.runtime:runtime-rxjava2'
-
+    //https://gitcode.net/mirrors/lucksiege/pictureselector/-/blob/master/README_CN.md
+    implementation 'io.github.lucksiege:pictureselector:v2.7.3-rc10'
 }

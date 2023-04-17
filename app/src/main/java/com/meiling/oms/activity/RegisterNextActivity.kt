@@ -6,6 +6,8 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.widget.addTextChangedListener
+import com.luck.picture.lib.PictureSelector
+import com.luck.picture.lib.config.PictureMimeType
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.activity.BaseVmActivity
 import com.meiling.common.activity.BaseVmDbActivity
@@ -27,7 +29,11 @@ class RegisterNextActivity : BaseActivity<RegisterViewModel, ActivityRegisterNex
         super.initData()
 
 
-
+        mDatabind.addImg.setOnClickListener {
+//            PictureSelector.create(this)
+//                .openGallery(PictureMimeType.ofImage())
+//                .imageEngine(GlideEn)
+        }
 
 
 
