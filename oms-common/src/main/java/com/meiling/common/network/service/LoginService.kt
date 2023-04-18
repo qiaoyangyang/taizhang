@@ -3,8 +3,7 @@ package com.meiling.common.network.service
 
 import com.meiling.common.network.ResultData
 import com.meiling.common.network.RetrofitClient
-import com.meiling.common.network.data.ForgetDto
-import com.meiling.common.network.data.LoginDto
+import com.meiling.common.network.data.*
 import okhttp3.MultipartBody
 import retrofit2.http.*
 
@@ -81,5 +80,37 @@ interface LoginService {
     @Multipart
     @POST("/saas/system/file/upload")
     suspend fun upload(@Part parts: List<MultipartBody.Part> ):ResultData<String>
+
+    /**
+     * 所属行业
+     */
+    @GET("/saas/business/category")
+    suspend fun getCategory():ResultData<List<Children>>
+
+    /**
+     * 校验品牌名称
+     */
+    @GET("/saas/business/thanBrand")
+    suspend fun checkThanBrand(@Query("name") name: String):ResultData<Boolean>
+
+    /**
+     * 注册
+     */
+    @POST("/saas/business/save")
+    suspend fun save(@Body businessDto: BusinessDto):ResultData<Any>
+
+    /**
+     *  所属渠道  租户默认所有渠道
+     */
+    @GET("/saas/business/channel")
+    suspend fun getChannel():ResultData<ArrayList<Channel>>
+
+    /**
+     *  所属城市  租户默认所有城市
+     */
+    @GET("/saas/business/city")
+    suspend fun getCity():ResultData<ArrayList<City>>
+
+
 
 }
