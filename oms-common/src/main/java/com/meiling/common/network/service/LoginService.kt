@@ -97,7 +97,7 @@ interface LoginService {
      * 注册
      */
     @POST("/saas/business/save")
-    suspend fun save(@Body businessDto: BusinessDto):ResultData<Any>
+    suspend fun save(@Body businessDto: BusinessDto):ResultData<String>
 
     /**
      *  所属渠道  租户默认所有渠道

@@ -2,6 +2,10 @@ package com.meiling.oms.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.CompoundButton
+import android.widget.RadioGroup
+import android.widget.RadioGroup.OnCheckedChangeListener
 import com.gyf.immersionbar.ImmersionBar
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -12,10 +16,12 @@ import com.meiling.common.network.data.Children
 import com.meiling.common.network.service.loginService
 import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.GlideEngine
+import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityRegisterNextBinding
 import com.meiling.oms.dialog.SelectIndustryShopDialog
 import com.meiling.oms.viewmodel.RegisterViewModel
 import com.meiling.oms.widget.showToast
+import com.wayne.constraintradiogroup.ConstraintRadioGroup
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -141,12 +147,58 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             }
         )
 
+        mDatabind.shopTypeRG.checkedChangeListener=object :com.wayne.constraintradiogroup.OnCheckedChangeListener{
+            override fun onCheckedChanged(
+                group: ConstraintRadioGroup,
+                checkedButton: CompoundButton,
+            ) {
+                if(checkedButton.id== R.id.checkEnterprise){
+                    mDatabind.txtOperateType.visibility= View.VISIBLE
+                    mDatabind.txtOperateTypeRed.visibility=View.VISIBLE
+                    mDatabind.operateTypeRG.visibility=View.VISIBLE
+                    mDatabind.line2.visibility=View.VISIBLE
+                    mDatabind.line4.visibility=View.VISIBLE
+                    mDatabind.txtShopName.visibility=View.VISIBLE
+                    mDatabind.txtShopName2.visibility=View.VISIBLE
+                    mDatabind.edtShopName.visibility=View.VISIBLE
+                }
+                if(checkedButton.id==R.id.checkPerson){
+                    mDatabind.txtOperateType.visibility= View.GONE
+                    mDatabind.txtOperateTypeRed.visibility=View.GONE
+                    mDatabind.operateTypeRG.visibility=View.GONE
+                    mDatabind.line2.visibility=View.GONE
+                    mDatabind.line4.visibility=View.GONE
+                    mDatabind.txtShopName.visibility=View.GONE
+                    mDatabind.txtShopName2.visibility=View.GONE
+                    mDatabind.edtShopName.visibility=View.GONE
+                    mViewModel.businessDto.value!!.isChain=""
+                    mViewModel.businessDto.value!!.enterpriseName=""
+                }
+                if(checkedButton.id==R.id.checkOther){
+                    mDatabind.txtOperateType.visibility= View.VISIBLE
+                    mDatabind.txtOperateTypeRed.visibility=View.VISIBLE
+                    mDatabind.operateTypeRG.visibility=View.VISIBLE
+                    mDatabind.line2.visibility=View.VISIBLE
+                    mDatabind.line4.visibility=View.GONE
+                    mDatabind.txtShopName.visibility=View.GONE
+                    mDatabind.txtShopName2.visibility=View.GONE
+                    mDatabind.edtShopName.visibility=View.GONE
+                    mViewModel.businessDto.value!!.enterpriseName=""
+                }
+
+            }
+
+        }
+
+        //注册
         mDatabind.btnNext.setOnClickListener {
+
             mViewModel.businessDto.value!!.phone=this@RegisterNextActivity.phone
             Log.e("",mViewModel.businessDto.value.toString())
             mViewModel.launchRequest(
                 { loginService.save(mViewModel.businessDto.value!!)},
                 onSuccess = {
+                    //成功会返回组合id
 
                 },
                 onError = {
@@ -154,6 +206,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 }
             )
         }
+
     }
 
     override fun isLightMode(): Boolean {
