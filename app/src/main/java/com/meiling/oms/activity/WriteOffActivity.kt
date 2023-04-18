@@ -148,8 +148,12 @@ class WriteOffActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activit
                     holder.setText(R.id.tv_type, "代金券")
                 }
                 var tv_shopName = holder.getView<TextView>(R.id.tv_shopName)
+                var shopname=item?.shopName
+                if (item?.shopName.toString().length>12){
+                    shopname=item?.shopName.toString().substring(0,12)+"...."
+                }
 
-                var conet = "由 ${item?.shopName} 验证"
+                var conet = "由 ${shopname} 验证"
                 SpannableUtils.setTextcolor(
                     holder.itemView.context,
                     conet,
