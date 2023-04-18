@@ -94,13 +94,17 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
     }
 
     override fun createObserver() {
-        mViewModel.orderSendAddress.onStart.observe(this) {}
+        mViewModel.orderSendAddress.onStart.observe(this) {
+            showLoading("正在请求")
+        }
         mViewModel.orderSendAddress.onSuccess.observe(this) {
+            dismissLoading()
             orderSendAddress = it
             mDatabind.edtRecName.setText(it.deliveryName)
             mDatabind.edtRecPhone.setText(it.deliveryPhone)
         }
         mViewModel.orderSendAddress.onError.observe(this) {
+            dismissLoading()
             showToast("${it.msg}")
         }
 
@@ -113,9 +117,14 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
             showToast("发起配送成功")
             mActivity.finish()
         }
-        mViewModel.sendSuccess.onSuccess.observe(this) {
+        mViewModel.sendSuccess.onError.observe(this) {
             dismissLoading()
-            showToast("发起配送失败 ")
+            if (it.msg == null || it.msg == "") {
+                showToast("操作失败")
+            } else {
+                showToast(it.msg)
+            }
+
         }
     }
 

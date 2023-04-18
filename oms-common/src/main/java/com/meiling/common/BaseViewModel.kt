@@ -31,7 +31,6 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                 block()
             }.onSuccess {
                 if (it.code == 200) {
-
                     resultState.onSuccess.postValue(it.data)
                 } else if (it.code == 403) {
                     ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
@@ -44,7 +43,6 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
     }
-
 
     fun <T : Any> request(
         block: suspend () -> ResultData<T>,
