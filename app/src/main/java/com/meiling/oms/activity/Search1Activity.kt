@@ -28,6 +28,7 @@ import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivitySearch1Binding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.*
@@ -56,7 +57,10 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                     val channelLogoImg = holder.getView<ImageView>(R.id.img_order_icon)
                     holder.setText(R.id.txt_order_delivery_name, item.order?.recvName)
                     holder.setText(R.id.txt_order_delivery_phone, item.order?.recvPhone)
-                    holder.setText(R.id.txt_order_delivery_address, item.order?.recvAddr?.replace("@@", ""))
+                    holder.setText(
+                        R.id.txt_order_delivery_address,
+                        item.order?.recvAddr?.replace("@@", "")
+                    )
                     holder.setText(R.id.txt_order_num, "#${item.order?.channelDaySn}")
                     holder.setText(R.id.txt_shop_actual_money, "${item.order?.actualIncome}")
                     holder.setText(R.id.txt_order_delivery_time, "${item.order?.arriveTimeDate}")
@@ -160,13 +164,23 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                             .withInt("index", holder.adapterPosition).navigation()
                     }
                     btnCancelDis.setSingleClickListener {
-                        mViewModel.cancelOrder(
-                            CancelOrderSend(
-                                deliveryConsumerId = item.deliveryConsume!!.id ?: "0",
-                                poiId = item.order!!.poiId ?: "0",
-                                stationChannelId = item.deliveryConsume!!.stationChannelId ?: "0"
+                        val dialog: MineExitDialog =
+                            MineExitDialog().newInstance("温馨提示", "确定取消配送吗？", "取消", "确认", false)
+                        dialog.setOkClickLister {
+
+                            mViewModel.cancelOrder(
+                                CancelOrderSend(
+                                    deliveryConsumerId = item.deliveryConsume!!.id ?: "0",
+                                    poiId = item.order!!.poiId ?: "0",
+                                    stationChannelId = item.deliveryConsume!!.stationChannelId
+                                        ?: "0"
+                                )
                             )
-                        )
+                            dialog.dismiss()
+                        }
+                        dialog.show(supportFragmentManager)
+
+
                     }
                     var orderDisDialog =
                         OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
@@ -206,7 +220,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                                 R.id.txt_order_delivery_state, "待抢单"
                             )
                             btnCancelDis.visibility = View.VISIBLE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "加小费"
                         }
                         "30" -> {
@@ -214,7 +228,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                                 R.id.txt_order_delivery_state, "待取货"
                             )
                             btnCancelDis.visibility = View.VISIBLE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "配送详情"
                         }
                         "50" -> {
@@ -222,7 +236,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                                 R.id.txt_order_delivery_state, "取消"
                             )
                             btnCancelDis.visibility = View.GONE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "配送详情"
                         }
                         "70" -> {
@@ -230,7 +244,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                                 R.id.txt_order_delivery_state, "取消"
                             )
                             btnCancelDis.visibility = View.GONE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "重新配送"
                         }
                         "80" -> {
@@ -238,7 +252,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                                 R.id.txt_order_delivery_state, "已送达"
                             )
                             btnCancelDis.visibility = View.GONE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "配送详情"
                         }
                     }
@@ -337,7 +351,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
             orderDisAdapter.setList(null)
             mDatabind.rlOrderEmpty.visibility = View.VISIBLE
             mDatabind.txtErrorMsg.text = "支持通过订单编号、收货人姓名、手机号进行搜索"
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
 
     }

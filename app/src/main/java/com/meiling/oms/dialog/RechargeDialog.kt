@@ -17,6 +17,7 @@ import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
+import java.math.BigDecimal
 
 class RechargeDialog : BaseNiceDialog() {
 
@@ -159,8 +160,14 @@ class RechargeDialog : BaseNiceDialog() {
                 showToast("请选择或者输入金额")
                 return@setSingleClickListener
             }
-            dismiss()
+            if (BigDecimal(money) <= BigDecimal("0")) {
+                showToast("请选择或者输入正确金额")
+                return@setSingleClickListener
+            }
+
+
             okSelectClickLister?.invoke(money, channel)
+            dismiss()
 
         }
 

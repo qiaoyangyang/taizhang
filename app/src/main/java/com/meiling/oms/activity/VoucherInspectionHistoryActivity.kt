@@ -207,7 +207,7 @@ class VoucherInspectionHistoryActivity :
         }
         mViewModel.writeoffhistory.onError.observe(this) {
             mDatabind.refeshLayout.finishRefresh()
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
     }
 

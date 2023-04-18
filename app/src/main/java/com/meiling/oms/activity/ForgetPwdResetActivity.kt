@@ -150,7 +150,7 @@ class ForgetPwdResetActivity : BaseActivity<LoginViewModel, ActivityForgetPwdRas
         }
         mViewModel.repData.onError.observe(this) {
             disLoading()
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
     }
 

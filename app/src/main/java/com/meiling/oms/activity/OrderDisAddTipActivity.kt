@@ -16,6 +16,7 @@ import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.*
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityOrderDisTipBinding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
@@ -111,13 +112,20 @@ class OrderDisAddTipActivity :
             }
         }
         mDatabind.btnCancelOrder.setSingleClickListener {
-            mViewModel.cancelOrder(
-                CancelOrderSend(
-                    deliveryConsumerId = content.deliveryConsume!!.id ?: "0",
-                    poiId = content.order!!.poiId ?: "0",
-                    stationChannelId = content.deliveryConsume!!.stationChannelId ?: "0"
+
+            val dialog: MineExitDialog =
+                MineExitDialog().newInstance("温馨提示", "确定取消配送吗？", "取消", "确认", false)
+            dialog.setOkClickLister {
+                mViewModel.cancelOrder(
+                    CancelOrderSend(
+                        deliveryConsumerId = content.deliveryConsume!!.id ?: "0",
+                        poiId = content.order!!.poiId ?: "0",
+                        stationChannelId = content.deliveryConsume!!.stationChannelId ?: "0"
+                    )
                 )
-            )
+            }
+            dialog.show(supportFragmentManager)
+
         }
     }
 

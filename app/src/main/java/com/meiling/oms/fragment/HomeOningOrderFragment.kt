@@ -10,6 +10,7 @@ import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentHomeOrderOningBinding
+import com.meiling.oms.eventBusData.MessageEventUpDateOrder
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.formatCurrentDateBeforeWeek
@@ -25,7 +26,6 @@ class HomeOningOrderFragment :
     companion object {
         fun newInstance() = HomeOningOrderFragment()
     }
-
 
     private val fragmentList: MutableList<Fragment> = ArrayList()
 
@@ -85,6 +85,7 @@ class HomeOningOrderFragment :
             isValid = "",
             businessNumber = ""
         )
+//        EventBus.getDefault().post(MessageEventUpDateOrder())
     }
 
     override fun createObserver() {
@@ -167,9 +168,8 @@ class HomeOningOrderFragment :
         }
         mViewModel.statusCountDto.onError.observe(this) {
             dismissLoading()
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
-
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentHomeOrderOningBinding {

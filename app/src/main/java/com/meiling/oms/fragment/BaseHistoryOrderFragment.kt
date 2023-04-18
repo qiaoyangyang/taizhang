@@ -25,6 +25,7 @@ import com.meiling.oms.eventBusData.MessageEventHistoryUpDataTip
 import com.meiling.oms.eventBusData.MessageHistoryEventSelect
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.*
@@ -180,31 +181,42 @@ class BaseHistoryOrderFragment :
                             .withInt("index", holder.adapterPosition).navigation()
                     }
                     btnCancelDis.setSingleClickListener {
-                        mViewModel.cancelOrder(
-                            CancelOrderSend(
-                                deliveryConsumerId = item.deliveryConsume!!.id ?: "0",
-                                poiId = item.order!!.poiId ?: "0",
-                                stationChannelId = item.deliveryConsume!!.stationChannelId ?: "0"
+                        val dialog: MineExitDialog =
+                            MineExitDialog().newInstance("温馨提示", "确定取消配送吗？", "取消", "确认", false)
+                        dialog.setOkClickLister {
+
+                            mViewModel.cancelOrder(
+                                CancelOrderSend(
+                                    deliveryConsumerId = item.deliveryConsume!!.id ?: "0",
+                                    poiId = item.order!!.poiId ?: "0",
+                                    stationChannelId = item.deliveryConsume!!.stationChannelId ?: "0"
+                                )
                             )
-                        )
+                            dialog.dismiss()
+                        }
+                        dialog.show(childFragmentManager)
+
                     }
                     var orderDisDialog =
                         OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
                     btnSendDis.setSingleClickListener {
-                        when (item.order!!.logisticsStatus) {
-                            "0" -> {
-                                ARouter.getInstance().build("/app/OrderDisActivity")
-                                    .withSerializable("kk", item).navigation()
-                            }
-                            "20" -> {
-                                ARouter.getInstance().build("/app/OrderDisAddTipActivity")
-                                    .withSerializable("kk", item).navigation()
-                            }
-                            "30", "50",
-                            "70", "80" -> {
-                                orderDisDialog.show(childFragmentManager)
-                            }
+                            when (item.order!!.logisticsStatus) {
+                                "0" -> {
+                                    ARouter.getInstance().build("/app/OrderDisActivity")
+                                        .withSerializable("kk", item).navigation()
+                                }
+                                "20" -> {
+                                    ARouter.getInstance().build("/app/OrderDisAddTipActivity")
+                                        .withSerializable("kk", item).navigation()
+                                }
 
+                                "70" -> {
+                                    ARouter.getInstance().build("/app/OrderDisActivity")
+                                        .withSerializable("kk", item).navigation()
+                                }
+                                "30", "50", "80" -> {
+                                    orderDisDialog.show(childFragmentManager)
+                                }
                         }
                     }
                     //0.待配送  20.待抢单 30.待取货 50.配送中 70.取消 80.已送达
@@ -222,7 +234,7 @@ class BaseHistoryOrderFragment :
                                 R.id.txt_order_delivery_state, "待抢单"
                             )
                             btnCancelDis.visibility = View.VISIBLE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "加小费"
                         }
                         "30" -> {
@@ -230,7 +242,7 @@ class BaseHistoryOrderFragment :
                                 R.id.txt_order_delivery_state, "待取货"
                             )
                             btnCancelDis.visibility = View.VISIBLE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "配送详情"
                         }
                         "50" -> {
@@ -238,23 +250,23 @@ class BaseHistoryOrderFragment :
                                 R.id.txt_order_delivery_state, "配送中"
                             )
                             btnCancelDis.visibility = View.GONE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "配送详情"
                         }
                         "70" -> {
                             holder.setText(
-                                R.id.txt_order_delivery_state, "取消"
+                                R.id.txt_order_delivery_state, "已取消"
                             )
                             btnCancelDis.visibility = View.GONE
-                            changeOrder.visibility = View.GONE
-                            btnSendDis.text = "配送详情"
+                            changeOrder.visibility = View.INVISIBLE
+                            btnSendDis.text = "重新配送"
                         }
                         "80" -> {
                             holder.setText(
                                 R.id.txt_order_delivery_state, "已送达"
                             )
                             btnCancelDis.visibility = View.GONE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "配送详情"
                         }
                     }

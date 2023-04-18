@@ -195,7 +195,7 @@ class ModifyPassWordActivity : BaseActivity<LoginViewModel, ActivityModifyPasswo
             captchaCountdownTool.stopCountdown()
             mDatabind.txtGetAuthCode.text = "重新获取"
             mDatabind.txtGetAuthCode.isClickable = true
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
 
 
@@ -211,7 +211,7 @@ class ModifyPassWordActivity : BaseActivity<LoginViewModel, ActivityModifyPasswo
         }
         mViewModel.repData.onError.observe(this) {
             disLoading()
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
     }
 

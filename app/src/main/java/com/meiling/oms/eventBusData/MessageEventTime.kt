@@ -7,6 +7,7 @@ class MessageEventTime(val starTime: String, val endTime: String)
 class MessageEventVoucherInspectionHistory(val id: Int)
 class MessageEventUpDataTip()
 class MessageEventHistoryUpDataTip()
+class MessageEventUpDateOrder()
 
 class MessageHistoryEventSelect(var selectDialogDto: SelectDialogDto)
 

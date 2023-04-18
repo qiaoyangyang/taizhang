@@ -69,6 +69,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 //            ARouter.getInstance().build("/app/PostDetailActivity").navigation()
 //        }
     }
+
     private fun resetting() {
         mDatabind.txtPendingOrder.isSelected = false
         mDatabind.txtHistoryOrder.isSelected = false
@@ -77,5 +78,11 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         mDatabind.txtPendingOrder.setTextColor(resources.getColor(R.color.home_A8ABB2))
         mDatabind.txtHistoryOrder.setTextColor(resources.getColor(R.color.home_A8ABB2))
         mDatabind.llChangeOrder.setBackgroundResource(R.drawable.bg_order_tab)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mViewModel.setUmToken()
+
     }
 }

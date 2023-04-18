@@ -116,7 +116,7 @@ class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdG
             captchaCountdownTool.stopCountdown()
             mDatabind.txtAuthCode.isClickable = true
             mDatabind.txtAuthCode.text = "重新获取"
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
 
         mViewModel.repData.onStart.observe(this) {
@@ -134,7 +134,7 @@ class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdG
         }
         mViewModel.repData.onError.observe(this) {
             disLoading()
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
 
 

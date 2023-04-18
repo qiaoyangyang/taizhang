@@ -45,6 +45,7 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
             }
         mDatabind.rvDataDis.adapter = dataDisAdapter
         mDatabind.srfDataDis.setOnRefreshListener {
+            startTime = formatCurrentDateBeforeDay()
             initViewData()
         }
     }
@@ -52,11 +53,11 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
     var poiId = ArrayList<String>()
 
     private fun initViewData() {
-        mViewModel.dataDisList(DataListDto(startTime = "", endTime = "", poiId))
+        mViewModel.dataDisList(DataListDto(startTime = formatCurrentDate(), endTime = formatCurrentDate(), poiId))
         mViewModel.dataHistoryDisList(
             DataListDto(
-                startTime = "$startTime 00:00:00",
-                endTime = formatCurrentDate() + " 23:59:59",
+                startTime = "$startTime",
+                endTime = formatCurrentDateBeforeDay(),
                 poiId
             )
         )
@@ -68,7 +69,7 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
 
     override fun onResume() {
         super.onResume()
-        initData()
+        initViewData()
     }
 
 
@@ -88,8 +89,8 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
                 startTime = it
                 mViewModel.dataHistoryDisList(
                     DataListDto(
-                        startTime = "$it 00:00:00",
-                        endTime = "${formatCurrentDateBeforeDay()} 23:59:59",
+                        startTime = "$it",
+                        endTime = "$it",
                         poiId
                     )
                 )
@@ -109,8 +110,6 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
             mDatabind.txtSumTips.text = it.sumTips
             mDatabind.txtSunAmount.text = it.sumAmount
             mDatabind.txtSumAmountAndTips.text = it.sumAmountAndTips
-            mDatabind.txtHisAvgAmount.text = it.sumAvg
-
         }
         mViewModel.dataList.onError.observe(this) {
             mDatabind.srfDataDis.isRefreshing = false
@@ -123,11 +122,12 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
         mViewModel.dataHistoryList.onSuccess.observe(this) {
             dismissLoading()
             mDatabind.srfDataDis.isRefreshing = false
-            mDatabind.txtSumOrderNum.text = it.sumOrderNum
             mDatabind.txtHisSumOrderNum.text = it.sumOrderNum
             mDatabind.txtHisSumTips.text = it.sumTips
             mDatabind.txtHisSunAmount.text = it.sumAmount
             mDatabind.txtHisSumAmountAndTips.text = it.sumAmountAndTips
+            mDatabind.txtHisAvgAmount.text = it.sumAvg
+
         }
         mViewModel.dataHistoryList.onError.observe(this) {
             mDatabind.srfDataDis.isRefreshing = false

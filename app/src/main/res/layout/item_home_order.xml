@@ -106,7 +106,6 @@
             android:id="@+id/txt_order_delivery_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:textColor="@color/home_333333"
             android:textSize="@dimen/sp_34"
@@ -118,7 +117,7 @@
         <TextView
             android:id="@+id/txt_order_delivery_phone"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_34"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"
             android:drawableEnd="@drawable/order_icon_phone"
             android:drawablePadding="@dimen/dp_10"
@@ -141,9 +140,9 @@
             android:textColor="@color/home_646A89"
             android:textSize="@dimen/sp_30"
             app:drawableStartCompat="@drawable/order_edit_icon"
-            app:layout_constraintBottom_toTopOf="@+id/txt_order_delivery_address"
+            app:layout_constraintTop_toTopOf="@+id/txt_order_delivery_name"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_order_delivery_name" />
+             />
 
         <TextView
 
@@ -173,10 +172,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/dp_10"
                 android:background="@color/home_FAAD14"
-                android:gravity="center_vertical"
                 android:paddingHorizontal="@dimen/dp_24"
                 android:paddingVertical="@dimen/dp_5"
                 android:text="备注"
@@ -187,12 +184,10 @@
                 android:id="@+id/txt_order_remark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginStart="@dimen/dp_10"
-                android:gravity="center"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_30"
-                tools:text="祝福语：remark" />
+                tools:text="祝福语：remark祝福语" />
         </LinearLayout>
 
         <TextView

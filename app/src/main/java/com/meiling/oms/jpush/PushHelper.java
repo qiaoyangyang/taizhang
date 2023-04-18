@@ -4,23 +4,16 @@ import static anet.channel.util.Utils.context;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.RemoteViews;
 
 import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
 
 import com.meihao.kotlin.cashier.widgets.juanmahexiao.JpushKt;
-import com.meiling.common.BuildConfig;
-import com.meiling.common.utils.MMKVUtils;
 import com.meiling.oms.R;
 import com.taobao.accs.ACCSClient;
 import com.taobao.accs.AccsClientConfig;
@@ -34,10 +27,6 @@ import com.umeng.message.UTrack;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
-
-import java.util.Map;
-
-import retrofit2.http.Url;
 
 //import org.android.agoo.huawei.HuaWeiRegister;
 //import org.android.agoo.mezu.MeizuRegister;

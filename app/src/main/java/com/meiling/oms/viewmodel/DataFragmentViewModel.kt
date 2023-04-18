@@ -22,7 +22,7 @@ class DataFragmentViewModel(application: Application) : BaseViewModel(applicatio
 
     var dataHistoryList = BaseLiveData<DataDisDto>()
     fun dataHistoryDisList(dataDisDto: DataListDto) {
-        request({ dataService.dataList(dataDisDto) }, dataList)
+        request({ dataService.dataList(dataDisDto) }, dataHistoryList)
     }
 
     /**

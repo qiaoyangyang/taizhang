@@ -20,11 +20,14 @@ import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
+import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.eventBusData.MessageEvent
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
+import com.meiling.oms.dialog.MineExitDialog
+import com.meiling.oms.eventBusData.MessageEventUpDateOrder
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.*
 import org.greenrobot.eventbus.EventBus
@@ -76,7 +79,10 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     val channelLogoImg = holder.getView<ImageView>(R.id.img_order_icon)
                     holder.setText(R.id.txt_order_delivery_name, item.order?.recvName)
                     holder.setText(R.id.txt_order_delivery_phone, item.order?.recvPhone)
-                    holder.setText(R.id.txt_order_delivery_address, item.order?.recvAddr!!.replace("@@",""))
+                    holder.setText(
+                        R.id.txt_order_delivery_address,
+                        item.order?.recvAddr!!.replace("@@", "")
+                    )
                     holder.setText(R.id.txt_order_num, "#${item.order?.channelDaySn}")
                     holder.setText(R.id.txt_shop_actual_money, "${item.order?.actualIncome}")
                     holder.setText(R.id.txt_order_delivery_time, "${item.order?.arriveTimeDate}")
@@ -103,7 +109,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     } else {
                         holder.setText(R.id.txt_order_delivery_type, "自提")
                         holder.setGone(R.id.txt_order_dis, true)
-                        changeOrder.visibility = View.GONE
+                        changeOrder.visibility = View.INVISIBLE
                     }
                     showMsg.setSingleClickListener {
                         holder.setGone(R.id.cos_hide, true)
@@ -181,13 +187,21 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             .withInt("index", holder.adapterPosition).navigation()
                     }
                     btnCancelDis.setSingleClickListener {
-                        mViewModel.cancelOrder(
-                            CancelOrderSend(
-                                deliveryConsumerId = item.deliveryConsume!!.id ?: "0",
-                                poiId = item.order!!.poiId ?: "0",
-                                stationChannelId = item.deliveryConsume!!.stationChannelId ?: "0"
+                        val dialog: MineExitDialog =
+                            MineExitDialog().newInstance("温馨提示", "确定取消配送吗？", "取消", "确认", false)
+                        dialog.setOkClickLister {
+                            mViewModel.cancelOrder(
+                                CancelOrderSend(
+                                    deliveryConsumerId = item.deliveryConsume!!.id ?: "0",
+                                    poiId = item.order!!.poiId ?: "0",
+                                    stationChannelId = item.deliveryConsume!!.stationChannelId
+                                        ?: "0"
+                                )
                             )
-                        )
+                            dialog.dismiss()
+                        }
+                        dialog.show(childFragmentManager)
+
                     }
                     var orderDisDialog =
                         OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
@@ -227,7 +241,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                                 R.id.txt_order_delivery_state, "待抢单"
                             )
                             btnCancelDis.visibility = View.VISIBLE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "加小费"
                         }
                         "30" -> {
@@ -235,7 +249,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                                 R.id.txt_order_delivery_state, "待取货"
                             )
                             btnCancelDis.visibility = View.VISIBLE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "配送详情"
                         }
                         "50" -> {
@@ -243,15 +257,15 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                                 R.id.txt_order_delivery_state, "配送中"
                             )
                             btnCancelDis.visibility = View.GONE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "配送详情"
                         }
                         "70" -> {
                             holder.setText(
-                                R.id.txt_order_delivery_state, "取消"
+                                R.id.txt_order_delivery_state, "已取消"
                             )
                             btnCancelDis.visibility = View.GONE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "重新配送"
                         }
                         "80" -> {
@@ -259,7 +273,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                                 R.id.txt_order_delivery_state, "已送达"
                             )
                             btnCancelDis.visibility = View.GONE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "配送详情"
                         }
                     }
@@ -347,12 +361,13 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         }
         mViewModel.cancelOrderDto.onSuccess.observe(this) {
             dismissLoading()
-            initViewData()
+            mDatabind.sflLayout.autoRefresh()
             EventBus.getDefault().post(MessageEventUpDataTip())
             showToast("订单已取消")
         }
         mViewModel.cancelOrderDto.onError.observe(this) {
             dismissLoading()
+//            mDatabind.sflLayout.autoRefresh()
             showToast(it.msg)
         }
 
@@ -375,5 +390,4 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         val message: Int = event.message
         orderDisAdapter.notifyItemChanged(message)
     }
-
 }

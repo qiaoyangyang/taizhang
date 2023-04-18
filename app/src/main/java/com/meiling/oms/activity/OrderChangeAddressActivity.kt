@@ -54,11 +54,11 @@ class OrderChangeAddressActivity :
         orderId = intent.getStringExtra("orderId").toString()
         lat = intent.getStringExtra("lat").toString()
         lon = intent.getStringExtra("lon").toString()
-        if (address!!.isBlank() && address!!.contains("@@")) {
+
+        if (address.isNotEmpty()) {
             val x = address.split("@@")
             mDatabind.txtOrderChangeAddress.text = x[0]
-            mDatabind.edtOrderChangeAddressDetail.setText(x[0])
-            println(x[1])
+            mDatabind.edtOrderChangeAddressDetail.setText(x[1])
         } else {
             mDatabind.txtOrderChangeAddress.text = address
         }
@@ -74,6 +74,15 @@ class OrderChangeAddressActivity :
 //        mViewModel.lon.onSuccess.value = mDatabind.txtOrderChangeAddress.text.toString()
 //        mViewModel.lat.onSuccess.value = mDatabind.txtOrderChangeAddress.text.toString()
         mDatabind?.btnSaveChange?.setSingleClickListener {
+
+            if (mDatabind.txtOrderChangeName.text.trim().toString().isBlank()) {
+                showToast("请输入收货人")
+                return@setSingleClickListener
+            }
+            if (mDatabind.txtOrderChangePhone.text.trim().toString().isBlank()) {
+                showToast("请输入收货人电话")
+                return@setSingleClickListener
+            }
 
             mViewModel.changeAddress(
                 orderId,
