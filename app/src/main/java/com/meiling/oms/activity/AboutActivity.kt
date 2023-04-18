@@ -8,6 +8,7 @@ import com.meiling.common.activity.BaseActivity
 import com.meiling.oms.databinding.ActivityAboutBinding
 import com.meiling.oms.dialog.AboutKFDialog
 import com.meiling.oms.viewmodel.LoginViewModel
+import com.meiling.oms.widget.UpdateVersion
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 
@@ -27,7 +28,8 @@ class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
                 .navigation()
         }
         mDatabind.slVersion.setSingleClickListener {
-            showToast("最新版本")
+            UpdateVersion.getUpdateVersion(this, "1")
+//            showToast("最新版本")
         }
         mDatabind.stKf.setSingleClickListener {
             AboutKFDialog().newInstance().newInstance().show(supportFragmentManager)

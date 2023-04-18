@@ -68,6 +68,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 LoadMoreModule {
                 override fun convert(holder: BaseViewHolder, item: OrderDto.Content) {
                     holder.setText(R.id.txt_order_delivery_type, item.orderName)
+                    val imgPrint = holder.getView<ImageView>(R.id.img_shop_print)
                     val imgShopCopy = holder.getView<ImageView>(R.id.img_shop_copy)
                     val changeOrder = holder.getView<TextView>(R.id.txt_change_order)
                     val btnSendDis = holder.getView<TextView>(R.id.txt_order_dis)//发起配送或查看配送详情
@@ -127,14 +128,37 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     var listGoods = item.goodsVoList
                     var x = ""
                     for (goods in listGoods!!) {
-                        x += "名称" + goods?.gname + "\n数量" + goods?.number + "\n价格" + goods?.price
+                        x += "名称:" + goods?.gname + "\n数量:" + goods?.number + "\n价格:" + goods?.price
                     }
+                    imgPrint.setSingleClickListener {
+                        //收银小票:1 退款小票:3
+                        when (item.order!!.logisticsStatus) {
+                            "70" -> {
+                                mViewModel.getPrint(
+                                    item.order?.viewId.toString(),
+                                    item.order?.shopId.toString(),
+                                    "3"
+                                )
+                            }
+                            else -> {
+                                mViewModel.getPrint(
+                                    item.order?.viewId.toString(),
+                                    item.order?.shopId.toString(),
+                                    "1"
+                                )
+                            }
+
+                        }
+
+
+                    }
+
                     imgShopCopy.setSingleClickListener {
                         copyText(
                             context,
-                            "订单来源：" + "${item.channelName} \n" + "门店名称${item.shopName}\n" + "订单编号${item.order?.viewId}\n" + "-------\n" + "商品信息${x}\n" +
+                            "订单来源:" + "${item.channelName} \n" + "门店名称:${item.shopName}\n" + "订单编号:${item.order?.viewId}\n" + "-------\n" + "商品信息:${x}\n" +
 //                                    "商品信息${Gson().fromJson(filteredData.toString(),Array<NewGoodsVo>::class.java).toList()}\n" +
-                                    "-------\n" + "收货时间${item.order?.arriveTimeDate}\n" + "收货人${item.order?.recvName}${item.order?.recvPhone}\n" + "收货地址${item.order?.recvAddr}\n" + "-------\n" + "备注${item.order?.remark}\n"
+                                    "-------\n" + "收货时间:${item.order?.arriveTimeDate}\n" + "收货人:${item.order?.recvName}${item.order?.recvPhone}\n" + "收货地址:${item.order?.recvAddr}\n" + "-------\n" + "备注${item.order?.remark}\n"
                         )
 //                        ToastUtils.showLong("复制成功")
                         showToast("复制成功")

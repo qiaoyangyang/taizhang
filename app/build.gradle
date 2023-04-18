@@ -91,4 +91,13 @@ dependencies {
     implementation 'com.umeng.umsdk:agoo_aranger:1.0.6'
     implementation 'com.umeng.umsdk:agoo_networksdk:3.5.8'
     implementation 'com.umeng.umsdk:agoo_tnet4android:3.1.14.10'
+
+    api 'com.qianwen:update-app:3.5.2'
+
+    //okhttp3
+    implementation 'com.squareup.okhttp3:mockwebserver:3.11.0'
+    implementation 'com.squareup.okio:okio:2.0.0'
+//鸿洋okhttputils
+    implementation 'com.zhy:okhttputils:2.6.2'
+
 }

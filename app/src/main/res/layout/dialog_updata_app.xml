@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_themes_f7f7f7">
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/fg"-->
+    <!--        android:layout_width="300dp"-->
+    <!--        android:layout_height="300dp"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        android:background="@mipmap/upgrade_bgm_img" />-->
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/img_close"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_above="@+id/fg"-->
+    <!--        android:layout_alignEnd="@+id/fg"-->
+    <!--        android:scaleType="center"-->
+    <!--        android:src="@mipmap/update_close_btn_pressed" />-->
+
+    <com.hjq.shape.layout.ShapeLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="@dimen/dp_30"
+        android:orientation="vertical"
+        app:shape_radius="@dimen/dp_40"
+        app:shape_solidColor="@color/white">
+
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/txtVersionName"
+            android:gravity="center"
+            android:paddingVertical="@dimen/dp_30"
+            android:text="发现新版本"
+            android:textColor="@color/home_333333"
+            android:textSize="@dimen/sp_30" />
+
+        <TextView
+            android:id="@+id/txtVersionName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/name"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingVertical="@dimen/dp_30"
+            android:text="升级1.0.4"
+            android:textColor="#606266"
+            android:textSize="@dimen/sp_30" />
+
+
+        <ProgressBar
+            android:id="@+id/pro"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:max="100"
+            android:progressDrawable="@drawable/pro"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txtPro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line"
+            android:layout_marginTop="@dimen/dp_10"
+            android:gravity="end"
+            android:text="已下载"
+            android:textColor="#606266"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_2"
+            android:layout_marginTop="@dimen/dp_30"
+            android:background="#F4F4F4" />
+
+        <LinearLayout
+            android:id="@+id/ll_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/cancel_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dp_30"
+                android:text="暂不更新"
+                android:textColor="@color/home_999999" />
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="@dimen/dp_2"
+                android:layout_height="match_parent"
+                android:background="#F4F4F4" />
+
+            <TextView
+                android:id="@+id/ok_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dp_30"
+                android:text="暂不更新"
+                android:textColor="#4E7BE5" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/server_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingVertical="@dimen/dp_30"
+            android:text="后台执行"
+            android:textColor="#4E7BE5"
+            android:visibility="gone" />
+    </com.hjq.shape.layout.ShapeLinearLayout>
+</RelativeLayout>

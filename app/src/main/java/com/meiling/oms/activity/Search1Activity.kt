@@ -347,7 +347,6 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
         }
         mViewModel.orderList.onError.observe(this) {
             disLoading()
-            mDatabind.edtSearch.setText("")
             orderDisAdapter.setList(null)
             mDatabind.rlOrderEmpty.visibility = View.VISIBLE
             mDatabind.txtErrorMsg.text = "支持通过订单编号、收货人姓名、手机号进行搜索"
