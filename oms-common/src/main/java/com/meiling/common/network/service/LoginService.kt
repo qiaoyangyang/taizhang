@@ -106,6 +106,18 @@ interface LoginService {
     suspend fun getChannel():ResultData<ArrayList<Channel>>
 
     /**
+     * 校验账号名称
+     */
+    @GET("/saas/business/username/check")
+    suspend fun checkUserName(@Query("username") username:String):ResultData<Any>
+
+    /**
+     * 校验品牌名称
+     */
+    @GET("/saas/business/thanBrand")
+    suspend fun thanBrand(@Query("name") name:String):ResultData<Any>
+
+    /**
      *  所属城市  租户默认所有城市
      */
     @GET("/saas/business/city")

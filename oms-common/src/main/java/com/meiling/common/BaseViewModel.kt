@@ -12,10 +12,7 @@ import com.meiling.common.network.APIException
 import com.meiling.common.network.ExceptionHandle
 import com.meiling.common.network.ResultData
 import com.orhanobut.logger.Logger
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 open class BaseViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -131,5 +128,6 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
     }
+
 
 }

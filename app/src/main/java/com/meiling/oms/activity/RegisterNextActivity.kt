@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.CompoundButton
 import android.widget.RadioGroup
 import android.widget.RadioGroup.OnCheckedChangeListener
+import androidx.compose.runtime.snapshots.SnapshotApplyResult
+import androidx.lifecycle.viewModelScope
 import com.gyf.immersionbar.ImmersionBar
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -22,15 +24,17 @@ import com.meiling.oms.dialog.SelectIndustryShopDialog
 import com.meiling.oms.viewmodel.RegisterViewModel
 import com.meiling.oms.widget.showToast
 import com.wayne.constraintradiogroup.ConstraintRadioGroup
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.internal.wait
 import java.io.File
 
 class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
     lateinit var mDatabind: ActivityRegisterNextBinding
-    var phone:String?="18311137330"
+    var phone: String? = "18311137330"
     override fun initView(savedInstanceState: Bundle?) {
 //        phone=savedInstanceState?.getString("phone","18311137330")
         ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
@@ -64,7 +68,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                             children: Children,
                         ) {
                             mDatabind.txtIndustryRight.text = cityidname
-                            mViewModel.businessDto.value!!.businessCategory=children.id
+                            mViewModel.businessDto.value!!.businessCategory = children.id
                         }
 
                         override fun Ondismiss() {
@@ -107,7 +111,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                                 },
                                 onSuccess = {
                                     showToast("上传成功")
-                                    mViewModel.businessDto.value!!.logo=it
+                                    mViewModel.businessDto.value!!.logo = it
                                 },
                                 onError = {
                                     showToast("上传失败")
@@ -127,7 +131,8 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             { loginService.getChannel() },
             onSuccess = {
                 it.let {
-                  mViewModel.businessDto.value!!.salesChannel=  it!!.map { it.id }.toList().joinToString(",")
+                    mViewModel.businessDto.value!!.salesChannel =
+                        it!!.map { it.id }.toList().joinToString(",")
                 }
             },
             onError = {
@@ -139,7 +144,8 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             { loginService.getCity() },
             onSuccess = {
                 it?.let {
-                    mViewModel.businessDto.value!!.city=it.map{it.id}.toList().joinToString(",")
+                    mViewModel.businessDto.value!!.city =
+                        it.map { it.id }.toList().joinToString(",")
                 }
             },
             onError = {
@@ -147,64 +153,116 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             }
         )
 
-        mDatabind.shopTypeRG.checkedChangeListener=object :com.wayne.constraintradiogroup.OnCheckedChangeListener{
-            override fun onCheckedChanged(
-                group: ConstraintRadioGroup,
-                checkedButton: CompoundButton,
-            ) {
-                if(checkedButton.id== R.id.checkEnterprise){
-                    mDatabind.txtOperateType.visibility= View.VISIBLE
-                    mDatabind.txtOperateTypeRed.visibility=View.VISIBLE
-                    mDatabind.operateTypeRG.visibility=View.VISIBLE
-                    mDatabind.line2.visibility=View.VISIBLE
-                    mDatabind.line4.visibility=View.VISIBLE
-                    mDatabind.txtShopName.visibility=View.VISIBLE
-                    mDatabind.txtShopName2.visibility=View.VISIBLE
-                    mDatabind.edtShopName.visibility=View.VISIBLE
-                }
-                if(checkedButton.id==R.id.checkPerson){
-                    mDatabind.txtOperateType.visibility= View.GONE
-                    mDatabind.txtOperateTypeRed.visibility=View.GONE
-                    mDatabind.operateTypeRG.visibility=View.GONE
-                    mDatabind.line2.visibility=View.GONE
-                    mDatabind.line4.visibility=View.GONE
-                    mDatabind.txtShopName.visibility=View.GONE
-                    mDatabind.txtShopName2.visibility=View.GONE
-                    mDatabind.edtShopName.visibility=View.GONE
-                    mViewModel.businessDto.value!!.isChain=""
-                    mViewModel.businessDto.value!!.enterpriseName=""
-                }
-                if(checkedButton.id==R.id.checkOther){
-                    mDatabind.txtOperateType.visibility= View.VISIBLE
-                    mDatabind.txtOperateTypeRed.visibility=View.VISIBLE
-                    mDatabind.operateTypeRG.visibility=View.VISIBLE
-                    mDatabind.line2.visibility=View.VISIBLE
-                    mDatabind.line4.visibility=View.GONE
-                    mDatabind.txtShopName.visibility=View.GONE
-                    mDatabind.txtShopName2.visibility=View.GONE
-                    mDatabind.edtShopName.visibility=View.GONE
-                    mViewModel.businessDto.value!!.enterpriseName=""
+        mDatabind.shopTypeRG.checkedChangeListener =
+            object : com.wayne.constraintradiogroup.OnCheckedChangeListener {
+                override fun onCheckedChanged(
+                    group: ConstraintRadioGroup,
+                    checkedButton: CompoundButton,
+                ) {
+                    if (checkedButton.id == R.id.checkEnterprise) {
+                        mDatabind.txtOperateType.visibility = View.VISIBLE
+                        mDatabind.txtOperateTypeRed.visibility = View.VISIBLE
+                        mDatabind.operateTypeRG.visibility = View.VISIBLE
+                        mDatabind.line2.visibility = View.VISIBLE
+                        mDatabind.line4.visibility = View.VISIBLE
+                        mDatabind.txtShopName.visibility = View.VISIBLE
+                        mDatabind.txtShopName2.visibility = View.VISIBLE
+                        mDatabind.edtShopName.visibility = View.VISIBLE
+                    }
+                    if (checkedButton.id == R.id.checkPerson) {
+                        mDatabind.txtOperateType.visibility = View.GONE
+                        mDatabind.txtOperateTypeRed.visibility = View.GONE
+                        mDatabind.operateTypeRG.visibility = View.GONE
+                        mDatabind.line2.visibility = View.GONE
+                        mDatabind.line4.visibility = View.GONE
+                        mDatabind.txtShopName.visibility = View.GONE
+                        mDatabind.txtShopName2.visibility = View.GONE
+                        mDatabind.edtShopName.visibility = View.GONE
+                        mViewModel.businessDto.value!!.isChain = ""
+                        mViewModel.businessDto.value!!.enterpriseName = ""
+                    }
+                    if (checkedButton.id == R.id.checkOther) {
+                        mDatabind.txtOperateType.visibility = View.VISIBLE
+                        mDatabind.txtOperateTypeRed.visibility = View.VISIBLE
+                        mDatabind.operateTypeRG.visibility = View.VISIBLE
+                        mDatabind.line2.visibility = View.VISIBLE
+                        mDatabind.line4.visibility = View.GONE
+                        mDatabind.txtShopName.visibility = View.GONE
+                        mDatabind.txtShopName2.visibility = View.GONE
+                        mDatabind.edtShopName.visibility = View.GONE
+                        mViewModel.businessDto.value!!.enterpriseName = ""
+                    }
+
                 }
 
             }
 
-        }
-
         //注册
         mDatabind.btnNext.setOnClickListener {
+            mViewModel.businessDto.value!!.phone = this@RegisterNextActivity.phone
 
-            mViewModel.businessDto.value!!.phone=this@RegisterNextActivity.phone
-            Log.e("",mViewModel.businessDto.value.toString())
-            mViewModel.launchRequest(
-                { loginService.save(mViewModel.businessDto.value!!)},
-                onSuccess = {
-                    //成功会返回组合id
-
-                },
-                onError = {
-                    it?.let { showToast(it) }
+            if (mViewModel.businessDto.value!!.tenantType == "1") {
+                if (mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()) {
+                    showToast("请输入企业名称")
+                    return@setOnClickListener
                 }
-            )
+            }
+            if (mViewModel.businessDto.value!!.tenantName.isNullOrBlank()) {
+                showToast("请输入品牌名称")
+                return@setOnClickListener
+            }
+            if (mViewModel.businessDto.value!!.logo.isNullOrBlank()) {
+                showToast("请选择LOGO")
+                return@setOnClickListener
+            }
+            if (mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()) {
+                showToast("请选择所属行业")
+                return@setOnClickListener
+            }
+            if (mViewModel.businessDto.value!!.userName.isNullOrBlank()) {
+                showToast("请输入管理员账号")
+                return@setOnClickListener
+            }
+            if (mViewModel.businessDto.value!!.userName.isNullOrBlank()) {
+                showToast("请输入管理员密码")
+                return@setOnClickListener
+            }
+
+            Log.e("", mViewModel.businessDto.value.toString())
+            var check1=false
+            var check2=false
+                mViewModel.launchRequest(
+                    {
+                        loginService.checkUserName(mViewModel.businessDto.value!!.userName!!)
+                    }, onSuccess = {
+                        check1=true
+                    }, onError = {
+                        it?.let { showToast(it) }
+                    }
+                )
+                mViewModel.launchRequest(
+                    {
+                        loginService.thanBrand(mViewModel.businessDto.value!!.tenantName!!)
+                    }, onSuccess = {
+                        check1=true
+                    }, onError = {
+                        it?.let { showToast(it) }
+                    }
+                )
+
+                if(check1&&check2){
+                    mViewModel.launchRequest(
+                        { loginService.save(mViewModel.businessDto.value!!)},
+                        onSuccess = {
+                            //成功会返回组合id
+
+                        },
+                        onError = {
+                            it?.let { showToast(it) }
+                        }
+                    )
+                }
+
         }
 
     }
