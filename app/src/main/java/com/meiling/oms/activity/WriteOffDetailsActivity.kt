@@ -110,10 +110,13 @@ class WriteOffDetailsActivity :
             } else {
 
             }
-
+            var shopname=serializableExtra?.shopName
+            if (serializableExtra?.shopName.toString().length>12){
+                shopname=serializableExtra?.shopName.toString().substring(0,12)+"...."
+            }
             if (serializableExtra?.coupon?.type == 2) {//美团
                 mDatabind.meiRecyclerView.visibility = View.VISIBLE
-                var conet = "由 ${serializableExtra.shopName} 验证"
+                var conet = "由 ${shopname} 验证"
                 SpannableUtils.setTextcolor(
                     this,
                     conet,
@@ -126,7 +129,7 @@ class WriteOffDetailsActivity :
             } else if (serializableExtra?.coupon?.type == 5) {//抖音
                 mDatabind.meiRecyclerView.visibility = View.GONE
                 //  holder.setText(R.id.tv_shopName, "由"+item?.coupon?.shopName+"验证")
-                var conet = "由 ${serializableExtra?.shopName} 验证"
+                var conet = "由 ${shopname} 验证"
                 SpannableUtils.setTextcolor(
                     this,
                     conet,

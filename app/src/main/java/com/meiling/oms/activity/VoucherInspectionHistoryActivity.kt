@@ -251,9 +251,13 @@ class VoucherInspectionHistoryActivity :
 
 
 
+                var shopname=item?.shopName
+                if (item?.shopName.toString().length>12){
+                    shopname=item?.shopName.toString().substring(0,12)+"...."
+                }
 
                 if (item?.coupon?.type == 2) {//美团
-                    var conet = "由 ${item.shopName} 验证"
+                    var conet = "由 ${shopname} 验证"
                     SpannableUtils.setTextcolor(
                         holder.itemView.context,
                         conet,
@@ -265,7 +269,8 @@ class VoucherInspectionHistoryActivity :
 
                 } else if (item?.coupon?.type == 5) {//抖音
                     //  holder.setText(R.id.tv_shopName, "由"+item?.coupon?.shopName+"验证")
-                    var conet = "由 ${item?.shopName} 验证"
+
+                    var conet = "由 ${shopname} 验证"
                     SpannableUtils.setTextcolor(
                         holder.itemView.context,
                         conet,
