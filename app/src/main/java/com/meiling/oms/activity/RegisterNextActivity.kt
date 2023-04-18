@@ -1,13 +1,10 @@
 package com.meiling.oms.activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
-import android.widget.RadioGroup
-import android.widget.RadioGroup.OnCheckedChangeListener
-import androidx.compose.runtime.snapshots.SnapshotApplyResult
-import androidx.lifecycle.viewModelScope
 import com.gyf.immersionbar.ImmersionBar
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -18,17 +15,17 @@ import com.meiling.common.network.data.Children
 import com.meiling.common.network.service.loginService
 import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.GlideEngine
+import com.meiling.common.view.ArrowPopupWindow
+import com.meiling.common.view.ArrowTiedPopupWindow
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityRegisterNextBinding
 import com.meiling.oms.dialog.SelectIndustryShopDialog
 import com.meiling.oms.viewmodel.RegisterViewModel
 import com.meiling.oms.widget.showToast
 import com.wayne.constraintradiogroup.ConstraintRadioGroup
-import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.internal.wait
 import java.io.File
 
 class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
@@ -46,9 +43,46 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         setContentView(mDatabind.root)
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun initData() {
         super.initData()
         mDatabind.viewModel = mViewModel
+        mDatabind.tips1.setOnClickListener {
+            var mpup= ArrowTiedPopupWindow(this@RegisterNextActivity)
+            mpup.apply {
+                setBackground(R.color.zxing_transparent,5f,20,10)
+                setArrow(R.color.black,0.2f,ArrowPopupWindow.ArrowSize.BIGGER)
+                setPopupView(layoutInflater.inflate(R.layout.pup_layout,null))
+                setTiedView(mDatabind.tips1,ArrowTiedPopupWindow.TiedDirection.BOTTOM)
+                preShow()
+                isOutsideTouchable=true
+                show()
+            }
+        }
+        mDatabind.tips2.setOnClickListener {
+            var mpup= ArrowTiedPopupWindow(this@RegisterNextActivity)
+            mpup.apply {
+                setBackground(R.color.zxing_transparent,5f,20,10)
+                setArrow(R.color.black,0.5f,ArrowPopupWindow.ArrowSize.BIGGER)
+                setPopupView(layoutInflater.inflate(R.layout.pup_layout,null))
+                setTiedView(mDatabind.tips2,ArrowTiedPopupWindow.TiedDirection.BOTTOM)
+                preShow()
+                isOutsideTouchable=true
+                show()
+            }
+        }
+        mDatabind.tips3.setOnClickListener {
+            var mpup= ArrowTiedPopupWindow(this@RegisterNextActivity)
+            mpup.apply {
+                setBackground(R.color.zxing_transparent,5f,20,10)
+                setArrow(R.color.black,0.85f,ArrowPopupWindow.ArrowSize.BIGGER)
+                setPopupView(layoutInflater.inflate(R.layout.pup_layout,null))
+                setTiedView(mDatabind.tips3,ArrowTiedPopupWindow.TiedDirection.BOTTOM)
+                preShow()
+                isOutsideTouchable=true
+                show()
+            }
+        }
         //选择所属行业
         mDatabind.txtIndustryRight.setOnClickListener {
             mViewModel.launchRequest(
