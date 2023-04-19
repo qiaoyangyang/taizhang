@@ -240,6 +240,7 @@ class VoucherInspectionActivity :
         }
         mViewModel.consume.onError.observe(this){
             disLoading()
+            showToast("${it.msg}")
         }
 
 
