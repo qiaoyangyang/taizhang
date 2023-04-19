@@ -196,8 +196,6 @@
             android:text="详细地址"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_32"
-            app:drawableEndCompat="@drawable/icon_must_input"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_address_tip" />
 

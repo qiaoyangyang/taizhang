@@ -45,15 +45,17 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                         )
                     )
                 }
-
             }.onFailure {
                 if (it.message!!.isNotEmpty()) {
                     if (it.message!!.contains("403")) {
                         MMKVUtils.clear()
-                        ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).navigation()
+                        ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY)
+                            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).navigation()
                     }
+
+                } else {
+                    resultState.onError.postValue(ExceptionHandle.handleException(it))
                 }
-                resultState.onError.postValue(ExceptionHandle.handleException(it))
             }
         }
     }

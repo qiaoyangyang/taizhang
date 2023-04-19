@@ -28,7 +28,6 @@ class DataFragment : BaseFragment<DataViewModel, FragmentDataBinding>() {
     private val fragmentList: MutableList<Fragment> = ArrayList()
 
     override fun initView(savedInstanceState: Bundle?) {
-        EventBus.getDefault().register(this)
         mDatabind.viewPager.isUserInputEnabled = false
         fragmentList.add(DataShopFragment.newInstance())
         fragmentList.add(DataChannelFragment.newInstance())
@@ -53,7 +52,15 @@ class DataFragment : BaseFragment<DataViewModel, FragmentDataBinding>() {
     override fun getBind(inflater: LayoutInflater): FragmentDataBinding {
         return FragmentDataBinding.inflate(inflater)
     }
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
 
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
 
     override fun initListener() {
 

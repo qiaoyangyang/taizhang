@@ -26,6 +26,7 @@ import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityHistoryBinding
 import com.meiling.oms.dialog.VerificationScreeningDidalog
 import com.meiling.oms.viewmodel.VoucherInspectionHistoryViewModel
+import com.meiling.oms.widget.SS
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
@@ -152,7 +153,7 @@ class VoucherInspectionHistoryActivity :
             typename = "2"
         }
 
-
+        orderLeftRecyAdapter.loadMoreModule.loadMoreView = SS()
         orderLeftRecyAdapter.loadMoreModule.setOnLoadMoreListener {
             pageIndex++
             setcoupon()

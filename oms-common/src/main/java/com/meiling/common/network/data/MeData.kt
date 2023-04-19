@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class MessageDto(
     @SerializedName("content")
-    var content: List<Content?>?,
+    var content: List<Content?>,
     @SerializedName("contentT")
     var contentT: Any?,
     @SerializedName("extra")

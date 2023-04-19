@@ -15,6 +15,7 @@ import com.meiling.oms.eventBusData.MessageEventTimeShow
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentRechargeRecordBinding
 import com.meiling.oms.viewmodel.RechargeViewModel
+import com.meiling.oms.widget.SS
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.formatCurrentDateBeforeWeek
 import com.meiling.oms.widget.showToast
@@ -68,6 +69,7 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
                 tenantId = MMKVUtils.getString(SPConstants.tenantId)
             )
         )
+        rechargeAdapter.loadMoreModule.loadMoreView = SS()
         rechargeAdapter.loadMoreModule.setOnLoadMoreListener {
             pageIndex++
             mViewModel.getFinancialRecord(

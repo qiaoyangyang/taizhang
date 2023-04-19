@@ -10,6 +10,7 @@ import com.meiling.common.network.data.DataListDto
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDataDisBinding
 import com.meiling.oms.dialog.DataSelectTimeDialog
+import com.meiling.oms.dialog. DataTipDialog
 import com.meiling.oms.eventBusData.MessageSelectShopPo
 import com.meiling.oms.viewmodel.DataFragmentViewModel
 import com.meiling.oms.widget.formatCurrentDate
@@ -28,7 +29,6 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        EventBus.getDefault().register(this)
         dataDisAdapter =
             object :
                 BaseQuickAdapter<DataDisDto.DeliveryConsumeLists, BaseViewHolder>(R.layout.item_data_dis) {
@@ -53,7 +53,13 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
     var poiId = ArrayList<String>()
 
     private fun initViewData() {
-        mViewModel.dataDisList(DataListDto(startTime = formatCurrentDate(), endTime = formatCurrentDate(), poiId))
+        mViewModel.dataDisList(
+            DataListDto(
+                startTime = formatCurrentDate(),
+                endTime = formatCurrentDate(),
+                poiId
+            )
+        )
         mViewModel.dataHistoryDisList(
             DataListDto(
                 startTime = "$startTime",
@@ -62,6 +68,7 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
             )
         )
     }
+
 
     override fun getBind(inflater: LayoutInflater): FragmentDataDisBinding {
         return FragmentDataDisBinding.inflate(inflater)
@@ -96,8 +103,55 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
                 )
             }
         }
+
+
+        mDatabind.txtDataDisTip.setSingleClickListener {
+             DataTipDialog().newInstance("只计算配送成功的订单数量，不包含配送中、配送失败和取消配送的订单")
+             .show(childFragmentManager)
+        }
+        mDatabind.txtDataDisTip1.setSingleClickListener {
+             DataTipDialog().newInstance("该配送费为系统预估的配送，实际配送费请以配送平台的为准")
+             .show(childFragmentManager)
+        }
+        mDatabind.txtDataDisTip2.setSingleClickListener {
+             DataTipDialog().newInstance("只计算配送成功的订单的加小费金额")
+             .show(childFragmentManager)
+        }
+        mDatabind.txtDataDisTip3.setSingleClickListener {
+             DataTipDialog().newInstance("小计=配送费+小费")
+             .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataDisTip.setSingleClickListener {
+             DataTipDialog().newInstance("只计算配送成功的订单数量，不包含配送中、配送失败和取消配送的订单")
+            .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataDisTip1.setSingleClickListener {
+             DataTipDialog().newInstance("该配送费为系统预估的配送，实际配送费请以配送平台的为准")
+            .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataDisTip2.setSingleClickListener {
+             DataTipDialog().newInstance("只计算配送成功的订单的加小费金额")
+             .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataDisTip3.setSingleClickListener {
+             DataTipDialog().newInstance("小计=配送费+小费")
+            .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataDisTip4.setSingleClickListener {
+             DataTipDialog().newInstance("客单价=小计/发单数量")
+             .show(childFragmentManager)
+        }
+
+    }
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
     }
 
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
     override fun createObserver() {
         mViewModel.dataList.onStart.observe(this) {
             showLoading("正在请求")

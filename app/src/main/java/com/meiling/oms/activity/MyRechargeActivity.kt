@@ -150,7 +150,7 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
         }
         mViewModel.rechargeDto.onError.observe(this) {}
         mViewModel.balance.onSuccess.observe(this) {
-            mDatabind.txtBalance.text = it.availableAmount
+            mDatabind.txtBalance.text = it.payAmount
             mDatabind.txtServiceFee.text = it.unitPrice
             mDatabind.txtFreezeAmount.text = "已冻结 ${it.freezeAmount}"
         }

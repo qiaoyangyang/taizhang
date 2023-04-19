@@ -45,11 +45,17 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txt_data_order_tip"
                             android:layout_width="wrap_content"
-                            android:layout_height="20dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:drawablePadding="@dimen/dp_5"
+                            android:gravity="center_vertical"
+
                             android:text="订单数量小计(单)"
                             android:textColor="@color/home_333333"
-                            android:textSize="@dimen/sp_28" />
+                            android:textSize="@dimen/sp_28"
+                            app:drawableEndCompat="@drawable/icon_data_tip" />
 
                         <TextView
                             android:id="@+id/text_data_shop_count"
@@ -68,11 +74,14 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="108dp"
-                            android:layout_height="20dp"
+                            android:id="@+id/txt_data_order_tip1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/dp_5"
                             android:text="下单数量(单)"
                             android:textColor="@color/home_333333"
-                            android:textSize="@dimen/sp_28" />
+                            android:textSize="@dimen/sp_28"
+                            app:drawableEndCompat="@drawable/icon_data_tip" />
 
                         <TextView
                             android:id="@+id/text_data_insert_order_count"
@@ -100,11 +109,14 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="108dp"
-                            android:layout_height="20dp"
+                            android:id="@+id/txt_data_order_tip2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/dp_5"
                             android:text="退单数量(单)"
                             android:textColor="@color/home_333333"
-                            android:textSize="@dimen/sp_28" />
+                            android:textSize="@dimen/sp_28"
+                            app:drawableEndCompat="@drawable/icon_data_tip" />
 
                         <TextView
                             android:id="@+id/text_data_refund_order_count"
@@ -123,11 +135,14 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="108dp"
-                            android:layout_height="20dp"
+                            android:id="@+id/txt_data_order_tip3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/dp_5"
                             android:text="客单价(元)"
                             android:textColor="@color/home_333333"
-                            android:textSize="@dimen/sp_28" />
+                            android:textSize="@dimen/sp_28"
+                            app:drawableEndCompat="@drawable/icon_data_tip" />
 
                         <TextView
                             android:id="@+id/text_data_avg_order_count"
@@ -155,11 +170,14 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="108dp"
-                            android:layout_height="20dp"
+                            android:id="@+id/txt_data_order_tip4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/dp_5"
                             android:text="收款小计(元)"
                             android:textColor="@color/home_333333"
-                            android:textSize="@dimen/sp_28" />
+                            android:textSize="@dimen/sp_28"
+                            app:drawableEndCompat="@drawable/icon_data_tip" />
 
                         <TextView
                             android:id="@+id/text_data_valid_order_count"
@@ -178,11 +196,14 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="108dp"
-                            android:layout_height="20dp"
+                            android:id="@+id/txt_data_order_tip5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/dp_5"
                             android:text="实付金额(元)"
                             android:textColor="@color/home_333333"
-                            android:textSize="@dimen/sp_28" />
+                            android:textSize="@dimen/sp_28"
+                            app:drawableEndCompat="@drawable/icon_data_tip" />
 
                         <TextView
                             android:id="@+id/text_data_actual_order_count"
@@ -211,11 +232,14 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="108dp"
-                            android:layout_height="20dp"
+                            android:id="@+id/txt_data_order_tip6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/dp_5"
                             android:text="退款金额(元)"
                             android:textColor="@color/home_333333"
-                            android:textSize="@dimen/sp_28" />
+                            android:textSize="@dimen/sp_28"
+                            app:drawableEndCompat="@drawable/icon_data_tip" />
 
                         <TextView
                             android:id="@+id/text_data_refund_order_money"
@@ -252,7 +276,8 @@
                         android:layout_marginHorizontal="@dimen/dp_20"
                         android:layout_weight="1"
                         android:orientation="horizontal"
-                        android:paddingHorizontal="@dimen/dp_30">
+                        android:paddingHorizontal="@dimen/dp_30"
+                        android:paddingVertical="@dimen/dp_5">
 
                         <TextView
                             android:layout_width="0dp"
@@ -329,11 +354,14 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txt_his_data_order_tip"
                             android:layout_width="wrap_content"
-                            android:layout_height="20dp"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/dp_5"
                             android:text="订单数量小计(单)"
                             android:textColor="@color/home_333333"
-                            android:textSize="@dimen/sp_28" />
+                            android:textSize="@dimen/sp_28"
+                            app:drawableEndCompat="@drawable/icon_data_tip" />
 
                         <TextView
                             android:id="@+id/text_data_history_shop_count"
@@ -352,11 +380,13 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="108dp"
-                            android:layout_height="20dp"
+                            android:id="@+id/txt_his_data_order_tip1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="下单数量(单)"
                             android:textColor="@color/home_333333"
-                            android:textSize="@dimen/sp_28" />
+                            android:textSize="@dimen/sp_28"
+                            app:drawableEndCompat="@drawable/icon_data_tip" />
 
                         <TextView
                             android:id="@+id/text_data_history_insert_order_count"
@@ -384,11 +414,13 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="108dp"
-                            android:layout_height="20dp"
+                            android:id="@+id/txt_his_data_order_tip2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="退单数量(单)"
                             android:textColor="@color/home_333333"
-                            android:textSize="@dimen/sp_28" />
+                            android:textSize="@dimen/sp_28"
+                            app:drawableEndCompat="@drawable/icon_data_tip" />
 
                         <TextView
                             android:id="@+id/text_data_history_refund_order_count"
@@ -407,11 +439,13 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="108dp"
-                            android:layout_height="20dp"
+                            android:id="@+id/txt_his_data_order_tip3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="客单价(元)"
                             android:textColor="@color/home_333333"
-                            android:textSize="@dimen/sp_28" />
+                            android:textSize="@dimen/sp_28"
+                            app:drawableEndCompat="@drawable/icon_data_tip" />
 
                         <TextView
                             android:id="@+id/text_data_history_avg_order_count"
@@ -439,11 +473,13 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="108dp"
-                            android:layout_height="20dp"
+                            android:id="@+id/txt_his_data_order_tip4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="收款小计(元)"
                             android:textColor="@color/home_333333"
-                            android:textSize="@dimen/sp_28" />
+                            android:textSize="@dimen/sp_28"
+                            app:drawableEndCompat="@drawable/icon_data_tip" />
 
                         <TextView
                             android:id="@+id/text_data_history_valid_order_count"
@@ -462,11 +498,13 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="108dp"
-                            android:layout_height="20dp"
+                            android:id="@+id/txt_his_data_order_tip5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="实付金额(元)"
                             android:textColor="@color/home_333333"
-                            android:textSize="@dimen/sp_28" />
+                            android:textSize="@dimen/sp_28"
+                            app:drawableEndCompat="@drawable/icon_data_tip" />
 
                         <TextView
                             android:id="@+id/text_data_history_actual_order_count"
@@ -495,11 +533,13 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="108dp"
-                            android:layout_height="20dp"
+                            android:id="@+id/txt_his_data_order_tip6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="退款金额(元)"
                             android:textColor="@color/home_333333"
-                            android:textSize="@dimen/sp_28" />
+                            android:textSize="@dimen/sp_28"
+                            app:drawableEndCompat="@drawable/icon_data_tip" />
 
                         <TextView
                             android:id="@+id/text_data_history_refund_order_money"

@@ -55,9 +55,6 @@ object UpdateVersion {
                             } else {
                                 updateAppBean.update = "No"
                             }
-//                            if (appUpdate.data.updateLog.isNotEmpty()) {
-//                                updateAppBean.setUpdateLog(appUpdate.data.updateLog)
-//                            }updateLog
                             //版本号
                             updateAppBean.newVersion = data.versionCode
                             //下载地址
@@ -71,9 +68,6 @@ object UpdateVersion {
                     updateApp: UpdateAppBean,
                     updateAppManager: UpdateAppManager
                 ) {
-                    Log.d("okhttp", "$====code==${context}")
-
-
                     showDiyDialogNew(context, updateApp, updateAppManager)
                 }
 
@@ -133,8 +127,9 @@ object UpdateVersion {
                 progressBar.visibility = View.VISIBLE
                 txtPro.visibility = View.VISIBLE
                 btnSure.visibility = View.GONE
-                llUpdate.visibility = View.GONE
+                llUpdate.visibility = View.VISIBLE
                 cancel.visibility = View.VISIBLE
+                serverUpdate.visibility = View.VISIBLE
                 updateAppManager.download(object : DownloadCallback {
                     override fun onStart() {}
 

@@ -16,18 +16,16 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
-import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
-import com.meiling.oms.eventBusData.MessageEvent
-import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
 import com.meiling.oms.dialog.MineExitDialog
-import com.meiling.oms.eventBusData.MessageEventUpDateOrder
+import com.meiling.oms.dialog.OrderDistributionDetailDialog
+import com.meiling.oms.eventBusData.MessageEvent
+import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.*
 import org.greenrobot.eventbus.EventBus
@@ -59,9 +57,16 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         initViewData()
         EventBus.getDefault().post(MessageEventUpDataTip())
     }
-
-    override fun initView(savedInstanceState: Bundle?) {
+    override fun onStart() {
+        super.onStart()
         EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+    override fun initView(savedInstanceState: Bundle?) {
         requireArguments().getString("type").toString()
         orderDisAdapter =
             object : BaseQuickAdapter<OrderDto.Content, BaseViewHolder>(R.layout.item_home_order),
@@ -329,7 +334,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             isValid = "",
             businessNumber = "",
         )
-
+        orderDisAdapter.loadMoreModule.loadMoreView = SS()
         orderDisAdapter.loadMoreModule.setOnLoadMoreListener {
             pageIndex++
             mViewModel.orderList(
@@ -402,11 +407,6 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         return FragmentBaseOrderBinding.inflate(inflater)
     }
 
-
-    override fun onDestroy() {
-        super.onDestroy()
-        EventBus.getDefault().unregister(this);
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {

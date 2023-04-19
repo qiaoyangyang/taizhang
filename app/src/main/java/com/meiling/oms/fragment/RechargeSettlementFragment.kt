@@ -86,6 +86,7 @@ class RechargeSettlementFragment :
                 tenantId = MMKVUtils.getString(SPConstants.tenantId)
             )
         )
+        chargeAdapter.loadMoreModule.loadMoreView = SS()
         chargeAdapter.loadMoreModule.setOnLoadMoreListener {
             pageIndex++
             mViewModel.getFinancialRecord(
