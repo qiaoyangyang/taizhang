@@ -1,12 +1,10 @@
 package com.meiling.oms.widget
 
 import android.R.attr.versionCode
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.text.TextUtils
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +12,6 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
 import com.meiling.oms.BuildConfig
 import com.meiling.oms.R
@@ -46,15 +43,27 @@ object UpdateVersion {
 
                     if (code == 200) {
                         if (data!!.updateId != null && data.downloadUrl != null) {
-//                            updateInstall 1 强制更新
-                            //是否更新
-                            Log.d("okhttp", "$====code==${data}")
-                            if (data.versionCode!!.toInt() > BuildConfig.VERSION_CODE) {
+
+                            updateAppBean.isConstraint = data.updateInstall == 1
+
+                            val i: Int = data.versionCode!!.toInt()
+//                            是否更新
+                            //                            是否更新
+                            if (i > BuildConfig.VERSION_CODE) {
                                 updateAppBean.update = "Yes"
-                                updateAppBean.isConstraint = data.updateInstall == 1
                             } else {
                                 updateAppBean.update = "No"
                             }
+
+//                            updateInstall 1 强制更新
+                            //是否更新
+//                            Log.d("okhttp", "$====code==${data}")
+//                            if (data.versionCode!!.toInt() > BuildConfig.VERSION_CODE) {
+//                                updateAppBean.update = "Yes"
+//                                updateAppBean.isConstraint = data.updateInstall == 1
+//                            } else {
+//                                updateAppBean.update = "No"
+//                            }
                             //版本号
                             updateAppBean.newVersion = data.versionCode
                             //下载地址
@@ -127,8 +136,9 @@ object UpdateVersion {
                 progressBar.visibility = View.VISIBLE
                 txtPro.visibility = View.VISIBLE
                 btnSure.visibility = View.GONE
-                llUpdate.visibility = View.VISIBLE
-                cancel.visibility = View.VISIBLE
+                llUpdate.visibility = View.GONE
+                cancel.visibility = View.GONE
+                txtVersion.visibility = View.GONE
                 serverUpdate.visibility = View.VISIBLE
                 updateAppManager.download(object : DownloadCallback {
                     override fun onStart() {}
@@ -159,7 +169,7 @@ object UpdateVersion {
                     }
 
                     override fun onInstallAppAndAppOnForeground(file: File?): Boolean {
-                        return false
+                        return true
                     }
                 })
             }
