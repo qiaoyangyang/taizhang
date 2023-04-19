@@ -10,7 +10,7 @@ import com.meiling.common.network.data.DataListDto
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDataDisBinding
 import com.meiling.oms.dialog.DataSelectTimeDialog
-import com.meiling.oms.dialog. DataTipDialog
+import com.meiling.oms.dialog.DataTipDialog
 import com.meiling.oms.eventBusData.MessageSelectShopPo
 import com.meiling.oms.viewmodel.DataFragmentViewModel
 import com.meiling.oms.widget.formatCurrentDate

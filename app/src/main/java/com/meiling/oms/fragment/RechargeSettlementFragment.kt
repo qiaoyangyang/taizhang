@@ -33,9 +33,16 @@ class RechargeSettlementFragment :
         fun newInstance() = RechargeSettlementFragment()
     }
 
-
-    override fun initView(savedInstanceState: Bundle?) {
+    override fun onStart() {
+        super.onStart()
         EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+    override fun initView(savedInstanceState: Bundle?) {
         chargeAdapter = object :
             BaseQuickAdapter<FinancialRecord.PageResult.PageData, BaseViewHolder>(R.layout.item_recharge_charge),
             LoadMoreModule {

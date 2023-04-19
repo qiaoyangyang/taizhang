@@ -99,20 +99,25 @@ class OrderDisAddTipActivity :
                         showToast("您已添加${ryOrderDisAddTipAdapter.data[position].tip}元小费，最多还能添加${30 - ryOrderDisAddTipAdapter.data[position].Addtip.toInt()}元")
                         return@setOnItemChildClickListener
                     }
-
-                    mViewModel.setAddTips(
-                        OrderSendAddTipRequest(
-                            content.deliveryConsume?.id ?: "0",
-                            content.order?.poiId ?: "0",
-                            ryOrderDisAddTipAdapter.data[position].channelType,
-                            ryOrderDisAddTipAdapter.data[position].Addtip
+                    val dialog: MineExitDialog =
+                        MineExitDialog().newInstance("温馨提示", "确定加  ${ryOrderDisAddTipAdapter.data[position].Addtip}元 小费吗？", "取消", "确认", false)
+                    dialog.setOkClickLister {
+                        mViewModel.setAddTips(
+                            OrderSendAddTipRequest(
+                                content.deliveryConsume?.id ?: "0",
+                                content.order?.poiId ?: "0",
+                                ryOrderDisAddTipAdapter.data[position].channelType,
+                                ryOrderDisAddTipAdapter.data[position].Addtip
+                            )
                         )
-                    )
+                    }
+                    dialog.show(supportFragmentManager)
+
+
                 }
             }
         }
         mDatabind.btnCancelOrder.setSingleClickListener {
-
             val dialog: MineExitDialog =
                 MineExitDialog().newInstance("温馨提示", "确定取消配送吗？", "取消", "确认", false)
             dialog.setOkClickLister {
@@ -131,14 +136,13 @@ class OrderDisAddTipActivity :
 
     override fun createObserver() {
         mViewModel.orderSendAddress.onStart.observe(this) {}
-        mViewModel.orderSendAddress.onStart.observe(this) {}
         mViewModel.orderSendAddress.onSuccess.observe(this) {
             mDatabind.txtOrderDisName.text = it.poiName
             mDatabind.txtOrderDisPhone.text = it.poiPhone
             mDatabind.txtOrderDisAddress.text = it.poiAddr
             mDatabind.txtOrderDisRecName.text = it.recvName
             mDatabind.txtOrderDisRecPhone.text = it.recvPhone
-            mDatabind.txtOrderDisRecAddress.text = it.recvAddr
+            mDatabind.txtOrderDisRecAddress.text =  it?.recvAddr?.replace("@@", "")
         }
         mViewModel.orderSendAddress.onError.observe(this) {
             showToast("${it.msg}")

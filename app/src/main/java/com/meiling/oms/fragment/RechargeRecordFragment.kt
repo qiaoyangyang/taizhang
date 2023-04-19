@@ -34,9 +34,16 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
     companion object {
         fun newInstance() = RechargeRecordFragment()
     }
-
-    override fun initView(savedInstanceState: Bundle?) {
+    override fun onStart() {
+        super.onStart()
         EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+    override fun initView(savedInstanceState: Bundle?) {
         rechargeAdapter =
             object : BaseQuickAdapter<PageData, BaseViewHolder>(R.layout.item_recharge_record),
                 LoadMoreModule {
@@ -140,6 +147,5 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBus.getDefault().unregister(this)
     }
 }

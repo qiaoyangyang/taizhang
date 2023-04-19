@@ -75,6 +75,9 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
 
     private val REQUEST_CALL_PHONE_PERMISSION = 1
 
+
+
+
     var telPhone = ""
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
         EventBus.getDefault().register(this)

@@ -41,7 +41,7 @@ class MessageCenterActivity : BaseActivity<MessageViewModel, ActivityMessageCent
                 holder.setText(R.id.txt_msg_center_content, item.title)
                 var iconMsg = holder?.getView<ImageView>(R.id.img_msg_center_icon)
                 holder.setText(R.id.txt_msg_center_time, item.pushTime)
-                if (item.title == "配送接单") {
+                if (item.pushMessageType == "2") {
                     iconMsg?.setImageDrawable(resources.getDrawable(R.drawable.icon_center_wl))
                 } else {
                     iconMsg?.setImageDrawable(resources.getDrawable(R.drawable.icon_msg_center_order))

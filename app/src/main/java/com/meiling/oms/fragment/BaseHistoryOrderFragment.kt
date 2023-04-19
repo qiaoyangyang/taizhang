@@ -58,9 +58,16 @@ class BaseHistoryOrderFragment :
         super.onResume()
         initViewData()
     }
-
-    override fun initView(savedInstanceState: Bundle?) {
+    override fun onStart() {
+        super.onStart()
         EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+    override fun initView(savedInstanceState: Bundle?) {
         requireArguments().getString("type").toString()
         orderDisAdapter =
             object : BaseQuickAdapter<OrderDto.Content, BaseViewHolder>(R.layout.item_home_order),
@@ -169,6 +176,12 @@ class BaseHistoryOrderFragment :
                         holder.setText(R.id.txt_total_money, "¥${sum}")
                     }
 
+                    if (item.order!!.type == 1) {
+                        holder?.setGone(R.id.txt_order_delivery_yu, false)
+                    } else {
+                        holder?.setGone(R.id.txt_order_delivery_yu, true)
+                    }
+
                     changeOrder.setSingleClickListener {
                         ARouter.getInstance().build("/app/OrderChangeAddressActivity")
                             .withString("receiveTime", item.order?.arriveTimeDate)
@@ -257,7 +270,7 @@ class BaseHistoryOrderFragment :
                             holder.setText(
                                 R.id.txt_order_delivery_state, "已取消"
                             )
-                            btnCancelDis.visibility = View.GONE
+                            btnCancelDis.visibility = View.INVISIBLE
                             changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "重新配送"
                         }
@@ -301,7 +314,7 @@ class BaseHistoryOrderFragment :
             businessNumber = "",
             channelId = channelId
         )
-
+        orderDisAdapter.loadMoreModule.loadMoreView = SS()
         orderDisAdapter.loadMoreModule.setOnLoadMoreListener {
             pageIndex++
             mViewModel.orderList(

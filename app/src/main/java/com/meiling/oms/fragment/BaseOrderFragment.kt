@@ -57,6 +57,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         initViewData()
         EventBus.getDefault().post(MessageEventUpDataTip())
     }
+
     override fun onStart() {
         super.onStart()
         EventBus.getDefault().register(this)
@@ -66,6 +67,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         super.onStop()
         EventBus.getDefault().unregister(this)
     }
+
     override fun initView(savedInstanceState: Bundle?) {
         requireArguments().getString("type").toString()
         orderDisAdapter =
@@ -135,6 +137,14 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     for (goods in listGoods!!) {
                         x += "名称:" + goods?.gname + "\n数量:" + goods?.number + "\n价格:" + goods?.price
                     }
+
+                    if (item.order!!.type == 1) {
+                        holder?.setGone(R.id.txt_order_delivery_yu, false)
+                    } else {
+                        holder?.setGone(R.id.txt_order_delivery_yu, true)
+                    }
+
+
                     imgPrint.setSingleClickListener {
                         //收银小票:1 退款小票:3
                         when (item.order!!.logisticsStatus) {
@@ -293,7 +303,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             holder.setText(
                                 R.id.txt_order_delivery_state, "已取消"
                             )
-                            btnCancelDis.visibility = View.GONE
+                            btnCancelDis.visibility = View.INVISIBLE
                             changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "重新配送"
                         }

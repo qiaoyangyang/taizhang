@@ -30,14 +30,18 @@ import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivitySearch1Binding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
+import com.meiling.oms.eventBusData.MessageEvent
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 @Route(path = "/app/Search1Activity")
 class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1Binding>() {
 
     lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
     lateinit var orderGoodsListAdapter: BaseQuickAdapter<OrderDto.Content.GoodsVo, BaseViewHolder>
+
 
     override fun initView(savedInstanceState: Bundle?) {
         setBar(this, mDatabind.cosTitle)
@@ -101,6 +105,12 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                         showToast("复制成功")
                     }
 
+                    if (item.order!!.type == 1) {
+                        holder?.setGone(R.id.txt_order_delivery_yu, false)
+                    } else {
+                        holder?.setGone(R.id.txt_order_delivery_yu, true)
+                    }
+
                     var listGoods = item.goodsVoList
                     var x = ""
                     for (goods in listGoods!!) {
@@ -153,6 +163,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                     }
 
                     changeOrder.setSingleClickListener {
+                        b = true
                         ARouter.getInstance().build("/app/OrderChangeAddressActivity")
                             .withString("receiveTime", item.order?.arriveTimeDate)
                             .withString("receiveName", item.order?.recvName)
@@ -164,6 +175,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                             .withInt("index", holder.adapterPosition).navigation()
                     }
                     btnCancelDis.setSingleClickListener {
+                        b = true
                         val dialog: MineExitDialog =
                             MineExitDialog().newInstance("温馨提示", "确定取消配送吗？", "取消", "确认", false)
                         dialog.setOkClickLister {
@@ -185,6 +197,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                     var orderDisDialog =
                         OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
                     btnSendDis.setSingleClickListener {
+                        b = true
                         when (item.order!!.logisticsStatus) {
                             "0" -> {
                                 ARouter.getInstance().build("/app/OrderDisActivity")
@@ -243,7 +256,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                             holder.setText(
                                 R.id.txt_order_delivery_state, "取消"
                             )
-                            btnCancelDis.visibility = View.GONE
+                            btnCancelDis.visibility = View.INVISIBLE
                             changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "重新配送"
                         }
@@ -268,7 +281,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
         return ActivitySearch1Binding.inflate(layoutInflater)
     }
 
-    private var b = true
+    private var b = false
 
     override fun initListener() {
         mDatabind.imgSearchBack.setOnClickListener {
@@ -296,6 +309,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
             orderDisAdapter.setList(null)
             orderDisAdapter.notifyDataSetChanged()
             mDatabind.rlOrderEmpty.visibility = View.VISIBLE
+            mDatabind.rvHistoryOrderList.visibility = View.GONE
             mDatabind.txtErrorMsg.text = "支持通过订单编号、收货人姓名、手机号进行搜索"
         }
 
@@ -317,6 +331,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
 
         }
 
+
 //        mDatabind.aivImg.setOnClickListener {
 //            if (b) {
 //                ARouter.getInstance().build("/app/SearchActivity").navigation()
@@ -327,32 +342,54 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
 //        }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (b) {
+            KeyBoardUtil.closeKeyBord(mDatabind.edtSearch, this)
+            mViewModel.orderList(
+                logisticsStatus = "",
+                startTime = "",
+                endTime = "",
+                businessNumberType = "1",
+                pageIndex = 1,
+                pageSize = "50",
+                orderTime = "1",
+                deliverySelect = "0",
+                isValid = "",
+                businessNumber = "",
+                selectText = mDatabind.edtSearch.text.trim().toString()
+            )
+
+        }
+    }
+
     override fun createObserver() {
         mViewModel.orderList.onStart.observe(this) {
             showLoading("请求中")
         }
         mViewModel.orderList.onSuccess.observe(this) {
             disLoading()
-
             if (it.content.isNullOrEmpty()) {
-                mDatabind.edtSearch.setText("")
                 orderDisAdapter.setList(null)
                 mDatabind.rlOrderEmpty.visibility = View.VISIBLE
+                mDatabind.rvHistoryOrderList.visibility = View.GONE
                 mDatabind.txtErrorMsg.text = "未查询到订单"
             } else {
+                mDatabind.rvHistoryOrderList.visibility = View.VISIBLE
                 mDatabind.rlOrderEmpty.visibility = View.GONE
                 orderDisAdapter.setList(it.content as MutableList<OrderDto.Content>)
             }
+            orderDisAdapter.notifyDataSetChanged()
             Log.e("order", "createObserver: " + it)
         }
         mViewModel.orderList.onError.observe(this) {
             disLoading()
             orderDisAdapter.setList(null)
+            mDatabind.rvHistoryOrderList.visibility = View.GONE
             mDatabind.rlOrderEmpty.visibility = View.VISIBLE
             mDatabind.txtErrorMsg.text = "支持通过订单编号、收货人姓名、手机号进行搜索"
             showToast("${it.msg}")
         }
 
     }
-
 }

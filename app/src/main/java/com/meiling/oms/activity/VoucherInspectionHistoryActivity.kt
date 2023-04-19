@@ -37,6 +37,8 @@ import org.greenrobot.eventbus.ThreadMode
 class VoucherInspectionHistoryActivity :
     BaseActivity<VoucherInspectionHistoryViewModel, ActivityHistoryBinding>() {
     lateinit var orderLeftRecyAdapter: BaseQuickAdapter<WriteoffhistoryPageData?, BaseViewHolder>
+
+
     override fun initView(savedInstanceState: Bundle?) {
         EventBus.getDefault().register(this)
         initRecycleyView()

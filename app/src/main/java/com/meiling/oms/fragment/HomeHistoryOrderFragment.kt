@@ -37,7 +37,17 @@ class HomeHistoryOrderFragment :
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewPager.isUserInputEnabled = false
+
+    }
+
+    override fun onStart() {
+        super.onStart()
         EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
     }
 
     var selectDialogDto = SelectDialogDto(
@@ -89,6 +99,14 @@ class HomeHistoryOrderFragment :
 
     override fun onResume() {
         super.onResume()
+        selectDialogDto = SelectDialogDto(
+            startDate = formatCurrentDate(),
+            endDate = formatCurrentDate(),
+            timetype = 2,
+            orderTime = "1",
+            channelId = "0",
+        )
+        EventBus.getDefault().post(MessageHistoryEventSelect(selectDialogDto))
         mViewModel.statusCount(
             logisticsStatus = "",
             startTime = formatCurrentDate(),

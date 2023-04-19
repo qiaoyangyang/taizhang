@@ -6,16 +6,18 @@
     android:background="@color/app_themes_1f2333"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/TitleBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="全国/所有门店"
-        android:paddingVertical="@dimen/dp_10"
-        android:textColor="@color/white"
         android:layout_gravity="center"
-        android:textSize="@dimen/sp_36"
-         />
+        android:drawableEnd="@drawable/xia"
+        android:paddingVertical="@dimen/dp_10"
+        android:text="全国/所有门店"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_36" />
+
     <com.angcyo.tablayout.DslTabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
@@ -47,6 +49,7 @@
             android:text="门店"
             android:textColor="#ff9b9b9b"
             android:textSize="@dimen/sp_30" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,6 +58,7 @@
             android:text="渠道"
             android:textColor="#ff9b9b9b"
             android:textSize="@dimen/sp_30" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,8 +74,8 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/home_B3B3B3"
-        android:layout_marginTop="@dimen/dp_20" />
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@color/home_B3B3B3" />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

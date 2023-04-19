@@ -72,7 +72,7 @@
                     android:layout_marginHorizontal="@dimen/sp_20"
                     android:layout_toEndOf="@+id/img_dis"
                     android:gravity="center"
-                    android:text="李"
+                    tools:text="李"
                     android:textColor="@color/home_666666"
                     android:textSize="@dimen/sp_36"
                     android:textStyle="bold" />
@@ -85,7 +85,7 @@
                     android:layout_alignBottom="@+id/img_dis"
                     android:layout_toEndOf="@+id/txt_order_dis_name"
                     android:gravity="center"
-                    android:text="188****8888"
+                    tools:text="188****8888"
                     android:textColor="@color/home_666666"
                     android:textSize="@dimen/sp_20" />
 
@@ -96,7 +96,7 @@
                     android:layout_below="@+id/txt_order_dis_name"
                     android:layout_alignLeft="@+id/txt_order_dis_name"
                     android:layout_marginBottom="@dimen/dp_50"
-                    android:text="内蒙古自治区鄂尔多斯市伊金霍洛旗伊金霍洛旗札萨克物流园区 14 幢 158 室"
+                    tools:text="内蒙古自治区鄂尔多斯市伊金霍洛旗伊金霍洛旗札萨克物流园区 14 幢 158 室"
                     android:textColor="@color/home_666666"
                     android:textSize="@dimen/sp_28" />
 
@@ -127,7 +127,7 @@
                     android:layout_marginHorizontal="@dimen/sp_20"
                     android:layout_toEndOf="@+id/img_dis_receive"
                     android:gravity="center"
-                    android:text="李"
+                    tools:text="李"
                     android:textColor="@color/home_666666"
                     android:textSize="@dimen/sp_36"
                     android:textStyle="bold" />
@@ -140,7 +140,7 @@
                     android:layout_alignBottom="@+id/img_dis_receive"
                     android:layout_toEndOf="@+id/txt_order_dis_rec_name"
                     android:gravity="center"
-                    android:text="188****8888"
+                    tools:text="188****8888"
                     android:textColor="@color/home_666666"
                     android:textSize="@dimen/sp_20" />
 
@@ -150,7 +150,7 @@
                     android:layout_height="40dp"
                     android:layout_below="@+id/txt_order_dis_rec_name"
                     android:layout_alignLeft="@+id/txt_order_dis_rec_name"
-                    android:text="内蒙古自治区鄂尔多斯市伊金霍洛旗伊金霍洛旗札萨克物流园区 14 幢 158 室"
+                    tools:text="内蒙古自治区鄂尔多斯市伊金霍洛旗伊金霍洛旗札萨克物流园区 14 幢 158 室"
                     android:textColor="#ff666666"
                     android:textSize="@dimen/sp_28" />
 
@@ -220,6 +220,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/dp_20"
         android:layout_weight="1"
+        android:visibility="gone"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingVertical="@dimen/dp_20"

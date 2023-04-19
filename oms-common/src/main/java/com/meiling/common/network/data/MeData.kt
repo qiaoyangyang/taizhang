@@ -47,7 +47,9 @@ data class MessageDto(
         @SerializedName("title")
         var title: String?,
         @SerializedName("type")
-        var type: Int?
+        var type: Int?,
+        @SerializedName("pushMessageType")
+        var pushMessageType: String?,
     ) {
         data class OrderMessage(
             @SerializedName("channelId")
