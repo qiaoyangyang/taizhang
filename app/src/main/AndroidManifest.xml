@@ -146,6 +146,12 @@
         <activity
             android:name=".activity.InputBoredomActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.StoreManagementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NewlyBuiltStoreActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

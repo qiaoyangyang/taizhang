@@ -1,6 +1,7 @@
 package com.meiling.oms.fragment
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.alibaba.android.arouter.launcher.ARouter
@@ -8,6 +9,7 @@ import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.constant.SPConstants
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.utils.MMKVUtils
+import com.meiling.oms.activity.StoreManagementActivity
 import com.meiling.oms.databinding.FragmentMyBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.MyViewModel
@@ -58,6 +60,9 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
 
     override fun initListener() {
+        mDatabind.txtStoreManagement.setSingleClickListener {
+            startActivity(Intent(requireActivity(),StoreManagementActivity::class.java))
+        }
         mDatabind.txtRecharge.setSingleClickListener {
             ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
         }
