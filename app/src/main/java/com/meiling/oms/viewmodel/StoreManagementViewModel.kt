@@ -1,6 +1,7 @@
 package com.meiling.oms.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
@@ -22,7 +23,7 @@ class StoreManagementViewModel (application: Application) : BaseViewModel(applic
    var poidata = BaseLiveData<PoiVoBean>()
    var PoiVoBean = MutableLiveData<PoiVoBean>()
     init {
-        PoiVoBean.value=PoiVoBean(PoiVo(),"")
+        PoiVoBean.value=PoiVoBean()
     }
     fun poi(id:String) {
         request({ branchInformationService.poi(id) }, poidata)

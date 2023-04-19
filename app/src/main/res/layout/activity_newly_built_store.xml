@@ -7,7 +7,7 @@
             name="viewModel"
             type="com.meiling.oms.viewmodel.StoreManagementViewModel" />
 
-    </data>
+        </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -78,7 +78,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingVertical="@dimen/dp_30"
-                            android:text="@{viewModel.PoiVoBean.test}"
+                            android:text="门店名称"
                             android:textColor="@color/home_666666"
                             android:textSize="@dimen/sp_32"
                             app:drawableEndCompat="@drawable/icon_must_input"
@@ -86,7 +86,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <EditText
-                            android:text="@={viewModel.PoiVoBean.poiVo.phone}"
+                            android:text="@={viewModel.PoiVoBean.poiVo.name}"
                             android:id="@+id/et_Store_name"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -127,6 +127,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <EditText
+                            android:text="@={viewModel.poiVoBean.poiVo.sinceCode}"
                             android:id="@+id/et_Store_number"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -168,6 +169,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <EditText
+                            android:text="@={viewModel.poiVoBean.poiVo.phone}"
                             android:id="@+id/et_Store_telephone"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -209,6 +211,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
+                            android:text="@={viewModel.poiVoBean.poiVo.address}"
                             android:id="@+id/et_Store_address"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -251,6 +254,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <EditText
+                            android:text="@={viewModel.poiVoBean.poiVo.address}"
                             android:id="@+id/et_detailed_address"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -322,6 +326,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <EditText
+                            android:text="@={viewModel.poiVoBean.poiVo.contactPerson}"
                             android:id="@+id/et_Store_contact"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -363,6 +368,8 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <EditText
+                            android:text="@={viewModel.poiVoBean.poiVo.mobilePhone}"
+
                             android:id="@+id/et_Contact_phoner"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"

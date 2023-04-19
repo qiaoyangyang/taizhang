@@ -1,4 +1,6 @@
 package com.meiling.oms.bean
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import com.google.gson.annotations.SerializedName
 
 
