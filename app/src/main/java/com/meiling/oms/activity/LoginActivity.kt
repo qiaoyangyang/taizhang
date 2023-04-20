@@ -220,7 +220,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             disLoading()
             captchaCountdownTool.stopCountdown()
             mDatabind.txtAuthCode.isClickable = true
-            mDatabind.txtAuthCode.text = "重新获取"
+            mDatabind.txtAuthCode.text = "获取验证码"
             showToast("${it.msg}")
         }
 

@@ -21,7 +21,8 @@
             android:layout_height="wrap_content"
             android:text="26"
             android:textColor="@color/home_333333"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_32"
+            android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/txt_service_charge_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +35,8 @@
             android:gravity="center"
             tools:text="技术服务费结算"
             android:textColor="@color/home_333333"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_32"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/txt_service_charge_money"
             app:layout_constraintStart_toStartOf="@+id/txt_day"
             app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="2月"
             android:textColor="@color/home_333333"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_32"
             app:layout_constraintBaseline_toBaselineOf="@+id/txt_service_charge_num"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

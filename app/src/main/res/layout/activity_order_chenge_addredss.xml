@@ -63,7 +63,7 @@
             android:layout_margin="@dimen/dp_20"
             android:text="收货信息"
             android:textColor="@color/home_333333"
-            android:textSize="@dimen/sp_36"
+            android:textSize="@dimen/sp_32"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -77,8 +77,7 @@
             android:paddingVertical="@dimen/dp_20"
             android:text="收货时间"
             android:textColor="@color/home_666666"
-
-            android:textSize="@dimen/sp_32"
+            android:textSize="@dimen/sp_28"
             app:drawableEndCompat="@drawable/icon_must_input"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_title" />
@@ -92,7 +91,7 @@
             android:paddingVertical="@dimen/dp_20"
             android:text="收货时间"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_32"
+            android:textSize="@dimen/sp_28"
             app:drawableEndCompat="@drawable/icon_next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txt_order_change_time_tip"
@@ -106,7 +105,7 @@
             android:paddingVertical="@dimen/dp_20"
             android:text="收货人"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_32"
+            android:textSize="@dimen/sp_28"
             app:drawableEndCompat="@drawable/icon_must_input"
             app:layout_constraintStart_toStartOf="parent"
 
@@ -122,7 +121,7 @@
             android:hint="请输入收货人"
             android:paddingVertical="@dimen/dp_20"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_32"
+            android:textSize="@dimen/sp_28"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txt_order_change_address_tip"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_time_tip" />
@@ -135,7 +134,7 @@
             android:paddingVertical="@dimen/dp_20"
             android:text="收货人电话"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_32"
+            android:textSize="@dimen/sp_28"
             app:drawableEndCompat="@drawable/icon_must_input"
 
             app:layout_constraintStart_toStartOf="parent"
@@ -152,7 +151,7 @@
             android:inputType="number"
             android:paddingVertical="@dimen/dp_20"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_32"
+            android:textSize="@dimen/sp_28"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txt_order_change_phone_tip"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_name_tip" />
@@ -165,7 +164,7 @@
             android:paddingVertical="@dimen/dp_20"
             android:text="收货地址"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_32"
+            android:textSize="@dimen/sp_28"
             app:drawableEndCompat="@drawable/icon_must_input"
 
             app:layout_constraintStart_toStartOf="parent"
@@ -181,7 +180,7 @@
             android:paddingVertical="@dimen/dp_20"
             android:singleLine="true"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_32"
+            android:textSize="@dimen/sp_28"
             app:drawableEndCompat="@drawable/icon_next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txt_order_change_address_tip"
@@ -195,7 +194,7 @@
             android:paddingVertical="@dimen/dp_20"
             android:text="详细地址"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_32"
+            android:textSize="@dimen/sp_28"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_address_tip" />
 
@@ -211,7 +210,7 @@
             android:paddingVertical="@dimen/dp_20"
             android:singleLine="true"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_32"
+            android:textSize="@dimen/sp_28"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txt_order_change_detail_tip"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_address_tip" />
@@ -224,7 +223,7 @@
             android:paddingVertical="@dimen/dp_20"
             android:text="备注"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_36"
+            android:textSize="@dimen/sp_32"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_detail_tip" />
@@ -238,11 +237,11 @@
             android:gravity="top"
             android:hint="这是一个备注"
             android:padding="@dimen/dp_20"
+            android:maxLength="200"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_36"
+            android:textSize="@dimen/sp_28"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_change_phone_remark_tip" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -273,7 +272,7 @@
             android:background="@drawable/order_search_bg_button_red"
             android:text="保存"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_36" />
+            android:textSize="@dimen/sp_32" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

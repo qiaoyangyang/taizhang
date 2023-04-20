@@ -282,7 +282,7 @@ class OrderChangeAddressMapActivity :
     }
 
 
-    fun searchLocationName(keyWork: String, cityCode: String) {
+    private fun searchLocationName(keyWork: String, cityCode: String) {
         var queryQuery = PoiSearch.Query(keyWork, "", cityCode)
         var poiSearch = PoiSearch(this, queryQuery)
         queryQuery.pageSize = 20

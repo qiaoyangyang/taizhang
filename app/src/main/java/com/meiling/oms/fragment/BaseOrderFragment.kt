@@ -92,7 +92,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         item.order?.recvAddr!!.replace("@@", "")
                     )
                     holder.setText(R.id.txt_order_num, "#${item.order?.channelDaySn}")
-                    holder.setText(R.id.txt_shop_actual_money, "${item.order?.actualIncome}")
+                    holder.setText(R.id.txt_shop_actual_money, "¥${item.order?.actualIncome}")
                     holder.setText(R.id.txt_order_delivery_time, "${item.order?.arriveTimeDate}")
                     holder.setText(R.id.txt_pay_money, "¥${item.order?.payPrice}")
                     holder.setText(R.id.txt_pay_fee, "¥${item.order?.platformServiceFee}")

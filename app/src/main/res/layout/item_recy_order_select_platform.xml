@@ -19,7 +19,7 @@
         android:singleLine="true"
         android:text="所有平台"
         android:textColor="@color/home_666666"
-        android:textSize="@dimen/sp_30" />
+        android:textSize="@dimen/sp_28" />
 
 
 </LinearLayout>

@@ -16,7 +16,7 @@
         android:paddingVertical="@dimen/dp_10"
         android:text="全国/所有门店"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_36" />
+        android:textSize="@dimen/sp_34" />
 
     <com.angcyo.tablayout.DslTabLayout
         android:id="@+id/tab_layout"
@@ -48,7 +48,7 @@
             android:paddingBottom="@dimen/dp_10"
             android:text="门店"
             android:textColor="#ff9b9b9b"
-            android:textSize="@dimen/sp_30" />
+            android:textSize="@dimen/sp_32" />
 
         <TextView
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
             android:paddingBottom="@dimen/dp_10"
             android:text="渠道"
             android:textColor="#ff9b9b9b"
-            android:textSize="@dimen/sp_30" />
+            android:textSize="@dimen/sp_32" />
 
         <TextView
             android:layout_width="match_parent"
@@ -66,7 +66,7 @@
             android:paddingBottom="@dimen/dp_10"
             android:text="配送"
             android:textColor="#ff9b9b9b"
-            android:textSize="@dimen/sp_30" />
+            android:textSize="@dimen/sp_32" />
 
     </com.angcyo.tablayout.DslTabLayout>
 

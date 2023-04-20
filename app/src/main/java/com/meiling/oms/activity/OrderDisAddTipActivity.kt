@@ -102,6 +102,7 @@ class OrderDisAddTipActivity :
                     val dialog: MineExitDialog =
                         MineExitDialog().newInstance("温馨提示", "确定加  ${ryOrderDisAddTipAdapter.data[position].Addtip}元 小费吗？", "取消", "确认", false)
                     dialog.setOkClickLister {
+                        dialog.dismiss()
                         mViewModel.setAddTips(
                             OrderSendAddTipRequest(
                                 content.deliveryConsume?.id ?: "0",

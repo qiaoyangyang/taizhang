@@ -29,7 +29,7 @@
             android:gravity="center"
             android:text="小喵钱包"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_36"
+            android:textSize="@dimen/sp_34"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,7 +57,7 @@
                 android:paddingVertical="@dimen/dp_20"
                 android:text="当前余额（元）"
                 android:textColor="#ff999999"
-                android:textSize="12sp"
+                android:textSize="@dimen/sp_24"
                 app:layout_constraintEnd_toEndOf="@+id/guideline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -82,7 +82,7 @@
                 android:gravity="center"
                 android:text="已冻结"
                 android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_18"
+                android:textSize="@dimen/sp_28"
                 app:layout_constraintEnd_toEndOf="@+id/txt_balance_tip"
                 app:layout_constraintStart_toStartOf="@+id/txt_balance_tip"
                 app:layout_constraintTop_toBottomOf="@+id/txt_balance" />
@@ -101,7 +101,7 @@
                 android:paddingVertical="@dimen/dp_20"
                 android:text="发单服务费（元）"
                 android:textColor="#ff999999"
-                android:textSize="12sp"
+                android:textSize="@dimen/sp_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -125,7 +125,7 @@
                 android:gravity="center"
                 android:text="/单"
                 android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_20"
+                android:textSize="@dimen/sp_24"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txt_service_fee"
                 app:layout_constraintStart_toEndOf="@+id/txt_service_fee" />
 
@@ -138,10 +138,11 @@
                 android:paddingHorizontal="@dimen/dp_120"
                 android:text="充值"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_38"
+                android:textSize="@dimen/sp_32"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/txt_freeze_amount" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -186,7 +187,7 @@
                 android:paddingBottom="@dimen/dp_10"
                 android:text="财务结算"
                 android:textColor="@color/order_9b9b9b"
-                android:textSize="@dimen/sp_36" />
+                android:textSize="@dimen/sp_32" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -195,7 +196,7 @@
                 android:paddingBottom="@dimen/dp_10"
                 android:text="充值记录"
                 android:textColor="@color/order_9b9b9b"
-                android:textSize="@dimen/sp_36" />
+                android:textSize="@dimen/sp_32" />
 
 
         </com.angcyo.tablayout.DslTabLayout>
@@ -224,6 +225,7 @@
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/dp_20"
                 android:paddingVertical="@dimen/dp_15"
+                android:textSize="@dimen/sp_28"
                 android:text="近7天"
                 android:textColor="@color/radio_button_text_color_selector" />
 
@@ -239,6 +241,7 @@
                 android:paddingHorizontal="@dimen/dp_20"
                 android:paddingVertical="@dimen/dp_15"
                 android:text="近30天"
+                android:textSize="@dimen/sp_28"
                 android:textColor="@color/radio_button_text_color_selector" />
 
             <RadioButton
@@ -252,6 +255,7 @@
                 android:paddingHorizontal="@dimen/dp_20"
                 android:paddingVertical="@dimen/dp_15"
                 android:text="近90天"
+                android:textSize="@dimen/sp_28"
                 android:textColor="@color/radio_button_text_color_selector" />
 
             <RadioButton
@@ -266,6 +270,7 @@
                 android:paddingHorizontal="@dimen/dp_20"
                 android:paddingVertical="@dimen/dp_15"
                 android:text="自定义"
+                android:textSize="@dimen/sp_28"
                 android:textColor="@color/radio_button_text_color_selector" />
 
 

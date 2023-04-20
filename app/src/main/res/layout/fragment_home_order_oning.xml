@@ -41,7 +41,8 @@
                 android:paddingBottom="@dimen/dp_10"
                 android:text="待配送"
                 android:textColor="#ff9b9b9b"
-                android:textSize="@dimen/sp_30" />
+                android:textStyle="bold"
+                android:textSize="@dimen/sp_28" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +50,8 @@
                 android:paddingBottom="@dimen/dp_10"
                 android:text="待抢单"
                 android:textColor="#ff9b9b9b"
-                android:textSize="@dimen/sp_30" />
+                android:textStyle="bold"
+                android:textSize="@dimen/sp_28" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,7 +59,8 @@
                 android:paddingBottom="@dimen/dp_10"
                 android:text="待取货"
                 android:textColor="#ff9b9b9b"
-                android:textSize="@dimen/sp_30" />
+                android:textStyle="bold"
+                android:textSize="@dimen/sp_28" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,7 +68,8 @@
                 android:paddingBottom="@dimen/dp_10"
                 android:text="配送中"
                 android:textColor="#ff9b9b9b"
-                android:textSize="@dimen/sp_30" />
+                android:textStyle="bold"
+                android:textSize="@dimen/sp_28" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,7 +77,8 @@
                 android:paddingBottom="@dimen/dp_10"
                 android:text="取消"
                 android:textColor="#ff9b9b9b"
-                android:textSize="@dimen/sp_30" />
+                android:textStyle="bold"
+                android:textSize="@dimen/sp_28" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,7 +88,8 @@
                 android:text="已送达"
                 android:maxLines="1"
                 android:textColor="#ff9b9b9b"
-                android:textSize="@dimen/sp_30"
+                android:textStyle="bold"
+                android:textSize="@dimen/sp_28"
                 tools:ignore="RtlSymmetry" />
 
 <!--           <RelativeLayout-->
@@ -97,7 +103,8 @@
 <!--                   android:paddingBottom="@dimen/dp_10"-->
 <!--                   android:text="进行中"-->
 <!--                   android:textColor="#ff9b9b9b"-->
-<!--                   android:textSize="@dimen/sp_30" />-->
+<!--                   android:textStyle="bold"
+                android:textSize="@dimen/sp_28" />-->
 <!--               <TextView-->
 <!--                   android:id="@+id/tab1"-->
 <!--                   android:layout_width="wrap_content"-->
@@ -121,7 +128,8 @@
 <!--                   android:paddingBottom="@dimen/dp_10"-->
 <!--                   android:text="进行中"-->
 <!--                   android:textColor="#ff9b9b9b"-->
-<!--                   android:textSize="@dimen/sp_30" />-->
+<!--                   android:textStyle="bold"
+                android:textSize="@dimen/sp_28" />-->
 <!--               <TextView-->
 <!--                   android:layout_width="wrap_content"-->
 <!--                   android:layout_height="wrap_content"-->
@@ -144,7 +152,8 @@
 <!--                   android:paddingBottom="@dimen/dp_10"-->
 <!--                   android:text="进行中"-->
 <!--                   android:textColor="#ff9b9b9b"-->
-<!--                   android:textSize="@dimen/sp_30" />-->
+<!--                   android:textStyle="bold"
+                android:textSize="@dimen/sp_28" />-->
 <!--               <TextView-->
 <!--                   android:layout_width="wrap_content"-->
 <!--                   android:layout_height="wrap_content"-->
@@ -167,7 +176,8 @@
 <!--                   android:paddingBottom="@dimen/dp_10"-->
 <!--                   android:text="进行中"-->
 <!--                   android:textColor="#ff9b9b9b"-->
-<!--                   android:textSize="@dimen/sp_30" />-->
+<!--                   android:textStyle="bold"
+                android:textSize="@dimen/sp_28" />-->
 <!--               <TextView-->
 <!--                   android:layout_width="wrap_content"-->
 <!--                   android:layout_height="wrap_content"-->
@@ -190,7 +200,8 @@
 <!--                   android:paddingBottom="@dimen/dp_10"-->
 <!--                   android:text="进行中"-->
 <!--                   android:textColor="#ff9b9b9b"-->
-<!--                   android:textSize="@dimen/sp_30" />-->
+<!--                   android:textStyle="bold"
+                android:textSize="@dimen/sp_28" />-->
 <!--               <TextView-->
 <!--                   android:layout_width="wrap_content"-->
 <!--                   android:layout_height="wrap_content"-->
@@ -213,7 +224,8 @@
 <!--                   android:paddingBottom="@dimen/dp_10"-->
 <!--                   android:text="进行中"-->
 <!--                   android:textColor="#ff9b9b9b"-->
-<!--                   android:textSize="@dimen/sp_30" />-->
+<!--                   android:textStyle="bold"
+                android:textSize="@dimen/sp_28" />-->
 <!--               <TextView-->
 <!--                   android:layout_width="wrap_content"-->
 <!--                   android:layout_height="wrap_content"-->

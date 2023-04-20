@@ -23,8 +23,8 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="84dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dp_20"
                     android:layout_marginVertical="@dimen/dp_20"
                     android:text="今日实时数据"
