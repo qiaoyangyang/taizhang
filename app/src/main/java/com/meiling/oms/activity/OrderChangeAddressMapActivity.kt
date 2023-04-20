@@ -85,6 +85,7 @@ class OrderChangeAddressMapActivity :
                     amapLocation.floor;//获取当前室内定位的楼层
                     amapLocation.gpsAccuracyStatus;//获取GPS的当前状态
                     cityCode = amapLocation.cityCode
+                    Log.d("yjk", "cityCode: "+cityCode)
                     mLocationClient?.stopLocation()
                     lat = amapLocation.latitude.toString()
                     lon = amapLocation.longitude.toString()
@@ -188,6 +189,7 @@ class OrderChangeAddressMapActivity :
             val data = Intent()
             data.putExtra("lon", lon)
             data.putExtra("lat", lat)
+            data.putExtra("poiItem", it)
             data.putExtra(
                 "address",
                 "${it.provinceName}${it.cityName}${it.adName}${it.snippet}${it.title}"

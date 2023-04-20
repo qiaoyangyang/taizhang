@@ -10,7 +10,7 @@ import com.meiling.oms.bean.PoiVo
 import com.meiling.oms.bean.PoiVoBean
 import com.meiling.oms.service.branchInformationService
 
-class StoreManagementViewModel (application: Application) : BaseViewModel(application) {
+class StoreManagementViewModel(application: Application) : BaseViewModel(application) {
     /**
      *门店列表
      * */
@@ -20,13 +20,44 @@ class StoreManagementViewModel (application: Application) : BaseViewModel(applic
     }
 
     //  详情
-   var poidata = BaseLiveData<PoiVoBean>()
-   var PoiVoBean = MutableLiveData<PoiVoBean>()
+    var poidata = BaseLiveData<PoiVoBean>()
+    var poiaddpoidata = BaseLiveData<String>()
+    var PoiVoBean = MutableLiveData<PoiVoBean>()
+
     init {
-        PoiVoBean.value=PoiVoBean()
+        PoiVoBean.value = PoiVoBean()
     }
-    fun poi(id:String) {
+
+    fun poi(id: String) {
         request({ branchInformationService.poi(id) }, poidata)
+    }
+
+    fun poiadd(
+        lat: String,
+        lon: String,
+        provinceCode: String,
+        cityCode: String,
+        districtCode: String,
+        cityName: String
+    ) {
+        request({
+            branchInformationService.poiadd(
+                PoiVoBean?.value?.poiVo?.name!!,
+                PoiVoBean?.value?.poiVo?.sinceCode!!,
+                PoiVoBean?.value?.poiVo?.phone!!,
+                PoiVoBean?.value?.poiVo?.storeaddress!! + " " + PoiVoBean?.value?.poiVo?.etdetailedaddress,
+                lat,
+                lon,
+                PoiVoBean?.value?.poiVo?.contactPerson!!,
+                PoiVoBean?.value?.poiVo?.mobilePhone!!,
+                provinceCode,
+                cityCode,
+                districtCode, cityName
+
+
+            )
+        }, poiaddpoidata)
+
     }
 
 }

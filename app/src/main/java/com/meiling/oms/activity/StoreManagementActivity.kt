@@ -43,8 +43,13 @@ class StoreManagementActivity :
 
     override fun initData() {
         super.initData()
-        mViewModel.poilis()
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mViewModel.poilis()
     }
 
 

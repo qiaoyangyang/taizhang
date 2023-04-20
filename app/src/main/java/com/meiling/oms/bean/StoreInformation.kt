@@ -94,6 +94,10 @@ data class PoiVoBean(
 data class PoiVo(
     @SerializedName("address")
     var address: String? = "",
+    @SerializedName("etdetailedaddress")
+    var etdetailedaddress: String? = "",
+    @SerializedName("storeaddress")
+    var storeaddress: String? = "",
     @SerializedName("autoTransOrder")
     var autoTransOrder: Int? = 0,
     @SerializedName("cargoType")
