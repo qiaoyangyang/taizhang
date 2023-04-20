@@ -1,34 +1,50 @@
 package com.meiling.oms.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import androidx.lifecycle.MutableLiveData
-import com.meiling.common.activity.BaseActivity
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.Nullable
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.meiling.common.activity.BaseVmActivity
-import com.meiling.common.network.service.loginService
 import com.meiling.oms.bean.PoiVo
-import com.meiling.oms.bean.PoiVoBean
 import com.meiling.oms.databinding.ActivityNewlyBuiltStoreBinding
-import com.meiling.oms.databinding.ActivityStoreManagementBinding
-import com.meiling.oms.service.branchInformationService
 import com.meiling.oms.viewmodel.StoreManagementViewModel
 import kotlinx.coroutines.*
 
 //新建门店
+@Route(path = "/app/NewlyBuiltStoreActivity")
 class NewlyBuiltStoreActivity :
     BaseVmActivity<StoreManagementViewModel>() {
+    private val REQUEST_CODE = 1000
     lateinit var mDatabind: ActivityNewlyBuiltStoreBinding
-    override fun initView(savedInstanceState: Bundle?) {
-    }
+    private val requestDataLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val data = result.data?.getStringExtra("data")
+                Log.d("FirstActivity", "data =${data}")
+            }
+        }
 
-//    override fun getBind(layoutInflater: LayoutInflater): ActivityNewlyBuiltStoreBinding {
-//        return ActivityNewlyBuiltStoreBinding.inflate(layoutInflater)
-//    }
-//
+    override fun initView(savedInstanceState: Bundle?) {
+
+    }
+    var address = ""
+    var lat = ""
+    var lon = ""
+    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            // 处理返回的结果
+            lon = data.getStringExtra("lon").toString()
+            lat = data.getStringExtra("lat").toString()
+            address = data.getStringExtra("address").toString()
+            mDatabind.etStoreAddress.text = address
+        }
+    }
     override fun isStatusBarDarkFont(): Boolean {
         return true
     }
@@ -36,6 +52,8 @@ class NewlyBuiltStoreActivity :
     override fun initDataBind() {
         mDatabind = ActivityNewlyBuiltStoreBinding.inflate(layoutInflater)
         setContentView(mDatabind.root)
+
+
 
     }
 
@@ -59,6 +77,14 @@ class NewlyBuiltStoreActivity :
         } else {
 
         }
+        mDatabind.etStoreAddress.setOnClickListener {
+//            ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
+//                .navigation(this, REQUEST_CODE)
+            var intent = Intent(this, OrderChangeAddressMapActivity::class.java)
+            requestDataLauncher.launch(intent)
+          //  startActivityForResult(intent,REQUEST_CODE)
+        }
+
     }
 
     var poiVo = PoiVo()

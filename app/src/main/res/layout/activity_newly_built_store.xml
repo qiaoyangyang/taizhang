@@ -42,6 +42,7 @@
                 android:orientation="vertical">
 
                 <com.hjq.shape.layout.ShapeLinearLayout
+                    android:paddingBottom="@dimen/dp_34"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -211,6 +212,8 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             android:text="@={viewModel.poiVoBean.poiVo.address}"
                             android:id="@+id/et_Store_address"
                             android:layout_width="0dp"
@@ -223,15 +226,15 @@
 
                             android:textColorHint="@color/home_999999"
                             android:textSize="@dimen/sp_32"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/tv_Store_address"
                             app:layout_constraintLeft_toRightOf="@+id/tv_Store_address"
                             app:layout_constraintRight_toRightOf="parent" />
 
                         <TextView
+                            android:layout_marginTop="@dimen/dp_30"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="#F5F5F5"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_Store_address" />
+                            app:layout_constraintTop_toBottomOf="@+id/et_Store_address" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -270,10 +273,11 @@
                             app:layout_constraintRight_toRightOf="parent" />
 
                         <TextView
+                            android:layout_marginTop="@dimen/dp_30"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="#F5F5F5"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_detailed_address" />
+                            app:layout_constraintTop_toBottomOf="@+id/et_detailed_address" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
