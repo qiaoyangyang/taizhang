@@ -94,9 +94,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun createObserver() {
         mViewModel.setUmTokenDto.onSuccess.observe(this) {
-
+            disLoading()
         }
         mViewModel.setUmTokenDto.onError.observe(this) {
+            disLoading()
             showToast(it.msg)
         }
     }

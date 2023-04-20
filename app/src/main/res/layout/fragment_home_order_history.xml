@@ -10,7 +10,7 @@
     <com.angcyo.tablayout.DslTabLayout
         android:id="@+id/tab_layout"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/dp_60"
         app:layout_constraintBottom_toTopOf="@id/tab_layout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
         app:tab_indicator_color="@color/red"
         app:tab_indicator_drawable="@drawable/indicator_bottom_line"
         app:tab_indicator_enable_flow="true"
-        app:tab_indicator_height="@dimen/dp_5"
+        app:tab_indicator_height="@dimen/dp_4"
         app:tab_indicator_solid_color="@color/red"
         app:tab_indicator_style="STYLE_BOTTOM"
         app:tab_indicator_width="30dp"

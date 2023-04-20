@@ -150,7 +150,7 @@ class OrderChangeAddressMapActivity :
             }
 
             override fun onCameraChangeFinish(p0: CameraPosition?) {
-//                getGeocodeSearch(p0!!.target, cityCode);
+                getGeocodeSearch(p0!!.target, cityCode);
             }
         })
     }

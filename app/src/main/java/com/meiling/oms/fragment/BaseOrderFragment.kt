@@ -196,7 +196,10 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             holder.setText(R.id.txt_order_shop_spec, item.specs)
                             holder.setText(R.id.txt_order_shop_num, "X" + item.number)
                             holder.setText(R.id.txt_order_shop_price, "¥" + item.price)
-                            Glide.with(context).load(item.avater).into(view)
+//                            Glide.with(context).load(item.avater).into(view)
+                            Glide.with(context).load(item.avater)
+                                .apply(options).into(view)
+
                         }
                     }
                     ryOrderSendDisDetail!!.adapter = orderGoodsListAdapter
