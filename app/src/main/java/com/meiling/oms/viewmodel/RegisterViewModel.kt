@@ -15,9 +15,5 @@ class RegisterViewModel(application: Application):BaseViewModel(application) {
         businessDto.value= BusinessDto()
     }
 
-    fun regist(){
-        viewModelScope.launch(Dispatchers.IO) {
 
-        }
-    }
 }

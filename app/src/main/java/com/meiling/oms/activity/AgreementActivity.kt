@@ -15,13 +15,24 @@ class AgreementActivity : BaseActivity<VoucherinspectionViewModel, ActivityAgree
     @SuppressLint("SetJavaScriptEnabled")
     override fun initView(savedInstanceState: Bundle?) {
         var stringExtraType = intent?.getStringExtra("YSXY")
+        var url2=intent?.getStringExtra("url")
+        var title=intent?.getStringExtra("title")
         var url = "file:///android_asset/xy.html"
-        if (stringExtraType == "1") {
-            mDatabind.TitleBar.title = "小喵来客隐私政策"
-            url = "file:///android_asset/xy.html"
-        } else {
-            mDatabind.TitleBar.title = "小喵来客用户协议"
-            url = "file:///android_asset/xy.html"
+        stringExtraType?.let {
+            if (stringExtraType == "1") {
+                mDatabind.TitleBar.title = "小喵来客隐私政策"
+                url = "file:///android_asset/xy.html"
+            } else {
+                mDatabind.TitleBar.title = "小喵来客用户协议"
+                url = "file:///android_asset/xy.html"
+            }
+        }
+
+        url2?.let {
+            url =it
+        }
+        title?.let {
+            mDatabind.TitleBar.title=it
         }
         // 开启javascript 渲染
         mDatabind.mWebView.settings.javaScriptEnabled = true;

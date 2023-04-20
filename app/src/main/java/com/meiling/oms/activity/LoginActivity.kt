@@ -180,10 +180,8 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         }
 
         mDatabind.txtForgetPwd.setSingleClickListener {
-           // ARouter.getInstance().build("/app/ForgetPwdActivity").navigation()
-            var logisticsPlatformInformationDidalog = LogisticsPlatformInformationDidalog()
+            ARouter.getInstance().build("/app/ForgetPwdActivity").navigation()
 
-            logisticsPlatformInformationDidalog.show(supportFragmentManager)
         }
         mDatabind.txtAuthCode.setSingleClickListener {
             if (mDatabind.etPhone.text?.trim().toString().isNotEmpty()) {

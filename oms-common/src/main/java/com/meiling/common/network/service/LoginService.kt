@@ -123,6 +123,16 @@ interface LoginService {
     @GET("/saas/business/city")
     suspend fun getCity():ResultData<ArrayList<City>>
 
+    /**
+     *  获取物流列表
+     */
+    @GET("/saas/express/merchant/list")
+    suspend fun getMerChantList(@Header("tenantId") tenantId:String):ResultData<ArrayList<Merchant>>
 
+    /**
+     * 绑定物流
+     */
+    @POST("/saas/express/merchant/save")
+    suspend fun merChantSave(@Body putMerChant:PutMerChant):ResultData<Any>
 
 }

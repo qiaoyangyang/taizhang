@@ -21,11 +21,12 @@ class RetrofitClient {
     private fun provideOkHttpClient(): OkHttpClient {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+//        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
 
 
         val client: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(AccessTokenInterceptor())
+            .addInterceptor(httpLoggingInterceptor)
             .connectTimeout(DEFAULT_TIME_OUT.toLong(), TimeUnit.SECONDS)
             .readTimeout(DEFAULT_TIME_OUT.toLong(), TimeUnit.SECONDS)
             .writeTimeout(DEFAULT_TIME_OUT.toLong(), TimeUnit.SECONDS)
