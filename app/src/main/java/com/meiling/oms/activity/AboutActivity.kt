@@ -36,20 +36,20 @@ class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
         mDatabind.txtVersion.text = "V${BuildConfig.VERSION_NAME}"
         mDatabind.slVersion.setSingleClickListener {
 
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.REQUEST_INSTALL_PACKAGES
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
+//            if (ContextCompat.checkSelfPermission(
+//                    this,
+//                    Manifest.permission.REQUEST_INSTALL_PACKAGES
+//                ) == PackageManager.PERMISSION_GRANTED
+//            ) {
                 UpdateVersion.getUpdateVersion(this, "1")
-            } else {
-                // 如果没有权限，申请权限
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.REQUEST_INSTALL_PACKAGES),
-                    ACCESS_INSTALL_LOCATION
-                )
-            }
+//            } else {
+//                // 如果没有权限，申请权限
+//                ActivityCompat.requestPermissions(
+//                    this,
+//                    arrayOf(Manifest.permission.REQUEST_INSTALL_PACKAGES),
+//                    ACCESS_INSTALL_LOCATION
+//                )
+//            }
 
 
 //            showToast("最新版本")
@@ -63,19 +63,19 @@ class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
         return ActivityAboutBinding.inflate(layoutInflater)
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == ACCESS_INSTALL_LOCATION) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                UpdateVersion.getUpdateVersion(this, "1")
-            } else {
-                showToast("您已经禁止权限，请手动开启")
-                // 如果用户拒绝了权限，可以在这里处理相应的逻辑
-            }
-        }
-    }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        if (requestCode == ACCESS_INSTALL_LOCATION) {
+//            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                UpdateVersion.getUpdateVersion(this, "1")
+//            } else {
+//                showToast("您已经禁止权限，请手动开启")
+//                // 如果用户拒绝了权限，可以在这里处理相应的逻辑
+//            }
+//        }
+//    }
 }
