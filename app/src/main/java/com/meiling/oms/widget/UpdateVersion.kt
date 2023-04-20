@@ -28,7 +28,7 @@ object UpdateVersion {
 
     fun getUpdateVersion(context: Activity, type: String = "0") {
         val map: HashMap<String, String> = HashMap()
-        map.put("versioncode", "0")
+        map.put("versioncode", BuildConfig.VERSION_CODE.toString())
         map.put("appId", "1")
         UpdateAppManager.Builder().setActivity(context)
             .setHttpManager(UpdateAppHttpUtil())
@@ -126,7 +126,7 @@ object UpdateVersion {
         val serverUpdate: TextView = v.findViewById(R.id.server_update) as TextView
         val llUpdate: LinearLayout = v.findViewById(R.id.ll_update) as LinearLayout
         val progressBar = v.findViewById(R.id.pro) as ProgressBar
-        txtVersion.text = "升级 " + updateApp.newVersion
+        txtVersion.text = "快来升级至${updateApp.updateLog}版本，体验最新功能吧～"
         val dialog: Dialog = builder.create()
         dialog.show()
         dialog.window!!.setContentView(v) //自定义布局应该在这里添加，要在dialog.show()的后面

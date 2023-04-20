@@ -3,6 +3,8 @@ package com.meiling.common
 import android.app.Application
 import android.content.Intent
 import android.util.Log
+import android.view.Gravity
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -48,9 +50,25 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
             }.onFailure {
                 if (it.message!!.isNotEmpty()) {
                     if (it.message!!.contains("403")) {
+//                        val toast = Toast.makeText(
+//                            getApplication(),
+//                            "登录过期，请重新登录",
+//                            Toast.LENGTH_SHORT
+//                        )
+//                        toast.setGravity(Gravity.CENTER, 0, 0)
+//                        toast.show()
                         MMKVUtils.clear()
                         ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY)
                             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).navigation()
+                    }
+                    if (it.message!!.contains("500")) {
+//                        val toast = Toast.makeText(
+//                            getApplication(),
+//                            "网络异常，请稍后再试",
+//                            Toast.LENGTH_SHORT
+//                        )
+//                        toast.setGravity(Gravity.CENTER, 0, 0)
+//                        toast.show()
                     }
 
                 } else {
