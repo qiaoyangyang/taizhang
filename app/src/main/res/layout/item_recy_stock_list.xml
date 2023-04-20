@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+    android:layout_marginLeft="@dimen/dp_20"
+    android:layout_marginRight="@dimen/dp_20"
     android:background="@color/white"
     app:shape_solidColor="@color/white"
-    app:shape_radius="10dp">
+    app:shape_radius="@dimen/dp_20">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,9 +18,9 @@
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:text="1356"
+            android:layout_marginLeft="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_40"
+            android:text=""
             android:textColor="#FF4C4A"
             android:textSize="28sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -28,10 +28,10 @@
         <TextView
             app:layout_constraintBottom_toBottomOf="@+id/tv_y"
             android:id="@+id/tvxi"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="@dimen/dp_30"
             android:background="#EEEEEE"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/dp_40"
             app:layout_constraintLeft_toRightOf="@+id/tv_couponBuyPrice"
             android:layout_width="1dp"
             android:layout_height="0dp"/>
@@ -39,12 +39,12 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:id="@+id/tv_dealTitle"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_32"
             android:textColor="@color/home_333333"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_32"
             app:layout_constraintTop_toTopOf="@+id/tv_couponBuyPrice"
-            android:text="浮光之丘疯狂星期四套餐"
+            android:text=""
             app:layout_constraintLeft_toRightOf="@+id/tvxi"
 
             app:layout_constraintRight_toRightOf="parent"
@@ -52,34 +52,34 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/tv_couponCode"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/dp_10"
             app:layout_constraintLeft_toLeftOf="@+id/tv_dealTitle"
             android:textColor="#999999"
-            android:textSize="12sp"
+            android:textSize="@dimen/sp_24"
             app:layout_constraintTop_toBottomOf="@+id/tv_dealTitle"
             app:layout_constraintRight_toRightOf="@+id/tv_dealTitle"
             android:layout_width="0dp"
-            android:text="券码号：290655641600"
+            android:text=""
             android:layout_height="wrap_content"/>
         <TextView
-            android:paddingBottom="10dp"
+            android:paddingBottom="@dimen/dp_20"
             android:id="@+id/tv_y"
-            android:textSize="12sp"
+            android:textSize="@dimen/sp_24"
             android:textColor="#666666"
-            android:text="优惠券(元)"
+            android:text=""
             app:layout_constraintLeft_toLeftOf="@+id/tv_couponBuyPrice"
             app:layout_constraintTop_toBottomOf="@+id/tv_couponBuyPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <View
             android:id="@+id/View_lin"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/dp_40"
             app:layout_constraintTop_toBottomOf="@+id/tv_y"
             android:background="@drawable/bg_view_lin1"
             android:layout_width="match_parent"
             android:layout_height="3dp"/>
         <com.hjq.shape.view.ShapeTextView
-            android:textSize="12sp"
+            android:textSize="@dimen/sp_24"
             android:id="@+id/tv_status"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
@@ -89,7 +89,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="24dp"
-            android:text="已核销"
+            android:text=""
             android:layout_width="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -107,7 +107,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_status"
             android:layout_width="0dp"
-            android:text="由浮光之丘MoonCake SKP 店"
+            android:text=""
             android:layout_height="wrap_content"/>
 
 

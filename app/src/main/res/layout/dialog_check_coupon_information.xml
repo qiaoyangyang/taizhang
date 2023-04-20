@@ -14,16 +14,16 @@
         android:layout_marginTop="@dimen/dp_30"
         android:text="请核对券码验证信息"
         android:textColor="#333333"
-        android:textSize="20sp"
+        android:textSize="@dimen/sp_40"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_bg_subtract"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="@dimen/dp_26"
         android:textColor="@color/white"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="@dimen/dp_32"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/subtract"
@@ -31,8 +31,8 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
     <TextView
         android:id="@+id/tv_RMB"
-        android:textSize="14sp"
-        android:layout_marginTop="12dp"
+        android:textSize="@dimen/sp_28"
+        android:layout_marginTop="@dimen/dp_24"
         android:text="RMB"
         app:layout_constraintTop_toTopOf="@+id/tv_bg_subtract"
         app:layout_constraintLeft_toLeftOf="@+id/tv_bg_subtract"
@@ -56,7 +56,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"/>
     <TextView
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="@dimen/dp_32"
         android:background="@drawable/subtracty"
         android:id="@+id/tv_youhui"
         app:layout_constraintRight_toRightOf="parent"
@@ -70,9 +70,9 @@
         android:maxLines="2"
         app:layout_constraintRight_toRightOf="@+id/tv_youhui"
         android:id="@+id/tv_name"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="5dp"
-        android:textSize="16sp"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textSize="@dimen/dp_32"
         android:textColor="#333333"
         app:layout_constraintLeft_toLeftOf="@+id/tv_youhui"
         app:layout_constraintTop_toTopOf="@+id/tv_RMB"
@@ -83,20 +83,20 @@
         android:id="@+id/tv_original_cost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/dp_16"
         android:text=""
         android:textColor="#999999"
-        android:textSize="14sp"
+        android:textSize="@dimen/dp_28"
         app:layout_constraintLeft_toLeftOf="@+id/tv_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
     <TextView
-        android:textSize="17sp"
+        android:textSize="@dimen/dp_34"
         android:textStyle="bold"
         android:id="@+id/num"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/dp_24"
         android:textColor="#1F2333"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="@dimen/dp_20"
         app:layout_constraintTop_toBottomOf="@+id/tv_bg_subtract"
         android:layout_width="wrap_content"
         android:text="验证张数"
@@ -104,7 +104,7 @@
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/tv_num"
-        android:textSize="14sp"
+        android:textSize="@dimen/sp_28"
         android:text="顾客共购买张"
         android:textColor="#1F2333"
         app:layout_constraintTop_toBottomOf="@+id/num"
@@ -121,7 +121,7 @@
         android:id="@+id/ll_count"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="@dimen/dp_28"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
