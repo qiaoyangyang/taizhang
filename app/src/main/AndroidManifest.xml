@@ -108,7 +108,9 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.Search1Activity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
         <activity
             android:name=".activity.PostDetailActivity"
             android:screenOrientation="portrait" />

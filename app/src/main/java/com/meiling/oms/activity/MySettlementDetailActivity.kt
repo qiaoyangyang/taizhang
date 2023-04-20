@@ -50,7 +50,7 @@ class MySettlementDetailActivity :
                     )
                     holder.setText(R.id.txt_service_charge_money, "-" + item.settlementAmount)
 //                    holder.setText(R.id.txt_recharge_name, transToString(item.createTime!!.toLong()))
-                    holder.setText(R.id.txt_recharge_name, item.orderArrivalTime)
+                    holder.setText(R.id.txt_recharge_name, item.createTime)
                 }
             }
         mDatabind.rvSettlement.adapter = settlementAdapter

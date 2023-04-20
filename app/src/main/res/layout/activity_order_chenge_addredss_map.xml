@@ -12,6 +12,7 @@
         app:barStyle="transparent"
         app:layout_constraintTop_toTopOf="parent"
         app:rightBackground="@null"
+        android:background="@color/app_themes_1f2333"
         app:rightTitleSize="@dimen/sp_14"
         app:title="修改收货地址" />
 
