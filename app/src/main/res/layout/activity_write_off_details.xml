@@ -33,16 +33,15 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:textSize="16sp"
             android:textColor="#2B2A2A"
-            android:text="浮光之丘疯狂星期四单人特惠套餐8英寸经典水果蛋糕，保证现做，分享快乐，经典传送传递幸福，全国连锁，品质保障，售后安心建议5-8人分享【仅支持美团点评上订购】10选1"
             android:id="@+id/tv_name"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
-            android:textSize="14sp"
+            android:textSize="@dimen/sp_28"
             android:textColor="#666666"
             android:id="@+id/order_price"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="@dimen/dp_26"
             app:layout_constraintLeft_toLeftOf="@+id/tv_name"
             android:text="订单价格："
             app:layout_constraintTop_toBottomOf="@+id/tv_name"
@@ -51,8 +50,8 @@
         <TextView
 
             android:id="@+id/tv_dealValue"
-            android:textSize="16sp"
-            android:text="￥534"
+            android:textSize="@dimen/sp_32"
+            android:text=""
             app:layout_constraintBottom_toBottomOf="@+id/order_price"
             app:layout_constraintRight_toRightOf="parent"
             android:textColor="#999999"
@@ -63,16 +62,16 @@
             android:layout_marginRight="8dp"
             app:layout_constraintRight_toLeftOf="@+id/tv_dealValue"
             app:layout_constraintBottom_toBottomOf="@+id/tv_dealValue"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_32"
             android:textColor="#FF4C4A"
-            android:text="￥534"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:textSize="@dimen/sp_28"
             android:id="@+id/couponCode"
             android:layout_marginTop="9dp"
             app:layout_constraintLeft_toLeftOf="@+id/order_price"
-            android:textSize="14sp"
             android:textColor="#666666"
             android:text="券码编号："
             app:layout_constraintTop_toBottomOf="@+id/order_price"
@@ -81,14 +80,15 @@
         <TextView
 
             android:id="@+id/tv_couponCode"
-            android:textSize="14sp"
-            android:text="290655641600"
+            android:textSize="@dimen/dp_28"
+            android:text=""
             app:layout_constraintBottom_toBottomOf="@+id/couponCode"
             app:layout_constraintRight_toRightOf="parent"
             android:textColor="#333333"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:textSize="@dimen/sp_28"
             android:id="@+id/type"
             android:layout_marginTop="9dp"
             android:text="券码类型："
@@ -99,14 +99,15 @@
         <TextView
 
             android:id="@+id/tv_type"
-            android:textSize="14sp"
-            android:text="套餐券/团购券"
+            android:textSize="@dimen/sp_28"
+            android:text=""
             app:layout_constraintBottom_toBottomOf="@+id/type"
             app:layout_constraintRight_toRightOf="parent"
             android:textColor="#333333"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:textSize="@dimen/sp_28"
             android:id="@+id/couponUseTime"
             android:layout_marginTop="9dp"
             android:text="核销时间："
@@ -117,14 +118,15 @@
         <TextView
 
             android:id="@+id/tv_couponUseTime"
-            android:textSize="14sp"
-            android:text="2023-10-10 12:23:45"
+            android:textSize="@dimen/sp_28"
+            android:text=""
             app:layout_constraintBottom_toBottomOf="@+id/couponUseTime"
             app:layout_constraintRight_toRightOf="parent"
             android:textColor="#333333"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:textSize="@dimen/sp_28"
             android:id="@+id/orderId"
             android:layout_marginTop="9dp"
             android:text="订单编号："
@@ -134,8 +136,8 @@
         <TextView
 
             android:id="@+id/tv_orderId"
-            android:textSize="14sp"
-            android:text="290655641600432432"
+            android:textSize="@dimen/sp_28"
+            android:text=""
             app:layout_constraintBottom_toBottomOf="@+id/orderId"
             app:layout_constraintRight_toRightOf="parent"
             android:textColor="#333333"

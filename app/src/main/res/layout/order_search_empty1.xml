@@ -30,6 +30,6 @@
         android:text="暂无相关券码信息"
         android:layout_marginTop="@dimen/dp_30"
         android:textColor="#999999"
-        android:textSize="14sp" />
+        android:textSize="@dimen/sp_28" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
