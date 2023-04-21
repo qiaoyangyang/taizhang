@@ -19,11 +19,13 @@
         app:titleColor="@color/white" />
 
     <ImageView
+        app:shape_radius="@dimen/dp_100"
         android:layout_width="@dimen/dp_140"
         android:layout_height="@dimen/dp_140"
         android:layout_gravity="center"
+        android:src="@mipmap/login_icon_about"
         android:layout_marginTop="@dimen/dp_50"
-        android:src="@mipmap/login_icon_about" />
+        />
 
     <TextView
         android:layout_width="wrap_content"

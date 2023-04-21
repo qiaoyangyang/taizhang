@@ -31,7 +31,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewBinding> : BaseVmDbFrag
         if (mLoadingDialog == null) {
             mLoadingDialog = LoadingDialog(mActivity)
         }
-        if (!mLoadingDialog!!.isShowing()) {
+        if (!mLoadingDialog!!.isShowing) {
             mLoadingDialog!!.show()
         }
         mLoadingDialog?.setContent(message)

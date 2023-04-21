@@ -397,7 +397,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
 
     override fun createObserver() {
         mViewModel.orderList.onStart.observe(this) {
-            showLoading("请求中")
+           showLoading("加载中")
         }
         mViewModel.orderList.onSuccess.observe(this) {
             dismissLoading()
@@ -414,6 +414,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 orderDisAdapter.addData(it.content as MutableList<OrderDto.Content>)
             }
             if (it.content.size < 20) {
+                dismissLoading()
                 orderDisAdapter.footerWithEmptyEnable = false
                 orderDisAdapter.footerLayout?.visibility = View.GONE
                 orderDisAdapter.loadMoreModule.loadMoreEnd()

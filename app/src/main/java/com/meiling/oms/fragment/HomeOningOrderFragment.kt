@@ -10,7 +10,6 @@ import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentHomeOrderOningBinding
-import com.meiling.oms.eventBusData.MessageEventUpDateOrder
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.formatCurrentDateBeforeWeek
@@ -51,6 +50,7 @@ class HomeOningOrderFragment :
         fragmentList.add(BaseOrderFragment.newInstance("50", false))
         fragmentList.add(BaseOrderFragment.newInstance("70", false))
         fragmentList.add(BaseOrderFragment.newInstance("80", false))
+        mDatabind.viewPager.offscreenPageLimit = 1
         mDatabind.viewPager.adapter =
             BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
         mDatabind.viewPager.setCurrentItem(0, false)
@@ -98,9 +98,9 @@ class HomeOningOrderFragment :
     }
 
     override fun createObserver() {
-
+        mViewModel.statusCountDto.onStart.observe(this) {
+        }
         mViewModel.statusCountDto.onSuccess.observe(this) {
-            dismissLoading()
             mDatabind.tabLayout.updateTabBadge(0) {
                 badgeTextSize = 30f
                 badgeGravity = Gravity.RIGHT or Gravity.TOP
@@ -176,7 +176,6 @@ class HomeOningOrderFragment :
             Log.e("order", "createObserver: " + it)
         }
         mViewModel.statusCountDto.onError.observe(this) {
-            dismissLoading()
             showToast("${it.msg}")
         }
     }

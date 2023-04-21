@@ -15,12 +15,17 @@ import com.meiling.common.activity.BaseActivity
 import com.meiling.common.utils.MMKVUtils
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityMainBinding
+import com.meiling.oms.eventBusData.MessageEvent
+import com.meiling.oms.eventBusData.MessageEventTabChange
 import com.meiling.oms.fragment.DataFragment
 import com.meiling.oms.fragment.HomeFragment
 import com.meiling.oms.fragment.MyFragment
 import com.meiling.oms.fragment.ScanFragment
 import com.meiling.oms.viewmodel.MainViewModel
 import com.meiling.oms.widget.showToast
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 @Route(path = "/app/MainActivity")
@@ -31,6 +36,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     private val ACCESS_NOTIFICATION_POLICY = 1
     override fun initView(savedInstanceState: Bundle?) {
+//        EventBus.getDefault().register(this)
         mDatabind.viewPager.isUserInputEnabled = false
         mViewModel.setUmToken()
         if (ContextCompat.checkSelfPermission(
@@ -70,6 +76,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             resetting()
             mDatabind.aivHome.isSelected = true
             mDatabind.atvHome.isSelected = true
+            EventBus.getDefault().post(MessageEventTabChange())
             mDatabind.viewPager.setCurrentItem(0, false)
         }
         mDatabind.llScan.setOnClickListener {
@@ -93,11 +100,11 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     }
 
     override fun createObserver() {
+        mViewModel.setUmTokenDto.onStart.observe(this) {
+        }
         mViewModel.setUmTokenDto.onSuccess.observe(this) {
-            disLoading()
         }
         mViewModel.setUmTokenDto.onError.observe(this) {
-            disLoading()
             showToast(it.msg)
         }
     }
@@ -139,6 +146,14 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             }
 
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+//            EventBus.getDefault().unregister(this)
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageEvent) {
     }
 
 }

@@ -38,8 +38,6 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
             }.onSuccess {
                 if (it.code == 200) {
                     resultState.onSuccess.postValue(it.data)
-                } else if (it.code == 500) {
-                    ToastUtils.showShort("服务器异常，请稍后再试")
                 } else {
                     resultState.onError.postValue(
                         ExceptionHandle.handleException(
