@@ -65,6 +65,7 @@ object UpdateVersion {
 //                                updateAppBean.update = "No"
 //                            }
                             //版本号
+                            updateAppBean.updateLog = data.versionName
                             updateAppBean.newVersion = data.versionCode
                             //下载地址
                             updateAppBean.apkFileUrl = data.downloadUrl
@@ -127,7 +128,7 @@ object UpdateVersion {
         val serverUpdate: TextView = v.findViewById(R.id.server_update) as TextView
         val llUpdate: LinearLayout = v.findViewById(R.id.ll_update) as LinearLayout
         val progressBar = v.findViewById(R.id.pro) as ProgressBar
-        txtVersion.text = "快来升级至${updateApp.newVersion}版本，体验最新功能吧～"
+        txtVersion.text = "快来升级至V${updateLog}版本，体验最新功能吧～"
         val dialog: Dialog = builder.create()
         dialog.show()
         dialog.window!!.setContentView(v) //自定义布局应该在这里添加，要在dialog.show()的后面

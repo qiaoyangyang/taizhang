@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.Utils
 import com.google.gson.Gson
 import com.meiling.common.constant.ARouteConstants
 import com.meiling.common.network.APIException
@@ -51,26 +52,27 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                 if (it.message!!.isNotEmpty()) {
                     if (it.message!!.contains("403")) {
 //                        val toast = Toast.makeText(
-//                            getApplication(),
-//                            "登录过期，请重新登录",
+//                            Utils.getApp(),
+//                            "账号登录过期，请重新登录",
 //                            Toast.LENGTH_SHORT
 //                        )
 //                        toast.setGravity(Gravity.CENTER, 0, 0)
 //                        toast.show()
+                        ToastUtils.showShort("账号登录过期，请重新登录")
                         MMKVUtils.clear()
                         ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY)
                             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).navigation()
-                    }
-                    if (it.message!!.contains("500")) {
+
+                    } else if (it.message!!.contains("500")) {
 //                        val toast = Toast.makeText(
-//                            getApplication(),
-//                            "网络异常，请稍后再试",
+//                            Utils.getApp(),
+//                            "账号登录过期，请重新登录",
 //                            Toast.LENGTH_SHORT
 //                        )
 //                        toast.setGravity(Gravity.CENTER, 0, 0)
 //                        toast.show()
+                        ToastUtils.showShort("服务器异常，请稍后再试")
                     }
-
                 } else {
                     resultState.onError.postValue(ExceptionHandle.handleException(it))
                 }

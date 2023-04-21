@@ -46,8 +46,8 @@
             android:id="@+id/txt_order_delivery_yu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_20"
-            android:paddingHorizontal="@dimen/dp_20"
+            android:layout_margin="@dimen/dp_10"
+            android:paddingHorizontal="@dimen/dp_16"
             android:paddingVertical="@dimen/dp_6"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_24"
@@ -63,7 +63,7 @@
             android:id="@+id/txt_order_delivery_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_20"
+            android:layout_marginStart="@dimen/dp_5"
             android:background="@drawable/order_home_item_5"
             android:paddingHorizontal="@dimen/dp_20"
             android:paddingVertical="@dimen/dp_6"
@@ -84,7 +84,7 @@
             app:layout_constraintRight_toLeftOf="@+id/txt_order_delivery_1"
             app:layout_constraintTop_toTopOf="parent"
             android:textStyle="bold"
-            tools:text="2023-03-23 15:00:00 arriveTimeDate" />
+            tools:text="2023-03-23 15:00:00" />
 
         <TextView
             android:id="@+id/txt_order_delivery_1"
@@ -138,7 +138,7 @@
             android:drawableEnd="@drawable/order_icon_phone"
             android:drawablePadding="@dimen/dp_10"
             android:gravity="center"
-            android:text="139933 "
+            tools:text="139933 "
             android:textColor="@color/home_333333"
             android:textSize="@dimen/dp_24"
             app:layout_constraintBottom_toBottomOf="@+id/txt_order_delivery_name"

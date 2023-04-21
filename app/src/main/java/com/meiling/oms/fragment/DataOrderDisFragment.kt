@@ -62,7 +62,7 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
         mDatabind.rvHisDataDis.adapter = dataHisDisAdapter
 
         mDatabind.srfDataDis.setOnRefreshListener {
-            startTime = formatCurrentDateBeforeDay()
+//            startTime = formatCurrentDateBeforeDay()
             initViewData()
         }
     }
@@ -114,7 +114,7 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
                 mViewModel.dataHistoryDisList(
                     DataListDto(
                         startTime = "$it",
-                        endTime = "$it",
+                        endTime = "${formatCurrentDateBeforeDay()}",
                         poiId
                     )
                 )

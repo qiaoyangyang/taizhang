@@ -32,7 +32,7 @@ import com.umeng.message.entity.UMessage;
 //import org.android.agoo.mezu.MeizuRegister;
 //import org.android.agoo.oppo.OppoRegister;
 //import org.android.agoo.vivo.VivoRegister;
-//import org.android.agoo.xiaomi.MiPushRegistar;mm
+//import org.android.agoo.xiaomi.MiPushRegistar；
 
 /**
  * PushSDK集成帮助类

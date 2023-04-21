@@ -25,6 +25,7 @@ import com.meiling.common.network.data.OrderSendDetail
 import com.meiling.common.network.service.orderDisService
 import com.meiling.oms.R
 import com.meiling.oms.widget.setSingleClickListener
+import com.meiling.oms.widget.showToast
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
 import org.greenrobot.eventbus.EventBus
@@ -76,8 +77,6 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
     private val REQUEST_CALL_PHONE_PERMISSION = 1
 
 
-
-
     var telPhone = ""
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
         EventBus.getDefault().register(this)
@@ -124,7 +123,7 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
                                 if (holder?.layoutPosition == 0) {
                                     view.setImageDrawable(resources.getDrawable(R.drawable.icon_order_dis_finish))
                                 } else {
-                                    if (orderSendDetail.deliveryConsumeLogs.size-1 == (holder?.layoutPosition)) {
+                                    if (orderSendDetail.deliveryConsumeLogs.size - 1 == (holder?.layoutPosition)) {
                                         holder.setGone(R.id.viewLine, true)
                                     }
                                     view.setImageDrawable(resources.getDrawable(R.drawable.icon_order_dis_ing))
@@ -282,7 +281,7 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
         {
             if (!it.isNullOrEmpty()) {
                 ryOrderDisDetailAllAdapter.setList(it)
-                txtOrderAddress!!.text = it.get(0).recvAddr
+                txtOrderAddress!!.text = "${it.get(0).recvAddr.replace("@@", "")}"
                 txtOrderName!!.text = "${it.get(0).recvName}"
                 txtOrderNameAddPhone!!.text = "${it.get(0).recvPhone}"
             }
@@ -324,6 +323,7 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
                 dialPhoneNumber(telPhone)
             } else {
                 // 如果用户拒绝了权限，可以在这里处理相应的逻辑
+                showToast("拒绝了打电话权限，请手动开启")
             }
         }
     }
