@@ -63,13 +63,19 @@ class WriteOffDetailsActivity :
                 listType
             )
 
-        var list=ArrayList<DealMenu>()
-        if (persons.size != 0)
-            persons.forEach {
-                list+=it
+        var list = ArrayList<DealMenu>()
+        if (persons.size != 0) {
+            persons.forEachIndexed { index, dealMenus ->
+                dealMenus.forEach {
+                    if (!TextUtils.isEmpty(it.total)) {
+                        list.add(it)
+
+                    }
+                }
             }
 
-        orderLeftRecyAdapter.setList(list)
+            orderLeftRecyAdapter.setList(list)
+        }
 
         if (serializableExtra != null) {
 
@@ -206,7 +212,14 @@ class WriteOffDetailsActivity :
                 holder: BaseViewHolder,
                 item: DealMenu?
 
+
             ) {
+                if (TextUtils.isEmpty(item?.total)) {
+                    holder.setGone(R.id.ll_btn, true)
+
+                } else {
+                    holder.setGone(R.id.ll_btn, false)
+                }
                 holder.setText(R.id.tv_name, item?.content)
                 holder.setText(R.id.tv_price, "¥" + item?.price)
                 holder.setText(R.id.tv_total, item?.specification)

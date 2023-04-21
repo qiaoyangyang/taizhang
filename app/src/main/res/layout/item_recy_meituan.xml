@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
+    android:id="@+id/ll_btn"
     android:layout_height="wrap_content">
     <TextView
         android:textSize="@dimen/sp_28"
