@@ -29,7 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_30"
         android:src="@drawable/search_close_edt"
-        android:text="配送详情"
         android:textColor="#1F1F1F"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -86,7 +85,7 @@
             android:layout_below="@+id/txt_order_dis_detail_name"
             android:layout_alignLeft="@+id/txt_order_dis_detail_name"
             android:layout_marginBottom="@dimen/dp_30"
-            android:text="内蒙古自治区鄂尔多斯市伊金霍洛旗伊金霍洛旗札萨克物流园区 14 幢 158 室"
+            tools:text="内蒙古自治区鄂尔多斯市伊金霍洛旗伊金霍洛旗札萨克物流园区 14 幢 158 室"
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_28" />
 

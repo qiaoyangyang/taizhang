@@ -193,7 +193,7 @@ class ModifyPassWordActivity : BaseActivity<LoginViewModel, ActivityModifyPasswo
         mViewModel.sendCode.onError.observe(this) {
             disLoading()
             captchaCountdownTool.stopCountdown()
-            mDatabind.txtGetAuthCode.text = "重新获取"
+            mDatabind.txtGetAuthCode.text = "发送验证码"
             mDatabind.txtGetAuthCode.isClickable = true
             showToast("${it.msg}")
         }

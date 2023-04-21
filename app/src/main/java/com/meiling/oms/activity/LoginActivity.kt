@@ -24,6 +24,7 @@ import com.meiling.oms.databinding.ActivityLoginBinding
 import com.meiling.oms.jpush.PushHelper
 import com.meiling.oms.viewmodel.LoginViewModel
 import com.meiling.oms.widget.CaptchaCountdownTool
+import com.meiling.oms.widget.KeyBoardUtil
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 
@@ -91,6 +92,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                 .addView(mDatabind.etPassword)
                 .setMain(it)
                 .build()
+            KeyBoardUtil.hideKeyBoard(this,mDatabind.btnLogin)
         }
 
         mDatabind.etPassword.addTextChangedListener(object : TextWatcher {

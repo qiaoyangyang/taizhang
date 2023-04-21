@@ -73,7 +73,7 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
         )
         mViewModel.channelHistoryDataList(
             DataListDto(
-                startTime = formatCurrentDateBeforeDay(),
+                startTime = startTime,
                 endTime = formatCurrentDateBeforeDay(),
                 poiId
             )

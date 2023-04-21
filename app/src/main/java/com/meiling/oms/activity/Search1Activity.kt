@@ -1,6 +1,10 @@
 package com.meiling.oms.activity
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.PictureDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,6 +14,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -42,7 +48,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
     lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
     lateinit var orderGoodsListAdapter: BaseQuickAdapter<OrderDto.Content.GoodsVo, BaseViewHolder>
 
-
+    var telPhone = ""
     override fun initView(savedInstanceState: Bundle?) {
         setBar(this, mDatabind.cosTitle)
         orderDisAdapter =
@@ -59,8 +65,10 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                     val copyOrderId = holder.getView<TextView>(R.id.txt_copy_order)
                     val orderId = holder.getView<TextView>(R.id.txt_order_id)
                     val channelLogoImg = holder.getView<ImageView>(R.id.img_order_icon)
+                    val phone = holder.getView<TextView>(R.id.txt_order_delivery_phone)
                     holder.setText(R.id.txt_order_delivery_name, item.order?.recvName)
-                    holder.setText(R.id.txt_order_delivery_phone, item.order?.recvPhone)
+                    phone.text = item.order?.recvPhone
+                    telPhone = item.order?.recvPhone ?: ""
                     holder.setText(
                         R.id.txt_order_delivery_address,
                         item.order?.recvAddr?.replace("@@", "")
@@ -111,17 +119,35 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                         holder?.setGone(R.id.txt_order_delivery_yu, true)
                     }
 
+                    phone.setSingleClickListener {
+                        if (ContextCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.CALL_PHONE
+                            )
+                            == PackageManager.PERMISSION_GRANTED
+                        ) {
+                            // 如果有权限，拨打电话
+                            dialPhoneNumber(telPhone)
+                        } else {
+                            // 如果没有权限，申请权限
+                            ActivityCompat.requestPermissions(
+                                this@Search1Activity,
+                                arrayOf(Manifest.permission.CALL_PHONE),
+                                REQUEST_CALL_PHONE_PERMISSION
+                            )
+                        }
+                    }
                     var listGoods = item.goodsVoList
                     var x = ""
                     for (goods in listGoods!!) {
-                        x += "名称" + goods?.gname + "\n数量" + goods?.number + "\n价格" + goods?.price
+                        x += "名称:" + goods?.gname + "\n数量:" + goods?.number + "\n价格:" + goods?.price
                     }
                     imgShopCopy.setSingleClickListener {
                         copyText(
                             context,
-                            "订单来源：" + "${item.channelName} \n" + "门店名称${item.shopName}\n" + "订单编号${item.order?.viewId}\n" + "-------\n" + "商品信息${x}\n" +
+                            "订单来源:" + "${item.channelName} \n" + "门店名称:${item.shopName}\n" + "订单编号:${item.order?.viewId}\n" + "-------\n" + "商品信息:${x}\n" +
 //                                    "商品信息${Gson().fromJson(filteredData.toString(),Array<NewGoodsVo>::class.java).toList()}\n" +
-                                    "-------\n" + "收货时间${item.order?.arriveTimeDate}\n" + "收货人${item.order?.recvName}${item.order?.recvPhone}\n" + "收货地址${item.order?.recvAddr}\n" + "-------\n" + "备注${item.order?.remark}\n"
+                                    "-------\n" + "收货时间:${item.order?.arriveTimeDate}\n" + "收货人:${item.order?.recvName}${item.order?.recvPhone}\n" + "收货地址:${item.order?.recvAddr}\n" + "-------\n" + "备注${item.order?.remark}\n"
                         )
 //                        ToastUtils.showLong("复制成功")
                         showToast("复制成功")
@@ -391,5 +417,29 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
             showToast("${it.msg}")
         }
 
+    }
+
+
+    var REQUEST_CALL_PHONE_PERMISSION = 1
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CALL_PHONE_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 如果用户授权了权限，拨打电话
+                dialPhoneNumber(telPhone)
+            } else {
+                // 如果用户拒绝了权限，可以在这里处理相应的逻辑
+                showToast("拒绝了打电话权限，请手动开启")
+            }
+        }
+    }
+
+    private fun dialPhoneNumber(phoneNumber: String) {
+        val dialIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${phoneNumber}"))
+        startActivity(dialIntent)
     }
 }

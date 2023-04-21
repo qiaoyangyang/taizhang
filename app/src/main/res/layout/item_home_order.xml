@@ -138,7 +138,7 @@
             android:drawableEnd="@drawable/order_icon_phone"
             android:drawablePadding="@dimen/dp_10"
             android:gravity="center"
-            android:text="139933 "
+            tools:text="139933 "
             android:textColor="@color/home_333333"
             android:textSize="@dimen/dp_24"
             app:layout_constraintBottom_toBottomOf="@+id/txt_order_delivery_name"

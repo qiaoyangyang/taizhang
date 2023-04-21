@@ -7,6 +7,7 @@ import org.apache.http.conn.ConnectTimeoutException
 import org.json.JSONException
 import retrofit2.HttpException
 import java.net.ConnectException
+import java.net.SocketTimeoutException
 
 object ExceptionHandle {
     fun handleException(e: Throwable?): APIException {
@@ -33,7 +34,7 @@ object ExceptionHandle {
                     ex = APIException(Error.TIMEOUT_ERROR,e)
                     return ex
                 }
-                is java.net.SocketTimeoutException -> {
+                is SocketTimeoutException -> {
                     ex = APIException(Error.TIMEOUT_ERROR,e)
                     return ex
                 }

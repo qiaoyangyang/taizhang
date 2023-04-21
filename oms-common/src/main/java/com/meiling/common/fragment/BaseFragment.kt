@@ -46,5 +46,4 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewBinding> : BaseVmDbFrag
 
 
 
-
 }
