@@ -58,7 +58,7 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
         mDatabind.srfRechargeRecord.setOnRefreshListener {
             pageIndex = 1
             initViewData()
-            EventBus.getDefault().post(MessageEventTimeShow())
+//            EventBus.getDefault().post(MessageEventTimeShow())
         }
     }
 

@@ -41,15 +41,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_title"
-        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_40"
         android:layout_marginEnd="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_20"
         android:background="@drawable/scan_bg_input"
         app:layout_constraintTop_toBottomOf="@+id/txt_order_dis">
 
         <ImageView
             android:id="@+id/img_dis"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:scaleType="center"
             android:src="@drawable/order_dis_shou_icon" />
 
         <TextView
@@ -76,18 +78,27 @@
             android:gravity="center"
             android:text="188****8888"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="@dimen/sp_28" />
 
         <TextView
             android:id="@+id/txt_order_dis_detail_address"
-            android:layout_width="299dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/txt_order_dis_detail_name"
-            android:layout_alignLeft="@+id/txt_order_dis_detail_name"
+            android:layout_alignStart="@+id/txt_order_dis_detail_name"
             android:layout_marginBottom="@dimen/dp_30"
-            tools:text="内蒙古自治区鄂尔多斯市伊金霍洛旗伊金霍洛旗札萨克物流园区 14 幢 158 室"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_28" />
+            android:textSize="@dimen/sp_28"
+            tools:text="内蒙古自治区鄂尔多斯市伊金霍洛旗伊金霍洛旗札萨克物流园区 14 幢 158 室" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_2"
+            android:layout_below="@+id/txt_order_dis_detail_address"
+            android:layout_alignStart="@+id/txt_order_dis_detail_address"
+            android:background="@color/my_rec_EEEEEE" />
 
     </RelativeLayout>
 

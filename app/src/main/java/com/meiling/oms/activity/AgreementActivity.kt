@@ -3,11 +3,15 @@ package com.meiling.oms.activity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.webkit.*
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.just.agentweb.AgentWeb
+import com.just.agentweb.DefaultWebClient
 import com.meiling.common.activity.BaseActivity
 import com.meiling.oms.databinding.ActivityAgreementBinding
 import com.meiling.oms.viewmodel.VoucherinspectionViewModel
+
 
 @Route(path = "/app/AgreementActivity")
 class AgreementActivity : BaseActivity<VoucherinspectionViewModel, ActivityAgreementBinding>() {
@@ -15,50 +19,35 @@ class AgreementActivity : BaseActivity<VoucherinspectionViewModel, ActivityAgree
     @SuppressLint("SetJavaScriptEnabled")
     override fun initView(savedInstanceState: Bundle?) {
         var stringExtraType = intent?.getStringExtra("YSXY")
-        // 开启javascript 渲染
-        mDatabind.mWebView.settings.javaScriptEnabled = true;
-
-        var url = "http://www.baidu.com/"
+        var url = "file:///android_asset/xy.html"
         if (stringExtraType == "1") {
             mDatabind.TitleBar.title = "小喵来客隐私政策"
-//            url = "http://dev-oms.igoodsale.com/#/privacyPolicy"
-            url = "https://www.baidu.com/"
+            url = "file:///android_asset/xy.html"
+            url = "http://dev-oms.igoodsale.com/#/privacyPolicy"
         } else {
             mDatabind.TitleBar.title = "小喵来客用户协议"
-            url = "http://dev-oms.igoodsale.com/#/userAgreement/"
+//            url = "file:///android_asset/xy.html"
+            url = "http://dev-oms.igoodsale.com/#/userAgreement"
         }
-//
-//        // 载入内容
-////        mDatabind.mWebView.loadUrl(url);
-////        val webView: WebView = findViewById(R.id.webView)
-//
-//// 启用JavaScript执行
-//        mDatabind.mWebView.settings.javaScriptEnabled = true
-//
-//// 允许网页缩放
-//        mDatabind.mWebView.settings.setSupportZoom(true)
-//        mDatabind.mWebView.settings.builtInZoomControls = true
-//        mDatabind.mWebView.settings.displayZoomControls = false
-//
-//// 缓存设置
-////         mDatabind.mWebView.settings.cacheMode = WebSettings.LOAD_DEFAULT
-////         mDatabind.mWebView.settings.setAppCacheEnabled(true)
-////         mDatabind.mWebView.settings.setAppCachePath(cacheDir.path)
-//
-//// 允许混合内容（HTTP和HTTPS）
-//        mDatabind.mWebView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-//
-//// 允许在 mDatabind.mWebView中打开链接，而不是打开默认的浏览器
-////         mDatabind.mWebView.webViewClient = WebViewClient()
-//
-//// 允许在WebView中打开多个窗口
-//        mDatabind.mWebView.webChromeClient = WebChromeClient()
-//
-//// 加载网页链接
-//        mDatabind.mWebView.loadUrl("http://dev-oms.igoodsale.com/#/userAgreement")
-////        mDatabind.mWebView.loadUrl("https://blog.csdn.net/qq_43515862/article/details/110293455")
 
-
+        var mAgentWeb = AgentWeb.with(this)
+            .setAgentWebParent(
+                mDatabind.mWebView,
+                FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+            )
+            .closeIndicator()
+            //设置报错布局 .setMainFrameErrorView(R.layout.agentweb_error_page, -1)
+            //打开其他应用时，弹窗咨询用户是否前往其他应用
+            .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.ASK)
+            .createAgentWeb()
+            .ready()
+            //打开页面
+            .go(url)
+        mAgentWeb.agentWebSettings.webSettings.javaScriptEnabled = true;
+        mAgentWeb.clearWebCache();
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityAgreementBinding {

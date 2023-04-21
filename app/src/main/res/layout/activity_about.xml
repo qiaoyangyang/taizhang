@@ -23,7 +23,7 @@
         android:layout_width="@dimen/dp_140"
         android:layout_height="@dimen/dp_140"
         android:layout_gravity="center"
-        android:src="@mipmap/login_icon_about"
+        android:src="@mipmap/icon_about_logo"
         android:layout_marginTop="@dimen/dp_50"
         />
 
