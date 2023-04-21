@@ -132,7 +132,7 @@ class RegisterActivity : BaseActivity<RegisterViewModel, ActivityRegisterBinding
                         mDatabind.etPassword.text.toString().trim())
                 }, onSuccess =  {
                     disLoading()
-                    startActivity(Intent(this,RegisterNextActivity::class.java))
+                    startActivity(Intent(this,RegisterNextActivity::class.java).putExtra("phone",""))
                 }, onError = {
                     mDatabind.etPassword.text.toString().trim()
                     if (it != null) {

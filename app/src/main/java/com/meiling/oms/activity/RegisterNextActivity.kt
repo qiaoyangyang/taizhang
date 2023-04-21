@@ -34,7 +34,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     lateinit var mDatabind: ActivityRegisterNextBinding
     var phone: String? = "18311137330"
     override fun initView(savedInstanceState: Bundle?) {
-//        phone=savedInstanceState?.getString("phone","18311137330")
+        phone=savedInstanceState?.getString("phone","18311137330")
         ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
     }
 
