@@ -159,3 +159,79 @@ data class PoiVo(
     @SerializedName("viewId")
     var viewId: Long? = 0
 )
+data class Channel(
+
+    // 三方
+    @SerializedName("channelList")
+    var channelList: List<ChannelX>? = listOf(),
+    @SerializedName("shopList")
+    var shopList: List<Shop>? = listOf()
+)
+
+data class ChannelX(
+    @SerializedName("createTime")
+    var createTime: Long? = 0,
+    @SerializedName("id")
+    var id: Int? = 0,
+    @SerializedName("logo")
+    var logo: String? = "",
+    @SerializedName("logoBg")
+    var logoBg: String? = "",
+    @SerializedName("logoColor")
+    var logoColor: String? = "",
+    @SerializedName("logoF")
+    var logoF: String? = "",
+    @SerializedName("logoText")
+    var logoText: String? = "",
+    @SerializedName("name")
+    var name: String? = "",
+    @SerializedName("process")
+    var process: String? = "",
+    @SerializedName("remark")
+    var remark: String? = "",
+    @SerializedName("status")
+    var status: Int? = 0,
+    @SerializedName("type")
+    var type: Int? = 0,
+    @SerializedName("updateTime")
+    var updateTime: Long? = 0,
+    @SerializedName("viewId")
+    var viewId: Int? = 0
+)
+
+data class Shop(
+    @SerializedName("channelId")
+    var channelId: Int? = 0,
+    @SerializedName("channelLogo")
+    var channelLogo: String? = "",
+    @SerializedName("channelName")
+    var channelName: String? = "",
+    @SerializedName("city")
+    var city: Int? = 0,
+    @SerializedName("goodsNum")
+    var goodsNum: Int? = 0,
+    @SerializedName("id")
+    var id: Int? = 0,
+    @SerializedName("inventoryModel")
+    var inventoryModel: Int? = 0,
+    @SerializedName("isPrint")
+    var isPrint: Int? = 0,
+    @SerializedName("name")
+    var name: String? = "",
+    @SerializedName("orderConfirm")
+    var orderConfirm: Int? = 0,
+    @SerializedName("phone")
+    var phone: String? = "",
+    @SerializedName("poiId")
+    var poiId: Int? = 0,
+    @SerializedName("properties")
+    var properties: String? = "",
+    @SerializedName("runtime")
+    var runtime: String? = "",
+    @SerializedName("status")
+    var status: Int? = 0,
+    @SerializedName("thirdInventoryUrl")
+    var thirdInventoryUrl: Any? = Any(),
+    @SerializedName("viewId")
+    var viewId: Long? = 0
+)

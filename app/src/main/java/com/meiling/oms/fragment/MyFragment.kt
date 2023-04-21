@@ -10,6 +10,7 @@ import com.meiling.common.constant.SPConstants
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.utils.MMKVUtils
 import com.meiling.oms.activity.BaseWebActivity
+import com.meiling.oms.activity.ChannelActivity
 import com.meiling.oms.activity.StoreManagementActivity
 import com.meiling.oms.databinding.FragmentMyBinding
 import com.meiling.oms.dialog.MineExitDialog
@@ -62,12 +63,12 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
     override fun initListener() {
         mDatabind.txtChannel.setSingleClickListener {
-
-            startActivity(Intent(requireActivity(), BaseWebActivity::class.java).putExtra("url","https://igoodsale.feishu.cn/wiki/wikcnYOMLoELnEnJ3kpsRVIYhcc"))
-           // startActivity(Intent(requireActivity(), ChannelActivity::class.java))
+            mViewModel.citypoi()
+            //startActivity(Intent(requireActivity(), BaseWebActivity::class.java).putExtra("url","https://igoodsale.feishu.cn/wiki/wikcnYOMLoELnEnJ3kpsRVIYhcc"))
+            //
         }
         mDatabind.txtStoreManagement.setSingleClickListener {
-            startActivity(Intent(requireActivity(),StoreManagementActivity::class.java))
+            startActivity(Intent(requireActivity(), StoreManagementActivity::class.java))
         }
         mDatabind.txtRecharge.setSingleClickListener {
             ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
@@ -124,6 +125,22 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             requireActivity().finish()
         }
         mViewModel.disableAccountDto.onError.observe(this) {
+            dismissLoading()
+            showToast(it.msg)
+        }
+
+        mViewModel.shopBean.onStart.observe(this) {
+            showLoading()
+        }
+        mViewModel.shopBean.onSuccess.observe(this) {
+            dismissLoading()
+            if (it.size == 0) {
+                startActivity(Intent(requireActivity(), StoreManagementActivity::class.java))
+            } else {
+                startActivity(Intent(requireActivity(), ChannelActivity::class.java))
+            }
+        }
+        mViewModel.shopBean.onError.observe(this) {
             dismissLoading()
             showToast(it.msg)
         }

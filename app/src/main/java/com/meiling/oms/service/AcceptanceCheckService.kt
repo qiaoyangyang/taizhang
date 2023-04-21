@@ -4,6 +4,7 @@ import com.meiling.common.network.ResultData
 import com.meiling.common.network.RetrofitClient
 import com.meiling.common.network.data.*
 import com.meiling.oms.bean.BranchInformation
+import com.meiling.oms.bean.Channel
 import com.meiling.oms.bean.PoiVoBean
 import retrofit2.http.*
 
@@ -43,6 +44,14 @@ interface BranchInformationService {
         @Query("districtCode") districtCode: String = "",//省
         @Query("cityName") cityName: String = "",//省
     ): ResultData<String>
+
+
+    @POST("saas/channel/getShopAndChannelVO")
+    suspend fun getShopAndChannelVO(
+        @Query("id") id: String = "",//门店名称
+    ): ResultData<Channel>
+
+
 
 
 

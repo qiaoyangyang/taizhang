@@ -5,7 +5,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
+import com.meiling.common.network.data.ShopBean
+import com.meiling.common.network.service.meService
 import com.meiling.oms.bean.BranchInformation
+import com.meiling.oms.bean.Channel
 import com.meiling.oms.bean.PoiVo
 import com.meiling.oms.bean.PoiVoBean
 import com.meiling.oms.service.branchInformationService
@@ -61,7 +64,16 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
         }, poiaddpoidata)
 
     }
-
+    //门店数据
+    var shopBean = BaseLiveData<ArrayList<ShopBean>>()
+    fun citypoi(){
+        request({ meService.citypoi() }, shopBean)
+    }
+    var channel = BaseLiveData<Channel>()
+    //渠道获取数据
+    fun getShopAndChannelVO(id: String){
+        request({ branchInformationService.getShopAndChannelVO(id) }, channel)
+    }
 
 
 }
