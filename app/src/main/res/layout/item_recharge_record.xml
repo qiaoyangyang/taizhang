@@ -23,6 +23,7 @@
             android:textColor="@color/home_333333"
             android:textSize="@dimen/sp_32"
             app:layout_constraintStart_toStartOf="parent"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="微信" />
 

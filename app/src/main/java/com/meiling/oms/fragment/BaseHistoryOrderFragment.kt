@@ -367,7 +367,7 @@ class BaseHistoryOrderFragment :
         }
 
         mViewModel.cancelOrderDto.onStart.observe(this) {
-            showLoading("取消订单")
+            showLoading("请求中")
         }
 
         mViewModel.cancelOrderDto.onSuccess.observe(this) {

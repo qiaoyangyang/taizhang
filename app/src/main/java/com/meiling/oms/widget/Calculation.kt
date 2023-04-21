@@ -33,7 +33,7 @@ fun calculationDivDataStr(str1: String?, str2: String?): String? {
         } else {
             val b1 = BigDecimal(str1Num)
             val b2 = BigDecimal(str2Num)
-            val divide = b1.divide(b2, 2, BigDecimal.ROUND_DOWN)
+            val divide = b1.divide(b2, 2, BigDecimal.ROUND_HALF_UP)
             divide.toString()
         }
 

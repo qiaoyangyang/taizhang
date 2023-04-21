@@ -46,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="订单"
+                android:textStyle="bold"
                 android:textColor="@drawable/bottom_navigation_item_selector"
                 android:textSize="@dimen/sp_20" />
 
@@ -71,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="验券"
+                android:textStyle="bold"
                 android:textColor="@drawable/bottom_navigation_item_selector"
                 android:textSize="@dimen/sp_20" />
 
@@ -96,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="数据"
+                android:textStyle="bold"
                 android:textColor="@drawable/bottom_navigation_item_selector"
                 android:textSize="@dimen/sp_20" />
 
@@ -121,6 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="我的"
+                android:textStyle="bold"
                 android:textColor="@drawable/bottom_navigation_item_selector"
                 android:textSize="@dimen/sp_20" />
 

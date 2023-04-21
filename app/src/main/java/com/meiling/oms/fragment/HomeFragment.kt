@@ -23,7 +23,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     }
 
-    private val fragmentList: MutableList<Fragment> = ArrayList()
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewPagerOrder.isUserInputEnabled = false
@@ -35,12 +34,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     }
 
     override fun initData() {
-        fragmentList.add(HomeOningOrderFragment.newInstance())
-        fragmentList.add(HomeHistoryOrderFragment.newInstance())
-        mDatabind.viewPagerOrder.adapter =
-            BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
-        mDatabind.viewPagerOrder.setCurrentItem(0, true)
-        mDatabind.txtPendingOrder.isSelected = true
+//        fragmentList.add(HomeOningOrderFragment.newInstance())
+//        fragmentList.add(HomeHistoryOrderFragment.newInstance())
+//        mDatabind.viewPagerOrder.adapter =
+//            BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
+//        mDatabind.viewPagerOrder.setCurrentItem(0, true)
+//        mDatabind.txtPendingOrder.isSelected = true
     }
 
     override fun initListener() {
@@ -83,6 +82,17 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     override fun onResume() {
         super.onResume()
         mViewModel.setUmToken()
+        val fragmentList: MutableList<Fragment> = ArrayList()
 
+        fragmentList.add(HomeOningOrderFragment.newInstance())
+        fragmentList.add(HomeHistoryOrderFragment.newInstance())
+        mDatabind.viewPagerOrder.adapter =
+            BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
+        mDatabind.viewPagerOrder.setCurrentItem(0, true)
+        mDatabind.txtPendingOrder.isSelected = true
+        resetting()
+        mDatabind.txtPendingOrder.setTextColor(Color.WHITE)
+        mDatabind.txtPendingOrder.setBackgroundResource(R.drawable.bg_order_tab1)
+        mDatabind.viewPagerOrder.setCurrentItem(0, false)
     }
 }

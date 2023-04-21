@@ -220,6 +220,7 @@
                         android:id="@+id/rv_data_dis"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_data_dis" />
                 </com.hjq.shape.layout.ShapeLinearLayout>
@@ -417,6 +418,75 @@
                     </LinearLayout>
 
                 </LinearLayout>
+                <com.hjq.shape.layout.ShapeLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_20"
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/dp_20"
+                    app:shape_radius="@dimen/dp_20"
+                    app:shape_solidColor="#F5F5F5">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dp_20"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="@dimen/dp_30">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="17dp"
+                            android:layout_weight="1"
+                            android:text="配送平台"
+                            android:textColor="#ff777777"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="17dp"
+                            android:layout_weight="1"
+                            android:text="发单数量"
+                            android:textColor="#ff777777"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="17dp"
+                            android:layout_weight="1"
+                            android:text="配送费"
+                            android:textColor="#ff777777"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="17dp"
+                            android:layout_weight="1"
+                            android:text="加小费"
+                            android:textColor="#ff777777"
+                            android:textSize="12sp" />
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="17dp"
+                            android:layout_gravity="end"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="客单价"
+                            android:textColor="#ff777777"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_his_data_dis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_data_dis" />
+                </com.hjq.shape.layout.ShapeLinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

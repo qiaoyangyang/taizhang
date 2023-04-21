@@ -161,18 +161,18 @@ class HomeOningOrderFragment :
                 badgeOffsetY = 30
 
             }
-            mDatabind.tabLayout.updateTabBadge(5) {
-                badgeTextSize = 30f
-                badgeGravity = Gravity.RIGHT or Gravity.TOP
-                badgeText = if (it.deliveryComplete == 0) {
-                    null
-                } else {
-                    it.deliveryComplete.toString()
-                }
-                badgeOffsetX = 10
-                badgeOffsetY = 30
-
-            }
+//            mDatabind.tabLayout.updateTabBadge(5) {
+//                badgeTextSize = 30f
+//                badgeGravity = Gravity.RIGHT or Gravity.TOP
+//                badgeText = if (it.deliveryComplete == 0) {
+//                    null
+//                } else {
+//                    it.deliveryComplete.toString()
+//                }
+//                badgeOffsetX = 10
+//                badgeOffsetY = 30
+//
+//            }
             Log.e("order", "createObserver: " + it)
         }
         mViewModel.statusCountDto.onError.observe(this) {

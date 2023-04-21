@@ -3,6 +3,7 @@ package com.meiling.oms.dialog
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -13,6 +14,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.network.data.OrderSendChannel
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
+import com.meiling.oms.widget.KeyBoardUtil
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import com.shehuan.nicedialog.BaseNiceDialog
@@ -64,7 +66,7 @@ class RechargeDialog : BaseNiceDialog() {
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
 //        val title = arguments?.getString("title") as String
 //        val content = arguments?.getString("content") as String
-        list.add(rechDto("0.01"))
+        list.add(rechDto("200"))
         list.add(rechDto("500"))
         list.add(rechDto("1000"))
         list.add(rechDto("2000"))
@@ -78,28 +80,52 @@ class RechargeDialog : BaseNiceDialog() {
         val btnWeixin = holder?.getView<TextView>(R.id.txt_weixin_pay)
         val btnZhifubao = holder?.getView<TextView>(R.id.txt_ali_pay)
         val rvRecharge = holder?.getView<RecyclerView>(R.id.rv_recharge)
+
+
+        edtMoney?.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                //获得焦点时，修改背景属性
+                //R.drawable.edit_text_bg_focus为背景资源
+                for (moneyDto in rechargeAdapter.data) {
+                    moneyDto.select = false
+                    isSelectMoney = false
+                    rechargeAdapter.notifyDataSetChanged()
+                    KeyBoardUtil.openKeyBord(edtMoney!!, requireContext())
+                }
+                v?.setBackgroundResource(R.drawable.recharge_bg_select_true);
+            } else {
+                KeyBoardUtil.closeKeyBord(edtMoney!!, requireContext())
+                v?.setBackgroundResource(R.drawable.recharge_bg_select_false);
+            }
+        }
+
         close?.setSingleClickListener {
             dismiss()
         }
 
-        edtMoney?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                if (s.toString().isNotEmpty()) {
-                    for (moneyDto in rechargeAdapter.data) {
-                        moneyDto.select = false
-                        isSelectMoney = false
-                        rechargeAdapter.notifyDataSetChanged()
-                    }
-                }
-            }
-        })
-
+//        edtMoney?.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            }
+//
+//            override fun afterTextChanged(s: Editable?) {
+//                if (s.toString().isNotEmpty()) {
+//                    for (moneyDto in rechargeAdapter.data) {
+//                        moneyDto.select = false
+//                        isSelectMoney = false
+//                        rechargeAdapter.notifyDataSetChanged()
+//                    }
+//                }
+//            }
+//        })
+        edtMoney?.setOnClickListener {
+            edtMoney.isFocusable = true
+            edtMoney.isFocusableInTouchMode = true
+            edtMoney.requestFocus()
+            edtMoney.findFocus()
+        }
         btnWeixin?.setSingleClickListener {
             isPayType = true
             TextDrawableUtils.setRightDrawable(btnWeixin, R.drawable.ic_spu_true)
@@ -126,6 +152,7 @@ class RechargeDialog : BaseNiceDialog() {
                         rechargeSum.setTextColor(resources.getColor(R.color.red))
                         money = item.money
                         isSelectMoney = true
+                        edtMoney?.isFocusable = false
                     } else {
                         holder.setBackgroundResource(
                             R.id.txt_recharge_sum,
@@ -146,12 +173,13 @@ class RechargeDialog : BaseNiceDialog() {
         }
 
         rvRecharge?.adapter = rechargeAdapter
+        list[0].select = true
         rechargeAdapter.setList(list)
         cancel?.setSingleClickListener {
             dismiss()
         }
         ok?.setSingleClickListener {
-
+            edtMoney?.isFocusable = false
             if (!isSelectMoney) {
                 money = edtMoney?.text.toString()
             }

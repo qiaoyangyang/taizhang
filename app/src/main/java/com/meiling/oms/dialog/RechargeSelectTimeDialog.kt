@@ -1,6 +1,6 @@
 package com.meiling.oms.dialog
 
-import android.content.res.Resources
+import android.annotation.SuppressLint
 import android.view.Gravity
 import android.widget.NumberPicker
 import android.widget.TextView
@@ -11,7 +11,7 @@ import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
 
 
-class OrderDisSelectTimeDialog : BaseNiceDialog() {
+class RechargeSelectTimeDialog : BaseNiceDialog() {
 
 
     init {
@@ -19,8 +19,8 @@ class OrderDisSelectTimeDialog : BaseNiceDialog() {
     }
 
 
-    fun newInstance(): OrderDisSelectTimeDialog {
-        return OrderDisSelectTimeDialog()
+    fun newInstance(): RechargeSelectTimeDialog {
+        return RechargeSelectTimeDialog()
     }
 
 
@@ -35,6 +35,7 @@ class OrderDisSelectTimeDialog : BaseNiceDialog() {
         this.selectTimeLister = selectTime
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
         val yearPicker = holder?.getView<NumberPicker>(R.id.yearPicker)
         val monthPicker = holder?.getView<NumberPicker>(R.id.monthPicker)
@@ -42,8 +43,8 @@ class OrderDisSelectTimeDialog : BaseNiceDialog() {
 
         val btnTime = holder?.getView<ShapeTextView>(R.id.btn_select_time_sure)
         val btnCancelTime = holder?.getView<ShapeTextView>(R.id.btn_select_time_cancel)
-        val txtStartTime = holder?.getView<ShapeTextView>(R.id.txt_select_start_time)
-        val txtEndTime = holder?.getView<ShapeTextView>(R.id.txt_select_end_time)
+        val txtStartTime = holder?.getView<TextView>(R.id.txt_select_start_time)
+        val txtEndTime = holder?.getView<TextView>(R.id.txt_select_end_time)
 
         // 设置 NumberPicker 控件的最小值、最大值和滚动监听器
         yearPicker?.minValue = 2020
@@ -93,11 +94,15 @@ class OrderDisSelectTimeDialog : BaseNiceDialog() {
             yearPicker?.value.toString() + "-" + monthPicker?.value.toString() + "-" + dayPicker?.value.toString()
         txtStartTime?.setSingleClickListener {
             selectBtn = true
+            txtStartTime.background = resources.getDrawable(R.drawable.edt_bg_select_true_20)
+            txtEndTime?.background = resources.getDrawable(R.drawable.edt_bg_select_false_20)
         }
         txtEndTime?.setSingleClickListener {
             selectBtn = false
-            txtEndTime?.text =
+            txtEndTime.text =
                 yearPicker?.value.toString() + "-" + monthPicker?.value.toString() + "-" + dayPicker?.value.toString()
+            txtEndTime.background = resources.getDrawable(R.drawable.edt_bg_select_true_20)
+            txtStartTime?.background = resources.getDrawable(R.drawable.edt_bg_select_false_20)
         }
 
         btnTime?.setOnClickListener {
@@ -130,6 +135,7 @@ class OrderDisSelectTimeDialog : BaseNiceDialog() {
 
 
     }
+
 
 //    private fun setNumberPickerDivider(numberPicker: NumberPicker) {
 //        val count = numberPicker.childCount

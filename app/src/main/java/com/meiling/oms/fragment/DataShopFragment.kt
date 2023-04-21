@@ -151,12 +151,11 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
             }
         }
 
-
         mDatabind.txtDataOrderTip.setSingleClickListener {
             DataTipDialog().newInstance("订单小计=有效下单数-退单数").show(childFragmentManager)
         }
         mDatabind.txtDataOrderTip1.setSingleClickListener {
-            DataTipDialog().newInstance("有效下单数'").show(childFragmentManager)
+            DataTipDialog().newInstance("有效下单数").show(childFragmentManager)
         }
         mDatabind.txtDataOrderTip2.setSingleClickListener {
             DataTipDialog().newInstance("全部退款/取消的订单的数量").show(childFragmentManager)
@@ -183,7 +182,7 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
                 .show(childFragmentManager)
         }
         mDatabind.txtHisDataOrderTip1.setSingleClickListener {
-            DataTipDialog().newInstance("有效下单数'")
+            DataTipDialog().newInstance("有效下单数")
                 .show(childFragmentManager)
         }
         mDatabind.txtHisDataOrderTip2.setSingleClickListener {

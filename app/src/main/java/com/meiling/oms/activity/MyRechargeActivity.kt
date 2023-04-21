@@ -1,11 +1,8 @@
 package com.meiling.oms.activity
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.NumberPicker
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -15,7 +12,7 @@ import com.meiling.common.network.data.RechargeRequest
 import com.meiling.oms.R
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityRechargeBinding
-import com.meiling.oms.dialog.OrderDisSelectTimeDialog
+import com.meiling.oms.dialog.RechargeSelectTimeDialog
 import com.meiling.oms.dialog.RechargeDialog
 import com.meiling.oms.eventBusData.MessageEventTime
 import com.meiling.oms.eventBusData.MessageEventTimeShow
@@ -30,7 +27,6 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
-import java.lang.reflect.Field
 
 
 /**
@@ -96,7 +92,7 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
         }
 
         mDatabind.radioButton4.setSingleClickListener {
-            var orderDisSelectTimeDialog = OrderDisSelectTimeDialog().newInstance()
+            var orderDisSelectTimeDialog = RechargeSelectTimeDialog().newInstance()
             orderDisSelectTimeDialog.show(supportFragmentManager)
             orderDisSelectTimeDialog.setSelectTime { startTime, endTime, type ->
                 EventBus.getDefault()

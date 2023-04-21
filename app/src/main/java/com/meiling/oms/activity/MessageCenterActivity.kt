@@ -96,7 +96,7 @@ class MessageCenterActivity : BaseActivity<MessageViewModel, ActivityMessageCent
             if (it.pageIndex == 1) {
                 if (it.content.isNullOrEmpty()) {
                     msgCenterAdapter.setList(null)
-                    msgCenterAdapter.setEmptyView(R.layout.order_search_empty)
+                    msgCenterAdapter.setEmptyView(R.layout.empty_msg_center)
                 } else {
                     msgCenterAdapter.setNewInstance(it.content as MutableList<MessageDto.Content>)
                 }

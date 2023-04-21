@@ -46,8 +46,8 @@
 
         <ImageView
             android:id="@+id/img_dis"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/order_dis_rec_icon" />
 
         <TextView
@@ -102,8 +102,8 @@
 
         <ImageView
             android:id="@+id/img_dis_receive"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/txt_order_dis_address"
             android:src="@drawable/order_dis_shou_icon" />
 
@@ -177,7 +177,7 @@
             android:paddingBottom="@dimen/dp_10"
             android:text="同城快送"
             android:textColor="@color/order_9b9b9b"
-            android:textSize="@dimen/sp_30" />
+            android:textSize="@dimen/sp_32" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -186,7 +186,7 @@
             android:paddingBottom="@dimen/dp_10"
             android:text="全国配送"
             android:textColor="@color/order_9b9b9b"
-            android:textSize="@dimen/sp_30" />
+            android:textSize="@dimen/sp_32" />
 
         <TextView
             android:layout_width="match_parent"
@@ -195,7 +195,7 @@
             android:paddingBottom="@dimen/dp_10"
             android:text="自配送"
             android:textColor="@color/order_9b9b9b"
-            android:textSize="@dimen/sp_30" />
+            android:textSize="@dimen/sp_32" />
 
 
     </com.angcyo.tablayout.DslTabLayout>

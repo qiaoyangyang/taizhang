@@ -92,7 +92,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         item.order?.recvAddr!!.replace("@@", "")
                     )
                     holder.setText(R.id.txt_order_num, "#${item.order?.channelDaySn}")
-                    holder.setText(R.id.txt_shop_actual_money, "${item.order?.actualIncome}")
+                    holder.setText(R.id.txt_shop_actual_money, "¥${item.order?.actualIncome}")
                     holder.setText(R.id.txt_order_delivery_time, "${item.order?.arriveTimeDate}")
                     holder.setText(R.id.txt_pay_money, "¥${item.order?.payPrice}")
                     holder.setText(R.id.txt_pay_fee, "¥${item.order?.platformServiceFee}")
@@ -196,7 +196,10 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             holder.setText(R.id.txt_order_shop_spec, item.specs)
                             holder.setText(R.id.txt_order_shop_num, "X" + item.number)
                             holder.setText(R.id.txt_order_shop_price, "¥" + item.price)
-                            Glide.with(context).load(item.avater).into(view)
+//                            Glide.with(context).load(item.avater).into(view)
+                            Glide.with(context).load(item.avater)
+                                .apply(options).into(view)
+
                         }
                     }
                     ryOrderSendDisDetail!!.adapter = orderGoodsListAdapter

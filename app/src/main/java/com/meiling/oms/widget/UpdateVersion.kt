@@ -1,6 +1,5 @@
 package com.meiling.oms.widget
 
-import android.R.attr.versionCode
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
@@ -21,6 +20,7 @@ import com.vector.update_app.UpdateAppBean
 import com.vector.update_app.UpdateAppManager
 import com.vector.update_app.UpdateCallback
 import com.vector.update_app.service.DownloadService.DownloadCallback
+import com.vector.update_app.utils.AppUpdateUtils
 import java.io.File
 
 
@@ -92,6 +92,7 @@ object UpdateVersion {
                         toast.show()
                     }
                 }
+
             })
     }
 
@@ -126,7 +127,7 @@ object UpdateVersion {
         val serverUpdate: TextView = v.findViewById(R.id.server_update) as TextView
         val llUpdate: LinearLayout = v.findViewById(R.id.ll_update) as LinearLayout
         val progressBar = v.findViewById(R.id.pro) as ProgressBar
-        txtVersion.text = "快来升级至${updateApp.updateLog}版本，体验最新功能吧～"
+        txtVersion.text = "快来升级至${updateApp.newVersion}版本，体验最新功能吧～"
         val dialog: Dialog = builder.create()
         dialog.show()
         dialog.window!!.setContentView(v) //自定义布局应该在这里添加，要在dialog.show()的后面
@@ -161,6 +162,7 @@ object UpdateVersion {
                     override fun setMax(total: Long) {}
                     override fun onFinish(file: File?): Boolean {
                         dialog.dismiss()
+                        AppUpdateUtils.installApp(context, file)
                         return true
                     }
 
@@ -169,9 +171,14 @@ object UpdateVersion {
                     }
 
                     override fun onInstallAppAndAppOnForeground(file: File?): Boolean {
-                        return true
+                        return false
                     }
-                })
+
+
+                }
+
+
+                )
             }
         })
         cancel.setOnClickListener { dialog.dismiss() }

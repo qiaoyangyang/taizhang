@@ -46,11 +46,11 @@ class MySettlementDetailActivity :
                 override fun convert(holder: BaseViewHolder, item: PageResult.PageData) {
                     holder.setText(
                         R.id.txt_channel_name,
-                        item.orderChannelName + "#" + item.orderChannel
+                        item.orderChannelName + "#" + item.orderSerialNumber
                     )
                     holder.setText(R.id.txt_service_charge_money, "-" + item.settlementAmount)
 //                    holder.setText(R.id.txt_recharge_name, transToString(item.createTime!!.toLong()))
-                    holder.setText(R.id.txt_recharge_name, item.orderArrivalTime)
+                    holder.setText(R.id.txt_recharge_name, item.createTime)
                 }
             }
         mDatabind.rvSettlement.adapter = settlementAdapter

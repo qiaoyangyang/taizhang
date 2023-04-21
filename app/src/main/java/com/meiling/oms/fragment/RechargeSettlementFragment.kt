@@ -62,7 +62,7 @@ class RechargeSettlementFragment :
         chargeAdapter.setOnItemClickListener { adapter, view, position ->
             ARouter.getInstance().build("/app/MySettlementDetailActivity").withString(
                 "settlementName",
-                (adapter.data[position] as FinancialRecord.PageResult.PageData).description
+                (adapter.data[position] as FinancialRecord.PageResult.PageData).remark
             ).withString(
                 "viewId",
                 (adapter.data[position] as FinancialRecord.PageResult.PageData).viewId
