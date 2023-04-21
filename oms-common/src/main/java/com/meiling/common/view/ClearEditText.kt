@@ -1,5 +1,4 @@
-package com.hjq.widget.view
-
+package com.meiling.common.view;
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Editable
@@ -12,6 +11,7 @@ import android.view.View.OnFocusChangeListener
 import android.view.View.OnTouchListener
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import com.hjq.widget.view.RegexEditText
 import com.meiling.common.R
 
 /**

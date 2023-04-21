@@ -5,12 +5,11 @@ import android.text.TextUtils
 import android.view.Gravity
 import android.widget.TextView
 import com.meiling.common.network.data.Merchant
-import com.meiling.common.utils.SpannableUtils
+import com.meiling.common.view.ClearEditText
 import com.meiling.oms.R
 import com.meiling.oms.widget.showToast
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
-import okhttp3.internal.notify
 
 //填写物流平台信息
 class LogisticsPlatformInformationDidalog : BaseNiceDialog() {
@@ -47,18 +46,18 @@ class LogisticsPlatformInformationDidalog : BaseNiceDialog() {
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
         var merchant=arguments?.getSerializable("merchant") as Merchant
         var tv_logistics_business=holder?.getView<TextView>(R.id.tv_logistics_business)//物流商
-        var tv_merchant_code=holder?.getView<TextView>(R.id.tv_merchant_code)//物流商平台商户编号
-        var tv_merchant_key=holder?.getView<TextView>(R.id.tv_merchant_key)//物流商平台商户key
-        var tv_merchant_keys=holder?.getView<TextView>(R.id.tv_merchant_keys)//物流商平台商户密钥
+        var tv_merchant_code=holder?.getView<ClearEditText>(R.id.tv_merchant_code)//物流商平台商户编号
+        var tv_merchant_key=holder?.getView<ClearEditText>(R.id.tv_merchant_key)//物流商平台商户key
+        var tv_merchant_keys=holder?.getView<ClearEditText>(R.id.tv_merchant_keys)//物流商平台商户密钥
 
         if(!merchant.thirdMerchantId.isNullOrBlank()){
-            tv_merchant_code?.text=merchant.thirdMerchantId
+            tv_merchant_code?.setText(merchant.thirdMerchantId)
         }
         if(!merchant.appSecret.isNullOrBlank()){
-            tv_merchant_keys?.text=merchant.appSecret
+            tv_merchant_keys?.setText(merchant.appSecret)
         }
         if(!merchant.appId.isNullOrBlank()){
-            tv_merchant_key?.text=merchant.appId
+            tv_merchant_key?.setText(merchant.appId)
         }
 
         holder?.setOnClickListener(R.id.txtGoWeb){

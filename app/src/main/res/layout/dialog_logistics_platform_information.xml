@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.hjq.shape.layout.ShapeConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:shape_solidColor="@color/white"
@@ -105,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-            <com.hjq.widget.view.ClearEditText
+            <com.meiling.common.view.ClearEditText
                 android:drawablePadding="5dp"
                 android:maxEms="1"
                 android:textColorHint="@color/home_999999"
@@ -121,7 +122,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/merchant_code"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingClass" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -158,7 +160,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-            <com.hjq.widget.view.ClearEditText
+            <com.meiling.common.view.ClearEditText
                 android:drawablePadding="5dp"
                 android:maxEms="1"
                 android:textColorHint="@color/home_999999"
@@ -205,13 +207,12 @@
         <TextView
             android:textColor="@color/red"
             android:text="*"
-
             app:layout_constraintTop_toTopOf="@+id/merchant_keys"
             app:layout_constraintLeft_toRightOf="@id/merchant_keys"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-            <com.hjq.widget.view.ClearEditText
+            <com.meiling.common.view.ClearEditText
                 android:drawablePadding="5dp"
                 android:maxEms="1"
                 android:textColorHint="@color/home_999999"
