@@ -3,21 +3,17 @@ package com.meiling.oms.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ImageView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.activity.BaseActivity
-import com.meiling.common.activity.BaseVmActivity
 import com.meiling.common.network.data.Merchant
 import com.meiling.common.network.data.PutMerChant
 import com.meiling.common.network.service.loginService
 import com.meiling.common.utils.GlideAppUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityBandingLogistcsLayoutBinding
-import com.meiling.oms.databinding.ActivityRegisterNextBinding
 import com.meiling.oms.dialog.LogisticsPlatformInformationDidalog
 import com.meiling.oms.viewmodel.BindingLogisticsViewModel
 import com.meiling.oms.widget.showToast
@@ -25,8 +21,11 @@ import com.meiling.oms.widget.showToast
 class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,ActivityBandingLogistcsLayoutBinding>() {
 
     lateinit var adapter:BaseQuickAdapter<Merchant,BaseViewHolder>
-
+    var name=""
+    var tenantId=""
     override fun initView(savedInstanceState: Bundle?) {
+        name= savedInstanceState?.getString("name","").toString()
+        tenantId= savedInstanceState?.getString("tenantId","").toString()
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -37,6 +36,11 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
                 holder.setText(R.id.name,item.typeName)
                 var img=holder.getView<ImageView>(R.id.img)
                 GlideAppUtils.loadUrl(img,item.iconUrl)
+                if(item.status=="1"){
+                    holder.setVisible(R.id.selectImg,true)
+                }else{
+                    holder.setGone(R.id.selectImg,true)
+                }
             }
         }
         adapter.setOnItemClickListener { adapte, view, position ->
@@ -46,17 +50,12 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
             logisticsPlatformInformationDidalog.setOnclickListener{
                 var item=adapter.data.get(position) as Merchant
                 if(it.typeName==item.typeName){
+                    item.thirdMerchantId=it.thirdMerchantId
+                    item.appSecret=it.appSecret
+                    item.appId=it.appId
+                    item.status=it.status
                     adapter.notifyItemChanged(position)
                 }
-//                mViewModel.launchRequest(
-//                    { loginService.merChantSave(PutMerChant(name=it.typeName, tenantId = "9024", arrayListOf(it)))},
-//                    onSuccess = {
-//
-//                    },
-//                    onError = {
-//                        it?.let { showToast(it) }
-//                    }
-//                )
             }
             logisticsPlatformInformationDidalog.setOnGoWebListener{
                 var intent=Intent(this,AgreementActivity::class.java)
@@ -67,7 +66,6 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
             }
             logisticsPlatformInformationDidalog.show(supportFragmentManager)
         }
-
         mDatabind.recyClerView.adapter=adapter
         mViewModel.launchRequest(//9024
             { loginService.getMerChantList("")},
@@ -80,6 +78,27 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
                 it?.let { showToast(it) }
             }
         )
+
+        //注册成功
+        mDatabind.btnSuccess.setOnClickListener {
+
+            var selectList=adapter.data.filter { it.status=="1" }
+            if(!selectList.isEmpty()){
+                showLoading("")
+                mViewModel.launchRequest(
+                    { loginService.merChantSave(PutMerChant(name=name, tenantId = tenantId, selectList as ArrayList<Merchant>))},
+                    onSuccess = {
+                        disLoading()
+
+                    },
+                    onError = {
+                        disLoading()
+                        it?.let { showToast(it) }
+                    }
+                )
+            }
+
+        }
 
     }
 

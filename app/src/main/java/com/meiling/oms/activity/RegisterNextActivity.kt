@@ -1,6 +1,7 @@
 package com.meiling.oms.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -262,9 +263,9 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 return@setOnClickListener
             }
 
-            Log.e("", mViewModel.businessDto.value.toString())
             var check1=false
             var check2=false
+                //校验账户名
                 mViewModel.launchRequest(
                     {
                         loginService.checkUserName(mViewModel.businessDto.value!!.userName!!)
@@ -274,6 +275,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                         it?.let { showToast(it) }
                     }
                 )
+                //校验品牌名
                 mViewModel.launchRequest(
                     {
                         loginService.thanBrand(mViewModel.businessDto.value!!.tenantName!!)
@@ -283,13 +285,16 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                         it?.let { showToast(it) }
                     }
                 )
-
+                //注册
                 if(check1&&check2){
                     mViewModel.launchRequest(
                         { loginService.save(mViewModel.businessDto.value!!)},
                         onSuccess = {
                             //成功会返回组合id
-
+                            startActivity(Intent(this,
+                                BindingLogisticsActivity::class.java)
+                                .putExtra("tenantId",it)
+                                .putExtra("name",mViewModel.businessDto.value!!.tenantName.toString()))
                         },
                         onError = {
                             it?.let { showToast(it) }

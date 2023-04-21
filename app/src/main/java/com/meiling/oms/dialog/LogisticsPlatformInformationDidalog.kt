@@ -93,6 +93,7 @@ class LogisticsPlatformInformationDidalog : BaseNiceDialog() {
             m.thirdMerchantId=tv_merchant_code?.text.toString()
             m.appSecret=tv_merchant_keys?.text.toString()
             m.appId=tv_merchant_key?.text.toString()
+            m.status="1"
             onclickListener?.invoke(m)
             dismiss()
 
