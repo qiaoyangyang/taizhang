@@ -21,7 +21,7 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
 
     //  详情
     var poidata = BaseLiveData<PoiVoBean>()
-    var poiaddpoidata = BaseLiveData<String>()
+
     var PoiVoBean = MutableLiveData<PoiVoBean>()
 
     init {
@@ -32,6 +32,8 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
         request({ branchInformationService.poi(id) }, poidata)
     }
 
+    //新建
+    var poiaddpoidata = BaseLiveData<String>()
     fun poiadd(
         lat: String,
         lon: String,
@@ -59,5 +61,7 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
         }, poiaddpoidata)
 
     }
+
+
 
 }

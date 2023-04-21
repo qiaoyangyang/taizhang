@@ -412,6 +412,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <com.hjq.shape.view.ShapeButton
+                android:textSize="@dimen/sp_32"
                 android:id="@+id/tv_go_on"
                 android:layout_width="0dp"
 

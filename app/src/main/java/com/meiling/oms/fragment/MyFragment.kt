@@ -9,6 +9,7 @@ import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.constant.SPConstants
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.utils.MMKVUtils
+import com.meiling.oms.activity.BaseWebActivity
 import com.meiling.oms.activity.StoreManagementActivity
 import com.meiling.oms.databinding.FragmentMyBinding
 import com.meiling.oms.dialog.MineExitDialog
@@ -60,6 +61,11 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
 
     override fun initListener() {
+        mDatabind.txtChannel.setSingleClickListener {
+
+            startActivity(Intent(requireActivity(), BaseWebActivity::class.java).putExtra("url","https://igoodsale.feishu.cn/wiki/wikcnYOMLoELnEnJ3kpsRVIYhcc"))
+           // startActivity(Intent(requireActivity(), ChannelActivity::class.java))
+        }
         mDatabind.txtStoreManagement.setSingleClickListener {
             startActivity(Intent(requireActivity(),StoreManagementActivity::class.java))
         }

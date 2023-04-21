@@ -87,8 +87,23 @@ class NewlyBuiltStoreActivity :
             if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.name)) {
                 showToast("请输入门店名称")
             }
-            if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.name)) {
+            if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.sinceCode)) {
                 showToast("请输入门店名称")
+            }
+            if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.phone)) {
+                showToast("请输入门店电话")
+            }
+            if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.storeaddress)) {
+                showToast("请选择门店地址")
+            }
+            if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.etdetailedaddress)) {
+                showToast("请填写详细的门店地址")
+            }
+            if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.contactPerson)) {
+                showToast("请输入联系人姓名")
+            }
+            if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.mobilePhone)) {
+                showToast("请输入联系人手机号")
             }
             mViewModel.poiadd(
                 lat,
@@ -128,8 +143,11 @@ class NewlyBuiltStoreActivity :
 
     @SuppressLint("SuspiciousIndentation")
     override fun createObserver() {
+        mViewModel.poidata.onStart.observe(this){
+            showLoading("")
+        }
         mViewModel.poidata.onSuccess.observe(this) {
-
+            disLoading()
             val x = it.poiVo?.address!!.split(" ")
             if (x.size != 0) {
                 it?.poiVo?.storeaddress = x[0]
@@ -137,6 +155,21 @@ class NewlyBuiltStoreActivity :
             }
 
             mViewModel.PoiVoBean.value = it
+        }
+        mViewModel.poidata.onError.observe(this){
+            disLoading()
+            showToast(it.msg)
+        }
+        mViewModel.poiaddpoidata.onStart.observe(this){
+            showLoading("")
+        }
+        mViewModel.poiaddpoidata.onSuccess.observe(this){
+            disLoading()
+            finish()
+        }
+        mViewModel.poiaddpoidata.onError.observe(this){
+            disLoading()
+            showToast(it.msg)
         }
     }
 

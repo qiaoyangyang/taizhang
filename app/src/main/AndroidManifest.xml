@@ -152,6 +152,12 @@
         <activity
             android:name=".activity.NewlyBuiltStoreActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ChannelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BaseWebActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
