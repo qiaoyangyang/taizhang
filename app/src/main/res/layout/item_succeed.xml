@@ -59,13 +59,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
-
+        android:gravity="right"
+        app:layout_constraintLeft_toRightOf="@+id/couponCode"
         android:id="@+id/tv_couponCode"
         android:textSize="@dimen/sp_28"
         app:layout_constraintBottom_toBottomOf="@+id/couponCode"
         app:layout_constraintRight_toRightOf="parent"
         android:textColor="#333333"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/type"
