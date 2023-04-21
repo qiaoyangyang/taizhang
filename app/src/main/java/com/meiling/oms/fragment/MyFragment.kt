@@ -64,7 +64,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     override fun initListener() {
         mDatabind.txtChannel.setSingleClickListener {
             mViewModel.citypoi()
-            //startActivity(Intent(requireActivity(), BaseWebActivity::class.java).putExtra("url","https://igoodsale.feishu.cn/wiki/wikcnYOMLoELnEnJ3kpsRVIYhcc"))
+            //startActivity(Intent(requireActivity(), BaseWebActivity::class.java).putExtra("url","http://dev-oms.igoodsale.com/#/userAgreement/"))
             //
         }
         mDatabind.txtStoreManagement.setSingleClickListener {
