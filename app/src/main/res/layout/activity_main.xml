@@ -39,6 +39,7 @@
                 android:id="@+id/aiv_my_select"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:src="@mipmap/home_tab" />
 
 
@@ -46,7 +47,6 @@
                 android:id="@+id/aiv_home"
                 android:layout_width="@dimen/dp_48"
                 android:layout_height="@dimen/dp_48"
-                android:visibility="gone"
                 android:src="@drawable/bottom_navigation_item_home_selector" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -55,7 +55,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="订单"
-                android:visibility="gone"
                 android:textStyle="bold"
                 android:textColor="@drawable/bottom_navigation_item_selector"
                 android:textSize="@dimen/sp_20" />
