@@ -8,6 +8,7 @@ public class PermissionUtilis {
      */
     public static final class Group {
 
+
         /** 存储权限 */
         public static final String[] STORAGE = new String[] {
                 Permission.READ_EXTERNAL_STORAGE,
