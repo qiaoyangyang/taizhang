@@ -397,7 +397,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
 
     override fun createObserver() {
         mViewModel.orderList.onStart.observe(this) {
-           showLoading("加载中")
+            showLoading("加载中")
         }
         mViewModel.orderList.onSuccess.observe(this) {
             dismissLoading()
@@ -440,6 +440,14 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         mViewModel.cancelOrderDto.onError.observe(this) {
             dismissLoading()
 //            mDatabind.sflLayout.autoRefresh()
+            showToast(it.msg)
+        }
+        mViewModel.printDto.onStart.observe(this) {
+        }
+        mViewModel.printDto.onSuccess.observe(this) {
+        }
+        mViewModel.printDto.onError.observe(this) {
+            dismissLoading()
             showToast(it.msg)
         }
 

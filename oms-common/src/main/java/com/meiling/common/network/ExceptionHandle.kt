@@ -15,7 +15,7 @@ object ExceptionHandle {
         e?.let {
             when (it) {
                 is HttpException -> {
-                    ex = APIException(Error.NETWORK_ERROR,e)
+                    ex = APIException(Error.SERVER_ERROR,e)
                     return ex
                 }
                 is JsonParseException, is JSONException, is ParseException, is MalformedJsonException -> {
