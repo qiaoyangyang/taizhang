@@ -37,10 +37,15 @@ class ForgetPwdFinishActivity : BaseActivity<LoginViewModel, ActivityForgetPwdSu
     }
 
     override fun initListener() {
-        val account = intent.getStringExtra("account")
-        val pwd = intent.getStringExtra("password")
-        val type = intent.getStringExtra("title")
-        val context = intent.getStringExtra("context")
+//        val account = intent.getStringExtra("account")
+//        val pwd = intent.getStringExtra("password")
+//        val type = intent.getStringExtra("title")
+//        val context = intent.getStringExtra("context")
+        val account = "qyy"
+        val pwd = "Admin8888!!"
+        val type = "13"
+        val context = "123"
+
         var isAgreement = false
 
         mDatabind.TitleBar.title = type
@@ -84,7 +89,7 @@ class ForgetPwdFinishActivity : BaseActivity<LoginViewModel, ActivityForgetPwdSu
             MMKVUtils.putString(SPConstants.tenantId, it.adminUser?.tenantId!!)
             MMKVUtils.putString(SPConstants.adminViewId, it.adminUser?.viewId!!)
             MMKVUtils.putInt(SPConstants.ROLE, 1)
-            ARouter.getInstance().build("/app/MainActivity").navigation()
+            ARouter.getInstance().build("/app/MainActivity")
             finish()
         }
         mViewModel.loginData.onError.observe(this) {

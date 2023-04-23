@@ -97,7 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:button="@drawable/login_cb_agreement"
-                        android:text="个人"
+                        android:text="个人   "
                         android:paddingLeft="5dp"
                         android:id="@+id/checkPerson"
                         android:checked='@{viewModel.businessDto.tenantType=="2"}'
@@ -107,7 +107,6 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
                         android:id="@+id/tips2"
                         android:padding="10dp"
                         android:src="@drawable/order_dis_tip_icon"
@@ -121,7 +120,6 @@
                         android:layout_height="wrap_content"
                         android:button="@drawable/login_cb_agreement"
                         android:text="其他"
-                        android:paddingRight="5dp"
                         android:checked='@{viewModel.businessDto.tenantType=="3"}'
                         app:layout_constraintEnd_toStartOf="@+id/tips3"
                         android:id="@+id/checkOther" />
@@ -129,7 +127,6 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp"
                         android:id="@+id/tips3"
                         android:padding="10dp"
                         app:layout_constraintEnd_toEndOf="parent"

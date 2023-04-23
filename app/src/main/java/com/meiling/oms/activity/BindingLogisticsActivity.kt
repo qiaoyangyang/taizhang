@@ -24,13 +24,14 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
     var name=""
     var tenantId=""
     override fun initView(savedInstanceState: Bundle?) {
-        name= savedInstanceState?.getString("name","").toString()
-        tenantId= savedInstanceState?.getString("tenantId","").toString()
     }
 
     @SuppressLint("SuspiciousIndentation")
     override fun initData() {
         super.initData()
+        name= intent?.getStringExtra("name")?:""
+        tenantId= intent?.getStringExtra("tenantId")?:""
+
         adapter=object :BaseQuickAdapter<Merchant,BaseViewHolder>(R.layout.item_merchant){
             override fun convert(holder: BaseViewHolder, item: Merchant) {
                 holder.setText(R.id.name,item.typeName)
@@ -90,7 +91,11 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
                     onSuccess = {
                         showToast("注册成功")
                         disLoading()
-                        startActivity(Intent(this,ForgetPwdFinishActivity::class.java).putExtra("account","").putExtra("pwd",""))
+                        startActivity(Intent(this,ForgetPwdFinishActivity::class.java)
+                            .putExtra("account","qyy")
+                            .putExtra("pwd","Admin8888!!")
+                            .putExtra("title","注册成功")
+                            .putExtra("context","注册成功"))
                     },
                     onError = {
                         disLoading()
@@ -98,7 +103,11 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
                     }
                 )
             }else{
-                startActivity(Intent(this,ForgetPwdFinishActivity::class.java).putExtra("account","qyy").putExtra("pwd","Admin8888!!"))
+                startActivity(Intent(this,ForgetPwdFinishActivity::class.java)
+                    .putExtra("account","qyy")
+                    .putExtra("pwd","Admin8888!!")
+                    .putExtra("title","注册成功")
+                    .putExtra("context","注册成功"))
 
             }
 

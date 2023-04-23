@@ -90,7 +90,7 @@ interface LoginService {
      */
     @Multipart
     @POST("/saas/system/file/upload")
-    suspend fun upload(@Part parts: List<MultipartBody.Part> ):ResultData<String>
+    suspend fun upload(@Header("platform") platform:String,@Part parts: MultipartBody.Part ):ResultData<String>
 
     /**
      * 所属行业

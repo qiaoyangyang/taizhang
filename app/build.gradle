@@ -40,7 +40,8 @@ android {
             minifyEnabled false
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String","BASE_URL",'"http://test-oms.igoodsale.com"'
+//            buildConfigField "String","BASE_URL",'"http://test-oms.igoodsale.com"'
+            buildConfigField "String","BASE_URL",'"http://dev-oms-api.igoodsale.com"'
 
         }
         release {
@@ -148,4 +149,3 @@ dependencies {
     implementation 'com.zhy:okhttputils:2.6.2'
 
 }
-   }

@@ -6,10 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
-import androidx.core.widget.addTextChangedListener
 import com.meiling.common.activity.BaseActivity
-import com.meiling.common.activity.BaseVmActivity
-import com.meiling.common.activity.BaseVmDbActivity
 import com.meiling.common.network.service.loginService
 import com.meiling.common.utils.InputTextManager
 import com.meiling.oms.databinding.ActivityRegisterBinding
@@ -132,8 +129,9 @@ class RegisterActivity : BaseActivity<RegisterViewModel, ActivityRegisterBinding
                         mDatabind.etPassword.text.toString().trim())
                 }, onSuccess =  {
                     disLoading()
-                    startActivity(Intent(this,RegisterNextActivity::class.java).putExtra("phone",""))
+                    startActivity(Intent(this,RegisterNextActivity::class.java).putExtra("phone",mDatabind.etPhone.text.toString().trim()))
                 }, onError = {
+                    disLoading()
                     mDatabind.etPassword.text.toString().trim()
                     if (it != null) {
                         showToast(it)

@@ -1,23 +1,20 @@
 package com.meiling.oms.activity
 
-import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.AppUtils
 import com.meiling.common.activity.BaseActivity
 import com.meiling.oms.BuildConfig
 import com.meiling.oms.databinding.ActivityAboutBinding
 import com.meiling.oms.dialog.AboutKFDialog
+import com.meiling.oms.dialog.SelectUrlDialog
 import com.meiling.oms.viewmodel.LoginViewModel
 import com.meiling.oms.widget.UpdateVersion
 import com.meiling.oms.widget.setSingleClickListener
@@ -28,7 +25,9 @@ import com.meiling.oms.widget.showToast
 class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
     }
-
+    var BREAK_THROUGH_TIMES = 7
+    var breakthrough = BREAK_THROUGH_TIMES
+    var lastClickTime: Long = 0
     val ACCESS_INSTALL_LOCATION = 1
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -43,6 +42,37 @@ class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
                 .navigation()
         }
         mDatabind.txtVersion.text = "V${BuildConfig.VERSION_NAME}"
+        if(AppUtils.isAppDebug()){
+            mDatabind.imgAbout.setOnClickListener {
+                if (breakthrough > 0) {
+                    if (isFastClickEachOneSec()) {
+                        --breakthrough
+                        if (breakthrough == 0) {
+//                        AbToastUtil.showInterruptToast(getActivity(), "已开放手动权限");
+                            // 开放手动切换地址权限后实现的功能
+                            var selectUrlDialog= SelectUrlDialog().newInstance()
+                            selectUrlDialog.setOnclose {
+                                breakthrough=BREAK_THROUGH_TIMES
+                                selectUrlDialog.dismiss()
+                                if(it){
+                                    AppUtils.relaunchApp(true)
+                                }
+                            }
+
+
+
+                            selectUrlDialog.show(supportFragmentManager)
+                            return@setOnClickListener;
+                        }
+//                    if (breakthrough < BREAK_THROUGH_TIMES - 1)
+//                        AbToastUtil.showInterruptToast(getActivity(), "点击" + breakthrough + "次开放手动权限");
+                    } else
+                        breakthrough = BREAK_THROUGH_TIMES;
+                }
+
+            }
+        }
+
         mDatabind.slVersion.setSingleClickListener {
 
 //            if (ContextCompat.checkSelfPermission(
@@ -128,4 +158,19 @@ class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
             UpdateVersion.getUpdateVersion(this, "1")
         }
     }
+
+    /**
+     * 防止1秒内连续操作
+     * @return true为连续操作，false则不是连续操作
+     */
+    fun isFastClickEachOneSec(): Boolean {
+        val time = System.currentTimeMillis()
+        if (time - lastClickTime < 1000) {
+            lastClickTime = time
+            return true
+        }
+        lastClickTime = time
+        return false
+    }
+
 }

@@ -24,6 +24,8 @@ import com.meiling.oms.dialog.SelectIndustryShopDialog
 import com.meiling.oms.viewmodel.RegisterViewModel
 import com.meiling.oms.widget.showToast
 import com.wayne.constraintradiogroup.ConstraintRadioGroup
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.parse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -32,11 +34,9 @@ import java.io.File
 class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
     lateinit var mDatabind: ActivityRegisterNextBinding
-    var phone: String? = "18311137330"
+    var phone: String? = ""
     override fun initView(savedInstanceState: Bundle?) {
-        phone = savedInstanceState?.getString("phone", "18311137330")
-        phone ="18311137330"
-        ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
+           ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
     }
 
     override fun initDataBind() {
@@ -48,6 +48,8 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     @SuppressLint("SuspiciousIndentation")
     override fun initData() {
         super.initData()
+        phone = intent?.getStringExtra("phone")
+        phone="18311111112"
         mDatabind.viewModel = mViewModel
         mDatabind.tips1.setOnClickListener {
             var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
@@ -65,8 +67,8 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
             mpup.apply {
                 setBackground(R.color.zxing_transparent, 5f, 20, 10)
-                setArrow(R.color.black, 0.5f, ArrowPopupWindow.ArrowSize.BIGGER)
-                setPopupView(layoutInflater.inflate(R.layout.pup_layout, null))
+                setArrow(R.color.black, 0.6f, ArrowPopupWindow.ArrowSize.BIGGER)
+                setPopupView(layoutInflater.inflate(R.layout.pup_layout2, null))
                 setTiedView(mDatabind.tips2, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
                 preShow()
                 isOutsideTouchable = true
@@ -76,9 +78,9 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         mDatabind.tips3.setOnClickListener {
             var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
             mpup.apply {
-                setBackground(R.color.zxing_transparent, 5f, 20, 10)
-                setArrow(R.color.black, 0.85f, ArrowPopupWindow.ArrowSize.BIGGER)
-                setPopupView(layoutInflater.inflate(R.layout.pup_layout, null))
+                setBackground(R.color.zxing_transparent, 5f, 0, 10)
+                setArrow(R.color.black, 1f, ArrowPopupWindow.ArrowSize.BIGGER)
+                setPopupView(layoutInflater.inflate(R.layout.pup_layout3, null))
                 setTiedView(mDatabind.tips3, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
                 preShow()
                 isOutsideTouchable = true
@@ -136,17 +138,13 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                             GlideAppUtils.loadUrl(mDatabind.addImg, result.get(0).compressPath)
 
                             val file = File(result.get(0).compressPath)
-                            val body: RequestBody =
-                                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
-
-                            val multipartBody = MultipartBody.Builder()
-                                .addFormDataPart("file", file.name, body)
-                                .setType(MultipartBody.FORM)
-                                .build()
-
+                            val part = MultipartBody.Part.createFormData(
+                                "file",
+                                result.get(0).fileName, RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+                            )
                             mViewModel.launchRequest(
                                 {
-                                    loginService.upload(multipartBody.parts)
+                                    loginService.upload("",part)
                                 },
                                 onSuccess = {
                                     showToast("上传成功")

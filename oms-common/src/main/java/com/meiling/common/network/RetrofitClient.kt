@@ -1,6 +1,9 @@
 package com.meiling.common.network
 
+import com.blankj.utilcode.util.SPStaticUtils
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.meiling.common.constant.SPConstants
+import com.meiling.common.utils.MMKVUtils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -38,8 +41,8 @@ class RetrofitClient {
 
     private fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://test-oms.igoodsale.com")//测试环境
-//            .baseUrl("http://dev-oms-api.igoodsale.com")//开发环境
+//            .baseUrl("http://test-oms.igoodsale.com")//测试环境
+            .baseUrl(SPStaticUtils.getString(SPConstants.IP,"http://dev-oms-api.igoodsale.com"))//开发环境
 //            .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(CustomGsonConverterFactory.create())
