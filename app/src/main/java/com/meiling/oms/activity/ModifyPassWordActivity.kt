@@ -206,6 +206,7 @@ class ModifyPassWordActivity : BaseActivity<LoginViewModel, ActivityModifyPasswo
         }
         mViewModel.repData.onSuccess.observe(this) {
             disLoading()
+            MMKVUtils.clear()
             ARouter.getInstance().build("/app/LoginActivity")
                 .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).navigation()
             ActivityUtils.finishAllActivities()
