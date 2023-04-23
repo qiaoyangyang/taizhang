@@ -15,7 +15,7 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
     var orderList = BaseLiveData<OrderDto>()
     var statusCountDto = BaseLiveData<StatusCountDto>()
     var cancelOrderDto = BaseLiveData<String>()
-    var anyDto = BaseLiveData<Any>()
+    var printDto = BaseLiveData<Any>()
 
     //    logisticsStatus：0.待配送  20.带抢单 30.待取货 50.配送中 70.取消 80.已送达
     fun orderList(
@@ -89,7 +89,7 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
         shopId: String,
         printTemplateType: String
     ) {
-        request({ orderDisService.print(sourceId, shopId, printTemplateType) }, anyDto)
+        request({ orderDisService.print(sourceId, shopId, printTemplateType) }, printDto)
     }
 
 }

@@ -2,9 +2,11 @@ package com.meiling.oms.activity
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -62,8 +64,11 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         mDatabind.viewPager.adapter =
             BaseFragmentPagerAdapter(supportFragmentManager, lifecycle, fragmentList)
         mDatabind.viewPager.setCurrentItem(0, false)
-        mDatabind.aivHome.isSelected = true
-        mDatabind.atvHome.isSelected = true
+//        mDatabind.aivHome.isSelected = true
+//        mDatabind.atvHome.isSelected = true
+        mDatabind.aivHomeSelect.visibility = View.VISIBLE
+        mDatabind.aivHome.visibility = View.GONE
+        mDatabind.atvHome.visibility = View.GONE
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityMainBinding {
@@ -74,6 +79,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun initListener() {
         mDatabind.llHome.setOnClickListener {
             resetting()
+            mDatabind.aivHomeSelect.visibility = View.VISIBLE
+            mDatabind.aivHome.visibility = View.GONE
+            mDatabind.atvHome.visibility = View.GONE
             mDatabind.aivHome.isSelected = true
             mDatabind.atvHome.isSelected = true
             EventBus.getDefault().post(MessageEventTabChange())
@@ -111,6 +119,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
 
     private fun resetting() {
+        mDatabind.aivHome.visibility = View.VISIBLE
+        mDatabind.atvHome.visibility = View.VISIBLE
+        mDatabind.aivHomeSelect.visibility = View.GONE
         mDatabind.aivHome.isSelected = false
         mDatabind.atvHome.isSelected = false
         mDatabind.aivFinds.isSelected = false
@@ -152,6 +163,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         super.onDestroy()
 //            EventBus.getDefault().unregister(this)
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
     }

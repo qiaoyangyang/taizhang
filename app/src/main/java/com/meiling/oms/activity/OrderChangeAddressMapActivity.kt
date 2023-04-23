@@ -145,15 +145,7 @@ class OrderChangeAddressMapActivity :
 //            dismiss()
 //        }
 
-        aMap?.setOnCameraChangeListener(object : AMap.OnCameraChangeListener {
-            override fun onCameraChange(p0: CameraPosition?) {
 
-            }
-
-            override fun onCameraChangeFinish(p0: CameraPosition?) {
-                getGeocodeSearch(p0!!.target, cityCode);
-            }
-        })
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityOrderChengeAddredssMapBinding {
@@ -226,6 +218,20 @@ class OrderChangeAddressMapActivity :
             }
         })
 
+
+        aMap?.setOnCameraChangeListener(object : AMap.OnCameraChangeListener {
+            override fun onCameraChange(p0: CameraPosition?) {
+
+                Log.d("lwq", "=12121212===========${p0!!.target}==1212==${cityCode}")
+
+            }
+
+            override fun onCameraChangeFinish(p0: CameraPosition?) {
+                Log.d("lwq", "============${p0!!.target}==1212==${cityCode}")
+                getGeocodeSearch(p0!!.target, cityCode);
+            }
+        })
+
         mDatabind.edtLocalSearch.setOnEditorActionListener { v, actionId, event ->
             ryOrderDisMapAdapter.setList(arrayListOf())
             ryOrderDisMapAdapter.notifyDataSetChanged()
@@ -256,6 +262,7 @@ class OrderChangeAddressMapActivity :
                 mDatabind.txtMapLocalCity?.text = it
             }
         }
+
     }
 
     override fun initListener() {
@@ -264,6 +271,7 @@ class OrderChangeAddressMapActivity :
 
     //逆地理编码获取当前位置信息
     fun getGeocodeSearch(targe: LatLng, cityCode: String) {
+        Log.d("lwq", "============12121")
         var queryQuery = PoiSearch.Query("住宿|商场|学校|住宅区|楼宇", "", cityCode)
         var poiSearch = PoiSearch(this, queryQuery)
         queryQuery.pageSize = 10
@@ -279,12 +287,13 @@ class OrderChangeAddressMapActivity :
             }
 
             override fun onPoiItemSearched(p0: PoiItem?, p1: Int) {
+                Log.d("lwq", "============12121p0")
             }
         });
     }
 
 
-    private fun searchLocationName(keyWork: String, cityCode: String) {
+    fun searchLocationName(keyWork: String, cityCode: String) {
         var queryQuery = PoiSearch.Query(keyWork, "", cityCode)
         var poiSearch = PoiSearch(this, queryQuery)
         queryQuery.pageSize = 20
@@ -323,17 +332,16 @@ class OrderChangeAddressMapActivity :
                 if (i == 1000) {
                     if (geocodeResult != null && geocodeResult.geocodeAddressList != null && geocodeResult.geocodeAddressList.size > 0) {
                         val geocodeAddress = geocodeResult.geocodeAddressList[0]
-
                         val latitude = geocodeAddress.latLonPoint.latitude //纬度
                         val longititude = geocodeAddress.latLonPoint.longitude //经度
                         lon = geocodeAddress.latLonPoint.longitude.toString()
                         lat = geocodeAddress.latLonPoint.latitude.toString()
                         cityCode = geocodeAddress.adcode
-                        val adcode = geocodeAddress.adcode //区域编码
                         val lng = LatLng(latitude, longititude)
                         aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(lng))
+                        getGeocodeSearch(lng, cityCode)
                     } else {
-
+                        Log.d("lwq", "错误============errorCode${121212}")
                     }
                 }
             }
@@ -342,4 +350,19 @@ class OrderChangeAddressMapActivity :
         geocodeSearch.getFromLocationNameAsyn(geocodeQuery)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState);
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+        mLocationClient?.onDestroy();//停止定位后，本地定位服务并不会被销毁
+    }
 }
