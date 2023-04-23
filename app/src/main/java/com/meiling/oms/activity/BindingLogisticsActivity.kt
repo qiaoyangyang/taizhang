@@ -88,14 +88,18 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
                 mViewModel.launchRequest(
                     { loginService.merChantSave(PutMerChant(name=name, tenantId = tenantId, selectList as ArrayList<Merchant>))},
                     onSuccess = {
+                        showToast("注册成功")
                         disLoading()
-
+                        startActivity(Intent(this,ForgetPwdFinishActivity::class.java).putExtra("account","").putExtra("pwd",""))
                     },
                     onError = {
                         disLoading()
                         it?.let { showToast(it) }
                     }
                 )
+            }else{
+                startActivity(Intent(this,ForgetPwdFinishActivity::class.java).putExtra("account","qyy").putExtra("pwd","Admin8888!!"))
+
             }
 
         }

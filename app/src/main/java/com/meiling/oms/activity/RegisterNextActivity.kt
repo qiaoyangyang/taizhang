@@ -34,7 +34,8 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     lateinit var mDatabind: ActivityRegisterNextBinding
     var phone: String? = "18311137330"
     override fun initView(savedInstanceState: Bundle?) {
-        phone=savedInstanceState?.getString("phone","18311137330")
+        phone = savedInstanceState?.getString("phone", "18311137330")
+        phone ="18311137330"
         ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
     }
 
@@ -49,38 +50,38 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         super.initData()
         mDatabind.viewModel = mViewModel
         mDatabind.tips1.setOnClickListener {
-            var mpup= ArrowTiedPopupWindow(this@RegisterNextActivity)
+            var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
             mpup.apply {
-                setBackground(R.color.zxing_transparent,5f,20,10)
-                setArrow(R.color.black,0.2f,ArrowPopupWindow.ArrowSize.BIGGER)
-                setPopupView(layoutInflater.inflate(R.layout.pup_layout,null))
-                setTiedView(mDatabind.tips1,ArrowTiedPopupWindow.TiedDirection.BOTTOM)
+                setBackground(R.color.zxing_transparent, 5f, 20, 10)
+                setArrow(R.color.black, 0.2f, ArrowPopupWindow.ArrowSize.BIGGER)
+                setPopupView(layoutInflater.inflate(R.layout.pup_layout, null))
+                setTiedView(mDatabind.tips1, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
                 preShow()
-                isOutsideTouchable=true
+                isOutsideTouchable = true
                 show()
             }
         }
         mDatabind.tips2.setOnClickListener {
-            var mpup= ArrowTiedPopupWindow(this@RegisterNextActivity)
+            var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
             mpup.apply {
-                setBackground(R.color.zxing_transparent,5f,20,10)
-                setArrow(R.color.black,0.5f,ArrowPopupWindow.ArrowSize.BIGGER)
-                setPopupView(layoutInflater.inflate(R.layout.pup_layout,null))
-                setTiedView(mDatabind.tips2,ArrowTiedPopupWindow.TiedDirection.BOTTOM)
+                setBackground(R.color.zxing_transparent, 5f, 20, 10)
+                setArrow(R.color.black, 0.5f, ArrowPopupWindow.ArrowSize.BIGGER)
+                setPopupView(layoutInflater.inflate(R.layout.pup_layout, null))
+                setTiedView(mDatabind.tips2, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
                 preShow()
-                isOutsideTouchable=true
+                isOutsideTouchable = true
                 show()
             }
         }
         mDatabind.tips3.setOnClickListener {
-            var mpup= ArrowTiedPopupWindow(this@RegisterNextActivity)
+            var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
             mpup.apply {
-                setBackground(R.color.zxing_transparent,5f,20,10)
-                setArrow(R.color.black,0.85f,ArrowPopupWindow.ArrowSize.BIGGER)
-                setPopupView(layoutInflater.inflate(R.layout.pup_layout,null))
-                setTiedView(mDatabind.tips3,ArrowTiedPopupWindow.TiedDirection.BOTTOM)
+                setBackground(R.color.zxing_transparent, 5f, 20, 10)
+                setArrow(R.color.black, 0.85f, ArrowPopupWindow.ArrowSize.BIGGER)
+                setPopupView(layoutInflater.inflate(R.layout.pup_layout, null))
+                setTiedView(mDatabind.tips3, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
                 preShow()
-                isOutsideTouchable=true
+                isOutsideTouchable = true
                 show()
             }
         }
@@ -122,16 +123,19 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 .imageEngine(GlideEngine.createGlideEngine())
                 .maxSelectNum(1)
                 .minSelectNum(1)
+                .isCompress(true)
+
                 .isReturnEmpty(true)
                 .isDisplayOriginalSize(true)
                 .isPreviewImage(true)
-                .minimumCompressSize(2000)
+                .minimumCompressSize(2048)
                 .cutOutQuality(90)
                 .forResult(object : OnResultCallbackListener<LocalMedia> {
                     override fun onResult(result: MutableList<LocalMedia>?) {
                         if (result?.isNotEmpty() == true) {
-                            GlideAppUtils.loadUrl(mDatabind.addImg, result.get(0).path)
-                            val file = File(result.get(0).path)
+                            GlideAppUtils.loadUrl(mDatabind.addImg, result.get(0).compressPath)
+
+                            val file = File(result.get(0).compressPath)
                             val body: RequestBody =
                                 RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
 
@@ -263,46 +267,53 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 return@setOnClickListener
             }
 
-            var check1=false
-            var check2=false
-                //校验账户名
-                mViewModel.launchRequest(
-                    {
-                        loginService.checkUserName(mViewModel.businessDto.value!!.userName!!)
-                    }, onSuccess = {
-                        check1=true
-                    }, onError = {
-                        it?.let { showToast(it) }
-                    }
-                )
-                //校验品牌名
-                mViewModel.launchRequest(
-                    {
-                        loginService.thanBrand(mViewModel.businessDto.value!!.tenantName!!)
-                    }, onSuccess = {
-                        check1=true
-                    }, onError = {
-                        it?.let { showToast(it) }
-                    }
-                )
-                //注册
-                if(check1&&check2){
-                    mViewModel.launchRequest(
-                        { loginService.save(mViewModel.businessDto.value!!)},
-                        onSuccess = {
-                            //成功会返回组合id
-                            startActivity(Intent(this,
-                                BindingLogisticsActivity::class.java)
-                                .putExtra("tenantId",it)
-                                .putExtra("name",mViewModel.businessDto.value!!.tenantName.toString()))
-                        },
-                        onError = {
-                            it?.let { showToast(it) }
-                        }
-                    )
+
+            //校验账户名
+            mViewModel.launchRequest(
+                {
+                    loginService.checkUserName(mViewModel.businessDto.value!!.userName!!)
+                }, onSuccess = {
+                    //校验品牌名
+                    checkTenantName()
+                }, onError = {
+                    it?.let { showToast(it) }
                 }
+            )
 
         }
+
+    }
+
+    private fun checkTenantName() {
+        mViewModel.launchRequest(
+            {
+                loginService.thanBrand(mViewModel.businessDto.value!!.tenantName!!)
+            }, onSuccess = {
+                //注册
+                register()
+            }, onError = {
+                it?.let { showToast(it) }
+            }
+        )
+    }
+
+    private fun register() {
+        showLoading("")
+        mViewModel.launchRequest(
+            { loginService.save(mViewModel.businessDto.value!!) },
+            onSuccess = {
+                disLoading()
+                //成功会返回组合id
+                startActivity(Intent(this,
+                    BindingLogisticsActivity::class.java)
+                    .putExtra("tenantId", it)
+                    .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
+            },
+            onError = {
+                disLoading()
+                it?.let { showToast(it) }
+            }
+        )
 
     }
 
