@@ -29,6 +29,7 @@ class ForgetPwdResetActivity : BaseActivity<LoginViewModel, ActivityForgetPwdRas
     override fun isStatusBarDarkFont(): Boolean {
         return true
     }
+
     override fun initData() {
 
     }
@@ -107,7 +108,10 @@ class ForgetPwdResetActivity : BaseActivity<LoginViewModel, ActivityForgetPwdRas
                 return@setSingleClickListener
             }
 
-            if (mDatabind.etPassword.text.trim().toString().length>20||mDatabind.etPassword.text.trim().toString().length<8) {
+            if (mDatabind.etPassword.text.trim()
+                    .toString().length > 20 || mDatabind.etPassword.text.trim()
+                    .toString().length < 8
+            ) {
                 mDatabind.txtPwdTipError.visibility = View.VISIBLE
                 mDatabind.txtPwdTipError.text = "密码长度需要在8-20位字符之间"
                 return@setSingleClickListener
@@ -117,7 +121,8 @@ class ForgetPwdResetActivity : BaseActivity<LoginViewModel, ActivityForgetPwdRas
                 mDatabind.txtPwdTipError.text = "密码不能是纯数字/纯字母/纯字符"
                 return@setSingleClickListener
             }
-            if (mDatabind.etPassword.text.trim().toString() == mDatabind.etAgainPassword.text.trim().toString()
+            if (mDatabind.etPassword.text.trim().toString() == mDatabind.etAgainPassword.text.trim()
+                    .toString()
             ) {
 
                 mViewModel.resetPwd(
@@ -146,6 +151,8 @@ class ForgetPwdResetActivity : BaseActivity<LoginViewModel, ActivityForgetPwdRas
             ARouter.getInstance().build("/app/ForgetPwdFinishActivity")
                 .withString("password", mDatabind.etPassword.text.trim().toString())
                 .withString("account", account)
+                .withString("title", "忘记密码")
+                .withString("context", "修改完成")
                 .navigation()
         }
         mViewModel.repData.onError.observe(this) {
@@ -154,9 +161,9 @@ class ForgetPwdResetActivity : BaseActivity<LoginViewModel, ActivityForgetPwdRas
         }
     }
 
-     private fun isPasswordValid(password: String): Boolean {
+    private fun isPasswordValid(password: String): Boolean {
 
-         Log.d("lwq","=========1111${password}")
+        Log.d("lwq", "=========1111${password}")
         // 判断是否是纯数字或纯字母
         if (password.matches(Regex("\\d+")) || password.matches(Regex("[a-zA-Z]+"))) {
             return false

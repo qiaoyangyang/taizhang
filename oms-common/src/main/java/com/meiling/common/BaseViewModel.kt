@@ -63,7 +63,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                         ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY)
                             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).navigation()
 
-                    } else if (it.message!!.contains("500")) {
+                    } else if (it.message!!.contains("50")) {
 //                        val toast = Toast.makeText(
 //                            Utils.getApp(),
 //                            "账号登录过期，请重新登录",
@@ -71,7 +71,8 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
 //                        )
 //                        toast.setGravity(Gravity.CENTER, 0, 0)
 //                        toast.show()
-                        ToastUtils.showShort("服务器异常，请稍后再试")
+//                        ToastUtils.showShort("服务器异常，请稍后再试")
+                        resultState.onError.postValue(ExceptionHandle.handleException(it))
                     }
                 } else {
                     resultState.onError.postValue(ExceptionHandle.handleException(it))
@@ -94,7 +95,6 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                 } else if (it.code == 403) {
                     ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
                 } else {
-
                     onError(ExceptionHandle.handleException(APIException(it.code, it.msg)))
                 }
             }.onFailure {
