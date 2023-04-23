@@ -125,7 +125,7 @@ class WriteOffDetailsActivity :
                 var string2Millis =
                     TimeUtils.string2Millis(serializableExtra?.coupon?.couponUseTime)
                 var nowMills = TimeUtils.getNowMills()
-                val b: Boolean = (nowMills - string2Millis) / 60000 > 20
+                val b: Boolean = (nowMills - string2Millis) / 60000 >= 20
                 if (b) {
                     mDatabind.tvOk.visibility = View.GONE
 
