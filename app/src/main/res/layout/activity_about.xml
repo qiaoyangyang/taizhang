@@ -19,11 +19,13 @@
         app:titleColor="@color/white" />
 
     <ImageView
+        app:shape_radius="@dimen/dp_100"
         android:layout_width="@dimen/dp_140"
         android:layout_height="@dimen/dp_140"
         android:layout_gravity="center"
+        android:src="@mipmap/icon_about_logo"
         android:layout_marginTop="@dimen/dp_50"
-        android:src="@mipmap/login_icon_about" />
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,6 +33,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp_20"
         android:text="小喵来客"
+        android:textStyle="bold"
         android:textColor="@color/home_000000"
         android:textSize="@dimen/sp_32" />
 
@@ -43,7 +46,7 @@
         android:drawableEnd="@drawable/icon_next"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/dp_20"
-        android:paddingVertical="@dimen/dp_40"
+        android:paddingVertical="@dimen/dp_30"
         android:text="联系我们"
         android:textColor="@color/home_333333"
         android:textSize="@dimen/sp_28"
@@ -58,7 +61,7 @@
         android:layout_marginTop="@dimen/dp_20"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/dp_20"
-        android:paddingVertical="@dimen/dp_40"
+        android:paddingVertical="@dimen/dp_30"
         app:shape_radius="@dimen/dp_20"
         app:shape_solidColor="@color/white">
 
@@ -93,7 +96,7 @@
         android:drawableEnd="@drawable/icon_next"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/dp_20"
-        android:paddingVertical="@dimen/dp_40"
+        android:paddingVertical="@dimen/dp_30"
         android:text="用户协议"
         android:textColor="@color/home_333333"
         android:textSize="@dimen/sp_28"
@@ -109,7 +112,7 @@
         android:drawableEnd="@drawable/icon_next"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/dp_20"
-        android:paddingVertical="@dimen/dp_40"
+        android:paddingVertical="@dimen/dp_30"
         android:text="隐私政策"
         android:textColor="@color/home_333333"
         android:textSize="@dimen/sp_28"
@@ -125,7 +128,7 @@
         android:layout_marginTop="@dimen/dp_20"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/dp_20"
-        android:paddingVertical="@dimen/dp_40"
+        android:paddingVertical="@dimen/dp_30"
         app:shape_radius="@dimen/dp_20"
         app:shape_solidColor="@color/white">
 
@@ -138,6 +141,7 @@
             android:textSize="@dimen/sp_28" />
 
         <TextView
+            android:id="@+id/txt_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -26,6 +26,7 @@ import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityHistoryBinding
 import com.meiling.oms.dialog.VerificationScreeningDidalog
 import com.meiling.oms.viewmodel.VoucherInspectionHistoryViewModel
+import com.meiling.oms.widget.SS
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
@@ -36,6 +37,8 @@ import org.greenrobot.eventbus.ThreadMode
 class VoucherInspectionHistoryActivity :
     BaseActivity<VoucherInspectionHistoryViewModel, ActivityHistoryBinding>() {
     lateinit var orderLeftRecyAdapter: BaseQuickAdapter<WriteoffhistoryPageData?, BaseViewHolder>
+
+
     override fun initView(savedInstanceState: Bundle?) {
         EventBus.getDefault().register(this)
         initRecycleyView()
@@ -152,7 +155,7 @@ class VoucherInspectionHistoryActivity :
             typename = "2"
         }
 
-
+        orderLeftRecyAdapter.loadMoreModule.loadMoreView = SS()
         orderLeftRecyAdapter.loadMoreModule.setOnLoadMoreListener {
             pageIndex++
             setcoupon()
@@ -207,7 +210,7 @@ class VoucherInspectionHistoryActivity :
         }
         mViewModel.writeoffhistory.onError.observe(this) {
             mDatabind.refeshLayout.finishRefresh()
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
     }
 
@@ -251,9 +254,13 @@ class VoucherInspectionHistoryActivity :
 
 
 
+                var shopname=item?.shopName
+                if (item?.shopName.toString().length>12){
+                    shopname=item?.shopName.toString().substring(0,12)+"...."
+                }
 
                 if (item?.coupon?.type == 2) {//美团
-                    var conet = "由 ${item.shopName} 验证"
+                    var conet = "由 ${shopname} 验证"
                     SpannableUtils.setTextcolor(
                         holder.itemView.context,
                         conet,
@@ -265,7 +272,8 @@ class VoucherInspectionHistoryActivity :
 
                 } else if (item?.coupon?.type == 5) {//抖音
                     //  holder.setText(R.id.tv_shopName, "由"+item?.coupon?.shopName+"验证")
-                    var conet = "由 ${item?.shopName} 验证"
+
+                    var conet = "由 ${shopname} 验证"
                     SpannableUtils.setTextcolor(
                         holder.itemView.context,
                         conet,

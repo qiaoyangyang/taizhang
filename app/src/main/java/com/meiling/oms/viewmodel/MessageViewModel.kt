@@ -11,7 +11,7 @@ class MessageViewModel(application: Application) : BaseViewModel(application) {
 
     var msgCenterDto = BaseLiveData<MessageDto>()
     fun getMessage(pageIndex: Int) {
-        request({ meService.getMsgCenter(pageIndex, "20") }, msgCenterDto)
+        request({ meService.getMsgCenter(pageIndex, "50") }, msgCenterDto)
     }
 
 }

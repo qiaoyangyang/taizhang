@@ -6,6 +6,8 @@ enum class Error(private val code: Int, private val err: String) {
      * 未知错误
      */
     UNKNOWN(1000, "请求失败，请稍后再试"),
+
+    TOKEN_INVALID(403, "请求失败，请稍后再试"),
     /**
      * 解析错误
      */

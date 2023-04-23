@@ -1,10 +1,14 @@
 package com.meiling.oms.activity
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.annotation.Nullable
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.codbking.widget.DatePickDialog
@@ -54,11 +58,15 @@ class OrderChangeAddressActivity :
         orderId = intent.getStringExtra("orderId").toString()
         lat = intent.getStringExtra("lat").toString()
         lon = intent.getStringExtra("lon").toString()
-        if (address!!.isBlank() && address!!.contains("@@")) {
-            val x = address.split("@@")
-            mDatabind.txtOrderChangeAddress.text = x[0]
-            mDatabind.edtOrderChangeAddressDetail.setText(x[0])
-            println(x[1])
+
+        if (address.isNotEmpty()) {
+            if (address.contains("@@")){
+                val x = address.split("@@")
+                mDatabind.txtOrderChangeAddress.text = x[0]
+                mDatabind.edtOrderChangeAddressDetail.setText(x[1])
+            }else{
+                mDatabind.txtOrderChangeAddress.text = address
+            }
         } else {
             mDatabind.txtOrderChangeAddress.text = address
         }
@@ -74,6 +82,15 @@ class OrderChangeAddressActivity :
 //        mViewModel.lon.onSuccess.value = mDatabind.txtOrderChangeAddress.text.toString()
 //        mViewModel.lat.onSuccess.value = mDatabind.txtOrderChangeAddress.text.toString()
         mDatabind?.btnSaveChange?.setSingleClickListener {
+
+            if (mDatabind.txtOrderChangeName.text.trim().toString().isBlank()) {
+                showToast("请输入收货人")
+                return@setSingleClickListener
+            }
+            if (mDatabind.txtOrderChangePhone.text.trim().toString().isBlank()) {
+                showToast("请输入收货人电话")
+                return@setSingleClickListener
+            }
 
             mViewModel.changeAddress(
                 orderId,
@@ -96,14 +113,30 @@ class OrderChangeAddressActivity :
     }
 
     private val REQUEST_CODE = 1000
+    private val ACCESS_FINE_LOCATION = 1
     override fun initListener() {
         mDatabind.aivBack.setOnClickListener { finish() }
         mDatabind.btnCancelChange.setOnClickListener { finish() }
         mDatabind.txtOrderChangeAddress.setSingleClickListener {
-            ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
-                .navigation(this, REQUEST_CODE)
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                // 如果有权限，拨打电话
+                ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
+                    .navigation(this, REQUEST_CODE)
+            } else {
+                // 如果没有权限，申请权限
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    ACCESS_FINE_LOCATION
+                )
+            }
         }
     }
+
 
     override fun createObserver() {
         mViewModel.changeAddressSuccess.onStart.observe(this) {
@@ -180,4 +213,24 @@ class OrderChangeAddressActivity :
         }
         dialog.show()
     }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == ACCESS_FINE_LOCATION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 如果有权限跳转
+                ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
+                    .navigation(this, REQUEST_CODE)
+            } else {
+                showToast("您已经禁止权限，请手动开启")
+                // 如果用户拒绝了权限，可以在这里处理相应的逻辑
+            }
+        }
+    }
+
+
 }

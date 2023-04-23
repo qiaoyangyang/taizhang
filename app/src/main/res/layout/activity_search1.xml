@@ -67,7 +67,7 @@
             android:gravity="center_vertical"
             android:hint="搜订单编号、手机号、姓名"
             android:singleLine="true"
-            android:textSize="@dimen/sp_30" />
+            android:textSize="@dimen/sp_28" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_search_edit_clear"
@@ -92,7 +92,7 @@
             android:paddingVertical="@dimen/dp_10"
             android:text="搜索"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_30" />
+            android:textSize="@dimen/sp_28" />
 
     </RelativeLayout>
 
@@ -100,6 +100,7 @@
         android:id="@+id/rv_history_order_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_home_order" />
 
@@ -125,7 +126,7 @@
             android:layout_centerHorizontal="true"
             android:text="支持通过订单编号、收货人姓名、手机号进行搜索"
             android:textColor="@color/home_000000"
-            android:textSize="14sp" />
+            android:textSize="@dimen/sp_28" />
 
     </RelativeLayout>
 

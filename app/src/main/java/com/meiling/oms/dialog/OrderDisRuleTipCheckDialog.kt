@@ -12,7 +12,7 @@ class OrderDisRuleTipCheckDialog : BaseNiceDialog() {
 
     init {
         setGravity(Gravity.BOTTOM)
-        setOutCancel(false)
+        setOutCancel(true)
     }
 
     fun newInstance(): OrderDisRuleTipCheckDialog {
@@ -23,16 +23,11 @@ class OrderDisRuleTipCheckDialog : BaseNiceDialog() {
         return R.layout.dialog_order_rule
     }
 
-    private var ruleTip: (() -> Unit)? = null
-    fun setRuleTip(ruleTips: () -> Unit) {
-        this.ruleTip = ruleTips
-    }
 
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
         var btnRuleTip = holder?.getView<TextView>(R.id.btn_rule_ok)
 
         btnRuleTip?.setSingleClickListener {
-            ruleTip?.invoke()
             dismiss()
         }
     }

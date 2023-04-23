@@ -27,6 +27,10 @@ class OrderDisRuleTipDialog : BaseNiceDialog() {
         return R.layout.dialog_dis_rule_tip
     }
 
+    private var ruleTip: (() -> Unit)? = null
+    fun setRuleTip(ruleTips: () -> Unit) {
+        this.ruleTip = ruleTips
+    }
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
         var context = arguments?.getString("errorContext")
         var txtContext = holder?.getView<TextView>(R.id.tv_rule_content)
@@ -37,11 +41,8 @@ class OrderDisRuleTipDialog : BaseNiceDialog() {
             dismiss()
         }
         btnRuleTip?.setSingleClickListener {
-            var orderDisRuleTipDialog = OrderDisRuleTipCheckDialog().newInstance()
-            orderDisRuleTipDialog.setRuleTip {
-                dismiss()
-            }
-            orderDisRuleTipDialog.show(this.childFragmentManager)
+            ruleTip?.invoke()
+          dismiss()
         }
     }
 }

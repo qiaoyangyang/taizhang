@@ -10,6 +10,7 @@ import com.meiling.common.network.data.DataListDto
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDataDisBinding
 import com.meiling.oms.dialog.DataSelectTimeDialog
+import com.meiling.oms.dialog.DataTipDialog
 import com.meiling.oms.eventBusData.MessageSelectShopPo
 import com.meiling.oms.viewmodel.DataFragmentViewModel
 import com.meiling.oms.widget.formatCurrentDate
@@ -22,13 +23,13 @@ import org.greenrobot.eventbus.ThreadMode
 
 class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDisBinding>() {
     lateinit var dataDisAdapter: BaseQuickAdapter<DataDisDto.DeliveryConsumeLists, BaseViewHolder>
+    lateinit var dataHisDisAdapter: BaseQuickAdapter<DataDisDto.DeliveryConsumeLists, BaseViewHolder>
 
     companion object {
         fun newInstance() = DataOrderDisFragment()
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        EventBus.getDefault().register(this)
         dataDisAdapter =
             object :
                 BaseQuickAdapter<DataDisDto.DeliveryConsumeLists, BaseViewHolder>(R.layout.item_data_dis) {
@@ -44,7 +45,24 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
                 }
             }
         mDatabind.rvDataDis.adapter = dataDisAdapter
+        dataHisDisAdapter =
+            object :
+                BaseQuickAdapter<DataDisDto.DeliveryConsumeLists, BaseViewHolder>(R.layout.item_data_dis) {
+                override fun convert(
+                    holder: BaseViewHolder,
+                    item: DataDisDto.DeliveryConsumeLists
+                ) {
+                    holder.setText(R.id.txt_data_platform, item.logisticsName)
+                    holder.setText(R.id.txt_data_order_num, item.orderNum)
+                    holder.setText(R.id.txt_data_order_dis_amount, item.amountAndTips)
+                    holder.setText(R.id.txt_data_order_tips, item.tips)
+                    holder.setText(R.id.txt_data_order_dis_avgAmount, item.avgAmount)
+                }
+            }
+        mDatabind.rvHisDataDis.adapter = dataHisDisAdapter
+
         mDatabind.srfDataDis.setOnRefreshListener {
+//            startTime = formatCurrentDateBeforeDay()
             initViewData()
         }
     }
@@ -52,15 +70,22 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
     var poiId = ArrayList<String>()
 
     private fun initViewData() {
-        mViewModel.dataDisList(DataListDto(startTime = "", endTime = "", poiId))
+        mViewModel.dataDisList(
+            DataListDto(
+                startTime = formatCurrentDate(),
+                endTime = formatCurrentDate(),
+                poiId
+            )
+        )
         mViewModel.dataHistoryDisList(
             DataListDto(
-                startTime = "$startTime 00:00:00",
-                endTime = formatCurrentDate() + " 23:59:59",
+                startTime = "$startTime",
+                endTime = formatCurrentDateBeforeDay(),
                 poiId
             )
         )
     }
+
 
     override fun getBind(inflater: LayoutInflater): FragmentDataDisBinding {
         return FragmentDataDisBinding.inflate(inflater)
@@ -68,7 +93,7 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
 
     override fun onResume() {
         super.onResume()
-        initData()
+        initViewData()
     }
 
 
@@ -88,13 +113,62 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
                 startTime = it
                 mViewModel.dataHistoryDisList(
                     DataListDto(
-                        startTime = "$it 00:00:00",
-                        endTime = "${formatCurrentDateBeforeDay()} 23:59:59",
+                        startTime = "$it",
+                        endTime = "${formatCurrentDateBeforeDay()}",
                         poiId
                     )
                 )
             }
         }
+
+
+        mDatabind.txtDataDisTip.setSingleClickListener {
+            DataTipDialog().newInstance("只计算配送成功的订单数量，不包含配送中、配送失败和取消配送的订单")
+                .show(childFragmentManager)
+        }
+        mDatabind.txtDataDisTip1.setSingleClickListener {
+            DataTipDialog().newInstance("该配送费为系统预估的配送，实际配送费请以配送平台的为准")
+                .show(childFragmentManager)
+        }
+        mDatabind.txtDataDisTip2.setSingleClickListener {
+            DataTipDialog().newInstance("只计算配送成功的订单的加小费金额")
+                .show(childFragmentManager)
+        }
+        mDatabind.txtDataDisTip3.setSingleClickListener {
+            DataTipDialog().newInstance("小计=配送费+小费")
+                .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataDisTip.setSingleClickListener {
+            DataTipDialog().newInstance("只计算配送成功的订单数量，不包含配送中、配送失败和取消配送的订单")
+                .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataDisTip1.setSingleClickListener {
+            DataTipDialog().newInstance("该配送费为系统预估的配送，实际配送费请以配送平台的为准")
+                .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataDisTip2.setSingleClickListener {
+            DataTipDialog().newInstance("只计算配送成功的订单的加小费金额")
+                .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataDisTip3.setSingleClickListener {
+            DataTipDialog().newInstance("小计=配送费+小费")
+                .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataDisTip4.setSingleClickListener {
+            DataTipDialog().newInstance("客单价=小计/发单数量")
+                .show(childFragmentManager)
+        }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
     }
 
     override fun createObserver() {
@@ -104,13 +178,15 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
         mViewModel.dataList.onSuccess.observe(this) {
             dismissLoading()
             mDatabind.srfDataDis.isRefreshing = false
-            dataDisAdapter.setList(it.deliveryConsumeLists as MutableList<DataDisDto.DeliveryConsumeLists>)
+            if (it.deliveryConsumeLists.isNullOrEmpty()) {
+                dataDisAdapter.setList(null)
+            } else{
+                dataDisAdapter.setList(it.deliveryConsumeLists as MutableList<DataDisDto.DeliveryConsumeLists>)
+            }
             mDatabind.txtSumOrderNum.text = it.sumOrderNum
             mDatabind.txtSumTips.text = it.sumTips
             mDatabind.txtSunAmount.text = it.sumAmount
             mDatabind.txtSumAmountAndTips.text = it.sumAmountAndTips
-            mDatabind.txtHisAvgAmount.text = it.sumAvg
-
         }
         mViewModel.dataList.onError.observe(this) {
             mDatabind.srfDataDis.isRefreshing = false
@@ -123,11 +199,17 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
         mViewModel.dataHistoryList.onSuccess.observe(this) {
             dismissLoading()
             mDatabind.srfDataDis.isRefreshing = false
-            mDatabind.txtSumOrderNum.text = it.sumOrderNum
             mDatabind.txtHisSumOrderNum.text = it.sumOrderNum
             mDatabind.txtHisSumTips.text = it.sumTips
+            if (it.deliveryConsumeLists.isNullOrEmpty()) {
+                dataHisDisAdapter.setList(null)
+            } else {
+                dataHisDisAdapter.setList(it.deliveryConsumeLists as MutableList<DataDisDto.DeliveryConsumeLists>)
+            }
             mDatabind.txtHisSunAmount.text = it.sumAmount
             mDatabind.txtHisSumAmountAndTips.text = it.sumAmountAndTips
+            mDatabind.txtHisAvgAmount.text = it.sumAvg
+
         }
         mViewModel.dataHistoryList.onError.observe(this) {
             mDatabind.srfDataDis.isRefreshing = false

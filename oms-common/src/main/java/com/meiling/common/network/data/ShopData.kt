@@ -35,7 +35,13 @@ data class Shop(
 
 ) : Serializable, IWheel {
     override fun getShowText(): String {
-        return name.toString()
+        var name1=""
+        if (name.toString().length>12){
+            name1=name.toString().substring(0,12)+"...."
+        }else{
+            name1=name.toString()
+        }
+        return name1
     }
 }
 

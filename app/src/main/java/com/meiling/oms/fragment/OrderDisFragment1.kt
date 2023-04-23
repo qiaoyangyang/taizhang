@@ -19,6 +19,7 @@ import com.meiling.common.network.data.*
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDis1Binding
 import com.meiling.oms.dialog.OrderDisGoodsSelectDialog
+import com.meiling.oms.dialog.OrderDisRuleTipCheckDialog
 import com.meiling.oms.dialog.OrderDisRuleTipDialog
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
@@ -154,6 +155,10 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
                 shopSelectDisWayAdapter.getItem(position).select = false
                 var orderDisRuleTipDialog = OrderDisRuleTipDialog().newInstance("${data.errMsg}")
                 orderDisRuleTipDialog.show(childFragmentManager)
+                orderDisRuleTipDialog.setRuleTip {
+                    var orderDisRuleTipDialog = OrderDisRuleTipCheckDialog().newInstance()
+                    orderDisRuleTipDialog.show(this.childFragmentManager)
+                }
             } else {
                 data.select = !shopSelectDisWayAdapter.getItem(position).select
             }

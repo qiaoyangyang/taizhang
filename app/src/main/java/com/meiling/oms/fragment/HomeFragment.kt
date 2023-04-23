@@ -9,7 +9,12 @@ import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.R
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentHomeBinding
+import com.meiling.oms.eventBusData.MessageEventTabChange
 import com.meiling.oms.viewmodel.HomeViewModel
+import com.meiling.oms.widget.showToast
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
@@ -22,8 +27,15 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         super.onCreate(savedInstanceState)
 
     }
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
 
-    private val fragmentList: MutableList<Fragment> = ArrayList()
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewPagerOrder.isUserInputEnabled = false
@@ -34,13 +46,20 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         return FragmentHomeBinding.inflate(inflater)
     }
 
+    var changeTab = false
+
     override fun initData() {
+        val fragmentList: MutableList<Fragment> = ArrayList()
         fragmentList.add(HomeOningOrderFragment.newInstance())
         fragmentList.add(HomeHistoryOrderFragment.newInstance())
         mDatabind.viewPagerOrder.adapter =
             BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
-        mDatabind.viewPagerOrder.setCurrentItem(0, true)
+        resetting()
         mDatabind.txtPendingOrder.isSelected = true
+        mDatabind.txtPendingOrder.setTextColor(Color.WHITE)
+        mDatabind.txtPendingOrder.setBackgroundResource(R.drawable.bg_order_tab1)
+        mDatabind.viewPagerOrder.setCurrentItem(0, false)
+//        mDatabind.txtPendingOrder.isSelected = true
     }
 
     override fun initListener() {
@@ -50,6 +69,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             mDatabind.txtPendingOrder.setTextColor(Color.WHITE)
             mDatabind.txtPendingOrder.setBackgroundResource(R.drawable.bg_order_tab1)
             mDatabind.viewPagerOrder.setCurrentItem(0, false)
+
         }
         mDatabind.txtHistoryOrder.setOnClickListener {
             resetting()
@@ -69,6 +89,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 //            ARouter.getInstance().build("/app/PostDetailActivity").navigation()
 //        }
     }
+
     private fun resetting() {
         mDatabind.txtPendingOrder.isSelected = false
         mDatabind.txtHistoryOrder.isSelected = false
@@ -77,5 +98,32 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         mDatabind.txtPendingOrder.setTextColor(resources.getColor(R.color.home_A8ABB2))
         mDatabind.txtHistoryOrder.setTextColor(resources.getColor(R.color.home_A8ABB2))
         mDatabind.llChangeOrder.setBackgroundResource(R.drawable.bg_order_tab)
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun eventChange(eventTabChange: MessageEventTabChange){
+        resetting()
+        mViewModel.setUmToken()
+        mDatabind.txtPendingOrder.isSelected = true
+        mDatabind.txtPendingOrder.setTextColor(Color.WHITE)
+        mDatabind.txtPendingOrder.setBackgroundResource(R.drawable.bg_order_tab1)
+        mDatabind.viewPagerOrder.setCurrentItem(0, false)
+    }
+    override fun onResume() {
+        super.onResume()
+
+//        val fragmentList: MutableList<Fragment> = ArrayList()
+//        fragmentList.add(HomeOningOrderFragment.newInstance())
+//        fragmentList.add(HomeHistoryOrderFragment.newInstance())
+//        mDatabind.viewPagerOrder.offscreenPageLimit = 1
+//        mDatabind.viewPagerOrder.adapter =
+//            BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
+//        mDatabind.viewPagerOrder.setCurrentItem(0, true)
+//        resetting()
+//        mDatabind.txtPendingOrder.isSelected = true
+//        mDatabind.txtPendingOrder.setTextColor(Color.WHITE)
+//        mDatabind.txtPendingOrder.setBackgroundResource(R.drawable.bg_order_tab1)
+//        mDatabind.viewPagerOrder.setCurrentItem(0, false)
     }
 }

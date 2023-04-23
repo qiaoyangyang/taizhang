@@ -59,6 +59,7 @@
                 android:layout_alignTop="@+id/sv_head"
                 android:layout_toEndOf="@+id/sv_head"
                 android:text="账号昵称"
+                android:textStyle="bold"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_36" />
 
@@ -70,7 +71,7 @@
                 android:layout_toEndOf="@+id/sv_head"
                 android:text="管理员 18706714009"
                 android:textColor="@color/home_666666"
-                android:textSize="@dimen/sp_28" />
+                android:textSize="@dimen/sp_24" />
         </RelativeLayout>
 
 
@@ -91,7 +92,7 @@
                 android:paddingVertical="@dimen/dp_20"
                 android:text="充值中心"
                 android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_32"
+                android:textSize="@dimen/sp_28"
                 app:drawableStartCompat="@mipmap/icon_my_recharge" />
             <TextView
                 android:id="@+id/txt_Store_management"
@@ -126,7 +127,7 @@
                 android:paddingVertical="@dimen/dp_20"
                 android:text="消息中心"
                 android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_32"
+                android:textSize="@dimen/sp_28"
                 app:drawableStartCompat="@mipmap/icon_my_msg" />
 
             <TextView
@@ -138,7 +139,7 @@
                 android:paddingVertical="@dimen/dp_20"
                 android:text="关于小喵来客"
                 android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_32"
+                android:textSize="@dimen/sp_28"
                 app:drawableStartCompat="@mipmap/icon_my_about" />
 
             <TextView
@@ -150,7 +151,7 @@
                 android:paddingVertical="@dimen/dp_20"
                 android:text="联系客服"
                 android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_32"
+                android:textSize="@dimen/sp_28"
                 android:visibility="gone"
                 app:drawableStartCompat="@mipmap/icon_my_kf" />
 
@@ -164,7 +165,7 @@
                 android:paddingVertical="@dimen/dp_20"
                 android:text="修改密码"
                 android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_32"
+                android:textSize="@dimen/sp_28"
                 app:drawableStartCompat="@mipmap/icon_my_lock" />
 
             <TextView
@@ -177,7 +178,7 @@
                 android:paddingVertical="@dimen/dp_20"
                 android:text="退出登录"
                 android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_32"
+                android:textSize="@dimen/sp_28"
                 app:drawableStartCompat="@mipmap/icon_my_off" />
 
             <TextView
@@ -190,7 +191,7 @@
                 android:paddingVertical="@dimen/dp_20"
                 android:text="注销账号"
                 android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_32"
+                android:textSize="@dimen/sp_28"
                 app:drawableStartCompat="@mipmap/icon_my_exit" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

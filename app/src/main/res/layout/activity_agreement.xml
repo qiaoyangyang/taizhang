@@ -16,7 +16,7 @@
         app:title="隐私政策"
         app:titleColor="@color/white" />
 
-    <WebView
+    <FrameLayout
         android:id="@+id/mWebView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -37,7 +37,8 @@ class DataSelectTimeDialog : BaseNiceDialog() {
         var currentDay = holder?.getView<TextView>(R.id.txt_current_day)
         var selectTime = formatCurrentDateBeforeDay()
         var name = "昨日"
-        currentDay?.text = formatCurrentDate()
+        currentDay?.text = formatCurrentDateBeforeDay()
+        timeShow?.text = formatCurrentDateBeforeDay()
         holder?.getView<RadioGroup>(R.id.radio_group_select)
             ?.setOnCheckedChangeListener { group, checkedId ->
                 when (checkedId) {

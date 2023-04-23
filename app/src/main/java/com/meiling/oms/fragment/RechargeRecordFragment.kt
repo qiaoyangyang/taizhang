@@ -15,6 +15,7 @@ import com.meiling.oms.eventBusData.MessageEventTimeShow
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentRechargeRecordBinding
 import com.meiling.oms.viewmodel.RechargeViewModel
+import com.meiling.oms.widget.SS
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.formatCurrentDateBeforeWeek
 import com.meiling.oms.widget.showToast
@@ -33,9 +34,16 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
     companion object {
         fun newInstance() = RechargeRecordFragment()
     }
-
-    override fun initView(savedInstanceState: Bundle?) {
+    override fun onStart() {
+        super.onStart()
         EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+    override fun initView(savedInstanceState: Bundle?) {
         rechargeAdapter =
             object : BaseQuickAdapter<PageData, BaseViewHolder>(R.layout.item_recharge_record),
                 LoadMoreModule {
@@ -50,7 +58,7 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
         mDatabind.srfRechargeRecord.setOnRefreshListener {
             pageIndex = 1
             initViewData()
-            EventBus.getDefault().post(MessageEventTimeShow())
+//            EventBus.getDefault().post(MessageEventTimeShow())
         }
     }
 
@@ -68,6 +76,7 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
                 tenantId = MMKVUtils.getString(SPConstants.tenantId)
             )
         )
+        rechargeAdapter.loadMoreModule.loadMoreView = SS()
         rechargeAdapter.loadMoreModule.setOnLoadMoreListener {
             pageIndex++
             mViewModel.getFinancialRecord(
@@ -138,6 +147,5 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBus.getDefault().unregister(this)
     }
 }

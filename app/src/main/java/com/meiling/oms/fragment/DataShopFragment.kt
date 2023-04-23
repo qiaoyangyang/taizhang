@@ -12,6 +12,7 @@ import com.meiling.common.network.data.DataShopList
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDataShopBinding
 import com.meiling.oms.dialog.DataSelectTimeDialog
+import com.meiling.oms.dialog.DataTipDialog
 import com.meiling.oms.eventBusData.MessageSelectShopPo
 import com.meiling.oms.viewmodel.DataFragmentViewModel
 import com.meiling.oms.widget.*
@@ -28,7 +29,6 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
     private lateinit var dataShopAdapter: BaseQuickAdapter<DataShopList.OrderStaticsGroupByHour, BaseViewHolder>
 
     override fun initView(savedInstanceState: Bundle?) {
-        EventBus.getDefault().register(this)
         dataShopAdapter =
             object :
                 BaseQuickAdapter<DataShopList.OrderStaticsGroupByHour, BaseViewHolder>(R.layout.item_data_shop) {
@@ -47,8 +47,17 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
             initViewData()
         }
 
+
+    }
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
     }
 
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
     override fun getBind(inflater: LayoutInflater): FragmentDataShopBinding {
         return FragmentDataShopBinding.inflate(inflater)
     }
@@ -141,6 +150,64 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
                 )
             }
         }
+
+        mDatabind.txtDataOrderTip.setSingleClickListener {
+            DataTipDialog().newInstance("订单小计=有效下单数-退单数").show(childFragmentManager)
+        }
+        mDatabind.txtDataOrderTip1.setSingleClickListener {
+            DataTipDialog().newInstance("有效下单数").show(childFragmentManager)
+        }
+        mDatabind.txtDataOrderTip2.setSingleClickListener {
+            DataTipDialog().newInstance("全部退款/取消的订单的数量").show(childFragmentManager)
+        }
+        mDatabind.txtDataOrderTip3.setSingleClickListener {
+            DataTipDialog().newInstance("客单价=收款小计/订单数量小计")
+           .show(childFragmentManager)
+        }
+        mDatabind.txtDataOrderTip4.setSingleClickListener {
+            DataTipDialog().newInstance("收款小计=实付金额-退款金额")
+                .show(childFragmentManager)
+        }
+        mDatabind.txtDataOrderTip5.setSingleClickListener {
+            DataTipDialog().newInstance("用户实际支付的订单金额")
+                .show(childFragmentManager)
+        }
+
+        mDatabind.txtDataOrderTip6.setSingleClickListener {
+            DataTipDialog().newInstance("订单退款金额")
+                .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataOrderTip.setSingleClickListener {
+            DataTipDialog().newInstance("订单小计=有效下单数-退单数")
+                .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataOrderTip1.setSingleClickListener {
+            DataTipDialog().newInstance("有效下单数")
+                .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataOrderTip2.setSingleClickListener {
+            DataTipDialog().newInstance("全部退款/取消的订单的数量")
+                .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataOrderTip3.setSingleClickListener {
+            DataTipDialog().newInstance("客单价=收款小计/订单数量小计")
+                .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataOrderTip4.setSingleClickListener {
+            DataTipDialog().newInstance("收款小计=实付金额-退款金额")
+                .show(childFragmentManager)
+        }
+        mDatabind.txtHisDataOrderTip5.setSingleClickListener {
+            DataTipDialog().newInstance("用户实际支付的订单金额")
+                .show(childFragmentManager)
+        }
+
+        mDatabind.txtHisDataOrderTip6.setSingleClickListener {
+            DataTipDialog().newInstance("订单退款金额")
+                .show(childFragmentManager)
+        }
+
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -197,8 +264,8 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
             dismissLoading()
             mDatabind.textDataHistoryShopCount.text =
                 calculationMinDataStr(it.orderCountTotal, it.orderRefundTotal)//减去
-            mDatabind.textDataHistoryInsertOrderCount.text = it.orderCountTotal
-            mDatabind.textDataHistoryRefundOrderCount.text = it.orderRefundTotal
+            mDatabind.textDataHistoryInsertOrderCount.text = it.orderCountTotal ?: "0"
+            mDatabind.textDataHistoryRefundOrderCount.text = it.orderRefundTotal ?: "0"
             mDatabind.textDataHistoryAvgOrderCount.text = calculationDivDataStr(
                 it.validPriceTotal,
                 mDatabind.textDataHistoryShopCount.text.toString()

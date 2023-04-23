@@ -1,6 +1,6 @@
 package com.meiling.common.network;
 
-public class ResultData<T> extends com.meihao.kotlin.baselibs.bean.BaseBean {
+public class ResultData<T> extends BaseBean {
 
     private T data;
  

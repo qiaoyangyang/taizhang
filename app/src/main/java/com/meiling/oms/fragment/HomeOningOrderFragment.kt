@@ -26,11 +26,19 @@ class HomeOningOrderFragment :
         fun newInstance() = HomeOningOrderFragment()
     }
 
-
     private val fragmentList: MutableList<Fragment> = ArrayList()
 
-    override fun initView(savedInstanceState: Bundle?) {
+    override fun onStart() {
+        super.onStart()
         EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+    override fun initView(savedInstanceState: Bundle?) {
+
         mDatabind.viewPager.isUserInputEnabled = false
     }
 
@@ -42,6 +50,7 @@ class HomeOningOrderFragment :
         fragmentList.add(BaseOrderFragment.newInstance("50", false))
         fragmentList.add(BaseOrderFragment.newInstance("70", false))
         fragmentList.add(BaseOrderFragment.newInstance("80", false))
+        mDatabind.viewPager.offscreenPageLimit = 1
         mDatabind.viewPager.adapter =
             BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
         mDatabind.viewPager.setCurrentItem(0, false)
@@ -85,12 +94,13 @@ class HomeOningOrderFragment :
             isValid = "",
             businessNumber = ""
         )
+//        EventBus.getDefault().post(MessageEventUpDateOrder())
     }
 
     override fun createObserver() {
-
+        mViewModel.statusCountDto.onStart.observe(this) {
+        }
         mViewModel.statusCountDto.onSuccess.observe(this) {
-            dismissLoading()
             mDatabind.tabLayout.updateTabBadge(0) {
                 badgeTextSize = 30f
                 badgeGravity = Gravity.RIGHT or Gravity.TOP
@@ -151,25 +161,23 @@ class HomeOningOrderFragment :
                 badgeOffsetY = 30
 
             }
-            mDatabind.tabLayout.updateTabBadge(5) {
-                badgeTextSize = 30f
-                badgeGravity = Gravity.RIGHT or Gravity.TOP
-                badgeText = if (it.deliveryComplete == 0) {
-                    null
-                } else {
-                    it.deliveryComplete.toString()
-                }
-                badgeOffsetX = 10
-                badgeOffsetY = 30
-
-            }
+//            mDatabind.tabLayout.updateTabBadge(5) {
+//                badgeTextSize = 30f
+//                badgeGravity = Gravity.RIGHT or Gravity.TOP
+//                badgeText = if (it.deliveryComplete == 0) {
+//                    null
+//                } else {
+//                    it.deliveryComplete.toString()
+//                }
+//                badgeOffsetX = 10
+//                badgeOffsetY = 30
+//
+//            }
             Log.e("order", "createObserver: " + it)
         }
         mViewModel.statusCountDto.onError.observe(this) {
-            dismissLoading()
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
-
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentHomeOrderOningBinding {

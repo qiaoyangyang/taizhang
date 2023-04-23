@@ -16,6 +16,7 @@ import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.*
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityOrderDisTipBinding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
@@ -98,31 +99,43 @@ class OrderDisAddTipActivity :
                         showToast("您已添加${ryOrderDisAddTipAdapter.data[position].tip}元小费，最多还能添加${30 - ryOrderDisAddTipAdapter.data[position].Addtip.toInt()}元")
                         return@setOnItemChildClickListener
                     }
-
-                    mViewModel.setAddTips(
-                        OrderSendAddTipRequest(
-                            content.deliveryConsume?.id ?: "0",
-                            content.order?.poiId ?: "0",
-                            ryOrderDisAddTipAdapter.data[position].channelType,
-                            ryOrderDisAddTipAdapter.data[position].Addtip
+                    val dialog: MineExitDialog =
+                        MineExitDialog().newInstance("温馨提示", "确定加  ${ryOrderDisAddTipAdapter.data[position].Addtip}元 小费吗？", "取消", "确认", false)
+                    dialog.setOkClickLister {
+                        dialog.dismiss()
+                        mViewModel.setAddTips(
+                            OrderSendAddTipRequest(
+                                content.deliveryConsume?.id ?: "0",
+                                content.order?.poiId ?: "0",
+                                ryOrderDisAddTipAdapter.data[position].channelType,
+                                ryOrderDisAddTipAdapter.data[position].Addtip
+                            )
                         )
-                    )
+                    }
+                    dialog.show(supportFragmentManager)
+
+
                 }
             }
         }
         mDatabind.btnCancelOrder.setSingleClickListener {
-            mViewModel.cancelOrder(
-                CancelOrderSend(
-                    deliveryConsumerId = content.deliveryConsume!!.id ?: "0",
-                    poiId = content.order!!.poiId ?: "0",
-                    stationChannelId = content.deliveryConsume!!.stationChannelId ?: "0"
+            val dialog: MineExitDialog =
+                MineExitDialog().newInstance("温馨提示", "确定取消配送吗？", "取消", "确认", false)
+            dialog.setOkClickLister {
+                mViewModel.cancelOrder(
+                    CancelOrderSend(
+                        deliveryConsumerId = content.deliveryConsume!!.id ?: "0",
+                        poiId = content.order!!.poiId ?: "0",
+                        stationChannelId = content.deliveryConsume!!.stationChannelId ?: "0"
+                    )
                 )
-            )
+            }
+            dialog.show(supportFragmentManager)
+
         }
     }
 
     override fun createObserver() {
-        mViewModel.orderSendAddress.onStart.observe(this) {}
         mViewModel.orderSendAddress.onStart.observe(this) {}
         mViewModel.orderSendAddress.onSuccess.observe(this) {
             mDatabind.txtOrderDisName.text = it.poiName
@@ -130,7 +143,7 @@ class OrderDisAddTipActivity :
             mDatabind.txtOrderDisAddress.text = it.poiAddr
             mDatabind.txtOrderDisRecName.text = it.recvName
             mDatabind.txtOrderDisRecPhone.text = it.recvPhone
-            mDatabind.txtOrderDisRecAddress.text = it.recvAddr
+            mDatabind.txtOrderDisRecAddress.text =  it?.recvAddr?.replace("@@", "")
         }
         mViewModel.orderSendAddress.onError.observe(this) {
             showToast("${it.msg}")

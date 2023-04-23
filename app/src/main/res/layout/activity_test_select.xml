@@ -28,12 +28,13 @@
         android:orientation="horizontal"
         android:weightSum="3">
 
-        <com.hjq.shape.view.ShapeTextView
+        <TextView
             android:id="@+id/txt_select_start_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1.3"
+            android:background="@drawable/edt_bg_select_true_20"
             android:gravity="center"
             android:paddingVertical="@dimen/dp_20"
             android:text="2023-04-06"
@@ -48,18 +49,19 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_gravity="center"
-            android:layout_weight="0.2"
-            android:gravity="center"
             android:layout_marginHorizontal="@dimen/dp_20"
+            android:layout_weight="0.2"
             android:background="@color/home_999999"
+            android:gravity="center"
             android:textSize="@dimen/sp_30" />
 
-        <com.hjq.shape.view.ShapeTextView
+        <TextView
             android:id="@+id/txt_select_end_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1.3"
+            android:background="@drawable/edt_bg_select_false_20"
             android:gravity="center"
             android:hint="请选择"
             android:paddingVertical="@dimen/dp_20"
@@ -84,21 +86,24 @@
             android:id="@+id/yearPicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:descendantFocusability="blocksDescendants" />
 
         <!-- 月份选择器 -->
         <NumberPicker
             android:id="@+id/monthPicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:descendantFocusability="blocksDescendants" />
 
         <!-- 日选择器 -->
         <NumberPicker
             android:id="@+id/dayPicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:descendantFocusability="blocksDescendants" />
 
         <!--        &lt;!&ndash; 小时选择器 &ndash;&gt;-->
         <!--        <NumberPicker-->

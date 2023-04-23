@@ -1,4 +1,4 @@
-package com.meihao.kotlin.baselibs.bean
+package com.meiling.common.network
 
 open class BaseBean {
     var code: Int = 0

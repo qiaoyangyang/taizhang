@@ -21,8 +21,10 @@ import com.meiling.common.utils.SpannableUtils
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityLoginBinding
+import com.meiling.oms.jpush.PushHelper
 import com.meiling.oms.viewmodel.LoginViewModel
 import com.meiling.oms.widget.CaptchaCountdownTool
+import com.meiling.oms.widget.KeyBoardUtil
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 
@@ -43,7 +45,8 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
 
     override fun initView(savedInstanceState: Bundle?) {
-
+        //建议在线程中执行初始化
+        Thread { PushHelper.init(this) }.start()
         var conet = "登录即代表同意小喵来客《用户协议》及《隐私政策》"
         SpannableUtils.setText(
             this,
@@ -89,6 +92,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                 .addView(mDatabind.etPassword)
                 .setMain(it)
                 .build()
+            KeyBoardUtil.hideKeyBoard(this,mDatabind.btnLogin)
         }
 
         mDatabind.etPassword.addTextChangedListener(object : TextWatcher {
@@ -218,8 +222,8 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             disLoading()
             captchaCountdownTool.stopCountdown()
             mDatabind.txtAuthCode.isClickable = true
-            mDatabind.txtAuthCode.text = "重新获取"
-            showToast("${it.message}")
+            mDatabind.txtAuthCode.text = "获取验证码"
+            showToast("${it.msg}")
         }
 
         mViewModel.loginData.onStart.observe(this) {

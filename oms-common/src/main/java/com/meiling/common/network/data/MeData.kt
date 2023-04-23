@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class MessageDto(
     @SerializedName("content")
-    var content: List<Content?>?,
+    var content: List<Content?>,
     @SerializedName("contentT")
     var contentT: Any?,
     @SerializedName("extra")
@@ -47,7 +47,9 @@ data class MessageDto(
         @SerializedName("title")
         var title: String?,
         @SerializedName("type")
-        var type: Int?
+        var type: Int?,
+        @SerializedName("pushMessageType")
+        var pushMessageType: String?,
     ) {
         data class OrderMessage(
             @SerializedName("channelId")

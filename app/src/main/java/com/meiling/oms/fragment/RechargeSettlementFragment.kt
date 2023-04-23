@@ -33,9 +33,16 @@ class RechargeSettlementFragment :
         fun newInstance() = RechargeSettlementFragment()
     }
 
-
-    override fun initView(savedInstanceState: Bundle?) {
+    override fun onStart() {
+        super.onStart()
         EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+    override fun initView(savedInstanceState: Bundle?) {
         chargeAdapter = object :
             BaseQuickAdapter<FinancialRecord.PageResult.PageData, BaseViewHolder>(R.layout.item_recharge_charge),
             LoadMoreModule {
@@ -55,7 +62,7 @@ class RechargeSettlementFragment :
         chargeAdapter.setOnItemClickListener { adapter, view, position ->
             ARouter.getInstance().build("/app/MySettlementDetailActivity").withString(
                 "settlementName",
-                (adapter.data[position] as FinancialRecord.PageResult.PageData).description
+                (adapter.data[position] as FinancialRecord.PageResult.PageData).remark
             ).withString(
                 "viewId",
                 (adapter.data[position] as FinancialRecord.PageResult.PageData).viewId
@@ -68,7 +75,7 @@ class RechargeSettlementFragment :
         mDatabind.srfRechargeFeeRecord.setOnRefreshListener {
             pageIndex = 1
             initViewData()
-            EventBus.getDefault().post(MessageEventTimeShow())
+//            EventBus.getDefault().post(MessageEventTimeShow())
         }
     }
 
@@ -86,6 +93,7 @@ class RechargeSettlementFragment :
                 tenantId = MMKVUtils.getString(SPConstants.tenantId)
             )
         )
+        chargeAdapter.loadMoreModule.loadMoreView = SS()
         chargeAdapter.loadMoreModule.setOnLoadMoreListener {
             pageIndex++
             mViewModel.getFinancialRecord(

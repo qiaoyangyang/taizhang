@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@mipmap/home_scan" android:state_selected="true" />
-    <item android:drawable="@mipmap/home_scan_un" android:state_selected="false" />
+    <item android:drawable="@mipmap/home_tab2_select" android:state_selected="true" />
+    <item android:drawable="@mipmap/home_tab_unselect" android:state_selected="false" />
 </selector>
