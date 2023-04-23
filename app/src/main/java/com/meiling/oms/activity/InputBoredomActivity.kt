@@ -166,6 +166,8 @@ class InputBoredomActivity :
         super.initData()
 
         type = intent?.getStringExtra("type").toString()
+        cityidname = intent?.getStringExtra("cityidname").toString()
+        shopdata = intent?.getSerializableExtra("shop") as Shop
         mViewModel.cityshop(type)
         val textWatcher = AutoSeparateTextWatcher(mDatabind.tvStockCode)
         textWatcher.setRULES(intArrayOf(4, 4, 4, 4, 4))
@@ -182,14 +184,18 @@ class InputBoredomActivity :
     }
 
     var shopId: String = ""
+    var cityidname: String = ""
     override fun createObserver() {
         mViewModel.shopBean.onSuccess.observe(this) {
-            if (it.size != 0) {
-                shopdata = it[0].shopList?.get(0)
-                shopId = it.get(0).shopList?.get(0)?.id!!
-                mDatabind.TitleBar.titleView.text =
-                    it.get(0).name + "/" + it.get(0).shopList?.get(0)?.name
-            }
+//            if (it.size != 0) {
+//                shopdata = it[0].shopList?.get(0)
+//                shopId = it.get(0).shopList?.get(0)?.id!!
+//
+//            }
+            shopId=shopdata?.id!!
+            mDatabind.TitleBar.titleView.text =
+                cityidname + "/" + shopdata?.name
+
         }
 
         mViewModel.thrillBen.onStart.observe(this) {

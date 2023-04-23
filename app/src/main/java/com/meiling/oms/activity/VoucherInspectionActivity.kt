@@ -32,8 +32,8 @@ class VoucherInspectionActivity :
     BaseActivity<VoucherinspectionViewModel, ActivityVoucherinspectionBinding>() {
 
     var type = ""
-    var thrillBen = ArrayList<ThrillBen>()
     var shopBean = ArrayList<ShopBean>()
+    var cityname =""
     var meituan: Meituan? = null
     override fun initView(savedInstanceState: Bundle?) {
         TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
@@ -42,7 +42,7 @@ class VoucherInspectionActivity :
             if (shopdata != null) {
                 startActivity(
                     Intent(this, VoucherInspectionHistoryActivity::class.java)
-                        .putExtra("shop", shopdata)
+
                         .putExtra("type", type)
                 )
             }
@@ -50,7 +50,10 @@ class VoucherInspectionActivity :
         //  输码验券
         mDatabind.tvInputBoredom.setOnClickListener {
             startActivity(
-                Intent(this, InputBoredomActivity::class.java).putExtra("type", type)
+                Intent(this, InputBoredomActivity::class.java)
+                    .putExtra("type", type)
+                    .putExtra("cityidname", cityname)
+                    .putExtra("shop", shopdata)
             )
         }
 
@@ -119,6 +122,7 @@ class VoucherInspectionActivity :
                         mViewModel.Shop.onSuccess.postValue(shop)
                         shopId = shop?.id.toString()
                         shopdata = shop
+                        cityname=cityidname
                         mDatabind.TitleBar.titleView.text = cityidname + shop.name
                     }
 
@@ -159,8 +163,10 @@ class VoucherInspectionActivity :
 
         mViewModel.shopBean.onSuccess.observe(this) {
             if (it.size != 0) {
+
                 shopdata = it[0].shopList?.get(0)
                 shopId = it.get(0).shopList?.get(0)?.id!!
+                cityname=it.get(0).name!!
                 mDatabind.TitleBar.titleView.text =
                     it.get(0).name + "/" + it.get(0).shopList?.get(0)?.name
             }
