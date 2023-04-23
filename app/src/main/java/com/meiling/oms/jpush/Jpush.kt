@@ -17,6 +17,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
 import com.meiling.oms.jpush.jpushPlay.MessageData
 import com.meiling.oms.jpush.jpushPlay.MessageManagement
@@ -187,10 +188,12 @@ fun createAndStart(context: Context, uMessage: UMessage, x: Int, y: Int) {
 ////        map.put("shopIds", shopId)
 ////        map.put("poiId", poiId)
 
-    val pushCode = Gson().fromJson(
-        uMessage.custom,
-        PushMsgJson::class.java
-    ).pushCode
+
+    try {
+        val pushCode = Gson().fromJson(
+            uMessage.custom,
+            PushMsgJson::class.java
+        ).pushCode
 //    新订单    1
 //    取消        3
 //    退款         7
@@ -198,64 +201,64 @@ fun createAndStart(context: Context, uMessage: UMessage, x: Int, y: Int) {
 //    骑手接单   301
 //    配送取消   302
 //    配送完成   303
-    when (pushCode) {
-        "1" -> {
-            MessageManagement.get(context)?.addMessage(
-                MessageData(
-                    R.raw.new_order,
-                    ""
+        when (pushCode) {
+            "1" -> {
+                MessageManagement.get(context)?.addMessage(
+                    MessageData(
+                        R.raw.new_order,
+                        ""
+                    )
                 )
-            )
-        }
-        "3" -> {
-            MessageManagement.get(context)?.addMessage(
-                MessageData(
-                    R.raw.cancel_order,
-                    ""
+            }
+            "3" -> {
+                MessageManagement.get(context)?.addMessage(
+                    MessageData(
+                        R.raw.cancel_order,
+                        ""
+                    )
                 )
-            )}
-        "7" -> {
-            MessageManagement.get(context)?.addMessage(
-                MessageData(
-                    R.raw.refund_order,
-                    ""
+            }
+            "7" -> {
+                MessageManagement.get(context)?.addMessage(
+                    MessageData(
+                        R.raw.refund_order,
+                        ""
+                    )
                 )
-            )}
-        "11" -> {
-            MessageManagement.get(context)?.addMessage(
-                MessageData(
-                    R.raw.order_yuding,
-                    ""
+            }
+            "11" -> {
+                MessageManagement.get(context)?.addMessage(
+                    MessageData(
+                        R.raw.order_yuding,
+                        ""
+                    )
                 )
-            )
-        }
-        "301" -> {
-            MessageManagement.get(context)?.addMessage(
-                MessageData(
-                    R.raw.order_dis_jiedan,
-                    ""
+            }
+            "301" -> {
+                MessageManagement.get(context)?.addMessage(
+                    MessageData(
+                        R.raw.order_dis_jiedan,
+                        ""
+                    )
                 )
-            )
-        }
+            }
 
-        "303" -> {
-            MessageManagement.get(context)?.addMessage(
-                MessageData(
-                    R.raw.order_dis_finish,
-                    ""
+            "303" -> {
+                MessageManagement.get(context)?.addMessage(
+                    MessageData(
+                        R.raw.order_dis_finish,
+                        ""
+                    )
                 )
-            )
-        }
-        "302" -> {
-            MessageManagement.get(context)?.addMessage(
-                MessageData(
-                    R.raw.order_dis_cancel,
-                    ""
+            }
+            "302" -> {
+                MessageManagement.get(context)?.addMessage(
+                    MessageData(
+                        R.raw.order_dis_cancel,
+                        ""
+                    )
                 )
-            )
-        }
-
-
+            }
 
 
 //        }
@@ -267,6 +270,10 @@ fun createAndStart(context: Context, uMessage: UMessage, x: Int, y: Int) {
 //                }
 //            }
 //        }, onError = {})
+        }
+
+    } catch (e: Exception) {
+        ToastUtils.showShort("推送消息格式异常")
     }
 
 }
