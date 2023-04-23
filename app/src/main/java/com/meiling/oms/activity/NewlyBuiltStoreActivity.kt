@@ -6,16 +6,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.services.core.PoiItem
-import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseVmActivity
 import com.meiling.oms.bean.PoiVo
 import com.meiling.oms.databinding.ActivityNewlyBuiltStoreBinding
@@ -117,6 +114,8 @@ class NewlyBuiltStoreActivity :
 
         }
         mDatabind.etStoreAddress.setOnClickListener {
+
+
 //            var intent = Intent(this, OrderChangeAddressMapActivity::class.java)
 //            requestDataLauncher.launch(intent)
             if (ContextCompat.checkSelfPermission(
