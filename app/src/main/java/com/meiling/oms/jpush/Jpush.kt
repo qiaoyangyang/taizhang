@@ -1,30 +1,17 @@
-package com.meihao.kotlin.cashier.widgets.juanmahexiao
+package com.meiling.oms.jpush
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Context.WINDOW_SERVICE
-import android.content.Intent
 import android.content.res.Resources
 import android.os.Build
-import android.view.Gravity.RIGHT
-import android.view.Gravity.TOP
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
 import com.meiling.oms.jpush.jpushPlay.MessageData
 import com.meiling.oms.jpush.jpushPlay.MessageManagement
 import com.meiling.common.network.data.PushMsgJson
-import com.meiling.oms.OmsApplication
 import com.meiling.oms.R
-import com.meiling.oms.activity.Search1Activity
 import com.umeng.message.entity.UMessage
 import java.util.*
 
