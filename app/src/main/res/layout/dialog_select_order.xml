@@ -15,7 +15,8 @@
         android:layout_marginTop="15dp"
         android:text="筛选"
         android:textColor="@color/home_333333"
-        android:textSize="18sp"
+        android:textSize="@dimen/sp_36"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:text="日期类型"
                 android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_30" />
+                android:textSize="@dimen/sp_32" />
 
             <RadioGroup
                 android:id="@+id/Rg_isVoucher"
@@ -74,7 +75,7 @@
                     android:paddingVertical="6dp"
                     android:text="下单时间"
                     android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_30"
+                    android:textSize="@dimen/sp_28"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <RadioButton
@@ -90,7 +91,7 @@
                     android:paddingVertical="6dp"
                     android:text="收货时间"
                     android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_30" />
+                    android:textSize="@dimen/sp_28" />
 
                 <RadioButton
                     android:id="@+id/rb_meal_voucher"
@@ -104,7 +105,7 @@
                     android:paddingVertical="6dp"
                     android:text="出货时间"
                     android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_30" />
+                    android:textSize="@dimen/sp_28" />
 
 
             </RadioGroup>
@@ -121,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:text="日期"
                 android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_30" />
+                android:textSize="@dimen/sp_32" />
 
 
             <RadioGroup
@@ -143,7 +144,7 @@
                     android:paddingBottom="6dp"
                     android:text="昨日"
                     android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_30" />
+                    android:textSize="@dimen/sp_28" />
 
                 <RadioButton
                     android:id="@+id/rb_today"
@@ -158,7 +159,7 @@
                     android:paddingBottom="6dp"
                     android:text="今日"
                     android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_30" />
+                    android:textSize="@dimen/sp_28" />
 
                 <RadioButton
                     android:id="@+id/rb_About_seven_days"
@@ -174,7 +175,7 @@
                     android:paddingBottom="6dp"
                     android:text="近7日"
                     android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_30" />
+                    android:textSize="@dimen/sp_28" />
 
                 <RadioButton
                     android:id="@+id/rb_nearly_days"
@@ -192,7 +193,7 @@
                     android:text="近30天"
 
                     android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_30" />
+                    android:textSize="@dimen/sp_28" />
 
 
             </RadioGroup>
@@ -218,7 +219,7 @@
                     android:textColor="@color/home_333333"
 
 
-                    android:textSize="@dimen/sp_30" />
+                    android:textSize="@dimen/sp_28" />
 
                 <RadioButton
                     android:id="@+id/tv_final_time"
@@ -236,7 +237,7 @@
                     android:text="终止时间"
 
                     android:textColor="@color/home_333333"
-                    android:textSize="@dimen/sp_30"
+                    android:textSize="@dimen/sp_28"
 
 
                     />
@@ -254,17 +255,17 @@
                 android:layout_height="wrap_content"
                 android:text="订单平台"
                 android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_30" />
+                android:textSize="@dimen/sp_32" />
 
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_select_order_platform"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="4"
-                    tools:listitem="@layout/item_recy_order_select_platform" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_select_order_platform"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="4"
+                tools:listitem="@layout/item_recy_order_select_platform" />
         </LinearLayout>
     </LinearLayout>
 
@@ -288,6 +289,8 @@
             android:paddingVertical="@dimen/dp_20"
             android:text="重置"
             android:textColor="#FF4C4A"
+            android:textSize="@dimen/sp_32"
+            android:textStyle="bold"
             app:shape_radius="10dp"
             app:shape_shadowColor="@color/white"
             app:shape_strokeColor="#FF4C4A"
@@ -304,6 +307,8 @@
             android:paddingVertical="@dimen/dp_20"
             android:text="筛选"
             android:textColor="@color/white"
+            android:textSize="@dimen/sp_32"
+            android:textStyle="bold"
             app:shape_radius="10dp"
             app:shape_solidColor="#FF4C4A" />
 

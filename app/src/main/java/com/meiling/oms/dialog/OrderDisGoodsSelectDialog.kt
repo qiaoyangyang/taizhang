@@ -1,6 +1,7 @@
 package com.meiling.oms.dialog
 
 import android.view.Gravity
+import android.widget.ImageView
 import com.hjq.shape.view.ShapeButton
 import com.meiling.common.base.WheelItemView
 import com.meiling.common.network.data.OrderSendShopSelect
@@ -13,7 +14,7 @@ import com.shehuan.nicedialog.ViewHolder
 class OrderDisGoodsSelectDialog : BaseNiceDialog() {
     init {
         setGravity(Gravity.BOTTOM)
-        setOutCancel(true)
+        setOutCancel(false)
     }
 
     override fun intLayoutId(): Int {
@@ -30,6 +31,7 @@ class OrderDisGoodsSelectDialog : BaseNiceDialog() {
         var cityid_view = holder?.getView<WheelItemView>(R.id.wheel_view_left)
         var wheel_view_center = holder?.getView<WheelItemView>(R.id.wheel_view_center)
         var btn_ok_exit = holder?.getView<ShapeButton>(R.id.btn_ok_exit)
+        var close = holder?.getView<ImageView>(R.id.iv_close_select_shop)
 //        cityid_view?.setOnSelectedListener { context, selectedIndex ->
 //            loadData1(wheel_view_center!!, shopBean, selectedIndex)
 //        }
@@ -54,12 +56,15 @@ class OrderDisGoodsSelectDialog : BaseNiceDialog() {
 //            Log.d("yjk", "convertView: $selectedIndex")
 //        }
         btn_ok_exit?.setOnClickListener {
-                var shop = shopBean[cityid_view?.selectedIndex!!]
+            var shop = shopBean[cityid_view?.selectedIndex!!]
             okSelectClickLister?.invoke(
-                    shop.id,
-                    shop.name,
-                )
-                dismiss()
+                shop.id,
+                shop.name,
+            )
+            dismiss()
+        }
+        close?.setOnClickListener {
+            dismiss()
         }
         if (shopBean.size != 0) {
             loadData(cityid_view!!, shopBean)

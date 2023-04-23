@@ -60,6 +60,15 @@ interface OrderDisService {
     //配送渠道/平台
     @GET("/saas/channel")
     suspend fun orderChannelPlatForm(): ResultData<ArrayList<OrderSelectPlatform>>
-
+//    入参 sourceId 订单号
+//    shopId 店铺id
+//    printTemplateType 收银小票:1 退款小票:3
+    //打印
+    @POST("/saas/printer/printTicket")
+    suspend fun print(
+        @Query("sourceId") sourceId: String,
+        @Query("shopId") shopId: String,
+        @Query("printTemplateType") orderId: String//收银小票:1 退款小票:3
+    ): ResultData<Any>
 
 }

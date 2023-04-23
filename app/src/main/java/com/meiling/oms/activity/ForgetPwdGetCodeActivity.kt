@@ -115,8 +115,8 @@ class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdG
             disLoading()
             captchaCountdownTool.stopCountdown()
             mDatabind.txtAuthCode.isClickable = true
-            mDatabind.txtAuthCode.text = "重新获取"
-            showToast("${it.message}")
+            mDatabind.txtAuthCode.text = "获取验证码"
+            showToast("${it.msg}")
         }
 
         mViewModel.repData.onStart.observe(this) {
@@ -130,11 +130,13 @@ class ForgetPwdGetCodeActivity : BaseActivity<LoginViewModel, ActivityForgetPwdG
             mDatabind.txtAuthCode.text = "重新获取"
             ARouter.getInstance().build("/app/ForgetPwdResetActivity")
                 .withString("account", account).withString("phone", phoneSend)
-                .withString("code", mDatabind.edtCode.text.trim().toString()).navigation()
+                .withString("code", mDatabind.edtCode.text.trim().toString())
+                .withString("title", "忘记密码")
+                .withString("context", "修改完成").navigation()
         }
         mViewModel.repData.onError.observe(this) {
             disLoading()
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
 
 

@@ -74,6 +74,17 @@ interface LoginService {
         @Query("code") code: String,
     ): ResultData<Any>
 
+
+    /**
+     * 校验验证码
+     */
+    @GET("/saas/Version/CheckUpdate")
+    suspend fun update(
+        @Query("phone") phone: String,
+        @Query("code") code: String,
+    ): ResultData<Any>
+
+
     /**
      * 上传logo图片
      */

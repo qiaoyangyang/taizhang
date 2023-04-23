@@ -1,11 +1,17 @@
 package com.meiling.oms.fragment
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.PictureDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,11 +26,12 @@ import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
-import com.meiling.oms.EventBusData.MessageEvent
-import com.meiling.oms.EventBusData.MessageEventHistoryUpDataTip
-import com.meiling.oms.EventBusData.MessageHistoryEventSelect
+import com.meiling.oms.eventBusData.MessageEvent
+import com.meiling.oms.eventBusData.MessageEventHistoryUpDataTip
+import com.meiling.oms.eventBusData.MessageHistoryEventSelect
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.*
@@ -57,9 +64,17 @@ class BaseHistoryOrderFragment :
         super.onResume()
         initViewData()
     }
-
-    override fun initView(savedInstanceState: Bundle?) {
+    override fun onStart() {
+        super.onStart()
         EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+    var telPhone = ""
+    override fun initView(savedInstanceState: Bundle?) {
         requireArguments().getString("type").toString()
         orderDisAdapter =
             object : BaseQuickAdapter<OrderDto.Content, BaseViewHolder>(R.layout.item_home_order),
@@ -74,10 +89,12 @@ class BaseHistoryOrderFragment :
                     val hideMsg = holder.getView<TextView>(R.id.txt_show_hide)
                     val copyOrderId = holder.getView<TextView>(R.id.txt_copy_order)
                     val orderId = holder.getView<TextView>(R.id.txt_order_id)
+                    val phone = holder.getView<TextView>(R.id.txt_order_delivery_phone)
                     val channelLogoImg = holder.getView<ImageView>(R.id.img_order_icon)
                     holder.setText(R.id.txt_order_delivery_name, item.order?.recvName)
-                    holder.setText(R.id.txt_order_delivery_phone, item.order?.recvPhone)
-                    holder.setText(R.id.txt_order_delivery_address, item.order?.recvAddr)
+                    phone.text = item.order?.recvPhone
+                    telPhone = item.order?.recvPhone ?: ""
+                    holder.setText(R.id.txt_order_delivery_address, item.order?.recvAddr?.replace("@@", ""))
                     holder.setText(R.id.txt_order_num, "#${item.order?.channelDaySn}")
                     holder.setText(R.id.txt_shop_actual_money, "${item.order?.actualIncome}")
                     holder.setText(R.id.txt_order_delivery_time, "${item.order?.arriveTimeDate}")
@@ -88,10 +105,6 @@ class BaseHistoryOrderFragment :
                     //加载svg图片
                     Glide.with(context).`as`(PictureDrawable::class.java).load(item.channelLogo)
                         .apply(options).listener(SvgSoftwareLayerSetter()).into(channelLogoImg)
-
-                    holder.setText(
-                        R.id.txt_order_delivery_state, "${item.order?.deliveryStatusName}"
-                    )
                     orderId.text = "${item.order?.viewId}"
                     holder.setText(R.id.txt_order_remark, "${item.order?.remark}")
                     holder.setText(
@@ -120,18 +133,35 @@ class BaseHistoryOrderFragment :
                         copyText(context, orderId.text.toString())
                         showToast("复制成功")
                     }
-
+                    phone.setSingleClickListener {
+                        if (ContextCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.CALL_PHONE
+                            )
+                            == PackageManager.PERMISSION_GRANTED
+                        ) {
+                            // 如果有权限，拨打电话
+                            dialPhoneNumber(telPhone)
+                        } else {
+                            // 如果没有权限，申请权限
+                            ActivityCompat.requestPermissions(
+                                requireActivity(),
+                                arrayOf(Manifest.permission.CALL_PHONE),
+                                REQUEST_CALL_PHONE_PERMISSION
+                            )
+                        }
+                    }
                     var listGoods = item.goodsVoList
                     var x = ""
                     for (goods in listGoods!!) {
-                        x += "名称" + goods?.gname + "\n数量" + goods?.number + "\n价格" + goods?.price
+                        x += "名称:" + goods?.gname + "\n数量:" + goods?.number + "\n价格:" + goods?.price
                     }
                     imgShopCopy.setSingleClickListener {
                         copyText(
                             context,
-                            "订单来源：" + "${item.channelName} \n" + "门店名称${item.shopName}\n" + "订单编号${item.order?.viewId}\n" + "-------\n" + "商品信息${x}\n" +
+                            "订单来源:" + "${item.channelName} \n" + "门店名称:${item.shopName}\n" + "订单编号:${item.order?.viewId}\n" + "-------\n" + "商品信息:${x}\n" +
 //                                    "商品信息${Gson().fromJson(filteredData.toString(),Array<NewGoodsVo>::class.java).toList()}\n" +
-                                    "-------\n" + "收货时间${item.order?.arriveTimeDate}\n" + "收货人${item.order?.recvName}${item.order?.recvPhone}\n" + "收货地址${item.order?.recvAddr}\n" + "-------\n" + "备注${item.order?.remark}\n"
+                                    "-------\n" + "收货时间:${item.order?.arriveTimeDate}\n" + "收货人:${item.order?.recvName}${item.order?.recvPhone}\n" + "收货地址:${item.order?.recvAddr}\n" + "-------\n" + "备注${item.order?.remark}\n"
                         )
 //                        ToastUtils.showLong("复制成功")
                         showToast("复制成功")
@@ -172,6 +202,12 @@ class BaseHistoryOrderFragment :
                         holder.setText(R.id.txt_total_money, "¥${sum}")
                     }
 
+                    if (item.order!!.type == 1) {
+                        holder?.setGone(R.id.txt_order_delivery_yu, false)
+                    } else {
+                        holder?.setGone(R.id.txt_order_delivery_yu, true)
+                    }
+
                     changeOrder.setSingleClickListener {
                         ARouter.getInstance().build("/app/OrderChangeAddressActivity")
                             .withString("receiveTime", item.order?.arriveTimeDate)
@@ -184,63 +220,92 @@ class BaseHistoryOrderFragment :
                             .withInt("index", holder.adapterPosition).navigation()
                     }
                     btnCancelDis.setSingleClickListener {
-                        mViewModel.cancelOrder(
-                            CancelOrderSend(
-                                deliveryConsumerId = item.deliveryConsume!!.id ?: "0",
-                                poiId = item.order!!.poiId ?: "0",
-                                stationChannelId = item.deliveryConsume!!.stationChannelId ?: "0"
+                        val dialog: MineExitDialog =
+                            MineExitDialog().newInstance("温馨提示", "确定取消配送吗？", "取消", "确认", false)
+                        dialog.setOkClickLister {
+
+                            mViewModel.cancelOrder(
+                                CancelOrderSend(
+                                    deliveryConsumerId = item.deliveryConsume!!.id ?: "0",
+                                    poiId = item.order!!.poiId ?: "0",
+                                    stationChannelId = item.deliveryConsume!!.stationChannelId ?: "0"
+                                )
                             )
-                        )
+                            dialog.dismiss()
+                        }
+                        dialog.show(childFragmentManager)
+
                     }
                     var orderDisDialog =
                         OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
                     btnSendDis.setSingleClickListener {
-                        when (item.order!!.logisticsStatus) {
-                            "0" -> {
-                                ARouter.getInstance().build("/app/OrderDisActivity")
-                                    .withSerializable("kk", item).navigation()
-                            }
-                            "20" -> {
-                                ARouter.getInstance().build("/app/OrderDisAddTipActivity")
-                                    .withSerializable("kk", item).navigation()
-                            }
-                            "30", "50",
-                            "70", "80" -> {
-                                orderDisDialog.show(childFragmentManager)
-                            }
+                            when (item.order!!.logisticsStatus) {
+                                "0" -> {
+                                    ARouter.getInstance().build("/app/OrderDisActivity")
+                                        .withSerializable("kk", item).navigation()
+                                }
+                                "20" -> {
+                                    ARouter.getInstance().build("/app/OrderDisAddTipActivity")
+                                        .withSerializable("kk", item).navigation()
+                                }
 
+                                "70" -> {
+                                    ARouter.getInstance().build("/app/OrderDisActivity")
+                                        .withSerializable("kk", item).navigation()
+                                }
+                                "30", "50", "80" -> {
+                                    orderDisDialog.show(childFragmentManager)
+                                }
                         }
                     }
                     //0.待配送  20.待抢单 30.待取货 50.配送中 70.取消 80.已送达
                     when (item.order!!.logisticsStatus) {
                         "0" -> {
+                            holder.setText(
+                                R.id.txt_order_delivery_state, "待配送"
+                            )
                             btnCancelDis.visibility = View.GONE
                             changeOrder.visibility = View.VISIBLE
                             btnSendDis.text = "发起配送"
                         }
                         "20" -> {
+                            holder.setText(
+                                R.id.txt_order_delivery_state, "待抢单"
+                            )
                             btnCancelDis.visibility = View.VISIBLE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "加小费"
                         }
                         "30" -> {
+                            holder.setText(
+                                R.id.txt_order_delivery_state, "待取货"
+                            )
                             btnCancelDis.visibility = View.VISIBLE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "配送详情"
                         }
                         "50" -> {
+                            holder.setText(
+                                R.id.txt_order_delivery_state, "配送中"
+                            )
                             btnCancelDis.visibility = View.GONE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "配送详情"
                         }
                         "70" -> {
-                            btnCancelDis.visibility = View.GONE
-                            changeOrder.visibility = View.GONE
-                            btnSendDis.text = "配送详情"
+                            holder.setText(
+                                R.id.txt_order_delivery_state, "已取消"
+                            )
+                            btnCancelDis.visibility = View.INVISIBLE
+                            changeOrder.visibility = View.INVISIBLE
+                            btnSendDis.text = "重新配送"
                         }
                         "80" -> {
+                            holder.setText(
+                                R.id.txt_order_delivery_state, "已送达"
+                            )
                             btnCancelDis.visibility = View.GONE
-                            changeOrder.visibility = View.GONE
+                            changeOrder.visibility = View.INVISIBLE
                             btnSendDis.text = "配送详情"
                         }
                     }
@@ -275,7 +340,7 @@ class BaseHistoryOrderFragment :
             businessNumber = "",
             channelId = channelId
         )
-
+        orderDisAdapter.loadMoreModule.loadMoreView = SS()
         orderDisAdapter.loadMoreModule.setOnLoadMoreListener {
             pageIndex++
             mViewModel.orderList(
@@ -328,7 +393,7 @@ class BaseHistoryOrderFragment :
         }
 
         mViewModel.cancelOrderDto.onStart.observe(this) {
-            showLoading("取消订单")
+            showLoading("请求中")
         }
 
         mViewModel.cancelOrderDto.onSuccess.observe(this) {
@@ -367,5 +432,26 @@ class BaseHistoryOrderFragment :
         orderTime = messageHistoryEventTime.selectDialogDto.orderTime
         channelId = messageHistoryEventTime.selectDialogDto.channelId!!
         initViewData()
+    }
+    var REQUEST_CALL_PHONE_PERMISSION = 1
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == REQUEST_CALL_PHONE_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 如果用户授权了权限，拨打电话
+                dialPhoneNumber(telPhone)
+            } else {
+                // 如果用户拒绝了权限，可以在这里处理相应的逻辑
+                showToast("拒绝了打电话权限，请手动开启")
+            }
+        }
+    }
+
+    private fun dialPhoneNumber(phoneNumber: String) {
+        val dialIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${phoneNumber}"))
+        startActivity(dialIntent)
     }
 }

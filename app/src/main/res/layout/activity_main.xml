@@ -34,6 +34,15 @@
             android:gravity="center"
             android:orientation="vertical">
 
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/aiv_my_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:src="@mipmap/home_tab" />
+
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/aiv_home"
                 android:layout_width="@dimen/dp_48"
@@ -46,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="订单"
+                android:textStyle="bold"
                 android:textColor="@drawable/bottom_navigation_item_selector"
                 android:textSize="@dimen/sp_20" />
 
@@ -71,6 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="验券"
+                android:textStyle="bold"
                 android:textColor="@drawable/bottom_navigation_item_selector"
                 android:textSize="@dimen/sp_20" />
 
@@ -96,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="数据"
+                android:textStyle="bold"
                 android:textColor="@drawable/bottom_navigation_item_selector"
                 android:textSize="@dimen/sp_20" />
 
@@ -115,12 +127,15 @@
                 android:layout_height="@dimen/dp_48"
                 android:src="@drawable/bottom_navigation_item_my_selector" />
 
+
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/atv_my"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="我的"
+                android:textStyle="bold"
                 android:textColor="@drawable/bottom_navigation_item_selector"
                 android:textSize="@dimen/sp_20" />
 

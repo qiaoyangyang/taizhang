@@ -7,14 +7,10 @@ import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.meiling.common.fragment.BaseFragment
-import com.meiling.common.network.data.OrderDto
-import com.meiling.oms.EventBusData.MessageEventTime
-import com.meiling.oms.EventBusData.MessageEventUpDataTip
-import com.meiling.oms.R
+import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentHomeOrderOningBinding
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
-import com.meiling.oms.viewmodel.NewsViewModel
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.formatCurrentDateBeforeWeek
 import com.meiling.oms.widget.showToast
@@ -30,10 +26,19 @@ class HomeOningOrderFragment :
         fun newInstance() = HomeOningOrderFragment()
     }
 
-
     private val fragmentList: MutableList<Fragment> = ArrayList()
 
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
     override fun initView(savedInstanceState: Bundle?) {
+
         mDatabind.viewPager.isUserInputEnabled = false
     }
 
@@ -45,6 +50,7 @@ class HomeOningOrderFragment :
         fragmentList.add(BaseOrderFragment.newInstance("50", false))
         fragmentList.add(BaseOrderFragment.newInstance("70", false))
         fragmentList.add(BaseOrderFragment.newInstance("80", false))
+        mDatabind.viewPager.offscreenPageLimit = 1
         mDatabind.viewPager.adapter =
             BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
         mDatabind.viewPager.setCurrentItem(0, false)
@@ -88,79 +94,90 @@ class HomeOningOrderFragment :
             isValid = "",
             businessNumber = ""
         )
+//        EventBus.getDefault().post(MessageEventUpDateOrder())
     }
 
     override fun createObserver() {
-
+        mViewModel.statusCountDto.onStart.observe(this) {
+        }
         mViewModel.statusCountDto.onSuccess.observe(this) {
-            dismissLoading()
-            if (it.deliveryNot != 0) {
-                mDatabind.tabLayout.updateTabBadge(0) {
-                    badgeTextSize = 30f
-                    badgeGravity = Gravity.RIGHT or Gravity.TOP
-                    badgeText = it.deliveryNot.toString()
-                    badgeOffsetX = 5
-                    badgeOffsetY = 30
-
+            mDatabind.tabLayout.updateTabBadge(0) {
+                badgeTextSize = 30f
+                badgeGravity = Gravity.RIGHT or Gravity.TOP
+                badgeText = if (it.deliveryNot == 0) {
+                    null
+                } else {
+                    it.deliveryNot.toString()
                 }
-            }
-            if (it.deliveryOrder != 0) {
-                mDatabind.tabLayout.updateTabBadge(1) {
-                    badgeTextSize = 30f
-                    badgeGravity = Gravity.RIGHT or Gravity.TOP
-                    badgeText = it.deliveryOrder.toString()
-                    badgeOffsetX = 5
-                    badgeOffsetY = 30
+                badgeOffsetX = 5
+                badgeOffsetY = 30
 
-                }
             }
-            if (it.deliveryGoods != 0) {
-                mDatabind.tabLayout.updateTabBadge(2) {
-                    badgeTextSize = 30f
-                    badgeGravity = Gravity.RIGHT or Gravity.TOP
-                    badgeText = it.deliveryGoods.toString()
-                    badgeOffsetX = 5
-                    badgeOffsetY = 30
+            mDatabind.tabLayout.updateTabBadge(1) {
+                badgeTextSize = 30f
+                badgeGravity = Gravity.RIGHT or Gravity.TOP
+                badgeText = if (it.deliveryOrder == 0) {
+                    null
+                } else {
+                    it.deliveryOrder.toString()
+                }
+                badgeOffsetX = 5
+                badgeOffsetY = 30
 
-                }
             }
-            if (it.deliverying != 0) {
-                mDatabind.tabLayout.updateTabBadge(3) {
-                    badgeTextSize = 30f
-                    badgeGravity = Gravity.RIGHT or Gravity.TOP
-                    badgeText = it.deliverying.toString()
-                    badgeOffsetX = 5
-                    badgeOffsetY = 30
+            mDatabind.tabLayout.updateTabBadge(2) {
+                badgeTextSize = 30f
+                badgeGravity = Gravity.RIGHT or Gravity.TOP
+                badgeText = if (it.deliveryGoods == 0) {
+                    null
+                } else {
+                    it.deliveryGoods.toString()
+                }
+                badgeOffsetX = 5
+                badgeOffsetY = 30
 
-                }
             }
-            if (it.deliveryCancel != 0) {
-                mDatabind.tabLayout.updateTabBadge(4) {
-                    badgeTextSize = 30f
-                    badgeGravity = Gravity.RIGHT or Gravity.TOP
-                    badgeText = it.deliveryCancel.toString()
-                    badgeOffsetX = 20
-                    badgeOffsetY = 30
+            mDatabind.tabLayout.updateTabBadge(3) {
+                badgeTextSize = 30f
+                badgeGravity = Gravity.RIGHT or Gravity.TOP
+                badgeText = if (it.deliverying == 0) {
+                    null
+                } else {
+                    it.deliverying.toString()
+                }
+                badgeOffsetX = 5
+                badgeOffsetY = 30
 
-                }
             }
-            if (it.deliveryComplete != 0) {
-                mDatabind.tabLayout.updateTabBadge(5) {
-                    badgeTextSize = 30f
-                    badgeGravity = Gravity.RIGHT or Gravity.TOP
-                    badgeText = it.deliveryComplete.toString()
-                    badgeOffsetX = 10
-                    badgeOffsetY = 30
+            mDatabind.tabLayout.updateTabBadge(4) {
+                badgeTextSize = 30f
+                badgeGravity = Gravity.RIGHT or Gravity.TOP
+                badgeText = if (it.deliveryCancel == 0) {
+                    null
+                } else {
+                    it.deliveryCancel.toString()
+                }
+                badgeOffsetX = 20
+                badgeOffsetY = 30
 
-                }
             }
+//            mDatabind.tabLayout.updateTabBadge(5) {
+//                badgeTextSize = 30f
+//                badgeGravity = Gravity.RIGHT or Gravity.TOP
+//                badgeText = if (it.deliveryComplete == 0) {
+//                    null
+//                } else {
+//                    it.deliveryComplete.toString()
+//                }
+//                badgeOffsetX = 10
+//                badgeOffsetY = 30
+//
+//            }
             Log.e("order", "createObserver: " + it)
         }
         mViewModel.statusCountDto.onError.observe(this) {
-            dismissLoading()
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
-
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentHomeOrderOningBinding {

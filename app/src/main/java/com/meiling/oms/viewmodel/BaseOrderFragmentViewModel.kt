@@ -8,12 +8,14 @@ import com.meiling.common.network.data.OrderDto
 import com.meiling.common.network.data.StatusCountDto
 import com.meiling.common.network.service.homeService
 import com.meiling.common.network.service.orderDisService
+import retrofit2.http.Query
 
 class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(application) {
 
     var orderList = BaseLiveData<OrderDto>()
     var statusCountDto = BaseLiveData<StatusCountDto>()
     var cancelOrderDto = BaseLiveData<String>()
+    var anyDto = BaseLiveData<Any>()
 
     //    logisticsStatus：0.待配送  20.带抢单 30.待取货 50.配送中 70.取消 80.已送达
     fun orderList(
@@ -41,8 +43,8 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
                 pageSize,
                 deliverySelect,
                 isValid,
-                businessNumber,
-                selectText,
+                businessNumber = businessNumber,
+                selectText = selectText,
                 channelId = channelId
             )
         }, orderList)
@@ -80,6 +82,14 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
 
     fun cancelOrder(cancelCouponSum: CancelOrderSend) {
         request({ orderDisService.cancelOrderSend(cancelCouponSum) }, cancelOrderDto)
+    }
+
+    fun getPrint(
+        sourceId: String,
+        shopId: String,
+        printTemplateType: String
+    ) {
+        request({ orderDisService.print(sourceId, shopId, printTemplateType) }, anyDto)
     }
 
 }

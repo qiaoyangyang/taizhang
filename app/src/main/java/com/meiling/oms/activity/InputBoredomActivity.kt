@@ -20,7 +20,6 @@ import com.meiling.oms.databinding.ActivityInputBoredomBinding
 import com.meiling.oms.dialog.CheckCouponInformationDidalog
 import com.meiling.oms.dialog.CheckCouponInformationDidalog1
 import com.meiling.oms.dialog.ShopDialog
-import com.meiling.oms.viewmodel.InputBoredomViewModel
 import com.meiling.oms.viewmodel.VoucherinspectionViewModel
 import com.meiling.oms.widget.showToast
 
@@ -86,7 +85,7 @@ class InputBoredomActivity :
 
         }
 
-        mDatabind.tvStockCode.isLongClickable=false
+        mDatabind.tvStockCode.isLongClickable = false
 
 
     }
@@ -98,12 +97,12 @@ class InputBoredomActivity :
             //DataPickerUtitl.setpickData(this,it)
             if (it.size != 0) {
                 it.forEach {
-                    it.shopList?.forEach { shop->
-                        if (TextUtils.isEmpty(shop?.poiId)){
-                            shop?.poiId=""
+                    it.shopList?.forEach { shop ->
+                        if (TextUtils.isEmpty(shop?.poiId)) {
+                            shop?.poiId = ""
                         }
-                        if (TextUtils.isEmpty(shop?.status)){
-                            shop?.status=""
+                        if (TextUtils.isEmpty(shop?.status)) {
+                            shop?.status = ""
                         }
 
                     }
@@ -113,11 +112,16 @@ class InputBoredomActivity :
                 shopDialog.setOnresilience(object : ShopDialog.Onresilience {
 
 
-                    override fun resilience(cityid: Int, cityidname: String, shopid: Int, shop: Shop) {
+                    override fun resilience(
+                        cityid: Int,
+                        cityidname: String,
+                        shopid: Int,
+                        shop: Shop
+                    ) {
                         mViewModel.Shop.onSuccess.postValue(shop)
                         shopId = shop?.id.toString()
                         shopdata = shop
-                        mDatabind.TitleBar.titleView.text = cityidname+shop.name
+                        mDatabind.TitleBar.titleView.text = cityidname + shop.name
                     }
 
                     override fun Ondismiss() {
@@ -179,9 +183,23 @@ class InputBoredomActivity :
 
     var shopId: String = ""
     override fun createObserver() {
+        mViewModel.shopBean.onSuccess.observe(this) {
+            if (it.size != 0) {
+                shopdata = it[0].shopList?.get(0)
+                shopId = it.get(0).shopList?.get(0)?.id!!
+                mDatabind.TitleBar.titleView.text =
+                    it.get(0).name + "/" + it.get(0).shopList?.get(0)?.name
+            }
+        }
+
+        mViewModel.thrillBen.onStart.observe(this) {
+            showLoading("")
+        }
 
         mViewModel.thrillBen.onSuccess.observe(this) {
+            disLoading()
             if (it.size != 0) {
+
                 var checkCouponInformationDidalog = CheckCouponInformationDidalog().newInstance(it)
                 checkCouponInformationDidalog.setOnresilience(object :
                     CheckCouponInformationDidalog.Onresilience {
@@ -197,18 +215,25 @@ class InputBoredomActivity :
 
         }
 
-        mViewModel.shopBean.onSuccess.observe(this) {
-            if (it.size != 0) {
-                shopdata = it[0].shopList?.get(0)
-                shopId = it.get(0).shopList?.get(0)?.id!!
-                mDatabind.TitleBar.titleView.text = it.get(0).name+"/"+it.get(0).shopList?.get(0)?.name
-            }
+        //扫码核销失败
+        mViewModel.thrillBen.onError.observe(this) {
+            disLoading()
+            showToast("${it.msg}")
         }
 
+
+
+        mViewModel.verifythrillBen.onStart.observe(this) {
+            showLoading("")
+        }
         //核销成功
         mViewModel.verifythrillBen.onSuccess.observe(this) {
+            disLoading()
             if (type == "1") {
                 var it1 = it as ArrayList<ThrillItem>
+
+                StockCode = ""
+                mDatabind.tvStockCode.setText(StockCode)
                 startActivity(
                     Intent(this, WriteOffActivity::class.java).putExtra(
                         "thrillitem",
@@ -223,15 +248,16 @@ class InputBoredomActivity :
         }
         //确认核销失败
         mViewModel.verifythrillBen.onError.observe(this) {
+            disLoading()
             showToast("${it.msg}")
         }
-        //扫码核销失败
-        mViewModel.thrillBen.onError.observe(this) {
-            showToast("${it.msg}")
+
+        mViewModel.meituan.onStart.observe(this) {
+            showLoading("")
         }
         //美团扫码返回
         mViewModel.meituan.onSuccess.observe(this) {
-
+            disLoading()
             var checkCouponInformationDidalog = CheckCouponInformationDidalog1().newInstance(it)
             checkCouponInformationDidalog.setOnresilience(object :
                 CheckCouponInformationDidalog1.Onresilience {
@@ -245,16 +271,29 @@ class InputBoredomActivity :
             checkCouponInformationDidalog.show(supportFragmentManager)
         }
         mViewModel.meituan.onError.observe(this) {
+            disLoading()
             showToast("${it.msg}")
         }
 
+        mViewModel.consume.onStart.observe(this) {
+            showLoading("")
+        }
+
         mViewModel.consume.onSuccess.observe(this) {
+            disLoading()
+            StockCode = ""
+            mDatabind.tvStockCode.setText(StockCode)
             startActivity(
                 Intent(this, MeituanActivity::class.java).putExtra(
                     "meituan",
                     meituan
                 ).putExtra("shopId", shopId).putExtra("code", it)
             )
+        }
+
+        mViewModel.consume.onError.observe(this){
+            disLoading()
+            showToast("${it.msg}")
         }
 
 

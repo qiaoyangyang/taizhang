@@ -66,9 +66,10 @@
         android:drawableStart="@drawable/order_dis_tip_icon"
         android:gravity="center"
         android:maxLines="1"
+        android:ellipsize="end"
         android:paddingVertical="@dimen/dp_5"
         android:paddingStart="@dimen/dp_10"
-        android:text="手机号格式异常"
+        tools:text="手机号格式异常"
         android:textColor="@color/red_FF4C4A"
         android:textSize="@dimen/sp_20" />
 </RelativeLayout>

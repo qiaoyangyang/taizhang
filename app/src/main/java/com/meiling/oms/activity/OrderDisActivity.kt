@@ -54,7 +54,7 @@ class OrderDisActivity : BaseActivity<OrderDisFragmentViewModel, ActivityDisBind
             mDatabind.txtOrderDisAddress.text = it.poiAddr
             mDatabind.txtOrderDisRecName.text = it.recvName
             mDatabind.txtOrderDisRecPhone.text = it.recvPhone
-            mDatabind.txtOrderDisRecAddress.text = it.recvAddr
+            mDatabind.txtOrderDisRecAddress.text = it.recvAddr?.replace("@@", "")
 
             fragmentList.add(
                 OrderDisFragment1.newInstance(

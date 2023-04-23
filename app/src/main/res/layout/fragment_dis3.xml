@@ -97,6 +97,8 @@
         android:background="@drawable/order_search_bg_button_red"
         android:text="发起配送"
         android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="@dimen/sp_32"
         app:layout_constraintBottom_toBottomOf="parent"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

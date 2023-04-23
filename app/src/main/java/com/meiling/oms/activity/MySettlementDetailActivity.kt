@@ -21,6 +21,7 @@ import com.meiling.oms.viewmodel.RechargeViewModel
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.formatCurrentDateBeforeWeek
 import com.meiling.oms.widget.showToast
+import com.meiling.oms.widget.transToString
 
 /**
  * 结算明细
@@ -45,9 +46,10 @@ class MySettlementDetailActivity :
                 override fun convert(holder: BaseViewHolder, item: PageResult.PageData) {
                     holder.setText(
                         R.id.txt_channel_name,
-                        item.orderChannelName + "#" + item.orderChannel
+                        item.orderChannelName + "#" + item.orderSerialNumber
                     )
-                    holder.setText(R.id.txt_service_charge_money, item.settlementAmount)
+                    holder.setText(R.id.txt_service_charge_money, "-" + item.settlementAmount)
+//                    holder.setText(R.id.txt_recharge_name, transToString(item.createTime!!.toLong()))
                     holder.setText(R.id.txt_recharge_name, item.createTime)
                 }
             }
@@ -59,7 +61,7 @@ class MySettlementDetailActivity :
         val settlementDate = intent.getStringExtra("settlementDate")
         val viewId = intent.getStringExtra("viewId")
         mDatabind.txtSettlementName.text = settlementName
-        mDatabind.txtSettlementTime.text = settlementDate + viewId
+        mDatabind.txtSettlementTime.text = settlementDate
         mViewModel.getFinancialRecordDetail(
             viewId = viewId!!,
             pageIndex = "1",

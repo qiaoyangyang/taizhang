@@ -21,12 +21,12 @@ import com.meiling.common.network.data.WriteoffhistoryPageData
 import com.meiling.common.utils.Constant
 import com.meiling.common.utils.RecyclerViewDivider
 import com.meiling.common.utils.SpannableUtils
-import com.meiling.oms.EventBusData.MessageEvent
-import com.meiling.oms.EventBusData.MessageEventVoucherInspectionHistory
+import com.meiling.oms.eventBusData.MessageEventVoucherInspectionHistory
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityHistoryBinding
 import com.meiling.oms.dialog.VerificationScreeningDidalog
 import com.meiling.oms.viewmodel.VoucherInspectionHistoryViewModel
+import com.meiling.oms.widget.SS
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
@@ -37,6 +37,8 @@ import org.greenrobot.eventbus.ThreadMode
 class VoucherInspectionHistoryActivity :
     BaseActivity<VoucherInspectionHistoryViewModel, ActivityHistoryBinding>() {
     lateinit var orderLeftRecyAdapter: BaseQuickAdapter<WriteoffhistoryPageData?, BaseViewHolder>
+
+
     override fun initView(savedInstanceState: Bundle?) {
         EventBus.getDefault().register(this)
         initRecycleyView()
@@ -56,26 +58,34 @@ class VoucherInspectionHistoryActivity :
             }
 
         })
+        //搜索
         mDatabind.btnSearch.setOnClickListener {
             orderLeftRecyAdapter.setList(null)
+            pageIndex = 1
             setcoupon()
 
         }
+
+        //清楚
         mDatabind.imgSearchEditClear.setOnClickListener {
             orderLeftRecyAdapter.setList(null)
             mDatabind.edtSearch.setText("")
+            pageIndex = 1
             setcoupon()
 
         }
-
+        //键盘搜索
         mDatabind.edtSearch?.setOnEditorActionListener { v, actionId, event ->
             if (actionId == 0 || actionId == 3) {
                 orderLeftRecyAdapter.setList(null)
+                pageIndex = 1
                 setcoupon()
 
             }
             return@setOnEditorActionListener false
         }
+
+        //筛选
         mDatabind.tvScreen.setOnClickListener {
 
             var verificationScreening =
@@ -84,6 +94,7 @@ class VoucherInspectionHistoryActivity :
                     endDate,
                     timetype,
                     poiId,
+                    shopName,
                     poiIdtype,
                     status,
                     isVoucher
@@ -101,10 +112,12 @@ class VoucherInspectionHistoryActivity :
                     startDate = verificationScreening.startDate
                     endDate = verificationScreening.endDate
                     poiIdtype = verificationScreening.poiIdtype
-                    poiIdtype = verificationScreening.poiIdtype
+                    poiId = verificationScreening.poiId
+                    shopName = verificationScreening.shopName
                     status = verificationScreening.status
                     isVoucher = verificationScreening.isVoucher
                     orderLeftRecyAdapter.setList(null)
+                    pageIndex = 1
                     setcoupon()
                 }
 
@@ -142,7 +155,7 @@ class VoucherInspectionHistoryActivity :
             typename = "2"
         }
 
-
+        orderLeftRecyAdapter.loadMoreModule.loadMoreView = SS()
         orderLeftRecyAdapter.loadMoreModule.setOnLoadMoreListener {
             pageIndex++
             setcoupon()
@@ -167,6 +180,7 @@ class VoucherInspectionHistoryActivity :
 
         }
         mViewModel.writeoffhistory.onSuccess.observe(this) {
+
             if (it.pageData != null) {
 
 
@@ -196,7 +210,7 @@ class VoucherInspectionHistoryActivity :
         }
         mViewModel.writeoffhistory.onError.observe(this) {
             mDatabind.refeshLayout.finishRefresh()
-            showToast("${it.message}")
+            showToast("${it.msg}")
         }
     }
 
@@ -233,16 +247,20 @@ class VoucherInspectionHistoryActivity :
                     holder.setText(R.id.tv_status, "已核销")
                 }
                 if (item?.coupon?.isVoucher == 1) {//团购 2。代金
-                    holder.setText(R.id.tv_y,"团购券(元)")
+                    holder.setText(R.id.tv_y, "团购券(元)")
                 } else {
-                    holder.setText(R.id.tv_y,"代金券(元)")
+                    holder.setText(R.id.tv_y, "代金券(元)")
                 }
 
 
 
+                var shopname=item?.shopName
+                if (item?.shopName.toString().length>12){
+                    shopname=item?.shopName.toString().substring(0,12)+"...."
+                }
 
                 if (item?.coupon?.type == 2) {//美团
-                    var conet = "由 ${item.shopName} 验证"
+                    var conet = "由 ${shopname} 验证"
                     SpannableUtils.setTextcolor(
                         holder.itemView.context,
                         conet,
@@ -254,7 +272,8 @@ class VoucherInspectionHistoryActivity :
 
                 } else if (item?.coupon?.type == 5) {//抖音
                     //  holder.setText(R.id.tv_shopName, "由"+item?.coupon?.shopName+"验证")
-                    var conet = "由 ${item?.shopName}店 验证"
+
+                    var conet = "由 ${shopname} 验证"
                     SpannableUtils.setTextcolor(
                         holder.itemView.context,
                         conet,
@@ -278,11 +297,11 @@ class VoucherInspectionHistoryActivity :
         mDatabind.ryOrderLeft.addItemDecoration(recyclerViewDivider)
         mDatabind.ryOrderLeft.adapter = orderLeftRecyAdapter
         orderLeftRecyAdapter.setList(arrayListOf())
-        orderLeftRecyAdapter.setEmptyView(R.layout.empty_want_goods_recycler)
+        orderLeftRecyAdapter.setEmptyView(R.layout.order_search_empty1)
         orderLeftRecyAdapter.setOnItemClickListener { adapter, view, position ->
             var writeoffhistoryPageData = orderLeftRecyAdapter.data[position]
             ARouter.getInstance().build("/app/WriteOffDetailsActivity")
-                .withInt("id",position)
+                .withInt("id", position)
                 .withSerializable(
                     "writeoffhistoryPageData",
                     writeoffhistoryPageData
@@ -299,6 +318,7 @@ class VoucherInspectionHistoryActivity :
     var timetype: Int = 2
     var poiId: String = ""
     var poiIdtype: String = "0"
+    var shopName: String = ""
     var status: String = ""
     var isVoucher: String = "0"
     var shopBean = ArrayList<ShopBean>()
@@ -307,11 +327,7 @@ class VoucherInspectionHistoryActivity :
             shopBean = it
         }
 
-        if (!TextUtils.isEmpty(shop?.poiId)) {
-            poiId = shop?.poiId!!
 
-
-        }
 
 
         mViewModel.coupon(
@@ -349,11 +365,22 @@ class VoucherInspectionHistoryActivity :
         // 在这里处理事件
         val message: Int = event.id
         var data = orderLeftRecyAdapter.data.get(message)
-        if (data?.coupon?.undoType == 0){
-            data?.coupon?.undoType=1
+        if (data?.coupon?.undoType == 0) {
+            data?.coupon?.undoType = 1
         }
         orderLeftRecyAdapter.notifyItemChanged(message)
         //orderDisAdapter.notifyItemChanged(message)
+        mViewModel.codeNumber(
+            poiId,
+            startDate,
+            endDate,
+            mDatabind.edtSearch.text.toString(),
+            pageIndex,
+            Constant.size,
+            typename,
+            status,
+            isVoucher
+        )
     }
 
 }

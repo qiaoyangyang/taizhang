@@ -2,15 +2,14 @@ package com.meiling.oms.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.SelectDialogDto
-import com.meiling.oms.EventBusData.MessageEventHistoryUpDataTip
-import com.meiling.oms.EventBusData.MessageHistoryEventSelect
+import com.meiling.oms.eventBusData.MessageEventHistoryUpDataTip
+import com.meiling.oms.eventBusData.MessageHistoryEventSelect
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentHomeOrderHistoryBinding
 import com.meiling.oms.dialog.OrderSelectDialog
@@ -38,7 +37,17 @@ class HomeHistoryOrderFragment :
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewPager.isUserInputEnabled = false
+
+    }
+
+    override fun onStart() {
+        super.onStart()
         EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
     }
 
     var selectDialogDto = SelectDialogDto(
@@ -90,6 +99,14 @@ class HomeHistoryOrderFragment :
 
     override fun onResume() {
         super.onResume()
+        selectDialogDto = SelectDialogDto(
+            startDate = formatCurrentDate(),
+            endDate = formatCurrentDate(),
+            timetype = 2,
+            orderTime = "1",
+            channelId = "0",
+        )
+        EventBus.getDefault().post(MessageHistoryEventSelect(selectDialogDto))
         mViewModel.statusCount(
             logisticsStatus = "",
             startTime = formatCurrentDate(),

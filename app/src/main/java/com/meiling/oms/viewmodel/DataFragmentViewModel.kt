@@ -3,10 +3,14 @@ package com.meiling.oms.viewmodel
 import android.app.Application
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
+import com.meiling.common.network.ResultData
 import com.meiling.common.network.data.*
 import com.meiling.common.network.service.dataService
+import retrofit2.http.GET
 
 class DataFragmentViewModel(application: Application) : BaseViewModel(application) {
+
+
 
     /**
      * 配送
@@ -18,7 +22,7 @@ class DataFragmentViewModel(application: Application) : BaseViewModel(applicatio
 
     var dataHistoryList = BaseLiveData<DataDisDto>()
     fun dataHistoryDisList(dataDisDto: DataListDto) {
-        request({ dataService.dataList(dataDisDto) }, dataList)
+        request({ dataService.dataList(dataDisDto) }, dataHistoryList)
     }
 
     /**
@@ -54,5 +58,6 @@ class DataFragmentViewModel(application: Application) : BaseViewModel(applicatio
     /**
      * 选择门店
      * */
+
 
 }

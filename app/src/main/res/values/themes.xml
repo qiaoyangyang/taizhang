@@ -15,7 +15,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@color/white</item>
         <!--页面背景色-->
-        <item name="android:windowBackground">@color/app_themes_1f2333</item>
+        <item name="android:windowBackground">@mipmap/splash</item>
         <!--api 21 可用 底部导航栏颜色-->
         <item name="android:navigationBarColor">@color/black</item>
 
@@ -35,8 +35,8 @@
         <item name="android:layout_height">100dp</item>
         <item name="android:background">@drawable/bg_pay</item>
         <item name="android:textColor">#9A9A9A</item>
-        <item name="android:textSize">@dimen/sp_36</item>
-        <item name="layout_constraintWidth_percent">0.24</item>
+        <item name="android:textSize">36sp</item>
+        <item name="layout_constraintWidth_percent">0.23</item>
         <item name="android:gravity">center</item>
 
 
@@ -46,4 +46,7 @@
         <item name="textSize">16sp</item>
         <item name="android:textColor">#666666</item>
     </style>
+
+
+
 </resources>

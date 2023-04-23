@@ -27,9 +27,11 @@ class ForgetPwdFinishActivity : BaseActivity<LoginViewModel, ActivityForgetPwdSu
         )
 
     }
+
     override fun isStatusBarDarkFont(): Boolean {
         return true
     }
+
     override fun getBind(layoutInflater: LayoutInflater): ActivityForgetPwdSuccessBinding {
         return ActivityForgetPwdSuccessBinding.inflate(layoutInflater)
     }
@@ -37,15 +39,21 @@ class ForgetPwdFinishActivity : BaseActivity<LoginViewModel, ActivityForgetPwdSu
     override fun initListener() {
         val account = intent.getStringExtra("account")
         val pwd = intent.getStringExtra("password")
+        val type = intent.getStringExtra("title")
+        val context = intent.getStringExtra("context")
         var isAgreement = false
+
+        mDatabind.TitleBar.title = type
+        mDatabind.txtTipTip.text = context
+
         mDatabind.cbAgreementv.setOnCheckedChangeListener { buttonView, isChecked ->
             isAgreement = isChecked
         }
 
         mDatabind.btnLoginNext.setSingleClickListener {
-            if (!isAgreement){
+            if (!isAgreement) {
                 showToast("请同意并勾选用户协议和隐私政策")
-            }else{
+            } else {
                 mViewModel.accountLogin(
                     account!!,
                     pwd!!

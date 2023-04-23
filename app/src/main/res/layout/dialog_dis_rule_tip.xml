@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginHorizontal="@dimen/dp_80"
+    android:background="@drawable/scan_bg_input">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="温馨提示"
+        android:textColor="#1F1F1F"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_rule_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginVertical="@dimen/dp_24"
+        android:gravity="center"
+        android:paddingVertical="@dimen/dp_24"
+        tools:text="请将收件人手机号码修改为真实号码，详情说明可点击“配送规则”查看"
+        app:layout_constraintBottom_toTopOf="@+id/ll_btn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/btn_rule_cancel"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_weight="1"
+            android:background="@drawable/order_bg_red"
+            android:gravity="center"
+            android:shadowColor="@color/home_666666"
+            android:text="取消"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_25"
+            app:shape_radius="@dimen/sp_15"
+            app:shape_solidColor="@color/white"
+            app:shape_strokeColor="@color/home_000000"
+            app:shape_strokeWidth="@dimen/dp_1" />
+
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/btn_rule_tip"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:shadowColor="@color/home_666666"
+            android:text="配送规则"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_25"
+            app:shape_radius="@dimen/sp_15"
+            app:shape_solidColor="@color/red" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
