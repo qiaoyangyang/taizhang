@@ -105,6 +105,7 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
 
             rb_status?.isChecked = true
             verificationScreening.status = ""
+            verificationScreening.poiId=""
 
         }
 
