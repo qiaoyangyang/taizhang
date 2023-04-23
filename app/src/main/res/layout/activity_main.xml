@@ -36,7 +36,7 @@
 
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/aiv_my_select"
+                android:id="@+id/aiv_home_select"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
