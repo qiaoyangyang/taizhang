@@ -1,5 +1,6 @@
 package com.meiling.oms.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -10,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.ActivityUtils
 import com.meiling.common.BaseViewModel
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.constant.SPConstants
@@ -204,10 +206,13 @@ class ModifyPassWordActivity : BaseActivity<LoginViewModel, ActivityModifyPasswo
         }
         mViewModel.repData.onSuccess.observe(this) {
             disLoading()
-            ARouter.getInstance().build("/app/ForgetPwdFinishActivity")
-                .withString("password", mDatabind.edtInputPwd.text.trim().toString())
-                .withString("account", mDatabind.txtLoginAccountShow.text.trim().toString())
-                .navigation()
+            ARouter.getInstance().build("/app/LoginActivity")
+                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).navigation()
+            ActivityUtils.finishAllActivities()
+//            ARouter.getInstance().build("/app/ForgetPwdFinishActivity")
+//                .withString("password", mDatabind.edtInputPwd.text.trim().toString())
+//                .withString("account", mDatabind.txtLoginAccountShow.text.trim().toString())
+//                .navigation()
         }
         mViewModel.repData.onError.observe(this) {
             disLoading()
