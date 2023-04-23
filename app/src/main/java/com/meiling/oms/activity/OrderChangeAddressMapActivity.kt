@@ -114,7 +114,7 @@ class OrderChangeAddressMapActivity :
 //                        1-> showToast("定位失败，由于未获得WIFI列表和基站信息，且GPS当前不可用")
 //                        12-> showToast("缺少定位权限")
 //                    }
-                   showToast("${amapLocation?.errorInfo}")
+                   showToast("定位失败，请检查权限")
 
 //                    rootView.findViewById<RecyclerView>(R.id.ryOrderDisSearchLocal).visibility = View.GONE
                     Log.d("lwq", "错误3============errorCode${amapLocation?.errorCode}")
@@ -130,7 +130,7 @@ class OrderChangeAddressMapActivity :
         //设置地图的放缩级别
         aMap?.moveCamera(CameraUpdateFactory.zoomTo(15f));
         //设置是否只定位一次,默认为false
-        mLocationOption?.isOnceLocation = true
+//        mLocationOption?.isOnceLocation = true
         //初始化定位
         mLocationClient = AMapLocationClient(this);
         //设置定位回调监听

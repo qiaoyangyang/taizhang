@@ -22,6 +22,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.oms.R
 import com.meiling.oms.widget.KeyBoardUtil
+import com.meiling.oms.widget.showToast
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
 import java.io.BufferedReader
@@ -79,6 +80,7 @@ class OrderDistributionSelectLocalCityDialog() : BaseNiceDialog() {
                     mLocationClient?.stopLocation()
                 } else {
                     txtLocal?.text = "定位失败"
+                    showToast("定位失败,请检查权限")
                 }
             }
         }
@@ -89,8 +91,8 @@ class OrderDistributionSelectLocalCityDialog() : BaseNiceDialog() {
         mLocationOption = AMapLocationClientOption();
         //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
         mLocationOption?.locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy;
-        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
         mLocationOption?.isOnceLocation = true
+        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
         mLocationOption?.interval = 100000
         //设置是否返回地址信息（默认返回地址信息）
         mLocationOption?.isNeedAddress = true;
