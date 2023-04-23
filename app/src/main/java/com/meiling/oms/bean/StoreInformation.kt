@@ -165,7 +165,7 @@ data class Channel(
     @SerializedName("channelList")
     var channelList: List<ChannelX>? = listOf(),
     @SerializedName("shopList")
-    var shopList: List<Shop>? = listOf()
+    var shopList: List<ChannShop>? = listOf()
 )
 
 data class ChannelX(
@@ -199,7 +199,7 @@ data class ChannelX(
     var viewId: Int? = 0
 )
 
-data class Shop(
+data class ChannShop(
     @SerializedName("channelId")
     var channelId: Int? = 0,
     @SerializedName("channelLogo")
@@ -231,7 +231,7 @@ data class Shop(
     @SerializedName("status")
     var status: Int? = 0,
     @SerializedName("thirdInventoryUrl")
-    var thirdInventoryUrl: Any? = Any(),
+    var thirdInventoryUrl: String? = "",
     @SerializedName("viewId")
     var viewId: Long? = 0
 )
