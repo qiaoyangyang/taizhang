@@ -33,6 +33,7 @@ import com.meiling.oms.databinding.ActivityOrderChengeAddredssMapBinding
 import com.meiling.oms.dialog.OrderDistributionSelectLocalCityDialog
 import com.meiling.oms.viewmodel.ChangeAddressModel
 import com.meiling.oms.widget.KeyBoardUtil
+import com.meiling.oms.widget.showToast
 
 
 /**
@@ -109,6 +110,12 @@ class OrderChangeAddressMapActivity :
 //                    rootView.findViewById<LinearLayout>(R.id.llError).visibility = View.VISIBLE
                     mapView.visibility = View.GONE
                     mDatabind.txtMapLocalCity?.text = "定位中"
+//                    when (amapLocation?.errorCode){
+//                        1-> showToast("定位失败，由于未获得WIFI列表和基站信息，且GPS当前不可用")
+//                        12-> showToast("缺少定位权限")
+//                    }
+                   showToast("${amapLocation?.errorInfo}")
+
 //                    rootView.findViewById<RecyclerView>(R.id.ryOrderDisSearchLocal).visibility = View.GONE
                     Log.d("lwq", "错误3============errorCode${amapLocation?.errorCode}")
                 }
@@ -230,6 +237,7 @@ class OrderChangeAddressMapActivity :
 //                Log.d("lwq", "============${p0!!.target}==1212==${cityCode}")
 //                getGeocodeSearch(p0!!.target, cityCode);
 //            }
+//        })
 //        })
 
         mDatabind.edtLocalSearch.setOnEditorActionListener { v, actionId, event ->

@@ -121,16 +121,19 @@ class OrderChangeAddressActivity :
             if (ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.CALL_PHONE
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-                // 如果有权限，拨打电话
+                // 如果有权限
                 ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
                     .navigation(this, REQUEST_CODE)
             } else {
                 // 如果没有权限，申请权限
                 ActivityCompat.requestPermissions(
                     this,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE),
                     ACCESS_FINE_LOCATION
                 )
             }
