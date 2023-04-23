@@ -24,9 +24,10 @@
             android:paddingHorizontal="@dimen/dp_30"
             android:paddingVertical="@dimen/dp_10"
             android:text="待处理"
+            android:textStyle="bold"
             android:layout_margin="@dimen/dp_8"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_30" />
+            android:textSize="@dimen/sp_28" />
 
         <TextView
             android:id="@+id/txt_history_order"
@@ -35,10 +36,10 @@
             android:paddingHorizontal="@dimen/dp_30"
             android:paddingVertical="@dimen/dp_10"
             android:text="历史订单"
-
             android:layout_margin="@dimen/dp_8"
+            android:textStyle="bold"
             android:textColor="@color/home_A8ABB2"
-            android:textSize="@dimen/sp_30" />
+            android:textSize="@dimen/sp_28" />
     </LinearLayout>
 
     <LinearLayout
@@ -60,8 +61,9 @@
             android:src="@drawable/home_search" />
         <TextView
             android:layout_width="wrap_content"
-            android:text="订单搜索"
+            android:text="搜订单"
             android:gravity="center"
+            android:textSize="@dimen/sp_24"
             android:textColor="@color/white"
             android:layout_height="wrap_content"/>
     </LinearLayout>

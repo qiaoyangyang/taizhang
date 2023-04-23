@@ -7,6 +7,7 @@ import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.activity.VoucherInspectionActivity
 import com.meiling.oms.databinding.FragmentScanBinding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.FindViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
@@ -23,6 +24,7 @@ class ScanFragment : BaseFragment<FindViewModel, FragmentScanBinding>() {
         ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
     }
 
+    var type = ""
     override fun getBind(inflater: LayoutInflater): FragmentScanBinding {
         return FragmentScanBinding.inflate(inflater)
     }
@@ -30,24 +32,54 @@ class ScanFragment : BaseFragment<FindViewModel, FragmentScanBinding>() {
     override fun initListener() {
         //抖音
         mDatabind.rlDouYin.setSingleClickListener {
-            startActivity(
-                Intent(mActivity, VoucherInspectionActivity::class.java).putExtra(
-                    "type",
-                    "1"
-                )
-            )
+            type = "1"
+            mViewModel.cityshop(type)
+
         }
         mDatabind.rlKouBei.setSingleClickListener { showToast("功能暂未开通") }
         mDatabind.rlMeiTuan.setSingleClickListener {
+            type = "2"
+            mViewModel.cityshop(type)
+
+
+        }
+
+    }
+
+    override fun createObserver() {
+        super.createObserver()
+        mViewModel.shopBean.onStart.observe(this) {
+            showLoading("")
+        }
+        mViewModel.shopBean.onSuccess.observe(this) {
+
+            dismissLoading()
+            if (it.isEmpty()) {
+                val dialog: MineExitDialog =
+                    MineExitDialog().newInstance(
+                        "温馨提示", "暂无门店，请去门店管理中创建门店！",
+                        "", "知道了", true
+                    )
+                dialog.setOkClickLister {
+                    dialog.dismiss()
+
+
+                }
+                dialog.show(activity?.supportFragmentManager)
+                return@observe
+            }
             startActivity(
                 Intent(mActivity, VoucherInspectionActivity::class.java).putExtra(
                     "type",
-                    "2"
+                    type
                 )
             )
 
         }
-
+        mViewModel.shopBean.onError.observe(this) {
+            dismissLoading()
+            showToast(it.msg)
+        }
     }
 
 }

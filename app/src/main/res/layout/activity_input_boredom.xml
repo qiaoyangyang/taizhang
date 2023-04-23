@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:leftIcon="@drawable/bar_arrows_left_white"
         app:lineVisible="false"
-        app:rightTitleSize="@dimen/sp_14"
+        app:rightTitleSize="@dimen/sp_36"
         app:title=""
         app:titleColor="@color/white" />
 
@@ -33,10 +33,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="18dp"
+        android:layout_marginLeft="@dimen/dp_36"
 
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="18dp"
+        android:layout_marginTop="@dimen/dp_100"
+        android:layout_marginRight="@dimen/dp_36"
 
         android:background="@drawable/bg_import_white_30"
         app:layout_constraintTop_toTopOf="@+id/slbg">
@@ -45,29 +45,30 @@
             android:id="@+id/iv_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="17dp"
-            android:layout_marginTop="17dp"
-            android:layout_marginBottom="17dp"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginBottom="@dimen/dp_34"
             android:src="@drawable/home_search_icon_red"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:maxLength="24"
 
             android:id="@+id/tv_Stock_Code"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_10"
             android:background="@null"
             android:focusable="false"
             android:gravity="center|left"
             android:hint="请输入顾客提供的券码"
             android:textColor="@color/home_333333"
-            android:textSize="18sp"
+            android:textSize="@dimen/sp_36"
             app:layout_constraintBottom_toBottomOf="parent"
 
             app:layout_constraintLeft_toRightOf="@+id/iv_search"
@@ -76,22 +77,22 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/iv_search_close_edt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="17dp"
+            android:layout_marginRight="@dimen/dp_34"
             android:src="@drawable/search_close_edt"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_Stock_Code"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/tv_Stock_Code" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/dp_20"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/cl_keyboard"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -100,18 +101,18 @@
         <TextView
 
             android:id="@+id/tv_left"
-            android:layout_width="32dp"
-            android:layout_height="1dp"
+            android:layout_width="@dimen/dp_64"
+            android:layout_height="@dimen/dp_1"
             android:background="#E2E2E2"
             app:layout_constraintBottom_toBottomOf="@+id/tv_type_name"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="@dimen/dp_20"
             app:layout_constraintRight_toLeftOf="@+id/tv_type_name"
             app:layout_constraintTop_toTopOf="@+id/tv_type_name" />
 
         <TextView
-            android:textSize="14sp"
+            android:textSize="@dimen/sp_28"
             android:textColor="#999999"
-            android:drawablePadding="10dp"
+            android:drawablePadding="@dimen/dp_20"
             android:gravity="center"
             android:text=""
             android:id="@+id/tv_type_name"
@@ -123,9 +124,9 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_width="32dp"
-            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_width="@dimen/dp_64"
+            android:layout_height="@dimen/dp_1"
             android:background="#E2E2E2"
             app:layout_constraintBottom_toBottomOf="@+id/tv_type_name"
             app:layout_constraintLeft_toRightOf="@+id/tv_type_name"
@@ -135,15 +136,16 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+
         android:id="@+id/cl_keyboard"
 
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:paddingLeft="5dp"
-        android:paddingTop="10dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="10dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_20"
         app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_constraintLeft_toLeftOf="parent"
@@ -154,6 +156,7 @@
             android:id="@+id/tv_1"
             style="@style/tv_pay_key"
 
+            android:layout_marginLeft="4dp"
             android:text="1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -161,7 +164,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_2"
             style="@style/tv_pay_key"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="7dp"
             android:text="2"
             app:layout_constraintLeft_toRightOf="@+id/tv_1"
             app:layout_constraintTop_toTopOf="parent" />
@@ -169,7 +172,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_3"
             style="@style/tv_pay_key"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="7dp"
             android:text="3"
             app:layout_constraintLeft_toRightOf="@+id/tv_2"
             app:layout_constraintTop_toTopOf="parent" />
@@ -177,7 +180,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_0"
             style="@style/tv_pay_key"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="7dp"
             android:text="0"
             app:layout_constraintLeft_toRightOf="@+id/tv_3"
             app:layout_constraintTop_toTopOf="parent" />
@@ -185,7 +188,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_4"
             style="@style/tv_pay_key"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="4"
             app:layout_constraintLeft_toLeftOf="@+id/tv_1"
             app:layout_constraintTop_toBottomOf="@+id/tv_0" />
@@ -193,7 +196,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_5"
             style="@style/tv_pay_key"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="5"
             app:layout_constraintLeft_toLeftOf="@+id/tv_2"
             app:layout_constraintTop_toBottomOf="@+id/tv_0" />
@@ -201,7 +204,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_6"
             style="@style/tv_pay_key"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="6"
             app:layout_constraintLeft_toLeftOf="@+id/tv_3"
             app:layout_constraintTop_toBottomOf="@+id/tv_0" />
@@ -209,7 +212,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_7"
             style="@style/tv_pay_key"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="7"
             app:layout_constraintLeft_toLeftOf="@+id/tv_4"
             app:layout_constraintTop_toBottomOf="@+id/tv_4" />
@@ -217,7 +220,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_8"
             style="@style/tv_pay_key"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="8"
             app:layout_constraintLeft_toLeftOf="@+id/tv_2"
             app:layout_constraintTop_toBottomOf="@+id/tv_4" />
@@ -225,7 +228,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_9"
             style="@style/tv_pay_key"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="9"
             app:layout_constraintLeft_toLeftOf="@+id/tv_3"
             app:layout_constraintTop_toBottomOf="@+id/tv_4" />
@@ -246,11 +249,12 @@
             tools:text="0" />
 
         <androidx.appcompat.widget.AppCompatTextView
+
             android:id="@+id/tv_ok"
             android:layout_width="0dp"
             android:layout_height="0dp"
 
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/indicator_bottom_line"
             android:focusable="true"
             android:gravity="center"

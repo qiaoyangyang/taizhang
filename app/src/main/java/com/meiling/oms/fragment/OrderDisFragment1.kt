@@ -3,8 +3,11 @@ package com.meiling.oms.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnTouchListener
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -13,14 +16,17 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.*
-import com.meiling.oms.EventBusData.MessageEventUpDataTip
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDis1Binding
 import com.meiling.oms.dialog.OrderDisGoodsSelectDialog
+import com.meiling.oms.dialog.OrderDisRuleTipCheckDialog
+import com.meiling.oms.dialog.OrderDisRuleTipDialog
+import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
+
 
 class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Binding>() {
 
@@ -101,7 +107,6 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
             }
         mDatabind.rvRecType.adapter = shopSelectDisWayAdapter
         var text = orderSendAddress.goodsWeight?.toInt()
-
         mDatabind.btnSendDis.setSingleClickListener {
             var insertOrderSendList = ArrayList<LogisticsInsertDto>()
             for (shopSelectDis in shopSelectDisWayAdapter.data) {
@@ -138,26 +143,31 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
                 showToast("请补全收货信息")
                 return@setSingleClickListener
             }
-            if (!insertOrderSendList.isNullOrEmpty()) {
-                mViewModel.insertOrderSend(LogisticsConfirmDtoList(logisticsConfirmDtoList = insertOrderSendList))
+            if (insertOrderSendList.isNullOrEmpty()) {
+                showToast("请选择配送平台")
             } else {
-                showToast("请选择配送方式")
+                mViewModel.insertOrderSend(LogisticsConfirmDtoList(logisticsConfirmDtoList = insertOrderSendList))
             }
         }
         shopSelectDisWayAdapter.setOnItemClickListener { adapter, view, position ->
             var data = adapter.data[position] as OrderSendChannel
             if (data.errMsg != null) {
-//                shopSelectDisWayAdapter.getItem(position).select = false
-//                OrderDistributionCheckRuleDialog().newInstance().show(this.childFragmentManager)
+                shopSelectDisWayAdapter.getItem(position).select = false
+                var orderDisRuleTipDialog = OrderDisRuleTipDialog().newInstance("${data.errMsg}")
+                orderDisRuleTipDialog.show(childFragmentManager)
+                orderDisRuleTipDialog.setRuleTip {
+                    var orderDisRuleTipDialog = OrderDisRuleTipCheckDialog().newInstance()
+                    orderDisRuleTipDialog.show(this.childFragmentManager)
+                }
             } else {
                 data.select = !shopSelectDisWayAdapter.getItem(position).select
             }
             shopSelectDisWayAdapter.notifyDataSetChanged()
         }
 
-        var weight = orderSendAddress.goodsWeight!!.toInt()
+
         mDatabind.txtAddTipPlus.setSingleClickListener {
-            mDatabind.edtAddTipShow.text = "${weight++}"
+            mDatabind.edtAddTipShow.text = "${mDatabind.edtAddTipShow.text.toString().toInt() + 1}"
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice!!,
                 cargoType = selectShop,
@@ -170,11 +180,12 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
             mViewModel.orderSendConfirm(orderSendRequest)
         }
         mDatabind.txtAddTipMinus.setSingleClickListener {
-            if (weight <= 1) {
+
+            if (mDatabind.edtAddTipShow.text.toString().toInt() <= 1) {
                 showToast("不能在减啦")
                 return@setSingleClickListener
             }
-            mDatabind.edtAddTipShow.text = "${weight--}"
+            mDatabind.edtAddTipShow.text = "${mDatabind.edtAddTipShow.text.toString().toInt() - 1}"
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice,
                 cargoType = selectShop,
@@ -201,7 +212,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
 
     override fun createObserver() {
         mViewModel.sendSuccess.onStart.observe(this) {
-            showLoading("正在请求。。。")
+            showLoading("正在请求")
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             dismissLoading()
@@ -209,16 +220,21 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
             showToast("发起配送成功")
             mActivity.finish()
         }
+        mViewModel.sendSuccess.onStart.observe(this) {
+            showLoading("正在请求")
+        }
         mViewModel.sendSuccess.onError.observe(this) {
             dismissLoading()
-            showToast("发起配送失败,失败原因")
+            showToast(it.msg)
         }
         mViewModel.orderSendConfirmList.onStart.observe(this) {
-
+            showLoading("加载中")
         }
         mViewModel.orderSendConfirmList.onSuccess.observe(this) {
+            dismissLoading()
             if (!it.isNullOrEmpty()) {
                 shopSelectDisWayAdapter.setList(it)
+
                 for (bean in it) {
                     if (orderSendAddress.method == "all") {
                         shopSelectDisWayAdapter.data.forEach { bean ->
@@ -233,7 +249,8 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
             }
         }
         mViewModel.orderSendConfirmList.onError.observe(this) {
-            showToast("发起配送失败 , 失败原因：${it.toString()}")
+            dismissLoading()
+            showToast(it.msg)
         }
     }
 

@@ -73,6 +73,7 @@
                     android:maxLength="8"
                     android:paddingVertical="6dp"
                     android:text="1"
+                    android:textColor="@color/home_999999"
                     android:textSize="@dimen/sp_28" />
 
                 <View
@@ -199,7 +200,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dp_30"
-                android:text="配送方式："
+                android:text="配送平台："
                 android:textColor="@color/home_666666"
                 android:textSize="@dimen/sp_28"
                 app:layout_constraintStart_toStartOf="parent"
@@ -210,7 +211,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dp_10"
-                android:text="(配送规则)："
+                android:text="(配送规则)"
+                android:visibility="gone"
                 android:textColor="@color/home_999999"
                 android:textSize="@dimen/sp_20"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txt_rec_type_tip"
@@ -219,7 +221,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_rec_type"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="250dp"
                 android:layout_marginTop="@dimen/dp_30"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintTop_toBottomOf="@+id/txt_rec_type_rule_tip"
@@ -242,6 +244,8 @@
         android:background="@drawable/order_search_bg_button_red"
         android:text="发起配送"
         android:textColor="@color/white"
+        android:textSize="@dimen/sp_32"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

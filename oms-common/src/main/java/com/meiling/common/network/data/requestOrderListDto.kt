@@ -3,7 +3,7 @@ import com.google.gson.annotations.SerializedName
 
 
 
-class DataListDto(var startTime:String,var endTime:String,var poiId : List<Long> ){}
+class DataListDto(var startTime:String,var endTime:String,var poiId : ArrayList<String> ){}
 
 data class DataShop(
     @SerializedName("adminUserIds")

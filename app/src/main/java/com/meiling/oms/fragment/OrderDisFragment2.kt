@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -14,13 +13,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.*
-import com.meiling.oms.EventBusData.MessageEventUpDataTip
+import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.R
-import com.meiling.oms.adapter.BaseFragmentPagerAdapter
-import com.meiling.oms.databinding.FragmentDis1Binding
 import com.meiling.oms.databinding.FragmentDis2Binding
 import com.meiling.oms.dialog.OrderDisGoodsSelectDialog
-import com.meiling.oms.viewmodel.DataFragmentViewModel
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
@@ -128,7 +124,7 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
                             cargoType = selectShop,
                             channelType = shopSelectDis.channelType,
                             deliveryTime = "",
-                            deliveryType = "2",
+                            deliveryType = "3",
                             distance = shopSelectDis.distance ?: "0",
                             orderId = orderId,
                             orgId = shopSelectDis.originId ?: "0",
@@ -153,10 +149,10 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
                 showToast("请补全收货信息")
                 return@setSingleClickListener
             }
-            if (!insertOrderSendList.isNullOrEmpty()) {
-                mViewModel.insertOrderSend(LogisticsConfirmDtoList(logisticsConfirmDtoList = insertOrderSendList))
+            if (insertOrderSendList.isNullOrEmpty()) {
+                showToast("请选择配送平台")
             } else {
-                showToast("请选择配送方式")
+                mViewModel.insertOrderSend(LogisticsConfirmDtoList(logisticsConfirmDtoList = insertOrderSendList))
             }
         }
         shopSelectDisWayAdapter.setOnItemClickListener { adapter, view, position ->
@@ -169,12 +165,12 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
         }
         var weight = orderSendAddress.goodsWeight!!.toInt()
         mDatabind.txtAddTipPlus.setSingleClickListener {
-            mDatabind.edtAddTipShow.text = "${weight++}"
+            mDatabind.edtAddTipShow.text = "${mDatabind.edtAddTipShow.text.toString().toInt()+1}"
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice!!,
                 cargoType = selectShop,
                 deliveryTime = "",
-                deliveryType = "2",
+                deliveryType = "3",
                 orderId = orderId!!,
                 wight = mDatabind.edtAddTipShow.text.toString(),
                 orderSendAddress
@@ -182,16 +178,16 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
             mViewModel.orderSendConfirm(orderSendRequest)
         }
         mDatabind.txtAddTipMinus.setSingleClickListener {
-            if (weight <= 1) {
+            if (mDatabind.edtAddTipShow.text.toString().toInt() <= 1) {
                 showToast("不能在减啦")
                 return@setSingleClickListener
             }
-            mDatabind.edtAddTipShow.text = "${weight--}"
+            mDatabind.edtAddTipShow.text = "${mDatabind.edtAddTipShow.text.toString().toInt()-1}"
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice,
                 cargoType = selectShop,
                 deliveryTime = "",
-                deliveryType = "2",
+                deliveryType = "3",
                 orderId = orderId!!,
                 wight = mDatabind.edtAddTipShow.text.toString(),
                 orderSendAddress
@@ -220,7 +216,7 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
         }
 
         mViewModel.sendSuccess.onStart.observe(this) {
-            showLoading("正在请求。。。")
+            showLoading("正在请求")
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             dismissLoading()
@@ -230,14 +226,19 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
         }
         mViewModel.sendSuccess.onError.observe(this) {
             dismissLoading()
-            showToast("发起配送失败")
+            showToast("发起配失败")
         }
         mViewModel.orderSendConfirmList.onStart.observe(this) {
-
+            showLoading("正在请求")
+        }
+        mViewModel.orderSendConfirmList.onStart.observe(this) {
+            showLoading("加载中")
         }
         mViewModel.orderSendConfirmList.onSuccess.observe(this) {
+            dismissLoading()
             if (!it.isNullOrEmpty()) {
                 shopSelectDisWayAdapter.setList(it)
+                it[0].select = true
                 for (bean in it) {
                     if (orderSendAddress.method == "all") {
                         shopSelectDisWayAdapter.data.forEach { bean ->
@@ -245,14 +246,15 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
                         }
                     }
 //                    else {
-//                        shopSelectDisWayAdapter.data[0].select = true
+//                        shopSelectDisWayAdapter.it[0].select = true
 //                    }
                     shopSelectDisWayAdapter.notifyDataSetChanged()
                 }
             }
         }
         mViewModel.orderSendConfirmList.onError.observe(this) {
-            showToast("发起配送失败 , 失败原因：${it.toString()}")
+            dismissLoading()
+            showToast("发起配送失败")
         }
     }
 
@@ -264,7 +266,7 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
             cargoPrice = orderPrice!!,
             cargoType = orderSendAddress.cargoType ?: "0",
             deliveryTime = "",
-            deliveryType = "2",
+            deliveryType = "3",
             orderId = orderId!!,
             wight = if (orderSendAddress.goodsWeight!! != null) {
                 orderSendAddress.goodsWeight!!

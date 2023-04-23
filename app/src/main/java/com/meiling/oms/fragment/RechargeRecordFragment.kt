@@ -10,12 +10,12 @@ import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.PageData
 import com.meiling.common.network.data.RechargeRecordListReq
 import com.meiling.common.utils.MMKVUtils
-import com.meiling.oms.EventBusData.MessageEventTime
-import com.meiling.oms.EventBusData.MessageEventTimeShow
+import com.meiling.oms.eventBusData.MessageEventTime
+import com.meiling.oms.eventBusData.MessageEventTimeShow
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentRechargeRecordBinding
 import com.meiling.oms.viewmodel.RechargeViewModel
-import com.meiling.oms.viewmodel.SelectedViewModel
+import com.meiling.oms.widget.SS
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.formatCurrentDateBeforeWeek
 import com.meiling.oms.widget.showToast
@@ -34,15 +34,22 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
     companion object {
         fun newInstance() = RechargeRecordFragment()
     }
-
-    override fun initView(savedInstanceState: Bundle?) {
+    override fun onStart() {
+        super.onStart()
         EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+    override fun initView(savedInstanceState: Bundle?) {
         rechargeAdapter =
             object : BaseQuickAdapter<PageData, BaseViewHolder>(R.layout.item_recharge_record),
                 LoadMoreModule {
                 override fun convert(holder: BaseViewHolder, item: PageData) {
                     holder.setText(R.id.txt_channel_name, item.payTypeName)
-                    holder.setText(R.id.txt_service_charge_money, item.payAmount)
+                    holder.setText(R.id.txt_service_charge_money, "+" + item.payAmount)
                     holder.setText(R.id.txt_recharge_name, item.createTime)
                 }
             }
@@ -51,30 +58,32 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
         mDatabind.srfRechargeRecord.setOnRefreshListener {
             pageIndex = 1
             initViewData()
-            EventBus.getDefault().post(MessageEventTimeShow())
+//            EventBus.getDefault().post(MessageEventTimeShow())
         }
     }
 
     var pageIndex = 1
     var startDate = formatCurrentDateBeforeWeek()
+    var endData = formatCurrentDate()
     private fun initViewData() {
         mViewModel.getRecord(
             RechargeRecordListReq(
                 createUserId = "",
                 startDate = startDate,
-                endDate = formatCurrentDate(),
+                endDate = endData,
                 pageIndex = 1,
                 pageSize = "20",
                 tenantId = MMKVUtils.getString(SPConstants.tenantId)
             )
         )
+        rechargeAdapter.loadMoreModule.loadMoreView = SS()
         rechargeAdapter.loadMoreModule.setOnLoadMoreListener {
             pageIndex++
             mViewModel.getFinancialRecord(
                 RechargeRecordListReq(
                     createUserId = "",
                     startDate = startDate,
-                    endDate = formatCurrentDate(),
+                    endDate = endData,
                     pageIndex = pageIndex,
                     pageSize = "20",
                     tenantId = MMKVUtils.getString(SPConstants.tenantId)
@@ -88,11 +97,32 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
     }
 
     override fun createObserver() {
+        mViewModel.rechargeRecord.onStart.observe(this) {
+            showLoading("请求中")
+        }
         mViewModel.rechargeRecord.onSuccess.observe(this) {
+            dismissLoading()
             mDatabind.srfRechargeRecord.isRefreshing = false
-            rechargeAdapter.setList(it.pageData as MutableList<PageData>)
+            if (it?.pageData.isNullOrEmpty()) {
+                rechargeAdapter.setList(null)
+                rechargeAdapter.footerWithEmptyEnable = false
+                rechargeAdapter.setEmptyView(R.layout.empty_record_center)
+            }
+            if (it.pageNum == 1) {
+                rechargeAdapter.setList(it.pageData as MutableList<PageData>)
+            } else {
+                rechargeAdapter.addData(it.pageData as MutableList<PageData>)
+            }
+
+            if (it.pageData!!.size < 20) {
+                rechargeAdapter.footerWithEmptyEnable = false
+                rechargeAdapter.loadMoreModule.loadMoreEnd()
+            } else {
+                rechargeAdapter.loadMoreModule.loadMoreComplete()
+            }
         }
         mViewModel.rechargeRecord.onError.observe(this) {
+            dismissLoading()
             mDatabind.srfRechargeRecord.isRefreshing = false
             showToast(it.msg)
         }
@@ -103,6 +133,7 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
         EventBus.getDefault().post(MessageEventTimeShow())
         pageIndex = 1
         startDate = formatCurrentDateBeforeWeek()
+        endData = formatCurrentDate()
         initViewData()
     }
 
@@ -110,11 +141,11 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
     fun eventDay(messageEventTime: MessageEventTime) {
         pageIndex = 1
         startDate = messageEventTime.starTime
+        endData = messageEventTime.endTime
         initViewData()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBus.getDefault().unregister(this)
     }
 }

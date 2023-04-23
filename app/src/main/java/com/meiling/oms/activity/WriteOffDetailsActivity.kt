@@ -4,30 +4,28 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.TimeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.hjq.shape.view.ShapeTextView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.DealMenu
 import com.meiling.common.network.data.WriteoffhistoryPageData
 import com.meiling.common.utils.GsonUtils
-import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.RecyclerViewDivider
 import com.meiling.common.utils.SpannableUtils
-import com.meiling.oms.EventBusData.MessageEventTimeShow
-import com.meiling.oms.EventBusData.MessageEventVoucherInspectionHistory
+import com.meiling.oms.eventBusData.MessageEventVoucherInspectionHistory
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityWriteOffDetailsBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.VoucherInspectionHistoryViewModel
+import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
 import org.json.JSONArray
 
@@ -43,17 +41,41 @@ class WriteOffDetailsActivity :
     override fun getBind(layoutInflater: LayoutInflater): ActivityWriteOffDetailsBinding {
         return ActivityWriteOffDetailsBinding.inflate(layoutInflater)
     }
-    var id =0
+
+    var id = 0
 
     override fun initData() {
         var serializableExtra =
             intent.getSerializableExtra("writeoffhistoryPageData") as WriteoffhistoryPageData?
         var shopId = intent.getStringExtra("shopId")
-         id = intent.getIntExtra("id",0)
+        id = intent.getIntExtra("id", 0)
+
+//        var persons =
+//            GsonUtils.getPersons1(serializableExtra?.coupon?.dealMenu, DealMenu::class.java)
+
+        val listType = object : TypeToken<ArrayList<ArrayList<DealMenu>>>() {
+
+        }.type
 
         var persons =
-            GsonUtils.getPersons1(serializableExtra?.coupon?.dealMenu, DealMenu::class.java)
-        orderLeftRecyAdapter.setList(persons)
+            Gson().fromJson<ArrayList<ArrayList<DealMenu>>>(
+                serializableExtra?.coupon?.dealMenu!!,
+                listType
+            )
+
+        var list = ArrayList<DealMenu>()
+        if (persons.size != 0) {
+            persons.forEachIndexed { index, dealMenus ->
+                dealMenus.forEach {
+                    if (!TextUtils.isEmpty(it.total)) {
+                        list.add(it)
+
+                    }
+                }
+            }
+
+            orderLeftRecyAdapter.setList(list)
+        }
 
         if (serializableExtra != null) {
 
@@ -115,10 +137,13 @@ class WriteOffDetailsActivity :
             } else {
 
             }
-
+            var shopname = serializableExtra?.shopName
+            if (serializableExtra?.shopName.toString().length > 12) {
+                shopname = serializableExtra?.shopName.toString().substring(0, 12) + "...."
+            }
             if (serializableExtra?.coupon?.type == 2) {//美团
                 mDatabind.meiRecyclerView.visibility = View.VISIBLE
-                var conet = "由 ${serializableExtra.shopName} 验证"
+                var conet = "由 ${shopname} 验证"
                 SpannableUtils.setTextcolor(
                     this,
                     conet,
@@ -131,7 +156,7 @@ class WriteOffDetailsActivity :
             } else if (serializableExtra?.coupon?.type == 5) {//抖音
                 mDatabind.meiRecyclerView.visibility = View.GONE
                 //  holder.setText(R.id.tv_shopName, "由"+item?.coupon?.shopName+"验证")
-                var conet = "由 ${serializableExtra?.shopName} 验证"
+                var conet = "由 ${shopname} 验证"
                 SpannableUtils.setTextcolor(
                     this,
                     conet,
@@ -187,7 +212,14 @@ class WriteOffDetailsActivity :
                 holder: BaseViewHolder,
                 item: DealMenu?
 
+
             ) {
+                if (TextUtils.isEmpty(item?.total)) {
+                    holder.setGone(R.id.ll_btn, true)
+
+                } else {
+                    holder.setGone(R.id.ll_btn, false)
+                }
                 holder.setText(R.id.tv_name, item?.content)
                 holder.setText(R.id.tv_price, "¥" + item?.price)
                 holder.setText(R.id.tv_total, item?.specification)
@@ -208,14 +240,34 @@ class WriteOffDetailsActivity :
     }
 
     override fun createObserver() {
+
         mViewModel.cancelstring.onStart.observe(this) {
+            showLoading("")
+
+        }
+        mViewModel.cancelstring.onSuccess.observe(this) {
+            disLoading()
             EventBus.getDefault().post(MessageEventVoucherInspectionHistory(id))
             finish()
+        }
+
+        mViewModel.cancelstring.onError.observe(this) {
+            disLoading()
+            showToast("${it.msg}")
+        }
+
+        mViewModel.cancelmeituanstring.onStart.observe(this) {
+            showLoading("")
 
         }
         mViewModel.cancelmeituanstring.onSuccess.observe(this) {
+            disLoading()
             EventBus.getDefault().post(MessageEventVoucherInspectionHistory(id))
             finish()
+        }
+        mViewModel.cancelmeituanstring.onError.observe(this) {
+            disLoading()
+            showToast("${it.msg}")
         }
 
     }

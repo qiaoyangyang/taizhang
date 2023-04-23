@@ -22,6 +22,7 @@ import com.meiling.oms.databinding.ActivityGiveBinding
 import com.meiling.oms.databinding.ActivityMeituanBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.VoucherInspectionHistoryViewModel
+import com.meiling.oms.widget.showToast
 
 //核销成功
 @Route(path = "/app/WriteOffActivity")
@@ -54,9 +55,18 @@ class MeituanActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activity
     }
 
     override fun createObserver() {
+
+        mViewModel.cancelmeituanstring.onStart.observe(this) {
+            showLoading("")
+        }
         mViewModel.cancelmeituanstring.onSuccess.observe(this) {
+            disLoading()
             finish()
             startActivity(Intent(this, WriteDetailsActivity::class.java))
+        }
+        mViewModel.cancelmeituanstring.onError.observe(this) {
+            disLoading()
+            showToast("${it.msg}")
         }
 
 
@@ -79,20 +89,30 @@ class MeituanActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activity
             mDatabind.tvCouponBuyPrice.text = "¥" + meituan?.couponBuyPrice
             mDatabind.tvDealValue.text = "¥" + meituan?.dealValue
             mDatabind.tvDealValue?.paint?.flags = Paint.STRIKE_THRU_TEXT_FLAG
-            mDatabind.tvCouponCode.text = code
-            mDatabind.tvCouponUseTime.text = meituan!!.couponUseTime
-            if (TextUtils.isEmpty(meituan?.dealId) || meituan?.dealId == "0") {
-                mDatabind.tvOrderId.text = "暂无"
-            } else {
-                mDatabind.tvOrderId.text = meituan!!.dealId
+            var code1 = code.split(",")
+            if (code1.size >= 2) {
+                mDatabind.tvCouponCode.text = code1.get(0)+","+code1.get(1)+"等"
+            }else{
+                mDatabind.tvCouponCode.text = code
             }
+            mDatabind.tvCouponUseTime.text = meituan!!.couponUseTime
+//            if (TextUtils.isEmpty(meituan?.dealId) || meituan?.dealId == "0") {
+//                mDatabind.tvOrderId.text = "暂无"
+//            } else {
+//                mDatabind.tvOrderId.text = meituan!!.dealId
+//            }
+            mDatabind.tvOrderId.text = "暂无"
             if (meituan?.isVoucher == 1) {
                 // holder.setText(R.id.tv_type, "")
                 mDatabind.tvType.text = "团购券"
             } else if (meituan?.isVoucher == 2) {
                 mDatabind.tvType.text = "代金券"
             }
-            var conet = "由 ${meituan?.shopName} 验证"
+            var shopname = meituan?.shopName
+            if (meituan?.shopName.toString().length > 12) {
+                shopname = meituan?.shopName.toString().substring(0, 12) + "...."
+            }
+            var conet = "由 ${shopname} 验证"
             SpannableUtils.setTextcolor(
                 this,
                 conet,
@@ -102,9 +122,9 @@ class MeituanActivity : BaseActivity<VoucherInspectionHistoryViewModel, Activity
                 R.color.pwd_1180FF
             )
 
-            mDatabind.tvStatus.setTextColor(Color.parseColor("#FB9716"))
+            mDatabind.tvStatus.setTextColor(Color.parseColor("#31D288"))
 
-            mDatabind.tvStatus.shapeDrawableBuilder.setSolidColor(Color.parseColor("#FFF1DF"))
+            mDatabind.tvStatus.shapeDrawableBuilder.setSolidColor(Color.parseColor("#EDFFF4"))
                 .intoBackground()
             mDatabind.tvStatus.text = "已核销"
 

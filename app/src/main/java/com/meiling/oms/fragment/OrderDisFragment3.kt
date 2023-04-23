@@ -3,13 +3,11 @@ package com.meiling.oms.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.meiling.common.fragment.BaseFragment
-import com.meiling.common.network.data.EventBusChangeAddress
 import com.meiling.common.network.data.LogisticsConfirmDtoList
 import com.meiling.common.network.data.LogisticsInsertDto
 import com.meiling.common.network.data.OrderSendAddress
-import com.meiling.oms.EventBusData.MessageEventUpDataTip
+import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.databinding.FragmentDis3Binding
-import com.meiling.oms.viewmodel.DataFragmentViewModel
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
@@ -74,7 +72,6 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
             }
             if (!insertOrderSendList.isNullOrEmpty()) {
                 mViewModel.insertOrderSend(LogisticsConfirmDtoList(logisticsConfirmDtoList = insertOrderSendList))
-
             }
         }
     }
@@ -97,28 +94,37 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
     }
 
     override fun createObserver() {
-        mViewModel.orderSendAddress.onStart.observe(this) {}
+        mViewModel.orderSendAddress.onStart.observe(this) {
+            showLoading("正在请求")
+        }
         mViewModel.orderSendAddress.onSuccess.observe(this) {
+            dismissLoading()
             orderSendAddress = it
             mDatabind.edtRecName.setText(it.deliveryName)
             mDatabind.edtRecPhone.setText(it.deliveryPhone)
         }
         mViewModel.orderSendAddress.onError.observe(this) {
+            dismissLoading()
             showToast("${it.msg}")
         }
 
         mViewModel.sendSuccess.onStart.observe(this) {
-            showLoading("正在请求。。。")
+            showLoading("正在请求")
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             dismissLoading()
             EventBus.getDefault().post(MessageEventUpDataTip())
-            showToast("已成功发起配送 请在订单页面，查看配送详情")
+            showToast("发起配送成功")
             mActivity.finish()
         }
-        mViewModel.sendSuccess.onSuccess.observe(this) {
+        mViewModel.sendSuccess.onError.observe(this) {
             dismissLoading()
-            showToast("发起配送失败 , 失败原因：${it.toString()}")
+            if (it.msg == null || it.msg == "") {
+                showToast("操作失败")
+            } else {
+                showToast(it.msg)
+            }
+
         }
     }
 

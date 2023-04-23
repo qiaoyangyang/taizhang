@@ -16,7 +16,7 @@
         android:layout_width="0dp"
         android:layout_height="17dp"
         android:layout_weight="1"
-        android:text="配送平台"
+        tools:text="配送平台"
         android:textColor="#ff777777"
         android:textSize="12sp" />
 
@@ -25,7 +25,7 @@
         android:layout_width="0dp"
         android:layout_height="17dp"
         android:layout_weight="1"
-        android:text="9525.00"
+        tools:text="9525.00"
         android:textColor="#ff777777"
         android:textSize="12sp" />
 
@@ -34,7 +34,7 @@
         android:layout_width="0dp"
         android:layout_height="17dp"
         android:layout_weight="1"
-        android:text="2784"
+        tools:text="2784"
         android:textColor="#ff777777"
         android:textSize="12sp" />
 
@@ -43,7 +43,7 @@
         android:layout_width="0dp"
         android:layout_height="17dp"
         android:layout_weight="1"
-        android:text="9827.00"
+        tools:text="9827.00"
         android:textColor="#ff777777"
         android:textSize="12sp" />
 

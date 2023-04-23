@@ -52,12 +52,13 @@ interface MeService {
     /**
      * 消息中心
      * */
-    @POST("/saas/financial/getRecordListByViewId")
+    @GET("/saas/messageCenter/getMessageList")
     suspend fun getMsgCenter(
-        @Query("viewId") viewId: String,
-        @Query("pageIndex") pageIndex: String,
-        @Query("pageSize") pageSize: String
-    ): ResultData<Any>
+        @Query("pageIndex") pageIndex: Int,
+        @Query("pageSize") pageSize: String,
+        @Query("messagePlatform") umeng: String = "umeng",
+        @Query("onlyUnread") onlyUnread: String = "0",
+    ): ResultData<MessageDto>
 
     /**
      * 注销账号

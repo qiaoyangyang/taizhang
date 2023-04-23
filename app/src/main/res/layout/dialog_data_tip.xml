@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginHorizontal="@dimen/dp_80"
+    android:background="@drawable/scan_bg_input"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_30"
+        android:gravity="center_horizontal"
+        android:text="数据口径"
+        android:textColor="@color/home_212121"
+        android:textSize="@dimen/sp_36" />
+
+    <TextView
+        android:id="@+id/txt_data_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginVertical="@dimen/dp_24"
+        android:gravity="center"
+        tools:text="周一到周日 10:00-18:30"
+        android:textColor="@color/home_666666"
+        android:textSize="@dimen/sp_28" />
+
+
+    <TextView
+        android:id="@+id/btn_data_sure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginVertical="@dimen/dp_24"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/dp_20"
+        android:paddingVertical="@dimen/dp_24"
+        android:text="我知道了"
+        android:textColor="@color/red"
+        android:textSize="@dimen/sp_32" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

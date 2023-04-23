@@ -10,10 +10,11 @@
 
     <ImageView
         android:id="@+id/imgView"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="@dimen/dp_20"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginStart="@dimen/dp_10"
         android:layout_marginTop="5dp"
+        android:scaleType="center"
         android:src="@drawable/icon_order_dis_ing"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,9 +37,9 @@
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_20"
         android:layout_marginBottom="@dimen/dp_10"
-        android:paddingLeft="15dp"
-        android:paddingEnd="15dp"
-        android:paddingBottom="15dp"
+        android:paddingStart="@dimen/dp_30"
+        android:paddingEnd="@dimen/dp_30"
+        android:paddingBottom="@dimen/dp_30"
         app:layout_constraintLeft_toRightOf="@+id/imgView"
         app:layout_constraintTop_toTopOf="@+id/imgView">
 
@@ -50,6 +51,8 @@
             android:layout_marginStart="@dimen/dp_4"
             android:layout_marginEnd="@dimen/dp_20"
             android:textColor="@color/home_333333"
+            android:textSize="@dimen/sp_32"
+            android:textStyle="bold"
             tools:text="配送取消" />
 
         <TextView
@@ -59,6 +62,7 @@
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_toEndOf="@+id/txtOperateName"
             android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_28"
             tools:text="08-06 10:53" />
 
         <TextView
@@ -69,6 +73,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="@dimen/dp_20"
             android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_28"
             tools:text="包裹已签收" />
 
         <TextView
@@ -79,6 +84,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="@dimen/dp_20"
             android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_28"
             android:visibility="gone"
             tools:text="配送员:张三" />
 
@@ -92,6 +98,7 @@
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_toEndOf="@+id/txt_dis_detail_name"
             android:textColor="@color/order_dis_5498FE"
+            android:textSize="@dimen/sp_28"
             android:visibility="gone"
             tools:text="1*******" />
 

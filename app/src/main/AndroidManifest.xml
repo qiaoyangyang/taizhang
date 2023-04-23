@@ -14,11 +14,15 @@
         android:maxSdkVersion="33" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <meta-data
         android:name="ScopedStorage"
         android:value="true" />
@@ -71,6 +75,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".activity.AboutActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.AgreementActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
@@ -109,7 +117,9 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.Search1Activity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
         <activity
             android:name=".activity.PostDetailActivity"
             android:screenOrientation="portrait" />
@@ -206,15 +216,15 @@
         <!--            android:exported="false">-->
         <!--            <grant-uri-permission android:pathPattern=".*" />-->
         <!--        </provider> &lt;!&ndash; 以下为基本配置信息，需要自行添加至您的AndroidManifest文件中 end &ndash;&gt;-->
-<!--        <receiver-->
-<!--            android:name=".jpush.MyPushReceiver"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="false">-->
-<!--            <intent-filter>-->
-<!--                &lt;!&ndash; 设置接收的广播类型 &ndash;&gt;-->
-<!--                <action android:name="com.example.mypushreceiver.PUSH_MESSAGE" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
+        <!--        <receiver-->
+        <!--            android:name=".jpush.MyPushReceiver"-->
+        <!--            android:enabled="true"-->
+        <!--            android:exported="false">-->
+        <!--            <intent-filter>-->
+        <!--                &lt;!&ndash; 设置接收的广播类型 &ndash;&gt;-->
+        <!--                <action android:name="com.example.mypushreceiver.PUSH_MESSAGE" />-->
+        <!--            </intent-filter>-->
+        <!--        </receiver>-->
     </application>
     <queries>
         <package android:name="com.tencent.mm" />

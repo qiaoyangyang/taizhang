@@ -1,21 +1,19 @@
 package com.meiling.oms.jpush;
 
+import static anet.channel.util.Utils.context;
+
 import android.annotation.SuppressLint;
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationChannelGroup;
+import android.app.NotificationManager;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.RemoteViews;
 
 import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
 
-import com.meiling.common.BuildConfig;
-import com.meiling.common.utils.MMKVUtils;
+import com.meihao.kotlin.cashier.widgets.juanmahexiao.JpushKt;
 import com.meiling.oms.R;
 import com.taobao.accs.ACCSClient;
 import com.taobao.accs.AccsClientConfig;
@@ -30,13 +28,11 @@ import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
 
-import retrofit2.http.Url;
-
 //import org.android.agoo.huawei.HuaWeiRegister;
 //import org.android.agoo.mezu.MeizuRegister;
 //import org.android.agoo.oppo.OppoRegister;
 //import org.android.agoo.vivo.VivoRegister;
-//import org.android.agoo.xiaomi.MiPushRegistar;mm
+//import org.android.agoo.xiaomi.MiPushRegistar；
 
 /**
  * PushSDK集成帮助类
@@ -185,41 +181,21 @@ public class PushHelper {
             @Override
             public void dealWithNotificationMessage(Context context, UMessage msg) {
                 super.dealWithNotificationMessage(context, msg);
-                Log.i("lwq", "notification receiver:" + msg.getRaw().toString());
+                Log.i("lwq", "notification receiver:" + "dealWithNotificationMessage" + msg.getRaw().toString());
                 handler.post(new Runnable() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void run() {
                         if (msg.extra != null) {
-                            Log.i("lwq", "notification receiver:" + msg.toString());
-//                            JpushKt.createAndStart(context, msg, 10, 10);
+                            Log.i("lwq", "notification receiver:" + "dealWithNotificationMessage" + msg.toString());
+                            JpushKt.createAndStart(context, msg, 10, 10);
                         }
                     }
                 });
+
+                msg();
             }
 
-            //自定义通知样式，此方法可以修改通知样式等
-            @Override
-            public Notification getNotification(Context context, UMessage msg) {
-                /**
-                 * context:上下文
-                 * uMessage:表示当前传递过来的消息，在消息中，我们通过变量builder_id判断使用哪种样式
-                 */
-                //创建通知栏对象
-
-                // 显示通知
-                Notification.Builder builder = new Notification.Builder(context);
-                @SuppressLint("RemoteViewLayout") RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.item_message_center);
-                remoteView.setTextViewText(R.id.txt_msg_center_name, msg.title);
-                remoteView.setTextViewText(R.id.txt_msg_center_spec, msg.text);
-
-                builder.setContent(remoteView)
-                        .setSmallIcon(R.mipmap.logo)
-                        .setTicker(msg.ticker)
-                        .setAutoCancel(true);
-                return builder.getNotification();
-
-            }
 
             //处理透传消息
             @Override
@@ -247,6 +223,7 @@ public class PushHelper {
 
             @Override
             public void dismissNotification(Context context, UMessage msg) {
+
                 super.dismissNotification(context, msg);
                 Log.i(TAG, "click dismissNotification: " + msg.getRaw().toString());
             }
@@ -254,20 +231,18 @@ public class PushHelper {
         pushAgent.setNotificationClickHandler(notificationClickHandler);
     }
 
-//    private void initChannel(Context context) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-//            if (nm != null) {
-//                NotificationChannelGroup notificationChannelGroup = new NotificationChannelGroup("MyGroupId", "自定义通知组");
-//                nm.createNotificationChannelGroup(notificationChannelGroup);
-//                NotificationChannel notificationChannel = new NotificationChannel("MyChannelId", "自定义通知", NotificationManager.IMPORTANCE_HIGH);
-//                notificationChannel.setGroup("MyGroupId");
-//                notificationChannel.enableLights(true);
-//                notificationChannel.enableVibration(true);
-//                notificationChannel.setSound(Uri.parse("android:resource://" + context.getPackageName() + "/" + R.raw.new_order), null);    // 设置自定义铃声
-//                nm.createNotificationChannel(notificationChannel);
-//            }
-//        }
-//    }
+    public static void msg() {
+        // 创建通知
+        Notification.Builder builder = new Notification.Builder(context)
+                .setSmallIcon(R.mipmap.logo) // 设置小图标
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.logo)) // 设置大图标
+                .setContentTitle("11212") // 设置标题
+                .setContentText("3312") // 设置文本
+                .setTicker("121") // 设置滚动文本
+                .setAutoCancel(true) // 点击后自动取消
+                .setDefaults(Notification.DEFAULT_ALL); // 设置通知的默认行为，例如声音、震动等
 
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(0, builder.build()); // 展示通知
+    }
 }

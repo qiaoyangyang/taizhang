@@ -63,4 +63,10 @@ interface DataService {
     suspend fun recentTab(): ResultData<HomeRecentTabVO>
 
 
+    @GET("/saas/poi/citypoi")
+    suspend fun cityPoi(
+        @Query("hasCityAll") hasCityAll: String = "1"
+    ): ResultData<ArrayList<ShopBean>>
+
+
 }

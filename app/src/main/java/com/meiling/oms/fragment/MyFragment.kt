@@ -88,6 +88,9 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         mDatabind.txtMsgCenter.setSingleClickListener {
             ARouter.getInstance().build("/app/MessageCenterActivity").navigation()
         }
+        mDatabind.txtAbout.setSingleClickListener {
+            ARouter.getInstance().build("/app/AboutActivity").navigation()
+        }
 //        mDatabind.aivMore.setOnClickListener {
 ////            mDatabind.drawerLayout.openDrawer(GravityCompat.START)
 //        }

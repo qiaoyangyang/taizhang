@@ -1,16 +1,22 @@
 package com.meiling.common
 
 import android.app.Application
+import android.content.Intent
 import android.util.Log
+import android.view.Gravity
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.Utils
 import com.google.gson.Gson
 import com.meiling.common.constant.ARouteConstants
 import com.meiling.common.network.APIException
 import com.meiling.common.network.ExceptionHandle
 import com.meiling.common.network.ResultData
+import com.meiling.common.utils.MMKVUtils
 import com.orhanobut.logger.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -31,20 +37,48 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                 block()
             }.onSuccess {
                 if (it.code == 200) {
-
                     resultState.onSuccess.postValue(it.data)
-                } else if (it.code == 403) {
-                    ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
                 } else {
-                    resultState.onError.postValue(ExceptionHandle.handleException(APIException(it.code, it.msg)))
+                    resultState.onError.postValue(
+                        ExceptionHandle.handleException(
+                            APIException(
+                                it.code,
+                                it.msg
+                            )
+                        )
+                    )
                 }
-
             }.onFailure {
-                resultState.onError.postValue(ExceptionHandle.handleException(it))
+                if (it.message!!.isNotEmpty()) {
+                    if (it.message!!.contains("403")) {
+//                        val toast = Toast.makeText(
+//                            Utils.getApp(),
+//                            "账号登录过期，请重新登录",
+//                            Toast.LENGTH_SHORT
+//                        )
+//                        toast.setGravity(Gravity.CENTER, 0, 0)
+//                        toast.show()
+                        ToastUtils.showShort("账号登录过期，请重新登录")
+                        MMKVUtils.clear()
+                        ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY)
+                            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).navigation()
+
+                    } else if (it.message!!.contains("500")) {
+//                        val toast = Toast.makeText(
+//                            Utils.getApp(),
+//                            "账号登录过期，请重新登录",
+//                            Toast.LENGTH_SHORT
+//                        )
+//                        toast.setGravity(Gravity.CENTER, 0, 0)
+//                        toast.show()
+                        ToastUtils.showShort("服务器异常，请稍后再试")
+                    }
+                } else {
+                    resultState.onError.postValue(ExceptionHandle.handleException(it))
+                }
             }
         }
     }
-
 
     fun <T : Any> request(
         block: suspend () -> ResultData<T>,
@@ -60,6 +94,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                 } else if (it.code == 403) {
                     ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
                 } else {
+
                     onError(ExceptionHandle.handleException(APIException(it.code, it.msg)))
                 }
             }.onFailure {

@@ -8,18 +8,19 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.ChannelDataList
-import com.meiling.common.network.data.DataDisDto
 import com.meiling.common.network.data.DataListDto
-import com.meiling.common.network.data.Shop
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDataChannelBinding
 import com.meiling.oms.dialog.DataSelectTimeDialog
-import com.meiling.oms.liveData.LiveDataShopData
+import com.meiling.oms.eventBusData.MessageSelectShopPo
 import com.meiling.oms.viewmodel.DataFragmentViewModel
 import com.meiling.oms.widget.formatCurrentDate
-import com.meiling.oms.widget.getTomorrowDate
+import com.meiling.oms.widget.formatCurrentDateBeforeDay
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChannelBinding>() {
 
@@ -52,7 +53,7 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
         mDatabind.rvDataChannelHistory.adapter = dataHistoryChannelAdapter
 
         mDatabind.srfDataChannel.setOnRefreshListener {
-            initData()
+            initViewData()
         }
     }
 
@@ -60,40 +61,53 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
         return FragmentDataChannelBinding.inflate(inflater)
     }
 
-    override fun initData() {
+    var poiId = ArrayList<String>()
+
+    private fun initViewData() {
         mViewModel.channelDataList(
             DataListDto(
                 startTime = formatCurrentDate(),
-                endTime = getTomorrowDate(),
-                ArrayList<Long>()
+                endTime = formatCurrentDate(),
+                poiId
             )
         )
         mViewModel.channelHistoryDataList(
             DataListDto(
-                startTime = formatCurrentDate(),
-                endTime = getTomorrowDate(),
-                ArrayList<Long>()
+                startTime = startTime,
+                endTime = formatCurrentDateBeforeDay(),
+                poiId
             )
         )
-        LiveDataShopData.INSTANCE.observe(this, changeObserver)
+//        LiveDataShopData.INSTANCE.observe(this, changeObserver)
     }
+
+    var startTime = formatCurrentDateBeforeDay()
 
     override fun initListener() {
         mDatabind.txtHistorySelectTime.setSingleClickListener {
             var dataSelectTimeDialog = DataSelectTimeDialog().newInstance()
             dataSelectTimeDialog.show(childFragmentManager)
             dataSelectTimeDialog.setSelectTime { it, name ->
-                showToast("1212" + it)
                 mDatabind.txtHistorySelectTime.text = name
+                startTime = it
                 mViewModel.channelHistoryDataList(
                     DataListDto(
                         startTime = it,
-                        endTime = getTomorrowDate(),
-                        ArrayList<Long>()
+                        endTime = formatCurrentDateBeforeDay(),
+                        poiId
                     )
                 )
             }
         }
+    }
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
     }
 
     private val changeObserver = Observer<String> { value ->
@@ -104,8 +118,15 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
 
     override fun onResume() {
         super.onResume()
-        initData()
+        initViewData()
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun eventSelectTime(messageSelectShopPo: MessageSelectShopPo) {
+        poiId = messageSelectShopPo.idArrayList
+        initViewData()
+    }
+
 
     override fun createObserver() {
         mViewModel.channelDataList.onStart.observe(this) {
@@ -114,7 +135,12 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
         mViewModel.channelDataList.onSuccess.observe(this) {
             mDatabind.srfDataChannel.isRefreshing = false
             dismissLoading()
-            dataChannelAdapter.setList(it)
+            if (it.isNullOrEmpty()) {
+                dataChannelAdapter.setList(ArrayList())
+            } else {
+                dataChannelAdapter.setList(it)
+            }
+
         }
         mViewModel.channelDataList.onError.observe(this) {
             dismissLoading()
@@ -127,14 +153,17 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
         mViewModel.channelHistoryDataList.onSuccess.observe(this) {
             mDatabind.srfDataChannel.isRefreshing = false
             dismissLoading()
-            dataHistoryChannelAdapter.setList(it)
+            if (it.isNullOrEmpty()) {
+                dataHistoryChannelAdapter.setList(ArrayList())
+            } else {
+                dataHistoryChannelAdapter.setList(it)
+            }
         }
         mViewModel.channelHistoryDataList.onError.observe(this) {
             mDatabind.srfDataChannel.isRefreshing = false
             dismissLoading()
             showToast(it.msg)
         }
-
 
     }
 }

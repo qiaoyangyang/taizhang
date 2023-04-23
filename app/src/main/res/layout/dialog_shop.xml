@@ -26,10 +26,12 @@
         android:layout_alignBottom="@+id/tv_title"
         android:layout_alignParentEnd="true"
         android:paddingHorizontal="@dimen/dp_20"
-        android:src="@drawable/search_close_edt" />
+        android:src="@drawable/icon_back_g" />
 
 
     <LinearLayout
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:background="@color/white"
@@ -48,17 +50,25 @@
             android:layout_height="wrap_content"
             app:wheelTextColor="#333333"
             app:wheelMaskLineColor="#F5F5F5"
+
             app:wheelTextSize="16sp"
+            app:wheelShowCount="3"
+            app:wheelItemVerticalSpace="30dp"
+
             />
 
         <com.meiling.common.base.WheelItemView
+            app:wheelShowCount="3"
+            app:wheelItemVerticalSpace="30dp"
             app:wheelMaskLineColor="#F5F5F5"
             android:id="@+id/wheel_view_center"
             android:layout_width="0dp"
             android:layout_weight="2"
+
             android:layout_height="wrap_content"
             app:wheelTextColor="#333333"
             app:wheelTextSize="16sp"
+
             />
 
 

@@ -68,7 +68,7 @@
             android:layout_toEndOf="@+id/img_meituan"
             android:src="@mipmap/scan_meituan"
             android:text="美团 | 点评验券"
-            android:textSize="18sp"
+            android:textSize="@dimen/sp_36"
             android:textColor="@color/home_333333" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -109,7 +109,7 @@
             android:layout_toEndOf="@+id/img_koubei"
             android:src="@mipmap/scan_meituan"
             android:text="口碑验券"
-            android:textSize="18sp"
+            android:textSize="@dimen/sp_36"
             android:textColor="@color/home_333333" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -148,7 +148,7 @@
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/img_douyin"
             android:text="抖音验券"
-            android:textSize="18sp"
+            android:textSize="@dimen/sp_36"
             android:textColor="@color/home_333333" />
 
         <androidx.appcompat.widget.AppCompatImageView
