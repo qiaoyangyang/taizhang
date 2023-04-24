@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">小喵来客</string>
     <string name="login_name">账号密码登录</string>
+    <string name="Store_information">门店信息</string>
+    <string name="Store_name">门店名称</string>
+    <string name="Store_number">门店编号</string>
+    <string name="Store_telephone">门店电话</string>
 </resources>

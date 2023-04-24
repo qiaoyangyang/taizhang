@@ -94,6 +94,28 @@
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_28"
                 app:drawableStartCompat="@mipmap/icon_my_recharge" />
+            <TextView
+                android:id="@+id/txt_Store_management"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:paddingVertical="@dimen/dp_20"
+                android:text="发货门店"
+                android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_32"
+                app:drawableStartCompat="@drawable/my_shop" />
+            <TextView
+                android:id="@+id/txt_channel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:paddingVertical="@dimen/dp_20"
+                android:text="渠道店铺"
+                android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_32"
+                app:drawableStartCompat="@drawable/my_channel" />
 
             <TextView
                 android:id="@+id/txt_msg_center"

@@ -10,8 +10,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission
-        android:name="android.permission.READ_MEDIA_VIDEO"/>
-<!--        android:maxSdkVersion="33" />-->
+        android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -68,7 +67,6 @@
         </activity>
         <activity
             android:name=".activity.LoginActivity"
-
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
@@ -190,6 +188,18 @@
 
         <activity
             android:name=".activity.InputBoredomActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.StoreManagementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NewlyBuiltStoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ChannelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BaseWebActivity"
             android:screenOrientation="portrait" />
 
         <provider

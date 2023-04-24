@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjq.shape.layout.ShapeConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:shape_solidColor="@color/white"
+    app:shape_radius="@dimen/dp_24"
+    android:layout_marginLeft="18dp"
+    android:layout_marginRight="18dp"
+
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_shopName"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_32"
+        android:textColor="@color/home_333333"
+        android:text="桃源门店"
+        android:textSize="@dimen/sp_36"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_phone"
+        android:textSize="@dimen/sp_28"
+        android:textColor="@color/home_666666"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintLeft_toRightOf="@+id/tv_shopName"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_shopName"
+        android:text="029-4839432"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tvx"
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginRight="@dimen/dp_24"
+
+        android:background="@color/order_remark_F4F4F4"
+        app:layout_constraintTop_toBottomOf="@+id/tv_shopName"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <com.hjq.shape.view.ShapeTextView
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        app:shape_solidColor="#FAFAFA"
+        app:shape_radius="@dimen/dp_24"
+        android:id="@+id/tv_detailed_address"
+        android:drawableLeft="@drawable/ic_location"
+        android:drawablePadding="@dimen/dp_10"
+        android:textColor="@color/home_333333"
+        android:textSize="@dimen/sp_32"
+        android:layout_marginTop="@dimen/dp_20"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:text="陕西省西安市莲湖区桃源假日酒店"
+        app:layout_constraintTop_toBottomOf="@+id/tvx"
+        app:layout_constraintLeft_toLeftOf="@+id/tvx"
+        app:layout_constraintRight_toRightOf="@+id/tvx"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+
+</com.hjq.shape.layout.ShapeConstraintLayout>

@@ -18,6 +18,7 @@ class AccessTokenInterceptor : Interceptor {
         builder.addHeader("adminToken", MMKVUtils.getString(SPConstants.TOKEN))
         builder.addHeader("tenantId", MMKVUtils.getString(SPConstants.tenantId))
 //        builder.addHeader("Authorization", MMKVUtils.getString(SPConstants.TOKEN)).build()
+       // Log.d("OkHttp","adminToken-----"+ MMKVUtils.getString(SPConstants.TOKEN))
 
         return chain.proceed(builder.build())
     }

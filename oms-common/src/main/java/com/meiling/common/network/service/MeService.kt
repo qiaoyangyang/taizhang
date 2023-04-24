@@ -67,5 +67,15 @@ interface MeService {
         @Query("accountStatus") accountStatus: String = "9",
     ): ResultData<Any>
 
+    /**
+     * 获取门店
+     * */
+    @GET("saas/poi/citypoi")
+    suspend fun citypoi(
+        @Query("poiType") poiType: String="1,2",
+        @Query("hasCityAll") hasCityAll: String = "0",
+    ): ResultData<ArrayList<ShopBean>>
+
+
 
 }

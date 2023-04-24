@@ -1,6 +1,7 @@
 package com.meiling.oms.fragment
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.alibaba.android.arouter.launcher.ARouter
@@ -8,6 +9,9 @@ import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.constant.SPConstants
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.utils.MMKVUtils
+import com.meiling.oms.activity.BaseWebActivity
+import com.meiling.oms.activity.ChannelActivity
+import com.meiling.oms.activity.StoreManagementActivity
 import com.meiling.oms.databinding.FragmentMyBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.MyViewModel
@@ -58,6 +62,15 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
 
     override fun initListener() {
+        //渠道店铺管理
+        mDatabind.txtChannel.setSingleClickListener {
+            mViewModel.citypoi()
+        }
+        //门店管理
+        mDatabind.txtStoreManagement.setSingleClickListener {
+            startActivity(Intent(requireActivity(), StoreManagementActivity::class.java))
+        }
+
         mDatabind.txtRecharge.setSingleClickListener {
             ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
         }
@@ -113,6 +126,22 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             requireActivity().finish()
         }
         mViewModel.disableAccountDto.onError.observe(this) {
+            dismissLoading()
+            showToast(it.msg)
+        }
+
+        mViewModel.shopBean.onStart.observe(this) {
+            showLoading()
+        }
+        mViewModel.shopBean.onSuccess.observe(this) {
+            dismissLoading()
+            if (it.size == 0) {
+                startActivity(Intent(requireActivity(), StoreManagementActivity::class.java))
+            } else {
+                startActivity(Intent(requireActivity(), ChannelActivity::class.java))
+            }
+        }
+        mViewModel.shopBean.onError.observe(this) {
             dismissLoading()
             showToast(it.msg)
         }

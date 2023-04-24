@@ -24,7 +24,6 @@ class RetrofitClient {
     private fun provideOkHttpClient(): OkHttpClient {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-//        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
 
 
         val client: OkHttpClient = OkHttpClient.Builder()
