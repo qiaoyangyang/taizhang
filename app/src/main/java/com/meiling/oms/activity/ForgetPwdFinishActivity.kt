@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.ActivityUtils
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.constant.SPConstants
 import com.meiling.common.utils.MMKVUtils
@@ -65,7 +66,7 @@ class ForgetPwdFinishActivity : BaseActivity<LoginViewModel, ActivityForgetPwdSu
         mDatabind.btnLoginReturn.setSingleClickListener {
             ARouter.getInstance().build("/app/LoginActivity")
                 .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).navigation()
-            finish()
+            ActivityUtils.finishAllActivities()
         }
     }
 
@@ -85,7 +86,7 @@ class ForgetPwdFinishActivity : BaseActivity<LoginViewModel, ActivityForgetPwdSu
             MMKVUtils.putString(SPConstants.adminViewId, it.adminUser?.viewId!!)
             MMKVUtils.putInt(SPConstants.ROLE, 1)
             ARouter.getInstance().build("/app/MainActivity").navigation()
-            finish()
+            ActivityUtils.finishAllActivities()
         }
         mViewModel.loginData.onError.observe(this) {
             disLoading()

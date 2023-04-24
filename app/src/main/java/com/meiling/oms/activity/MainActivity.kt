@@ -13,8 +13,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.hjq.permissions.OnPermissionCallback
+import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.utils.MMKVUtils
+import com.meiling.common.utils.PermissionUtilis
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityMainBinding
 import com.meiling.oms.eventBusData.MessageEvent
@@ -32,7 +35,6 @@ import org.greenrobot.eventbus.ThreadMode
 
 @Route(path = "/app/MainActivity")
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
-
 
     private val fragmentList: MutableList<Fragment> = ArrayList()
 
@@ -53,6 +55,31 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                 ACCESS_NOTIFICATION_POLICY
             )
         }
+
+//        XXPermissions.with(this).permission(PermissionUtilis.Group.STORAGE)
+//            .request(object : OnPermissionCallback {
+//                override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
+//                    if (!allGranted) {
+//                        showToast("获取部分权限成功，但部分权限未正常授予")
+//                        return
+//                    }
+//                }
+//
+//                override fun onDenied(
+//                    permissions: MutableList<String>,
+//                    doNotAskAgain: Boolean
+//                ) {
+//                    if (doNotAskAgain) {
+//                        // 如果是被永久拒绝就跳转到应用权限系统设置页面
+//                        XXPermissions.startPermissionActivity(
+//                            this@MainActivity,
+//                            permissions
+//                        )
+//                    } else {
+//                        showToast("授权失败，请检查权限")
+//                    }
+//                }
+//            })
     }
 
 
