@@ -60,12 +60,12 @@ class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
 //                    ACCESS_INSTALL_LOCATION
 //                )
 //            }
-            val hasInstallPermission: Boolean = isHasInstallPermissionWithO(this)
-            if (!hasInstallPermission) {
-                startInstallPermissionSettingActivity(this)
-            }else{
+//            val hasInstallPermission: Boolean = isHasInstallPermissionWithO(this)
+//            if (!hasInstallPermission) {
+//                startInstallPermissionSettingActivity(this)
+//            }else{
                 UpdateVersion.getUpdateVersion(this, "1")
-            }
+//            }
 
         }
         mDatabind.stKf.setSingleClickListener {

@@ -58,7 +58,7 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
     private var RG_time: RadioGroup? = null
     var iscustom = 0//是否自定义时间
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
-        val verificationScreening =
+        var verificationScreening =
             arguments?.getSerializable("verificationScreening") as VerificationScreening
         val shopBean = arguments?.getSerializable("shopBean") as ArrayList<ShopBean>
 
@@ -106,6 +106,7 @@ class VerificationScreeningDidalog : BaseNiceDialog() {
             rb_status?.isChecked = true
             verificationScreening.status = ""
             verificationScreening.poiId=""
+            verificationScreening.poiIdtype = "0"
 
         }
 

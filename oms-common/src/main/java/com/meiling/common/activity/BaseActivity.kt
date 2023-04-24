@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
+import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
 import com.gyf.immersionbar.ImmersionBar
 import com.hjq.bar.TitleBar
@@ -48,14 +49,13 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewBinding> : BaseVmDbActi
     override fun initDataBind() {
         super.initDataBind()
         val titleBar = getTitleBar()
+        overridePendingTransition(R.anim.activity_right_in, R.anim.activity_right_out)
+//        this.overridePendingTransition(R.anim.activity_in_anim,R.anim.activity_out_anim)
         titleBar?.setOnTitleBarListener(this)
-
         // 初始化沉浸式状态栏
         if (isStatusBarEnabled()) {
             getStatusBarConfig().init()
-
             // 设置标题栏沉浸
-
             if (titleBar != null) {
                 Log.d("yjk", "initListener: ")
                 ImmersionBar.setTitleBar(this, titleBar)
@@ -71,6 +71,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewBinding> : BaseVmDbActi
 
     override fun onLeftClick(view: View) {
         onBackPressed()
+        overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out)
     }
 
     override fun onTitleClick(view: View) {
@@ -107,8 +108,5 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewBinding> : BaseVmDbActi
             .statusBarDarkFont(isStatusBarDarkFont()) // 指定导航栏背景颜色
             .autoDarkModeEnable(true, 0.2f)
     }
-
-
-
 
 }
