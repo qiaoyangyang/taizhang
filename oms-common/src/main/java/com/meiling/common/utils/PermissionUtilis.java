@@ -12,12 +12,17 @@ public class PermissionUtilis {
          * 存储权限
          */
         public static final String[] STORAGE = new String[]{
-                Permission.READ_MEDIA_AUDIO};
+                Permission.READ_MEDIA_IMAGES,
+                Permission.READ_MEDIA_VIDEO,
+                Permission.READ_MEDIA_AUDIO
+        };
         /**
          * 定位权限
          */
         public static final String[] LOCAL = new String[]{
-                Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION};
+                Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION, Permission.READ_MEDIA_IMAGES,
+                Permission.READ_MEDIA_VIDEO,
+                Permission.READ_MEDIA_AUDIO};
         /**
          * 电话权限
          */
