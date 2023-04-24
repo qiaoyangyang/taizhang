@@ -7,7 +7,7 @@ enum class Error(private val code: Int, private val err: String) {
      */
     UNKNOWN(1000, "请求失败，请稍后再试"),
 
-    TOKEN_INVALID(403, "请求失败，请稍后再试"),
+    SERVER_ERROR(500, "服务器异常，请稍后再试"),
     /**
      * 解析错误
      */

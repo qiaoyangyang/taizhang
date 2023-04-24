@@ -14,6 +14,7 @@ import com.meiling.oms.dialog.ShopDialog
 import com.meiling.oms.eventBusData.MessageSelectShopPo
 import com.meiling.oms.viewmodel.DataViewModel
 import com.meiling.oms.widget.setSingleClickListener
+import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -52,6 +53,7 @@ class DataFragment : BaseFragment<DataViewModel, FragmentDataBinding>() {
     override fun getBind(inflater: LayoutInflater): FragmentDataBinding {
         return FragmentDataBinding.inflate(inflater)
     }
+
     override fun onStart() {
         super.onStart()
         EventBus.getDefault().register(this)
@@ -80,7 +82,6 @@ class DataFragment : BaseFragment<DataViewModel, FragmentDataBinding>() {
                 shopBeanList.addAll(it)
                 mDatabind.TitleBar.text =
                     shopBeanList[0].name + "/" + "${shopBeanList[0].shopList?.get(0)!!.name}"
-
                 shopDialog = ShopDialog().newInstance(shopBeanList)
                 shopDialog.setOnresilience(object : ShopDialog.Onresilience {
                     override fun resilience(
@@ -96,11 +97,19 @@ class DataFragment : BaseFragment<DataViewModel, FragmentDataBinding>() {
                         mDatabind.TitleBar.text = cityidname + "/" + shop.name
                         EventBus.getDefault().post(MessageSelectShopPo(idArrayList))
                     }
-
                     override fun Ondismiss() {
                     }
                 })
+            }else{
+                mDatabind.TitleBar.text = "全国"+ "/" + "所有门店"
+                EventBus.getDefault().post(MessageSelectShopPo(ArrayList()))
             }
+
+
+        }
+
+        mViewModel.shopBean.onError.observe(this) {
+            showToast(it.msg)
         }
     }
 

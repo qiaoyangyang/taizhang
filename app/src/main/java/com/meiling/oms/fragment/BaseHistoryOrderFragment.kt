@@ -64,6 +64,7 @@ class BaseHistoryOrderFragment :
         super.onResume()
         initViewData()
     }
+
     override fun onStart() {
         super.onStart()
         EventBus.getDefault().register(this)
@@ -73,6 +74,7 @@ class BaseHistoryOrderFragment :
         super.onStop()
         EventBus.getDefault().unregister(this)
     }
+
     var telPhone = ""
     override fun initView(savedInstanceState: Bundle?) {
         requireArguments().getString("type").toString()
@@ -81,6 +83,8 @@ class BaseHistoryOrderFragment :
                 LoadMoreModule {
                 override fun convert(holder: BaseViewHolder, item: OrderDto.Content) {
                     holder.setText(R.id.txt_order_delivery_type, item.orderName)
+                    val imgPrint = holder.getView<ImageView>(R.id.img_shop_print)
+
                     val imgShopCopy = holder.getView<ImageView>(R.id.img_shop_copy)
                     val changeOrder = holder.getView<TextView>(R.id.txt_change_order)
                     val btnSendDis = holder.getView<TextView>(R.id.txt_order_dis)//发起配送或查看配送详情
@@ -94,7 +98,10 @@ class BaseHistoryOrderFragment :
                     holder.setText(R.id.txt_order_delivery_name, item.order?.recvName)
                     phone.text = item.order?.recvPhone
                     telPhone = item.order?.recvPhone ?: ""
-                    holder.setText(R.id.txt_order_delivery_address, item.order?.recvAddr?.replace("@@", ""))
+                    holder.setText(
+                        R.id.txt_order_delivery_address,
+                        item.order?.recvAddr?.replace("@@", "")
+                    )
                     holder.setText(R.id.txt_order_num, "#${item.order?.channelDaySn}")
                     holder.setText(R.id.txt_shop_actual_money, "${item.order?.actualIncome}")
                     holder.setText(R.id.txt_order_delivery_time, "${item.order?.arriveTimeDate}")
@@ -166,7 +173,28 @@ class BaseHistoryOrderFragment :
 //                        ToastUtils.showLong("复制成功")
                         showToast("复制成功")
                     }
+                    imgPrint.setSingleClickListener {
+                        //收银小票:1 退款小票:3
+                        when (item.order!!.logisticsStatus) {
+                            "70" -> {
+                                mViewModel.getPrint(
+                                    item.order?.viewId.toString(),
+                                    item.order?.shopId.toString(),
+                                    "3"
+                                )
+                            }
+                            else -> {
+                                mViewModel.getPrint(
+                                    item.order?.viewId.toString(),
+                                    item.order?.shopId.toString(),
+                                    "1"
+                                )
+                            }
 
+                        }
+
+
+                    }
                     var ryOrderSendDisDetail = holder.getView<RecyclerView>(R.id.rv_shop)
                     if (ryOrderSendDisDetail.layoutManager == null) {
                         ryOrderSendDisDetail.layoutManager = LinearLayoutManager(
@@ -228,7 +256,8 @@ class BaseHistoryOrderFragment :
                                 CancelOrderSend(
                                     deliveryConsumerId = item.deliveryConsume!!.id ?: "0",
                                     poiId = item.order!!.poiId ?: "0",
-                                    stationChannelId = item.deliveryConsume!!.stationChannelId ?: "0"
+                                    stationChannelId = item.deliveryConsume!!.stationChannelId
+                                        ?: "0"
                                 )
                             )
                             dialog.dismiss()
@@ -239,23 +268,23 @@ class BaseHistoryOrderFragment :
                     var orderDisDialog =
                         OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
                     btnSendDis.setSingleClickListener {
-                            when (item.order!!.logisticsStatus) {
-                                "0" -> {
-                                    ARouter.getInstance().build("/app/OrderDisActivity")
-                                        .withSerializable("kk", item).navigation()
-                                }
-                                "20" -> {
-                                    ARouter.getInstance().build("/app/OrderDisAddTipActivity")
-                                        .withSerializable("kk", item).navigation()
-                                }
+                        when (item.order!!.logisticsStatus) {
+                            "0" -> {
+                                ARouter.getInstance().build("/app/OrderDisActivity")
+                                    .withSerializable("kk", item).navigation()
+                            }
+                            "20" -> {
+                                ARouter.getInstance().build("/app/OrderDisAddTipActivity")
+                                    .withSerializable("kk", item).navigation()
+                            }
 
-                                "70" -> {
-                                    ARouter.getInstance().build("/app/OrderDisActivity")
-                                        .withSerializable("kk", item).navigation()
-                                }
-                                "30", "50", "80" -> {
-                                    orderDisDialog.show(childFragmentManager)
-                                }
+                            "70" -> {
+                                ARouter.getInstance().build("/app/OrderDisActivity")
+                                    .withSerializable("kk", item).navigation()
+                            }
+                            "30", "50", "80" -> {
+                                orderDisDialog.show(childFragmentManager)
+                            }
                         }
                     }
                     //0.待配送  20.待抢单 30.待取货 50.配送中 70.取消 80.已送达
@@ -405,6 +434,15 @@ class BaseHistoryOrderFragment :
             dismissLoading()
             showToast(it.msg)
         }
+
+        mViewModel.printDto.onStart.observe(this) {
+        }
+        mViewModel.printDto.onSuccess.observe(this) {
+        }
+        mViewModel.printDto.onError.observe(this) {
+            dismissLoading()
+            showToast(it.msg)
+        }
     }
 
 
@@ -433,6 +471,7 @@ class BaseHistoryOrderFragment :
         channelId = messageHistoryEventTime.selectDialogDto.channelId!!
         initViewData()
     }
+
     var REQUEST_CALL_PHONE_PERMISSION = 1
     override fun onRequestPermissionsResult(
         requestCode: Int,
