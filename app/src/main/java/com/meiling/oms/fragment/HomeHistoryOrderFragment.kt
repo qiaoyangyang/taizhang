@@ -70,7 +70,6 @@ class HomeHistoryOrderFragment :
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
 
 
-
         mDatabind.txtSelectOrder.setSingleClickListener {
             var orderSelectDialog = OrderSelectDialog().newInstance(
                 selectDialogDto
@@ -93,6 +92,9 @@ class HomeHistoryOrderFragment :
                 )
             }
 
+            orderSelectDialog.setSelectCloseOrder {
+                selectDialogDto = it
+            }
             orderSelectDialog.show(childFragmentManager)
         }
     }
