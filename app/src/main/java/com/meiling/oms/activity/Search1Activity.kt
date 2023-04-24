@@ -303,10 +303,10 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                         }
                         "70" -> {
                             holder.setText(
-                                R.id.txt_order_delivery_state, "取消"
+                                R.id.txt_order_delivery_state, "已取消"
                             )
                             btnCancelDis.visibility = View.INVISIBLE
-                            changeOrder.visibility = View.INVISIBLE
+                            changeOrder.visibility = View.VISIBLE
                             btnSendDis.text = "重新配送"
                         }
                         "80" -> {

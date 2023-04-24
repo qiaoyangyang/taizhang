@@ -91,6 +91,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         mDatabind.viewPager.adapter =
             BaseFragmentPagerAdapter(supportFragmentManager, lifecycle, fragmentList)
         mDatabind.viewPager.setCurrentItem(0, false)
+        mDatabind.viewPager.offscreenPageLimit = 1
 //        mDatabind.aivHome.isSelected = true
 //        mDatabind.atvHome.isSelected = true
         mDatabind.aivHomeSelect.visibility = View.VISIBLE

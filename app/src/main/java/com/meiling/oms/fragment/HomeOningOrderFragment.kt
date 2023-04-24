@@ -50,23 +50,23 @@ class HomeOningOrderFragment :
         fragmentList.add(BaseOrderFragment.newInstance("50", false))
         fragmentList.add(BaseOrderFragment.newInstance("70", false))
         fragmentList.add(BaseOrderFragment.newInstance("80", false))
-        mDatabind.viewPager.offscreenPageLimit = 1
         mDatabind.viewPager.adapter =
             BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
         mDatabind.viewPager.setCurrentItem(0, false)
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
-        mViewModel.statusCount(
-            logisticsStatus = "",
-            startTime = formatCurrentDateBeforeWeek(),
-            endTime = formatCurrentDate(),
-            businessNumberType = "1",
-            pageIndex = "1",
-            pageSize = "20",
-            orderTime = "1",
-            deliverySelect = "0",
-            isValid = "",
-            businessNumber = ""
-        )
+        mDatabind.viewPager.offscreenPageLimit = 1
+//        mViewModel.statusCount(
+//            logisticsStatus = "",
+//            startTime = formatCurrentDateBeforeWeek(),
+//            endTime = formatCurrentDate(),
+//            businessNumberType = "1",
+//            pageIndex = "1",
+//            pageSize = "20",
+//            orderTime = "1",
+//            deliverySelect = "0",
+//            isValid = "",
+//            businessNumber = ""
+//        )
 
     }
 
