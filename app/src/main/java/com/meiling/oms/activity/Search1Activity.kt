@@ -56,6 +56,7 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                 LoadMoreModule {
                 override fun convert(holder: BaseViewHolder, item: OrderDto.Content) {
                     holder.setText(R.id.txt_order_delivery_type, item.orderName)
+                    val imgPrint = holder.getView<ImageView>(R.id.img_shop_print)
                     val imgShopCopy = holder.getView<ImageView>(R.id.img_shop_copy)
                     val changeOrder = holder.getView<TextView>(R.id.txt_change_order)
                     val btnSendDis = holder.getView<TextView>(R.id.txt_order_dis)//发起配送或查看配送详情
@@ -119,6 +120,28 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                         holder?.setGone(R.id.txt_order_delivery_yu, true)
                     }
 
+                    imgPrint.setSingleClickListener {
+                        //收银小票:1 退款小票:3
+                        when (item.order!!.logisticsStatus) {
+                            "70" -> {
+                                mViewModel.getPrint(
+                                    item.order?.viewId.toString(),
+                                    item.order?.shopId.toString(),
+                                    "3"
+                                )
+                            }
+                            else -> {
+                                mViewModel.getPrint(
+                                    item.order?.viewId.toString(),
+                                    item.order?.shopId.toString(),
+                                    "1"
+                                )
+                            }
+
+                        }
+
+
+                    }
                     phone.setSingleClickListener {
                         if (ContextCompat.checkSelfPermission(
                                 context,
@@ -415,6 +438,14 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
             mDatabind.rlOrderEmpty.visibility = View.VISIBLE
             mDatabind.txtErrorMsg.text = "支持通过订单编号、收货人姓名、手机号进行搜索"
             showToast("${it.msg}")
+        }
+
+        mViewModel.printDto.onStart.observe(this) {
+        }
+        mViewModel.printDto.onSuccess.observe(this) {
+        }
+        mViewModel.printDto.onError.observe(this) {
+            showToast(it.msg)
         }
 
     }

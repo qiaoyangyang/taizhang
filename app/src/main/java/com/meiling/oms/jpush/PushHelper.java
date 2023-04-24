@@ -13,7 +13,6 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
-import com.meihao.kotlin.cashier.widgets.juanmahexiao.JpushKt;
 import com.meiling.oms.R;
 import com.taobao.accs.ACCSClient;
 import com.taobao.accs.AccsClientConfig;

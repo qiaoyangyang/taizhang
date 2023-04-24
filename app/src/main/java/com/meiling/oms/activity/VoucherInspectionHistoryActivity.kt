@@ -144,7 +144,6 @@ class VoucherInspectionHistoryActivity :
     var typename = ""
     override fun initData() {
         super.initData()
-        shop = intent.getSerializableExtra("shop") as Shop
         type = intent.getStringExtra("type").toString()
         mViewModel.cityshop(type)
 

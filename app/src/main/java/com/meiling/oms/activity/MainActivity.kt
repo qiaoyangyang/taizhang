@@ -2,17 +2,22 @@ package com.meiling.oms.activity
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.hjq.permissions.OnPermissionCallback
+import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.utils.MMKVUtils
+import com.meiling.common.utils.PermissionUtilis
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityMainBinding
 import com.meiling.oms.eventBusData.MessageEvent
@@ -30,7 +35,6 @@ import org.greenrobot.eventbus.ThreadMode
 
 @Route(path = "/app/MainActivity")
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
-
 
     private val fragmentList: MutableList<Fragment> = ArrayList()
 
@@ -51,6 +55,31 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                 ACCESS_NOTIFICATION_POLICY
             )
         }
+
+//        XXPermissions.with(this).permission(PermissionUtilis.Group.STORAGE)
+//            .request(object : OnPermissionCallback {
+//                override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
+//                    if (!allGranted) {
+//                        showToast("获取部分权限成功，但部分权限未正常授予")
+//                        return
+//                    }
+//                }
+//
+//                override fun onDenied(
+//                    permissions: MutableList<String>,
+//                    doNotAskAgain: Boolean
+//                ) {
+//                    if (doNotAskAgain) {
+//                        // 如果是被永久拒绝就跳转到应用权限系统设置页面
+//                        XXPermissions.startPermissionActivity(
+//                            this@MainActivity,
+//                            permissions
+//                        )
+//                    } else {
+//                        showToast("授权失败，请检查权限")
+//                    }
+//                }
+//            })
     }
 
 
@@ -62,8 +91,11 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         mDatabind.viewPager.adapter =
             BaseFragmentPagerAdapter(supportFragmentManager, lifecycle, fragmentList)
         mDatabind.viewPager.setCurrentItem(0, false)
-        mDatabind.aivHome.isSelected = true
-        mDatabind.atvHome.isSelected = true
+//        mDatabind.aivHome.isSelected = true
+//        mDatabind.atvHome.isSelected = true
+        mDatabind.aivHomeSelect.visibility = View.VISIBLE
+        mDatabind.aivHome.visibility = View.GONE
+        mDatabind.atvHome.visibility = View.GONE
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityMainBinding {
@@ -74,6 +106,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun initListener() {
         mDatabind.llHome.setOnClickListener {
             resetting()
+            mDatabind.aivHomeSelect.visibility = View.VISIBLE
+            mDatabind.aivHome.visibility = View.GONE
+            mDatabind.atvHome.visibility = View.GONE
             mDatabind.aivHome.isSelected = true
             mDatabind.atvHome.isSelected = true
             EventBus.getDefault().post(MessageEventTabChange())
@@ -111,6 +146,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
 
     private fun resetting() {
+        mDatabind.aivHome.visibility = View.VISIBLE
+        mDatabind.atvHome.visibility = View.VISIBLE
+        mDatabind.aivHomeSelect.visibility = View.GONE
         mDatabind.aivHome.isSelected = false
         mDatabind.atvHome.isSelected = false
         mDatabind.aivFinds.isSelected = false
@@ -152,6 +190,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         super.onDestroy()
 //            EventBus.getDefault().unregister(this)
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
     }

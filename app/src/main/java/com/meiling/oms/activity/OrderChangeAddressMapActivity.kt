@@ -33,6 +33,7 @@ import com.meiling.oms.databinding.ActivityOrderChengeAddredssMapBinding
 import com.meiling.oms.dialog.OrderDistributionSelectLocalCityDialog
 import com.meiling.oms.viewmodel.ChangeAddressModel
 import com.meiling.oms.widget.KeyBoardUtil
+import com.meiling.oms.widget.showToast
 
 
 /**
@@ -109,6 +110,12 @@ class OrderChangeAddressMapActivity :
 //                    rootView.findViewById<LinearLayout>(R.id.llError).visibility = View.VISIBLE
                     mapView.visibility = View.GONE
                     mDatabind.txtMapLocalCity?.text = "定位中"
+//                    when (amapLocation?.errorCode){
+//                        1-> showToast("定位失败，由于未获得WIFI列表和基站信息，且GPS当前不可用")
+//                        12-> showToast("缺少定位权限")
+//                    }
+                   showToast("定位失败，请检查权限")
+
 //                    rootView.findViewById<RecyclerView>(R.id.ryOrderDisSearchLocal).visibility = View.GONE
                     Log.d("lwq", "错误3============errorCode${amapLocation?.errorCode}")
                 }
@@ -122,6 +129,8 @@ class OrderChangeAddressMapActivity :
         aMap?.isMyLocationEnabled = true;// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
         //设置地图的放缩级别
         aMap?.moveCamera(CameraUpdateFactory.zoomTo(15f));
+        //设置是否只定位一次,默认为false
+//        mLocationOption?.isOnceLocation = true
         //初始化定位
         mLocationClient = AMapLocationClient(this);
         //设置定位回调监听
@@ -131,11 +140,11 @@ class OrderChangeAddressMapActivity :
         //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
         mLocationOption?.locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy;
         //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
-        mLocationOption?.interval = 1000;
+        mLocationOption?.interval = 100000;
         //设置是否返回地址信息（默认返回地址信息）
         mLocationOption?.isNeedAddress = true;
         //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
-        mLocationOption?.httpTimeOut = 20000;
+        mLocationOption?.httpTimeOut = 800000;
         //给定位客户端对象设置定位参数
         mLocationClient?.setLocationOption(mLocationOption);
         //启动定位
@@ -144,15 +153,7 @@ class OrderChangeAddressMapActivity :
 //            dismiss()
 //        }
 
-        aMap?.setOnCameraChangeListener(object : AMap.OnCameraChangeListener {
-            override fun onCameraChange(p0: CameraPosition?) {
 
-            }
-
-            override fun onCameraChangeFinish(p0: CameraPosition?) {
-                getGeocodeSearch(p0!!.target, cityCode);
-            }
-        })
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityOrderChengeAddredssMapBinding {
@@ -224,6 +225,21 @@ class OrderChangeAddressMapActivity :
             }
         })
 
+
+//        aMap?.setOnCameraChangeListener(object : AMap.OnCameraChangeListener {
+//            override fun onCameraChange(p0: CameraPosition?) {
+//
+//                Log.d("lwq", "=12121212===========${p0!!.target}==1212==${cityCode}")
+//
+//            }
+//
+//            override fun onCameraChangeFinish(p0: CameraPosition?) {
+//                Log.d("lwq", "============${p0!!.target}==1212==${cityCode}")
+//                getGeocodeSearch(p0!!.target, cityCode);
+//            }
+//        })
+//        })
+
         mDatabind.edtLocalSearch.setOnEditorActionListener { v, actionId, event ->
             ryOrderDisMapAdapter.setList(arrayListOf())
             ryOrderDisMapAdapter.notifyDataSetChanged()
@@ -254,6 +270,7 @@ class OrderChangeAddressMapActivity :
                 mDatabind.txtMapLocalCity?.text = it
             }
         }
+
     }
 
     override fun initListener() {
@@ -262,6 +279,7 @@ class OrderChangeAddressMapActivity :
 
     //逆地理编码获取当前位置信息
     fun getGeocodeSearch(targe: LatLng, cityCode: String) {
+        Log.d("lwq", "============12121")
         var queryQuery = PoiSearch.Query("住宿|商场|学校|住宅区|楼宇", "", cityCode)
         var poiSearch = PoiSearch(this, queryQuery)
         queryQuery.pageSize = 10
@@ -277,12 +295,13 @@ class OrderChangeAddressMapActivity :
             }
 
             override fun onPoiItemSearched(p0: PoiItem?, p1: Int) {
+                Log.d("lwq", "============12121p0")
             }
         });
     }
 
 
-    private fun searchLocationName(keyWork: String, cityCode: String) {
+    fun searchLocationName(keyWork: String, cityCode: String) {
         var queryQuery = PoiSearch.Query(keyWork, "", cityCode)
         var poiSearch = PoiSearch(this, queryQuery)
         queryQuery.pageSize = 20
@@ -321,17 +340,16 @@ class OrderChangeAddressMapActivity :
                 if (i == 1000) {
                     if (geocodeResult != null && geocodeResult.geocodeAddressList != null && geocodeResult.geocodeAddressList.size > 0) {
                         val geocodeAddress = geocodeResult.geocodeAddressList[0]
-
                         val latitude = geocodeAddress.latLonPoint.latitude //纬度
                         val longititude = geocodeAddress.latLonPoint.longitude //经度
                         lon = geocodeAddress.latLonPoint.longitude.toString()
                         lat = geocodeAddress.latLonPoint.latitude.toString()
                         cityCode = geocodeAddress.adcode
-                        val adcode = geocodeAddress.adcode //区域编码
                         val lng = LatLng(latitude, longititude)
                         aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(lng))
+                        getGeocodeSearch(lng, cityCode)
                     } else {
-
+                        Log.d("lwq", "错误============errorCode${121212}")
                     }
                 }
             }
@@ -340,4 +358,19 @@ class OrderChangeAddressMapActivity :
         geocodeSearch.getFromLocationNameAsyn(geocodeQuery)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState);
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+        mLocationClient?.onDestroy();//停止定位后，本地定位服务并不会被销毁
+    }
 }

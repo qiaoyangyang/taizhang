@@ -53,30 +53,32 @@ class WriteOffDetailsActivity :
 //        var persons =
 //            GsonUtils.getPersons1(serializableExtra?.coupon?.dealMenu, DealMenu::class.java)
 
-        val listType = object : TypeToken<ArrayList<ArrayList<DealMenu>>>() {
 
-        }.type
+        if (serializableExtra?.coupon?.type == 2) {
 
-        var persons =
-            Gson().fromJson<ArrayList<ArrayList<DealMenu>>>(
-                serializableExtra?.coupon?.dealMenu!!,
-                listType
-            )
+            val listType = object : TypeToken<ArrayList<ArrayList<DealMenu>>>() {
 
-        var list = ArrayList<DealMenu>()
-        if (persons.size != 0) {
-            persons.forEachIndexed { index, dealMenus ->
-                dealMenus.forEach {
-                    if (!TextUtils.isEmpty(it.total)) {
-                        list.add(it)
+            }.type
+            var persons =
+                Gson().fromJson<ArrayList<ArrayList<DealMenu>>>(
+                    serializableExtra?.coupon?.dealMenu!!,
+                    listType
+                )
 
+            var list = ArrayList<DealMenu>()
+            if (persons.size != 0) {
+                persons.forEachIndexed { index, dealMenus ->
+                    dealMenus.forEach {
+                        if (!TextUtils.isEmpty(it.total)) {
+                            list.add(it)
+
+                        }
                     }
                 }
+
+                orderLeftRecyAdapter.setList(list)
             }
-
-            orderLeftRecyAdapter.setList(list)
         }
-
         if (serializableExtra != null) {
 
             mDatabind.tvName.text = serializableExtra?.coupon?.dealTitle
@@ -123,7 +125,7 @@ class WriteOffDetailsActivity :
                 var string2Millis =
                     TimeUtils.string2Millis(serializableExtra?.coupon?.couponUseTime)
                 var nowMills = TimeUtils.getNowMills()
-                val b: Boolean = (nowMills - string2Millis) / 60000 > 20
+                val b: Boolean = (nowMills - string2Millis) / 60000 >= 20
                 if (b) {
                     mDatabind.tvOk.visibility = View.GONE
 
