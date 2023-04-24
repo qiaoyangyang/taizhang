@@ -72,10 +72,10 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
     override fun onResume() {
         super.onResume()
         if (shop != null) {
-            Log.d("yjk","--shop--onResume-")
+            Log.d("yjk", "--shop--onResume-")
             mViewModel.getShopAndChannelVO(shop?.id!!)
         } else {
-            Log.d("yjk","----onResume-")
+            Log.d("yjk", "----onResume-")
         }
     }
 
@@ -180,7 +180,8 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         mDatabind.rectangle1.adapter = channelXAdapter
         channelXAdapter.setList(arrayListOf())
         channelXAdapter.setOnItemClickListener { adapter, view, position ->
-             startActivity(Intent(this, BaseWebActivity::class.java).putExtra("url","http://dev-oms.igoodsale.com/#/userAgreement"))
+            mViewModel.urlauth(channelXAdapter.getItem(position)?.id!!,shop?.id!!,"3")
+            // startActivity(Intent(this, BaseWebActivity::class.java).putExtra("url","http://dev-oms.igoodsale.com/#/userAgreement"))
 
         }
 

@@ -52,6 +52,13 @@ interface BranchInformationService {
     ): ResultData<Channel>
 
 
+    @GET("saas/admin/auth")
+    suspend fun urlauth(
+        @Query("channelId") channelId: String = "",//所选渠道的id
+        @Query("poiId") poiId: String = "",//所选渠道的id
+        @Query("businessId") businessId: String = "",//美团专用 1：美团点评 2：美团外卖 3：美团闪惠
+    ): ResultData<String>
+
 
 
 

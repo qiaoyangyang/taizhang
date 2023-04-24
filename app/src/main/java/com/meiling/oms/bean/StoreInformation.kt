@@ -172,7 +172,7 @@ data class ChannelX(
     @SerializedName("createTime")
     var createTime: Long? = 0,
     @SerializedName("id")
-    var id: Int? = 0,
+    var id: String? = "",
     @SerializedName("logo")
     var logo: String? = "",
     @SerializedName("logoBg")

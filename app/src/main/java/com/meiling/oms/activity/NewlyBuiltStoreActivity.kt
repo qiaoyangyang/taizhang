@@ -74,8 +74,6 @@ class NewlyBuiltStoreActivity :
             mDatabind.etStoreNumber.keyListener = null
             mDatabind.etStoreAddress.keyListener = null
             mDatabind.etDetailedAddress.keyListener = null
-            mDatabind.etStoreContact.keyListener = null
-            mDatabind.etContactPhoner.keyListener = null
             mViewModel.poi(id)
         } else {
             mDatabind.tvGoOn.visibility = View.VISIBLE
@@ -96,12 +94,7 @@ class NewlyBuiltStoreActivity :
             if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.etdetailedaddress)) {
                 showToast("请填写详细的门店地址")
             }
-            if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.contactPerson)) {
-                showToast("请输入联系人姓名")
-            }
-            if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.mobilePhone)) {
-                showToast("请输入联系人手机号")
-            }
+
             mViewModel.poiadd(
                 lat,
                 lon,

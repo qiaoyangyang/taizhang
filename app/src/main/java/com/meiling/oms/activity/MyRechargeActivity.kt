@@ -41,7 +41,6 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
     override fun initView(savedInstanceState: Bundle?) {
         EventBus.getDefault().register(this)
         mDatabind.viewPager.isUserInputEnabled = false
-        setBar(this, mDatabind.cosTitle)
         fragmentList.add(RechargeSettlementFragment.newInstance())
         fragmentList.add(RechargeRecordFragment.newInstance())
         mDatabind.viewPager.setCurrentItem(0, false)
@@ -55,7 +54,6 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
     }
 
     override fun initListener() {
-        mDatabind.imgRechargeBack.setOnClickListener { finish() }
 
         mDatabind.btnRecharge.setSingleClickListener {
             var rechargeDialog = RechargeDialog().newInstance()

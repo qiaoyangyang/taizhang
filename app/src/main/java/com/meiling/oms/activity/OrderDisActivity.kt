@@ -23,7 +23,6 @@ class OrderDisActivity : BaseActivity<OrderDisFragmentViewModel, ActivityDisBind
     lateinit var content: OrderDto.Content
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewPager.isUserInputEnabled = false
-        setBar(this, mDatabind.txtOrderDis)
 
 
         content =
@@ -89,6 +88,5 @@ class OrderDisActivity : BaseActivity<OrderDisFragmentViewModel, ActivityDisBind
     }
 
     override fun initListener() {
-        mDatabind.aivBack.setOnClickListener { finish() }
     }
 }

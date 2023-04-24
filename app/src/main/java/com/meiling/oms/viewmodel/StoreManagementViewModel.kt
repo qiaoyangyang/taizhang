@@ -64,15 +64,24 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
         }, poiaddpoidata)
 
     }
+
     //门店数据
     var shopBean = BaseLiveData<ArrayList<ShopBean>>()
-    fun citypoi(){
+    fun citypoi() {
         request({ meService.citypoi() }, shopBean)
     }
+
     var channel = BaseLiveData<Channel>()
+
     //渠道获取数据
-    fun getShopAndChannelVO(id: String){
+    fun getShopAndChannelVO(id: String) {
         request({ branchInformationService.getShopAndChannelVO(id) }, channel)
+    }
+
+    //美图绑定
+    var urlauth = BaseLiveData<String>()
+    fun urlauth(channelId: String, poiId: String, businessId: String) {
+        request({ branchInformationService.urlauth(channelId, poiId, businessId) }, urlauth)
     }
 
 

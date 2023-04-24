@@ -62,13 +62,15 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
 
     override fun initListener() {
+        //渠道店铺管理
         mDatabind.txtChannel.setSingleClickListener {
             mViewModel.citypoi()
-            //     //
         }
+        //门店管理
         mDatabind.txtStoreManagement.setSingleClickListener {
             startActivity(Intent(requireActivity(), StoreManagementActivity::class.java))
         }
+
         mDatabind.txtRecharge.setSingleClickListener {
             ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
         }
