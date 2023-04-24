@@ -13,7 +13,9 @@ object GlideAppUtils {
     fun loadUrl(imageView: ImageView, url: String) {
         GlideApp.with(Utils.getApp()).load(url).fitCenter().into(imageView)
     }
-
+    fun loadResUrl(imageView: ImageView, url: Int) {
+        GlideApp.with(Utils.getApp()).load(url).fitCenter().into(imageView)
+    }
     fun loadUrlCenterCropDp(imageView: ImageView, url: String, roundingRadius: Int = 1) {
         GlideApp
             .with(Utils.getApp())

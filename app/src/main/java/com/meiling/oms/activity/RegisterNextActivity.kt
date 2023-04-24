@@ -49,7 +49,6 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     override fun initData() {
         super.initData()
         phone = intent?.getStringExtra("phone")
-        phone="18311111112"
         mDatabind.viewModel = mViewModel
         mDatabind.tips1.setOnClickListener {
             var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
@@ -117,6 +116,10 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 },
                 onError = {}
             )
+        }
+        mDatabind.txtAddImg.setOnClickListener {
+            GlideAppUtils.loadResUrl(mDatabind.addImg, R.mipmap.default_logo)
+            mViewModel.businessDto.value!!.logo = "https://static.igoodsale.com/default-logo-header.png"
         }
         //选择图片
         mDatabind.addImg.setOnClickListener {
@@ -240,31 +243,34 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
             if (mViewModel.businessDto.value!!.tenantType == "1") {
                 if (mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()) {
-                    showToast("请输入企业名称")
+                    showToast("企业名称未填写")
                     return@setOnClickListener
                 }
             }
             if (mViewModel.businessDto.value!!.tenantName.isNullOrBlank()) {
-                showToast("请输入品牌名称")
+                showToast("品牌名称未填写")
                 return@setOnClickListener
             }
             if (mViewModel.businessDto.value!!.logo.isNullOrBlank()) {
-                showToast("请选择LOGO")
+                showToast("品牌LOGO未上传")
                 return@setOnClickListener
             }
             if (mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()) {
-                showToast("请选择所属行业")
+                showToast("所属行业未选择")
+                return@setOnClickListener
+            }
+            if (mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()) {
+                showToast("管理员姓名未填写")
                 return@setOnClickListener
             }
             if (mViewModel.businessDto.value!!.userName.isNullOrBlank()) {
-                showToast("请输入管理员账号")
+                showToast("登录账号未填写")
                 return@setOnClickListener
             }
-            if (mViewModel.businessDto.value!!.userName.isNullOrBlank()) {
-                showToast("请输入管理员密码")
+            if (mViewModel.businessDto.value!!.password.isNullOrBlank()) {
+                showToast("登录密码未填写")
                 return@setOnClickListener
             }
-
 
             //校验账户名
             mViewModel.launchRequest(
@@ -306,6 +312,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                     BindingLogisticsActivity::class.java)
                     .putExtra("tenantId", it)
                     .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
+
             },
             onError = {
                 disLoading()

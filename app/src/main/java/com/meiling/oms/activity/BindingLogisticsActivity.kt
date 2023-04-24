@@ -23,6 +23,8 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
     lateinit var adapter:BaseQuickAdapter<Merchant,BaseViewHolder>
     var name=""
     var tenantId=""
+    var account=""
+    var pwd=""
     override fun initView(savedInstanceState: Bundle?) {
     }
 
@@ -31,7 +33,8 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
         super.initData()
         name= intent?.getStringExtra("name")?:""
         tenantId= intent?.getStringExtra("tenantId")?:""
-
+        account= intent?.getStringExtra("account")?:""
+        pwd= intent?.getStringExtra("pwd")?:""
         adapter=object :BaseQuickAdapter<Merchant,BaseViewHolder>(R.layout.item_merchant){
             override fun convert(holder: BaseViewHolder, item: Merchant) {
                 holder.setText(R.id.name,item.typeName)
@@ -92,8 +95,8 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
                         showToast("注册成功")
                         disLoading()
                         startActivity(Intent(this,ForgetPwdFinishActivity::class.java)
-                            .putExtra("account","qyy")
-                            .putExtra("pwd","Admin8888!!")
+                            .putExtra("account",account)
+                            .putExtra("pwd",pwd)
                             .putExtra("title","注册成功")
                             .putExtra("context","注册成功"))
                     },
@@ -104,8 +107,8 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
                 )
             }else{
                 startActivity(Intent(this,ForgetPwdFinishActivity::class.java)
-                    .putExtra("account","qyy")
-                    .putExtra("pwd","Admin8888!!")
+                    .putExtra("account",account)
+                    .putExtra("pwd",pwd)
                     .putExtra("title","注册成功")
                     .putExtra("context","注册成功"))
 

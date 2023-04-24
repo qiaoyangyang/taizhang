@@ -234,7 +234,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/line2"
                     android:text="*" />
 
-                <EditText
+                <com.meiling.common.view.ClearEditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="right"
@@ -243,6 +243,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@null"
                     android:maxLines="1"
+                    android:maxLength="30"
                     android:singleLine="true"
                     android:text="@={viewModel.businessDto.enterpriseName}"
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtShopName"
@@ -284,7 +285,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/line4"
                     android:text="*" />
 
-                <EditText
+                <com.meiling.common.view.ClearEditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="right"
@@ -293,6 +294,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@null"
                     android:maxLines="1"
+                    android:maxLength="20"
                     android:singleLine="true"
                     android:text="@={viewModel.businessDto.tenantName}"
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtShopBrandName"
@@ -322,6 +324,15 @@
                     android:id="@+id/txtLogo"
                     android:layout_marginTop="10dp"
                     style="@style/registTitleTxt" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtLogoRed"
+                    android:textColor="@color/red"
+                    android:layout_marginLeft="5dp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/txtLogo"
+                    app:layout_constraintStart_toEndOf="@+id/txtLogo"
+                    android:text="*" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -436,7 +447,7 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtAdministratorsName"
                     android:text="*" />
 
-                <EditText
+                <com.meiling.common.view.ClearEditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -447,6 +458,7 @@
                     android:hint="请输入"
                     android:text="@={viewModel.businessDto.tenantHead}"
                     android:maxLines="1"
+                    android:maxLength="25"
                     android:singleLine="true"
                     android:gravity="right"
                     android:layout_marginRight="15dp"
@@ -486,7 +498,7 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtAdministratorsLoginName"
                     android:text="*" />
 
-                <EditText
+                <com.meiling.common.view.ClearEditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -496,6 +508,7 @@
                     android:layout_marginTop="15dp"
                     android:hint="用户登录管理系统"
                     android:maxLines="1"
+                    android:maxLength="25"
                     android:singleLine="true"
                     android:gravity="right"
                     android:layout_marginRight="15dp"
@@ -537,7 +550,7 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtAdministratorsLoginPassWord"
                     android:text="*" />
 
-                <EditText
+                <com.meiling.common.view.ClearEditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
