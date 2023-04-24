@@ -37,9 +37,9 @@ class RetrofitClient {
 
     private fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-//            .baseUrl("http://test-oms-api.igoodsale.com")//测试环境
+            .baseUrl("http://test-oms-api.igoodsale.com")//测试环境
 //            .baseUrl("http://dev-oms-api.igoodsale.com")//开发环境
-            .baseUrl("https://ods-api.igoodsale.com")//生产环境
+           // .baseUrl("https://ods-api.igoodsale.com")//生产环境
 //            .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(CustomGsonConverterFactory.create())
