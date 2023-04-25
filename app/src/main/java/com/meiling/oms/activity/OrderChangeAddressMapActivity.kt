@@ -14,7 +14,6 @@ import com.amap.api.location.AMapLocationListener
 import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.MapView
-import com.amap.api.maps.model.CameraPosition
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.MyLocationStyle
 import com.amap.api.services.core.LatLonPoint
@@ -34,7 +33,6 @@ import com.meiling.oms.dialog.OrderDistributionSelectLocalCityDialog
 import com.meiling.oms.viewmodel.ChangeAddressModel
 import com.meiling.oms.widget.KeyBoardUtil
 import com.meiling.oms.widget.showToast
-
 
 /**
  * 地图选择
@@ -56,7 +54,6 @@ class OrderChangeAddressMapActivity :
         mapView = mDatabind.mapView
         mapView.onCreate(savedInstanceState)
         aMap = mDatabind.mapView.map
-
     }
 
     var cityCode = ""
@@ -66,13 +63,13 @@ class OrderChangeAddressMapActivity :
         var mLocationListener = AMapLocationListener { amapLocation ->
             if (amapLocation != null) {
                 if (amapLocation.errorCode == 0) {
-                    amapLocation.locationType;//获取当前定位结果来源，如网络定位结果，详见定位类型表
+//                    amapLocation.locationType;//获取当前定位结果来源，如网络定位结果，详见定位类型表
                     amapLocation.latitude;//获取纬度
                     amapLocation.longitude;//获取经度
                     amapLocation.accuracy;//获取精度信息
                     mDatabind.txtMapLocalCity?.text = amapLocation.city;
 //                    clearSearch = amapLocation.address
-                    amapLocation.address;//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
+//                    amapLocation.address;//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
                     amapLocation.country;//国家信息
                     amapLocation.province;//省信息
                     amapLocation.city;//城市信息
@@ -82,9 +79,9 @@ class OrderChangeAddressMapActivity :
                     amapLocation.cityCode;//城市编码
                     amapLocation.adCode;//地区编码
                     amapLocation.aoiName;//获取当前定位点的AOI信息
-                    amapLocation.buildingId;//获取当前室内定位的建筑物Id
-                    amapLocation.floor;//获取当前室内定位的楼层
-                    amapLocation.gpsAccuracyStatus;//获取GPS的当前状态
+//                    amapLocation.buildingId;//获取当前室内定位的建筑物Id
+//                    amapLocation.floor;//获取当前室内定位的楼层
+//                    amapLocation.gpsAccuracyStatus;//获取GPS的当前状态
                     cityCode = amapLocation.cityCode
                     mLocationClient?.stopLocation()
                     lat = amapLocation.latitude.toString()
@@ -114,8 +111,7 @@ class OrderChangeAddressMapActivity :
 //                        1-> showToast("定位失败，由于未获得WIFI列表和基站信息，且GPS当前不可用")
 //                        12-> showToast("缺少定位权限")
 //                    }
-                   showToast("定位失败，请检查权限")
-
+                    showToast("定位失败，请检查权限")
 //                    rootView.findViewById<RecyclerView>(R.id.ryOrderDisSearchLocal).visibility = View.GONE
                     Log.d("lwq", "错误3============errorCode${amapLocation?.errorCode}")
                 }
@@ -149,17 +145,10 @@ class OrderChangeAddressMapActivity :
         mLocationClient?.setLocationOption(mLocationOption);
         //启动定位
         mLocationClient?.startLocation();
-//        rootView.findViewById<ImageView>(R.id.imgOrderMapClose).setOnClickListener {
-//            dismiss()
-//        }
-
-
     }
-
     override fun getBind(layoutInflater: LayoutInflater): ActivityOrderChengeAddredssMapBinding {
         return ActivityOrderChengeAddredssMapBinding.inflate(layoutInflater)
     }
-
 
     private var type = true
 
@@ -263,9 +252,9 @@ class OrderChangeAddressMapActivity :
         }
 
         mDatabind.txtMapLocalCity.setOnClickListener {
-            if( mDatabind.txtMapLocalCity?.text.toString()=="定位失败"){
+            if (mDatabind.txtMapLocalCity?.text.toString() == "定位失败") {
                 showToast("定位失败，请检查网络或者权限")
-            }else{
+            } else {
                 var bas = OrderDistributionSelectLocalCityDialog().newInstance()
                 bas.show(supportFragmentManager)
                 bas.setOnSelectAddressClickLister {
@@ -278,7 +267,6 @@ class OrderChangeAddressMapActivity :
     }
 
     override fun initListener() {
-//        mDatabind.aivBack.setOnClickListener { finish() }
     }
 
     //逆地理编码获取当前位置信息
@@ -303,7 +291,6 @@ class OrderChangeAddressMapActivity :
             }
         });
     }
-
 
     fun searchLocationName(keyWork: String, cityCode: String) {
         var queryQuery = PoiSearch.Query(keyWork, "", cityCode)
@@ -331,7 +318,6 @@ class OrderChangeAddressMapActivity :
         });
 
     }
-
 
     //切换城市
     private fun getLatlon(cityName: String) {

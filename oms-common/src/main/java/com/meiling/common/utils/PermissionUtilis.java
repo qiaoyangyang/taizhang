@@ -18,12 +18,23 @@ public class PermissionUtilis {
         };
         /**
          * 定位权限
+         * Permission.ACCESS_COARSE_LOCATION,
+         *  Manifest.permission.ACCESS_COARSE_LOCATION,
+         *             Manifest.permission.ACCESS_FINE_LOCATION,
+         *             Manifest.permission.WRITE_EXTERNAL_STORAGE,
+         *             Manifest.permission.READ_EXTERNAL_STORAGE,
+         *             Manifest.permission.READ_PHONE_STATE
+         *
+         *              Permission.READ_MEDIA_VIDEO,
+         *                 Permission.READ_PHONE_STATE,
+         *                 Permission.READ_MEDIA_AUDIO
+         *                                 Permission.READ_MEDIA_IMAGES,
          */
         public static final String[] LOCAL = new String[]{
-                Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION, Permission.READ_MEDIA_IMAGES,
-                Permission.READ_MEDIA_VIDEO,
+                Permission.ACCESS_FINE_LOCATION,
+                Permission.ACCESS_COARSE_LOCATION,
                 Permission.READ_PHONE_STATE,
-                Permission.READ_MEDIA_AUDIO};
+               };
         /**
          * 电话权限
          */

@@ -2,7 +2,6 @@ package com.meiling.oms.activity
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -12,12 +11,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.hjq.permissions.OnPermissionCallback
+import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseActivity
-import com.meiling.common.utils.MMKVUtils
-import com.meiling.common.utils.PermissionUtilis
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityMainBinding
 import com.meiling.oms.eventBusData.MessageEvent
@@ -43,45 +40,44 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 //        EventBus.getDefault().register(this)
         mDatabind.viewPager.isUserInputEnabled = false
         mViewModel.setUmToken()
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_NOTIFICATION_POLICY
-            ) == PackageManager.PERMISSION_DENIED
-        ) {
-            // 如果没有权限，申请权限
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_NOTIFICATION_POLICY),
-                ACCESS_NOTIFICATION_POLICY
-            )
-        }
+//        if (ContextCompat.checkSelfPermission(
+//                this,
+//                Manifest.permission.ACCESS_NOTIFICATION_POLICY
+//            ) == PackageManager.PERMISSION_DENIED
+//        ) {
+//            // 如果没有权限，申请权限
+//            ActivityCompat.requestPermissions(
+//                this,
+//                arrayOf(Manifest.permission.ACCESS_NOTIFICATION_POLICY),
+//                ACCESS_NOTIFICATION_POLICY
+//            )
+//        }
 
-//        XXPermissions.with(this).permission(PermissionUtilis.Group.STORAGE)
-//            .request(object : OnPermissionCallback {
-//                override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
-//                    if (!allGranted) {
-//                        showToast("获取部分权限成功，但部分权限未正常授予")
-//                        return
-//                    }
-//                }
-//
-//                override fun onDenied(
-//                    permissions: MutableList<String>,
-//                    doNotAskAgain: Boolean
-//                ) {
-//                    if (doNotAskAgain) {
-//                        // 如果是被永久拒绝就跳转到应用权限系统设置页面
-//                        XXPermissions.startPermissionActivity(
-//                            this@MainActivity,
-//                            permissions
-//                        )
-//                    } else {
-//                        showToast("授权失败，请检查权限")
-//                    }
-//                }
-//            })
+        XXPermissions.with(this).permission(Permission.ACCESS_NOTIFICATION_POLICY)
+            .request(object : OnPermissionCallback {
+                override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
+                    if (!allGranted) {
+                        showToast("获取部分权限成功，但部分权限未正常授予")
+                        return
+                    }
+                }
+
+                override fun onDenied(
+                    permissions: MutableList<String>,
+                    doNotAskAgain: Boolean
+                ) {
+                    if (doNotAskAgain) {
+                        // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                        XXPermissions.startPermissionActivity(
+                            this@MainActivity,
+                            permissions
+                        )
+                    } else {
+                        showToast("授权失败，请检查权限")
+                    }
+                }
+            })
     }
-
 
     override fun initData() {
         fragmentList.add(HomeFragment.newInstance())
@@ -160,9 +156,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         mDatabind.atvMy.isSelected = false
     }
 
-
     private var doubleBackToExitPressedOnce = false
-
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed()
