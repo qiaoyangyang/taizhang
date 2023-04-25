@@ -209,6 +209,9 @@
         <activity
             android:name=".activity.BaseWebActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NoStoreActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
