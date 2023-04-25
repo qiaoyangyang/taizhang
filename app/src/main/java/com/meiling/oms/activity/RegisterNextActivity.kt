@@ -49,7 +49,6 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     override fun initData() {
         super.initData()
         phone = intent?.getStringExtra("phone")
-        phone="18311111113"
         mDatabind.viewModel = mViewModel
         mDatabind.tips1.setOnClickListener {
             var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
