@@ -24,7 +24,7 @@ class NoStoreActivity : BaseVmDbActivity<RegisterViewModel,ActivityNoStoreBindin
     override fun initData() {
         super.initData()
         var mainViewModel=ViewModelProvider(MainActivity.mainActivity!!).get(MainViewModel2::class.java)
-//        mainViewModel.getByTenantId.value=mainViewModel.getByTenantId.value?.copy(shop = 1)
+//        mainViewModel.getByTenantId.value=mainViewModel.getByTenantId.value?.copy(shop = 1, poi = -1)
         mDatabind.creatStoreBtn.setOnClickListener {
             startActivity(Intent(this,NewlyBuiltStoreActivity::class.java))
             finish()
