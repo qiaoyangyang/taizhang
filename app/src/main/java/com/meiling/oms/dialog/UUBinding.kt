@@ -26,8 +26,6 @@ class UUBinding: BaseNiceDialog() {
 
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
 
-
-
         var btn=holder?.getView<Button>(R.id.btn_uu_sure)
         var txtAuthCode=holder?.getView<TextView>(R.id.txt_auth_code)
         var edtUuBindCode=holder?.getView<EditText>(R.id.edt_uu_bind_code)
