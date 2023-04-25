@@ -94,10 +94,6 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     val phone = holder.getView<TextView>(R.id.txt_order_delivery_phone)
                     val channelLogoImg = holder.getView<ImageView>(R.id.img_order_icon)
 
-                    if (item.goodsVoList?.get(0)?.refundNum == item.goodsVoList?.get(0)?.number) {
-
-                    }
-
                     holder.setText(R.id.txt_order_delivery_name, item.order?.recvName)
                     phone.text = item.order?.recvPhone
                     telPhone = item.order?.recvPhone ?: ""
