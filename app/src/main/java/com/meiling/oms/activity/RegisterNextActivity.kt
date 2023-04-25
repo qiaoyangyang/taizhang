@@ -49,7 +49,6 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     override fun initData() {
         super.initData()
         phone = intent?.getStringExtra("phone")
-        phone="18311111113"
         mDatabind.viewModel = mViewModel
         mDatabind.tips1.setOnClickListener {
             var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
@@ -240,6 +239,8 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
         //注册
         mDatabind.btnNext.setOnClickListener {
+            startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
+            return@setOnClickListener
             mViewModel.businessDto.value!!.phone = this@RegisterNextActivity.phone
 
             if (mViewModel.businessDto.value!!.tenantType == "1") {
@@ -310,11 +311,11 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             onSuccess = {
                 disLoading()
                 //成功会返回组合id
-                startActivity(Intent(this,
-                    BindingLogisticsActivity::class.java)
-                    .putExtra("tenantId", it)
-                    .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
-
+//                startActivity(Intent(this,
+//                    BindingLogisticsActivity::class.java)
+//                    .putExtra("tenantId", it)
+//                    .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
+                startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
             },
             onError = {
                 disLoading()

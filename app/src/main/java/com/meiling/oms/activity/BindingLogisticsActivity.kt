@@ -15,6 +15,7 @@ import com.meiling.common.utils.GlideAppUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityBandingLogistcsLayoutBinding
 import com.meiling.oms.dialog.LogisticsPlatformInformationDidalog
+import com.meiling.oms.dialog.UUBinding
 import com.meiling.oms.viewmodel.BindingLogisticsViewModel
 import com.meiling.oms.widget.showToast
 
@@ -50,25 +51,36 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
         adapter.setOnItemClickListener { adapte, view, position ->
             var merchant = adapter.data.get(position)
 
-            var logisticsPlatformInformationDidalog = LogisticsPlatformInformationDidalog().newInstance(merchant )
-            logisticsPlatformInformationDidalog.setOnclickListener{
-                var item=adapter.data.get(position) as Merchant
-                if(it.typeName==item.typeName){
-                    item.thirdMerchantId=it.thirdMerchantId
-                    item.appSecret=it.appSecret
-                    item.appId=it.appId
-                    item.status=it.status
-                    adapter.notifyItemChanged(position)
-                }
-            }
-            logisticsPlatformInformationDidalog.setOnGoWebListener{
-                var intent=Intent(this,AgreementActivity::class.java)
-                intent.putExtra("title","物流手册")
-                intent.putExtra("url",it.guideUrl)
-                startActivity(intent)
 
+
+            if(merchant.type=="uu"){
+
+                var uuBinding=UUBinding()
+
+                uuBinding.show(supportFragmentManager)
+
+
+            }else{
+                var logisticsPlatformInformationDidalog = LogisticsPlatformInformationDidalog().newInstance(merchant )
+                logisticsPlatformInformationDidalog.setOnclickListener{
+                    var item=adapter.data.get(position) as Merchant
+                    if(it.typeName==item.typeName){
+                        item.thirdMerchantId=it.thirdMerchantId
+                        item.appSecret=it.appSecret
+                        item.appId=it.appId
+                        item.status=it.status
+                        adapter.notifyItemChanged(position)
+                    }
+                }
+                logisticsPlatformInformationDidalog.setOnGoWebListener{
+                    var intent=Intent(this,AgreementActivity::class.java)
+                    intent.putExtra("title","物流手册")
+                    intent.putExtra("url",it.guideUrl)
+                    startActivity(intent)
+
+                }
+                logisticsPlatformInformationDidalog.show(supportFragmentManager)
             }
-            logisticsPlatformInformationDidalog.show(supportFragmentManager)
         }
         mDatabind.recyClerView.adapter=adapter
         mViewModel.launchRequest(//9024

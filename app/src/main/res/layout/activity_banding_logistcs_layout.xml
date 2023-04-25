@@ -15,7 +15,7 @@
         android:background="#FF4545"
         app:rightTitleSize="@dimen/sp_14"
         app:titleColor="@color/white"
-        app:title="商户注册" />
+        app:title="绑定物流" />
 
 
     <View
