@@ -22,6 +22,7 @@ public class PermissionUtilis {
         public static final String[] LOCAL = new String[]{
                 Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION, Permission.READ_MEDIA_IMAGES,
                 Permission.READ_MEDIA_VIDEO,
+                Permission.READ_PHONE_STATE,
                 Permission.READ_MEDIA_AUDIO};
         /**
          * 电话权限

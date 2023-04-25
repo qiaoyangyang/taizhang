@@ -8,16 +8,17 @@
     android:orientation="vertical">
 
     <com.hjq.bar.TitleBar
-        android:background="#00000000"
         android:id="@+id/TitleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#00000000"
         app:barStyle="transparent"
         app:layout_constraintTop_toTopOf="parent"
         app:leftIcon="@null"
         app:rightBackground="@null"
         app:rightTitleSize="@dimen/sp_14"
         app:title="" />
+
 
     <RelativeLayout
 
@@ -29,22 +30,22 @@
         app:layout_constraintTop_toTopOf="@+id/TitleBar">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:visibility="gone"
             android:id="@+id/iv_scan_icon1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/scan_icon1" />
+            android:src="@mipmap/scan_icon1"
+            android:visibility="gone" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:src="@mipmap/scan_icon" />
+            android:src="@mipmap/scan_icon"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/rl_mei_tuan"
+        android:id="@+id/rl_dou_yin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_40"
@@ -52,6 +53,45 @@
         android:layout_marginEnd="@dimen/dp_40"
         android:background="@drawable/scan_bg_input"
         app:layout_constraintTop_toBottomOf="@+id/rel_title">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_douyin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_40"
+            android:padding="@dimen/dp_40"
+            android:src="@drawable/douyin" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/img_douyin"
+            android:text="抖音验券"
+            android:textColor="@color/home_333333"
+            android:textSize="@dimen/sp_36" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:src="@drawable/icon_back" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_mei_tuan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_40"
+        android:background="@drawable/scan_bg_input"
+        app:layout_constraintTop_toBottomOf="@+id/rl_dou_yin">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_meituan"
@@ -68,8 +108,8 @@
             android:layout_toEndOf="@+id/img_meituan"
             android:src="@mipmap/scan_meituan"
             android:text="美团 | 点评验券"
-            android:textSize="@dimen/sp_36"
-            android:textColor="@color/home_333333" />
+            android:textColor="@color/home_333333"
+            android:textSize="@dimen/sp_36" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_next"
@@ -109,8 +149,8 @@
             android:layout_toEndOf="@+id/img_koubei"
             android:src="@mipmap/scan_meituan"
             android:text="口碑验券"
-            android:textSize="@dimen/sp_36"
-            android:textColor="@color/home_333333" />
+            android:textColor="@color/home_333333"
+            android:textSize="@dimen/sp_36" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
@@ -124,42 +164,5 @@
             android:src="@drawable/icon_back" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl_dou_yin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_40"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginEnd="@dimen/dp_40"
-        android:background="@drawable/scan_bg_input"
-        app:layout_constraintTop_toBottomOf="@+id/rl_kou_bei">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img_douyin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/dp_40"
-            android:padding="@dimen/dp_40"
-            android:src="@drawable/douyin" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/img_douyin"
-            android:text="抖音验券"
-            android:textSize="@dimen/sp_36"
-            android:textColor="@color/home_333333" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginEnd="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_20"
-            android:src="@drawable/icon_back" />
-    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

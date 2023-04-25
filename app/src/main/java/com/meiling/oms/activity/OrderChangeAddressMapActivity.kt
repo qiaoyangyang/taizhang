@@ -109,7 +109,7 @@ class OrderChangeAddressMapActivity :
                 } else {
 //                    rootView.findViewById<LinearLayout>(R.id.llError).visibility = View.VISIBLE
                     mapView.visibility = View.GONE
-                    mDatabind.txtMapLocalCity?.text = "定位中"
+                    mDatabind.txtMapLocalCity?.text = "定位失败"
 //                    when (amapLocation?.errorCode){
 //                        1-> showToast("定位失败，由于未获得WIFI列表和基站信息，且GPS当前不可用")
 //                        12-> showToast("缺少定位权限")
@@ -263,11 +263,15 @@ class OrderChangeAddressMapActivity :
         }
 
         mDatabind.txtMapLocalCity.setOnClickListener {
-            var bas = OrderDistributionSelectLocalCityDialog().newInstance()
-            bas.show(supportFragmentManager)
-            bas.setOnSelectAddressClickLister {
-                getLatlon(it)
-                mDatabind.txtMapLocalCity?.text = it
+            if( mDatabind.txtMapLocalCity?.text.toString()=="定位失败"){
+                showToast("定位失败，请检查网络或者权限")
+            }else{
+                var bas = OrderDistributionSelectLocalCityDialog().newInstance()
+                bas.show(supportFragmentManager)
+                bas.setOnSelectAddressClickLister {
+                    getLatlon(it)
+                    mDatabind.txtMapLocalCity?.text = it
+                }
             }
         }
 
