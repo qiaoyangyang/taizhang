@@ -1,10 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-   >
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/img_dis_icon"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="5dp"
+            android:scaleType="center"
+            android:src="@drawable/icon_order_dis_ing"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/rlOperate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:paddingStart="@dimen/dp_30"
+            android:paddingEnd="@dimen/dp_30"
+            android:paddingBottom="@dimen/dp_30"
+            app:layout_constraintLeft_toRightOf="@+id/img_dis_icon"
+            app:layout_constraintTop_toTopOf="@+id/img_dis_icon">
+
+
+            <TextView
+                android:id="@+id/txt_dis_per_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_4"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_32"
+                android:textStyle="bold"
+                tools:text="达达" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:id="@+id/btnCopyNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_toEndOf="@+id/txt_dis_per_name"
+                android:padding="@dimen/dp_6"
+                android:text="复制单号"
+                android:textColor="@color/home_666666"
+                android:textSize="@dimen/sp_20"
+                app:shape_radius="4dp"
+                app:shape_strokeColor="@color/home_666666"
+                app:shape_strokeWidth="@dimen/dp_1" />
+
+            <TextView
+                android:id="@+id/txt_dis_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnCopyNumber"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:textColor="@color/home_666666"
+                android:textSize="@dimen/sp_28"
+                tools:text="单号：1212" />
+
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ryOrderSendDisDetail"
         android:layout_width="match_parent"
@@ -12,4 +87,4 @@
         android:layout_marginEnd="@dimen/dp_20"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_distribution" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
