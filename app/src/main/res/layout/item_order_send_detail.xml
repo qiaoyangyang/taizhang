@@ -42,7 +42,6 @@
                 android:id="@+id/txt_dis_per_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_4"
                 android:layout_marginEnd="@dimen/dp_20"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_32"
