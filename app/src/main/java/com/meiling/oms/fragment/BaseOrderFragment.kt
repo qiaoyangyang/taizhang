@@ -93,6 +93,11 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     val orderId = holder.getView<TextView>(R.id.txt_order_id)
                     val phone = holder.getView<TextView>(R.id.txt_order_delivery_phone)
                     val channelLogoImg = holder.getView<ImageView>(R.id.img_order_icon)
+
+                    if (item.goodsVoList?.get(0)?.refundNum == item.goodsVoList?.get(0)?.number) {
+
+                    }
+
                     holder.setText(R.id.txt_order_delivery_name, item.order?.recvName)
                     phone.text = item.order?.recvPhone
                     telPhone = item.order?.recvPhone ?: ""
@@ -225,6 +230,14 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             holder.setText(R.id.txt_order_shop_spec, item.specs)
                             holder.setText(R.id.txt_order_shop_num, "X" + item.number)
                             holder.setText(R.id.txt_order_shop_price, "¥" + item.price)
+                            val txtRefund = holder.getView<TextView>(R.id.txt_order_refund)
+
+                            if (item.refundNum == item.number) {
+                                txtRefund.visibility = View.VISIBLE
+                            } else {
+                                txtRefund.visibility = View.GONE
+                            }
+
 //                            Glide.with(context).load(item.avater).into(view)
                             Glide.with(context).load(item.avater)
                                 .apply(options).into(view)
@@ -239,6 +252,11 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         for (ne in item.goodsVoList!!) {
                             sum += ne?.totalPrice!!
                             sumNumber += ne?.number!!
+//                            if (ne.refundNum == ne.number){
+//                                ne.isRefund = true
+//                            }else{
+//                                ne.isRefund = false
+//                            }
                         }
                         holder.setText(
                             R.id.txt_order_shop_msg, "${item.goodsVoList?.size}种商品，共${sumNumber}件"

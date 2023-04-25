@@ -87,7 +87,7 @@ class OrderSelectDialog : BaseNiceDialog() {
 
         var tv_go_on = holder?.getView<ShapeButton>(R.id.tv_go_on)
         holder?.setOnClickListener(R.id.iv_close_recharge) {
-            selectOrderLister?.invoke(resetDto)
+            selectOrderCloseLister?.invoke(resetDto)
             dismiss()
         }
 
@@ -356,12 +356,14 @@ class OrderSelectDialog : BaseNiceDialog() {
     }
 
     private var selectOrderLister: ((selectDialogDto: SelectDialogDto) -> Unit)? = null
+
+    private var selectOrderCloseLister: ((selectDialogDto: SelectDialogDto) -> Unit)? = null
     fun setSelectOrder(selectTime: ((selectDialogDto: SelectDialogDto) -> Unit)) {
         this.selectOrderLister = selectTime
     }
 
     fun setSelectCloseOrder(selectTime: ((selectDialogDto: SelectDialogDto) -> Unit)) {
-        this.selectOrderLister = selectTime
+        this.selectOrderCloseLister = selectTime
     }
 
 

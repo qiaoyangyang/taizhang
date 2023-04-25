@@ -193,6 +193,13 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                             holder.setText(R.id.txt_order_shop_spec, item.specs)
                             holder.setText(R.id.txt_order_shop_num, "X" + item.number)
                             holder.setText(R.id.txt_order_shop_price, "¥" + item.price)
+                            val txtRefund = holder.getView<TextView>(R.id.txt_order_refund)
+
+                            if (item.refundNum == item.number) {
+                                txtRefund.visibility = View.VISIBLE
+                            } else {
+                                txtRefund.visibility = View.GONE
+                            }
                             Glide.with(context).load(item.avater).into(view)
                         }
                     }
