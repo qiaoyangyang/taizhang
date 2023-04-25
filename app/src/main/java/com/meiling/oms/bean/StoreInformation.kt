@@ -196,7 +196,8 @@ data class ChannelX(
     @SerializedName("updateTime")
     var updateTime: Long? = 0,
     @SerializedName("viewId")
-    var viewId: Int? = 0
+    var viewId: Int? = 0,
+    var isselect: Boolean
 )
 
 data class ChannShop(

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -12,14 +13,18 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hjq.shape.view.ShapeTextView
 import com.meiling.common.BaseViewModel
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.constant.SPConstants
 import com.meiling.common.network.data.WriteoffhistoryPageData
+import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.RecyclerViewDivider
 import com.meiling.common.utils.SpannableUtils
 import com.meiling.oms.R
 import com.meiling.oms.bean.BranchInformationContent
 import com.meiling.oms.databinding.ActivitySplashBinding
 import com.meiling.oms.databinding.ActivityStoreManagementBinding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.StoreManagementViewModel
+import com.meiling.oms.widget.showToast
 
 //门店管理
 class StoreManagementActivity :
@@ -37,9 +42,6 @@ class StoreManagementActivity :
         return ActivityStoreManagementBinding.inflate(layoutInflater)
     }
 
-    override fun isStatusBarDarkFont(): Boolean {
-        return true
-    }
 
     override fun initData() {
         super.initData()
@@ -51,7 +53,7 @@ class StoreManagementActivity :
         super.onResume()
         mViewModel.poilis()
     }
-
+    var isposition=-1
 
     private fun initRecycleyView() {
 
@@ -87,12 +89,47 @@ class StoreManagementActivity :
                 )
             )
         }
+        storeManagemenAdapter.addChildClickViewIds(R.id.tv_remove)
+        storeManagemenAdapter.setOnItemChildClickListener { adapter, view, position ->
+            when (view.id) {
+                R.id.tv_remove -> {
+                    val dialog: MineExitDialog =
+                        MineExitDialog().newInstance("温馨提示", "若门店存在绑定的渠道店铺，则无法删除。请确认是否删除门店？", "取消", "确认", false)
+                    dialog.setOkClickLister {
+                        isposition=position
+                        dialog.dismiss()
+                        mViewModel.deletePoi(storeManagemenAdapter.getItem(position)?.id!!)
+
+                    }
+                    dialog.show(supportFragmentManager)
+                }
+            }
+        }
 
 
     }
 
     override fun createObserver() {
+        mViewModel.deletePoi.onStart.observe(this){
+            showLoading("")
+        }
+        mViewModel.deletePoi.onSuccess.observe(this){
+            disLoading()
+            storeManagemenAdapter.removeAt(isposition)
+            storeManagemenAdapter.notifyDataSetChanged()
+
+        }
+        mViewModel.deletePoi.onError.observe(this){
+            disLoading()
+            showToast(it.msg)
+        }
+
         mViewModel.dataList.onSuccess.observe(this) {
+            if (it.content==null||it?.content?.size==0){
+                mDatabind.tvType.visibility=View.GONE
+            }else{
+                mDatabind.tvType.visibility=View.VISIBLE
+            }
             storeManagemenAdapter.setList(it.content)
         }
     }

@@ -3,6 +3,7 @@ package com.meiling.oms.activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
@@ -165,6 +166,11 @@ class OrderChangeAddressMapActivity :
     private var type = true
 
     override fun initData() {
+        var tetle=intent.getStringExtra("title")
+        if (!TextUtils.isEmpty(tetle)){
+            mDatabind.TitleBar.title=tetle
+
+        }
         ryOrderDisMapAdapter = object :
             BaseQuickAdapter<PoiItem, BaseViewHolder>(R.layout.item_recy_distribution_local_map) {
             override fun convert(holder: BaseViewHolder, item: PoiItem) {
