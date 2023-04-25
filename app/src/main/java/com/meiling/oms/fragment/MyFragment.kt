@@ -55,20 +55,21 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         ).get(MainViewModel2::class.java)
         (vm as MainViewModel2).getByTenantId.observe(this) {
             if (it.logistics == 1) {//物流是否绑定 1绑定;-1没绑定
-                mDatabind.tvIsLogisticsBinding.visibility=View.GONE
-            }else{
-                mDatabind.tvIsLogisticsBinding.visibility=View.VISIBLE
+                mDatabind.tvIsLogisticsBinding.visibility = View.GONE
+            } else {
+                mDatabind.tvIsLogisticsBinding.visibility = View.VISIBLE
             }
             if (it.poi == 1) {//门店是否创建 1绑定;-1没绑定
-                mDatabind.tvIsStoreManagement.visibility=View.GONE
-            }else{
-                mDatabind.tvIsStoreManagement.visibility=View.VISIBLE
+                mDatabind.tvIsStoreManagement.visibility = View.GONE
+            } else {
+                mDatabind.tvIsStoreManagement.visibility = View.VISIBLE
             }
             if (it.shop == 1) {//渠道是否创建 1绑定;-1没绑定
-                mDatabind.tvIschannel.visibility=View.GONE
-            }else{
-                mDatabind.tvIschannel.visibility=View.VISIBLE
+                mDatabind.tvIschannel.visibility = View.GONE
+            } else {
+                mDatabind.tvIschannel.visibility = View.VISIBLE
             }
+
         }
 
         ImmersionBar.with(this).init()
@@ -99,7 +100,12 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         //渠道店铺管理
         mDatabind.llChannel.setSingleClickListener {
             // mViewModel.citypoi()
-            startActivity(Intent(requireActivity(), ChannelActivity::class.java))
+            startActivity(
+                Intent(requireActivity(), ChannelActivity::class.java).putExtra(
+                    "poi",
+                    vm?.getByTenantId?.value?.poi!!
+                )
+            )
         }
         //门店管理
         mDatabind.llStoreManagement.setSingleClickListener {

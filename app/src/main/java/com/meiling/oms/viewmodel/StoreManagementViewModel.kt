@@ -87,7 +87,7 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
     //  删除门店
     var deletePoi = BaseLiveData<String>()
     fun deletePoi(poiId: String) {
-        request({ branchInformationService.deletePoi() }, deletePoi)
+        request({ branchInformationService.deletePoi(poiId) }, deletePoi)
     }
 
 

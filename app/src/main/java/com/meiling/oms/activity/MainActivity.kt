@@ -88,7 +88,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
 
     override fun initData() {
-        mainViewModel2= ViewModelProvider(
+        mainViewModel2 = ViewModelProvider(
             this,
             ViewModelProvider.NewInstanceFactory()
         ).get(MainViewModel2::class.java)
@@ -153,8 +153,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         mViewModel.setUmTokenDto.onError.observe(this) {
             showToast(it.msg)
         }
-        mViewModel.getByTenantId.onSuccess.observe(this){
-        mainViewModel2.getByTenantId.value=it
+        mViewModel.getByTenantId.onSuccess.observe(this) {
+            SaveUserBean(it)
+            mainViewModel2.getByTenantId.value = it
+
         }
     }
 

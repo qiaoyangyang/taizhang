@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.hjq.shape.view.ShapeTextView
 import com.meiling.common.GlideApp
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.Shop
@@ -36,10 +37,6 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
         initRecycleyView()
         initRecycleyView1()
-        Log.d("yjk", "initView: "+ByTenantId()?.shop)
-        var byTenantId1 = ByTenantId()
-        byTenantId1?.shop=1
-        SaveUserBean(byTenantId1)
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityChannelBinding {
@@ -72,10 +69,12 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
     }
 
     var shopBean: ArrayList<ShopBean>? = null
-
+    var poi = -1
 
     override fun initData() {
         mViewModel.citypoi()
+        poi = intent.getIntExtra("poi", -1)
+
     }
 
     override fun onResume() {
@@ -95,10 +94,21 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         }
         mViewModel.shopBean.onSuccess.observe(this) {
             disLoading()
-            shopBean = it
-            shop = it.get(0).shopList?.get(0)
-            mDatabind.TitleBar.title = it.get(0).name + "/" + it.get(0).shopList?.get(0)?.name
-            mViewModel.getShopAndChannelVO(it.get(0).shopList?.get(0)?.id!!)
+            if (it != null && it.size != 0) {
+                shopBean = it
+                shop = it.get(0).shopList?.get(0)
+                mDatabind.TitleBar.title = it.get(0).name + "/" + it.get(0).shopList?.get(0)?.name
+
+                mViewModel.getShopAndChannelVO(it.get(0).shopList?.get(0)?.id!!)
+            } else if (ByTenantId()?.poi==-1){
+                val view = LayoutInflater.from(this).inflate(R.layout.store_managemnet1, null, false)
+                var tv_decreate = view.findViewById<ShapeTextView>(R.id.tv_decreate)
+                tv_decreate.setOnClickListener {
+                    startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
+                }
+
+                channelXAdapter.setEmptyView(view)
+            }
 
         }
         mViewModel.shopBean.onError.observe(this) {
@@ -125,7 +135,8 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         }
 
     }
-    var isposition=-1
+
+    var isposition = -1
     private fun initRecycleyView() {
 
         channeAdapter = object :
@@ -157,9 +168,15 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
             when (view.id) {
                 R.id.tv_unbundle -> {
                     val dialog: MineExitDialog =
-                        MineExitDialog().newInstance("温馨提示", "解绑后，订单将不会同步，确定是否解除绑定？", "取消", "确认", false)
+                        MineExitDialog().newInstance(
+                            "温馨提示",
+                            "解绑后，订单将不会同步，确定是否解除绑定？",
+                            "取消",
+                            "确认",
+                            false
+                        )
                     dialog.setOkClickLister {
-                        isposition=position
+                        isposition = position
                         dialog.dismiss()
 
 
