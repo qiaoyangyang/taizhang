@@ -109,7 +109,7 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
                     }
 
                     var view1 = holder.getView<ImageView>(R.id.img_dis_icon)
-                    var btnCopy = holder.getView<TextView>(R.id.txt_dis_per_name)
+                    var btnCopy = holder.getView<TextView>(R.id.btnCopyNumber)
                     val options = RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)
 
                     Glide.with(context).load(orderSendDetail.icon).apply(options).into(view1)
@@ -118,6 +118,7 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
 
                     btnCopy.setSingleClickListener {
                         copyText(context, "${orderSendDetail.stationChannelId}")
+                        showToast("复制成功")
                     }
 
                     ryOrderDisDetailAdapter =
