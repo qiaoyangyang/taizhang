@@ -15,6 +15,7 @@ import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.utils.PermissionUtilis
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityMainBinding
 import com.meiling.oms.eventBusData.MessageEvent
@@ -40,43 +41,43 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 //        EventBus.getDefault().register(this)
         mDatabind.viewPager.isUserInputEnabled = false
         mViewModel.setUmToken()
-//        if (ContextCompat.checkSelfPermission(
-//                this,
-//                Manifest.permission.ACCESS_NOTIFICATION_POLICY
-//            ) == PackageManager.PERMISSION_DENIED
-//        ) {
-//            // 如果没有权限，申请权限
-//            ActivityCompat.requestPermissions(
-//                this,
-//                arrayOf(Manifest.permission.ACCESS_NOTIFICATION_POLICY),
-//                ACCESS_NOTIFICATION_POLICY
-//            )
-//        }
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_NOTIFICATION_POLICY
+            ) == PackageManager.PERMISSION_DENIED
+        ) {
+            // 如果没有权限，申请权限
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_NOTIFICATION_POLICY),
+                ACCESS_NOTIFICATION_POLICY
+            )
+        }
 
-        XXPermissions.with(this).permission(Permission.ACCESS_NOTIFICATION_POLICY)
-            .request(object : OnPermissionCallback {
-                override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
-                    if (!allGranted) {
-                        showToast("获取部分权限成功，但部分权限未正常授予")
-                        return
-                    }
-                }
-
-                override fun onDenied(
-                    permissions: MutableList<String>,
-                    doNotAskAgain: Boolean
-                ) {
-                    if (doNotAskAgain) {
-                        // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                        XXPermissions.startPermissionActivity(
-                            this@MainActivity,
-                            permissions
-                        )
-                    } else {
-                        showToast("授权失败，请检查权限")
-                    }
-                }
-            })
+//        XXPermissions.with(this).permission(PermissionUtilis.Group.NOTIFICATION)
+//            .request(object : OnPermissionCallback {
+//                override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
+//                    if (!allGranted) {
+//                        showToast("获取部分权限成功，但部分权限未正常授予")
+//                        return
+//                    }
+//                }
+//
+//                override fun onDenied(
+//                    permissions: MutableList<String>,
+//                    doNotAskAgain: Boolean
+//                ) {
+//                    if (doNotAskAgain) {
+//                        // 如果是被永久拒绝就跳转到应用权限系统设置页面
+//                        XXPermissions.startPermissionActivity(
+//                            this@MainActivity,
+//                            permissions
+//                        )
+//                    } else {
+//                        showToast("授权失败，请检查权限")
+//                    }
+//                }
+//            })
     }
 
     override fun initData() {

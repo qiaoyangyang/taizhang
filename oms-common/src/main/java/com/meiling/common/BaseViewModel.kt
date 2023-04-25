@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
 import com.google.gson.Gson
@@ -62,6 +63,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                         MMKVUtils.clear()
                         ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY)
                             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).navigation()
+                        ActivityUtils.finishAllActivities()
 
                     } else if (it.message!!.contains("50")) {
 //                        val toast = Toast.makeText(
