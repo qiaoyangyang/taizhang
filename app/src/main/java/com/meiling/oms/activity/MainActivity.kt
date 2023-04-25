@@ -13,6 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.hjq.permissions.OnPermissionCallback
@@ -38,13 +40,16 @@ import org.greenrobot.eventbus.ThreadMode
 
 @Route(path = "/app/MainActivity")
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
-
+    companion object{
+        var mainActivity:ViewModelStoreOwner?=null
+    }
     private val fragmentList: MutableList<Fragment> = ArrayList()
 
     lateinit var mainViewModel2: MainViewModel2
     private val ACCESS_NOTIFICATION_POLICY = 1
     override fun initView(savedInstanceState: Bundle?) {
 //        EventBus.getDefault().register(this)
+        mainActivity=this
         mDatabind.viewPager.isUserInputEnabled = false
         mViewModel.setUmToken()
         if (ContextCompat.checkSelfPermission(
@@ -88,8 +93,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
 
     override fun initData() {
-        mainViewModel2 = ViewModelProvider(
-            this,
+        mainViewModel2= ViewModelProvider(
+            MainActivity.mainActivity!!,
             ViewModelProvider.NewInstanceFactory()
         ).get(MainViewModel2::class.java)
 
@@ -204,6 +209,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
+//        mainActivity=null
 //            EventBus.getDefault().unregister(this)
     }
 
