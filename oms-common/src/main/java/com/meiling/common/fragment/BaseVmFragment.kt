@@ -6,9 +6,14 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.Gson
+import com.luck.picture.lib.tools.SPUtils
+import com.meiling.common.BaseViewModel
 import com.meiling.common.dialog.LoadingDialog
 import com.meiling.common.getVmClazz
-import com.meiling.common.BaseViewModel
+import com.meiling.common.network.data.ByTenantId
+import com.meiling.common.utils.GsonUtils
+import com.meiling.common.utils.MMKVUtils
 
 
 /**
@@ -31,6 +36,7 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
 
     lateinit var mActivity: AppCompatActivity
     private var mLoadingDialog: LoadingDialog? = null
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -67,6 +73,18 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
     abstract fun showLoading(message: String = "请求网络中...")
 
     abstract fun dismissLoading()
+
+
+    var byTenantId: ByTenantId?=null
+    open fun ByTenantId(): ByTenantId? {
+        byTenantId = GsonUtils.getPerson(MMKVUtils.getString("byTenantId", ""), ByTenantId::class.java)
+        return byTenantId
+    }
+
+    open fun SaveUserBean(byTenantId: ByTenantId?) {
+        MMKVUtils.putString("byTenantId", Gson().toJson(byTenantId))
+    }
+
 
 
 }

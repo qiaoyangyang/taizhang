@@ -1,11 +1,15 @@
 package com.meiling.oms.activity
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -19,6 +23,7 @@ import com.meiling.oms.R
 import com.meiling.oms.bean.ChannShop
 import com.meiling.oms.bean.ChannelX
 import com.meiling.oms.databinding.ActivityChannelBinding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.ShopDialog
 import com.meiling.oms.viewmodel.StoreManagementViewModel
 import com.meiling.oms.widget.showToast
@@ -28,9 +33,13 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
     lateinit var channeAdapter: BaseQuickAdapter<ChannShop?, BaseViewHolder>
     lateinit var channelXAdapter: BaseQuickAdapter<ChannelX?, BaseViewHolder>
     override fun initView(savedInstanceState: Bundle?) {
-        TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia1)
+        TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
         initRecycleyView()
         initRecycleyView1()
+        Log.d("yjk", "initView: "+ByTenantId()?.shop)
+        var byTenantId1 = ByTenantId()
+        byTenantId1?.shop=1
+        SaveUserBean(byTenantId1)
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityChannelBinding {
@@ -79,10 +88,6 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         }
     }
 
-    override fun isStatusBarDarkFont(): Boolean {
-        return true
-    }
-
 
     override fun createObserver() {
         mViewModel.shopBean.onStart.observe(this) {
@@ -109,6 +114,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
         mViewModel.channel.onSuccess.observe(this) {
             disLoading()
+            it.channelList?.get(0)?.isselect = true
             channeAdapter.setList(it.shopList)
             channelXAdapter.setList(it.channelList)
         }
@@ -119,7 +125,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         }
 
     }
-
+    var isposition=-1
     private fun initRecycleyView() {
 
         channeAdapter = object :
@@ -130,10 +136,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                 item: ChannShop?
 
             ) {
-                holder.setText(R.id.tv_name, item?.channelName)
-                GlideApp.with(holder.itemView.context)
-                    .load(item?.channelLogo)
-                    .into(holder.getView(R.id.iv_picture))
+
 
 //
 //
@@ -148,6 +151,22 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         channeAdapter.setList(arrayListOf())
         channeAdapter.setOnItemClickListener { adapter, view, position ->
 
+        }
+        channeAdapter.addChildClickViewIds(R.id.tv_unbundle)
+        channeAdapter.setOnItemChildClickListener { adapter, view, position ->
+            when (view.id) {
+                R.id.tv_unbundle -> {
+                    val dialog: MineExitDialog =
+                        MineExitDialog().newInstance("温馨提示", "解绑后，订单将不会同步，确定是否解除绑定？", "取消", "确认", false)
+                    dialog.setOkClickLister {
+                        isposition=position
+                        dialog.dismiss()
+
+
+                    }
+                    dialog.show(supportFragmentManager)
+                }
+            }
         }
 
 
@@ -164,25 +183,40 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
             ) {
                 holder.setText(R.id.tv_name, item?.name)
-                GlideApp.with(holder.itemView.context)
-                    .load(item?.logo)
-                    .into(holder.getView(R.id.iv_picture))
+                var tv_name = holder.getView<TextView>(R.id.tv_name)
+                if (item?.isselect == true) {
+                    holder.setTextColor(R.id.tv_name, Color.parseColor("#212121"))
+                    tv_name.textSize = 18f
+                    //tv_name.textSize = context.resources.getDimension(R.dimen.sp_16)
+                    holder.setGone(R.id.tv_xin, false)
+                    tv_name.setTypeface(null, Typeface.BOLD)
+                } else {
+                    holder.setGone(R.id.tv_xin, true)
+                    holder.setTextColor(R.id.tv_name, Color.parseColor("#757575"))
+                    // tv_name.textSize = context.resources.getDimension(R.dimen.sp_12)
+                    tv_name.textSize = 14f
+                    tv_name.setTypeface(null, Typeface.NORMAL)
 
+                }
 //
 //
 
             }
         }
-        mDatabind.rectangle1.layoutManager = LinearLayoutManager(this)
+        mDatabind.rectangle1.layoutManager = LinearLayoutManager(
+            this,
+            RecyclerView.HORIZONTAL, false
+        )
         var recyclerViewDivider = RecyclerViewDivider()
-        recyclerViewDivider.setDividerHeight(30)
         mDatabind.rectangle1.addItemDecoration(recyclerViewDivider)
         mDatabind.rectangle1.adapter = channelXAdapter
         channelXAdapter.setList(arrayListOf())
         channelXAdapter.setOnItemClickListener { adapter, view, position ->
-            mViewModel.urlauth(channelXAdapter.getItem(position)?.id!!,shop?.id!!,"3")
-            // startActivity(Intent(this, BaseWebActivity::class.java).putExtra("url","http://dev-oms.igoodsale.com/#/userAgreement"))
-
+            channelXAdapter.data.forEach {
+                it?.isselect = false
+            }
+            channelXAdapter.data.get(position)?.isselect = true
+            channelXAdapter.notifyDataSetChanged()
         }
 
 

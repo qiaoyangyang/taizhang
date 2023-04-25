@@ -76,6 +76,14 @@ interface MeService {
         @Query("hasCityAll") hasCityAll: String = "0",
     ): ResultData<ArrayList<ShopBean>>
 
+    /**
+     * 获取门店 公共接口get请求 传租户id
+     * */
+    @GET("saas/common/getByTenantId")
+    suspend fun getByTenantId(
+
+    ): ResultData<ByTenantId>
+
 
 
 }
