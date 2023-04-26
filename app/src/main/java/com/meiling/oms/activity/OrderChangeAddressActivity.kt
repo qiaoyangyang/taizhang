@@ -172,8 +172,11 @@ class OrderChangeAddressActivity :
 
     fun initStart() {
         // 如果有权限
-        ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
+        ARouter.getInstance().build("/app/NewOrderChangeAddressMapActivity")
             .navigation(this, REQUEST_CODE)
+
+//        ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
+//            .navigation(this, REQUEST_CODE)
     }
 
     override fun createObserver() {
