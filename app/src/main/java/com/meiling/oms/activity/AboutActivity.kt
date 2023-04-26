@@ -17,6 +17,7 @@ import com.meiling.oms.dialog.AboutKFDialog
 import com.meiling.oms.dialog.SelectUrlDialog
 import com.meiling.oms.viewmodel.LoginViewModel
 import com.meiling.oms.widget.UpdateVersion
+import com.meiling.oms.widget.copyText
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 
@@ -32,7 +33,10 @@ class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun initListener() {
-        mDatabind.slCopyUrl.setSingleClickListener { showToast("地址已经复制") }
+        mDatabind.slCopyUrl.setSingleClickListener {
+            copyText(this, "http://ods.igoodsale.com/")
+            showToast("地址已经复制")
+        }
         mDatabind.slXy.setSingleClickListener {
             ARouter.getInstance().build("/app/AgreementActivity").withString("YSXY", "0")
                 .navigation()
@@ -42,7 +46,6 @@ class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
                 .navigation()
         }
         mDatabind.txtVersion.text = "V${BuildConfig.VERSION_NAME}"
-        if(AppUtils.isAppDebug()){
             mDatabind.imgAbout.setOnClickListener {
                 if (breakthrough > 0) {
                     if (isFastClickEachOneSec()) {
@@ -71,7 +74,6 @@ class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
                 }
 
             }
-        }
 
         mDatabind.slVersion.setSingleClickListener {
 
@@ -90,12 +92,12 @@ class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
 //                    ACCESS_INSTALL_LOCATION
 //                )
 //            }
-            val hasInstallPermission: Boolean = isHasInstallPermissionWithO(this)
-            if (!hasInstallPermission) {
-                startInstallPermissionSettingActivity(this)
-            }else{
-                UpdateVersion.getUpdateVersion(this, "1")
-            }
+//            val hasInstallPermission: Boolean = isHasInstallPermissionWithO(this)
+//            if (!hasInstallPermission) {
+//                startInstallPermissionSettingActivity(this)
+//            }else{
+            UpdateVersion.getUpdateVersion(this, "1")
+//            }
 
         }
         mDatabind.stKf.setSingleClickListener {
@@ -142,7 +144,7 @@ class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
         }
         var intent = Intent();
         //获取当前apk包URI，并设置到intent中（这一步设置，可让“未知应用权限设置界面”只显示当前应用的设置项）
-        var packageURI = Uri.parse("package:"+context.packageName);
+        var packageURI = Uri.parse("package:" + context.packageName);
         intent.setData(packageURI);
         if (Build.VERSION.SDK_INT >= 26) {
             intent.action = android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES;

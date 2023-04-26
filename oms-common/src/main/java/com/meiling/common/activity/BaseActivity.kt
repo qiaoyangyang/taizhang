@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
+import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
 import com.gyf.immersionbar.ImmersionBar
 import com.hjq.bar.TitleBar
@@ -27,13 +28,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewBinding> : BaseVmDbActi
     }
     override fun initListener() {
         super.initListener()
-
     }
-
-
-
-
-
-
 
 }

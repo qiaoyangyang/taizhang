@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.Utils
+import com.meiling.common.utils.CrashManagerUtil
 import com.meiling.common.constant.SPConstants
 import com.meiling.common.utils.MMKVUtils
 import com.orhanobut.logger.AndroidLogAdapter
@@ -17,6 +18,7 @@ import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator
+import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 import com.tencent.smtt.sdk.QbSdk
 
@@ -48,10 +50,13 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
 
             }
         })
+        CrashManagerUtil.getInstance(this).init()
+
+        CrashReport.initCrashReport(this, "0e93bafb3e", false);
 
     }
 
-    private  var activitys: Activity? = null
+    private var activitys: Activity? = null
 
     fun getActivity(): Activity? {
         if (activitys == null) {

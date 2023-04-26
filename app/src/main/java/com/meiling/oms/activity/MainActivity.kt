@@ -2,7 +2,6 @@ package com.meiling.oms.activity
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -16,11 +15,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.hjq.permissions.OnPermissionCallback
+import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseActivity
-import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.PermissionUtilis
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityMainBinding
@@ -65,7 +63,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             )
         }
 
-//        XXPermissions.with(this).permission(PermissionUtilis.Group.STORAGE)
+//        XXPermissions.with(this).permission(PermissionUtilis.Group.NOTIFICATION)
 //            .request(object : OnPermissionCallback {
 //                override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
 //                    if (!allGranted) {
@@ -91,7 +89,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 //            })
     }
 
-
     override fun initData() {
         mainViewModel2= ViewModelProvider(
             MainActivity.mainActivity!!,
@@ -106,6 +103,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         mDatabind.viewPager.adapter =
             BaseFragmentPagerAdapter(supportFragmentManager, lifecycle, fragmentList)
         mDatabind.viewPager.setCurrentItem(0, false)
+        mDatabind.viewPager.offscreenPageLimit = 1
 //        mDatabind.aivHome.isSelected = true
 //        mDatabind.atvHome.isSelected = true
         mDatabind.aivHomeSelect.visibility = View.VISIBLE
@@ -180,9 +178,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         mDatabind.atvMy.isSelected = false
     }
 
-
     private var doubleBackToExitPressedOnce = false
-
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed()

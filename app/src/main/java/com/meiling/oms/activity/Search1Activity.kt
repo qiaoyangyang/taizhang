@@ -192,6 +192,13 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                             holder.setText(R.id.txt_order_shop_spec, item.specs)
                             holder.setText(R.id.txt_order_shop_num, "X" + item.number)
                             holder.setText(R.id.txt_order_shop_price, "¥" + item.price)
+                            val txtRefund = holder.getView<TextView>(R.id.txt_order_refund)
+
+                            if (item.refundNum == item.number) {
+                                txtRefund.visibility = View.VISIBLE
+                            } else {
+                                txtRefund.visibility = View.GONE
+                            }
                             Glide.with(context).load(item.avater).into(view)
                         }
                     }
@@ -302,10 +309,10 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                         }
                         "70" -> {
                             holder.setText(
-                                R.id.txt_order_delivery_state, "取消"
+                                R.id.txt_order_delivery_state, "已取消"
                             )
                             btnCancelDis.visibility = View.INVISIBLE
-                            changeOrder.visibility = View.INVISIBLE
+                            changeOrder.visibility = View.VISIBLE
                             btnSendDis.text = "重新配送"
                         }
                         "80" -> {
@@ -332,7 +339,6 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
     private var b = false
 
     override fun initListener() {
-
 
         mDatabind.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

@@ -168,7 +168,6 @@ class VoucherInspectionHistoryActivity :
 
     override fun createObserver() {
         super.createObserver()
-
         mViewModel.recordCodeNumber.onSuccess.observe(this) {
             mDatabind.tvInspectionQuantity.text = it.count
             if (!TextUtils.isEmpty(it.total)) {
@@ -176,7 +175,6 @@ class VoucherInspectionHistoryActivity :
             } else {
                 mDatabind.tvAggregateAmount.text = "¥" + 0
             }
-
         }
         mViewModel.writeoffhistory.onSuccess.observe(this) {
 

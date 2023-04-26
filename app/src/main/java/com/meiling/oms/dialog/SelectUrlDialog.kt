@@ -47,7 +47,7 @@ class SelectUrlDialog : BaseNiceDialog() {
             onclose?.invoke(true)
         }
         btnOkTip2?.setSingleClickListener {
-            SPStaticUtils.put(SPConstants.IP,"http://dev-oms-api.igoodsale.com",true)
+            SPStaticUtils.put(SPConstants.IP,"https://ods-api.igoodsale.com",true)
             onclose?.invoke(true)
         }
         closeBtn?.setOnClickListener{

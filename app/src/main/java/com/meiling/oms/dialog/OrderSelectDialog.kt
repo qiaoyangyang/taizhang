@@ -65,9 +65,9 @@ class OrderSelectDialog : BaseNiceDialog() {
     private var RG_time: RadioGroup? = null
     var iscustom = 0//是否自定义时间
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
-        val selectDialogDto =
+        var selectDialogDto =
             arguments?.getSerializable("selectDialogDto") as SelectDialogDto
-
+        var resetDto = selectDialogDto.copy()
         val orderPlatForm = holder?.getView<RecyclerView>(R.id.rv_select_order_platform)
         rb_today = holder?.getView<RadioButton>(R.id.rb_today)
         rb_yesterday = holder?.getView<RadioButton>(R.id.rb_yesterday)
@@ -87,6 +87,7 @@ class OrderSelectDialog : BaseNiceDialog() {
 
         var tv_go_on = holder?.getView<ShapeButton>(R.id.tv_go_on)
         holder?.setOnClickListener(R.id.iv_close_recharge) {
+            selectOrderCloseLister?.invoke(resetDto)
             dismiss()
         }
 
@@ -94,9 +95,14 @@ class OrderSelectDialog : BaseNiceDialog() {
             settiet()
             rb_today?.isChecked = true
             selectDialogDto.timetype = 2
-
             rb_isVoucher?.isChecked = true
             selectDialogDto.orderTime = "1"
+
+            for (xx in selectOrderPlatformAdapter.data) {
+                xx.select = false
+            }
+            selectOrderPlatformAdapter.data[0].select = true
+            selectOrderPlatformAdapter.notifyDataSetChanged()
         }
 
 //        var timetype: Int,//时间类型 0自定义时间 1 昨天 2 今天 3 近七天 4 进30天
@@ -113,13 +119,13 @@ class OrderSelectDialog : BaseNiceDialog() {
         Rg_isVoucher?.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.rb_isVoucher -> {
-                    selectDialogDto.orderTime = "0"
-                }
-                R.id.rb_voucher -> {
                     selectDialogDto.orderTime = "1"
                 }
-                R.id.rb_meal_voucher -> {
+                R.id.rb_voucher -> {
                     selectDialogDto.orderTime = "2"
+                }
+                R.id.rb_meal_voucher -> {
+                    selectDialogDto.orderTime = "3"
                 }
 
             }
@@ -305,12 +311,13 @@ class OrderSelectDialog : BaseNiceDialog() {
                 var orderPlatformList = ArrayList<OrderSelectPlatform>()
                 orderPlatformList.add(OrderSelectPlatform(id = "0", name = "全部"))
                 orderPlatformList.addAll(it)
-                orderPlatformList[0].select = true
+                for (platform in orderPlatformList) {
+                    platform.select = (platform as OrderSelectPlatform).id == selectDialogDto.channelId
+                }
+//                orderPlatformList[0].select = true
                 selectOrderPlatformAdapter.setList(orderPlatformList)
             }
         }
-
-
     }
 
     private fun showDatePickDialog(
@@ -349,8 +356,14 @@ class OrderSelectDialog : BaseNiceDialog() {
     }
 
     private var selectOrderLister: ((selectDialogDto: SelectDialogDto) -> Unit)? = null
+
+    private var selectOrderCloseLister: ((selectDialogDto: SelectDialogDto) -> Unit)? = null
     fun setSelectOrder(selectTime: ((selectDialogDto: SelectDialogDto) -> Unit)) {
         this.selectOrderLister = selectTime
+    }
+
+    fun setSelectCloseOrder(selectTime: ((selectDialogDto: SelectDialogDto) -> Unit)) {
+        this.selectOrderCloseLister = selectTime
     }
 
 

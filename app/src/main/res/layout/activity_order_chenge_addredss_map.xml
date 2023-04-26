@@ -9,10 +9,10 @@
         android:id="@+id/TitleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/app_themes_1f2333"
         app:barStyle="transparent"
         app:layout_constraintTop_toTopOf="parent"
         app:rightBackground="@null"
-        android:background="@color/app_themes_1f2333"
         app:rightTitleSize="@dimen/sp_14"
         app:title="修改收货地址" />
 
@@ -36,6 +36,7 @@
             android:layout_marginStart="@dimen/dp_20"
             android:drawablePadding="@dimen/dp_5"
             android:gravity="center"
+            android:text="定位中"
             app:drawableEndCompat="@drawable/ic_local_xia"
             app:drawableStartCompat="@drawable/ic_local_address"
             tools:text="西安市" />
