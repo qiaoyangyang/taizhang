@@ -150,7 +150,6 @@
             android:layout_marginHorizontal="@dimen/dp_30"
             android:background="@null"
             android:imeOptions="actionDone"
-            android:inputType="textPassword"
             android:singleLine="true"
             android:textColorHint="@color/home_999999"
             android:textSize="@dimen/sp_32"

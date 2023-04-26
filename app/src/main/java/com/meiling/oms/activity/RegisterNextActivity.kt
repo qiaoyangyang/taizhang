@@ -208,6 +208,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                         mDatabind.txtShopName.visibility = View.VISIBLE
                         mDatabind.txtShopName2.visibility = View.VISIBLE
                         mDatabind.edtShopName.visibility = View.VISIBLE
+                        mViewModel.businessDto.value?.tenantType="1"
                     }
                     if (checkedButton.id == R.id.checkPerson) {
                         mDatabind.txtOperateType.visibility = View.GONE
@@ -220,6 +221,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                         mDatabind.edtShopName.visibility = View.GONE
                         mViewModel.businessDto.value!!.isChain = ""
                         mViewModel.businessDto.value!!.enterpriseName = ""
+                        mViewModel.businessDto.value?.tenantType="2"
                     }
                     if (checkedButton.id == R.id.checkOther) {
                         mDatabind.txtOperateType.visibility = View.VISIBLE
@@ -231,6 +233,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                         mDatabind.txtShopName2.visibility = View.GONE
                         mDatabind.edtShopName.visibility = View.GONE
                         mViewModel.businessDto.value!!.enterpriseName = ""
+                        mViewModel.businessDto.value?.tenantType="3"
                     }
 
                 }
