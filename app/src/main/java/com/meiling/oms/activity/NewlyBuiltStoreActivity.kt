@@ -126,7 +126,7 @@ class NewlyBuiltStoreActivity :
         mDatabind.etStoreAddress.setOnClickListener {
 
 
-            XXPermissions.with(this).permission(PermissionUtilis.Group.LOCAL1)
+            XXPermissions.with(this).permission(PermissionUtilis.Group.LOCAL)
                 .request(object : OnPermissionCallback {
                     override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
                         if (!allGranted) {
