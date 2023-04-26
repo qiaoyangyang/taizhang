@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
@@ -27,12 +28,16 @@ import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.R
+import com.meiling.oms.activity.MainActivity
+import com.meiling.oms.activity.NewlyBuiltStoreActivity
+import com.meiling.oms.activity.NoStoreActivity
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.oms.eventBusData.MessageEvent
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
+import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.widget.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -75,7 +80,12 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
     }
 
     var telPhone = ""
+    lateinit var vm: MainViewModel2
     override fun initView(savedInstanceState: Bundle?) {
+        vm = ViewModelProvider(
+            MainActivity.mainActivity!!,
+            ViewModelProvider.NewInstanceFactory()
+        ).get(MainViewModel2::class.java)
         requireArguments().getString("type").toString()
         orderDisAdapter =
             object : BaseQuickAdapter<OrderDto.Content, BaseViewHolder>(R.layout.item_home_order),
@@ -93,6 +103,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     val orderId = holder.getView<TextView>(R.id.txt_order_id)
                     val phone = holder.getView<TextView>(R.id.txt_order_delivery_phone)
                     val channelLogoImg = holder.getView<ImageView>(R.id.img_order_icon)
+
                     holder.setText(R.id.txt_order_delivery_name, item.order?.recvName)
                     phone.text = item.order?.recvPhone
                     telPhone = item.order?.recvPhone ?: ""
@@ -225,6 +236,14 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             holder.setText(R.id.txt_order_shop_spec, item.specs)
                             holder.setText(R.id.txt_order_shop_num, "X" + item.number)
                             holder.setText(R.id.txt_order_shop_price, "¥" + item.price)
+                            val txtRefund = holder.getView<TextView>(R.id.txt_order_refund)
+
+                            if (item.refundNum == item.number) {
+                                txtRefund.visibility = View.VISIBLE
+                            } else {
+                                txtRefund.visibility = View.GONE
+                            }
+
 //                            Glide.with(context).load(item.avater).into(view)
                             Glide.with(context).load(item.avater)
                                 .apply(options).into(view)
@@ -239,6 +258,11 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         for (ne in item.goodsVoList!!) {
                             sum += ne?.totalPrice!!
                             sumNumber += ne?.number!!
+//                            if (ne.refundNum == ne.number){
+//                                ne.isRefund = true
+//                            }else{
+//                                ne.isRefund = false
+//                            }
                         }
                         holder.setText(
                             R.id.txt_order_shop_msg, "${item.goodsVoList?.size}种商品，共${sumNumber}件"
@@ -336,7 +360,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                                 R.id.txt_order_delivery_state, "已取消"
                             )
                             btnCancelDis.visibility = View.INVISIBLE
-                            changeOrder.visibility = View.INVISIBLE
+                            changeOrder.visibility = View.VISIBLE
                             btnSendDis.text = "重新配送"
                         }
                         "80" -> {
@@ -396,6 +420,20 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
     }
 
     override fun createObserver() {
+
+        vm.getByTenantId.observe(this){
+            if(it.poi==-1){
+                val view = LayoutInflater.from(activity).inflate(R.layout.order_store_empty, null, false)
+                view.findViewById<TextView>(R.id.tv_bind).setOnClickListener {
+                    startActivity(Intent(requireActivity(),NewlyBuiltStoreActivity::class.java))
+
+                }
+                orderDisAdapter.setEmptyView(view)
+            }else{
+                orderDisAdapter.setEmptyView(R.layout.order_search_empty)
+            }
+        }
+
         mViewModel.orderList.onStart.observe(this) {
             showLoading("加载中")
         }
@@ -406,7 +444,6 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             if (it.pageIndex == 1) {
                 if (it.content.isNullOrEmpty()) {
                     orderDisAdapter.setList(null)
-                    orderDisAdapter.setEmptyView(R.layout.order_search_empty)
                 } else {
                     orderDisAdapter.setList(it.content as MutableList<OrderDto.Content>)
                 }

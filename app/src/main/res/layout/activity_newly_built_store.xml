@@ -19,13 +19,13 @@
             android:id="@+id/TitleBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/red"
             app:layout_constraintTop_toTopOf="parent"
-            app:leftIcon="@drawable/bar_arrows_left_black"
+            app:leftIcon="@drawable/bar_arrows_left_white"
             app:lineVisible="false"
             app:rightTitleSize="@dimen/sp_36"
             app:title="新建门店"
-            app:titleColor="@color/home_333333" />
+            app:titleColor="@color/white" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -252,7 +252,6 @@
                             android:text="详细地址"
                             android:textColor="@color/home_666666"
                             android:textSize="@dimen/sp_32"
-                            app:drawableEndCompat="@drawable/icon_must_input"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -301,7 +300,7 @@
                 android:textSize="@dimen/sp_32"
                 android:id="@+id/tv_go_on"
                 android:layout_width="0dp"
-
+                android:enabled="false"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dp"
                 android:layout_marginTop="10dp"
@@ -313,9 +312,9 @@
                 android:paddingBottom="10dp"
                 android:text="提交"
                 android:textColor="@color/white"
-
+                android:background="@drawable/login_btn_selector"
                 app:shape_radius="10dp"
-                app:shape_solidColor="#FF4C4A" />
+                />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

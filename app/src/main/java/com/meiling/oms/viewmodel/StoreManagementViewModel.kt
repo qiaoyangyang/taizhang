@@ -84,5 +84,12 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
         request({ branchInformationService.urlauth(channelId, poiId, businessId) }, urlauth)
     }
 
+    //  删除门店
+    var deletePoi = BaseLiveData<String>()
+    fun deletePoi(poiId: String) {
+        request({ branchInformationService.deletePoi(poiId) }, deletePoi)
+    }
+
+
 
 }

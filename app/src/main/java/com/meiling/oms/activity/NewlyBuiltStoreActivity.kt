@@ -13,10 +13,15 @@ import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.services.core.PoiItem
+import com.hjq.permissions.OnPermissionCallback
+import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseVmActivity
+import com.meiling.common.utils.InputTextManager
+import com.meiling.common.utils.PermissionUtilis
 import com.meiling.oms.bean.PoiVo
 import com.meiling.oms.databinding.ActivityNewlyBuiltStoreBinding
 import com.meiling.oms.viewmodel.StoreManagementViewModel
+import com.meiling.oms.widget.KeyBoardUtil
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import kotlinx.coroutines.*
@@ -49,9 +54,6 @@ class NewlyBuiltStoreActivity :
         }
     }
 
-    override fun isStatusBarDarkFont(): Boolean {
-        return true
-    }
 
     override fun initDataBind() {
         mDatabind = ActivityNewlyBuiltStoreBinding.inflate(layoutInflater)
@@ -66,6 +68,16 @@ class NewlyBuiltStoreActivity :
         mDatabind.viewModel = mViewModel
         mDatabind.lifecycleOwner = this
         id = intent.getStringExtra("id").toString()
+        mDatabind.tvGoOn.let {
+            InputTextManager.with(this)
+                .addView(mDatabind.etStoreName)
+                .addView(mDatabind.etStoreTelephone)
+                .addView(mDatabind.etStoreNumber)
+                .addView(mDatabind.etStoreAddress)
+                .setMain(it)
+                .build()
+            KeyBoardUtil.hideKeyBoard(this,mDatabind.tvGoOn)
+        }
         if (!TextUtils.isEmpty(id) && id != "null") {
 
             mDatabind.tvGoOn.visibility = View.GONE
@@ -81,19 +93,22 @@ class NewlyBuiltStoreActivity :
         mDatabind.tvGoOn.setSingleClickListener {
             if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.name)) {
                 showToast("请输入门店名称")
+                return@setSingleClickListener
             }
             if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.sinceCode)) {
                 showToast("请输入门店名称")
+                return@setSingleClickListener
             }
             if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.phone)) {
                 showToast("请输入门店电话")
+                return@setSingleClickListener
             }
             if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.storeaddress)) {
                 showToast("请选择门店地址")
+                return@setSingleClickListener
             }
-            if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.etdetailedaddress)) {
-                showToast("请填写详细的门店地址")
-            }
+
+
 
             mViewModel.poiadd(
                 lat,
@@ -109,24 +124,53 @@ class NewlyBuiltStoreActivity :
         mDatabind.etStoreAddress.setOnClickListener {
 
 
-//            var intent = Intent(this, OrderChangeAddressMapActivity::class.java)
-//            requestDataLauncher.launch(intent)
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                // 如果有权限，拨打电话
-                ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
-                    .navigation(this, REQUEST_CODE)
-            } else {
-                // 如果没有权限，申请权限
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    ACCESS_FINE_LOCATION
-                )
-            }
+            XXPermissions.with(this).permission(PermissionUtilis.Group.LOCAL1)
+                .request(object : OnPermissionCallback {
+                    override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
+                        if (!allGranted) {
+                            showToast("获取部分权限成功，但部分权限未正常授予")
+                            return
+                        }
+                       // initStart()
+                        ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
+                            .withString("title","门店地址")
+                            .navigation(this@NewlyBuiltStoreActivity, REQUEST_CODE)
+                    }
+
+                    override fun onDenied(
+                        permissions: MutableList<String>,
+                        doNotAskAgain: Boolean
+                    ) {
+                        if (doNotAskAgain) {
+                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                            XXPermissions.startPermissionActivity(
+                                this@NewlyBuiltStoreActivity,
+                                permissions
+                            )
+                        } else {
+                            showToast("授权失败，请检查权限")
+                        }
+                    }
+                })
+
+////            var intent = Intent(this, OrderChangeAddressMapActivity::class.java)
+////            requestDataLauncher.launch(intent)
+//            if (ContextCompat.checkSelfPermission(
+//                    this,
+//                    Manifest.permission.ACCESS_FINE_LOCATION
+//                ) == PackageManager.PERMISSION_GRANTED
+//            ) {
+//                // 如果有权限，拨打电话
+//                ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
+//                    .navigation(this, REQUEST_CODE)
+//            } else {
+//                // 如果没有权限，申请权限
+//                ActivityCompat.requestPermissions(
+//                    this,
+//                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+//                    ACCESS_FINE_LOCATION
+//                )
+//            }
         }
 
     }
@@ -157,6 +201,7 @@ class NewlyBuiltStoreActivity :
         }
         mViewModel.poiaddpoidata.onSuccess.observe(this){
             disLoading()
+
             finish()
         }
         mViewModel.poiaddpoidata.onError.observe(this){

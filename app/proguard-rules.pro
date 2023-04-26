@@ -17,6 +17,10 @@
 # 不做预校验，preverify是proguard的四个步骤之一，Android不需要preverify，去掉这一步能够加快混淆速度。
 -dontpreverify
 
+# 保留bugly不混淆
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+
 # 保留Annotation不混淆
 -keepattributes *Annotation*,InnerClasses
 

@@ -17,6 +17,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.BaseLiveData
@@ -24,6 +27,7 @@ import com.meiling.common.BaseViewModel
 import com.meiling.common.network.data.OrderSendDetail
 import com.meiling.common.network.service.orderDisService
 import com.meiling.oms.R
+import com.meiling.oms.widget.copyText
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import com.shehuan.nicedialog.BaseNiceDialog
@@ -103,6 +107,20 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
                                 false
                             )
                     }
+
+                    var view1 = holder.getView<ImageView>(R.id.img_dis_icon)
+                    var btnCopy = holder.getView<TextView>(R.id.btnCopyNumber)
+                    val options = RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)
+
+                    Glide.with(context).load(orderSendDetail.icon).apply(options).into(view1)
+                    holder.setText(R.id.txt_dis_per_name, orderSendDetail.deliveryName)
+                    holder.setText(R.id.txt_dis_number, "单号：${orderSendDetail.stationChannelId}")
+
+                    btnCopy.setSingleClickListener {
+                        copyText(context, "${orderSendDetail.stationChannelId}")
+                        showToast("复制成功")
+                    }
+
                     ryOrderDisDetailAdapter =
                         object :
                             BaseQuickAdapter<OrderSendDetail.DeliveryConsumeLog, BaseViewHolder>(R.layout.item_distribution) {

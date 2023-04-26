@@ -11,6 +11,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.amap.api.location.AMapLocationClient
 import com.codbking.widget.DatePickDialog
 import com.codbking.widget.bean.DateType
 import com.hjq.permissions.OnPermissionCallback
@@ -34,7 +35,6 @@ class OrderChangeAddressActivity :
     BaseActivity<ChangeAddressModel, ActivityOrderChengeAddredssBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
-        setBar(this, mDatabind.cosChangeOrder)
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityOrderChengeAddredssBinding {
@@ -114,43 +114,11 @@ class OrderChangeAddressActivity :
             }
         }
     }
-
     private val REQUEST_CODE = 1000
     private val ACCESS_FINE_LOCATION = 1
-
-    var STORAGE = false
-    var LOCAL = false
     override fun initListener() {
-        mDatabind.aivBack.setOnClickListener { finish() }
         mDatabind.btnCancelChange.setOnClickListener { finish() }
         mDatabind.txtOrderChangeAddress.setSingleClickListener {
-
-//            XXPermissions.with(this).permission(PermissionUtilis.Group.STORAGE)
-//                .request(object : OnPermissionCallback {
-//                    override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
-//                        if (!allGranted) {
-//                            showToast("获取部分权限成功，但部分权限未正常授予")
-//                            return
-//                        }
-////                        initStart()
-//                    }
-//
-//                    override fun onDenied(
-//                        permissions: MutableList<String>,
-//                        doNotAskAgain: Boolean
-//                    ) {
-//                        if (doNotAskAgain) {
-//                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
-//                            XXPermissions.startPermissionActivity(
-//                                this@OrderChangeAddressActivity,
-//                                permissions
-//                            )
-//                        } else {
-//                            showToast("授权失败，请检查权限")
-//                        }
-//                    }
-//                })
-
             XXPermissions.with(this).permission(PermissionUtilis.Group.LOCAL)
                 .request(object : OnPermissionCallback {
                     override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
@@ -160,7 +128,6 @@ class OrderChangeAddressActivity :
                         }
                         initStart()
                     }
-
                     override fun onDenied(
                         permissions: MutableList<String>,
                         doNotAskAgain: Boolean
@@ -176,7 +143,6 @@ class OrderChangeAddressActivity :
                         }
                     }
                 })
-
 
 //
 //            if (ContextCompat.checkSelfPermission(
@@ -286,23 +252,23 @@ class OrderChangeAddressActivity :
         dialog.show()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == ACCESS_FINE_LOCATION) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // 如果有权限跳转
-                ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
-                    .navigation(this, REQUEST_CODE)
-            } else {
-                showToast("您已经禁止权限，请手动开启")
-                // 如果用户拒绝了权限，可以在这里处理相应的逻辑
-            }
-        }
-    }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        if (requestCode == ACCESS_FINE_LOCATION) {
+//            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                // 如果有权限跳转
+//                ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
+//                    .navigation(this, REQUEST_CODE)
+//            } else {
+//                showToast("您已经禁止权限，请手动开启")
+//                // 如果用户拒绝了权限，可以在这里处理相应的逻辑
+//            }
+//        }
+//    }
 
 
 }

@@ -15,12 +15,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.BarUtils
+import com.google.gson.Gson
 import com.gyf.immersionbar.ImmersionBar
 import com.hjq.bar.TitleBar
 import com.meiling.common.BaseViewModel
+import com.meiling.common.R
 import com.meiling.common.action.TitleBarAction
 import com.meiling.common.dialog.LoadingDialog
 import com.meiling.common.getVmClazz
+import com.meiling.common.network.data.ByTenantId
+import com.meiling.common.utils.GsonUtils
+import com.meiling.common.utils.MMKVUtils
 
 
 abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleBarAction {
@@ -99,7 +104,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
         }
     }
     open fun initDataBind() {
-
+        overridePendingTransition(R.anim.activity_right_in, R.anim.activity_right_out)
     }
 
 
@@ -167,6 +172,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
 
     override fun onLeftClick(view: View) {
         onBackPressed()
+        overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out)
     }
 
     override fun onTitleClick(view: View) {
@@ -206,6 +212,15 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
         return ImmersionBar.with(this) // 默认状态栏字体颜色为黑色
             .statusBarDarkFont(isStatusBarDarkFont()) // 指定导航栏背景颜色
             .autoDarkModeEnable(true, 0.2f)
+    }
+    var byTenantId: ByTenantId?=null
+    open fun ByTenantId(): ByTenantId? {
+        byTenantId = GsonUtils.getPerson(MMKVUtils.getString("UserBean", ""), ByTenantId::class.java)
+        return byTenantId
+    }
+
+    open fun SaveUserBean(userBean: ByTenantId?) {
+        MMKVUtils.putString("UserBean", Gson().toJson(userBean))
     }
 
 

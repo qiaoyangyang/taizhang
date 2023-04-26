@@ -225,7 +225,9 @@ data class OrderDto(
             var unitUseType: Any?,
             @SerializedName("specs")
             var specs: String?
-        ) : Serializable
+        ) : Serializable{
+            var isRefund = false
+        }
 
         data class Order(
             @SerializedName("activityFee")

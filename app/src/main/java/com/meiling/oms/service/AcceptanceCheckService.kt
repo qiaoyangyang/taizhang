@@ -46,6 +46,7 @@ interface BranchInformationService {
     ): ResultData<String>
 
 
+
     @POST("saas/channel/getShopAndChannelVO")
     suspend fun getShopAndChannelVO(
         @Query("id") id: String = "",//门店名称
@@ -60,6 +61,9 @@ interface BranchInformationService {
     ): ResultData<String>
 
 
-
+    @GET("saas/poi/deletePoi")
+    suspend fun deletePoi(
+        @Query("poiId") id: String = "",//门店名称
+    ): ResultData<String>
 
 }

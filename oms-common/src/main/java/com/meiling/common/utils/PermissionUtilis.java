@@ -1,5 +1,7 @@
 package com.meiling.common.utils;
 
+import android.Manifest;
+
 import com.hjq.permissions.Permission;
 
 public class PermissionUtilis {
@@ -22,7 +24,13 @@ public class PermissionUtilis {
         public static final String[] LOCAL = new String[]{
                 Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION, Permission.READ_MEDIA_IMAGES,
                 Permission.READ_MEDIA_VIDEO,
-                Permission.READ_MEDIA_AUDIO};
+                Permission.READ_MEDIA_AUDIO};  /**
+         * 定位权限
+         */
+        public static final String[] LOCAL1 = new String[]{
+                        Permission.ACCESS_COARSE_LOCATION,
+                        Permission.ACCESS_FINE_LOCATION,
+                 };
         /**
          * 电话权限
          */

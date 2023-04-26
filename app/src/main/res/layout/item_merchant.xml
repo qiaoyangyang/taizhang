@@ -35,5 +35,17 @@
         app:layout_constraintTop_toBottomOf="@+id/img"
         android:visibility="gone"
         android:id="@+id/selectImg"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_btn_select_true"
+        android:text="绑定"
+        android:textColor="@color/white"
+        android:paddingHorizontal="15dp"
+        android:layout_marginTop="5dp"
+        android:paddingVertical="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

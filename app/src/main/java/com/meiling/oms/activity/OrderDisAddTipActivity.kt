@@ -28,7 +28,6 @@ class OrderDisAddTipActivity :
     lateinit var ryOrderDisAddTipAdapter: BaseQuickAdapter<OrderSendAddTips, BaseViewHolder>
     lateinit var content: OrderDto.Content
     override fun initView(savedInstanceState: Bundle?) {
-        setBar(this, mDatabind.txtOrderDisAddTip)
         // 1 TC  2 自提 3 全国
         content = intent.getSerializableExtra("kk") as OrderDto.Content
 
@@ -192,7 +191,6 @@ class OrderDisAddTipActivity :
 
 
     override fun initListener() {
-        mDatabind.inSendDisBack.setOnClickListener { finish() }
     }
 
 }

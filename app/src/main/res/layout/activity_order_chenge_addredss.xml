@@ -6,55 +6,24 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cos_change_order"
+    <com.hjq.bar.TitleBar
+        android:id="@+id/TitleBar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/app_themes_1f2333"
-        app:layout_constraintTop_toTopOf="parent">
+        app:barStyle="transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rightBackground="@null"
+        app:rightTitleSize="@dimen/sp_14"
+        app:title="修改订单" />
 
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/aiv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/icon_back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="修改订单"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_30"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/aiv_more"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="15dp"
-            android:src="@mipmap/icon_more_1"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:padding="@dimen/dp_20"
-        app:layout_constraintTop_toBottomOf="@+id/cos_change_order">
+        app:layout_constraintTop_toBottomOf="@+id/TitleBar">
 
         <TextView
             android:id="@+id/txt_order_change_title"
