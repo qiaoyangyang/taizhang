@@ -339,9 +339,6 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
     private var b = false
 
     override fun initListener() {
-        mDatabind.imgSearchBack.setOnClickListener {
-            finish()
-        }
 
         mDatabind.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

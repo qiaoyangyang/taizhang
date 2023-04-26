@@ -46,7 +46,6 @@ class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
                 .navigation()
         }
         mDatabind.txtVersion.text = "V${BuildConfig.VERSION_NAME}"
-        if(AppUtils.isAppDebug()){
             mDatabind.imgAbout.setOnClickListener {
                 if (breakthrough > 0) {
                     if (isFastClickEachOneSec()) {
@@ -75,7 +74,6 @@ class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
                 }
 
             }
-        }
 
         mDatabind.slVersion.setSingleClickListener {
 
