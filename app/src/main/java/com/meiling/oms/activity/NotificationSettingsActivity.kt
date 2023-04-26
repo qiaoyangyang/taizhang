@@ -16,6 +16,7 @@ import com.meiling.common.utils.RecyclerViewDivider
 import com.meiling.common.utils.SpannableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityNotificationSettingsBinding
+import com.meiling.oms.dialog.OrderDialog
 import com.meiling.oms.jpush.jpushPlay.MessageData
 import com.meiling.oms.jpush.jpushPlay.MessageManagement
 import com.meiling.oms.viewmodel.NotificationSettingsViewModel
@@ -36,7 +37,6 @@ class NotificationSettingsActivity :
     }
 
     override fun initData() {
-
     }
 
     private fun initRecycleyView() {
