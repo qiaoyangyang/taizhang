@@ -1,5 +1,6 @@
 package com.meiling.oms.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -15,12 +16,14 @@ import com.hjq.widget.view.RegexEditText.Companion.REGEX_MOBILE
 import com.hjq.widget.view.RegexEditText.Companion.REGEX_NAME
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.constant.SPConstants
+import com.meiling.common.network.service.loginService
 import com.meiling.common.utils.InputTextManager
 import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.SpannableUtils
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityLoginBinding
+import com.meiling.oms.dialog.LogisticsPlatformInformationDidalog
 import com.meiling.oms.jpush.PushHelper
 import com.meiling.oms.viewmodel.LoginViewModel
 import com.meiling.oms.widget.CaptchaCountdownTool
@@ -208,7 +211,10 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
     override fun createObserver() {
 
         mDatabind.txtRegister.setSingleClickListener {
-            showToast("注册功能，正在开发中～")
+//            showToast("注册功能，正在开发中～")
+            var intent=Intent(this,RegisterActivity::class.java)
+            startActivity(intent)
+
         }
 
         mViewModel.sendCode.onStart.observe(this) {

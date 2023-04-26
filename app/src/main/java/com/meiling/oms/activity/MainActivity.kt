@@ -10,6 +10,10 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
@@ -25,6 +29,7 @@ import com.meiling.oms.fragment.HomeFragment
 import com.meiling.oms.fragment.MyFragment
 import com.meiling.oms.fragment.ScanFragment
 import com.meiling.oms.viewmodel.MainViewModel
+import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -33,12 +38,16 @@ import org.greenrobot.eventbus.ThreadMode
 
 @Route(path = "/app/MainActivity")
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
-
+    companion object{
+        var mainActivity:ViewModelStoreOwner?=null
+    }
     private val fragmentList: MutableList<Fragment> = ArrayList()
 
+    lateinit var mainViewModel2: MainViewModel2
     private val ACCESS_NOTIFICATION_POLICY = 1
     override fun initView(savedInstanceState: Bundle?) {
 //        EventBus.getDefault().register(this)
+        mainActivity=this
         mDatabind.viewPager.isUserInputEnabled = false
         mViewModel.setUmToken()
         if (ContextCompat.checkSelfPermission(
@@ -81,6 +90,12 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     }
 
     override fun initData() {
+        mainViewModel2= ViewModelProvider(
+            MainActivity.mainActivity!!,
+            ViewModelProvider.NewInstanceFactory()
+        ).get(MainViewModel2::class.java)
+
+
         fragmentList.add(HomeFragment.newInstance())
         fragmentList.add(ScanFragment.newInstance())
         fragmentList.add(DataFragment.newInstance())
@@ -94,6 +109,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         mDatabind.aivHomeSelect.visibility = View.VISIBLE
         mDatabind.aivHome.visibility = View.GONE
         mDatabind.atvHome.visibility = View.GONE
+        mViewModel.getByTenantId()
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityMainBinding {
@@ -140,6 +156,11 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         mViewModel.setUmTokenDto.onError.observe(this) {
             showToast(it.msg)
         }
+        mViewModel.getByTenantId.onSuccess.observe(this) {
+            SaveUserBean(it)
+            mainViewModel2.getByTenantId.value = it
+
+        }
     }
 
 
@@ -184,6 +205,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
+//        mainActivity=null
 //            EventBus.getDefault().unregister(this)
     }
 

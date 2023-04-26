@@ -3,6 +3,7 @@ package com.meiling.oms.activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
@@ -83,6 +84,7 @@ class OrderChangeAddressMapActivity :
 //                    amapLocation.floor;//获取当前室内定位的楼层
 //                    amapLocation.gpsAccuracyStatus;//获取GPS的当前状态
                     cityCode = amapLocation.cityCode
+                    Log.d("yjk", "cityCode: "+cityCode)
                     mLocationClient?.stopLocation()
                     lat = amapLocation.latitude.toString()
                     lon = amapLocation.longitude.toString()
@@ -153,6 +155,11 @@ class OrderChangeAddressMapActivity :
     private var type = true
 
     override fun initData() {
+        var tetle=intent.getStringExtra("title")
+        if (!TextUtils.isEmpty(tetle)){
+            mDatabind.TitleBar.title=tetle
+
+        }
         ryOrderDisMapAdapter = object :
             BaseQuickAdapter<PoiItem, BaseViewHolder>(R.layout.item_recy_distribution_local_map) {
             override fun convert(holder: BaseViewHolder, item: PoiItem) {
@@ -178,6 +185,7 @@ class OrderChangeAddressMapActivity :
             val data = Intent()
             data.putExtra("lon", lon)
             data.putExtra("lat", lat)
+            data.putExtra("poiItem", it)
             data.putExtra(
                 "address",
                 "${it.provinceName}${it.cityName}${it.adName}${it.snippet}${it.title}"

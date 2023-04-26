@@ -10,8 +10,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission
-        android:name="android.permission.READ_MEDIA_VIDEO"/>
-<!--        android:maxSdkVersion="33" />-->
+        android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -40,10 +39,10 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Tarket"
+        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
-        tools:targetApi="31">
+        tools:targetApi="n">
 
         <!-- 适配全面屏 -->
         <meta-data
@@ -56,8 +55,13 @@
             android:name="notch.config"
             android:value="portrait|landscape" />
 
+
+
+        <!-- 闪屏页 -->
         <activity
             android:name=".activity.SplashActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/SplashTheme"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -66,15 +70,47 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-
         </activity>
+
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RegisterNextActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="portrait" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--            <meta-data-->
+<!--                android:name="android.app.lib_name"-->
+<!--                android:value="" />-->
+        </activity>
+
+        <activity
+            android:name=".activity.BindingLogisticsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="portrait" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--            <meta-data-->
+<!--                android:name="android.app.lib_name"-->
+<!--                android:value="" />-->
+        </activity>
+
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.AboutActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -99,7 +135,13 @@
             android:name=".activity.ForgetPwdGetCodeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.MainActivity"
+
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".activity.OrderDisAddTipActivity"
             android:screenOrientation="portrait" />
@@ -155,8 +197,25 @@
             android:name=".activity.VoucherInspectionHistoryActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.WriteOffDetailsActivity" />
+        <activity android:name=".activity.RegistSuccessActivity" />
+
         <activity
             android:name=".activity.InputBoredomActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.StoreManagementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NewlyBuiltStoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ChannelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BaseWebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NoStoreActivity"
             android:screenOrientation="portrait" />
 
         <provider

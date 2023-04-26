@@ -3,11 +3,9 @@ package com.meiling.common.network.service
 
 import com.meiling.common.network.ResultData
 import com.meiling.common.network.RetrofitClient
-import com.meiling.common.network.data.ForgetDto
-import com.meiling.common.network.data.LoginDto
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import com.meiling.common.network.data.*
+import okhttp3.MultipartBody
+import retrofit2.http.*
 
 val loginService: LoginService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
     RetrofitClient().getInstance().createApiClient(LoginService::class.java)
@@ -86,5 +84,66 @@ interface LoginService {
         @Query("code") code: String,
     ): ResultData<Any>
 
+
+    /**
+     * 上传logo图片
+     */
+    @Multipart
+    @POST("/saas/system/file/upload")
+    suspend fun upload(@Header("platform") platform:String,@Part parts: MultipartBody.Part ):ResultData<String>
+
+    /**
+     * 所属行业
+     */
+    @GET("/saas/business/category")
+    suspend fun getCategory():ResultData<List<Children>>
+
+    /**
+     * 校验品牌名称
+     */
+    @GET("/saas/business/thanBrand")
+    suspend fun checkThanBrand(@Query("name") name: String):ResultData<Boolean>
+
+    /**
+     * 注册
+     */
+    @POST("/saas/business/save")
+    suspend fun save(@Body businessDto: BusinessDto):ResultData<String>
+
+    /**
+     *  所属渠道  租户默认所有渠道
+     */
+    @GET("/saas/business/channel")
+    suspend fun getChannel():ResultData<ArrayList<Channel>>
+
+    /**
+     * 校验账号名称
+     */
+    @GET("/saas/business/username/check")
+    suspend fun checkUserName(@Query("username") username:String):ResultData<Any>
+
+    /**
+     * 校验品牌名称
+     */
+    @GET("/saas/business/thanBrand")
+    suspend fun thanBrand(@Query("name") name:String):ResultData<Any>
+
+    /**
+     *  所属城市  租户默认所有城市
+     */
+    @GET("/saas/business/city")
+    suspend fun getCity():ResultData<ArrayList<City>>
+
+    /**
+     *  获取物流列表
+     */
+    @GET("/saas/express/merchant/list")
+    suspend fun getMerChantList(@Header("tenantId") tenantId:String):ResultData<ArrayList<Merchant>>
+
+    /**
+     * 绑定物流
+     */
+    @POST("/saas/express/merchant/save")
+    suspend fun merChantSave(@Body putMerChant:PutMerChant):ResultData<Any>
 
 }

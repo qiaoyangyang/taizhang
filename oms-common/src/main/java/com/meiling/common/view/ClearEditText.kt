@@ -1,5 +1,4 @@
-package com.hjq.widget.view
-
+package com.meiling.common.view;
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Editable
@@ -12,6 +11,7 @@ import android.view.View.OnFocusChangeListener
 import android.view.View.OnTouchListener
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import com.hjq.widget.view.RegexEditText
 import com.meiling.common.R
 
 /**
@@ -27,13 +27,13 @@ class ClearEditText @JvmOverloads constructor(
     RegexEditText(context, attrs, defStyleAttr),
     OnTouchListener, OnFocusChangeListener, TextWatcher {
 
-    private val clearDrawable: Drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.input_delete_ic)!!)
+    private val clearDrawable: Drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.search_close_edt)!!)
     private var touchListener: OnTouchListener? = null
     private var focusChangeListener: OnFocusChangeListener? = null
 
     init {
         clearDrawable.setBounds(0, 0, clearDrawable.intrinsicWidth, clearDrawable.intrinsicHeight)
-        setDrawableVisible(false)
+        setDrawableVisible(true)
         super.setOnTouchListener(this)
         super.setOnFocusChangeListener(this)
         super.addTextChangedListener(this)

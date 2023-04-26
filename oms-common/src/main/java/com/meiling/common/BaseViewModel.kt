@@ -19,9 +19,7 @@ import com.meiling.common.network.ExceptionHandle
 import com.meiling.common.network.ResultData
 import com.meiling.common.utils.MMKVUtils
 import com.orhanobut.logger.Logger
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 open class BaseViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -92,7 +90,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
             runCatching {
                 block()
             }.onSuccess {
-                if (it.code == 0) {
+                if (it.code == 200) {
                     resultState.postValue(it.data)
                 } else if (it.code == 403) {
                     ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
@@ -114,7 +112,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
             runCatching {
                 block()
             }.onSuccess {
-                if (it.code == 0) {
+                if (it.code == 200) {
                     resultState.postValue(it.data)
                 } else if (it.code == 403) {
                     ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
@@ -126,5 +124,47 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
     }
+
+    fun <T : Any> launchRequest(
+        block: suspend () -> ResultData<T>,
+        isShowLoading:Boolean?=true,
+        onSuccess:(T?)->Unit,
+        onError:((String?)->Unit) ?= null
+    ): Job {
+        Log.e("当前线程",""+Thread.currentThread().name)
+
+        return viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                block()
+            }.onSuccess {
+                Log.e("当前线程2",""+Thread.currentThread().name)
+                withContext(Dispatchers.Main){
+                    Log.e("当前线程3",""+Thread.currentThread().name)
+                    if (it.code == 200) {
+                        if(it.data!=null){
+                            onSuccess.invoke(it.data)
+                        }else{
+                            onSuccess.invoke(null)
+                        }
+                    } else if (it.code == 403) {
+                        ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
+                    } else {
+                        if(onError!=null){
+                            onError?.invoke(it.msg)
+                        }
+                    }
+                }
+
+            }.onFailure {
+                withContext(Dispatchers.Main){
+                    Log.e("当前线程4",""+Thread.currentThread().name)
+
+                    onError?.invoke(ExceptionHandle.handleException(it).msg)
+                }
+
+            }
+        }
+    }
+
 
 }

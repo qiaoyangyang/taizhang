@@ -148,6 +148,7 @@ class ModifyPassWordActivity : BaseActivity<LoginViewModel, ActivityModifyPasswo
         }
 
         mDatabind.btnSureChange.setSingleClickListener {
+
             if (mDatabind.edtInputPwd.text.trim().toString().isEmpty()) {
                 showToast("密码不能为空")
                 return@setSingleClickListener

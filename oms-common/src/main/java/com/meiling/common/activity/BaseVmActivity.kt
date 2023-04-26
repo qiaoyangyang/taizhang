@@ -4,22 +4,30 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.BarUtils
+import com.google.gson.Gson
 import com.gyf.immersionbar.ImmersionBar
+import com.hjq.bar.TitleBar
 import com.meiling.common.BaseViewModel
+import com.meiling.common.action.TitleBarAction
 import com.meiling.common.dialog.LoadingDialog
 import com.meiling.common.getVmClazz
+import com.meiling.common.network.data.ByTenantId
+import com.meiling.common.utils.GsonUtils
+import com.meiling.common.utils.MMKVUtils
 
 
-abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
+abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleBarAction {
 
     private var isUserDb = false
 
@@ -36,11 +44,11 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
         BarUtils.setStatusBarLightMode(this, isLightMode());
         initDataBind()
         init(savedInstanceState)
+        settitleBar()
     }
 
+
     open fun setBar(context: Activity, view: View) {
-        ImmersionBar.with(context).init()
-        ImmersionBar.setTitleBar(context, view)
     }
 
     abstract fun isLightMode(): Boolean
@@ -75,8 +83,28 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
     fun userDataBinding(isUserDb: Boolean) {
         this.isUserDb = isUserDb
     }
+    fun settitleBar(){
+        val titleBar = getTitleBar()
+        titleBar?.setOnTitleBarListener(this)
 
-    open fun initDataBind() {}
+
+        // 初始化沉浸式状态栏
+        if (isStatusBarEnabled()) {
+            getStatusBarConfig().init()
+
+            // 设置标题栏沉浸
+
+            if (titleBar != null) {
+                Log.d("yjk", "initListener: ")
+                ImmersionBar.setTitleBar(this, titleBar)
+            }else{
+                Log.d("yjk", "initListener ==null ")
+            }
+        }
+    }
+    open fun initDataBind() {
+
+    }
 
 
     fun showInput(editText: EditText) {
@@ -119,4 +147,79 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
     open fun getContentView(): ViewGroup? {
         return findViewById(Window.ID_ANDROID_CONTENT)
     }
+    /* 设置标题栏的标题
+    */
+    override fun setTitle(@StringRes id: Int) {
+        title = getString(id)
+    }
+
+    /**
+     * 设置标题栏的标题
+     */
+    override fun setTitle(title: CharSequence?) {
+    }
+
+    override fun getTitleBar(): TitleBar? {
+        if (titleBar == null) {
+            titleBar = obtainTitleBar(getContentView())
+        }
+        return titleBar
+    }
+
+
+
+
+    override fun onLeftClick(view: View) {
+        onBackPressed()
+    }
+
+    override fun onTitleClick(view: View) {
+
+    }
+    /**
+     * 是否使用沉浸式状态栏
+     */
+    protected open fun isStatusBarEnabled(): Boolean {
+        return true
+    }
+
+    /**
+     * 状态栏字体深色模式
+     */
+    open fun isStatusBarDarkFont(): Boolean {
+        return false
+    }
+    /**
+     * 获取状态栏沉浸的配置对象
+     */
+    open fun getStatusBarConfig(): ImmersionBar {
+        if (immersionBar == null) {
+            immersionBar = createStatusBarConfig()
+        }
+        return immersionBar!!
+    }
+    /** 标题栏对象 */
+    private var titleBar: TitleBar? = null
+
+    /** 状态栏沉浸 */
+    private var immersionBar: ImmersionBar? = null
+    /**
+     * 初始化沉浸式状态栏
+     */
+    protected open fun createStatusBarConfig(): ImmersionBar {
+        return ImmersionBar.with(this) // 默认状态栏字体颜色为黑色
+            .statusBarDarkFont(isStatusBarDarkFont()) // 指定导航栏背景颜色
+            .autoDarkModeEnable(true, 0.2f)
+    }
+    var byTenantId: ByTenantId?=null
+    open fun ByTenantId(): ByTenantId? {
+        byTenantId = GsonUtils.getPerson(MMKVUtils.getString("UserBean", ""), ByTenantId::class.java)
+        return byTenantId
+    }
+
+    open fun SaveUserBean(userBean: ByTenantId?) {
+        MMKVUtils.putString("UserBean", Gson().toJson(userBean))
+    }
+
+
 }

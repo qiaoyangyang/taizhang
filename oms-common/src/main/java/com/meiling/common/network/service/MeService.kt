@@ -3,10 +3,8 @@ package com.meiling.common.network.service
 import com.meiling.common.network.ResultData
 import com.meiling.common.network.RetrofitClient
 import com.meiling.common.network.data.*
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import okhttp3.MultipartBody
+import retrofit2.http.*
 
 
 val meService: MeService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
@@ -68,6 +66,24 @@ interface MeService {
         @Query("userViewId") userViewId: String,
         @Query("accountStatus") accountStatus: String = "9",
     ): ResultData<Any>
+
+    /**
+     * 获取门店
+     * */
+    @GET("saas/poi/citypoi")
+    suspend fun citypoi(
+        @Query("poiType") poiType: String="1,2",
+        @Query("hasCityAll") hasCityAll: String = "0",
+    ): ResultData<ArrayList<ShopBean>>
+
+    /**
+     * 获取门店 公共接口get请求 传租户id
+     * */
+    @GET("saas/common/getByTenantId")
+    suspend fun getByTenantId(
+
+    ): ResultData<ByTenantId>
+
 
 
 }

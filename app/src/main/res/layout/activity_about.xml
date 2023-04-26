@@ -25,6 +25,7 @@
         android:layout_gravity="center"
         android:src="@mipmap/icon_about_logo"
         android:layout_marginTop="@dimen/dp_50"
+        android:id="@+id/imgAbout"
         />
 
     <TextView

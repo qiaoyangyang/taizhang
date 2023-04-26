@@ -6,6 +6,7 @@ import com.meiling.common.BaseViewModel
 import com.meiling.common.network.data.ForgetDto
 import com.meiling.common.network.data.LoginDto
 import com.meiling.common.network.service.loginService
+import com.meiling.oms.widget.showToast
 
 class LoginViewModel(application: Application) : BaseViewModel(application) {
 
@@ -16,6 +17,7 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
 
     fun sendCode(phone: String) {
         request({ loginService.sendCode(phone) }, sendCode)
+
     }
 
     fun mobileLogin(phone: String, pwd: String) {

@@ -41,13 +41,13 @@ android {
             minifyEnabled false
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_URL", '"http://test-oms.igoodsale.com"'
+            buildConfigField "String","BASE_URL",'"http://test-oms.igoodsale.com"'
         }
         release {
             minifyEnabled false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_URL", '"http://dev-oms-api.igoodsale.com"'
+            buildConfigField "String","BASE_URL",'"http://dev-oms-api.igoodsale.com"'
         }
     }
 
@@ -69,7 +69,9 @@ android {
 
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
+
 }
 
 dependencies {
@@ -164,6 +166,10 @@ dependencies {
     api 'com.wayne:constraint-radiogroup:1.0.0'
 
 
+    //https://gitcode.net/mirrors/lucksiege/pictureselector/-/blob/master/README_CN.md
+    api 'io.github.lucksiege:pictureselector:v2.7.3-rc10'
+    // 图片压缩 (按需引入)
+    implementation 'io.github.lucksiege:compress:v3.11.1'
     //AgentWeb
     api 'com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx' // (必选)
     api 'com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.0-alpha.1-androidx'// (可选)
@@ -173,6 +179,13 @@ dependencies {
     //bugly
     api 'com.tencent.bugly:crashreport:latest.release'
 
+
+
 }
+
+
+
+
+
 
 
