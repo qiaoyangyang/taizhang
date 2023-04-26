@@ -19,6 +19,7 @@ import com.google.gson.Gson
 import com.gyf.immersionbar.ImmersionBar
 import com.hjq.bar.TitleBar
 import com.meiling.common.BaseViewModel
+import com.meiling.common.R
 import com.meiling.common.action.TitleBarAction
 import com.meiling.common.dialog.LoadingDialog
 import com.meiling.common.getVmClazz
@@ -103,7 +104,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
         }
     }
     open fun initDataBind() {
-
+        overridePendingTransition(R.anim.activity_right_in, R.anim.activity_right_out)
     }
 
 
@@ -171,6 +172,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
 
     override fun onLeftClick(view: View) {
         onBackPressed()
+        overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out)
     }
 
     override fun onTitleClick(view: View) {

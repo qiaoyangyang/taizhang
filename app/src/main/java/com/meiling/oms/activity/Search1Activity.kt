@@ -50,7 +50,6 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
 
     var telPhone = ""
     override fun initView(savedInstanceState: Bundle?) {
-        setBar(this, mDatabind.cosTitle)
         orderDisAdapter =
             object : BaseQuickAdapter<OrderDto.Content, BaseViewHolder>(R.layout.item_home_order),
                 LoadMoreModule {

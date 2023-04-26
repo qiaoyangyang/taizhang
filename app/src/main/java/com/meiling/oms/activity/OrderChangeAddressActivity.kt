@@ -35,7 +35,6 @@ class OrderChangeAddressActivity :
     BaseActivity<ChangeAddressModel, ActivityOrderChengeAddredssBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
-        setBar(this, mDatabind.cosChangeOrder)
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityOrderChengeAddredssBinding {
@@ -118,7 +117,6 @@ class OrderChangeAddressActivity :
     private val REQUEST_CODE = 1000
     private val ACCESS_FINE_LOCATION = 1
     override fun initListener() {
-        mDatabind.aivBack.setOnClickListener { finish() }
         mDatabind.btnCancelChange.setOnClickListener { finish() }
         mDatabind.txtOrderChangeAddress.setSingleClickListener {
             XXPermissions.with(this).permission(PermissionUtilis.Group.LOCAL)

@@ -38,7 +38,6 @@ class MySettlementDetailActivity :
         fragments.add(
             CommunityFragment.newInstance()
         )
-        setBar(this, mDatabind.cosTitle)
 
         settlementAdapter =
             object :
@@ -84,7 +83,6 @@ class MySettlementDetailActivity :
     }
 
     override fun initListener() {
-        mDatabind.imgSettlememtBack.setOnClickListener { finish() }
     }
 
 }

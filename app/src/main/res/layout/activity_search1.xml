@@ -7,35 +7,16 @@
     android:background="@color/app_themes_f7f7f7"
     android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cos_title"
+    <com.hjq.bar.TitleBar
+        android:id="@+id/TitleBar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/app_themes_1f2333">
-
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img_search_back"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:src="@mipmap/icon_back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="订单搜索"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_32"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        android:layout_height="wrap_content"
+        android:background="@color/app_themes_1f2333"
+        app:barStyle="transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rightBackground="@null"
+        app:rightTitleSize="@dimen/sp_14"
+        app:title="修改订单" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
