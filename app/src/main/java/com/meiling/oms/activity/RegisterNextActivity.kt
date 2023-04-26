@@ -104,7 +104,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                             shopid: Int,
                             children: Children,
                         ) {
-                            mDatabind.txtIndustryRight.text = cityidname
+                            mDatabind.txtIndustryRight.text = children.name
                             mViewModel.businessDto.value!!.businessCategory = children.id
                         }
 
@@ -274,6 +274,17 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 showToast("登录密码未填写")
                 return@setOnClickListener
             }
+            if (mViewModel.businessDto.value!!.password?.trim().toString()
+                    .toString().length > 20 || mViewModel.businessDto.value!!.password?.trim().toString()
+                    .toString().length < 8
+            ) {
+                showToast("密码长度需要在8-20位字符之间")
+                return@setOnClickListener
+            }
+            if (!isPasswordValid(mViewModel.businessDto.value!!.password?.trim().toString())) {
+                showToast("密码不能是纯数字/纯字母/纯字符")
+                return@setOnClickListener
+            }
 
             //校验账户名
             mViewModel.launchRequest(
@@ -289,6 +300,20 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
         }
 
+    }
+
+    private fun isPasswordValid(password: String): Boolean {
+
+        Log.d("lwq", "=========1111${password}")
+        // 判断是否是纯数字或纯字母
+        if (password.matches(Regex("\\d+")) || password.matches(Regex("[a-zA-Z]+"))) {
+            return false
+        }
+        // 判断是否包含字母和数字
+        if (password.matches(Regex("[a-zA-Z]+")) && password.matches(Regex("\\d+"))) {
+            return true
+        }
+        return true
     }
 
     private fun checkTenantName() {
@@ -315,6 +340,8 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 startActivity(Intent(this,
                     BindingLogisticsActivity::class.java)
                     .putExtra("tenantId", it)
+                    .putExtra("account",mViewModel.businessDto.value!!.userName?.trim().toString())
+                    .putExtra("pwd",mViewModel.businessDto.value!!.password?.trim().toString())
                     .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
 //                startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
             },
