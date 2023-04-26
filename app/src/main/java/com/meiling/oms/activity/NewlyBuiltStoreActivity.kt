@@ -134,11 +134,11 @@ class NewlyBuiltStoreActivity :
                             showToast("获取部分权限成功，但部分权限未正常授予")
                             return
                         }
-                        startActivity(Intent(this@NewlyBuiltStoreActivity,NewOrderChangeAddressMapActivity::class.java))
+                     //   startActivity(Intent(this@NewlyBuiltStoreActivity,NewOrderChangeAddressMapActivity::class.java))
                         // initStart()
-//                        ARouter.getInstance().build("/app/NewOrderChangeAddressMapActivity")
-//                            .withString("title", "门店地址")
-//                            .navigation(this@NewlyBuiltStoreActivity, REQUEST_CODE)
+                        ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
+                            .withString("title", "门店地址")
+                            .navigation(this@NewlyBuiltStoreActivity, REQUEST_CODE)
                     }
 
                     override fun onDenied(
