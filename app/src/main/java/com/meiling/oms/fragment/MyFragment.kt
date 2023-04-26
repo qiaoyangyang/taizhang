@@ -12,8 +12,7 @@ import com.meiling.common.constant.SPConstants
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.ByTenantId
 import com.meiling.common.utils.MMKVUtils
-import com.meiling.oms.activity.NotificationSettingsActivity
-import com.meiling.oms.activity.WriteDetailsActivity
+import com.meiling.oms.activity.*
 import com.meiling.oms.databinding.FragmentMyBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.MainViewModel2

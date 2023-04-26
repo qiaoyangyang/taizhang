@@ -30,10 +30,12 @@ class MessageManagement private constructor(context: Context) {
         this.mMessageManagementListener = listener
     }
 
-    public fun addMessage(messageData: MessageData) {
-        messageDataQueue.add(messageData)
-        mMessageManagementListener?.currentMessageTotal(messageDataQueue.size)
-        play()
+    public fun addMessage(messageData: MessageData, index: Int = 1) {
+        for (i in 0 until index){
+            messageDataQueue.add(messageData)
+            mMessageManagementListener?.currentMessageTotal(messageDataQueue.size)
+            play()
+        }
     }
 
     @Synchronized //或者isPaly使用关键字线程安全

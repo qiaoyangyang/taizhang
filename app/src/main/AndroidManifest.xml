@@ -203,19 +203,7 @@
             android:name=".activity.InputBoredomActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.StoreManagementActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.NewlyBuiltStoreActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.ChannelActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.BaseWebActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.NoStoreActivity"
+            android:name=".activity.NotificationSettingsActivity"
             android:screenOrientation="portrait" />
 
         <provider
