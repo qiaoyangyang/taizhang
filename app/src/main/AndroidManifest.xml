@@ -197,7 +197,6 @@
             android:name=".activity.VoucherInspectionHistoryActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.WriteOffDetailsActivity" />
-        <activity android:name=".activity.RegistSuccessActivity" />
 
         <activity
             android:name=".activity.InputBoredomActivity"

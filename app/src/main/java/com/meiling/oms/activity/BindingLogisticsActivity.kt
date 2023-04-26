@@ -125,7 +125,7 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
                         disLoading()
                         startActivity(Intent(this,ForgetPwdFinishActivity::class.java)
                             .putExtra("account",account)
-                            .putExtra("pwd",pwd)
+                            .putExtra("password",pwd)
                             .putExtra("title","注册成功")
                             .putExtra("context","注册成功"))
                     },
@@ -137,7 +137,7 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
             }else{
                 startActivity(Intent(this,ForgetPwdFinishActivity::class.java)
                     .putExtra("account",account)
-                    .putExtra("pwd",pwd)
+                    .putExtra("password",pwd)
                     .putExtra("title","注册成功")
                     .putExtra("context","注册成功"))
 
