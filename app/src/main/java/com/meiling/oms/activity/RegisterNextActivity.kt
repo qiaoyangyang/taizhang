@@ -340,6 +340,8 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 startActivity(Intent(this,
                     BindingLogisticsActivity::class.java)
                     .putExtra("tenantId", it)
+                    .putExtra("account",mViewModel.businessDto.value!!.userName?.trim().toString())
+                    .putExtra("pwd",mViewModel.businessDto.value!!.password?.trim().toString())
                     .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
 //                startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
             },
