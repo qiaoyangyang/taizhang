@@ -10,6 +10,7 @@ import android.view.View
 import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.services.core.PoiItem
@@ -20,6 +21,7 @@ import com.meiling.common.utils.InputTextManager
 import com.meiling.common.utils.PermissionUtilis
 import com.meiling.oms.bean.PoiVo
 import com.meiling.oms.databinding.ActivityNewlyBuiltStoreBinding
+import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.viewmodel.StoreManagementViewModel
 import com.meiling.oms.widget.KeyBoardUtil
 import com.meiling.oms.widget.setSingleClickListener
@@ -76,7 +78,7 @@ class NewlyBuiltStoreActivity :
                 .addView(mDatabind.etStoreAddress)
                 .setMain(it)
                 .build()
-            KeyBoardUtil.hideKeyBoard(this,mDatabind.tvGoOn)
+            KeyBoardUtil.hideKeyBoard(this, mDatabind.tvGoOn)
         }
         if (!TextUtils.isEmpty(id) && id != "null") {
 
@@ -131,9 +133,9 @@ class NewlyBuiltStoreActivity :
                             showToast("获取部分权限成功，但部分权限未正常授予")
                             return
                         }
-                       // initStart()
+                        // initStart()
                         ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
-                            .withString("title","门店地址")
+                            .withString("title", "门店地址")
                             .navigation(this@NewlyBuiltStoreActivity, REQUEST_CODE)
                     }
 
@@ -179,7 +181,7 @@ class NewlyBuiltStoreActivity :
 
     @SuppressLint("SuspiciousIndentation")
     override fun createObserver() {
-        mViewModel.poidata.onStart.observe(this){
+        mViewModel.poidata.onStart.observe(this) {
             showLoading("")
         }
         mViewModel.poidata.onSuccess.observe(this) {
@@ -192,19 +194,22 @@ class NewlyBuiltStoreActivity :
 
             mViewModel.PoiVoBean.value = it
         }
-        mViewModel.poidata.onError.observe(this){
+        mViewModel.poidata.onError.observe(this) {
             disLoading()
             showToast(it.msg)
         }
-        mViewModel.poiaddpoidata.onStart.observe(this){
+        mViewModel.poiaddpoidata.onStart.observe(this) {
             showLoading("")
         }
-        mViewModel.poiaddpoidata.onSuccess.observe(this){
+        mViewModel.poiaddpoidata.onSuccess.observe(this) {
             disLoading()
+            var mainViewModel =
+                ViewModelProvider(MainActivity.mainActivity!!).get(MainViewModel2::class.java)
+            mainViewModel.getByTenantId.value = mainViewModel.getByTenantId.value?.copy(poi = 1)
 
             finish()
         }
-        mViewModel.poiaddpoidata.onError.observe(this){
+        mViewModel.poiaddpoidata.onError.observe(this) {
             disLoading()
             showToast(it.msg)
         }

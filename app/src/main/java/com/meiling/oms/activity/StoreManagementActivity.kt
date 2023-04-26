@@ -117,6 +117,11 @@ class StoreManagementActivity :
             disLoading()
             storeManagemenAdapter.removeAt(isposition)
             storeManagemenAdapter.notifyDataSetChanged()
+            if (storeManagemenAdapter.data.size==0){
+                mDatabind.tvType.visibility=View.GONE
+            }else{
+                mDatabind.tvType.visibility=View.VISIBLE
+            }
 
         }
         mViewModel.deletePoi.onError.observe(this){
