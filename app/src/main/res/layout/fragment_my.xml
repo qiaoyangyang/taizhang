@@ -59,9 +59,9 @@
                 android:layout_alignTop="@+id/sv_head"
                 android:layout_toEndOf="@+id/sv_head"
                 android:text="账号昵称"
-                android:textStyle="bold"
                 android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_36" />
+                android:textSize="@dimen/sp_36"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txt_phone"
@@ -94,12 +94,14 @@
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_28"
                 app:drawableStartCompat="@mipmap/icon_my_recharge" />
+
             <LinearLayout
                 android:id="@+id/ll_Store_management"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
                 <TextView
                     android:id="@+id/txt_Store_management"
                     android:layout_width="wrap_content"
@@ -111,58 +113,73 @@
                     android:textColor="@color/home_333333"
                     android:textSize="@dimen/sp_32"
                     app:drawableStartCompat="@drawable/my_shop" />
+
                 <com.hjq.shape.view.ShapeTextView
                     android:id="@+id/tv_isStore_management"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dp_14"
                     android:paddingLeft="@dimen/dp_10"
-                    android:paddingRight="@dimen/dp_10"
                     android:paddingTop="@dimen/dp_2"
+                    android:paddingRight="@dimen/dp_10"
                     android:paddingBottom="@dimen/dp_2"
-                    android:textSize="@dimen/sp_22"
-                    app:shape_solidColor="@color/red"
-                    app:shape_radius="@dimen/dp_10"
-                    android:textColor="@color/white"
                     android:text="待完善"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_22"
+                    app:shape_radius="@dimen/dp_10"
+                    app:shape_solidColor="@color/red" />
             </LinearLayout>
-          <LinearLayout
-              android:id="@+id/ll_channel"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:visibility="gone"
-              android:layout_height="wrap_content">
-              <TextView
-                  android:id="@+id/txt_channel"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:drawablePadding="@dimen/dp_10"
-                  android:gravity="center_vertical"
-                  android:paddingVertical="@dimen/dp_20"
-                  android:text="渠道店铺"
-                  android:textColor="@color/home_333333"
-                  android:textSize="@dimen/sp_32"
-                  app:drawableStartCompat="@drawable/my_channel" />
-              <com.hjq.shape.view.ShapeTextView
-                  android:id="@+id/tv_ischannel"
-                  android:layout_marginLeft="@dimen/dp_14"
-                  android:layout_gravity="center"
-                  android:paddingLeft="@dimen/dp_10"
-                  android:paddingRight="@dimen/dp_10"
-                  android:paddingTop="@dimen/dp_2"
-                  android:paddingBottom="@dimen/dp_2"
-                  android:textSize="@dimen/sp_22"
-                  app:shape_solidColor="@color/red"
-                  app:shape_radius="@dimen/dp_10"
-                  android:textColor="@color/white"
-                  android:text="待完善"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"/>
-          </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_channel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/txt_channel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="@dimen/dp_20"
+                    android:text="渠道店铺"
+                    android:textColor="@color/home_333333"
+                    android:textSize="@dimen/sp_32"
+                    app:drawableStartCompat="@drawable/my_channel" />
+
+                <com.hjq.shape.view.ShapeTextView
+                    android:id="@+id/tv_ischannel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp_14"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingRight="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:text="待完善"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_22"
+                    app:shape_radius="@dimen/dp_10"
+                    app:shape_solidColor="@color/red" />
+            </LinearLayout>
 
 
-
+            <TextView
+                android:id="@+id/txt_notification_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:paddingVertical="@dimen/dp_20"
+                android:text="通知设置"
+                android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_28"
+                app:drawableStartCompat="@mipmap/icon_my_msg" />
 
             <TextView
                 android:id="@+id/txt_msg_center"
@@ -176,12 +193,15 @@
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_28"
                 app:drawableStartCompat="@mipmap/icon_my_msg" />
+
+
             <LinearLayout
                 android:id="@+id/ll_Logistics_binding"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
                 <TextView
                     android:id="@+id/txt_Logistics_binding"
                     android:layout_width="wrap_content"
@@ -193,21 +213,22 @@
                     android:textColor="@color/home_333333"
                     android:textSize="@dimen/sp_32"
                     app:drawableStartCompat="@drawable/logistics_binding" />
+
                 <com.hjq.shape.view.ShapeTextView
                     android:id="@+id/tv_isLogistics_binding"
-                    android:layout_marginLeft="@dimen/dp_14"
-                    android:layout_gravity="center"
-                    android:paddingLeft="@dimen/dp_10"
-                    android:paddingRight="@dimen/dp_10"
-                    android:paddingTop="@dimen/dp_2"
-                    android:paddingBottom="@dimen/dp_2"
-                    android:textSize="@dimen/sp_22"
-                    app:shape_solidColor="@color/red"
-                    app:shape_radius="@dimen/dp_10"
-                    android:textColor="@color/white"
-                    android:text="待完善"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp_14"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingRight="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:text="待完善"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_22"
+                    app:shape_radius="@dimen/dp_10"
+                    app:shape_solidColor="@color/red" />
             </LinearLayout>
 
             <TextView

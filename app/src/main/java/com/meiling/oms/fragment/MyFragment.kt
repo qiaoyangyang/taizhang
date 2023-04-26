@@ -12,7 +12,8 @@ import com.meiling.common.constant.SPConstants
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.ByTenantId
 import com.meiling.common.utils.MMKVUtils
-import com.meiling.oms.activity.*
+import com.meiling.oms.activity.NotificationSettingsActivity
+import com.meiling.oms.activity.WriteDetailsActivity
 import com.meiling.oms.databinding.FragmentMyBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.MainViewModel2
@@ -144,6 +145,11 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 //        mDatabind.aivModify.setOnClickListener {
 //            ARouter.getInstance().build("/app/ModifyInformationActivity").navigation()
 //        }
+
+        //通知设置
+        mDatabind.txtNotificationSettings.setOnClickListener {
+            startActivity(Intent(activity,NotificationSettingsActivity::class.java))
+        }
     }
 
     override fun createObserver() {
