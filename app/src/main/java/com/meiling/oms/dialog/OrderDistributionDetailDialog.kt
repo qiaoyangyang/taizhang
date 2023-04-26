@@ -114,7 +114,7 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
 
                     Glide.with(context).load(orderSendDetail.icon).apply(options).into(view1)
                     holder.setText(R.id.txt_dis_per_name, orderSendDetail.deliveryName)
-                    holder.setText(R.id.txt_dis_number, "单号：${orderSendDetail.stationChannelId}")
+                    holder.setText(R.id.txt_dis_number, "单号：${orderSendDetail.channelDelNum}")
 
                     btnCopy.setSingleClickListener {
                         copyText(context, "${orderSendDetail.stationChannelId}")
