@@ -18,6 +18,7 @@ import com.meiling.oms.dialog.BindOtherLogistics
 import com.meiling.oms.dialog.LogisticsPlatformInformationDidalog
 import com.meiling.oms.dialog.UUBinding
 import com.meiling.oms.viewmodel.BindingLogisticsViewModel
+import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 
 class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,ActivityBandingLogistcsLayoutBinding>() {
@@ -111,14 +112,14 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
         )
 
         //注册成功
-        mDatabind.btnSuccess.setOnClickListener {
-
+        mDatabind.btnSuccess.setSingleClickListener(1000L) {
+            showLoading("")
             var selectList=adapter.data.filter { it.status=="1" }
             if(!selectList.isEmpty()){
-                showLoading("")
                 mViewModel.launchRequest(
                     { loginService.merChantSave(PutMerChant(name=name, tenantId = tenantId, selectList as ArrayList<Merchant>))},
                     onSuccess = {
+
                         showToast("注册成功")
                         disLoading()
                         startActivity(Intent(this,ForgetPwdFinishActivity::class.java)
@@ -133,6 +134,7 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
                     }
                 )
             }else{
+                disLoading()
                 startActivity(Intent(this,ForgetPwdFinishActivity::class.java)
                     .putExtra("account",account)
                     .putExtra("password",pwd)
