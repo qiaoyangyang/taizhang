@@ -1,7 +1,9 @@
 package com.meiling.oms.fragment
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -23,6 +25,7 @@ import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
+import java.util.regex.Pattern
 
 class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Binding>() {
 
@@ -302,6 +305,54 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
             dismissLoading()
             showToast("发起配送失败")
         }
+
+        var outStr = "25";
+        mDatabind.edtAddTipShow?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                var edit = s.toString()
+
+                if (edit?.length == 2 && Integer.parseInt(edit) >= 10) {
+                    outStr = edit;
+                }
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                var words = s.toString()
+                //首先内容进行非空判断，空内容（""和null）不处理
+                if (!TextUtils.isEmpty(words)) {
+                    //1-100的正则验证
+                    var p = Pattern.compile("^(25|[1-9]\\d|\\d)$")
+                    var m = p.matcher(words)
+                    if (m.find() || ("").equals(words)) {
+                        //这个时候输入的是合法范围内的值
+                    } else {
+                        if (words.length > 2) {
+                            //若输入不合规，且长度超过2位，继续输入只显示之前存储的outStr
+                            mDatabind.edtAddTipShow.setText(outStr)
+                            // mDatabind.setText(outStr);
+                            //重置输入框内容后默认光标位置会回到索引0的地方，要改变光标位置
+                            mDatabind.edtAddTipShow.setSelection(2)
+                        }
+                    }
+                }
+
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                var  words = s.toString()
+                //首先内容进行非空判断，空内容（""和null）不处理
+                if (!TextUtils.isEmpty(words)) {
+                    if (Integer.parseInt(s.toString()) > 25) {
+                        mDatabind.edtAddTipShow.setText("25")
+                    }
+                }
+            }
+
+        })
+
+
     }
 
 
