@@ -1,10 +1,13 @@
 package com.meiling.oms.widget
 
 import android.content.Context
+import android.text.InputType
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.TextView
+import com.huawei.hms.framework.common.ContextCompat.getSystemService
 
 object KeyBoardUtil {
 
@@ -33,6 +36,16 @@ object KeyBoardUtil {
     fun hideKeyBoard(context: Context, view: View?) {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+    }
+
+    /**
+     * 关闭软键盘
+     */
+    fun openKeyBoard(context: Context, view: TextView) {
+        view.inputType = InputType.TYPE_CLASS_NUMBER
+        val imm = getSystemService(context,Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+
     }
 
     /**

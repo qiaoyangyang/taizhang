@@ -29,13 +29,13 @@ public class PushConstants {
      * 小米后台APP对应的xiaomi id
      */
 //    public static final String MI_ID = "填写您在小米后台APP对应的xiaomi id";
-    public static final String MI_ID = "2882303761517875511";
+    public static final String MI_ID = "2882303761520240526";
 
     /**
      * 小米后台APP对应的xiaomi key
      */
 //    public static final String MI_KEY = "填写您在小米后台APP对应的xiaomi key";
-    public static final String MI_KEY = "5961787531511";
+    public static final String MI_KEY = "5862024070526";
 
     /**
      * 魅族后台APP对应的xiaomi id

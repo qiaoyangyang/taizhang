@@ -17,6 +17,8 @@ import com.meiling.common.utils.SpannableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityNotificationSettingsBinding
 import com.meiling.oms.dialog.OrderDialog
+import com.meiling.oms.dialog.PushMsgSettingDialog
+import com.meiling.oms.dialog.PushMsgSettingTimeDialog
 import com.meiling.oms.jpush.jpushPlay.MessageData
 import com.meiling.oms.jpush.jpushPlay.MessageManagement
 import com.meiling.oms.viewmodel.NotificationSettingsViewModel
@@ -29,7 +31,7 @@ class NotificationSettingsActivity :
     private lateinit var notificationSettingsAdapter: BaseQuickAdapter<NotificationDto?, BaseViewHolder>
 
     override fun initView(savedInstanceState: Bundle?) {
-        initRecycleyView()
+        initRecycleView()
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityNotificationSettingsBinding {
@@ -39,7 +41,7 @@ class NotificationSettingsActivity :
     override fun initData() {
     }
 
-    private fun initRecycleyView() {
+    private fun initRecycleView() {
 
         notificationSettingsAdapter =
             object :
@@ -125,8 +127,17 @@ class NotificationSettingsActivity :
                                 MessageData(
                                     R.raw.new_order,
                                     ""
-                                ),2
+                                ), 2
                             )
+                            var newInstance = PushMsgSettingDialog().newInstance()
+                            newInstance.show(supportFragmentManager)
+                            newInstance.setOkClickLister { id, name ->
+                                list[0] = NotificationDto("新订单", id, "1", "120")
+                                showToast(id)
+                                notificationSettingsAdapter.setList(list)
+                                adapter.notifyDataSetChanged()
+                            }
+
                         }
                         1 -> {
                             showToast((adapter.data[position] as NotificationDto).name)
@@ -134,8 +145,15 @@ class NotificationSettingsActivity :
                                 MessageData(
                                     R.raw.cancel_order,
                                     ""
-                                ),3
+                                ), 3
                             )
+                            var newInstance = PushMsgSettingDialog().newInstance()
+                            newInstance.show(supportFragmentManager)
+                            newInstance.setOkClickLister { id, name ->
+                                list[0] = NotificationDto("新订单", id, "1", "120")
+                                showToast(id)
+                                adapter.notifyDataSetChanged()
+                            }
                         }
                         2 -> {
                             showToast((adapter.data[position] as NotificationDto).name)
@@ -143,8 +161,15 @@ class NotificationSettingsActivity :
                                 MessageData(
                                     R.raw.refund_order,
                                     ""
-                                ),1
+                                ), 1
                             )
+                            var newInstance = PushMsgSettingDialog().newInstance()
+                            newInstance.show(supportFragmentManager)
+                            newInstance.setOkClickLister { id, name ->
+                                list[0] = NotificationDto("新订单", id, "1", "120")
+                                showToast(id)
+                                adapter.notifyDataSetChanged()
+                            }
                         }
                         3 -> {
                             showToast((adapter.data[position] as NotificationDto).name)
@@ -152,14 +177,101 @@ class NotificationSettingsActivity :
                                 MessageData(
                                     R.raw.order_dis_jiedan,
                                     ""
-                                ),1
+                                ), 1
                             )
+                            var newInstance = PushMsgSettingDialog().newInstance()
+                            newInstance.show(supportFragmentManager)
+                            newInstance.setOkClickLister { id, name ->
+                                list[0] = NotificationDto("新订单", id, "1", "120")
+                                showToast(id)
+                                adapter.notifyDataSetChanged()
+                            }
+                        }
+                        4 -> {
+                            showToast((adapter.data[position] as NotificationDto).name)
+                            MessageManagement.get(this)?.addMessage(
+                                MessageData(
+                                    R.raw.order_dis_jiedan,
+                                    ""
+                                ), 1
+                            )
+                            var newInstance = PushMsgSettingDialog().newInstance()
+                            newInstance.show(supportFragmentManager)
+                            newInstance.setOkClickLister { id, name ->
+                                list[0] = NotificationDto("新订单", id, "1", "120")
+                                showToast(id)
+                                adapter.notifyDataSetChanged()
+                            }
+                        }
+                        5 -> {
+                            showToast((adapter.data[position] as NotificationDto).name)
+                            MessageManagement.get(this)?.addMessage(
+                                MessageData(
+                                    R.raw.order_dis_jiedan,
+                                    ""
+                                ), 1
+                            )
+                            var newInstance = PushMsgSettingDialog().newInstance()
+                            newInstance.show(supportFragmentManager)
+                            newInstance.setOkClickLister { id, name ->
+                                list[0] = NotificationDto("新订单", id, "1", "120")
+                                showToast(id)
+                                adapter.notifyDataSetChanged()
+                            }
+                        }
+                        6 -> {
+                            showToast((adapter.data[position] as NotificationDto).name)
+                            MessageManagement.get(this)?.addMessage(
+                                MessageData(
+                                    R.raw.order_dis_jiedan,
+                                    ""
+                                ), 1
+                            )
+                            var newInstance = PushMsgSettingDialog().newInstance()
+                            newInstance.show(supportFragmentManager)
+                            newInstance.setOkClickLister { id, name ->
+                                list[0] = NotificationDto("新订单", id, "1", "120")
+                                showToast(id)
+                                adapter.notifyDataSetChanged()
+                            }
+                        }
+                        7 -> {
+                            MessageManagement.get(this)?.addMessage(
+                                MessageData(
+                                    R.raw.order_dis_jiedan,
+                                    ""
+                                ), 1
+                            )
+                            var newInstance = PushMsgSettingDialog().newInstance()
+                            newInstance.show(supportFragmentManager)
+                            newInstance.setOkClickLister { id, name ->
+                                list[0] = NotificationDto("新订单", id, "1", "120")
+                                showToast(id)
+                                adapter.notifyDataSetChanged()
+                            }
                         }
                     }
 
                 }
                 R.id.txt_time_setting -> {
-                    showToast("设置时间")
+                    when (position) {
+                        6 -> {
+                            var pushMsgSettingTimeDialog = PushMsgSettingTimeDialog().newInstance()
+                            pushMsgSettingTimeDialog.show(supportFragmentManager)
+                            pushMsgSettingTimeDialog.setOkClickLister { time, channel ->
+                                showToast("====STime${time}")
+                            }
+                        }
+                        7 -> {
+                            var pushMsgSettingTimeDialog = PushMsgSettingTimeDialog().newInstance()
+                            pushMsgSettingTimeDialog.show(supportFragmentManager)
+                            pushMsgSettingTimeDialog.setOkClickLister { time, channel ->
+                                showToast("====STime${time}")
+                            }
+                            showToast("设置时间2")
+                        }
+                    }
+
                 }
             }
 

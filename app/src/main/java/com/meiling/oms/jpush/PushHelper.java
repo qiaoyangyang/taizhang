@@ -27,6 +27,8 @@ import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
 
+import org.android.agoo.xiaomi.MiPushRegistar;
+
 //import org.android.agoo.huawei.HuaWeiRegister;
 //import org.android.agoo.mezu.MeizuRegister;
 //import org.android.agoo.oppo.OppoRegister;
@@ -116,7 +118,7 @@ public class PushHelper {
 
                 //可设置别名，推送时使用别名推送
                 String type = "uid";
-                String alias = "1234567890";
+                String alias = "123123123";
                 pushAgent.setAlias(alias, type, new UTrack.ICallBack() {
                     @Override
                     public void onMessage(boolean success, String message) {
@@ -132,7 +134,8 @@ public class PushHelper {
             }
         });
         if (isMainProcess(context)) {
-//            registerDeviceChannel(context);
+            registerDeviceChannel(context);
+//            MiPushReg.register(context, PushConstants.MI_ID, PushConstants.MI_KEY);
         }
     }
 
@@ -141,9 +144,9 @@ public class PushHelper {
      *
      * @param context 应用上下文
      */
-//    private static void registerDeviceChannel(Context context) {
+    private static void registerDeviceChannel(Context context) {
 //        //小米通道，填写您在小米后台APP对应的xiaomi id和key
-//        MiPushRegistar.register(context, PushConstants.MI_ID, PushConstants.MI_KEY);
+        MiPushRegistar.register(context, PushConstants.MI_ID, PushConstants.MI_KEY);
 //        //华为，注意华为通道的初始化参数在minifest中配置
 //        HuaWeiRegister.register((Application) context.getApplicationContext());
 //        //魅族，填写您在魅族后台APP对应的app id和key
@@ -152,7 +155,7 @@ public class PushHelper {
 //        OppoRegister.register(context, PushConstants.OPPO_KEY, PushConstants.OPPO_SECRET);
 //        //vivo，注意vivo通道的初始化参数在minifest中配置
 //        VivoRegister.register(context);
-//    }
+    }
 
     /**
      * 是否运行在主进程

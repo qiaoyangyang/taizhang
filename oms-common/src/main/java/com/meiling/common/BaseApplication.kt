@@ -58,7 +58,7 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
 
     private var activitys: Activity? = null
 
-    fun getActivity(): Activity? {
+    open fun getActivity(): Activity? {
         if (activitys == null) {
             return null
         }

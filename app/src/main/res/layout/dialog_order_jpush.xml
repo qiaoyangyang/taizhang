@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <com.hjq.shape.layout.ShapeRelativeLayout
         android:id="@+id/bg_set"
-        android:layout_width="460dp"
-        android:layout_height="110dp"
-        android:layout_alignParentEnd="true"
-        android:background="@color/white">
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_20"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:paddingVertical="@dimen/dp_20"
+        app:shape_radius="@dimen/dp_20"
+        app:shape_solidColor="#DBDCE1">
 
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/dp_36"
+            android:layout_height="@dimen/dp_36"
             android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_20" />
+            android:src="@mipmap/logo" />
 
         <ImageView
             android:id="@+id/closeMsg"
@@ -27,7 +33,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="-30dp"
             android:scaleType="center"
-            android:src="@drawable/search_close_edt" />
+            android:src="@drawable/search_close_edt"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tvMsgTotal"
@@ -47,9 +54,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_20"
             android:layout_toEndOf="@+id/icon"
-            android:text="新订单来了"
+            android:text="小喵来客"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvMsgTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_toEndOf="@+id/tvMsg"
+            android:text="时间"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
@@ -58,13 +74,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvMsg"
+            android:layout_marginVertical="@dimen/dp_30"
             android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_toEndOf="@+id/icon"
             android:singleLine="true"
-            android:text="新订单来了#1111"
-            android:textColor="@color/home_333333"
-            android:textSize="12sp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_24"
+            android:textStyle="bold"
+            tools:text="新订单来了" />
 
         <TextView
             android:id="@+id/tvMsgShow"
@@ -72,10 +88,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvOrderMsg"
             android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/icon"
-            android:text="收件信息："
-            android:textSize="11sp" />
+            android:maxLines="1"
+            android:textSize="@dimen/sp_24"
+            tools:text="收件信息：" />
 
         <TextView
             android:id="@+id/tvReceiveMsg"
@@ -88,7 +103,8 @@
             android:layout_toEndOf="@+id/tvMsgShow"
             android:singleLine="true"
             android:text="法外狂徒， 11111111111"
-            android:textSize="11sp" />
+            android:textSize="11sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tvCloseAll"
@@ -104,8 +120,9 @@
             android:paddingVertical="5dp"
             android:text="全部关闭"
             android:textColor="@color/red"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            android:visibility="gone" />
 
 
-    </RelativeLayout>
+    </com.hjq.shape.layout.ShapeRelativeLayout>
 </RelativeLayout>

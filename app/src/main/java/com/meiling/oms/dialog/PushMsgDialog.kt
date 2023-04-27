@@ -4,11 +4,11 @@ import com.meiling.oms.R
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
 
-class OrderDialog : BaseNiceDialog() {
+class PushMsgDialog : BaseNiceDialog() {
 
 
-    fun newInstance(): OrderDialog {
-        return OrderDialog()
+    fun newInstance(): PushMsgDialog {
+        return PushMsgDialog()
     }
 
 

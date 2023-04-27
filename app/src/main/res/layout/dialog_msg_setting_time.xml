@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjq.shape.layout.ShapeRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:shape_solidColor="@color/white"
+    app:shape_topLeftRadius="@dimen/dp_20"
+    app:shape_topRightRadius="@dimen/dp_20">
+
+    <ImageView
+        android:id="@+id/iv_close_recharge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_title"
+        android:layout_alignBottom="@+id/tv_title"
+        android:layout_alignParentEnd="true"
+        android:paddingHorizontal="@dimen/dp_20"
+        android:src="@drawable/search_close_edt" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="设置时间"
+        android:textColor="#1F1F1F"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_select_setting_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/sp_32"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_recy_recharge" />
+
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rv_select_setting_time"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/dp_30"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/btn_cancel_select"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_weight="1"
+            android:background="@drawable/order_bg_red"
+            android:gravity="center"
+            android:shadowColor="@color/home_666666"
+            android:text="取消"
+            android:textColor="@color/red"
+            android:textSize="@dimen/sp_32"
+            app:shape_radius="@dimen/sp_15"
+            app:shape_solidColor="@color/white"
+            app:shape_strokeColor="@color/red"
+            app:shape_strokeWidth="@dimen/dp_1" />
+
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/btn_ok_select_time"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:shadowColor="@color/home_666666"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_32"
+            app:shape_radius="@dimen/sp_15"
+            app:shape_solidColor="@color/red" />
+    </LinearLayout>
+
+
+</com.hjq.shape.layout.ShapeRelativeLayout>

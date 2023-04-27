@@ -61,3 +61,7 @@
 -keepclasseswithmembernames class * {
     native <methods>;
 }
+
+
+#小米厂商通道
+-keep class org.android.agoo.xiaomi.MiPushBroadcastReceiver {*;}
