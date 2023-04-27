@@ -22,6 +22,7 @@ import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityRegisterNextBinding
 import com.meiling.oms.dialog.SelectIndustryShopDialog
 import com.meiling.oms.viewmodel.RegisterViewModel
+import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import com.wayne.constraintradiogroup.ConstraintRadioGroup
 import okhttp3.MediaType
@@ -241,49 +242,49 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             }
 
         //注册
-        mDatabind.btnNext.setOnClickListener {
+        mDatabind.btnNext.setSingleClickListener(500) {
             mViewModel.businessDto.value!!.phone = this@RegisterNextActivity.phone
 
             if (mViewModel.businessDto.value!!.tenantType == "1") {
                 if (mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()) {
                     showToast("企业名称未填写")
-                    return@setOnClickListener
+                    return@setSingleClickListener
                 }
             }
             if (mViewModel.businessDto.value!!.tenantName.isNullOrBlank()) {
                 showToast("品牌名称未填写")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.logo.isNullOrBlank()) {
                 showToast("品牌LOGO未上传")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()) {
                 showToast("所属行业未选择")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()) {
                 showToast("管理员姓名未填写")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.userName.isNullOrBlank()) {
                 showToast("登录账号未填写")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.password.isNullOrBlank()) {
                 showToast("登录密码未填写")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.password?.trim().toString()
                     .toString().length > 20 || mViewModel.businessDto.value!!.password?.trim().toString()
                     .toString().length < 8
             ) {
                 showToast("密码长度需要在8-20位字符之间")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (!isPasswordValid(mViewModel.businessDto.value!!.password?.trim().toString())) {
                 showToast("密码不能是纯数字/纯字母/纯字符")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
 
             //校验账户名
