@@ -270,7 +270,33 @@
             android:textSize="15sp"
             android:text="打印张数"/>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toLeftOf="@+id/txtPrintPageNum2"
+            app:layout_constraintTop_toBottomOf="@+id/line4"
+            android:layout_marginTop="10dp"
+            android:id="@+id/imgReduce"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/print_page_reduce"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtPrintPageNum2"
+            app:layout_constraintTop_toBottomOf="@+id/line4"
+            app:layout_constraintRight_toLeftOf="@+id/imgAdd"
+            android:text="1"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line4"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/imgAdd"
+            android:src="@drawable/print_page_num_add"/>
 
 
     </com.hjq.shape.layout.ShapeConstraintLayout>
