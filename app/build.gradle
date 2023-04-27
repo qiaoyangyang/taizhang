@@ -139,8 +139,7 @@ dependencies {
     implementation 'androidx.compose.runtime:runtime-livedata'
     // Optional - Integration with RxJava
     implementation 'androidx.compose.runtime:runtime-rxjava2'
-
-
+    implementation 'androidx.fragment:fragment-ktx:1.5.7'
     api 'com.qianwen:update-app:3.5.2'
 
     //okhttp3
