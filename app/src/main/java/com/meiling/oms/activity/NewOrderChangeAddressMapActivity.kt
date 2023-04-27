@@ -102,7 +102,7 @@ class NewOrderChangeAddressMapActivity :
             aMap = mMapView!!.map
             setUpMap()
         }
-        ImmersionBar.setTitleBar(this@NewOrderChangeAddressMapActivity, findViewById)
+      //  ImmersionBar.setTitleBar(this@NewOrderChangeAddressMapActivity, findViewById)
         initViewAdapter()
     }
 
