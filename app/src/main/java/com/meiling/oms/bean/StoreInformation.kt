@@ -87,7 +87,6 @@ data class PoiVoBean(
 
     @SerializedName("poiVo")
     var poiVo: PoiVo? = PoiVo(),
-    var test:String?=""
 
 )
 

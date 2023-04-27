@@ -24,6 +24,7 @@ interface BranchInformationService {
         @Query("types") types: String = "0",//20
         @Query("adminUserRole") adminUserRole: String = "19",//20
     ): ResultData<BranchInformation>
+
     @GET("saas/poi/{id}")
     suspend fun poi(
         @Path("id") id: String,
@@ -31,6 +32,8 @@ interface BranchInformationService {
 
     @POST("saas/poi")
     suspend fun poiadd(
+
+        @Query("id") id: String = "",//门店id
         @Query("poiName") poiName: String = "",//门店名称
         @Query("sinceCode") sinceCode: String = "",//门店编号
         @Query("poiPhone") poiPhone: String = "",//门店电话
@@ -44,7 +47,6 @@ interface BranchInformationService {
         @Query("districtCode") districtCode: String = "",//省
         @Query("cityName") cityName: String = "",//省
     ): ResultData<String>
-
 
 
     @POST("saas/channel/getShopAndChannelVO")
