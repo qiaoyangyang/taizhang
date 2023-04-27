@@ -173,7 +173,7 @@
 
                         <EditText
                             android:maxLength="11"
-                            android:inputType="phone"
+                            android:inputType="number"
                             android:id="@+id/et_Store_telephone"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
