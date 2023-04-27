@@ -1,6 +1,7 @@
 package com.meiling.oms.fragment
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -13,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.*
+import com.meiling.common.utils.SoftKeyBoardListener
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDis2Binding
@@ -165,7 +167,11 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
         }
         var weight = orderSendAddress.goodsWeight!!.toInt()
         mDatabind.txtAddTipPlus.setSingleClickListener {
-            mDatabind.edtAddTipShow.text = "${mDatabind.edtAddTipShow.text.toString().toInt()+1}"
+            mDatabind.edtAddTipShow.setText(
+                "${
+                    mDatabind.edtAddTipShow.text.toString().toInt() + 1
+                }"
+            )
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice!!,
                 cargoType = selectShop,
@@ -182,7 +188,11 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
                 showToast("不能在减啦")
                 return@setSingleClickListener
             }
-            mDatabind.edtAddTipShow.text = "${mDatabind.edtAddTipShow.text.toString().toInt()-1}"
+            mDatabind.edtAddTipShow.setText(
+                "${
+                    mDatabind.edtAddTipShow.text.toString().toInt() - 1
+                }"
+            )
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice,
                 cargoType = selectShop,
@@ -194,6 +204,42 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
             )
             mViewModel.orderSendConfirm(orderSendRequest)
         }
+        mDatabind.edtAddTipShow?.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == 0 || actionId == 3) {
+                var orderSendRequest = OrderSendRequest(
+                    cargoPrice = orderPrice,
+                    cargoType = selectShop,
+                    deliveryTime = "",
+                    deliveryType = "2",
+                    orderId = orderId!!,
+                    wight = mDatabind.edtAddTipShow.text.toString(),
+                    orderSendAddress
+                )
+                mViewModel.orderSendConfirm(orderSendRequest)
+            }
+            return@setOnEditorActionListener false
+        }
+        SoftKeyBoardListener.setListener(activity, object :
+            SoftKeyBoardListener.OnSoftKeyBoardChangeListener {
+            override fun keyBoardShow(height: Int) {
+            }
+
+            override fun keyBoardHide(height: Int) {
+                if (!TextUtils.isEmpty(mDatabind.edtAddTipShow.text.toString())) {
+                    var orderSendRequest = OrderSendRequest(
+                        cargoPrice = orderPrice,
+                        cargoType = selectShop,
+                        deliveryTime = "",
+                        deliveryType = "2",
+                        orderId = orderId!!,
+                        wight = mDatabind.edtAddTipShow.text.toString(),
+                        orderSendAddress
+                    )
+                    mViewModel.orderSendConfirm(orderSendRequest)
+                }
+            }
+        })
+
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentDis2Binding {
@@ -261,7 +307,7 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
 
     private fun addressChange(eventBusChangeAddress: EventBusChangeAddress) {
         orderSendAddress = eventBusChangeAddress.orderSendAddress
-        mDatabind.edtAddTipShow.text = orderSendAddress.goodsWeight
+        mDatabind.edtAddTipShow.setText(  orderSendAddress.goodsWeight)
         var orderSendRequest = OrderSendRequest(
             cargoPrice = orderPrice!!,
             cargoType = orderSendAddress.cargoType ?: "0",

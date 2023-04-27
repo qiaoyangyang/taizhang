@@ -1,26 +1,28 @@
 package com.meiling.oms.fragment
 
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
-import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnTouchListener
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.meiling.common.constant.SPConstants
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.*
+import com.meiling.common.utils.MMKVUtils
+import com.meiling.common.utils.SoftKeyBoardListener
+import com.meiling.common.utils.SoftKeyBoardListener.OnSoftKeyBoardChangeListener
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDis1Binding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDisGoodsSelectDialog
 import com.meiling.oms.dialog.OrderDisRuleTipCheckDialog
 import com.meiling.oms.dialog.OrderDisRuleTipDialog
@@ -170,7 +172,11 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
 
 
         mDatabind.txtAddTipPlus.setSingleClickListener {
-            mDatabind.edtAddTipShow.setText( "${mDatabind.edtAddTipShow.text.toString().toInt() + 1}")
+            mDatabind.edtAddTipShow.setText(
+                "${
+                    mDatabind.edtAddTipShow.text.toString().toInt() + 1
+                }"
+            )
 
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice!!,
@@ -189,7 +195,11 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
                 showToast("不能在减啦")
                 return@setSingleClickListener
             }
-            mDatabind.edtAddTipShow.setText("${mDatabind.edtAddTipShow.text.toString().toInt() - 1}")
+            mDatabind.edtAddTipShow.setText(
+                "${
+                    mDatabind.edtAddTipShow.text.toString().toInt() - 1
+                }"
+            )
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice,
                 cargoType = selectShop,
@@ -219,8 +229,29 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
             }
             return@setOnEditorActionListener false
         }
+        SoftKeyBoardListener.setListener(activity, object : OnSoftKeyBoardChangeListener {
+            override fun keyBoardShow(height: Int) {
+            }
+
+            override fun keyBoardHide(height: Int) {
+                if (!TextUtils.isEmpty(mDatabind.edtAddTipShow.text.toString())) {
+                    var orderSendRequest = OrderSendRequest(
+                        cargoPrice = orderPrice,
+                        cargoType = selectShop,
+                        deliveryTime = "",
+                        deliveryType = "2",
+                        orderId = orderId!!,
+                        wight = mDatabind.edtAddTipShow.text.toString(),
+                        orderSendAddress
+                    )
+                    mViewModel.orderSendConfirm(orderSendRequest)
+                }
+            }
+        })
+
 
     }
+
 
     override fun getBind(inflater: LayoutInflater): FragmentDis1Binding {
         return FragmentDis1Binding.inflate(inflater)
@@ -246,9 +277,26 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
             showLoading("正在请求")
         }
         mViewModel.sendSuccess.onError.observe(this) {
-
             dismissLoading()
-            showToast(it.msg)
+            if (it.errCode == 700) {
+                val dialog: MineExitDialog =
+                    MineExitDialog().newInstance(
+                        "温馨提示",
+                        "可用余额（账户余额-冻结余额）不足，无法发起配送，请去充值中心进行余额充值！",
+                        "知道了",
+                        "去充值",
+                        false
+                    )
+                dialog.setOkClickLister {
+
+                    ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
+                }
+                dialog.show(childFragmentManager)
+            } else {
+                showToast(it.msg)
+            }
+
+
         }
         mViewModel.orderSendConfirmList.onStart.observe(this) {
             showLoading("加载中")
@@ -280,7 +328,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
 
     private fun addressChange(eventBusChangeAddress: EventBusChangeAddress) {
         orderSendAddress = eventBusChangeAddress.orderSendAddress
-        mDatabind.edtAddTipShow.setText(  orderSendAddress.goodsWeight)
+        mDatabind.edtAddTipShow.setText(orderSendAddress.goodsWeight)
         var orderSendRequest = OrderSendRequest(
             cargoPrice = orderPrice!!,
             cargoType = orderSendAddress.cargoType ?: "0",
@@ -304,4 +352,5 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
     private fun checkString(str: String?): String {
         return str ?: "0"
     }
+
 }
