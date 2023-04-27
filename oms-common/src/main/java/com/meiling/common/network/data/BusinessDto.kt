@@ -9,7 +9,7 @@ data class BusinessDto(
     var phone: String? = "",
     var logo: String? = "",
     var salesChannel: String? = "",//id逗号隔开
-    var tenantHead: String? = "",
+    var tenantHead: String? = "",//管理员姓名
     var tenantName: String? = "",//品牌名称
     var tenantType: String? = "1",//身份 1企业 2个人 3其他
     var userName: String? = "",

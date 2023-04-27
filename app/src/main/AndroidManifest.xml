@@ -219,6 +219,14 @@
         <activity
             android:name=".activity.NoStoreActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NoPrintDeviceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SelectPrintDeviceActivity"
+            android:screenOrientation="portrait" />
+
+
 
         <provider
             android:name="androidx.core.content.FileProvider"
