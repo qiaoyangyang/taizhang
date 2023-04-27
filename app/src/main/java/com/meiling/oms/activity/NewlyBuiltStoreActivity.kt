@@ -34,9 +34,10 @@ class NewlyBuiltStoreActivity :
     BaseVmActivity<StoreManagementViewModel>() {
     private val REQUEST_CODE = 1000
     lateinit var mDatabind: ActivityNewlyBuiltStoreBinding
-
+    lateinit var mainViewModel:MainViewModel2
     override fun initView(savedInstanceState: Bundle?) {
-
+         mainViewModel =
+            ViewModelProvider(MainActivity.mainActivity!!).get(MainViewModel2::class.java)
     }
 
     private val ACCESS_FINE_LOCATION = 1
@@ -126,13 +127,14 @@ class NewlyBuiltStoreActivity :
         mDatabind.etStoreAddress.setOnClickListener {
 
 
-            XXPermissions.with(this).permission(PermissionUtilis.Group.LOCAL1)
+            XXPermissions.with(this).permission(PermissionUtilis.Group.LOCAL)
                 .request(object : OnPermissionCallback {
                     override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
                         if (!allGranted) {
                             showToast("获取部分权限成功，但部分权限未正常授予")
                             return
                         }
+                     //   startActivity(Intent(this@NewlyBuiltStoreActivity,NewOrderChangeAddressMapActivity::class.java))
                         // initStart()
                         ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
                             .withString("title", "门店地址")
@@ -203,8 +205,7 @@ class NewlyBuiltStoreActivity :
         }
         mViewModel.poiaddpoidata.onSuccess.observe(this) {
             disLoading()
-            var mainViewModel =
-                ViewModelProvider(MainActivity.mainActivity!!).get(MainViewModel2::class.java)
+
             mainViewModel.getByTenantId.value = mainViewModel.getByTenantId.value?.copy(poi = 1)
 
             finish()

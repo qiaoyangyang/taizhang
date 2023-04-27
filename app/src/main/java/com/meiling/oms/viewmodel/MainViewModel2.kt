@@ -9,5 +9,7 @@ class MainViewModel2() : ViewModel() {
     //  公共数据
     var getByTenantId = MutableLiveData<ByTenantId>()
 
-
+    init {
+        getByTenantId.value=ByTenantId()
+    }
 }

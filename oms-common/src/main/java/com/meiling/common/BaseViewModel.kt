@@ -73,6 +73,8 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
 //                        toast.show()
 //                        ToastUtils.showShort("服务器异常，请稍后再试")
                         resultState.onError.postValue(ExceptionHandle.handleException(it))
+                    } else {
+                        resultState.onError.postValue(ExceptionHandle.handleException(it))
                     }
                 } else {
                     resultState.onError.postValue(ExceptionHandle.handleException(it))
@@ -127,37 +129,37 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun <T : Any> launchRequest(
         block: suspend () -> ResultData<T>,
-        isShowLoading:Boolean?=true,
-        onSuccess:(T?)->Unit,
-        onError:((String?)->Unit) ?= null
+        isShowLoading: Boolean? = true,
+        onSuccess: (T?) -> Unit,
+        onError: ((String?) -> Unit)? = null
     ): Job {
-        Log.e("当前线程",""+Thread.currentThread().name)
+        Log.e("当前线程", "" + Thread.currentThread().name)
 
         return viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 block()
             }.onSuccess {
-                Log.e("当前线程2",""+Thread.currentThread().name)
-                withContext(Dispatchers.Main){
-                    Log.e("当前线程3",""+Thread.currentThread().name)
+                Log.e("当前线程2", "" + Thread.currentThread().name)
+                withContext(Dispatchers.Main) {
+                    Log.e("当前线程3", "" + Thread.currentThread().name)
                     if (it.code == 200) {
-                        if(it.data!=null){
+                        if (it.data != null) {
                             onSuccess.invoke(it.data)
-                        }else{
+                        } else {
                             onSuccess.invoke(null)
                         }
                     } else if (it.code == 403) {
                         ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
                     } else {
-                        if(onError!=null){
+                        if (onError != null) {
                             onError?.invoke(it.msg)
                         }
                     }
                 }
 
             }.onFailure {
-                withContext(Dispatchers.Main){
-                    Log.e("当前线程4",""+Thread.currentThread().name)
+                withContext(Dispatchers.Main) {
+                    Log.e("当前线程4", "" + Thread.currentThread().name)
 
                     onError?.invoke(ExceptionHandle.handleException(it).msg)
                 }
