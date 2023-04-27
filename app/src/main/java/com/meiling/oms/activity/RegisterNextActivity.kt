@@ -12,6 +12,7 @@ import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import com.meiling.common.activity.BaseVmActivity
+import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.Children
 import com.meiling.common.network.service.loginService
 import com.meiling.common.utils.GlideAppUtils
@@ -20,6 +21,7 @@ import com.meiling.common.view.ArrowPopupWindow
 import com.meiling.common.view.ArrowTiedPopupWindow
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityRegisterNextBinding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.SelectIndustryShopDialog
 import com.meiling.oms.viewmodel.RegisterViewModel
 import com.meiling.oms.widget.setSingleClickListener
@@ -38,6 +40,17 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     var phone: String? = ""
     override fun initView(savedInstanceState: Bundle?) {
            ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
+    }
+
+    override fun onLeftClick(view: View) {
+        super.onLeftClick(view)
+        val dialog: MineExitDialog =
+            MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
+        dialog.setOkClickLister {
+            dialog.dismiss()
+            finish()
+        }
+        dialog.show(supportFragmentManager)
     }
 
     override fun initDataBind() {
@@ -242,7 +255,8 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             }
 
         //注册
-        mDatabind.btnNext.setSingleClickListener(500) {
+        mDatabind.btnNext.setSingleClickListener(1000) {
+
             mViewModel.businessDto.value!!.phone = this@RegisterNextActivity.phone
 
             if (mViewModel.businessDto.value!!.tenantType == "1") {
