@@ -421,18 +421,18 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
 
     override fun createObserver() {
 
-        vm.getByTenantId.observe(this){
-            if(it.poi==-1){
-                val view = LayoutInflater.from(activity).inflate(R.layout.order_store_empty, null, false)
-                view.findViewById<TextView>(R.id.tv_bind).setOnClickListener {
-                    startActivity(Intent(requireActivity(),NewlyBuiltStoreActivity::class.java))
-
-                }
-                orderDisAdapter.setEmptyView(view)
-            }else{
-                orderDisAdapter.setEmptyView(R.layout.order_search_empty)
-            }
-        }
+//        vm.getByTenantId.observe(this){
+//            if(it.poi==-1){
+//                val view = LayoutInflater.from(activity).inflate(R.layout.order_store_empty, null, false)
+//                view.findViewById<TextView>(R.id.tv_bind).setOnClickListener {
+//                    startActivity(Intent(requireActivity(),NewlyBuiltStoreActivity::class.java))
+//
+//                }
+//                orderDisAdapter.setEmptyView(view)
+//            }else{
+//                orderDisAdapter.setEmptyView(R.layout.order_search_empty)
+//            }
+//        }
 
         mViewModel.orderList.onStart.observe(this) {
             showLoading("加载中")
@@ -444,6 +444,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             if (it.pageIndex == 1) {
                 if (it.content.isNullOrEmpty()) {
                     orderDisAdapter.setList(null)
+                    orderDisAdapter.setEmptyView(R.layout.order_search_empty)
                 } else {
                     orderDisAdapter.setList(it.content as MutableList<OrderDto.Content>)
                 }

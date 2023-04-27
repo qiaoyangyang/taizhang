@@ -157,7 +157,7 @@ class OrderChangeAddressMapActivity :
     override fun initData() {
         var tetle=intent.getStringExtra("title")
         if (!TextUtils.isEmpty(tetle)){
-            mDatabind.TitleBar.title=tetle
+            mDatabind.TitleBarLeft.title=tetle
 
         }
         ryOrderDisMapAdapter = object :

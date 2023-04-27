@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <com.hjq.bar.TitleBar
-        android:id="@+id/TitleBar"
+        android:id="@+id/TitleBarLeft"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/app_themes_1f2333"
@@ -19,7 +19,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/TitleBar"
+        android:layout_below="@+id/TitleBarLeft"
         android:background="@color/white"
         app:shape_radius="@dimen/dp_100"
         app:shape_solidColor="@color/white"
