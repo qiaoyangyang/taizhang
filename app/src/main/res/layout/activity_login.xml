@@ -293,6 +293,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_80"
+        android:paddingVertical="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
@@ -302,15 +303,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@drawable/login_cb_agreement"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/tv_agreement"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_agreement"
             tools:ignore="TouchTargetSizeCheck" />
 
         <TextView
             android:id="@+id/tv_agreement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
             android:layout_marginLeft="5dp"
             android:drawablePadding="5dp"
             android:text="登录即代表同意小喵来客《用户协议》及《隐私政策》"

@@ -3,9 +3,11 @@ package com.meiling.oms.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
+import android.widget.Toast
 import com.gyf.immersionbar.ImmersionBar
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -43,7 +45,15 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     }
 
     override fun onLeftClick(view: View) {
-        super.onLeftClick(view)
+        val dialog: MineExitDialog =
+            MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
+        dialog.setOkClickLister {
+            dialog.dismiss()
+            finish()
+        }
+        dialog.show(supportFragmentManager)
+    }
+    override fun onBackPressed() {
         val dialog: MineExitDialog =
             MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
         dialog.setOkClickLister {

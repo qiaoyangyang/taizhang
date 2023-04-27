@@ -130,7 +130,9 @@
         <activity
             android:name=".activity.ForgetPwdFinishActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+
+        </activity>
         <activity
             android:name=".activity.ForgetPwdGetCodeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
