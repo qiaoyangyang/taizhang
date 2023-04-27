@@ -24,6 +24,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.amap.api.location.AMapLocation
@@ -56,7 +57,7 @@ import java.lang.Exception
 
 @Route(path = "/app/NewOrderChangeAddressMapActivity")
 class NewOrderChangeAddressMapActivity :
-    BaseActivity<ChangeAddressModel, ActivityOrderChengeAddredssMapBinding>(),
+    AppCompatActivity(),
     OnMyLocationChangeListener, LocationSource,
     OnMapTouchListener, AMapLocationListener, OnPoiSearchListener {
     var mMapView: MapView? = null
@@ -78,12 +79,22 @@ class NewOrderChangeAddressMapActivity :
         setContentView(R.layout.activity_order_chenge_addredss_map)
 
         mMapView = findViewById<View>(R.id.mapView) as MapView
+        //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
+        mMapView?.onCreate(savedInstanceState)
+        if (aMap == null) {
+            aMap = mMapView!!.map
+            setUpMap()
+        }
+
         txtMapLocalCity = findViewById<View>(R.id.txtMapLocalCity) as TextView
         edtLocalSearch = findViewById<EditText>(R.id.edtLocalSearch) as EditText
         imgClearLocalSearch = findViewById<ImageView>(R.id.imgClearLocalSearch) as ImageView
-        var findViewById = findViewById<TitleBar>(R.id.TitleBarLeft)
+//
+        ryOrderDisSearchLocal =
+            findViewById<RecyclerView>(R.id.ryOrderDisSearchLocal) as RecyclerView
+        var titleBar = findViewById<TitleBar>(R.id.title_bar_left) as TitleBar
 
-        findViewById?.setOnTitleBarListener(object : OnTitleBarListener {
+        titleBar?.setOnTitleBarListener(object : OnTitleBarListener {
             override fun onLeftClick(view: View?) {
                 finish()
             }
@@ -94,15 +105,7 @@ class NewOrderChangeAddressMapActivity :
             override fun onRightClick(view: View?) {
             }
         })
-        ryOrderDisSearchLocal =
-            findViewById<RecyclerView>(R.id.ryOrderDisSearchLocal) as RecyclerView
-        //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
-        mMapView!!.onCreate(savedInstanceState)
-        if (aMap == null) {
-            aMap = mMapView!!.map
-            setUpMap()
-        }
-        ImmersionBar.setTitleBar(this@NewOrderChangeAddressMapActivity, findViewById)
+
         initViewAdapter()
     }
 
@@ -380,6 +383,7 @@ class NewOrderChangeAddressMapActivity :
                         startChangeLocation(latLng)
                     }
                 }
+
                 Log.d("yjl", "onLocationChanged: " + Gson().toJson(amapLocation))
                 Log.d("yjl", "onLocationChanged: " + amapLocation.latitude)
                 Log.d("yjl", "onLocationChanged: " + amapLocation.latitude)
@@ -504,11 +508,34 @@ class NewOrderChangeAddressMapActivity :
         });
 
     }
+    /** 状态栏沉浸 */
+    private var immersionBar: ImmersionBar? = null
+    /**
+     * 获取状态栏沉浸的配置对象
+     */
+    open fun getStatusBarConfig(): ImmersionBar {
+        if (immersionBar == null) {
+            immersionBar = createStatusBarConfig()
 
-    override fun initView(savedInstanceState: Bundle?) {
+        }
+        return immersionBar!!
+    }
+    /**
+     * 初始化沉浸式状态栏
+     */
+    protected open fun createStatusBarConfig(): ImmersionBar {
+        return ImmersionBar.with(this) // 默认状态栏字体颜色为黑色
+
+            .statusBarDarkFont(isStatusBarDarkFont()) // 指定导航栏背景颜色
+            .autoDarkModeEnable(true, 0.2f)
     }
 
-    override fun getBind(layoutInflater: LayoutInflater): ActivityOrderChengeAddredssMapBinding {
-        return ActivityOrderChengeAddredssMapBinding.inflate(layoutInflater)
+    /**
+     * 状态栏字体深色模式
+     */
+    open fun isStatusBarDarkFont(): Boolean {
+        return false
     }
+
+
 }

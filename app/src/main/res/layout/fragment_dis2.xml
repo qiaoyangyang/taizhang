@@ -174,7 +174,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view_line2" />
 
-            <EditText
+            <TextView
                 android:id="@+id/edt_rec_pay_type"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
