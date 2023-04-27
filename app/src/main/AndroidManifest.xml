@@ -225,7 +225,9 @@
         <activity
             android:name=".activity.SelectPrintDeviceActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".activity.BindPrintDeviceActivity"
+            android:screenOrientation="portrait" />
 
 
         <provider

@@ -24,7 +24,9 @@ class SelectPrintDeviceActivity : BaseVmDbActivity<RegisterViewModel,ActivitySel
 
     override fun initData() {
         super.initData()
-
+        mDatabind.btnPrintBind.setOnClickListener {
+            startActivity(Intent(this,BindPrintDeviceActivity::class.java))
+        }
     }
 
 }
