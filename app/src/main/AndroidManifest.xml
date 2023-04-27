@@ -152,6 +152,9 @@
             android:name=".activity.OrderChangeAddressMapActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.NewOrderChangeAddressMapActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.MessageCenterActivity"
             android:screenOrientation="portrait" />
         <activity

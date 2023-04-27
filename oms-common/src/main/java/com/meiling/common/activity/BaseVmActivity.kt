@@ -46,6 +46,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
         initDataBind()
         init(savedInstanceState)
         settitleBar()
+        overridePendingTransition(R.anim.activity_right_in, R.anim.activity_right_out)
     }
 
 
