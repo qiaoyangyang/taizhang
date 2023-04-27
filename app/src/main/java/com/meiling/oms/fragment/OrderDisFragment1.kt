@@ -1,6 +1,9 @@
 package com.meiling.oms.fragment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnTouchListener
@@ -167,7 +170,8 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
 
 
         mDatabind.txtAddTipPlus.setSingleClickListener {
-            mDatabind.edtAddTipShow.text = "${mDatabind.edtAddTipShow.text.toString().toInt() + 1}"
+            mDatabind.edtAddTipShow.setText( "${mDatabind.edtAddTipShow.text.toString().toInt() + 1}")
+
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice!!,
                 cargoType = selectShop,
@@ -185,7 +189,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
                 showToast("不能在减啦")
                 return@setSingleClickListener
             }
-            mDatabind.edtAddTipShow.text = "${mDatabind.edtAddTipShow.text.toString().toInt() - 1}"
+            mDatabind.edtAddTipShow.setText("${mDatabind.edtAddTipShow.text.toString().toInt() - 1}")
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice,
                 cargoType = selectShop,
@@ -196,6 +200,24 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
                 orderSendAddress
             )
             mViewModel.orderSendConfirm(orderSendRequest)
+
+        }
+
+
+        mDatabind.edtAddTipShow?.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == 0 || actionId == 3) {
+                var orderSendRequest = OrderSendRequest(
+                    cargoPrice = orderPrice,
+                    cargoType = selectShop,
+                    deliveryTime = "",
+                    deliveryType = "2",
+                    orderId = orderId!!,
+                    wight = mDatabind.edtAddTipShow.text.toString(),
+                    orderSendAddress
+                )
+                mViewModel.orderSendConfirm(orderSendRequest)
+            }
+            return@setOnEditorActionListener false
         }
 
     }
@@ -224,6 +246,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
             showLoading("正在请求")
         }
         mViewModel.sendSuccess.onError.observe(this) {
+
             dismissLoading()
             showToast(it.msg)
         }
@@ -257,7 +280,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
 
     private fun addressChange(eventBusChangeAddress: EventBusChangeAddress) {
         orderSendAddress = eventBusChangeAddress.orderSendAddress
-        mDatabind.edtAddTipShow.text = orderSendAddress.goodsWeight
+        mDatabind.edtAddTipShow.setText(  orderSendAddress.goodsWeight)
         var orderSendRequest = OrderSendRequest(
             cargoPrice = orderPrice!!,
             cargoType = orderSendAddress.cargoType ?: "0",
