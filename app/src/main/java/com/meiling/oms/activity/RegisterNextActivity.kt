@@ -3,15 +3,18 @@ package com.meiling.oms.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
+import android.widget.Toast
 import com.gyf.immersionbar.ImmersionBar
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import com.meiling.common.activity.BaseVmActivity
+import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.Children
 import com.meiling.common.network.service.loginService
 import com.meiling.common.utils.GlideAppUtils
@@ -20,8 +23,10 @@ import com.meiling.common.view.ArrowPopupWindow
 import com.meiling.common.view.ArrowTiedPopupWindow
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityRegisterNextBinding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.SelectIndustryShopDialog
 import com.meiling.oms.viewmodel.RegisterViewModel
+import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import com.wayne.constraintradiogroup.ConstraintRadioGroup
 import okhttp3.MediaType
@@ -37,6 +42,25 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     var phone: String? = ""
     override fun initView(savedInstanceState: Bundle?) {
            ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
+    }
+
+    override fun onLeftClick(view: View) {
+        val dialog: MineExitDialog =
+            MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
+        dialog.setOkClickLister {
+            dialog.dismiss()
+            finish()
+        }
+        dialog.show(supportFragmentManager)
+    }
+    override fun onBackPressed() {
+        val dialog: MineExitDialog =
+            MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
+        dialog.setOkClickLister {
+            dialog.dismiss()
+            finish()
+        }
+        dialog.show(supportFragmentManager)
     }
 
     override fun initDataBind() {
@@ -104,7 +128,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                             shopid: Int,
                             children: Children,
                         ) {
-                            mDatabind.txtIndustryRight.text = cityidname
+                            mDatabind.txtIndustryRight.text = children.name
                             mViewModel.businessDto.value!!.businessCategory = children.id
                         }
 
@@ -208,6 +232,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                         mDatabind.txtShopName.visibility = View.VISIBLE
                         mDatabind.txtShopName2.visibility = View.VISIBLE
                         mDatabind.edtShopName.visibility = View.VISIBLE
+                        mViewModel.businessDto.value?.tenantType="1"
                     }
                     if (checkedButton.id == R.id.checkPerson) {
                         mDatabind.txtOperateType.visibility = View.GONE
@@ -220,6 +245,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                         mDatabind.edtShopName.visibility = View.GONE
                         mViewModel.businessDto.value!!.isChain = ""
                         mViewModel.businessDto.value!!.enterpriseName = ""
+                        mViewModel.businessDto.value?.tenantType="2"
                     }
                     if (checkedButton.id == R.id.checkOther) {
                         mDatabind.txtOperateType.visibility = View.VISIBLE
@@ -231,6 +257,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                         mDatabind.txtShopName2.visibility = View.GONE
                         mDatabind.edtShopName.visibility = View.GONE
                         mViewModel.businessDto.value!!.enterpriseName = ""
+                        mViewModel.businessDto.value?.tenantType="3"
                     }
 
                 }
@@ -238,40 +265,50 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             }
 
         //注册
-        mDatabind.btnNext.setOnClickListener {
-            startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
-            return@setOnClickListener
+        mDatabind.btnNext.setSingleClickListener(1000) {
+
             mViewModel.businessDto.value!!.phone = this@RegisterNextActivity.phone
 
             if (mViewModel.businessDto.value!!.tenantType == "1") {
                 if (mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()) {
                     showToast("企业名称未填写")
-                    return@setOnClickListener
+                    return@setSingleClickListener
                 }
             }
             if (mViewModel.businessDto.value!!.tenantName.isNullOrBlank()) {
                 showToast("品牌名称未填写")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.logo.isNullOrBlank()) {
                 showToast("品牌LOGO未上传")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()) {
                 showToast("所属行业未选择")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()) {
                 showToast("管理员姓名未填写")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.userName.isNullOrBlank()) {
                 showToast("登录账号未填写")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.password.isNullOrBlank()) {
                 showToast("登录密码未填写")
-                return@setOnClickListener
+                return@setSingleClickListener
+            }
+            if (mViewModel.businessDto.value!!.password?.trim().toString()
+                    .toString().length > 20 || mViewModel.businessDto.value!!.password?.trim().toString()
+                    .toString().length < 8
+            ) {
+                showToast("密码长度需要在8-20位字符之间")
+                return@setSingleClickListener
+            }
+            if (!isPasswordValid(mViewModel.businessDto.value!!.password?.trim().toString())) {
+                showToast("密码不能是纯数字/纯字母/纯字符")
+                return@setSingleClickListener
             }
 
             //校验账户名
@@ -288,6 +325,20 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
         }
 
+    }
+
+    private fun isPasswordValid(password: String): Boolean {
+
+        Log.d("lwq", "=========1111${password}")
+        // 判断是否是纯数字或纯字母
+        if (password.matches(Regex("\\d+")) || password.matches(Regex("[a-zA-Z]+"))) {
+            return false
+        }
+        // 判断是否包含字母和数字
+        if (password.matches(Regex("[a-zA-Z]+")) && password.matches(Regex("\\d+"))) {
+            return true
+        }
+        return true
     }
 
     private fun checkTenantName() {
@@ -311,11 +362,13 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             onSuccess = {
                 disLoading()
                 //成功会返回组合id
-//                startActivity(Intent(this,
-//                    BindingLogisticsActivity::class.java)
-//                    .putExtra("tenantId", it)
-//                    .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
-                startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
+                startActivity(Intent(this,
+                    BindingLogisticsActivity::class.java)
+                    .putExtra("tenantId", it)
+                    .putExtra("account",mViewModel.businessDto.value!!.userName?.trim().toString())
+                    .putExtra("pwd",mViewModel.businessDto.value!!.password?.trim().toString())
+                    .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
+//                startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
             },
             onError = {
                 disLoading()

@@ -43,10 +43,12 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
         provinceCode: String,
         cityCode: String,
         districtCode: String,
-        cityName: String
+        cityName: String,
+        id: String
     ) {
         request({
             branchInformationService.poiadd(
+                id,
                 PoiVoBean?.value?.poiVo?.name!!,
                 PoiVoBean?.value?.poiVo?.sinceCode!!,
                 PoiVoBean?.value?.poiVo?.phone!!,

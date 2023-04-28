@@ -1,7 +1,15 @@
 package com.meiling.oms.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.location.Location
+import com.amap.api.maps.AMap.OnMyLocationChangeListener
+import com.amap.api.maps.LocationSource
+import com.amap.api.maps.AMap.OnMapTouchListener
+import com.amap.api.location.AMapLocationListener
+import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener
+import com.amap.api.maps.MapView
+import com.amap.api.maps.AMap
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,13 +20,11 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
-import com.amap.api.location.AMapLocationListener
 import com.amap.api.maps.*
 import com.amap.api.maps.AMap.*
 import com.amap.api.maps.LocationSource.OnLocationChangedListener
@@ -31,7 +37,6 @@ import com.amap.api.services.geocoder.GeocodeSearch
 import com.amap.api.services.geocoder.RegeocodeResult
 import com.amap.api.services.poisearch.PoiResult
 import com.amap.api.services.poisearch.PoiSearch
-import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.google.gson.Gson
@@ -84,6 +89,7 @@ class NewOrderChangeAddressMapActivity :
             aMap = mMapView!!.map
             setUpMap()
         }
+      //  ImmersionBar.setTitleBar(this@NewOrderChangeAddressMapActivity, findViewById)
         initViewAdapter()
     }
 
@@ -303,7 +309,7 @@ class NewOrderChangeAddressMapActivity :
                 mLocationOption!!.locationMode =
                     AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
                 //是指定位间隔
-//                mLocationOption!!.interval = 200000;
+                //   mLocationOption.setInterval(2000);
                 mLocationOption!!.isOnceLocation = true
                 //设置定位参数
                 mlocationClient!!.setLocationOption(mLocationOption)
