@@ -25,7 +25,13 @@ class SelectPrintDeviceActivity : BaseVmDbActivity<RegisterViewModel,ActivitySel
     override fun initData() {
         super.initData()
         mDatabind.btnPrintBind.setOnClickListener {
-            startActivity(Intent(this,BindPrintDeviceActivity::class.java))
+            startActivity(Intent(this,BindPrintDeviceActivity::class.java).putExtra("name","芯烨云"))
+        }
+        mDatabind.btnPrintBind2.setOnClickListener {
+            startActivity(Intent(this,BindPrintDeviceActivity::class.java).putExtra("name","佳博云"))
+        }
+        mDatabind.btnPrintBind3.setOnClickListener {
+            startActivity(Intent(this,BindPrintDeviceActivity::class.java).putExtra("name","商米"))
         }
     }
 

@@ -17,7 +17,7 @@
         app:rightTitleSize="@dimen/sp_14"
         app:titleColor="@color/white"
         android:background="@color/red"
-        app:title="" />
+        app:title="选择打印机" />
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
