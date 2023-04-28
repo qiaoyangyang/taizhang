@@ -27,16 +27,26 @@ import com.meiling.oms.databinding.ActivityChannelBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.ShopDialog
 import com.meiling.oms.viewmodel.StoreManagementViewModel
+import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 
 //渠道店铺管理
 class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBinding>() {
     lateinit var channeAdapter: BaseQuickAdapter<ChannShop?, BaseViewHolder>
     lateinit var channelXAdapter: BaseQuickAdapter<ChannelX?, BaseViewHolder>
+    lateinit var channelX: ChannelX
     override fun initView(savedInstanceState: Bundle?) {
         TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
         initRecycleyView()
         initRecycleyView1()
+        mDatabind.tvNewlyBuiltStore.setSingleClickListener() {
+            if (channelX.id == "32") {
+                startActivity(Intent(this, TiktokBindingActvity::class.java))
+            }else {
+                mViewModel.urlauth(channelX.id!!, shop?.id!!, channelX?.id!!)
+            }
+
+        }
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityChannelBinding {
@@ -58,7 +68,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
             ) {
                 shop = sho
                 mDatabind.TitleBar.titleView.text = cityidname + "/" + sho.name
-                mViewModel.getShopAndChannelVO(sho?.id!!)
+
             }
 
             override fun Ondismiss() {
@@ -79,12 +89,8 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
     override fun onResume() {
         super.onResume()
-        if (shop != null) {
-            Log.d("yjk", "--shop--onResume-")
-            mViewModel.getShopAndChannelVO(shop?.id!!)
-        } else {
-            Log.d("yjk", "----onResume-")
-        }
+        mViewModel.getShopAndChannelVO()
+
     }
 
 
@@ -99,9 +105,9 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                 shop = it.get(0).shopList?.get(0)
                 mDatabind.TitleBar.title = it.get(0).name + "/" + it.get(0).shopList?.get(0)?.name
 
-                mViewModel.getShopAndChannelVO(it.get(0).shopList?.get(0)?.id!!)
-            } else if (ByTenantId()?.poi==-1){
-                val view = LayoutInflater.from(this).inflate(R.layout.store_managemnet1, null, false)
+            } else if (ByTenantId()?.poi == -1) {
+                val view =
+                    LayoutInflater.from(this).inflate(R.layout.store_managemnet1, null, false)
                 var tv_decreate = view.findViewById<ShapeTextView>(R.id.tv_decreate)
                 tv_decreate.setOnClickListener {
                     startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
@@ -124,17 +130,50 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
         mViewModel.channel.onSuccess.observe(this) {
             disLoading()
-            it.channelList?.get(0)?.isselect = true
-            channeAdapter.setList(it.shopList)
-            channelXAdapter.setList(it.channelList)
+            it[0]?.isselect = true
+
+            channelXAdapter.setList(it)
+            channelX = it[0]
+            mViewModel.shop_list(channelX.id!!, shop?.id!!)
         }
 
         mViewModel.channel.onError.observe(this) {
             disLoading()
             showToast(it.msg)
         }
+        mViewModel.channShop.onStart.observe(this) {
+            showLoading("")
+
+
+        }
+        mViewModel.channShop.onError.observe(this) {
+            disLoading()
+            showToast(it.msg)
+        }
+        mViewModel.channShop.onSuccess.observe(this) {
+            disLoading()
+//            if (it.data?.size==0){
+//                val view =
+//                    LayoutInflater.from(this).inflate(R.layout.store_managemnet, null, false)
+//                var tv_decreate = view.findViewById<ShapeTextView>(R.id.txt_error)
+//                tv_decreate.text = "暂无数据，请去绑定渠道店铺"
+//
+//
+//                channeAdapter.setEmptyView(view)
+//                channeAdapter.setList(arrayListOf())
+//            }else {
+//
+//            }
+            channeAdapter.setList(it.data)
+
+        }
+        mViewModel.urlauth.onSuccess.observe(this) {
+            startActivity(Intent(this, BaseWebActivity::class.java).putExtra("url", it.url))
+        }
+
 
     }
+
 
     var isposition = -1
     private fun initRecycleyView() {
@@ -147,10 +186,9 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                 item: ChannShop?
 
             ) {
+                holder.setText(R.id.tv_name_t, "三方平台名称:" + item?.name)
+                holder.setText(R.id.tv_channel_id, "三方平台名称:" + item?.channelShopId)
 
-
-//
-//
 
             }
         }
@@ -159,10 +197,9 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         recyclerViewDivider.setDividerHeight(30)
         mDatabind.rectangle.addItemDecoration(recyclerViewDivider)
         mDatabind.rectangle.adapter = channeAdapter
+        channeAdapter.setEmptyView(R.layout.store_managemnet2)
         channeAdapter.setList(arrayListOf())
-        channeAdapter.setOnItemClickListener { adapter, view, position ->
 
-        }
         channeAdapter.addChildClickViewIds(R.id.tv_unbundle)
         channeAdapter.setOnItemChildClickListener { adapter, view, position ->
             when (view.id) {
@@ -234,6 +271,8 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
             }
             channelXAdapter.data.get(position)?.isselect = true
             channelXAdapter.notifyDataSetChanged()
+            channelX = channelXAdapter?.data?.get(position)!!
+            mViewModel.shop_list(channelX.id!!, shop?.id!!)
         }
 
 

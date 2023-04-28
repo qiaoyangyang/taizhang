@@ -111,6 +111,7 @@
                     android:textSize="@dimen/sp_32"
                     app:drawableStartCompat="@drawable/my_shop" />
                 <com.hjq.shape.view.ShapeTextView
+                    android:visibility="gone"
                     android:id="@+id/tv_isStore_management"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dp_14"
@@ -130,7 +131,6 @@
               android:id="@+id/ll_channel"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:visibility="gone"
               android:layout_height="wrap_content">
               <TextView
                   android:id="@+id/txt_channel"
@@ -144,6 +144,7 @@
                   android:textSize="@dimen/sp_32"
                   app:drawableStartCompat="@drawable/my_channel" />
               <com.hjq.shape.view.ShapeTextView
+                  android:visibility="gone"
                   android:id="@+id/tv_ischannel"
                   android:layout_marginLeft="@dimen/dp_14"
                   android:layout_gravity="center"
@@ -198,6 +199,7 @@
                     android:layout_gravity="center"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingRight="@dimen/dp_10"
+                    android:visibility="gone"
                     android:paddingTop="@dimen/dp_2"
                     android:paddingBottom="@dimen/dp_2"
                     android:textSize="@dimen/sp_22"

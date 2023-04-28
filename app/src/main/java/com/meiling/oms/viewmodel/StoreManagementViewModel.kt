@@ -7,10 +7,7 @@ import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
 import com.meiling.common.network.data.ShopBean
 import com.meiling.common.network.service.meService
-import com.meiling.oms.bean.BranchInformation
-import com.meiling.oms.bean.Channel
-import com.meiling.oms.bean.PoiVo
-import com.meiling.oms.bean.PoiVoBean
+import com.meiling.oms.bean.*
 import com.meiling.oms.service.branchInformationService
 
 class StoreManagementViewModel(application: Application) : BaseViewModel(application) {
@@ -73,15 +70,21 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
         request({ meService.citypoi() }, shopBean)
     }
 
-    var channel = BaseLiveData<Channel>()
+    var channel = BaseLiveData<ArrayList<ChannelX>>()
 
     //渠道获取数据
-    fun getShopAndChannelVO(id: String) {
-        request({ branchInformationService.getShopAndChannelVO(id) }, channel)
+    fun getShopAndChannelVO() {
+        request({ branchInformationService.getShopAndChannelVO() }, channel)
+    }
+    var channShop = BaseLiveData<ChannShopBean>()
+    //渠道获取数据
+    fun shop_list(channelId:String,poiId:String) {
+        request({ branchInformationService.shop_list(channelId,poiId) }, channShop)
     }
 
+
     //美图绑定
-    var urlauth = BaseLiveData<String>()
+    var urlauth = BaseLiveData<Unification>()
     fun urlauth(channelId: String, poiId: String, businessId: String) {
         request({ branchInformationService.urlauth(channelId, poiId, businessId) }, urlauth)
     }

@@ -158,14 +158,7 @@ data class PoiVo(
     @SerializedName("viewId")
     var viewId: Long? = 0
 )
-data class Channel(
 
-    // 三方
-    @SerializedName("channelList")
-    var channelList: List<ChannelX>? = listOf(),
-    @SerializedName("shopList")
-    var shopList: List<ChannShop>? = listOf()
-)
 
 data class ChannelX(
     @SerializedName("createTime")
@@ -199,6 +192,12 @@ data class ChannelX(
     var isselect: Boolean
 )
 
+data class ChannShopBean(
+    @SerializedName("data")
+    var data: List<ChannShop?>? = listOf(),
+
+)
+
 data class ChannShop(
     @SerializedName("channelId")
     var channelId: Int? = 0,
@@ -206,6 +205,8 @@ data class ChannShop(
     var channelLogo: String? = "",
     @SerializedName("channelName")
     var channelName: String? = "",
+    @SerializedName("channelShopId")
+    var channelShopId: String? = "",
     @SerializedName("city")
     var city: Int? = 0,
     @SerializedName("goodsNum")
@@ -224,6 +225,8 @@ data class ChannShop(
     var phone: String? = "",
     @SerializedName("poiId")
     var poiId: Int? = 0,
+    @SerializedName("poiName")
+    var poiName: String? = "",
     @SerializedName("properties")
     var properties: String? = "",
     @SerializedName("runtime")
@@ -231,7 +234,11 @@ data class ChannShop(
     @SerializedName("status")
     var status: Int? = 0,
     @SerializedName("thirdInventoryUrl")
-    var thirdInventoryUrl: String? = "",
+    var thirdInventoryUrl: Any? = Any(),
     @SerializedName("viewId")
     var viewId: Long? = 0
+)
+data class Unification(
+    @SerializedName("url")
+    var url: String? = ""
 )

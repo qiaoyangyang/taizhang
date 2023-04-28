@@ -100,7 +100,7 @@ public class BaseWebActivity extends AppCompatActivity {
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
             if (mTitleTextView != null) {
-                mTitleTextView.setText(title);
+                mTitleTextView.setText("");
             }
         }
     };

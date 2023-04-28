@@ -3,9 +3,7 @@ package com.meiling.oms.service
 import com.meiling.common.network.ResultData
 import com.meiling.common.network.RetrofitClient
 import com.meiling.common.network.data.*
-import com.meiling.oms.bean.BranchInformation
-import com.meiling.oms.bean.Channel
-import com.meiling.oms.bean.PoiVoBean
+import com.meiling.oms.bean.*
 import retrofit2.http.*
 
 
@@ -49,18 +47,22 @@ interface BranchInformationService {
     ): ResultData<String>
 
 
-    @POST("saas/channel/getShopAndChannelVO")
+    @GET("saas/channel")
     suspend fun getShopAndChannelVO(
-        @Query("id") id: String = "",//门店名称
-    ): ResultData<Channel>
+    ): ResultData<ArrayList<ChannelX>>
+//http://test-oms-api.igoodsale.com/saas/poi/shop_list?poiId=156207217&channelId= get请求 传poiId 和 channelId 对应门店的渠道的店铺
 
-
-    @GET("saas/admin/auth")
+    @GET("saas/poi/shop_list")
+    suspend fun shop_list(
+        @Query("channelId") channelId: String = "",//所选渠道的id
+        @Query("poiId") poiId: String = "",//所选渠道的id
+    ): ResultData<ChannShopBean>
+    @GET("/saas/admin/unification/auth")
     suspend fun urlauth(
         @Query("channelId") channelId: String = "",//所选渠道的id
         @Query("poiId") poiId: String = "",//所选渠道的id
         @Query("businessId") businessId: String = "",//美团专用 1：美团点评 2：美团外卖 3：美团闪惠
-    ): ResultData<String>
+    ): ResultData<Unification>
 
 
     @GET("saas/poi/deletePoi")
