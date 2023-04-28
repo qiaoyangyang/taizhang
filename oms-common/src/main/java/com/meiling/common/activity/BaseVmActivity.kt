@@ -26,6 +26,7 @@ import com.meiling.common.getVmClazz
 import com.meiling.common.network.data.ByTenantId
 import com.meiling.common.utils.GsonUtils
 import com.meiling.common.utils.MMKVUtils
+import com.umeng.analytics.MobclickAgent
 
 
 abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleBarAction {
@@ -224,5 +225,17 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
         MMKVUtils.putString("UserBean", Gson().toJson(userBean))
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        // 自动采集选择
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // 自动采集选择
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+    }
 
 }
