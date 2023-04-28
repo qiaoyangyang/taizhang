@@ -297,7 +297,7 @@
         <!--华为 -->
         <meta-data
             android:name="com.huawei.hms.client.appid"
-            android:value="appid=xxx" />
+            android:value="appid=108169495" />
     </application>
     <queries>
         <package android:name="com.tencent.mm" />

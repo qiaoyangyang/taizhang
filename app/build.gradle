@@ -28,6 +28,7 @@ android {
         targetSdkVersion build_versions.target_sdk
         versionCode build_versions.version_code
         versionName build_versions.version_name
+        resConfigs "en", "zh-rCN"
 //        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         kapt {
             arguments {
