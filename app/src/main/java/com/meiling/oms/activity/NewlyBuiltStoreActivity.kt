@@ -146,7 +146,7 @@ class NewlyBuiltStoreActivity :
                         }
                         //   startActivity(Intent(this@NewlyBuiltStoreActivity,NewOrderChangeAddressMapActivity::class.java))
                         // initStart()
-                        ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
+                        ARouter.getInstance().build("/app/NewOrderChangeAddressMapActivity")
                             .withString("title", "门店地址")
                             .navigation(this@NewlyBuiltStoreActivity, REQUEST_CODE)
                     }

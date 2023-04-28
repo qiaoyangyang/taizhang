@@ -24,6 +24,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.amap.api.location.AMapLocation
@@ -56,7 +57,7 @@ import java.lang.Exception
 
 @Route(path = "/app/NewOrderChangeAddressMapActivity")
 class NewOrderChangeAddressMapActivity :
-    BaseActivity<ChangeAddressModel, ActivityOrderChengeAddredssMapBinding>(),
+    AppCompatActivity(),
     OnMyLocationChangeListener, LocationSource,
     OnMapTouchListener, AMapLocationListener, OnPoiSearchListener {
     var mMapView: MapView? = null
@@ -505,10 +506,5 @@ class NewOrderChangeAddressMapActivity :
 
     }
 
-    override fun initView(savedInstanceState: Bundle?) {
-    }
 
-    override fun getBind(layoutInflater: LayoutInflater): ActivityOrderChengeAddredssMapBinding {
-        return ActivityOrderChengeAddredssMapBinding.inflate(layoutInflater)
-    }
 }
