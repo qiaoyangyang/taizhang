@@ -9,6 +9,7 @@ import com.meiling.common.BaseViewModel
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.utils.MMKVUtils
 import com.meiling.oms.databinding.ActivitySplashBinding
+import com.umeng.message.PushAgent
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -22,17 +23,20 @@ class SplashActivity : BaseActivity<BaseViewModel, ActivitySplashBinding>() {
             if (MMKVUtils.getBoolean("isLogin")) {
                 var intent = Intent(this@SplashActivity, MainActivity::class.java)
                 startActivity(intent)
-              //  ARouter.getInstance().build("/app/MainActivity").navigation()
+                //  ARouter.getInstance().build("/app/MainActivity").navigation()
                 finish()
             } else {
                 var intent = Intent(this@SplashActivity, LoginActivity::class.java)
                 startActivity(intent)
-               // ARouter.getInstance().build("/app/LoginActivity").navigation()
+                // ARouter.getInstance().build("/app/LoginActivity").navigation()
                 finish()
 
             }
 
         }
+
+        //友盟统计用户活跃度
+        PushAgent.getInstance(this).onAppStart();
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivitySplashBinding {

@@ -288,7 +288,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="${applicationId}"
+                    android:host="com.meiling.oms"
                     android:path="/thirdpush"
                     android:scheme="agoo" />
             </intent-filter>
