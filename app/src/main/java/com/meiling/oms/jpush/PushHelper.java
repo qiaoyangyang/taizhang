@@ -13,6 +13,7 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.meiling.oms.R;
 import com.taobao.accs.ACCSClient;
 import com.taobao.accs.AccsClientConfig;
@@ -220,6 +221,7 @@ public class PushHelper {
             @Override
             public void launchApp(Context context, UMessage msg) {
                 super.launchApp(context, msg);
+                ARouter.getInstance().build("/app/Search1Activity").withString("pushOrderId",msg.extra.get("orderViewId").toString()).navigation();
                 Log.i(TAG, "click launchApp: " + msg.getRaw().toString());
             }
 

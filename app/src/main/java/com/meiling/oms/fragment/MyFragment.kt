@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.Utils
 import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.constant.SPConstants
 import com.meiling.common.fragment.BaseFragment
@@ -15,6 +16,7 @@ import com.meiling.common.utils.MMKVUtils
 import com.meiling.oms.activity.*
 import com.meiling.oms.databinding.FragmentMyBinding
 import com.meiling.oms.dialog.MineExitDialog
+import com.meiling.oms.dialog.OrderDialog
 import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.viewmodel.MyViewModel
 import com.meiling.oms.widget.setSingleClickListener
@@ -64,7 +66,11 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             }
         }${MMKVUtils.getString(SPConstants.PHONE)}"
 
+        mDatabind.svHead.setOnClickListener {
 
+            OrderDialog().newInstance().show(childFragmentManager)
+
+        }
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentMyBinding {
@@ -92,7 +98,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         mDatabind.llLogisticsBinding.setOnClickListener {
             //门店是否创建
 //            if(vm.getByTenantId.value?.poi==-1){
-                startActivity(Intent(requireActivity(), NoStoreActivity::class.java))
+            startActivity(Intent(requireActivity(), NoStoreActivity::class.java))
 //            }else{
 //                //物流是否绑定
 //                if(vm.getByTenantId.value?.logistics==-1){
@@ -147,26 +153,26 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
         //通知设置
         mDatabind.txtNotificationSettings.setOnClickListener {
-            startActivity(Intent(activity,NotificationSettingsActivity::class.java))
+            startActivity(Intent(activity, NotificationSettingsActivity::class.java))
         }
     }
 
     override fun createObserver() {
-        vm.getByTenantId.observe(this){
+        vm.getByTenantId.observe(this) {
             if (it.logistics == 1) {//物流是否绑定 1绑定;-1没绑定
-                mDatabind.tvIsLogisticsBinding.visibility=View.GONE
-            }else{
-                mDatabind.tvIsLogisticsBinding.visibility=View.VISIBLE
+                mDatabind.tvIsLogisticsBinding.visibility = View.GONE
+            } else {
+                mDatabind.tvIsLogisticsBinding.visibility = View.VISIBLE
             }
             if (it.poi == 1) {//门店是否创建 1绑定;-1没绑定
-                mDatabind.tvIsStoreManagement.visibility=View.GONE
-            }else{
-                mDatabind.tvIsStoreManagement.visibility=View.VISIBLE
+                mDatabind.tvIsStoreManagement.visibility = View.GONE
+            } else {
+                mDatabind.tvIsStoreManagement.visibility = View.VISIBLE
             }
             if (it.shop == 1) {//渠道是否创建 1绑定;-1没绑定
-                mDatabind.tvIschannel.visibility=View.GONE
-            }else{
-                mDatabind.tvIschannel.visibility=View.VISIBLE
+                mDatabind.tvIschannel.visibility = View.GONE
+            } else {
+                mDatabind.tvIschannel.visibility = View.VISIBLE
             }
         }
         mViewModel.disableAccountDto.onStart.observe(this) {

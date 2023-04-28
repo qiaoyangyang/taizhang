@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.hjq.shape.layout.ShapeRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:id="@+id/bg_close"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:shape_radius="@dimen/dp_20"
+    android:layout_margin="@dimen/dp_10"
+    app:shape_solidColor="#DBDCE1"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
-
+    <com.hjq.bar.TitleBar
+        android:id="@+id/TitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/red"
+        app:barStyle="transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rightBackground="@null"
+        />
     <com.hjq.shape.layout.ShapeRelativeLayout
         android:id="@+id/bg_set"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_20"
-        android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginEnd="@dimen/dp_20"
-        android:layout_marginBottom="@dimen/dp_20"
         android:paddingVertical="@dimen/dp_20"
-        app:shape_radius="@dimen/dp_20"
-        app:shape_solidColor="#DBDCE1">
+      >
 
         <ImageView
             android:id="@+id/icon"
@@ -89,8 +96,9 @@
             android:layout_below="@+id/tvOrderMsg"
             android:layout_marginStart="@dimen/dp_20"
             android:maxLines="1"
+            android:textColor="@color/black"
             android:textSize="@dimen/sp_24"
-            tools:text="收件信息：" />
+            tools:text="详细信息：" />
 
         <TextView
             android:id="@+id/tvReceiveMsg"
@@ -125,4 +133,4 @@
 
 
     </com.hjq.shape.layout.ShapeRelativeLayout>
-</RelativeLayout>
+</com.hjq.shape.layout.ShapeRelativeLayout>

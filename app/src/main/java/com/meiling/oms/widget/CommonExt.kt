@@ -182,7 +182,7 @@ fun formatCurrentDate2(): String {
 }
 
 fun formatCurrentDate3(): String {
-    val sdf = SimpleDateFormat("HH:mm:ssss")
+    val sdf = SimpleDateFormat("HH:mm:ss")
     return sdf.format(Date())
 }
 
