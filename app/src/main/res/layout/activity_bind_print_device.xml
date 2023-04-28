@@ -103,6 +103,7 @@
             android:textColor="#333333"
             android:id="@+id/editPrintName"
             android:background="@null"
+            android:gravity="right"
             app:layout_constraintBaseline_toBaselineOf="@+id/txtPrintName"
             app:layout_constraintLeft_toRightOf="@+id/txtPrintName"
             app:layout_constraintTop_toBottomOf="@+id/line1"
