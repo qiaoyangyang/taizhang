@@ -1,15 +1,7 @@
 package com.meiling.oms.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.location.Location
-import com.amap.api.maps.AMap.OnMyLocationChangeListener
-import com.amap.api.maps.LocationSource
-import com.amap.api.maps.AMap.OnMapTouchListener
-import com.amap.api.location.AMapLocationListener
-import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener
-import com.amap.api.maps.MapView
-import com.amap.api.maps.AMap
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -25,6 +17,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
+import com.amap.api.location.AMapLocationListener
 import com.amap.api.maps.*
 import com.amap.api.maps.AMap.*
 import com.amap.api.maps.LocationSource.OnLocationChangedListener
@@ -37,6 +30,7 @@ import com.amap.api.services.geocoder.GeocodeSearch
 import com.amap.api.services.geocoder.RegeocodeResult
 import com.amap.api.services.poisearch.PoiResult
 import com.amap.api.services.poisearch.PoiSearch
+import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.google.gson.Gson
@@ -49,7 +43,7 @@ import com.meiling.oms.widget.KeyBoardUtil
 import com.meiling.oms.widget.showToast
 
 @Route(path = "/app/NewOrderChangeAddressMapActivity")
-class NewOrderChangeAddressMapActivity :
+class NewOrderChangeAddressMapActivity() :
     BaseActivity<ChangeAddressModel, ActivityOrderChengeAddredssMapBinding>(),
     OnMyLocationChangeListener, LocationSource,
     OnMapTouchListener, AMapLocationListener, OnPoiSearchListener {
@@ -410,6 +404,7 @@ class NewOrderChangeAddressMapActivity :
     }
 
     var myCancelCallback = MyCancelCallback()
+
     override fun onPoiSearched(poiResult: PoiResult, i: Int) {
         Log.d("yjk", "onPoiSearched:--- " + poiResult.pois.size)
     }
@@ -499,4 +494,5 @@ class NewOrderChangeAddressMapActivity :
     override fun getBind(layoutInflater: LayoutInflater): ActivityOrderChengeAddredssMapBinding {
         return ActivityOrderChengeAddredssMapBinding.inflate(layoutInflater)
     }
+
 }
