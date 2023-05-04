@@ -7,8 +7,10 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.gyf.immersionbar.ImmersionBar
 import com.hjq.shape.layout.ShapeRelativeLayout
 import com.meiling.common.BaseViewModel
 import com.meiling.common.activity.BaseActivity
@@ -21,10 +23,8 @@ import com.meiling.oms.widget.formatCurrentDate3
 
 //在线消息弹出
 @Route(path = "/app/PushDialogActivity")
-class PushDialogActivity : BaseActivity<BaseViewModel, DialogOrderJpushBinding>() {
-    override fun initView(savedInstanceState: Bundle?) {
+class PushDialogActivity : AppCompatActivity() {
 
-    }
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +32,8 @@ class PushDialogActivity : BaseActivity<BaseViewModel, DialogOrderJpushBinding>(
         setContentView(R.layout.dialog_order_jpush)
         val lp = window.attributes
         lp.gravity = Gravity.TOP; // 屏幕左边显示，可设置Gravity其他参数
+        lp.y = 80;
         window.attributes = lp // 设置参数给window
-
         val intentTitle = intent.getStringExtra("pushTitle")
         val intentDetail = intent.getStringExtra("pushDetail")
         val intentOrderId = intent.getStringExtra("pushOrderId")
@@ -50,11 +50,10 @@ class PushDialogActivity : BaseActivity<BaseViewModel, DialogOrderJpushBinding>(
                 .withString("pushOrderId", intentOrderId).navigation()
             finish()
         }
+        //ImmersionBar.setTitleBar(this, titleBar)
 
     }
 
-    override fun getBind(layoutInflater: LayoutInflater): DialogOrderJpushBinding {
-        return DialogOrderJpushBinding.inflate(layoutInflater)
-    }
+
 
 }

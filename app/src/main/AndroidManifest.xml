@@ -123,7 +123,7 @@
         <activity
             android:name=".activity.PushDialogActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:theme="@style/Theme.AppCompat.Dialog"
+            android:theme="@style/dialogActivityTheme"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ForgetPwdActivity"

@@ -330,6 +330,14 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
 
             }
         mDatabind.rvHistoryOrderList.adapter = orderDisAdapter
+
+        var intentOrderId = intent.getStringExtra("pushOrderId")
+        if (intentOrderId != null) {
+            b = true
+            mDatabind.edtSearch.setText(intentOrderId)
+        } else {
+            b = false
+        }
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivitySearch1Binding {

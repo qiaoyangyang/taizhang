@@ -7,6 +7,7 @@ import android.os.Build
 import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
@@ -94,13 +95,13 @@ fun createAndStart(context: Context, uMessage: UMessage, x: Int, y: Int) {
                 )
             }
         }
-//        val childFragmentManager = OrderDialog().newInstance()
-//        childFragmentManager.show((AppConfig.getActivity() as MainActivity).supportFragmentManager)
-        ARouter.getInstance().build("/app/PushDialogActivity")
-            .withString("pushTitle", uMessage.title.toString() ?: "小喵来客")
-            .withString("pushDetail", uMessage.text.toString() ?: "小喵来客")
-            .withString("pushOrderId", uMessage.extra["orderViewId"].toString() ?: "1")
-            .navigation()
+        val childFragmentManager = OrderDialog().newInstance()
+        childFragmentManager.show((AppConfig.getActivity() as AppCompatActivity).supportFragmentManager)
+//        ARouter.getInstance().build("/app/PushDialogActivity")
+//            .withString("pushTitle", uMessage.title.toString() ?: "小喵来客")
+//            .withString("pushDetail", uMessage.text.toString() ?: "小喵来客")
+//            .withString("pushOrderId", uMessage.extra["orderViewId"].toString() ?: "1")
+//            .navigation()
         Log.i("lwq", "uMessage" + uMessage.extra.get("orderViewId"))
         Log.i("lwq", "uMessage" + "${uMessage.text.toString()}" + context)
         ToastUtils.showShort("新消息${context}")

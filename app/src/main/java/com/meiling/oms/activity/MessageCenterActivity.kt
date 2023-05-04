@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.module.LoadMoreModuleConfig
@@ -49,6 +50,15 @@ class MessageCenterActivity : BaseActivity<MessageViewModel, ActivityMessageCent
             }
         }
         mDatabind.rvMsgCenter.adapter = msgCenterAdapter
+
+        msgCenterAdapter.setOnItemClickListener { adapter, view, position ->
+            ARouter.getInstance().build("/app/Search1Activity")
+                .withString(
+                    "pushOrderId",
+                    (adapter.data[position] as MessageDto.Content).orderViewId
+                ).navigation()
+            finish()
+        }
 
         msgCenterAdapter.setEmptyView(R.layout.empty_msg_center)
         mDatabind.srfMsgCenter.setOnRefreshListener {

@@ -29,7 +29,6 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.amap.api.location.AMapLocation
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.Projection
-import com.meiling.oms.activity.NewOrderChangeAddressMapActivity.MyCancelCallback
 import com.amap.api.services.poisearch.PoiResult
 import com.amap.api.maps.AMap.CancelableCallback
 import com.amap.api.maps.model.*
@@ -55,7 +54,7 @@ import com.meiling.oms.widget.showToast
 import java.lang.Exception
 
 @Route(path = "/app/NewOrderChangeAddressMapActivity")
-class NewOrderChangeAddressMapActivity :
+class nNewOrderChangeAddressMapActivity :
     BaseActivity<ChangeAddressModel, ActivityOrderChengeAddredssMapBinding>(),
     OnMyLocationChangeListener, LocationSource,
     OnMapTouchListener, AMapLocationListener, OnPoiSearchListener {
@@ -102,7 +101,7 @@ class NewOrderChangeAddressMapActivity :
             aMap = mMapView!!.map
             setUpMap()
         }
-        ImmersionBar.setTitleBar(this@NewOrderChangeAddressMapActivity, findViewById)
+       // ImmersionBar.setTitleBar(this@NewOrderChangeAddressMapActivity, findViewById)
         initViewAdapter()
     }
 
