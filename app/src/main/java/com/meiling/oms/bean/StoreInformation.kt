@@ -236,9 +236,44 @@ data class ChannShop(
     @SerializedName("thirdInventoryUrl")
     var thirdInventoryUrl: Any? = Any(),
     @SerializedName("viewId")
-    var viewId: Long? = 0
+    var viewId: String? = ""
 )
 data class Unification(
     @SerializedName("url")
     var url: String? = ""
+
 )
+data class PageResult(
+    @SerializedName("pageResult")
+    var pageResult: PageResultX? = PageResultX()
+)
+
+data class PageResultX(
+    @SerializedName("pageData")
+    var pageData: List<TiktokData?>? = listOf(),
+    @SerializedName("pageNum")
+    var pageNum: Int? = 0,
+    @SerializedName("pageSize")
+    var pageSize: Int? = 0,
+    @SerializedName("pages")
+    var pages: Int? = 0,
+    @SerializedName("total")
+    var total: Int? = 0
+)
+
+data class TiktokData(
+    @SerializedName("address")
+    var address: String? = "",
+    @SerializedName("latitude")
+    var latitude: Double? = 0.0,
+    @SerializedName("longitude")
+    var longitude: Double? = 0.0,
+    @SerializedName("poi_id")
+    var poiId: String? = "",
+    @SerializedName("poi_name")
+    var poiName: String? = "",
+    @SerializedName("status")
+    var status: Boolean? = false,
+    var isstatus: Boolean? = false
+)
+

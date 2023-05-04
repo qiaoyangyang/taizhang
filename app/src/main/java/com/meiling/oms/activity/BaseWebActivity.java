@@ -25,6 +25,7 @@ import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
 import com.just.agentweb.WebChromeClient;
 import com.just.agentweb.WebViewClient;
+import com.meiling.oms.AndroidInterface;
 import com.meiling.oms.R;
 import com.meiling.oms.widget.com.yy.live.widget.WebLayout;
 
@@ -80,6 +81,7 @@ public class BaseWebActivity extends AppCompatActivity {
                 .ready()
                 .go(url);
         initImmersion();
+        mAgentWeb.getJsInterfaceHolder().addJavaObject("android", new AndroidInterface(mAgentWeb, this));
 
     }
 
@@ -92,7 +94,7 @@ public class BaseWebActivity extends AppCompatActivity {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             //do you  work
-            Log.i("Info", "BaseWebActivity onPageStarted");
+            Log.i("Info", "BaseWebActivity onPageStarted---"+url);
         }
     };
     private com.just.agentweb.WebChromeClient mWebChromeClient = new WebChromeClient() {

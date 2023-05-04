@@ -45,16 +45,6 @@
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_28"
             android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/tv_unbundle"
-            android:textSize="@dimen/sp_28"
-            android:textColor="@color/red"
-            android:text="解绑"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="@dimen/dp_24"
-            android:layout_width="wrap_content"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tv_channel_id"
-            android:layout_height="wrap_content"/>
 
 
 
@@ -67,9 +57,9 @@
         android:layout_marginRight="@dimen/dp_24"
         android:layout_marginBottom="@dimen/dp_22"
         android:paddingLeft="@dimen/dp_22"
-        android:paddingTop="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_15"
         android:paddingRight="@dimen/dp_22"
-        android:paddingBottom="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_15"
         android:text="设置发货门店"
         android:textColor="@color/red"
         android:textSize="@dimen/dp_24"

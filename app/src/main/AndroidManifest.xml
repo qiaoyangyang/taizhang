@@ -160,6 +160,10 @@
             android:name=".activity.TiktokBindingActvity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.BindingTiktokListActivity"
+
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.MessageCenterActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -217,6 +221,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ChannelActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BaseWebActivity"

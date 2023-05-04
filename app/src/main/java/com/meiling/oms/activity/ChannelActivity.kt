@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -26,6 +27,7 @@ import com.meiling.oms.bean.ChannelX
 import com.meiling.oms.databinding.ActivityChannelBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.ShopDialog
+import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.viewmodel.StoreManagementViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
@@ -35,18 +37,26 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
     lateinit var channeAdapter: BaseQuickAdapter<ChannShop?, BaseViewHolder>
     lateinit var channelXAdapter: BaseQuickAdapter<ChannelX?, BaseViewHolder>
     lateinit var channelX: ChannelX
+    lateinit var mainViewModel: MainViewModel2
     override fun initView(savedInstanceState: Bundle?) {
         TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
         initRecycleyView()
         initRecycleyView1()
         mDatabind.tvNewlyBuiltStore.setSingleClickListener() {
             if (channelX.id == "32") {
-                startActivity(Intent(this, TiktokBindingActvity::class.java))
-            }else {
+                startActivity(
+                    Intent(this, TiktokBindingActvity::class.java)
+                        .putExtra("channelId", channelX.id)
+                        .putExtra("poiId", shop?.id)
+                )
+            } else {
                 mViewModel.urlauth(channelX.id!!, shop?.id!!, channelX?.id!!)
             }
 
         }
+        mainViewModel =
+            ViewModelProvider(MainActivity.mainActivity!!).get(MainViewModel2::class.java)
+
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityChannelBinding {
@@ -89,7 +99,12 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
     override fun onResume() {
         super.onResume()
-        mViewModel.getShopAndChannelVO()
+        Log.d("yjk", "${channelXAdapter.data.size}")
+        if (channelXAdapter.data.size == 0) {
+            mViewModel.getShopAndChannelVO()
+        } else {
+            mViewModel.shop_list(channelX.id!!, shop?.id!!)
+        }
 
     }
 
@@ -105,7 +120,8 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                 shop = it.get(0).shopList?.get(0)
                 mDatabind.TitleBar.title = it.get(0).name + "/" + it.get(0).shopList?.get(0)?.name
 
-            } else if (ByTenantId()?.poi == -1) {
+            } else if (mainViewModel.getByTenantId.value?.poi == -1) {
+                mDatabind.tvNewlyBuiltStore.visibility = View.GONE
                 val view =
                     LayoutInflater.from(this).inflate(R.layout.store_managemnet1, null, false)
                 var tv_decreate = view.findViewById<ShapeTextView>(R.id.tv_decreate)
@@ -152,18 +168,6 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         }
         mViewModel.channShop.onSuccess.observe(this) {
             disLoading()
-//            if (it.data?.size==0){
-//                val view =
-//                    LayoutInflater.from(this).inflate(R.layout.store_managemnet, null, false)
-//                var tv_decreate = view.findViewById<ShapeTextView>(R.id.txt_error)
-//                tv_decreate.text = "暂无数据，请去绑定渠道店铺"
-//
-//
-//                channeAdapter.setEmptyView(view)
-//                channeAdapter.setList(arrayListOf())
-//            }else {
-//
-//            }
             channeAdapter.setList(it.data)
 
         }
@@ -200,10 +204,10 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         channeAdapter.setEmptyView(R.layout.store_managemnet2)
         channeAdapter.setList(arrayListOf())
 
-        channeAdapter.addChildClickViewIds(R.id.tv_unbundle)
+        channeAdapter.addChildClickViewIds(R.id.tv_delete)
         channeAdapter.setOnItemChildClickListener { adapter, view, position ->
             when (view.id) {
-                R.id.tv_unbundle -> {
+                R.id.tv_delete -> {
                     val dialog: MineExitDialog =
                         MineExitDialog().newInstance(
                             "温馨提示",
@@ -214,6 +218,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                         )
                     dialog.setOkClickLister {
                         isposition = position
+                        mViewModel.releasebind(channelX.id!!,channeAdapter?.getItem(position)?.viewId!!)
                         dialog.dismiss()
 
 

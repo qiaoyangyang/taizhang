@@ -4,6 +4,7 @@ import com.meiling.common.network.ResultData
 import com.meiling.common.network.RetrofitClient
 import com.meiling.common.network.data.*
 import com.meiling.oms.bean.*
+import com.meiling.oms.bean.PageResult
 import retrofit2.http.*
 
 
@@ -57,6 +58,7 @@ interface BranchInformationService {
         @Query("channelId") channelId: String = "",//所选渠道的id
         @Query("poiId") poiId: String = "",//所选渠道的id
     ): ResultData<ChannShopBean>
+
     @GET("/saas/admin/unification/auth")
     suspend fun urlauth(
         @Query("channelId") channelId: String = "",//所选渠道的id
@@ -64,6 +66,28 @@ interface BranchInformationService {
         @Query("businessId") businessId: String = "",//美团专用 1：美团点评 2：美团外卖 3：美团闪惠
     ): ResultData<Unification>
 
+    @GET("/saas/admin/unification/auth")
+    suspend fun douurlauth(
+        @Query("channelId") channelId: String = "",//所选渠道的id
+        @Query("poiId") poiId: String = "",//所选渠道的id
+        @Query("selectText") selectText: String = "",//抖音专用，搜索门店名称
+        @Query("pageSize") pageSize: String = "20",//抖音专用，当前页数量
+        @Query("pageNum") pageNum: String = "1",//抖音专用，当前页页码
+
+    ): ResultData<PageResult>
+
+
+    //  抖音绑定
+    @GET("saas/dytg/bindShop")
+    suspend fun bindTenant(
+        @Query("accountId") accountId: String = "",//抖音商户id
+    ): ResultData<String>
+    //解绑
+    @GET("saas/admin/meituan/releasebind/{businessId}/{viewId}")
+    suspend fun releasebind(
+        @Path("businessId") businessId: String,
+        @Path("viewId") viewId: String,
+    ): ResultData<String>
 
     @GET("saas/poi/deletePoi")
     suspend fun deletePoi(

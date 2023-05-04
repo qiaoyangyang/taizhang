@@ -88,6 +88,20 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
     fun urlauth(channelId: String, poiId: String, businessId: String) {
         request({ branchInformationService.urlauth(channelId, poiId, businessId) }, urlauth)
     }
+    //抖音返回列表
+    var douyin = BaseLiveData<PageResult>()
+    fun douurlauth(channelId: String, poiId: String, selectText: String) {
+        request({ branchInformationService.douurlauth(channelId, poiId, selectText) }, douyin)
+    }
+    //抖音返回列表
+    var bindTenant = BaseLiveData<String>()
+    fun bindTenant(channelId: String) {
+        request({ branchInformationService.bindTenant(channelId ) }, bindTenant)
+    } //抖音返回列表
+    var releasebind = BaseLiveData<String>()
+    fun releasebind(businessId: String,viewId:String) {
+        request({ branchInformationService.releasebind(businessId ,viewId) }, releasebind)
+    }
 
     //  删除门店
     var deletePoi = BaseLiveData<String>()
