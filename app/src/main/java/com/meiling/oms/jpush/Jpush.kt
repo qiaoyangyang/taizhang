@@ -95,16 +95,16 @@ fun createAndStart(context: Context, uMessage: UMessage, x: Int, y: Int) {
                 )
             }
         }
-        val childFragmentManager = OrderDialog().newInstance()
-        childFragmentManager.show((AppConfig.getActivity() as AppCompatActivity).supportFragmentManager)
-//        ARouter.getInstance().build("/app/PushDialogActivity")
-//            .withString("pushTitle", uMessage.title.toString() ?: "小喵来客")
-//            .withString("pushDetail", uMessage.text.toString() ?: "小喵来客")
-//            .withString("pushOrderId", uMessage.extra["orderViewId"].toString() ?: "1")
-//            .navigation()
+//        val childFragmentManager = OrderDialog().newInstance()
+//        childFragmentManager.show((AppConfig.getActivity() as AppCompatActivity).supportFragmentManager)
+        ARouter.getInstance().build("/app/PushDialogActivity")
+            .withString("pushTitle", uMessage.title.toString() ?: "小喵来客")
+            .withString("pushDetail", uMessage.text.toString() ?: "小喵来客")
+            .withString("pushOrderId", uMessage.extra["orderViewId"].toString() ?: null)
+            .navigation()
         Log.i("lwq", "uMessage" + uMessage.extra.get("orderViewId"))
         Log.i("lwq", "uMessage" + "${uMessage.text.toString()}" + context)
-        ToastUtils.showShort("新消息${context}")
+//        ToastUtils.showShort("新消息${context}")
     } catch (e: Exception) {
 
         ToastUtils.showShort("推送消息格式异常")

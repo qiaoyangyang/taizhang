@@ -7,18 +7,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <com.hjq.bar.TitleBar
-        android:visibility="gone"
         android:id="@+id/TitleBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/red"
+        android:layout_height="@dimen/dp_10"
         app:barStyle="transparent"
         app:layout_constraintTop_toTopOf="parent"
+        app:leftIcon="@null"
         app:rightBackground="@null"
+        app:rightTitleSize="@dimen/sp_14"
+        app:title=""
+        android:visibility="invisible"
+        android:background="@color/red"
         />
 
     <com.hjq.shape.layout.ShapeRelativeLayout
         android:id="@+id/bg_set"
+        android:layout_below="@+id/TitleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"

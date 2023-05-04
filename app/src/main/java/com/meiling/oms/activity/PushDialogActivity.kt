@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.gyf.immersionbar.ImmersionBar
+import com.hjq.bar.TitleBar
 import com.hjq.shape.layout.ShapeRelativeLayout
 import com.meiling.common.BaseViewModel
 import com.meiling.common.activity.BaseActivity
@@ -42,6 +43,7 @@ class PushDialogActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tvOrderMsg).text = intentTitle
         findViewById<TextView>(R.id.tvMsgShow).text = intentDetail
 
+
         findViewById<ShapeRelativeLayout>(R.id.bg_close).setOnClickListener {
             finish()
         }
@@ -50,8 +52,8 @@ class PushDialogActivity : AppCompatActivity() {
                 .withString("pushOrderId", intentOrderId).navigation()
             finish()
         }
-        //ImmersionBar.setTitleBar(this, titleBar)
-
+        ImmersionBar.with(this).init()
+        ImmersionBar.setTitleBar(this, findViewById<TitleBar>(R.id.TitleBar))
     }
 
 
