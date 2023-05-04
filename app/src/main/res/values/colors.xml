@@ -40,6 +40,7 @@
     <color name="toast_rec_DDDDDD">#DDDDDD</color>
     <color name="pwd_26C57C">#26C57C</color>
     <color name="pwd_1180FF">#1180FF</color>
+    <color name="account_F5F5F5">#F5F5F5</color>
 
     <!-- App 样式中引用的颜色 -->
     <color name="colorPrimary">@color/white</color>

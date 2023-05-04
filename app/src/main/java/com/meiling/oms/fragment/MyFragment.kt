@@ -111,6 +111,9 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         mDatabind.txtRecharge.setSingleClickListener {
             ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
         }
+        mDatabind.txtAccountManager.setSingleClickListener {
+            startActivity(Intent(requireActivity(), AccountManagerActivity::class.java))
+        }
         mDatabind.txtExit.setSingleClickListener {
             val dialog: MineExitDialog =
                 MineExitDialog().newInstance("温馨提示", "确认退出当前账号吗？", "取消", "确认", false)
