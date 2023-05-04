@@ -229,6 +229,8 @@
             android:name=".activity.BindPrintDeviceActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.PrintDeviceListActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

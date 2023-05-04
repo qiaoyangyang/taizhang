@@ -83,11 +83,13 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             if(vm.getByTenantId.value?.poi==-1){
                 //未创建门店
 //                startActivity(Intent(requireActivity(), NoStoreActivity::class.java))
-                startActivity(Intent(requireActivity(), NoPrintDeviceActivity::class.java))
+//                startActivity(Intent(requireActivity(), NoPrintDeviceActivity::class.java))
+                startActivity(Intent(requireActivity(), PrintDeviceListActivity::class.java))
 
             }else{
                 //未绑定打印机
-                startActivity(Intent(requireActivity(), NoPrintDeviceActivity::class.java))
+//                startActivity(Intent(requireActivity(), NoPrintDeviceActivity::class.java))
+                startActivity(Intent(requireActivity(), PrintDeviceListActivity::class.java))
 
                 //物流是否绑定
 //                if(vm.getByTenantId.value?.logistics==-1){
