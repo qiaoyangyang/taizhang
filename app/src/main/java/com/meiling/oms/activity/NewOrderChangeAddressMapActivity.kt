@@ -1,24 +1,12 @@
 package com.meiling.oms.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.location.Location
-import com.amap.api.maps.AMap.OnMyLocationChangeListener
-import com.amap.api.maps.LocationSource
-import com.amap.api.maps.AMap.OnMapTouchListener
-import com.amap.api.location.AMapLocationListener
-import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener
-import com.amap.api.maps.MapView
-import com.amap.api.maps.AMap
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
-import com.meiling.oms.R
-import com.amap.api.maps.LocationSource.OnLocationChangedListener
-import com.amap.api.location.AMapLocationClient
-import com.amap.api.location.AMapLocationClientOption
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
@@ -27,34 +15,35 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.amap.api.location.AMapLocation
-import com.amap.api.maps.CameraUpdateFactory
-import com.amap.api.maps.Projection
-import com.amap.api.services.poisearch.PoiResult
-import com.amap.api.maps.AMap.CancelableCallback
+import com.amap.api.location.AMapLocationClient
+import com.amap.api.location.AMapLocationClientOption
+import com.amap.api.location.AMapLocationListener
+import com.amap.api.maps.*
+import com.amap.api.maps.AMap.*
+import com.amap.api.maps.LocationSource.OnLocationChangedListener
 import com.amap.api.maps.model.*
-import com.amap.api.services.poisearch.PoiSearch
 import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.core.PoiItem
 import com.amap.api.services.geocoder.GeocodeQuery
 import com.amap.api.services.geocoder.GeocodeResult
 import com.amap.api.services.geocoder.GeocodeSearch
 import com.amap.api.services.geocoder.RegeocodeResult
+import com.amap.api.services.poisearch.PoiResult
+import com.amap.api.services.poisearch.PoiSearch
+import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.google.gson.Gson
-import com.gyf.immersionbar.ImmersionBar
-import com.hjq.bar.OnTitleBarListener
-import com.hjq.bar.TitleBar
 import com.meiling.common.activity.BaseActivity
+import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityOrderChengeAddredssMapBinding
 import com.meiling.oms.dialog.OrderDistributionSelectLocalCityDialog
 import com.meiling.oms.viewmodel.ChangeAddressModel
 import com.meiling.oms.widget.KeyBoardUtil
 import com.meiling.oms.widget.showToast
-import java.lang.Exception
 
 @Route(path = "/app/NewOrderChangeAddressMapActivity")
-class nNewOrderChangeAddressMapActivity :
+class NewOrderChangeAddressMapActivity() :
     BaseActivity<ChangeAddressModel, ActivityOrderChengeAddredssMapBinding>(),
     OnMyLocationChangeListener, LocationSource,
     OnMapTouchListener, AMapLocationListener, OnPoiSearchListener {
@@ -68,6 +57,7 @@ class nNewOrderChangeAddressMapActivity :
     var ryOrderDisSearchLocal: RecyclerView? = null
     var edtLocalSearch: EditText? = null
     var imgClearLocalSearch: ImageView? = null
+    var back: ImageView? = null
     lateinit var ryOrderDisMapAdapter: BaseQuickAdapter<PoiItem, BaseViewHolder>
     var cityCode = ""
     var lat = "0"
@@ -80,19 +70,11 @@ class nNewOrderChangeAddressMapActivity :
         txtMapLocalCity = findViewById<View>(R.id.txtMapLocalCity) as TextView
         edtLocalSearch = findViewById<EditText>(R.id.edtLocalSearch) as EditText
         imgClearLocalSearch = findViewById<ImageView>(R.id.imgClearLocalSearch) as ImageView
-        var findViewById = findViewById<TitleBar>(R.id.TitleBarLeft)
+        back = findViewById<ImageView>(R.id.img_search_back) as ImageView
 
-        findViewById?.setOnTitleBarListener(object : OnTitleBarListener {
-            override fun onLeftClick(view: View?) {
-                finish()
-            }
-
-            override fun onTitleClick(view: View?) {
-            }
-
-            override fun onRightClick(view: View?) {
-            }
-        })
+        back?.setOnClickListener {
+            finish()
+        }
         ryOrderDisSearchLocal =
             findViewById<RecyclerView>(R.id.ryOrderDisSearchLocal) as RecyclerView
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
@@ -101,7 +83,7 @@ class nNewOrderChangeAddressMapActivity :
             aMap = mMapView!!.map
             setUpMap()
         }
-       // ImmersionBar.setTitleBar(this@NewOrderChangeAddressMapActivity, findViewById)
+      //  ImmersionBar.setTitleBar(this@NewOrderChangeAddressMapActivity, findViewById)
         initViewAdapter()
     }
 
@@ -387,6 +369,7 @@ class nNewOrderChangeAddressMapActivity :
                 txtMapLocalCity?.text = amapLocation.city
                 getGeocodeSearch(latLng, amapLocation.city)
             } else {
+                txtMapLocalCity?.text = "定位失败"
                 val errText = "定位失败," + amapLocation.errorCode + ": " + amapLocation.errorInfo
                 Log.e("AmapErr", errText)
             }
@@ -421,6 +404,7 @@ class nNewOrderChangeAddressMapActivity :
     }
 
     var myCancelCallback = MyCancelCallback()
+
     override fun onPoiSearched(poiResult: PoiResult, i: Int) {
         Log.d("yjk", "onPoiSearched:--- " + poiResult.pois.size)
     }
@@ -510,4 +494,5 @@ class nNewOrderChangeAddressMapActivity :
     override fun getBind(layoutInflater: LayoutInflater): ActivityOrderChengeAddredssMapBinding {
         return ActivityOrderChengeAddredssMapBinding.inflate(layoutInflater)
     }
+
 }

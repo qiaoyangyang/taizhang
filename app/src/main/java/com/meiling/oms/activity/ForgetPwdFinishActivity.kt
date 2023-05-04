@@ -3,6 +3,7 @@ package com.meiling.oms.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.ActivityUtils
@@ -12,6 +13,7 @@ import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.SpannableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityForgetPwdSuccessBinding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.LoginViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
@@ -36,14 +38,27 @@ class ForgetPwdFinishActivity : BaseActivity<LoginViewModel, ActivityForgetPwdSu
     override fun getBind(layoutInflater: LayoutInflater): ActivityForgetPwdSuccessBinding {
         return ActivityForgetPwdSuccessBinding.inflate(layoutInflater)
     }
-
+    var type:String?=""
+    override fun onLeftClick(view: View) {
+        if(type=="注册成功"){
+            ARouter.getInstance().build("/app/LoginActivity")
+                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).navigation()
+            ActivityUtils.finishAllActivities()
+        }
+    }
+    override fun onBackPressed() {
+        if(type=="注册成功"){
+            ARouter.getInstance().build("/app/LoginActivity")
+                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).navigation()
+            ActivityUtils.finishAllActivities()
+        }
+    }
     override fun initListener() {
         val account = intent.getStringExtra("account")
         val pwd = intent.getStringExtra("password")
-        val type = intent.getStringExtra("title")
+        type = intent.getStringExtra("title")
         val context = intent.getStringExtra("context")
         var isAgreement = false
-
         mDatabind.TitleBar.title = type
         mDatabind.txtTipTip.text = context
 

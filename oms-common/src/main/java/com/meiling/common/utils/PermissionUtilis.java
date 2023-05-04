@@ -26,13 +26,7 @@ public class PermissionUtilis {
                 Permission.READ_PHONE_STATE,
                 Permission.READ_MEDIA_VIDEO,
                 Permission.READ_MEDIA_AUDIO};
-        /**
-         * 定位权限
-         */
-        public static final String[] LOCAL1 = new String[]{
-                Permission.ACCESS_COARSE_LOCATION,
-                Permission.ACCESS_FINE_LOCATION,
-        };
+
         /**
          * 电话权限
          */

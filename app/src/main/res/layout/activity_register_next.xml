@@ -48,7 +48,7 @@
                     android:layout_marginEnd="32dp"
                     android:textColor="#666666"
                     android:text="商家类型"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/sp_32"
                     android:layout_marginLeft="@dimen/dp_18"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="*"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/sp_32"
                     android:textColor="@color/red"
                     app:layout_constraintBaseline_toBaselineOf="@+id/tv_title"
                     app:layout_constraintStart_toEndOf="@+id/tv_title" />
@@ -79,6 +79,8 @@
                         android:button="@drawable/login_cb_agreement"
                         android:text="企业"
                         android:paddingLeft="5dp"
+                        android:textSize="@dimen/sp_32"
+                        android:textColor="#666666"
                         android:checked='@{viewModel.businessDto.tenantType=="1"}'
                         android:id="@+id/checkEnterprise" />
 
@@ -86,9 +88,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:padding="10dp"
                         android:id="@+id/tips1"
-                        android:src="@drawable/order_dis_tip_icon"
+                        android:src="@drawable/icon_data_tip"
                         app:layout_constraintStart_toEndOf="@+id/checkEnterprise"
                         app:layout_constraintTop_toTopOf="@+id/checkEnterprise"
                         app:layout_constraintBottom_toBottomOf="@+id/checkEnterprise" />
@@ -97,9 +98,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:button="@drawable/login_cb_agreement"
-                        android:text="个人   "
+                        android:text="  个人"
                         android:paddingLeft="5dp"
                         android:id="@+id/checkPerson"
+                        android:textSize="@dimen/sp_32"
+                        android:textColor="#666666"
                         android:checked='@{viewModel.businessDto.tenantType=="2"}'
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
@@ -108,8 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/tips2"
-                        android:padding="10dp"
-                        android:src="@drawable/order_dis_tip_icon"
+                        android:src="@drawable/icon_data_tip"
                         app:layout_constraintStart_toEndOf="@+id/checkPerson"
                         app:layout_constraintTop_toTopOf="@+id/checkPerson"
                         app:layout_constraintBottom_toBottomOf="@+id/checkPerson" />
@@ -120,6 +122,8 @@
                         android:layout_height="wrap_content"
                         android:button="@drawable/login_cb_agreement"
                         android:text="其他"
+                        android:textSize="@dimen/sp_32"
+                        android:textColor="#666666"
                         android:checked='@{viewModel.businessDto.tenantType=="3"}'
                         app:layout_constraintEnd_toStartOf="@+id/tips3"
                         android:id="@+id/checkOther" />
@@ -128,9 +132,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/tips3"
-                        android:padding="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:src="@drawable/order_dis_tip_icon"
+                        android:src="@drawable/icon_data_tip"
                         app:layout_constraintTop_toTopOf="@+id/checkOther"
                         app:layout_constraintBottom_toBottomOf="@+id/checkOther" />
 
@@ -153,7 +156,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/line"
                     android:layout_marginTop="10dp"
                     android:id="@+id/txtOperateType"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/sp_32"
                     android:textColor="#666666"
                     app:layout_constraintStart_toStartOf="@+id/tv_title"
                     android:text="经营类型" />
@@ -161,7 +164,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/sp_32"
                     android:layout_marginLeft="5dp"
                     android:textColor="@color/red"
                     android:id="@+id/txtOperateTypeRed"
@@ -184,6 +187,8 @@
                         android:layout_height="wrap_content"
                         android:button="@drawable/login_cb_agreement"
                         android:text="连锁"
+                        android:textSize="@dimen/sp_32"
+                        android:textColor="#666666"
                         android:paddingLeft="5dp"
                         android:checked='@{viewModel.businessDto.isChain=="1"}'
                         android:id="@+id/checkChain" />
@@ -193,6 +198,8 @@
                         android:layout_height="wrap_content"
                         android:button="@drawable/login_cb_agreement"
                         android:text="非连锁"
+                        android:textSize="@dimen/sp_32"
+                        android:textColor="#666666"
                         android:paddingLeft="5dp"
                         android:id="@+id/checkUnChain"
                         android:checked='@{viewModel.businessDto.isChain=="0"}'
@@ -219,7 +226,8 @@
                     android:id="@+id/txtShopName"
                     app:layout_constraintStart_toStartOf="@+id/tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/line2"
-                    style="@style/registTitleTxt"
+                    android:textSize="@dimen/sp_32"
+                    android:textColor="#666666"
                     android:layout_marginTop="10dp"
                     android:text="企业名称" />
 
@@ -245,6 +253,9 @@
                     android:maxLines="1"
                     android:maxLength="30"
                     android:singleLine="true"
+                    android:textSize="@dimen/sp_32"
+                    android:textColorHint="#999999"
+                    android:textColor="#666666"
                     android:text="@={viewModel.businessDto.enterpriseName}"
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtShopName"
                     app:layout_constraintTop_toBottomOf="@+id/line2"
@@ -270,7 +281,8 @@
                     android:id="@+id/txtShopBrandName"
                     app:layout_constraintStart_toStartOf="@+id/tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/line4"
-                    style="@style/registTitleTxt"
+                    android:textSize="@dimen/sp_32"
+                    android:textColor="#666666"
                     android:layout_marginTop="10dp"
                     android:text="品牌名称" />
 
@@ -296,6 +308,9 @@
                     android:maxLines="1"
                     android:maxLength="20"
                     android:singleLine="true"
+                    android:textSize="@dimen/sp_32"
+                    android:textColor="#666666"
+                    android:textColorHint="#999999"
                     android:text="@={viewModel.businessDto.tenantName}"
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtShopBrandName"
                     app:layout_constraintTop_toBottomOf="@+id/line4"
@@ -323,7 +338,8 @@
                     android:text="品牌LOGO"
                     android:id="@+id/txtLogo"
                     android:layout_marginTop="10dp"
-                    style="@style/registTitleTxt" />
+                    android:textSize="@dimen/sp_32"
+                    android:textColor="#666666" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -342,12 +358,12 @@
                     android:text="只能上传jpg/jpeg/png文件,且不超过2000kb"
                     android:id="@+id/txtLogo2"
                     android:layout_marginTop="10dp"
-                    android:textSize="14sp"
-                    style="@style/registTitleTxt" />
+                    android:textSize="@dimen/sp_24"
+                    android:textColor="#666666" />
 
                 <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:src="@mipmap/addimg"
                     android:scaleType="fitXY"
                     app:layout_constraintTop_toBottomOf="@+id/txtLogo2"
@@ -358,7 +374,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/sp_24"
                     android:textColor="@color/red"
                     app:layout_constraintStart_toStartOf="@id/tv_title"
                     app:layout_constraintTop_toBottomOf="@id/addImg"
@@ -369,7 +385,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/registTitleTxt"
+                    android:textSize="@dimen/sp_32"
+                    android:textColor="#666666"
                     app:layout_constraintStart_toStartOf="@id/tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/txtAddImg"
                     android:layout_marginTop="15dp"
@@ -395,10 +412,12 @@
                     app:layout_constraintTop_toBottomOf="@+id/txtAddImg"
                     android:id="@+id/txtIndustryRight"
                     android:layout_marginRight="5dp"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/sp_32"
+                    android:textColor="#666666"
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtIndustry"
                     app:layout_constraintEnd_toStartOf="@+id/txtIndustryRight2"
                     android:hint="请选择"
+                    android:textColorHint="#999999"
                      />
 
                 <TextView
@@ -409,6 +428,7 @@
                     android:layout_marginRight="15dp"
                     android:textSize="14sp"
                     android:id="@+id/txtIndustryRight2"
+                    android:textColor="#999999"
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtIndustry"
                     android:text=">" />
 
@@ -427,7 +447,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txtAdministratorsName"
-                    style="@style/registTitleTxt"
+                    android:textSize="@dimen/sp_32"
+                    android:textColor="#666666"
                     app:layout_constraintStart_toStartOf="@id/tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/line6"
                     android:layout_marginTop="15dp"
@@ -462,7 +483,9 @@
                     android:singleLine="true"
                     android:gravity="right"
                     android:layout_marginRight="15dp"
-                    android:textSize="16sp" />
+                    android:textColor="#666666"
+                    android:textColorHint="#999999"
+                    android:textSize="@dimen/sp_32" />
 
                 <View
                     android:layout_width="0dp"
@@ -479,7 +502,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txtAdministratorsLoginName"
-                    style="@style/registTitleTxt"
+                    android:textSize="@dimen/sp_32"
+                    android:textColor="#666666"
                     app:layout_constraintStart_toStartOf="@id/tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/line7"
                     android:layout_marginTop="15dp"
@@ -506,7 +530,7 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtAdministratorsLoginName"
                     android:background="@null"
                     android:layout_marginTop="15dp"
-                    android:hint="用户登录管理系统"
+                    android:hint="用于登录管理系统"
                     android:maxLines="1"
                     android:maxLength="25"
                     android:singleLine="true"
@@ -514,7 +538,9 @@
                     android:layout_marginRight="15dp"
                     android:text="@={viewModel.businessDto.userName}"
                     android:id="@+id/editAdministratorsLoginName"
-                    android:textSize="16sp" />
+                    android:textColor="#666666"
+                    android:textColorHint="#999999"
+                    android:textSize="@dimen/sp_32" />
 
                 <View
                     android:layout_width="0dp"
@@ -531,7 +557,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txtAdministratorsLoginPassWord"
-                    style="@style/registTitleTxt"
+                    android:textSize="@dimen/sp_32"
+                    android:textColor="#666666"
                     app:layout_constraintStart_toStartOf="@id/tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/line8"
                     android:layout_marginTop="15dp"
@@ -558,14 +585,16 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtAdministratorsLoginPassWord"
                     android:background="@null"
                     android:layout_marginTop="15dp"
-                    android:hint="用户登录管理系统"
+                    android:hint="用于登录管理系统"
                     android:text="@={viewModel.businessDto.password}"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:gravity="right"
                     android:layout_marginRight="15dp"
                     android:id="@+id/editAdministratorsLoginPassWord"
-                    android:textSize="16sp" />
+                    android:textColor="#666666"
+                    android:textColorHint="#999999"
+                    android:textSize="@dimen/sp_32" />
 
                 <View
                     android:layout_width="0dp"

@@ -82,17 +82,12 @@ class StoreManagementActivity :
         storeManagemenAdapter.setList(arrayListOf())
         storeManagemenAdapter.setEmptyView(R.layout.store_managemnet)
         storeManagemenAdapter.setOnItemClickListener { adapter, view, position ->
-            startActivity(
-                Intent(this, NewlyBuiltStoreActivity::class.java).putExtra(
-                    "id",
-                    storeManagemenAdapter.data.get(position)?.id
-                )
-            )
+
         }
-        storeManagemenAdapter.addChildClickViewIds(R.id.tv_remove)
+        storeManagemenAdapter.addChildClickViewIds(R.id.tv_delete,R.id.tv_compile)
         storeManagemenAdapter.setOnItemChildClickListener { adapter, view, position ->
             when (view.id) {
-                R.id.tv_remove -> {
+                R.id.tv_delete -> {
                     val dialog: MineExitDialog =
                         MineExitDialog().newInstance("温馨提示", "若门店存在绑定的渠道店铺，则无法删除。请确认是否删除门店？", "取消", "确认", false)
                     dialog.setOkClickLister {
@@ -102,6 +97,14 @@ class StoreManagementActivity :
 
                     }
                     dialog.show(supportFragmentManager)
+                }
+                R.id.tv_compile ->{
+                    startActivity(
+                        Intent(this, NewlyBuiltStoreActivity::class.java).putExtra(
+                            "id",
+                            storeManagemenAdapter.data.get(position)?.id
+                        )
+                    )
                 }
             }
         }
@@ -117,6 +120,11 @@ class StoreManagementActivity :
             disLoading()
             storeManagemenAdapter.removeAt(isposition)
             storeManagemenAdapter.notifyDataSetChanged()
+            if (storeManagemenAdapter.data.size==0){
+                mDatabind.tvType.visibility=View.GONE
+            }else{
+                mDatabind.tvType.visibility=View.VISIBLE
+            }
 
         }
         mViewModel.deletePoi.onError.observe(this){

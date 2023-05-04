@@ -10,6 +10,7 @@ import android.view.View
 import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.services.core.PoiItem
@@ -18,8 +19,10 @@ import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseVmActivity
 import com.meiling.common.utils.InputTextManager
 import com.meiling.common.utils.PermissionUtilis
+import com.meiling.common.utils.RegularUtils
 import com.meiling.oms.bean.PoiVo
 import com.meiling.oms.databinding.ActivityNewlyBuiltStoreBinding
+import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.viewmodel.StoreManagementViewModel
 import com.meiling.oms.widget.KeyBoardUtil
 import com.meiling.oms.widget.setSingleClickListener
@@ -32,15 +35,19 @@ class NewlyBuiltStoreActivity :
     BaseVmActivity<StoreManagementViewModel>() {
     private val REQUEST_CODE = 1000
     lateinit var mDatabind: ActivityNewlyBuiltStoreBinding
-
+    lateinit var mainViewModel: MainViewModel2
     override fun initView(savedInstanceState: Bundle?) {
-
+        mainViewModel =
+            ViewModelProvider(MainActivity.mainActivity!!).get(MainViewModel2::class.java)
     }
 
     private val ACCESS_FINE_LOCATION = 1
     var address = ""
     var lat = ""
     var lon = ""
+    var provinceCode = ""
+    var adCode = ""
+    var cityName = ""
     var poiItem: PoiItem? = null
     override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -50,6 +57,9 @@ class NewlyBuiltStoreActivity :
             lat = data.getStringExtra("lat").toString()
             address = data.getStringExtra("address").toString()
             poiItem = data.getParcelableExtra("poiItem")
+            provinceCode=poiItem?.provinceCode!!
+            adCode=poiItem?.adCode!!
+            cityName=poiItem?.cityName!!
             mDatabind.etStoreAddress.text = address
         }
     }
@@ -76,19 +86,13 @@ class NewlyBuiltStoreActivity :
                 .addView(mDatabind.etStoreAddress)
                 .setMain(it)
                 .build()
-            KeyBoardUtil.hideKeyBoard(this,mDatabind.tvGoOn)
+            KeyBoardUtil.hideKeyBoard(this, mDatabind.tvGoOn)
         }
         if (!TextUtils.isEmpty(id) && id != "null") {
 
-            mDatabind.tvGoOn.visibility = View.GONE
-            mDatabind.etStoreName.keyListener = null
-            mDatabind.etStoreTelephone.keyListener = null
-            mDatabind.etStoreNumber.keyListener = null
-            mDatabind.etStoreAddress.keyListener = null
-            mDatabind.etDetailedAddress.keyListener = null
+
             mViewModel.poi(id)
-        } else {
-            mDatabind.tvGoOn.visibility = View.VISIBLE
+
         }
         mDatabind.tvGoOn.setSingleClickListener {
             if (TextUtils.isEmpty(mViewModel.PoiVoBean.value?.poiVo?.name)) {
@@ -107,16 +111,25 @@ class NewlyBuiltStoreActivity :
                 showToast("请选择门店地址")
                 return@setSingleClickListener
             }
+            if (!RegularUtils.REGEX_TEL_phone(
+                    mViewModel.PoiVoBean.value?.poiVo?.phone!!
+                )
+            ) {
+                showToast("门店电话格式错误")
+                return@setSingleClickListener
+            }
+            if (!TextUtils.isEmpty(id) && id != "null") {
 
+            }
 
 
             mViewModel.poiadd(
                 lat,
                 lon,
-                poiItem?.provinceCode!!,
+                provinceCode,
                 "",
-                poiItem?.adCode!!,
-                poiItem?.cityName!!.replace("市", "")
+                adCode,
+                cityName.replace("市", ""), id
             )
 
 
@@ -124,16 +137,17 @@ class NewlyBuiltStoreActivity :
         mDatabind.etStoreAddress.setOnClickListener {
 
 
-            XXPermissions.with(this).permission(PermissionUtilis.Group.LOCAL1)
+            XXPermissions.with(this).permission(PermissionUtilis.Group.LOCAL)
                 .request(object : OnPermissionCallback {
                     override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
                         if (!allGranted) {
                             showToast("获取部分权限成功，但部分权限未正常授予")
                             return
                         }
-                       // initStart()
+                        //   startActivity(Intent(this@NewlyBuiltStoreActivity,NewOrderChangeAddressMapActivity::class.java))
+                        // initStart()
                         ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
-                            .withString("title","门店地址")
+                            .withString("title", "门店地址")
                             .navigation(this@NewlyBuiltStoreActivity, REQUEST_CODE)
                     }
 
@@ -179,7 +193,7 @@ class NewlyBuiltStoreActivity :
 
     @SuppressLint("SuspiciousIndentation")
     override fun createObserver() {
-        mViewModel.poidata.onStart.observe(this){
+        mViewModel.poidata.onStart.observe(this) {
             showLoading("")
         }
         mViewModel.poidata.onSuccess.observe(this) {
@@ -189,22 +203,30 @@ class NewlyBuiltStoreActivity :
                 it?.poiVo?.storeaddress = x[0]
                 it?.poiVo?.etdetailedaddress = x[1]
             }
+            lat=it?.poiVo?.lat!!
+            lon=it?.poiVo?.lon!!
+            cityName=it.poiVo?.cityName!!
+            adCode=it.poiVo?.districtCode!!
+            provinceCode=it?.poiVo?.provinceCode!!
 
             mViewModel.PoiVoBean.value = it
+
         }
-        mViewModel.poidata.onError.observe(this){
+        mViewModel.poidata.onError.observe(this) {
             disLoading()
             showToast(it.msg)
         }
-        mViewModel.poiaddpoidata.onStart.observe(this){
+        mViewModel.poiaddpoidata.onStart.observe(this) {
             showLoading("")
         }
-        mViewModel.poiaddpoidata.onSuccess.observe(this){
+        mViewModel.poiaddpoidata.onSuccess.observe(this) {
             disLoading()
+
+            mainViewModel.getByTenantId.value = mainViewModel.getByTenantId.value?.copy(poi = 1)
 
             finish()
         }
-        mViewModel.poiaddpoidata.onError.observe(this){
+        mViewModel.poiaddpoidata.onError.observe(this) {
             disLoading()
             showToast(it.msg)
         }
@@ -230,6 +252,11 @@ class NewlyBuiltStoreActivity :
                 // 如果用户拒绝了权限，可以在这里处理相应的逻辑
             }
         }
+    }
+
+    private fun isPhoneNumber(input: String): Boolean {
+        val regex = Regex("^1[3-9]\\d{9}$")
+        return regex.matches(input)
     }
 
 

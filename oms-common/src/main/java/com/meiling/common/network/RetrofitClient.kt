@@ -23,9 +23,7 @@ class RetrofitClient {
 
     private fun provideOkHttpClient(): OkHttpClient {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
-            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
-
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         val client: OkHttpClient = OkHttpClient.Builder()
             .addInterceptor(AccessTokenInterceptor())
             .addInterceptor(httpLoggingInterceptor)
@@ -36,16 +34,11 @@ class RetrofitClient {
         okHttpClient = client
         return client
     }
-
-
+     var url="https://ods-api.igoodsale.com"//生产环境
     private fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-//            .baseUrl("http://test-oms.igoodsale.com")//测试环境
-            .baseUrl(SPStaticUtils.getString(SPConstants.IP,"https://ods-api.igoodsale.com"))//开发环境
-//            .baseUrl("http://test-oms-api.igoodsale.com")//测试环境
+            .baseUrl(SPStaticUtils.getString(SPConstants.IP, "https://ods-api.igoodsale.com"))
 //            .baseUrl("http://dev-oms-api.igoodsale.com")//开发环境
-//            .baseUrl("https://ods-api.igoodsale.com")//生产环境
-//            .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(CustomGsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())

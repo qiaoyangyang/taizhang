@@ -86,7 +86,7 @@ class RegisterActivity : BaseActivity<RegisterViewModel, ActivityRegisterBinding
 
         mDatabind.txtAuthCode.setOnClickListener {
             if (mDatabind.etPhone.text.toString().trim().isNullOrBlank()) {
-                showToast("登录账号未填写")
+                showToast("手机号未填写")
                 return@setOnClickListener
             }
             if (!isPhoneNumber(mDatabind.etPhone.text.toString().trim())) {
