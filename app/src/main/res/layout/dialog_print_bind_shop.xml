@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjq.shape.layout.ShapeRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/dp_40"
+    app:shape_solidColor="@color/white"
+    app:shape_topLeftRadius="@dimen/dp_20"
+    app:shape_topRightRadius="@dimen/dp_20">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="关联发货门店"
+        android:textColor="#1F1F1F"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_detail_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
+        android:src="@drawable/search_close_edt"
+        android:layout_alignParentRight="true"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/rl_order_receive_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:background="@drawable/scan_bg_input"
+        app:layout_constraintTop_toBottomOf="@+id/txt_order_dis">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_28"
+            android:textColor="@color/home_666666"
+            android:text="已选择2个门店"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_28"
+            android:button="@null"
+            android:drawableRight="@drawable/login_cb_agreement"
+            android:text="全选"/>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_print_shop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_order_receive_address"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_print_bind_shop" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp">
+
+        <com.hjq.shape.layout.ShapeConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:shape_solidColor="@color/white"
+            app:shape_strokeColor="@color/red"
+            app:shape_strokeWidth="1dp"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            app:shape_radius="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="取消"
+                android:textColor="@color/red"
+                android:textSize="@dimen/sp_32"/>
+
+        </com.hjq.shape.layout.ShapeConstraintLayout>
+
+        <com.hjq.shape.layout.ShapeConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:shape_solidColor="@color/red"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            app:shape_radius="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="确定"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_32"/>
+
+        </com.hjq.shape.layout.ShapeConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.hjq.shape.layout.ShapeRelativeLayout>
