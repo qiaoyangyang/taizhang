@@ -83,8 +83,8 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
         rvSelect?.adapter = rvSelectAdapter
         rvSelectAdapter.setNewInstance(selectItemBean)
         rvSelectAdapter.setOnItemClickListener { adapter, view, position ->
-            (adapter.data[position] as AccountCityOrShopDto).isSelect =
-                !(adapter.data[position] as AccountCityOrShopDto).isSelect
+            (rvSelectAdapter.data[position] as AccountCityOrShopDto).isSelect =
+                !(rvSelectAdapter.data[position] as AccountCityOrShopDto).isSelect
             rvSelectAdapter.notifyDataSetChanged()
 
 //            val hasSelected = rvSelectAdapter.data.any { it.isSelect }
