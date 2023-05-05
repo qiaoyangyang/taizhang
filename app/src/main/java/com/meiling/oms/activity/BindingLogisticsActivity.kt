@@ -134,13 +134,23 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
                     }
                 )
             }else{
-                disLoading()
-                startActivity(Intent(this,ForgetPwdFinishActivity::class.java)
-                    .putExtra("account",account)
-                    .putExtra("password",pwd)
-                    .putExtra("title","注册成功")
-                    .putExtra("context","注册成功"))
+                mViewModel.launchRequest(
+                    { loginService.merChantSave(PutMerChant(name=name, tenantId = tenantId, adapter.data as ArrayList<Merchant>))},
+                    onSuccess = {
 
+                        showToast("注册成功")
+                        disLoading()
+                        startActivity(Intent(this,ForgetPwdFinishActivity::class.java)
+                            .putExtra("account",account)
+                            .putExtra("password",pwd)
+                            .putExtra("title","注册成功")
+                            .putExtra("context","注册成功"))
+                    },
+                    onError = {
+                        disLoading()
+                        it?.let { showToast(it) }
+                    }
+                )
             }
 
         }
