@@ -126,9 +126,7 @@ class OrderChangeAddressActivity :
                             showToast("获取部分权限成功，但部分权限未正常授予")
                             return
                         }
-                        //initStart()
-                        ARouter.getInstance().build("/app/NewOrderChangeAddressMapActivity")
-                            .navigation(this@OrderChangeAddressActivity, REQUEST_CODE)
+                        initStart()
                     }
                     override fun onDenied(
                         permissions: MutableList<String>,

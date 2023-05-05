@@ -28,7 +28,7 @@ import com.shehuan.nicedialog.ViewHolder
 
 
 @Suppress("DEPRECATION")
-class AccountSelectShopOrCityDialog : BaseNiceDialog() {
+class AccountSelectCityDialog : BaseNiceDialog() {
     init {
         setHeight(400)
         setGravity(Gravity.BOTTOM)
@@ -39,14 +39,14 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
         return R.layout.dialog_account_select_shop_city
     }
 
-    private lateinit var rvSelectAdapter: BaseQuickAdapter<PoiContentList, BaseViewHolder>
+    private lateinit var rvSelectAdapter: BaseQuickAdapter<CreateShopBean, BaseViewHolder>
 
     fun newInstance(
         title: String
-    ): AccountSelectShopOrCityDialog {
+    ): AccountSelectCityDialog {
         val args = Bundle()
         args.putString("title", title)
-        val dialog = AccountSelectShopOrCityDialog()
+        val dialog = AccountSelectCityDialog()
         dialog.arguments = args
         return dialog
     }
@@ -60,7 +60,6 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
         var llSelectAll = holder?.getView<LinearLayout>(R.id.ll_select_all)
         var title = holder?.getView<TextView>(R.id.txt_title_item_city)
         title?.text = arguments?.getString("title")
-
 
 //        btnSelect?.setOnClickListener {
 //            var shop = selectItemBean[selectView?.selectedIndex!!]
@@ -76,10 +75,10 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
         var isSelectAll = false
         ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_false))
         rvSelectAdapter = object :
-            BaseQuickAdapter<PoiContentList, BaseViewHolder>(R.layout.item_dialog_account_select_city_or_shop),
+            BaseQuickAdapter<CreateShopBean, BaseViewHolder>(R.layout.item_dialog_account_select_city_or_shop),
             LoadMoreModule {
             @SuppressLint("UseCompatLoadingForDrawables")
-            override fun convert(holder: BaseViewHolder, item: PoiContentList) {
+            override fun convert(holder: BaseViewHolder, item: CreateShopBean) {
                 var imgShopOrCity = holder.getView<ImageView>(R.id.img_shop_or_city)
                 holder.setText(R.id.txt_shop_or_city, item.name)
                 if (item.isSelect) {
@@ -91,11 +90,10 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
 
         }
 
-
         rvSelect?.adapter = rvSelectAdapter
         rvSelectAdapter.setOnItemClickListener { adapter, view, position ->
-            (rvSelectAdapter.data[position] as PoiContentList).isSelect =
-                !(rvSelectAdapter.data[position] as PoiContentList).isSelect
+            (rvSelectAdapter.data[position] as CreateShopBean).isSelect =
+                !(rvSelectAdapter.data[position] as CreateShopBean).isSelect
             rvSelectAdapter.notifyItemChanged(position)
 
             if (rvSelectAdapter.data.all { it.isSelect }) {
@@ -107,7 +105,6 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
             }
 
         }
-
 
         llSelectAll?.setOnClickListener {
             if (isSelectAll) {
@@ -130,44 +127,13 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
     }
 
     fun initData() {
-        var createSelectPoiDto = BaseLiveData<CreateSelectPoiDto>()
+        var createSelectPoiDto = BaseLiveData<ArrayList<CreateShopBean>>()
         BaseViewModel(Application()).request(
-            { accountService.getPoiList(1, "10") },
-            createSelectPoiDto
-        )
-//        rvSelectAdapter.loadMoreModule.loadMoreView = SS()
-//        rvSelectAdapter.loadMoreModule.setOnLoadMoreListener {
-//            pageIndex++
-//            BaseViewModel(Application()).request(
-//                { accountService.getPoiList(pageIndex, "100") },
-//                createSelectPoiDto
-//            )
-//        }
-        BaseViewModel(Application()).request(
-            { accountService.getPoiList(1, "100") },
+            { accountService.getCityPoiList() },
             createSelectPoiDto
         )
         createSelectPoiDto.onSuccess.observe(this) {
-            rvSelectAdapter.setList(it.content as MutableList<PoiContentList>)
-//            if (it.pageIndex == 1) {
-//                if (it.content.isNullOrEmpty()) {
-//                    rvSelectAdapter.setList(null)
-//                } else {
-//                    rvSelectAdapter.setList(it.content as MutableList<PoiContentList>)
-//                    rvSelectAdapter.notifyDataSetChanged()
-//                }
-//            } else {
-//                rvSelectAdapter.addData(it.content as MutableList<PoiContentList>)
-//                rvSelectAdapter.notifyDataSetChanged()
-//            }
-//            if (it.content!!.size < 10) {
-//                rvSelectAdapter.footerWithEmptyEnable = false
-//                rvSelectAdapter.footerLayout?.visibility = View.GONE
-//                rvSelectAdapter.loadMoreModule.loadMoreEnd()
-//                rvSelectAdapter.notifyDataSetChanged()
-//            } else {
-//                rvSelectAdapter.loadMoreModule.loadMoreComplete()
-//            }
+            rvSelectAdapter.setList(it as MutableList<CreateShopBean>)
         }
         createSelectPoiDto.onStart.observe(this) {
         }

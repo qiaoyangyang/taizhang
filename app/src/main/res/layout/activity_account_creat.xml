@@ -312,12 +312,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="@dimen/dp_20"
-        android:layout_marginVertical="@dimen/dp_20"
+        android:layout_marginVertical="@dimen/dp_30"
         android:gravity="center"
-        android:paddingVertical="@dimen/dp_20"
+        android:paddingVertical="@dimen/dp_25"
         android:text="保存"
         android:textColor="@color/white"
         app:shape_radius="@dimen/dp_50"
+        android:textSize="@dimen/sp_32"
         app:shape_solidColor="@color/red" />
 
 </RelativeLayout>

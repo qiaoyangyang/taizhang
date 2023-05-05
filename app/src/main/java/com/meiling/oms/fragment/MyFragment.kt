@@ -66,11 +66,11 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             }
         }${MMKVUtils.getString(SPConstants.PHONE)}"
 
-        mDatabind.svHead.setOnClickListener {
-
-            OrderDialog().newInstance().show(childFragmentManager)
-
-        }
+//        mDatabind.svHead.setOnClickListener {
+//
+//            OrderDialog().newInstance().show(childFragmentManager)
+//
+//        }
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentMyBinding {
