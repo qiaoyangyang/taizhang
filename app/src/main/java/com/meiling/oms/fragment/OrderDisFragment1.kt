@@ -1,23 +1,30 @@
 package com.meiling.oms.fragment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnTouchListener
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.meiling.common.constant.SPConstants
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.*
+import com.meiling.common.utils.MMKVUtils
+import com.meiling.common.utils.SoftKeyBoardListener
+import com.meiling.common.utils.SoftKeyBoardListener.OnSoftKeyBoardChangeListener
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDis1Binding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDisGoodsSelectDialog
 import com.meiling.oms.dialog.OrderDisRuleTipCheckDialog
 import com.meiling.oms.dialog.OrderDisRuleTipDialog
@@ -26,6 +33,7 @@ import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
+import java.util.regex.Pattern
 
 
 class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Binding>() {
@@ -167,7 +175,18 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
 
 
         mDatabind.txtAddTipPlus.setSingleClickListener {
-            mDatabind.edtAddTipShow.text = "${mDatabind.edtAddTipShow.text.toString().toInt() + 1}"
+
+            if (mDatabind.edtAddTipShow.text.toString().toInt() >= 25) {
+
+                showToast("不能再减啦")
+                return@setSingleClickListener
+            }
+            mDatabind.edtAddTipShow.setText(
+                "${
+                    mDatabind.edtAddTipShow.text.toString().toInt() + 1
+                }"
+            )
+
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice!!,
                 cargoType = selectShop,
@@ -182,10 +201,14 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
         mDatabind.txtAddTipMinus.setSingleClickListener {
 
             if (mDatabind.edtAddTipShow.text.toString().toInt() <= 1) {
-                showToast("不能在减啦")
+                showToast("不能再加啦")
                 return@setSingleClickListener
             }
-            mDatabind.edtAddTipShow.text = "${mDatabind.edtAddTipShow.text.toString().toInt() - 1}"
+            mDatabind.edtAddTipShow.setText(
+                "${
+                    mDatabind.edtAddTipShow.text.toString().toInt() - 1
+                }"
+            )
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice,
                 cargoType = selectShop,
@@ -196,9 +219,93 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
                 orderSendAddress
             )
             mViewModel.orderSendConfirm(orderSendRequest)
+
         }
+        var outStr = "25";
+        mDatabind.edtAddTipShow?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                var edit = s.toString()
+
+                if (edit?.length == 2 && Integer.parseInt(edit) >= 10) {
+                    outStr = edit;
+                }
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                var words = s.toString()
+                //首先内容进行非空判断，空内容（""和null）不处理
+                if (!TextUtils.isEmpty(words)) {
+                    //1-100的正则验证
+                    var p = Pattern.compile("^(25|[1-9]\\d|\\d)$")
+                    var m = p.matcher(words)
+                    if (m.find() || ("").equals(words)) {
+                        //这个时候输入的是合法范围内的值
+                    } else {
+                        if (words.length > 2) {
+                            //若输入不合规，且长度超过2位，继续输入只显示之前存储的outStr
+                            mDatabind.edtAddTipShow.setText(outStr)
+                           // mDatabind.setText(outStr);
+                            //重置输入框内容后默认光标位置会回到索引0的地方，要改变光标位置
+                            mDatabind.edtAddTipShow.setSelection(2)
+                        }
+                    }
+                }
+
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+              var  words = s.toString()
+                //首先内容进行非空判断，空内容（""和null）不处理
+                if (!TextUtils.isEmpty(words)) {
+                    if (Integer.parseInt(s.toString()) > 25) {
+                        mDatabind.edtAddTipShow.setText("25")
+                    }
+                }
+            }
+
+        })
+
+
+        mDatabind.edtAddTipShow?.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == 0 || actionId == 3) {
+                var orderSendRequest = OrderSendRequest(
+                    cargoPrice = orderPrice,
+                    cargoType = selectShop,
+                    deliveryTime = "",
+                    deliveryType = "2",
+                    orderId = orderId!!,
+                    wight = mDatabind.edtAddTipShow.text.toString(),
+                    orderSendAddress
+                )
+                mViewModel.orderSendConfirm(orderSendRequest)
+            }
+            return@setOnEditorActionListener false
+        }
+        SoftKeyBoardListener.setListener(activity, object : OnSoftKeyBoardChangeListener {
+            override fun keyBoardShow(height: Int) {
+            }
+
+            override fun keyBoardHide(height: Int) {
+                if (!TextUtils.isEmpty(mDatabind.edtAddTipShow.text.toString())) {
+                    var orderSendRequest = OrderSendRequest(
+                        cargoPrice = orderPrice,
+                        cargoType = selectShop,
+                        deliveryTime = "",
+                        deliveryType = "2",
+                        orderId = orderId!!,
+                        wight = mDatabind.edtAddTipShow.text.toString(),
+                        orderSendAddress
+                    )
+                    mViewModel.orderSendConfirm(orderSendRequest)
+                }
+            }
+        })
+
 
     }
+
 
     override fun getBind(inflater: LayoutInflater): FragmentDis1Binding {
         return FragmentDis1Binding.inflate(inflater)
@@ -225,7 +332,25 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
         }
         mViewModel.sendSuccess.onError.observe(this) {
             dismissLoading()
-            showToast(it.msg)
+            if (it.errCode == 700) {
+                val dialog: MineExitDialog =
+                    MineExitDialog().newInstance(
+                        "温馨提示",
+                        "可用余额（账户余额-冻结余额）不足，无法发起配送，请去充值中心进行余额充值！",
+                        "知道了",
+                        "去充值",
+                        false
+                    )
+                dialog.setOkClickLister {
+
+                    ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
+                }
+                dialog.show(childFragmentManager)
+            } else {
+                showToast(it.msg)
+            }
+
+
         }
         mViewModel.orderSendConfirmList.onStart.observe(this) {
             showLoading("加载中")
@@ -257,7 +382,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
 
     private fun addressChange(eventBusChangeAddress: EventBusChangeAddress) {
         orderSendAddress = eventBusChangeAddress.orderSendAddress
-        mDatabind.edtAddTipShow.text = orderSendAddress.goodsWeight
+        mDatabind.edtAddTipShow.setText(orderSendAddress.goodsWeight)
         var orderSendRequest = OrderSendRequest(
             cargoPrice = orderPrice!!,
             cargoType = orderSendAddress.cargoType ?: "0",
@@ -281,4 +406,5 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
     private fun checkString(str: String?): String {
         return str ?: "0"
     }
+
 }
