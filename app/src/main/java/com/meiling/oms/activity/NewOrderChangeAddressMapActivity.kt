@@ -1,50 +1,61 @@
 package com.meiling.oms.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.location.Location
+import com.amap.api.maps.AMap.OnMyLocationChangeListener
+import com.amap.api.maps.LocationSource
+import com.amap.api.maps.AMap.OnMapTouchListener
+import com.amap.api.location.AMapLocationListener
+import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener
+import com.amap.api.maps.MapView
+import com.amap.api.maps.AMap
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
+import com.meiling.oms.R
+import com.amap.api.maps.LocationSource.OnLocationChangedListener
+import com.amap.api.location.AMapLocationClient
+import com.amap.api.location.AMapLocationClientOption
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.amap.api.location.AMapLocation
-import com.amap.api.location.AMapLocationClient
-import com.amap.api.location.AMapLocationClientOption
-import com.amap.api.location.AMapLocationListener
-import com.amap.api.maps.*
-import com.amap.api.maps.AMap.*
-import com.amap.api.maps.LocationSource.OnLocationChangedListener
+import com.amap.api.maps.CameraUpdateFactory
+import com.amap.api.maps.Projection
+import com.meiling.oms.activity.NewOrderChangeAddressMapActivity.MyCancelCallback
+import com.amap.api.services.poisearch.PoiResult
+import com.amap.api.maps.AMap.CancelableCallback
 import com.amap.api.maps.model.*
+import com.amap.api.services.poisearch.PoiSearch
 import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.core.PoiItem
 import com.amap.api.services.geocoder.GeocodeQuery
 import com.amap.api.services.geocoder.GeocodeResult
 import com.amap.api.services.geocoder.GeocodeSearch
 import com.amap.api.services.geocoder.RegeocodeResult
-import com.amap.api.services.poisearch.PoiResult
-import com.amap.api.services.poisearch.PoiSearch
-import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.google.gson.Gson
+import com.gyf.immersionbar.ImmersionBar
+import com.hjq.bar.OnTitleBarListener
+import com.hjq.bar.TitleBar
 import com.meiling.common.activity.BaseActivity
-import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityOrderChengeAddredssMapBinding
 import com.meiling.oms.dialog.OrderDistributionSelectLocalCityDialog
 import com.meiling.oms.viewmodel.ChangeAddressModel
 import com.meiling.oms.widget.KeyBoardUtil
 import com.meiling.oms.widget.showToast
+import java.lang.Exception
 
 @Route(path = "/app/NewOrderChangeAddressMapActivity")
-class NewOrderChangeAddressMapActivity() :
-    BaseActivity<ChangeAddressModel, ActivityOrderChengeAddredssMapBinding>(),
 class NewOrderChangeAddressMapActivity :
     AppCompatActivity(),
     OnMyLocationChangeListener, LocationSource,
@@ -59,7 +70,6 @@ class NewOrderChangeAddressMapActivity :
     var ryOrderDisSearchLocal: RecyclerView? = null
     var edtLocalSearch: EditText? = null
     var imgClearLocalSearch: ImageView? = null
-    var back: ImageView? = null
     lateinit var ryOrderDisMapAdapter: BaseQuickAdapter<PoiItem, BaseViewHolder>
     var cityCode = ""
     var lat = "0"
@@ -69,23 +79,33 @@ class NewOrderChangeAddressMapActivity :
         setContentView(R.layout.activity_order_chenge_addredss_map)
 
         mMapView = findViewById<View>(R.id.mapView) as MapView
-        txtMapLocalCity = findViewById<View>(R.id.txtMapLocalCity) as TextView
-        edtLocalSearch = findViewById<EditText>(R.id.edtLocalSearch) as EditText
-        imgClearLocalSearch = findViewById<ImageView>(R.id.imgClearLocalSearch) as ImageView
-        back = findViewById<ImageView>(R.id.img_search_back) as ImageView
-
-        back?.setOnClickListener {
-            finish()
-        }
-        ryOrderDisSearchLocal =
-            findViewById<RecyclerView>(R.id.ryOrderDisSearchLocal) as RecyclerView
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
-        mMapView!!.onCreate(savedInstanceState)
+        mMapView?.onCreate(savedInstanceState)
         if (aMap == null) {
             aMap = mMapView!!.map
             setUpMap()
         }
-      //  ImmersionBar.setTitleBar(this@NewOrderChangeAddressMapActivity, findViewById)
+
+        txtMapLocalCity = findViewById<View>(R.id.txtMapLocalCity) as TextView
+        edtLocalSearch = findViewById<EditText>(R.id.edtLocalSearch) as EditText
+        imgClearLocalSearch = findViewById<ImageView>(R.id.imgClearLocalSearch) as ImageView
+//
+        ryOrderDisSearchLocal =
+            findViewById<RecyclerView>(R.id.ryOrderDisSearchLocal) as RecyclerView
+        var titleBar = findViewById<TitleBar>(R.id.title_bar_left) as TitleBar
+
+        titleBar?.setOnTitleBarListener(object : OnTitleBarListener {
+            override fun onLeftClick(view: View?) {
+                finish()
+            }
+
+            override fun onTitleClick(view: View?) {
+            }
+
+            override fun onRightClick(view: View?) {
+            }
+        })
+
         initViewAdapter()
     }
 
@@ -363,6 +383,7 @@ class NewOrderChangeAddressMapActivity :
                         startChangeLocation(latLng)
                     }
                 }
+
                 Log.d("yjl", "onLocationChanged: " + Gson().toJson(amapLocation))
                 Log.d("yjl", "onLocationChanged: " + amapLocation.latitude)
                 Log.d("yjl", "onLocationChanged: " + amapLocation.latitude)
@@ -489,12 +510,34 @@ class NewOrderChangeAddressMapActivity :
         });
 
     }
+    /** 状态栏沉浸 */
+    private var immersionBar: ImmersionBar? = null
+    /**
+     * 获取状态栏沉浸的配置对象
+     */
+    open fun getStatusBarConfig(): ImmersionBar {
+        if (immersionBar == null) {
+            immersionBar = createStatusBarConfig()
 
-    override fun initView(savedInstanceState: Bundle?) {
+        }
+        return immersionBar!!
+    }
+    /**
+     * 初始化沉浸式状态栏
+     */
+    protected open fun createStatusBarConfig(): ImmersionBar {
+        return ImmersionBar.with(this) // 默认状态栏字体颜色为黑色
+
+            .statusBarDarkFont(isStatusBarDarkFont()) // 指定导航栏背景颜色
+            .autoDarkModeEnable(true, 0.2f)
     }
 
-    override fun getBind(layoutInflater: LayoutInflater): ActivityOrderChengeAddredssMapBinding {
-        return ActivityOrderChengeAddredssMapBinding.inflate(layoutInflater)
+    /**
+     * 状态栏字体深色模式
+     */
+    open fun isStatusBarDarkFont(): Boolean {
+        return false
     }
+
 
 }

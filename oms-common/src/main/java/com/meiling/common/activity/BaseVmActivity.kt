@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -225,6 +226,18 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
         MMKVUtils.putString("UserBean", Gson().toJson(userBean))
     }
 
+    /**
+     * 初始化软键盘
+     */
+    protected open fun initSoftKeyboard() {
+        // 点击外部隐藏软键盘，提升用户体验
+        getContentView()!!.setOnClickListener {
+            hideSoftKeyboard()
+            setContentView()
+        }
+    }
+
+    open fun setContentView(){
 
     override fun onResume() {
         super.onResume()
@@ -238,4 +251,32 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
     }
 
+    }
+
+    /**
+     * 隐藏软键盘
+     */
+     open fun hideSoftKeyboard() {
+        // 隐藏软键盘，避免软键盘引发的内存泄露
+        val view = currentFocus
+        if (view != null) {
+            val manager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            manager?.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (ev!!.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+//            if (isShouldHideKeyboard(v, ev)) {
+//                //根据判断关闭软键盘
+//               // SoftKeyboardUtils.hideKeyboard(v!!)
+//                KeyBoardUtil.hideKeyBoard(this,v)
+//            }
+            if (v!=null) {
+                hideSoftKeyboard()
+               // KeyBoardUtil.hideKeyBoard(this, v)
+            }
+        }
+        return super.dispatchTouchEvent(ev)
+    }
 }

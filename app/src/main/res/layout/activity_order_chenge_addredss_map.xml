@@ -3,44 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/app_themes_1f2333"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cos_title"
+    <com.hjq.bar.TitleBar
+        app:titleColor="@color/white"
+        android:id="@+id/title_bar_left"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/app_themes_1f2333">
-
-
-        <ImageView
-            android:id="@+id/img_search_back"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:src="@mipmap/icon_back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="修改收货地址"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_32"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        android:layout_height="wrap_content"
+        android:background="@color/app_themes_1f2333"
+        app:title="修改收货地址" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/cos_title"
+        android:layout_below="@+id/title_bar_left"
         android:background="@color/white"
         app:shape_radius="@dimen/dp_100"
         app:shape_solidColor="@color/white"

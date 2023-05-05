@@ -1,6 +1,9 @@
 package com.meiling.oms.fragment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -13,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.*
+import com.meiling.common.utils.SoftKeyBoardListener
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDis2Binding
@@ -21,6 +25,7 @@ import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
+import java.util.regex.Pattern
 
 class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Binding>() {
 
@@ -165,7 +170,11 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
         }
         var weight = orderSendAddress.goodsWeight!!.toInt()
         mDatabind.txtAddTipPlus.setSingleClickListener {
-            mDatabind.edtAddTipShow.text = "${mDatabind.edtAddTipShow.text.toString().toInt()+1}"
+            mDatabind.edtAddTipShow.setText(
+                "${
+                    mDatabind.edtAddTipShow.text.toString().toInt() + 1
+                }"
+            )
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice!!,
                 cargoType = selectShop,
@@ -182,7 +191,11 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
                 showToast("不能在减啦")
                 return@setSingleClickListener
             }
-            mDatabind.edtAddTipShow.text = "${mDatabind.edtAddTipShow.text.toString().toInt()-1}"
+            mDatabind.edtAddTipShow.setText(
+                "${
+                    mDatabind.edtAddTipShow.text.toString().toInt() - 1
+                }"
+            )
             var orderSendRequest = OrderSendRequest(
                 cargoPrice = orderPrice,
                 cargoType = selectShop,
@@ -194,6 +207,42 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
             )
             mViewModel.orderSendConfirm(orderSendRequest)
         }
+        mDatabind.edtAddTipShow?.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == 0 || actionId == 3) {
+                var orderSendRequest = OrderSendRequest(
+                    cargoPrice = orderPrice,
+                    cargoType = selectShop,
+                    deliveryTime = "",
+                    deliveryType = "2",
+                    orderId = orderId!!,
+                    wight = mDatabind.edtAddTipShow.text.toString(),
+                    orderSendAddress
+                )
+                mViewModel.orderSendConfirm(orderSendRequest)
+            }
+            return@setOnEditorActionListener false
+        }
+        SoftKeyBoardListener.setListener(activity, object :
+            SoftKeyBoardListener.OnSoftKeyBoardChangeListener {
+            override fun keyBoardShow(height: Int) {
+            }
+
+            override fun keyBoardHide(height: Int) {
+                if (!TextUtils.isEmpty(mDatabind.edtAddTipShow.text.toString())) {
+                    var orderSendRequest = OrderSendRequest(
+                        cargoPrice = orderPrice,
+                        cargoType = selectShop,
+                        deliveryTime = "",
+                        deliveryType = "2",
+                        orderId = orderId!!,
+                        wight = mDatabind.edtAddTipShow.text.toString(),
+                        orderSendAddress
+                    )
+                    mViewModel.orderSendConfirm(orderSendRequest)
+                }
+            }
+        })
+
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentDis2Binding {
@@ -256,12 +305,60 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
             dismissLoading()
             showToast("发起配送失败")
         }
+
+        var outStr = "25";
+        mDatabind.edtAddTipShow?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                var edit = s.toString()
+
+                if (edit?.length == 2 && Integer.parseInt(edit) >= 10) {
+                    outStr = edit;
+                }
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                var words = s.toString()
+                //首先内容进行非空判断，空内容（""和null）不处理
+                if (!TextUtils.isEmpty(words)) {
+                    //1-100的正则验证
+                    var p = Pattern.compile("^(25|[1-9]\\d|\\d)$")
+                    var m = p.matcher(words)
+                    if (m.find() || ("").equals(words)) {
+                        //这个时候输入的是合法范围内的值
+                    } else {
+                        if (words.length > 2) {
+                            //若输入不合规，且长度超过2位，继续输入只显示之前存储的outStr
+                            mDatabind.edtAddTipShow.setText(outStr)
+                            // mDatabind.setText(outStr);
+                            //重置输入框内容后默认光标位置会回到索引0的地方，要改变光标位置
+                            mDatabind.edtAddTipShow.setSelection(2)
+                        }
+                    }
+                }
+
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                var  words = s.toString()
+                //首先内容进行非空判断，空内容（""和null）不处理
+                if (!TextUtils.isEmpty(words)) {
+                    if (Integer.parseInt(s.toString()) > 25) {
+                        mDatabind.edtAddTipShow.setText("25")
+                    }
+                }
+            }
+
+        })
+
+
     }
 
 
     private fun addressChange(eventBusChangeAddress: EventBusChangeAddress) {
         orderSendAddress = eventBusChangeAddress.orderSendAddress
-        mDatabind.edtAddTipShow.text = orderSendAddress.goodsWeight
+        mDatabind.edtAddTipShow.setText(  orderSendAddress.goodsWeight)
         var orderSendRequest = OrderSendRequest(
             cargoPrice = orderPrice!!,
             cargoType = orderSendAddress.cargoType ?: "0",

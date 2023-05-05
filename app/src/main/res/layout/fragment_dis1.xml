@@ -60,7 +60,10 @@
                     android:layout_height="match_parent"
                     android:background="#E1E2E5" />
 
-                <TextView
+                <EditText
+                    android:imeOptions="actionSend"
+                    android:singleLine="true"
+                    android:inputType="number"
                     android:id="@+id/edtAddTipShow"
                     android:layout_width="@dimen/dp_90"
                     android:layout_height="wrap_content"

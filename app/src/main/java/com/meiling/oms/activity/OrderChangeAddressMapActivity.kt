@@ -156,10 +156,10 @@ class OrderChangeAddressMapActivity :
 
     override fun initData() {
         var tetle=intent.getStringExtra("title")
-//        if (!TextUtils.isEmpty(tetle)){
-//            mDatabind.TitleBarLeft.title=tetle
-//
-//        }
+        if (!TextUtils.isEmpty(tetle)){
+           // mDatabind.TitleBarLeft.title=tetle
+
+        }
         ryOrderDisMapAdapter = object :
             BaseQuickAdapter<PoiItem, BaseViewHolder>(R.layout.item_recy_distribution_local_map) {
             override fun convert(holder: BaseViewHolder, item: PoiItem) {
