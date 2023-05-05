@@ -94,19 +94,36 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
         request({ branchInformationService.douurlauth(channelId, poiId, selectText) }, douyin)
     }
     //抖音返回列表
-    var bindTenant = BaseLiveData<String>()
-    fun bindTenant(channelId: String) {
-        request({ branchInformationService.bindTenant(channelId ) }, bindTenant)
-    } //抖音返回列表
+    var bindShop = BaseLiveData<String>()
+    fun bindShop(shopId: String,address:String,shopName:String,channelPoiId:String) {
+        request({ branchInformationService.bindShop(shopId,address ,shopName,channelPoiId) }, bindShop)
+    }
+    //解绑
     var releasebind = BaseLiveData<String>()
-    fun releasebind(businessId: String,viewId:String) {
-        request({ branchInformationService.releasebind(businessId ,viewId) }, releasebind)
+    fun releasebind(channelId: String,shopId:String) {
+        request({ branchInformationService.releasebind(channelId ,shopId) }, releasebind)
+    }
+    // 设置发货门店
+    var updateShop = BaseLiveData<String>()
+    fun updateShop(shopId: String,poiId:String) {
+        request({ branchInformationService.updateShop(shopId ,poiId) }, updateShop)
+    }
+
+    //抖音返回列表
+    var bindTenant = BaseLiveData<String>()
+    fun bindTenant(accountId: String) {
+        request({ branchInformationService.bindTenant(accountId) }, bindTenant)
     }
 
     //  删除门店
     var deletePoi = BaseLiveData<String>()
     fun deletePoi(poiId: String) {
         request({ branchInformationService.deletePoi(poiId) }, deletePoi)
+    }
+    //  是否绑定租户
+    var isTenant = BaseLiveData<Boolean>()
+    fun isTenant() {
+        request({ branchInformationService.isTenant() }, isTenant)
     }
 
 

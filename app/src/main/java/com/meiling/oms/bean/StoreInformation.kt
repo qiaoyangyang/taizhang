@@ -212,7 +212,7 @@ data class ChannShop(
     @SerializedName("goodsNum")
     var goodsNum: Int? = 0,
     @SerializedName("id")
-    var id: Int? = 0,
+    var id: String? = "",
     @SerializedName("inventoryModel")
     var inventoryModel: Int? = 0,
     @SerializedName("isPrint")
@@ -224,7 +224,7 @@ data class ChannShop(
     @SerializedName("phone")
     var phone: String? = "",
     @SerializedName("poiId")
-    var poiId: Int? = 0,
+    var poiId: String? = "",
     @SerializedName("poiName")
     var poiName: String? = "",
     @SerializedName("properties")

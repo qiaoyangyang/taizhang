@@ -79,15 +79,38 @@ interface BranchInformationService {
 
     //  抖音绑定
     @GET("saas/dytg/bindShop")
+    suspend fun bindShop(
+        @Query("shopId") shopId: String = "",//门店id（poiId)
+        @Query("address") address: String = "",//
+        @Query("shopName") shopName: String = "",//
+        @Query("channelPoiId") channelPoiId: String = "",//	渠道门店Id
+    ): ResultData<String>
+
+    //  抖音商户
+    @GET("saas/dytg/bindTenant")
     suspend fun bindTenant(
         @Query("accountId") accountId: String = "",//抖音商户id
     ): ResultData<String>
+
     //解绑
-    @GET("saas/admin/meituan/releasebind/{businessId}/{viewId}")
+    @GET("saas/admin/unification/releasebind")
     suspend fun releasebind(
-        @Path("businessId") businessId: String,
-        @Path("viewId") viewId: String,
+        @Query("channelId") channelId: String,
+        @Query("shopId") viewId: String,
     ): ResultData<String>
+      //设置渠道店铺的门店
+    @GET("saas/poi/updateShop")
+    suspend fun updateShop(
+        @Query("shopId") shopId: String,
+        @Query("poiId") poiId: String,
+    ): ResultData<String>
+
+    //是否抖音商户
+    @GET("saas/dytg/isTenant")
+    suspend fun isTenant(
+    ): ResultData<Boolean>
+
+
 
     @GET("saas/poi/deletePoi")
     suspend fun deletePoi(

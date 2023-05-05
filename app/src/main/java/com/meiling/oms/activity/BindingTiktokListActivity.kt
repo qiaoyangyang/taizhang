@@ -3,6 +3,7 @@ package com.meiling.oms.activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
@@ -33,18 +34,44 @@ class BindingTiktokListActivity :
         mDatabind.tvOk.setOnClickListener {
            //
             if (tiktokData != null) {
-                mViewModel.bindTenant(tiktokData?.poiId!!)
+                mViewModel.bindShop(poiId ,tiktokData?.address!!,tiktokData?.poiName!!,tiktokData.poiId!!)
             }
         }
+        mDatabind.btnSearch.setOnClickListener {
+            if (TextUtils.isEmpty(mDatabind.edtSearch.text.toString())){
+
+                return@setOnClickListener
+            }
+            mViewModel.douurlauth(channelId, poiId, mDatabind.edtSearch.text.toString())
+        }
+        //清楚
+        mDatabind.imgSearchEditClear.setOnClickListener {
+            mDatabind.edtSearch.setText("")
+            mViewModel.douurlauth(channelId, poiId, mDatabind.edtSearch.text.toString())
+        }
+        //键盘搜索
+        mDatabind.edtSearch?.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == 0 || actionId == 3) {
+
+                mDatabind.edtSearch.setText("")
+                mViewModel.douurlauth(channelId, poiId, mDatabind.edtSearch.text.toString())
+            }
+            return@setOnEditorActionListener false
+        }
+
+
     }
 
     var channelId: String = ""
     var poiId: String = ""
+    var channename: String = ""
 
     override fun initData() {
         channelId = intent.getStringExtra("channelId").toString()
         poiId = intent.getStringExtra("poiId").toString()
+        channename = intent.getStringExtra("channename").toString()
         mViewModel.douurlauth(channelId, poiId, "")
+        mDatabind.TitleBar.title="绑定${channename}店铺"
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityBindingTiktokBinding {
@@ -52,17 +79,7 @@ class BindingTiktokListActivity :
     }
 
     private fun initRecycleyView() {
-        mViewModel.bindTenant.onStart.observe(this){
-            showLoading("")
-        }
-        mViewModel.bindTenant.onSuccess.observe(this){
-            disLoading()
-            startActivity(Intent(this, ChannelActivity::class.java))
-        }
-        mViewModel.bindTenant.onError.observe(this){
-            disLoading()
-            showToast(it.msg)
-        }
+
 
         bindingTiktokAdapter = object :
             BaseQuickAdapter<TiktokData?, BaseViewHolder>(R.layout.item_binding_tiktok),
@@ -82,8 +99,10 @@ class BindingTiktokListActivity :
                     holder.setGone(R.id.s_status, true)
                 }
                 if (item?.isstatus == true) {
+                    holder.setBackgroundResource(R.id.scbg,R.drawable.bg_true)
                     holder.setBackgroundResource(R.id.iv_status, R.drawable.ic_spu_true)
                 } else {
+                    holder.setBackgroundResource(R.id.scbg,R.drawable.bg_fase)
                     holder.setBackgroundResource(R.id.iv_status, R.drawable.ic_spu_fase1)
                 }
 
@@ -118,8 +137,26 @@ class BindingTiktokListActivity :
 
     override fun createObserver() {
         super.createObserver()
+        mViewModel.douyin.onStart.observe(this){
+            showLoading("")
+        }
         mViewModel.douyin.onSuccess.observe(this) {
+            disLoading()
             bindingTiktokAdapter.setList(it.pageResult?.pageData)
+        }
+        mViewModel.douyin.onError.observe(this){
+            disLoading()
+        }
+        mViewModel.bindShop.onStart.observe(this){
+            showLoading("")
+        }
+        mViewModel.bindShop.onSuccess.observe(this){
+            disLoading()
+            startActivity(Intent(this, ChannelActivity::class.java))
+        }
+        mViewModel.bindShop.onError.observe(this){
+            disLoading()
+            showToast(it.msg)
         }
 
     }

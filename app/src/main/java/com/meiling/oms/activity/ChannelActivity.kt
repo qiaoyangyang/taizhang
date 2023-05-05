@@ -25,6 +25,7 @@ import com.meiling.oms.R
 import com.meiling.oms.bean.ChannShop
 import com.meiling.oms.bean.ChannelX
 import com.meiling.oms.databinding.ActivityChannelBinding
+import com.meiling.oms.dialog.BindMeituanShopDialog
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.ShopDialog
 import com.meiling.oms.viewmodel.MainViewModel2
@@ -44,11 +45,21 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         initRecycleyView1()
         mDatabind.tvNewlyBuiltStore.setSingleClickListener() {
             if (channelX.id == "32") {
-                startActivity(
-                    Intent(this, TiktokBindingActvity::class.java)
-                        .putExtra("channelId", channelX.id)
-                        .putExtra("poiId", shop?.id)
-                )
+                mViewModel.isTenant()
+
+
+            } else if (channelX.id == "1") {
+                var bindMeituanShopDialog = BindMeituanShopDialog()
+                bindMeituanShopDialog.setOnresilience(object : BindMeituanShopDialog.Onresilience {
+                    override fun resilience(type: Int) {
+                        mViewModel.urlauth(
+                            type.toString(),
+                            shop?.id!!, channelX?.id!!
+                        )
+                    }
+
+                })
+                bindMeituanShopDialog.show(supportFragmentManager)
             } else {
                 mViewModel.urlauth(channelX.id!!, shop?.id!!, channelX?.id!!)
             }
@@ -56,7 +67,9 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         }
         mainViewModel =
             ViewModelProvider(MainActivity.mainActivity!!).get(MainViewModel2::class.java)
-
+        mDatabind.refeshLayout.setOnRefreshListener {
+            mViewModel.shop_list(channelX.id!!, shop?.id!!)
+        }
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityChannelBinding {
@@ -65,7 +78,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
     var shop: Shop? = null
     override fun onTitleClick(view: View) {
-        var shopDialog = ShopDialog().newInstance(shopBean!!)
+        var shopDialog = ShopDialog().newInstance(shopBean!!, "选择发货门店")
 
         shopDialog.setOnresilience(object : ShopDialog.Onresilience {
 
@@ -79,6 +92,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                 shop = sho
                 mDatabind.TitleBar.titleView.text = cityidname + "/" + sho.name
 
+                mViewModel.shop_list(channelX.id!!, shop?.id!!)
             }
 
             override fun Ondismiss() {
@@ -110,6 +124,66 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
 
     override fun createObserver() {
+        //设置发货门店
+        mViewModel.updateShop.onStart.observe(this) {
+            showLoading("")
+        }
+        mViewModel.updateShop.onSuccess.observe(this) {
+            disLoading()
+            channeAdapter.removeAt(isposition)
+            channeAdapter.notifyDataSetChanged()
+        }
+        mViewModel.updateShop.onError.observe(this) {
+
+            disLoading()
+            showToast(it.msg)
+        }
+        //解绑
+        mViewModel.releasebind.onStart.observe(this) {
+            showLoading("")
+        }
+        mViewModel.releasebind.onSuccess.observe(this) {
+            disLoading()
+            channeAdapter.removeAt(isposition)
+            channeAdapter.notifyDataSetChanged()
+        }
+        mViewModel.releasebind.onError.observe(this) {
+
+            disLoading()
+            showToast(it.msg)
+        }
+
+
+        //是否绑定租户
+        mViewModel.isTenant.onStart.observe(this) {
+            showLoading("")
+        }
+        mViewModel.isTenant.onSuccess.observe(this) {
+            disLoading()
+            if (it) {
+                startActivity(
+                    Intent(this, BindingTiktokListActivity::class.java).putExtra(
+                        "channelId", channelX.id
+                    )
+                        .putExtra("poiId", shop?.id).putExtra("channename",channelX.name)
+
+                )
+            } else {
+                startActivity(
+                    Intent(this, TiktokBindingActvity::class.java)
+                        .putExtra("channelId", channelX.id)
+                        .putExtra("poiId", shop?.id)
+                        .putExtra("channename",channelX.name)
+                )
+            }
+
+        }
+        mViewModel.isTenant.onError.observe(this) {
+            disLoading()
+            showToast(it.msg)
+        }
+
+
         mViewModel.shopBean.onStart.observe(this) {
             showLoading("")
         }
@@ -118,7 +192,8 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
             if (it != null && it.size != 0) {
                 shopBean = it
                 shop = it.get(0).shopList?.get(0)
-                mDatabind.TitleBar.title = it.get(0).name + "/" + it.get(0).shopList?.get(0)?.name
+                mDatabind.TitleBar.title =
+                    it.get(0).name + "/" + it.get(0).shopList?.get(0)?.name
 
             } else if (mainViewModel.getByTenantId.value?.poi == -1) {
                 mDatabind.tvNewlyBuiltStore.visibility = View.GONE
@@ -165,8 +240,10 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         mViewModel.channShop.onError.observe(this) {
             disLoading()
             showToast(it.msg)
+            mDatabind.refeshLayout.finishRefresh()
         }
         mViewModel.channShop.onSuccess.observe(this) {
+            mDatabind.refeshLayout.finishRefresh()
             disLoading()
             channeAdapter.setList(it.data)
 
@@ -204,9 +281,33 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         channeAdapter.setEmptyView(R.layout.store_managemnet2)
         channeAdapter.setList(arrayListOf())
 
-        channeAdapter.addChildClickViewIds(R.id.tv_delete)
+        channeAdapter.addChildClickViewIds(R.id.tv_delete, R.id.tv_compile)
         channeAdapter.setOnItemChildClickListener { adapter, view, position ->
             when (view.id) {
+                R.id.tv_compile -> {
+                    var shopDialog = ShopDialog().newInstance(shopBean!!, "设置发货门店")
+
+                    shopDialog.setOnresilience(object : ShopDialog.Onresilience {
+
+
+                        override fun resilience(
+                            cityid: Int,
+                            cityidname: String,
+                            shopid: Int,
+                            sho: Shop
+                        ) {
+                            mViewModel.updateShop(channeAdapter.getItem(position)?.id!!, sho?.id!!)
+                            //shop = sho
+                            // mDatabind.TitleBar.titleView.text = cityidname + "/" + sho.name
+
+                        }
+
+                        override fun Ondismiss() {
+                        }
+
+                    })
+                    shopDialog.show(supportFragmentManager)
+                }
                 R.id.tv_delete -> {
                     val dialog: MineExitDialog =
                         MineExitDialog().newInstance(
@@ -218,7 +319,10 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                         )
                     dialog.setOkClickLister {
                         isposition = position
-                        mViewModel.releasebind(channelX.id!!,channeAdapter?.getItem(position)?.viewId!!)
+                        mViewModel.releasebind(
+                            channelX.id!!,
+                            channeAdapter?.getItem(position)?.id!!,
+                        )
                         dialog.dismiss()
 
 
@@ -232,6 +336,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
     }
 
     private fun initRecycleyView1() {
+
 
         channelXAdapter = object :
             BaseQuickAdapter<ChannelX?, BaseViewHolder>(R.layout.item_channel_shop),

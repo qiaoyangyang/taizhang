@@ -233,6 +233,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.hjq.shape.view.ShapeEditText
+                android:id="@+id/et_bindTenant"
                 android:padding="@dimen/dp_24"
                 android:layout_marginLeft="@dimen/dp_20"
                 android:layout_width="match_parent"
