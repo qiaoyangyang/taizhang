@@ -49,7 +49,7 @@ interface AccountService {
     suspend fun checkAccount(
         @Query("username") username: String,
     ): ResultData<ArrayList<CreateShopBean>>
- /**
+    /**
      * 检查手机号
      * */
     @POST("uc/adminuser/phoneIsRepeat")

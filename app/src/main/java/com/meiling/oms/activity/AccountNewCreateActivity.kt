@@ -55,11 +55,14 @@ class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountC
                 selectAuthWay = id
             }
         }
+
+        var cityPoiDtoList = ArrayList<ReqCreateAccount.CityPoiDto>()
         mDatabind.txtDeliveryStore.setSingleClickListener {
             if (selectAuthWay == "1") {
                 var accountSelectDialog =
                     AccountSelectShopOrCityDialog().newInstance("授权发货门店")
                 accountSelectDialog.show(supportFragmentManager)
+                accountSelectDialog.setOkClickItemLister { id, name ->  }
             } else {
                 var accountSelectDialog =
                     AccountSelectCityDialog().newInstance("地址授权发货门店")
@@ -69,7 +72,19 @@ class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountC
 
         mDatabind.txtCreateSave.setSingleClickListener {
 
-//            mViewModel.saveAndUpdate(ReqCreateAccount(pageIndex, 10))
+            mViewModel.saveAndUpdate(
+                ReqCreateAccount(
+                    phone = "",
+                    username = "",
+                    nickname = "",
+                    shopPoiDtoList = arrayListOf(),
+                    cityPoiDtoList = arrayListOf(),
+                    poiShopIds = "",
+                    status = 1,
+                    authStorePoiAll = "0",
+                    roleId = ""
+                )
+            )
         }
     }
 

@@ -189,29 +189,31 @@ data class ShopList(
 
 data class ReqCreateAccount(
     @SerializedName("adminUserId")
-    var adminUserId: Long?,
+    var adminUserId: String? = "",
     @SerializedName("channelPoiDtoList")
-    var channelPoiDtoList: List<Any?>?,
+    var channelPoiDtoList: List<Any?> = arrayListOf(),
     @SerializedName("cityByChannelPoiDtoList")
-    var cityByChannelPoiDtoList: List<Any?>?,
+    var cityByChannelPoiDtoList: List<Any?> = arrayListOf(),
     @SerializedName("cityPoiDtoList")
-    var cityPoiDtoList: List<CityPoiDto?>?,
+    var cityPoiDtoList: List<CityPoiDto?> = arrayListOf(),
     @SerializedName("nickname")
-    var nickname: String?,
+    var nickname: String? = "",
     @SerializedName("openAutoPoi")
-    var openAutoPoi: Int?,
+    var openAutoPoi: Int? = 0,
     @SerializedName("phone")
-    var phone: String?,
+    var phone: String? = "",
     @SerializedName("poiShopIds")
-    var poiShopIds: String?,
+    var poiShopIds: String? = "",
     @SerializedName("roleId")
-    var roleId: Long?,
+    var roleId: String? = "",
     @SerializedName("shopPoiDtoList")
-    var shopPoiDtoList: List<ShopPoiDto?>?,
+    var shopPoiDtoList: List<ShopPoiDto?> = arrayListOf(),
     @SerializedName("status")
-    var status: Int?,
+    var status: Int? = 0,
     @SerializedName("username")
-    var username: String?
+    var username: String? = "",
+    @SerializedName("authStorePoiAll")
+    var authStorePoiAll: String? = ""
 ) {
     data class CityPoiDto(
         @SerializedName("cityIds")
