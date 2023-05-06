@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
+import com.blankj.utilcode.util.ActivityUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.activity.BaseActivity
@@ -16,6 +18,7 @@ import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityBandingLogistcsLayoutBinding
 import com.meiling.oms.dialog.BindOtherLogistics
 import com.meiling.oms.dialog.LogisticsPlatformInformationDidalog
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.UUBinding
 import com.meiling.oms.viewmodel.BindingLogisticsViewModel
 import com.meiling.oms.widget.setSingleClickListener
@@ -31,6 +34,26 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
     override fun initView(savedInstanceState: Bundle?) {
     }
 
+    override fun onLeftClick(view: View) {
+        val dialog: MineExitDialog =
+            MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
+        dialog.setOkClickLister {
+            dialog.dismiss()
+            startActivity(Intent(this,LoginActivity::class.java))
+            ActivityUtils.finishAllActivities()
+        }
+        dialog.show(supportFragmentManager)
+    }
+    override fun onBackPressed() {
+        val dialog: MineExitDialog =
+            MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
+        dialog.setOkClickLister {
+            dialog.dismiss()
+            startActivity(Intent(this,LoginActivity::class.java))
+            ActivityUtils.finishAllActivities()
+        }
+        dialog.show(supportFragmentManager)
+    }
     @SuppressLint("SuspiciousIndentation")
     override fun initData() {
         super.initData()
