@@ -237,7 +237,9 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
         }
     }
 
-    open fun setContentView(){}
+    open fun setContentView(){
+
+    }
 
     override fun onResume() {
         super.onResume()
@@ -250,7 +252,6 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
         // 自动采集选择
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
     }
-
 
 
     /**

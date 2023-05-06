@@ -37,7 +37,7 @@
             android:layout_below="@+id/img"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_30"
-            android:text="暂无数据，请去新建发货门店"
+            android:text="暂无数据，请去绑定渠道店铺"
             android:textColor="#999999"
             android:textSize="14sp"
             app:layout_constraintLeft_toLeftOf="parent"

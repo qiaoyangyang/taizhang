@@ -2,6 +2,7 @@ package com.meiling.oms.dialog
 
 import android.content.Context
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -28,9 +29,10 @@ class ShopDialog : BaseNiceDialog() {
         return R.layout.dialog_shop
     }
 
-    fun newInstance(shopBean: ArrayList<ShopBean>): ShopDialog {
+    fun newInstance(shopBean: ArrayList<ShopBean>,tetle:String?=""): ShopDialog {
         val args = Bundle()
         args.putSerializable("shopBean", shopBean)
+        args.putString("tetle", tetle)
         val dialog = ShopDialog()
         dialog.arguments = args
         return dialog
@@ -38,6 +40,10 @@ class ShopDialog : BaseNiceDialog() {
 
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
         val shopBean = arguments?.getSerializable("shopBean") as ArrayList<ShopBean>
+        val tetle = arguments?.getString("tetle").toString()
+        if (!TextUtils.isEmpty(tetle)){
+            holder?.setText(R.id.tv_title,tetle)
+        }
         var cityid_view = holder?.getView<WheelItemView>(R.id.wheel_view_left)
         var wheel_view_center = holder?.getView<WheelItemView>(R.id.wheel_view_center)
         var btn_ok_exit = holder?.getView<ShapeButton>(R.id.btn_ok_exit)

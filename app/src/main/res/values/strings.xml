@@ -5,4 +5,6 @@
     <string name="Store_name">门店名称</string>
     <string name="Store_number">门店编号</string>
     <string name="Store_telephone">门店电话</string>
+    <string name="first_step"><![CDATA[1.登录抖音来客后台（电脑端）\n2.点击店铺管理-->服务应用授权-->新增授权\n3.按照下列信息进行填写，填写完成后提交 查看]]></string>
+    <string name="service">授权成功后 联系客服，开通应用服务</string>
 </resources>

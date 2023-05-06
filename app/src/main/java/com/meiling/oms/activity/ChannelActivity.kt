@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -24,19 +25,51 @@ import com.meiling.oms.R
 import com.meiling.oms.bean.ChannShop
 import com.meiling.oms.bean.ChannelX
 import com.meiling.oms.databinding.ActivityChannelBinding
+import com.meiling.oms.dialog.BindMeituanShopDialog
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.ShopDialog
+import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.viewmodel.StoreManagementViewModel
+import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 
 //渠道店铺管理
 class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBinding>() {
     lateinit var channeAdapter: BaseQuickAdapter<ChannShop?, BaseViewHolder>
     lateinit var channelXAdapter: BaseQuickAdapter<ChannelX?, BaseViewHolder>
+    lateinit var channelX: ChannelX
+    lateinit var mainViewModel: MainViewModel2
     override fun initView(savedInstanceState: Bundle?) {
         TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
         initRecycleyView()
         initRecycleyView1()
+        mDatabind.tvNewlyBuiltStore.setSingleClickListener() {
+            if (channelX.id == "32") {
+                mViewModel.isTenant()
+
+
+            } else if (channelX.id == "1") {
+                var bindMeituanShopDialog = BindMeituanShopDialog()
+                bindMeituanShopDialog.setOnresilience(object : BindMeituanShopDialog.Onresilience {
+                    override fun resilience(type: Int) {
+                        mViewModel.urlauth(
+                            type.toString(),
+                            shop?.id!!, channelX?.id!!
+                        )
+                    }
+
+                })
+                bindMeituanShopDialog.show(supportFragmentManager)
+            } else {
+                mViewModel.urlauth(channelX.id!!, shop?.id!!, channelX?.id!!)
+            }
+
+        }
+        mainViewModel =
+            ViewModelProvider(MainActivity.mainActivity!!).get(MainViewModel2::class.java)
+        mDatabind.refeshLayout.setOnRefreshListener {
+            mViewModel.shop_list(channelX.id!!, shop?.id!!)
+        }
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityChannelBinding {
@@ -45,7 +78,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
     var shop: Shop? = null
     override fun onTitleClick(view: View) {
-        var shopDialog = ShopDialog().newInstance(shopBean!!)
+        var shopDialog = ShopDialog().newInstance(shopBean!!, "选择发货门店")
 
         shopDialog.setOnresilience(object : ShopDialog.Onresilience {
 
@@ -58,7 +91,8 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
             ) {
                 shop = sho
                 mDatabind.TitleBar.titleView.text = cityidname + "/" + sho.name
-                mViewModel.getShopAndChannelVO(sho?.id!!)
+
+                mViewModel.shop_list(channelX.id!!, shop?.id!!)
             }
 
             override fun Ondismiss() {
@@ -79,16 +113,77 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
     override fun onResume() {
         super.onResume()
-        if (shop != null) {
-            Log.d("yjk", "--shop--onResume-")
-            mViewModel.getShopAndChannelVO(shop?.id!!)
+        Log.d("yjk", "${channelXAdapter.data.size}")
+        if (channelXAdapter.data.size == 0) {
+            mViewModel.getShopAndChannelVO()
         } else {
-            Log.d("yjk", "----onResume-")
+            mViewModel.shop_list(channelX.id!!, shop?.id!!)
         }
+
     }
 
 
     override fun createObserver() {
+        //设置发货门店
+        mViewModel.updateShop.onStart.observe(this) {
+            showLoading("")
+        }
+        mViewModel.updateShop.onSuccess.observe(this) {
+            disLoading()
+            channeAdapter.removeAt(isposition)
+            channeAdapter.notifyDataSetChanged()
+        }
+        mViewModel.updateShop.onError.observe(this) {
+
+            disLoading()
+            showToast(it.msg)
+        }
+        //解绑
+        mViewModel.releasebind.onStart.observe(this) {
+            showLoading("")
+        }
+        mViewModel.releasebind.onSuccess.observe(this) {
+            disLoading()
+            channeAdapter.removeAt(isposition)
+            channeAdapter.notifyDataSetChanged()
+        }
+        mViewModel.releasebind.onError.observe(this) {
+
+            disLoading()
+            showToast(it.msg)
+        }
+
+
+        //是否绑定租户
+        mViewModel.isTenant.onStart.observe(this) {
+            showLoading("")
+        }
+        mViewModel.isTenant.onSuccess.observe(this) {
+            disLoading()
+            if (it) {
+                startActivity(
+                    Intent(this, BindingTiktokListActivity::class.java).putExtra(
+                        "channelId", channelX.id
+                    )
+                        .putExtra("poiId", shop?.id).putExtra("channename",channelX.name)
+
+                )
+            } else {
+                startActivity(
+                    Intent(this, TiktokBindingActvity::class.java)
+                        .putExtra("channelId", channelX.id)
+                        .putExtra("poiId", shop?.id)
+                        .putExtra("channename",channelX.name)
+                )
+            }
+
+        }
+        mViewModel.isTenant.onError.observe(this) {
+            disLoading()
+            showToast(it.msg)
+        }
+
+
         mViewModel.shopBean.onStart.observe(this) {
             showLoading("")
         }
@@ -97,11 +192,13 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
             if (it != null && it.size != 0) {
                 shopBean = it
                 shop = it.get(0).shopList?.get(0)
-                mDatabind.TitleBar.title = it.get(0).name + "/" + it.get(0).shopList?.get(0)?.name
+                mDatabind.TitleBar.title =
+                    it.get(0).name + "/" + it.get(0).shopList?.get(0)?.name
 
-                mViewModel.getShopAndChannelVO(it.get(0).shopList?.get(0)?.id!!)
-            } else if (ByTenantId()?.poi==-1){
-                val view = LayoutInflater.from(this).inflate(R.layout.store_managemnet1, null, false)
+            } else if (mainViewModel.getByTenantId.value?.poi == -1) {
+                mDatabind.tvNewlyBuiltStore.visibility = View.GONE
+                val view =
+                    LayoutInflater.from(this).inflate(R.layout.store_managemnet1, null, false)
                 var tv_decreate = view.findViewById<ShapeTextView>(R.id.tv_decreate)
                 tv_decreate.setOnClickListener {
                     startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
@@ -124,17 +221,40 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
         mViewModel.channel.onSuccess.observe(this) {
             disLoading()
-            it.channelList?.get(0)?.isselect = true
-            channeAdapter.setList(it.shopList)
-            channelXAdapter.setList(it.channelList)
+            it[0]?.isselect = true
+
+            channelXAdapter.setList(it)
+            channelX = it[0]
+            mViewModel.shop_list(channelX.id!!, shop?.id!!)
         }
 
         mViewModel.channel.onError.observe(this) {
             disLoading()
             showToast(it.msg)
         }
+        mViewModel.channShop.onStart.observe(this) {
+            showLoading("")
+
+
+        }
+        mViewModel.channShop.onError.observe(this) {
+            disLoading()
+            showToast(it.msg)
+            mDatabind.refeshLayout.finishRefresh()
+        }
+        mViewModel.channShop.onSuccess.observe(this) {
+            mDatabind.refeshLayout.finishRefresh()
+            disLoading()
+            channeAdapter.setList(it.data)
+
+        }
+        mViewModel.urlauth.onSuccess.observe(this) {
+            startActivity(Intent(this, BaseWebActivity::class.java).putExtra("url", it.url))
+        }
+
 
     }
+
 
     var isposition = -1
     private fun initRecycleyView() {
@@ -147,10 +267,9 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                 item: ChannShop?
 
             ) {
+                holder.setText(R.id.tv_name_t, "三方平台名称:" + item?.name)
+                holder.setText(R.id.tv_channel_id, "三方平台名称:" + item?.channelShopId)
 
-
-//
-//
 
             }
         }
@@ -159,14 +278,37 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         recyclerViewDivider.setDividerHeight(30)
         mDatabind.rectangle.addItemDecoration(recyclerViewDivider)
         mDatabind.rectangle.adapter = channeAdapter
+        channeAdapter.setEmptyView(R.layout.store_managemnet2)
         channeAdapter.setList(arrayListOf())
-        channeAdapter.setOnItemClickListener { adapter, view, position ->
 
-        }
-        channeAdapter.addChildClickViewIds(R.id.tv_unbundle)
+        channeAdapter.addChildClickViewIds(R.id.tv_delete, R.id.tv_compile)
         channeAdapter.setOnItemChildClickListener { adapter, view, position ->
             when (view.id) {
-                R.id.tv_unbundle -> {
+                R.id.tv_compile -> {
+                    var shopDialog = ShopDialog().newInstance(shopBean!!, "设置发货门店")
+
+                    shopDialog.setOnresilience(object : ShopDialog.Onresilience {
+
+
+                        override fun resilience(
+                            cityid: Int,
+                            cityidname: String,
+                            shopid: Int,
+                            sho: Shop
+                        ) {
+                            mViewModel.updateShop(channeAdapter.getItem(position)?.id!!, sho?.id!!)
+                            //shop = sho
+                            // mDatabind.TitleBar.titleView.text = cityidname + "/" + sho.name
+
+                        }
+
+                        override fun Ondismiss() {
+                        }
+
+                    })
+                    shopDialog.show(supportFragmentManager)
+                }
+                R.id.tv_delete -> {
                     val dialog: MineExitDialog =
                         MineExitDialog().newInstance(
                             "温馨提示",
@@ -177,6 +319,10 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                         )
                     dialog.setOkClickLister {
                         isposition = position
+                        mViewModel.releasebind(
+                            channelX.id!!,
+                            channeAdapter?.getItem(position)?.id!!,
+                        )
                         dialog.dismiss()
 
 
@@ -190,6 +336,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
     }
 
     private fun initRecycleyView1() {
+
 
         channelXAdapter = object :
             BaseQuickAdapter<ChannelX?, BaseViewHolder>(R.layout.item_channel_shop),
@@ -234,6 +381,8 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
             }
             channelXAdapter.data.get(position)?.isselect = true
             channelXAdapter.notifyDataSetChanged()
+            channelX = channelXAdapter?.data?.get(position)!!
+            mViewModel.shop_list(channelX.id!!, shop?.id!!)
         }
 
 

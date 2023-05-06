@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hjq.bar.TitleBar
+
+
+        android:id="@+id/TitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        app:layout_constraintTop_toTopOf="parent"
+        app:leftIcon="@drawable/bar_arrows_left_white"
+        app:lineVisible="false"
+        app:rightTitleSize="@dimen/sp_36"
+        app:title="绑定抖音来客店铺"
+        app:titleColor="@color/white" />
+
+    <androidx.core.widget.NestedScrollView
+        app:layout_constraintBottom_toTopOf="@+id/tv_ok"
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        android:layout_margin="@dimen/dp_20"
+        app:layout_constraintTop_toBottomOf="@+id/TitleBar">
+
+        <com.hjq.shape.layout.ShapeLinearLayout
+            android:paddingBottom="@dimen/dp_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp_32"
+
+            android:paddingRight="@dimen/dp_32"
+            app:shape_radius="@dimen/dp_24"
+            app:shape_solidColor="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="@dimen/dp_34"
+
+                android:text="第一步 抖音来客授权"
+
+                android:textColor="@color/home_000000"
+
+                android:textSize="@dimen/sp_32"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_first_step"
+                android:lineSpacingMultiplier="1.2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:text="@string/first_step"
+                android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_28" />
+            <com.hjq.shape.layout.ShapeConstraintLayout
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                app:shape_radius="@dimen/dp_24"
+                app:shape_solidColor="#ECF5FF"
+                android:paddingBottom="@dimen/dp_20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_operator_name"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="@dimen/dp_34"
+
+                    android:text="所属服务商名称："
+
+                    android:textColor="@color/home_333333"
+
+                    android:textSize="@dimen/sp_32"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_operator_name1"
+                    android:textSize="@dimen/sp_28"
+                    android:textColor="@color/home_333333"
+                    android:text="xxxxxx有限公司"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_operator_name"
+                    android:layout_width="wrap_content"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tv_operator_name"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tv_selected_applications"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:textColor="@color/home_333333"
+
+                    android:textSize="@dimen/sp_32"
+                    android:textStyle="bold"
+                    android:text="选择应用："
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_operator_name"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_operator_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textSize="@dimen/sp_28"
+                    android:textColor="@color/home_333333"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tv_selected_applications"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_selected_applications"
+                    android:text="小喵来客"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tv_Industry_Dealer"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:textColor="@color/home_333333"
+
+                    android:textSize="@dimen/sp_32"
+                    android:textStyle="bold"
+                    android:text="授权行业："
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_selected_applications"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_selected_applications"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textSize="@dimen/sp_28"
+                    android:textColor="@color/home_333333"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tv_Industry_Dealer"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_Industry_Dealer"
+                    android:text="到店餐饮解决方案"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tv_scope"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:textColor="@color/home_333333"
+
+                    android:textSize="@dimen/sp_32"
+                    android:textStyle="bold"
+                    android:text="授权范围："
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_Industry_Dealer"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_Industry_Dealer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tv_tv_scope1"
+                    android:lineSpacingMultiplier="1.2"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:textSize="@dimen/sp_28"
+                    android:textColor="@color/home_333333"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tv_scope"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_scope"
+                    android:text="订单推送、门店管理、同步门店户、门店匹配、门店亮照、订单查询、商品查询、团购核销、团购核销对账"
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+                <com.hjq.shape.view.ShapeTextView
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:id="@+id/tv_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_22"
+                    android:layout_marginRight="@dimen/dp_24"
+                    android:layout_marginBottom="@dimen/dp_22"
+                    android:paddingLeft="@dimen/dp_22"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_22"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:text="复制"
+                    android:textColor="#8C8C8C"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tv_operator_name1"
+                    android:textSize="@dimen/dp_24"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_operator_name1"
+                    app:shape_radius="@dimen/dp_8"
+                    app:shape_strokeColor="#BFBFBF"
+                    app:shape_strokeWidth="1dp" />
+
+            </com.hjq.shape.layout.ShapeConstraintLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="@dimen/dp_34"
+
+                android:text="第二步 联系客服进行审核"
+
+                android:textColor="@color/home_000000"
+
+                android:textSize="@dimen/sp_32"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:text="@string/service"
+                android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_28" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="@dimen/dp_64"
+
+                android:text="第三步 授权信息填写"
+
+                android:textColor="@color/home_000000"
+
+                android:textSize="@dimen/sp_32"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:text="开通成功后，将抖音来客的账号ID填写至下方输入框"
+                android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_28" />
+            <TextView
+                android:drawableLeft="@drawable/icon_must_input"
+                android:id="@+id/tv_Store_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dp_30"
+                android:text="抖音来客账号ID："
+                android:textColor="@color/home_666666"
+                android:textSize="@dimen/sp_32"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.hjq.shape.view.ShapeEditText
+                android:id="@+id/et_bindTenant"
+                android:padding="@dimen/dp_24"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="#A8ABB2"
+                android:hint="请输入抖音来客的账号ID"
+                android:textColor="#8C8C8C"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_operator_name1"
+                android:textSize="@dimen/dp_32"
+                app:layout_constraintLeft_toRightOf="@+id/tv_operator_name1"
+                app:shape_radius="@dimen/dp_8"
+                app:shape_strokeColor="#DDDFE6"
+                app:shape_strokeWidth="1dp" />
+
+
+        </com.hjq.shape.layout.ShapeLinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+    <com.hjq.shape.view.ShapeButton
+        android:id="@+id/tv_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:shape_radius="10dp"
+        app:shape_solidColor="#FF4C4A" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

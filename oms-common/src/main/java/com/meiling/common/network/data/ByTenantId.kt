@@ -1,4 +1,5 @@
 package com.meiling.common.network.data
+
 import com.google.gson.annotations.SerializedName
 
 
@@ -8,5 +9,7 @@ data class ByTenantId(
     @SerializedName("poi")
     var poi: Int? = -1,//门店是否创建 1绑定;-1没绑定
     @SerializedName("shop")
-    var shop: Int? = -1//渠道是否创建 1绑定;-1没绑定
+    var shop: Int? = -1,//渠道是否创建 1绑定;-1没绑定
+    @SerializedName("isDyTenant")
+    var isDyTenant: Int? = -1//渠道是否创建 1绑定;-1没绑定
 )

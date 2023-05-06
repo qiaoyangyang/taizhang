@@ -7,10 +7,7 @@ import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
 import com.meiling.common.network.data.ShopBean
 import com.meiling.common.network.service.meService
-import com.meiling.oms.bean.BranchInformation
-import com.meiling.oms.bean.Channel
-import com.meiling.oms.bean.PoiVo
-import com.meiling.oms.bean.PoiVoBean
+import com.meiling.oms.bean.*
 import com.meiling.oms.service.branchInformationService
 
 class StoreManagementViewModel(application: Application) : BaseViewModel(application) {
@@ -73,23 +70,60 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
         request({ meService.citypoi() }, shopBean)
     }
 
-    var channel = BaseLiveData<Channel>()
+    var channel = BaseLiveData<ArrayList<ChannelX>>()
 
     //渠道获取数据
-    fun getShopAndChannelVO(id: String) {
-        request({ branchInformationService.getShopAndChannelVO(id) }, channel)
+    fun getShopAndChannelVO() {
+        request({ branchInformationService.getShopAndChannelVO() }, channel)
+    }
+    var channShop = BaseLiveData<ChannShopBean>()
+    //渠道获取数据
+    fun shop_list(channelId:String,poiId:String) {
+        request({ branchInformationService.shop_list(channelId,poiId) }, channShop)
     }
 
+
     //美图绑定
-    var urlauth = BaseLiveData<String>()
+    var urlauth = BaseLiveData<Unification>()
     fun urlauth(channelId: String, poiId: String, businessId: String) {
         request({ branchInformationService.urlauth(channelId, poiId, businessId) }, urlauth)
+    }
+    //抖音返回列表
+    var douyin = BaseLiveData<PageResult>()
+    fun douurlauth(channelId: String, poiId: String, selectText: String) {
+        request({ branchInformationService.douurlauth(channelId, poiId, selectText) }, douyin)
+    }
+    //抖音返回列表
+    var bindShop = BaseLiveData<String>()
+    fun bindShop(shopId: String,address:String,shopName:String,channelPoiId:String) {
+        request({ branchInformationService.bindShop(shopId,address ,shopName,channelPoiId) }, bindShop)
+    }
+    //解绑
+    var releasebind = BaseLiveData<String>()
+    fun releasebind(channelId: String,shopId:String) {
+        request({ branchInformationService.releasebind(channelId ,shopId) }, releasebind)
+    }
+    // 设置发货门店
+    var updateShop = BaseLiveData<String>()
+    fun updateShop(shopId: String,poiId:String) {
+        request({ branchInformationService.updateShop(shopId ,poiId) }, updateShop)
+    }
+
+    //抖音返回列表
+    var bindTenant = BaseLiveData<String>()
+    fun bindTenant(accountId: String) {
+        request({ branchInformationService.bindTenant(accountId) }, bindTenant)
     }
 
     //  删除门店
     var deletePoi = BaseLiveData<String>()
     fun deletePoi(poiId: String) {
         request({ branchInformationService.deletePoi(poiId) }, deletePoi)
+    }
+    //  是否绑定租户
+    var isTenant = BaseLiveData<Boolean>()
+    fun isTenant() {
+        request({ branchInformationService.isTenant() }, isTenant)
     }
 
 

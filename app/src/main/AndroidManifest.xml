@@ -171,6 +171,13 @@
             android:name=".activity.NewOrderChangeAddressMapActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.TiktokBindingActvity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BindingTiktokListActivity"
+
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.MessageCenterActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -221,6 +228,22 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.NotificationSettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.StoreManagementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NewlyBuiltStoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ChannelActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BaseWebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NoStoreActivity"
             android:screenOrientation="portrait" />
 
         <provider

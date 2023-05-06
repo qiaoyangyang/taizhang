@@ -100,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="gone">
+               >
 
                 <TextView
                     android:id="@+id/txt_Store_management"
@@ -113,22 +113,22 @@
                     android:textColor="@color/home_333333"
                     android:textSize="@dimen/sp_32"
                     app:drawableStartCompat="@drawable/my_shop" />
-
                 <com.hjq.shape.view.ShapeTextView
+                    android:visibility="gone"
                     android:id="@+id/tv_isStore_management"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dp_14"
                     android:paddingLeft="@dimen/dp_10"
-                    android:paddingTop="@dimen/dp_2"
                     android:paddingRight="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_2"
                     android:paddingBottom="@dimen/dp_2"
-                    android:text="待完善"
-                    android:textColor="@color/white"
                     android:textSize="@dimen/sp_22"
+                    app:shape_solidColor="@color/red"
                     app:shape_radius="@dimen/dp_10"
-                    app:shape_solidColor="@color/red" />
+                    android:textColor="@color/white"
+                    android:text="待完善"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <LinearLayout
@@ -136,7 +136,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="gone">
+               >
 
                 <TextView
                     android:id="@+id/txt_channel"
@@ -215,19 +215,20 @@
 
                 <com.hjq.shape.view.ShapeTextView
                     android:id="@+id/tv_isLogistics_binding"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dp_14"
+                    android:layout_gravity="center"
                     android:paddingLeft="@dimen/dp_10"
-                    android:paddingTop="@dimen/dp_2"
                     android:paddingRight="@dimen/dp_10"
+                    android:visibility="gone"
+                    android:paddingTop="@dimen/dp_2"
                     android:paddingBottom="@dimen/dp_2"
-                    android:text="待完善"
-                    android:textColor="@color/white"
                     android:textSize="@dimen/sp_22"
+                    app:shape_solidColor="@color/red"
                     app:shape_radius="@dimen/dp_10"
-                    app:shape_solidColor="@color/red" />
+                    android:textColor="@color/white"
+                    android:text="待完善"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <TextView
