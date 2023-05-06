@@ -1,4 +1,5 @@
 package com.meiling.oms.bean
+
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.google.gson.annotations.SerializedName
@@ -83,12 +84,13 @@ data class BranchInformationContent(
     @SerializedName("viewId")
     var viewId: Long? = 0
 )
+
 data class PoiVoBean(
 
     @SerializedName("poiVo")
     var poiVo: PoiVo? = PoiVo(),
 
-)
+    )
 
 data class PoiVo(
     @SerializedName("address")
@@ -196,7 +198,7 @@ data class ChannShopBean(
     @SerializedName("data")
     var data: List<ChannShop?>? = listOf(),
 
-)
+    )
 
 data class ChannShop(
     @SerializedName("channelId")
@@ -236,13 +238,17 @@ data class ChannShop(
     @SerializedName("thirdInventoryUrl")
     var thirdInventoryUrl: Any? = Any(),
     @SerializedName("viewId")
-    var viewId: String? = ""
+    var viewId: String? = "",
+    @SerializedName("mtModel")
+    var mtModel: Int? = 0
 )
+
 data class Unification(
     @SerializedName("url")
     var url: String? = ""
 
 )
+
 data class PageResult(
     @SerializedName("pageResult")
     var pageResult: PageResultX? = PageResultX()

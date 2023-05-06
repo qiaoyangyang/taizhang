@@ -146,6 +146,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
             disLoading()
             channeAdapter.removeAt(isposition)
             channeAdapter.notifyDataSetChanged()
+
         }
         mViewModel.releasebind.onError.observe(this) {
 
@@ -272,6 +273,11 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
             ) {
                 holder.setText(R.id.tv_name_t, "三方平台名称:" + item?.name)
                 holder.setText(R.id.tv_channel_id, "三方平台名称:" + item?.channelShopId)
+                if (item?.mtModel==2){
+                    holder.setGone(R.id.s_status,false);
+                }else{
+                    holder.setGone(R.id.s_status,true);
+                }
 
 
             }
@@ -304,8 +310,6 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                                 return
                             }
                             mViewModel.updateShop(channeAdapter.getItem(position)?.id!!, sho?.id!!)
-                            //shop = sho
-                            // mDatabind.TitleBar.titleView.text = cityidname + "/" + sho.name
 
                         }
 
