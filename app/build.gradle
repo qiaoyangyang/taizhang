@@ -135,4 +135,6 @@ dependencies {
     //鸿洋okhttputils
     implementation 'com.zhy:okhttputils:2.6.2'
 
+    implementation 'com.romandanylyk:pageindicatorview:1.0.3'
+
 }

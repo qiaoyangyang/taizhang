@@ -86,34 +86,13 @@ public class SpannableUtils {
         textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    public static void setTiktokBindingTextcolor(Context context, String content, TextView textView, int ling, int begin, int color, int i) {
+    public static void setTiktokBindingTextcolor(Context context, String content, TextView textView, int ling, int begin, int color, int i,ontestonClick ontestonClick) {
         SpannableStringBuilder builder = new SpannableStringBuilder(content);
         builder.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-                if (i == 1) {
-                    XXPermissions.with(context).permission(Permission.CALL_PHONE).request(new OnPermissionCallback() {
-                        @Override
-                        public void onGranted(@NonNull List<String> permissions, boolean allGranted) {
-                            dialPhoneNumber("15535958281", context);
-                        }
+                ontestonClick.ononClick(i);
 
-                        @Override
-                        public void onDenied(@NonNull List<String> permissions, boolean doNotAskAgain) {
-                            if (doNotAskAgain) {
-                                // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                                XXPermissions.startPermissionActivity(context, permissions);
-                            } else {
-                               // showToast("授权失败，请检查权限");
-                                //Toast.makeText(context,"授权失败，请检查权限");
-                            }
-                        }
-                    });
-
-
-                } else {
-
-                }
             }
 
             @Override
@@ -137,5 +116,8 @@ public class SpannableUtils {
 
     }
 
+    public interface ontestonClick{
+        public void ononClick(int type);
+    }
 
 }

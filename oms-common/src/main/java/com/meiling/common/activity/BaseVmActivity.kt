@@ -237,7 +237,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
         }
     }
 
-    open fun setContentView(){
+    open fun setContentView(){}
 
     override fun onResume() {
         super.onResume()
@@ -251,7 +251,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
     }
 
-    }
+
 
     /**
      * 隐藏软键盘

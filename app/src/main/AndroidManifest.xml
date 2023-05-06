@@ -229,6 +229,10 @@
         <activity
             android:name=".activity.NoStoreActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ImageActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" /> <!-- 查看大图 -->
 
         <provider
             android:name="androidx.core.content.FileProvider"
