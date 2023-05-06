@@ -50,5 +50,6 @@
     <color name="textColor">#333333</color>
     <color name="textColorHint">#757575</color>
 
-
+    <!-- 透明色 -->
+    <color name="transparent">#00000000</color>
 </resources>
