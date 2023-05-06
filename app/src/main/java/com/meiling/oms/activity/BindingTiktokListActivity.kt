@@ -3,8 +3,11 @@ package com.meiling.oms.activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -32,13 +35,18 @@ class BindingTiktokListActivity :
     override fun initView(savedInstanceState: Bundle?) {
         initRecycleyView()
         mDatabind.tvOk.setOnClickListener {
-           //
+            //
             if (tiktokData != null) {
-                mViewModel.bindShop(poiId ,tiktokData?.address!!,tiktokData?.poiName!!,tiktokData.poiId!!)
+                mViewModel.bindShop(
+                    poiId,
+                    tiktokData?.address!!,
+                    tiktokData?.poiName!!,
+                    tiktokData.poiId!!
+                )
             }
         }
         mDatabind.btnSearch.setOnClickListener {
-            if (TextUtils.isEmpty(mDatabind.edtSearch.text.toString())){
+            if (TextUtils.isEmpty(mDatabind.edtSearch.text.toString())) {
 
                 return@setOnClickListener
             }
@@ -58,6 +66,23 @@ class BindingTiktokListActivity :
             }
             return@setOnEditorActionListener false
         }
+        mDatabind.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (TextUtils.isEmpty(mDatabind.edtSearch.text.toString())) {
+                    mDatabind.imgSearchEditClear.visibility=View.GONE
+                } else {
+                    mDatabind.imgSearchEditClear.visibility=View.VISIBLE
+
+                }
+            }
+
+        })
 
 
     }
@@ -71,7 +96,7 @@ class BindingTiktokListActivity :
         poiId = intent.getStringExtra("poiId").toString()
         channename = intent.getStringExtra("channename").toString()
         mViewModel.douurlauth(channelId, poiId, "")
-        mDatabind.TitleBar.title="绑定${channename}店铺"
+        mDatabind.TitleBar.title = "绑定${channename}店铺"
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityBindingTiktokBinding {
@@ -99,10 +124,10 @@ class BindingTiktokListActivity :
                     holder.setGone(R.id.s_status, true)
                 }
                 if (item?.isstatus == true) {
-                    holder.setBackgroundResource(R.id.scbg,R.drawable.bg_true)
+                    holder.setBackgroundResource(R.id.scbg, R.drawable.bg_true)
                     holder.setBackgroundResource(R.id.iv_status, R.drawable.ic_spu_true)
                 } else {
-                    holder.setBackgroundResource(R.id.scbg,R.drawable.bg_fase)
+                    holder.setBackgroundResource(R.id.scbg, R.drawable.bg_fase)
                     holder.setBackgroundResource(R.id.iv_status, R.drawable.ic_spu_fase1)
                 }
 
@@ -137,24 +162,24 @@ class BindingTiktokListActivity :
 
     override fun createObserver() {
         super.createObserver()
-        mViewModel.douyin.onStart.observe(this){
+        mViewModel.douyin.onStart.observe(this) {
             showLoading("")
         }
         mViewModel.douyin.onSuccess.observe(this) {
             disLoading()
             bindingTiktokAdapter.setList(it.pageResult?.pageData)
         }
-        mViewModel.douyin.onError.observe(this){
+        mViewModel.douyin.onError.observe(this) {
             disLoading()
         }
-        mViewModel.bindShop.onStart.observe(this){
+        mViewModel.bindShop.onStart.observe(this) {
             showLoading("")
         }
-        mViewModel.bindShop.onSuccess.observe(this){
+        mViewModel.bindShop.onSuccess.observe(this) {
             disLoading()
             startActivity(Intent(this, ChannelActivity::class.java))
         }
-        mViewModel.bindShop.onError.observe(this){
+        mViewModel.bindShop.onError.observe(this) {
             disLoading()
             showToast(it.msg)
         }

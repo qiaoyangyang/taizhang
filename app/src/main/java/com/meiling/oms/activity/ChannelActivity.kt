@@ -251,6 +251,9 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         mViewModel.urlauth.onSuccess.observe(this) {
             startActivity(Intent(this, BaseWebActivity::class.java).putExtra("url", it.url))
         }
+        mViewModel.urlauth.onError.observe(this){
+            showToast(it.msg)
+        }
 
 
     }
@@ -296,6 +299,10 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                             shopid: Int,
                             sho: Shop
                         ) {
+                            if (shop?.id==sho.id){
+                                showToast("已经是当前门店啦，请重新选择门店或关闭窗口")
+                                return
+                            }
                             mViewModel.updateShop(channeAdapter.getItem(position)?.id!!, sho?.id!!)
                             //shop = sho
                             // mDatabind.TitleBar.titleView.text = cityidname + "/" + sho.name
