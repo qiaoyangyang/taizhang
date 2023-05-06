@@ -52,6 +52,8 @@ class AccountSelectCityDialog : BaseNiceDialog() {
     }
 
     var pageIndex = 1
+    var cityPoiDtoList = ArrayList<CityPoiDto>()
+    @SuppressLint("NotifyDataSetChanged")
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
         var rvSelect = holder?.getView<RecyclerView>(R.id.rv_shop_or_city)
         var btnSelect = holder?.getView<ShapeButton>(R.id.btn_ok_select_shop_city)
@@ -60,15 +62,8 @@ class AccountSelectCityDialog : BaseNiceDialog() {
         var llSelectAll = holder?.getView<LinearLayout>(R.id.ll_select_all)
         var title = holder?.getView<TextView>(R.id.txt_title_item_city)
         title?.text = arguments?.getString("title")
+        var selectNum = holder?.getView<TextView>(R.id.txt_select_shop_or_city)
 
-//        btnSelect?.setOnClickListener {
-//            var shop = selectItemBean[selectView?.selectedIndex!!]
-//            okSelectItemClickLister?.invoke(
-//                shop.id,
-//                shop.name,
-//            )
-//            dismiss()
-//        }
         close?.setOnClickListener {
             dismiss()
         }
@@ -91,6 +86,7 @@ class AccountSelectCityDialog : BaseNiceDialog() {
         }
 
         rvSelect?.adapter = rvSelectAdapter
+        selectNum?.text = "已选择${rvSelectAdapter.data.count { it.isSelect }}个城市"
         rvSelectAdapter.setOnItemClickListener { adapter, view, position ->
             (rvSelectAdapter.data[position] as CreateShopBean).isSelect =
                 !(rvSelectAdapter.data[position] as CreateShopBean).isSelect
@@ -98,9 +94,11 @@ class AccountSelectCityDialog : BaseNiceDialog() {
 
             if (rvSelectAdapter.data.all { it.isSelect }) {
                 isSelectAll = true
+                selectNum?.text = "已选择全部门店"
                 ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_true))
             } else {
                 isSelectAll = false
+                selectNum?.text = "已选择${rvSelectAdapter.data.count { it.isSelect }}个门店"
                 ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_false))
             }
 
@@ -114,14 +112,38 @@ class AccountSelectCityDialog : BaseNiceDialog() {
                     ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_false))
                     rvSelectAdapter.notifyDataSetChanged()
                 }
+                selectNum?.text = "已选择${rvSelectAdapter.data.count { it.isSelect }}个城市"
             } else {
                 isSelectAll = true
+                selectNum?.text = "全部城市"
                 for (item in rvSelectAdapter.data) {
                     item.isSelect = true
                     ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_true))
                     rvSelectAdapter.notifyDataSetChanged()
                 }
             }
+        }
+
+
+
+        btnSelect?.setOnClickListener {
+
+            for (item in rvSelectAdapter.data) {
+                if (item.isSelect) {
+                    cityPoiDtoList.add(
+                        CityPoiDto(
+                            cityIds = item.id,
+                            poiIds = item.shopList?.get(0)!!.id.toString()
+                        )
+                    )
+                }
+            }
+            if (cityPoiDtoList.isNullOrEmpty()) {
+                showToast("请选择城市")
+                return@setOnClickListener
+            }
+            okSelectItemCityClickLister?.invoke(cityPoiDtoList, selectNum?.text.toString())
+            dismiss()
         }
         initData()
     }
@@ -142,8 +164,10 @@ class AccountSelectCityDialog : BaseNiceDialog() {
         }
     }
 
-    var okSelectItemClickLister: ((id: String, name: String) -> Unit)? = null
-    fun setOkClickItemLister(okClickLister: (id: String, name: String) -> Unit) {
-        this.okSelectItemClickLister = okClickLister
+    private var okSelectItemCityClickLister: ((cityDialog: ArrayList<CityPoiDto>, selectNum: String) -> Unit)? =
+        null
+
+    fun setOkClickItemCityLister(okClickLister: (cityDialog: ArrayList<CityPoiDto>, selectNum: String) -> Unit) {
+        this.okSelectItemCityClickLister = okClickLister
     }
 }

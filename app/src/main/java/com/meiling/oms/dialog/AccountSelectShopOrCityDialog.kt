@@ -55,6 +55,7 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
         var ivSelectAll = holder?.getView<ImageView>(R.id.img_select_all)
         var llSelectAll = holder?.getView<LinearLayout>(R.id.ll_select_all)
         var title = holder?.getView<TextView>(R.id.txt_title_item_city)
+        var selectNum = holder?.getView<TextView>(R.id.txt_select_shop_or_city)
         title?.text = arguments?.getString("title")
 
         close?.setOnClickListener {
@@ -78,37 +79,24 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
 
         }
 
-
+        selectNum?.text = "已选择${rvSelectAdapter.data.count { it.isSelect }}个门店"
         rvSelect?.adapter = rvSelectAdapter
         rvSelectAdapter.setOnItemClickListener { adapter, view, position ->
             (rvSelectAdapter.data[position] as PoiContentList).isSelect =
                 !(rvSelectAdapter.data[position] as PoiContentList).isSelect
             rvSelectAdapter.notifyItemChanged(position)
-            if ((rvSelectAdapter.data[position] as PoiContentList).isSelect) {
-                arrayList.add(ShopPoiDto(poiIds = (rvSelectAdapter.data[position] as PoiContentList).id))
-            } else {
-                arrayList.remove(ShopPoiDto(poiIds = (rvSelectAdapter.data[position] as PoiContentList).id))
-            }
 
             if (rvSelectAdapter.data.all { it.isSelect }) {
                 isSelectAll = true
+                selectNum?.text = "已选择全部门店"
                 ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_true))
             } else {
                 isSelectAll = false
+                selectNum?.text = "已选择${rvSelectAdapter.data.count { it.isSelect }}个门店"
                 ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_false))
             }
 
         }
-
-
-        btnSelect?.setOnClickListener {
-            okSelectItemClickLister?.invoke(
-                arrayList,
-                "0",
-            )
-            dismiss()
-        }
-
         llSelectAll?.setOnClickListener {
             if (isSelectAll) {
                 isSelectAll = false
@@ -117,8 +105,10 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
                     ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_false))
                     rvSelectAdapter.notifyDataSetChanged()
                 }
+                selectNum?.text = "已选择${rvSelectAdapter.data.count { it.isSelect }}个门店"
             } else {
                 isSelectAll = true
+                selectNum?.text = "已选择全部门店"
                 for (item in rvSelectAdapter.data) {
                     item.isSelect = true
                     ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_true))
@@ -126,6 +116,34 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
                 }
             }
         }
+        var isSelect = "0"
+        btnSelect?.setOnClickListener {
+            if (isSelectAll) {
+                isSelect = "1"
+                arrayList = arrayListOf()
+
+            } else {
+                isSelect = "0"
+                for (item in rvSelectAdapter.data) {
+                    if (item.isSelect) {
+                        arrayList.add(ShopPoiDto(poiIds = item.id))
+                    }
+                }
+            }
+
+            if (isSelect == "0" && arrayList.isNullOrEmpty()) {
+                showToast("请选择门店")
+                return@setOnClickListener
+            }
+
+            okSelectItemClickLister?.invoke(
+                arrayList,
+                isSelect,
+            )
+            dismiss()
+        }
+
+
         initData()
     }
 
@@ -133,8 +151,7 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
     fun initData() {
         var createSelectPoiDto = BaseLiveData<CreateSelectPoiDto>()
         BaseViewModel(Application()).request(
-            { accountService.getPoiList(1, "10") },
-            createSelectPoiDto
+            { accountService.getPoiList(1, "10") }, createSelectPoiDto
         )
 //        rvSelectAdapter.loadMoreModule.loadMoreView = SS()
 //        rvSelectAdapter.loadMoreModule.setOnLoadMoreListener {
@@ -145,8 +162,7 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
 //            )
 //        }
         BaseViewModel(Application()).request(
-            { accountService.getPoiList(1, "100") },
-            createSelectPoiDto
+            { accountService.getPoiList(1, "100") }, createSelectPoiDto
         )
         createSelectPoiDto.onSuccess.observe(this) {
             rvSelectAdapter.setList(it.content as MutableList<PoiContentList>)
@@ -170,8 +186,7 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
 //                rvSelectAdapter.loadMoreModule.loadMoreComplete()
 //            }
         }
-        createSelectPoiDto.onStart.observe(this) {
-        }
+        createSelectPoiDto.onStart.observe(this) {}
         createSelectPoiDto.onError.observe(this) {
             showToast(it.msg)
         }

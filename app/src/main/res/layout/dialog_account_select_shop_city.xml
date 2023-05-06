@@ -39,7 +39,7 @@
         android:layout_alignBottom="@+id/ll_select_all"
         android:layout_marginHorizontal="@dimen/dp_20"
         android:gravity="center_vertical"
-        android:text="已选择4个门店"
+        tools:text="已选择4个门店"
         android:textColor="#ff333333"
         android:textSize="@dimen/sp_32" />
 

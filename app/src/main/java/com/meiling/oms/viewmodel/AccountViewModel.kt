@@ -3,9 +3,7 @@ package com.meiling.oms.viewmodel
 import android.app.Application
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
-import com.meiling.common.network.data.AccountListDto
-import com.meiling.common.network.data.ReqCreateAccount
-import com.meiling.common.network.data.RequestAccount
+import com.meiling.common.network.data.*
 import com.meiling.common.network.service.accountService
 
 class AccountViewModel(application: Application) : BaseViewModel(application) {
@@ -14,6 +12,8 @@ class AccountViewModel(application: Application) : BaseViewModel(application) {
      * */
     var accountListDto = BaseLiveData<AccountListDto>()
     var disableAccount = BaseLiveData<Any>()
+    var roleListDto = BaseLiveData<ArrayList<RoleListDto>>()
+    var accountDetailDto = BaseLiveData<AccountDetailDto>()
     fun getAccountList(requestAccount: RequestAccount) {
         request({ accountService.orderStatus(requestAccount) }, accountListDto)
     }
@@ -29,6 +29,23 @@ class AccountViewModel(application: Application) : BaseViewModel(application) {
     fun saveAndUpdate(reqCreateAccount: ReqCreateAccount) {
         request({ accountService.saveAndUpdate(reqCreateAccount) }, disableAccount)
     }
+
+    fun checkAccountPhone(reqCreateAccount: String) {
+        request({ accountService.checkAccountPhone(reqCreateAccount) }, disableAccount)
+    }
+
+    fun checkAccount(reqCreateAccount: String) {
+        request({ accountService.checkAccount(reqCreateAccount) }, disableAccount)
+    }
+
+    fun userDetail(adminUserId: String) {
+        request({ accountService.userDetail(adminUserId) }, accountDetailDto)
+    }
+
+    fun roleList() {
+        request({ accountService.roleList() }, roleListDto)
+    }
+
 
 }
 
