@@ -184,14 +184,16 @@
             android:shadowColor="@color/home_333333"
             android:singleLine="true"
             android:text="获取验证码"
-            android:textColor="@color/white"
+            android:textColor="@color/red"
             android:textColorHint="@color/home_999999"
-            android:textSize="@dimen/sp_25"
+            android:textSize="@dimen/sp_28"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shape_radius="@dimen/dp_100"
-            app:shape_solidColor="@color/red"
+            app:shape_solidColor="@color/white"
+            app:shape_strokeColor="@color/red"
+            app:shape_strokeWidth="@dimen/dp_2"
             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
         <ImageView

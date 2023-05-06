@@ -76,7 +76,7 @@
             android:shadowColor="@color/home_666666"
             android:text="取消"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_25"
+            android:textSize="@dimen/sp_32"
             app:shape_radius="@dimen/sp_15"
             app:shape_solidColor="@color/white"
             app:shape_strokeColor="@color/toast_rec_DDDDDD"
@@ -94,7 +94,7 @@
             android:shadowColor="@color/home_666666"
             android:text="确认"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_25"
+            android:textSize="@dimen/sp_32"
             app:shape_radius="@dimen/sp_15"
             app:shape_solidColor="@color/red" />
     </LinearLayout>

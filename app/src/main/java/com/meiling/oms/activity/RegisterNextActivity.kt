@@ -3,15 +3,23 @@ package com.meiling.oms.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.CompoundButton
+import android.widget.EditText
+import android.widget.Toast
+import com.blankj.utilcode.util.ActivityUtils
 import com.gyf.immersionbar.ImmersionBar
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import com.meiling.common.activity.BaseVmActivity
+import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.Children
 import com.meiling.common.network.service.loginService
 import com.meiling.common.utils.GlideAppUtils
@@ -20,8 +28,10 @@ import com.meiling.common.view.ArrowPopupWindow
 import com.meiling.common.view.ArrowTiedPopupWindow
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityRegisterNextBinding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.SelectIndustryShopDialog
 import com.meiling.oms.viewmodel.RegisterViewModel
+import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import com.wayne.constraintradiogroup.ConstraintRadioGroup
 import okhttp3.MediaType
@@ -37,6 +47,27 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     var phone: String? = ""
     override fun initView(savedInstanceState: Bundle?) {
            ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
+    }
+
+    override fun onLeftClick(view: View) {
+        val dialog: MineExitDialog =
+            MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
+        dialog.setOkClickLister {
+            dialog.dismiss()
+            startActivity(Intent(this,LoginActivity::class.java))
+            ActivityUtils.finishAllActivities()
+        }
+        dialog.show(supportFragmentManager)
+    }
+    override fun onBackPressed() {
+        val dialog: MineExitDialog =
+            MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
+        dialog.setOkClickLister {
+            dialog.dismiss()
+            startActivity(Intent(this,LoginActivity::class.java))
+            ActivityUtils.finishAllActivities()
+        }
+        dialog.show(supportFragmentManager)
     }
 
     override fun initDataBind() {
@@ -77,7 +108,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         mDatabind.tips3.setOnClickListener {
             var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
             mpup.apply {
-                setBackground(R.color.zxing_transparent, 5f, 0, 10)
+                setBackground(R.color.zxing_transparent, 1f, 0, 10)
                 setArrow(R.color.black, 1f, ArrowPopupWindow.ArrowSize.BIGGER)
                 setPopupView(layoutInflater.inflate(R.layout.pup_layout3, null))
                 setTiedView(mDatabind.tips3, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
@@ -118,9 +149,30 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             )
         }
         mDatabind.txtAddImg.setOnClickListener {
-            GlideAppUtils.loadResUrl(mDatabind.addImg, R.mipmap.default_logo)
+            mDatabind.addImg.visibility=View.GONE
+            mDatabind.addImg2.visibility=View.VISIBLE
+            mDatabind.closeImg.visibility=View.GONE
+            mDatabind.closeImg2.visibility=View.VISIBLE
             mViewModel.businessDto.value!!.logo = "https://static.igoodsale.com/default-logo-header.png"
         }
+
+        mDatabind.closeImg.setOnClickListener {
+            GlideAppUtils.loadResUrl(mDatabind.addImg, R.mipmap.addimg)
+            mDatabind.addImg.visibility=View.VISIBLE
+            mDatabind.addImg2.visibility=View.GONE
+            mDatabind.closeImg.visibility=View.GONE
+            mDatabind.closeImg2.visibility=View.GONE
+            mViewModel.businessDto.value!!.logo =""
+        }
+        mDatabind.closeImg2.setOnClickListener {
+            GlideAppUtils.loadResUrl(mDatabind.addImg, R.mipmap.addimg)
+            mDatabind.addImg.visibility=View.VISIBLE
+            mDatabind.addImg2.visibility=View.GONE
+            mDatabind.closeImg.visibility=View.GONE
+            mDatabind.closeImg2.visibility=View.GONE
+            mViewModel.businessDto.value!!.logo =""
+        }
+
         //选择图片
         mDatabind.addImg.setOnClickListener {
             PictureSelector.create(this)
@@ -151,6 +203,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                                 },
                                 onSuccess = {
                                     showToast("上传成功")
+                                    mDatabind.closeImg.visibility=View.VISIBLE
                                     mViewModel.businessDto.value!!.logo = it
                                 },
                                 onError = {
@@ -209,6 +262,14 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                         mDatabind.txtShopName2.visibility = View.VISIBLE
                         mDatabind.edtShopName.visibility = View.VISIBLE
                         mViewModel.businessDto.value?.tenantType="1"
+                        mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
+                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType1()})
+                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
+                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
+                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType1()})
+                        if(tenantType1()){
+                            mDatabind.btnNext.setBackgroundResource(R.drawable.login_btn_select_true)
+                        }
                     }
                     if (checkedButton.id == R.id.checkPerson) {
                         mDatabind.txtOperateType.visibility = View.GONE
@@ -219,9 +280,16 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                         mDatabind.txtShopName.visibility = View.GONE
                         mDatabind.txtShopName2.visibility = View.GONE
                         mDatabind.edtShopName.visibility = View.GONE
-                        mViewModel.businessDto.value!!.isChain = ""
-                        mViewModel.businessDto.value!!.enterpriseName = ""
+//                        mViewModel.businessDto.value!!.isChain = ""
+//                        mViewModel.businessDto.value!!.enterpriseName = ""
                         mViewModel.businessDto.value?.tenantType="2"
+                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType2()})
+                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType2()})
+                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType2()})
+                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType2()})
+                        if(tenantType2()){
+                            mDatabind.btnNext.setBackgroundResource(R.drawable.login_btn_select_true)
+                        }
                     }
                     if (checkedButton.id == R.id.checkOther) {
                         mDatabind.txtOperateType.visibility = View.VISIBLE
@@ -232,58 +300,72 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                         mDatabind.txtShopName.visibility = View.GONE
                         mDatabind.txtShopName2.visibility = View.GONE
                         mDatabind.edtShopName.visibility = View.GONE
-                        mViewModel.businessDto.value!!.enterpriseName = ""
+//                        mViewModel.businessDto.value!!.enterpriseName = ""
                         mViewModel.businessDto.value?.tenantType="3"
+                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType2()})
+                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType2()})
+                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType2()})
+                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType2()})
+                        if(tenantType2()){
+                            mDatabind.btnNext.setBackgroundResource(R.drawable.login_btn_select_true)
+                        }
                     }
 
                 }
 
             }
 
+        mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
+        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType1()})
+        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
+        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
+        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType1()})
+
         //注册
-        mDatabind.btnNext.setOnClickListener {
+        mDatabind.btnNext.setSingleClickListener(1000) {
+
             mViewModel.businessDto.value!!.phone = this@RegisterNextActivity.phone
 
             if (mViewModel.businessDto.value!!.tenantType == "1") {
                 if (mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()) {
                     showToast("企业名称未填写")
-                    return@setOnClickListener
+                    return@setSingleClickListener
                 }
             }
             if (mViewModel.businessDto.value!!.tenantName.isNullOrBlank()) {
                 showToast("品牌名称未填写")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.logo.isNullOrBlank()) {
                 showToast("品牌LOGO未上传")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()) {
                 showToast("所属行业未选择")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()) {
                 showToast("管理员姓名未填写")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.userName.isNullOrBlank()) {
                 showToast("登录账号未填写")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.password.isNullOrBlank()) {
                 showToast("登录密码未填写")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (mViewModel.businessDto.value!!.password?.trim().toString()
                     .toString().length > 20 || mViewModel.businessDto.value!!.password?.trim().toString()
                     .toString().length < 8
             ) {
                 showToast("密码长度需要在8-20位字符之间")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (!isPasswordValid(mViewModel.businessDto.value!!.password?.trim().toString())) {
                 showToast("密码不能是纯数字/纯字母/纯字符")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
 
             //校验账户名
@@ -300,6 +382,24 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
         }
 
+    }
+
+    fun tenantType1():Boolean{
+        return !mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.tenantName.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.logo.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.password.isNullOrBlank()
+    }
+    fun tenantType2():Boolean{
+        return !mViewModel.businessDto.value!!.tenantName.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.logo.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.password.isNullOrBlank()
     }
 
     private fun isPasswordValid(password: String): Boolean {
@@ -333,13 +433,15 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         showLoading("")
 
         mViewModel.launchRequest(
-            { loginService.save(mViewModel.businessDto.value!!) },
+            {
+                loginService.save(mViewModel.businessDto.value!!)
+            },
             onSuccess = {
                 disLoading()
                 //成功会返回组合id
                 startActivity(Intent(this,
                     BindingLogisticsActivity::class.java)
-                    .putExtra("tenantId", it)
+                    .putExtra("tenantId", it!!.tenantId)
                     .putExtra("account",mViewModel.businessDto.value!!.userName?.trim().toString())
                     .putExtra("pwd",mViewModel.businessDto.value!!.password?.trim().toString())
                     .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
@@ -361,4 +463,21 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     }
 
 
+}
+
+fun Button.falseBackground(et: EditText, method:()->Boolean){
+    val btn=this
+    et.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if(method()){
+                btn.setBackgroundResource(R.drawable.login_btn_select_true)
+            }else{
+                btn.setBackgroundResource(R.drawable.login_btn_select_false)
+            }
+        }
+    })
 }

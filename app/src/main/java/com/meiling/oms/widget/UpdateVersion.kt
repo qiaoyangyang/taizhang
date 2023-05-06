@@ -11,7 +11,9 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import com.blankj.utilcode.util.SPStaticUtils
 import com.google.gson.Gson
+import com.meiling.common.constant.SPConstants
 import com.meiling.oms.BuildConfig
 import com.meiling.oms.R
 import com.meiling.oms.UpdateAppHttpUtil
@@ -32,7 +34,7 @@ object UpdateVersion {
         map.put("appId", "1")
         UpdateAppManager.Builder().setActivity(context)
             .setHttpManager(UpdateAppHttpUtil())
-            .setUpdateUrl("http://dev-oms-api.igoodsale.com/saas/Version/CheckUpdate")
+            .setUpdateUrl(SPStaticUtils.getString(SPConstants.IP, "https://ods-api.igoodsale.com")+"/saas/Version/CheckUpdate")
             .setPost(true)
             .setParams(map)
             .build()
