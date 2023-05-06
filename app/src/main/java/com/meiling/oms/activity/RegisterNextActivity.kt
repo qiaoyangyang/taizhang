@@ -4,9 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.CompoundButton
+import android.widget.EditText
 import android.widget.Toast
 import com.gyf.immersionbar.ImmersionBar
 import com.luck.picture.lib.PictureSelector
@@ -243,9 +247,14 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                         mDatabind.txtShopName.visibility = View.GONE
                         mDatabind.txtShopName2.visibility = View.GONE
                         mDatabind.edtShopName.visibility = View.GONE
-                        mViewModel.businessDto.value!!.isChain = ""
-                        mViewModel.businessDto.value!!.enterpriseName = ""
+//                        mViewModel.businessDto.value!!.isChain = ""
+//                        mViewModel.businessDto.value!!.enterpriseName = ""
                         mViewModel.businessDto.value?.tenantType="2"
+                        mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
+                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType1()})
+                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
+                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
+                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType1()})
                     }
                     if (checkedButton.id == R.id.checkOther) {
                         mDatabind.txtOperateType.visibility = View.VISIBLE
@@ -256,13 +265,19 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                         mDatabind.txtShopName.visibility = View.GONE
                         mDatabind.txtShopName2.visibility = View.GONE
                         mDatabind.edtShopName.visibility = View.GONE
-                        mViewModel.businessDto.value!!.enterpriseName = ""
+//                        mViewModel.businessDto.value!!.enterpriseName = ""
                         mViewModel.businessDto.value?.tenantType="3"
+                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType2()})
+                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType2()})
+                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType2()})
+                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType2()})
                     }
 
                 }
 
             }
+
+
 
         //注册
         mDatabind.btnNext.setSingleClickListener(1000) {
@@ -327,6 +342,24 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
     }
 
+    fun tenantType1():Boolean{
+        return !mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.tenantName.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.logo.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.password.isNullOrBlank()
+    }
+    fun tenantType2():Boolean{
+        return !mViewModel.businessDto.value!!.tenantName.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.logo.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
+                &&!mViewModel.businessDto.value!!.password.isNullOrBlank()
+    }
+
     private fun isPasswordValid(password: String): Boolean {
 
         Log.d("lwq", "=========1111${password}")
@@ -358,7 +391,9 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         showLoading("")
 
         mViewModel.launchRequest(
-            { loginService.save(mViewModel.businessDto.value!!) },
+            {
+                loginService.save(mViewModel.businessDto.value!!)
+            },
             onSuccess = {
                 disLoading()
                 //成功会返回组合id
@@ -386,4 +421,21 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     }
 
 
+}
+
+fun Button.falseBackground(et: EditText, method:()->Boolean){
+    val btn=this
+    et.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if(method()){
+                btn.setBackgroundResource(R.drawable.login_btn_select_true)
+            }else{
+                btn.setBackgroundResource(R.drawable.login_btn_select_false)
+            }
+        }
+    })
 }
