@@ -57,9 +57,9 @@ class NewlyBuiltStoreActivity :
             lat = data.getStringExtra("lat").toString()
             address = data.getStringExtra("address").toString()
             poiItem = data.getParcelableExtra("poiItem")
-            provinceCode=poiItem?.provinceCode!!
-            adCode=poiItem?.adCode!!
-            cityName=poiItem?.cityName!!
+            provinceCode = poiItem?.provinceCode!!
+            adCode = poiItem?.adCode!!
+            cityName = poiItem?.cityName!!
             mDatabind.etStoreAddress.text = address
         }
     }
@@ -198,16 +198,16 @@ class NewlyBuiltStoreActivity :
         }
         mViewModel.poidata.onSuccess.observe(this) {
             disLoading()
-            val x = it.poiVo?.address!!.split(" ")
+            val x = it.poiVo?.address!!.split("@@", " ","&&")
             if (x.size != 0) {
                 it?.poiVo?.storeaddress = x[0]
                 it?.poiVo?.etdetailedaddress = x[1]
             }
-            lat=it?.poiVo?.lat!!
-            lon=it?.poiVo?.lon!!
-            cityName=it.poiVo?.cityName!!
-            adCode=it.poiVo?.districtCode!!
-            provinceCode=it?.poiVo?.provinceCode!!
+            lat = it?.poiVo?.lat!!
+            lon = it?.poiVo?.lon!!
+            cityName = it.poiVo?.cityName!!
+            adCode = it.poiVo?.districtCode!!
+            provinceCode = it?.poiVo?.provinceCode!!
 
             mViewModel.PoiVoBean.value = it
 
@@ -221,7 +221,7 @@ class NewlyBuiltStoreActivity :
         }
         mViewModel.poiaddpoidata.onSuccess.observe(this) {
             disLoading()
-
+            showToast("门店信息保存成功")
             mainViewModel.getByTenantId.value = mainViewModel.getByTenantId.value?.copy(poi = 1)
 
             finish()

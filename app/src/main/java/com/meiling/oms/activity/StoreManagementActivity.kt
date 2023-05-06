@@ -67,7 +67,7 @@ class StoreManagementActivity :
             ) {
                 holder.setText(R.id.tv_shopName, item?.name)
                 holder.setText(R.id.tv_phone, item?.phone)
-                holder.setText(R.id.tv_detailed_address, item?.address)
+                holder.setText(R.id.tv_detailed_address, item?.address?.replace("@@","  "))
 
 //
 //
@@ -125,6 +125,7 @@ class StoreManagementActivity :
             }else{
                 mDatabind.tvType.visibility=View.VISIBLE
             }
+            showToast("门店删除成功")
 
         }
         mViewModel.deletePoi.onError.observe(this){

@@ -111,7 +111,7 @@
                     android:paddingVertical="@dimen/dp_20"
                     android:text="发货门店"
                     android:textColor="@color/home_333333"
-                    android:textSize="@dimen/sp_32"
+                    android:textSize="@dimen/sp_28"
                     app:drawableStartCompat="@drawable/my_shop" />
                 <com.hjq.shape.view.ShapeTextView
                     android:visibility="gone"
@@ -147,7 +147,7 @@
                     android:paddingVertical="@dimen/dp_20"
                     android:text="渠道店铺"
                     android:textColor="@color/home_333333"
-                    android:textSize="@dimen/sp_32"
+                    android:textSize="@dimen/sp_28"
                     app:drawableStartCompat="@drawable/my_channel" />
 
                 <com.hjq.shape.view.ShapeTextView

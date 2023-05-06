@@ -23,6 +23,7 @@ import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.SoftKeyBoardListener
 import com.meiling.common.utils.SoftKeyBoardListener.OnSoftKeyBoardChangeListener
 import com.meiling.oms.R
+import com.meiling.oms.activity.OrderDisActivity
 import com.meiling.oms.databinding.FragmentDis1Binding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDisGoodsSelectDialog
@@ -332,7 +333,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
         }
         mViewModel.sendSuccess.onError.observe(this) {
             dismissLoading()
-            if (it.errCode == 700) {
+            if (it.errCode == 760) {
                 val dialog: MineExitDialog =
                     MineExitDialog().newInstance(
                         "温馨提示",
@@ -383,6 +384,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
     private fun addressChange(eventBusChangeAddress: EventBusChangeAddress) {
         orderSendAddress = eventBusChangeAddress.orderSendAddress
         mDatabind.edtAddTipShow.setText(orderSendAddress.goodsWeight)
+        (activity as OrderDisActivity).orderSendAddress
         var orderSendRequest = OrderSendRequest(
             cargoPrice = orderPrice!!,
             cargoType = orderSendAddress.cargoType ?: "0",

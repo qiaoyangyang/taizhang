@@ -48,6 +48,24 @@
             android:textSize="@dimen/sp_28"
             android:layout_height="wrap_content"/>
 
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/s_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingTop="3dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="3dp"
+            android:text="其他系统接单"
+            android:textSize="10sp"
+            android:textColor="@color/white"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shape_bottomLeftRadius="12dp"
+            app:shape_endColor="#FF3D3D"
+            app:shape_startColor="#FFB499"
+            app:shape_topRightRadius="12dp" />
+
 
 
     </com.hjq.shape.layout.ShapeConstraintLayout>
@@ -72,12 +90,12 @@
         app:shape_strokeColor="@color/red"
         app:shape_strokeWidth="1dp" />
     <com.hjq.shape.view.ShapeTextView
+
+        app:layout_constraintTop_toTopOf="@+id/tv_compile"
         android:id="@+id/tv_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_22"
         android:layout_marginRight="@dimen/dp_24"
-        android:layout_marginBottom="@dimen/dp_22"
         android:paddingLeft="@dimen/dp_22"
         android:paddingTop="@dimen/dp_10"
         android:paddingRight="@dimen/dp_22"
@@ -86,7 +104,7 @@
         android:textColor="#999999"
         android:textSize="@dimen/dp_24"
         app:layout_constraintRight_toLeftOf="@+id/tv_compile"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_compile"
         app:layout_constraintTop_toBottomOf="@+id/tv_detailed_address"
         app:shape_radius="@dimen/dp_40"
         app:shape_strokeColor="#999999"

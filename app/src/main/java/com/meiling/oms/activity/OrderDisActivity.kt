@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.meiling.common.BaseViewModel
 import com.meiling.common.activity.BaseActivity
@@ -27,6 +28,10 @@ class OrderDisActivity : BaseActivity<OrderDisFragmentViewModel, ActivityDisBind
 
         content =
             intent.getSerializableExtra("kk") as OrderDto.Content
+        mDatabind.ivDetail.setOnClickListener {
+            ARouter.getInstance().build("/app/OrderChangeAddressActivity")
+              .navigation()
+        }
 
     }
 

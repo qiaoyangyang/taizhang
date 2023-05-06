@@ -120,11 +120,21 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_order_dis_rec_name"
             android:layout_alignLeft="@+id/txt_order_dis_rec_name"
-            tools:text="内蒙古自治区鄂尔多斯市伊金霍洛旗伊金霍洛旗札萨克物流园区内蒙古自治区鄂尔多斯市伊金霍洛旗伊金霍洛旗札萨克物流园区 14 幢 158 室"
+            tools:text=" 14 幢 158 室"
             android:textColor="#ff666666"
             android:maxLines="2"
             android:ellipsize="end"
             android:textSize="@dimen/sp_28" />
+
+        <ImageView
+            android:id="@+id/iv_detail"
+            android:scaleType="center"
+            android:layout_alignTop="@+id/txt_order_dis_rec_name"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/dp_100"
+            android:layout_above="@+id/txt_order_dis_rec_address"
+            android:src="@drawable/order_edit_icon"
+            android:layout_height="@dimen/dp_100"/>
 
     </RelativeLayout>
 

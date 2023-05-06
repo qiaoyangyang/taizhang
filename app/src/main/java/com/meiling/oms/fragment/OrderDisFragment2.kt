@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -20,6 +21,7 @@ import com.meiling.common.utils.SoftKeyBoardListener
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentDis2Binding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDisGoodsSelectDialog
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
@@ -276,6 +278,23 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
         mViewModel.sendSuccess.onError.observe(this) {
             dismissLoading()
             showToast("发起配失败")
+            if (it.errCode == 760) {
+                val dialog: MineExitDialog =
+                    MineExitDialog().newInstance(
+                        "温馨提示",
+                        "可用余额（账户余额-冻结余额）不足，无法发起配送，请去充值中心进行余额充值！",
+                        "知道了",
+                        "去充值",
+                        false
+                    )
+                dialog.setOkClickLister {
+
+                    ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
+                }
+                dialog.show(childFragmentManager)
+            } else {
+                showToast(it.msg)
+            }
         }
         mViewModel.orderSendConfirmList.onStart.observe(this) {
             showLoading("正在请求")

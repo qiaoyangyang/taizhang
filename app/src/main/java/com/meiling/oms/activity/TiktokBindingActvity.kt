@@ -15,6 +15,7 @@ import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityTiktoKnindingBinding
 import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.viewmodel.StoreManagementViewModel
+import com.meiling.oms.widget.copyText
 import com.meiling.oms.widget.showToast
 
 class TiktokBindingActvity :
@@ -22,7 +23,7 @@ class TiktokBindingActvity :
     SpannableUtils.ontestonClick {
     lateinit var mainViewModel: MainViewModel2
     override fun initView(savedInstanceState: Bundle?) {
-        mDatabind.etBindTenant.setText("7070780918415230991")
+        //mDatabind.etBindTenant.setText("7070780918415230991")
         SpannableUtils.setTiktokBindingTextcolor(
             this,
             getString(R.string.first_step),
@@ -38,6 +39,14 @@ class TiktokBindingActvity :
             10,
             R.color.pwd_1180FF, 1,this
         )
+        SpannableUtils.setTiktokBindingTextcolor1(
+            this,
+            getString(R.string.Scope),
+            mDatabind.tvScope,
+            0,
+            4,
+            R.color.home_333333,
+        )
         mDatabind.tvOk.setOnClickListener {
             if (TextUtils.isEmpty(mDatabind.etBindTenant.text.toString())) {
                 showToast("请输入抖音来客的账号ID")
@@ -46,6 +55,10 @@ class TiktokBindingActvity :
 
             mViewModel.bindTenant(mDatabind.etBindTenant.text.toString())
 
+        }
+        mDatabind.tvDelete.setOnClickListener {
+            copyText(this, "http://ods.igoodsale.com/")
+            showToast("复制成功")
         }
 
         mainViewModel =
