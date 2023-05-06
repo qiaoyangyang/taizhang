@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.os.Bundle
 import android.view.Gravity
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -15,13 +14,9 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hjq.shape.view.ShapeButton
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
-import com.meiling.common.base.WheelItemView
 import com.meiling.common.network.data.*
 import com.meiling.common.network.service.accountService
-import com.meiling.common.network.service.orderDisService
 import com.meiling.oms.R
-import com.meiling.oms.widget.SS
-import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
@@ -52,6 +47,7 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
     }
 
     var pageIndex = 1
+    var arrayList = ArrayList<ShopPoiDto>()
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
         var rvSelect = holder?.getView<RecyclerView>(R.id.rv_shop_or_city)
         var btnSelect = holder?.getView<ShapeButton>(R.id.btn_ok_select_shop_city)
@@ -61,15 +57,6 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
         var title = holder?.getView<TextView>(R.id.txt_title_item_city)
         title?.text = arguments?.getString("title")
 
-
-//        btnSelect?.setOnClickListener {
-//            var shop = selectItemBean[selectView?.selectedIndex!!]
-//            okSelectItemClickLister?.invoke(
-//                shop.id,
-//                shop.name,
-//            )
-//            dismiss()
-//        }
         close?.setOnClickListener {
             dismiss()
         }
@@ -97,6 +84,11 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
             (rvSelectAdapter.data[position] as PoiContentList).isSelect =
                 !(rvSelectAdapter.data[position] as PoiContentList).isSelect
             rvSelectAdapter.notifyItemChanged(position)
+            if ((rvSelectAdapter.data[position] as PoiContentList).isSelect) {
+                arrayList.add(ShopPoiDto(poiIds = (rvSelectAdapter.data[position] as PoiContentList).id))
+            } else {
+                arrayList.remove(ShopPoiDto(poiIds = (rvSelectAdapter.data[position] as PoiContentList).id))
+            }
 
             if (rvSelectAdapter.data.all { it.isSelect }) {
                 isSelectAll = true
@@ -108,6 +100,14 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
 
         }
 
+
+        btnSelect?.setOnClickListener {
+            okSelectItemClickLister?.invoke(
+                arrayList,
+                "0",
+            )
+            dismiss()
+        }
 
         llSelectAll?.setOnClickListener {
             if (isSelectAll) {
@@ -128,6 +128,7 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
         }
         initData()
     }
+
 
     fun initData() {
         var createSelectPoiDto = BaseLiveData<CreateSelectPoiDto>()
@@ -176,8 +177,10 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
         }
     }
 
-    var okSelectItemClickLister: ((id: String, name: String) -> Unit)? = null
-    fun setOkClickItemLister(okClickLister: (id: String, name: String) -> Unit) {
+    var okSelectItemClickLister: ((arrayList: ArrayList<ShopPoiDto>, isSelectAll: String) -> Unit)? =
+        null
+
+    fun setOkClickItemLister(okClickLister: (arrayList: ArrayList<ShopPoiDto>, isSelectAll: String) -> Unit) {
         this.okSelectItemClickLister = okClickLister
     }
 }

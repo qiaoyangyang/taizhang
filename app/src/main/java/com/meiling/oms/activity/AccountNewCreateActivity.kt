@@ -3,10 +3,10 @@ package com.meiling.oms.activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.meiling.common.activity.BaseActivity
-import com.meiling.common.network.data.AccountCityOrShopDto
 import com.meiling.common.network.data.AccountItemSelect
+import com.meiling.common.network.data.CityPoiDto
 import com.meiling.common.network.data.ReqCreateAccount
-import com.meiling.common.network.data.RequestAccount
+import com.meiling.common.network.data.ShopPoiDto
 import com.meiling.oms.databinding.ActivityAccountCreatBinding
 import com.meiling.oms.dialog.AccountSelectCityDialog
 import com.meiling.oms.dialog.AccountSelectDialog
@@ -56,13 +56,14 @@ class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountC
             }
         }
 
-        var cityPoiDtoList = ArrayList<ReqCreateAccount.CityPoiDto>()
+        var cityPoiDtoList = ArrayList<CityPoiDto>()
+        var shopPoiDtoList = ArrayList<ShopPoiDto>()
         mDatabind.txtDeliveryStore.setSingleClickListener {
             if (selectAuthWay == "1") {
                 var accountSelectDialog =
                     AccountSelectShopOrCityDialog().newInstance("授权发货门店")
                 accountSelectDialog.show(supportFragmentManager)
-                accountSelectDialog.setOkClickItemLister { id, name ->  }
+                accountSelectDialog.setOkClickItemLister { arrayList, isSelectAll ->  }
             } else {
                 var accountSelectDialog =
                     AccountSelectCityDialog().newInstance("地址授权发货门店")

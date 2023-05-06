@@ -120,7 +120,7 @@ data class PoiContentList(
     @SerializedName("fuRepertoryCheck")
     var fuRepertoryCheck: Int?,
     @SerializedName("id")
-    var id: Int?,
+    var id: String?,
     @SerializedName("lat")
     var lat: String?,
     @SerializedName("lon")
@@ -214,17 +214,18 @@ data class ReqCreateAccount(
     var username: String? = "",
     @SerializedName("authStorePoiAll")
     var authStorePoiAll: String? = ""
-) {
-    data class CityPoiDto(
-        @SerializedName("cityIds")
-        var cityIds: Int?,
-        @SerializedName("poiIds")
-        var poiIds: String?
-    )
+)
 
-    data class ShopPoiDto(
-        @SerializedName("poiIds")
-        var poiIds: String?
-    )
-}
+data class CityPoiDto(
+    @SerializedName("cityIds")
+    var cityIds: Int?,
+    @SerializedName("poiIds")
+    var poiIds: String?
+)
+
+data class ShopPoiDto(
+    @SerializedName("poiIds")
+    var poiIds: String?
+)
+
 
