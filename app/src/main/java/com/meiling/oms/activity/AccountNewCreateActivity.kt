@@ -1,36 +1,51 @@
 package com.meiling.oms.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.constant.SPConstants
 import com.meiling.common.network.data.AccountItemSelect
 import com.meiling.common.network.data.CityPoiDto
 import com.meiling.common.network.data.ReqCreateAccount
 import com.meiling.common.network.data.ShopPoiDto
+import com.meiling.common.utils.MMKVUtils
 import com.meiling.oms.databinding.ActivityAccountCreatBinding
 import com.meiling.oms.dialog.AccountSelectCityDialog
 import com.meiling.oms.dialog.AccountSelectDialog
 import com.meiling.oms.dialog.AccountSelectShopOrCityDialog
 import com.meiling.oms.viewmodel.AccountViewModel
 import com.meiling.oms.widget.setSingleClickListener
+import com.meiling.oms.widget.showToast
 
 
 class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountCreatBinding>() {
 
+    var adminUserIdEdit = ""
     override fun initView(savedInstanceState: Bundle?) {
-
+        var intentEdit = intent.getBooleanExtra("edit", false)
+        mViewModel.roleList()
+        if (intentEdit) {
+            var adminViewId = intent.getStringExtra("adminViewId")
+            adminUserIdEdit = adminViewId.toString()
+            mViewModel.userDetail(adminViewId.toString())
+        }
     }
 
     override fun initData() {
 
     }
 
+
+    var cityPoiDtoList = ArrayList<CityPoiDto>()
+    var shopPoiDtoList = ArrayList<ShopPoiDto>()
+
     override fun getBind(layoutInflater: LayoutInflater): ActivityAccountCreatBinding {
         return ActivityAccountCreatBinding.inflate(layoutInflater)
 
     }
 
-    var selectRole = "1"
+    var selectRole = "19"
     var selectAuthWay = "1"
     override fun initListener() {
         mDatabind.txtAuthWay.text = "按发货门店授权"
@@ -41,7 +56,7 @@ class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountC
             accountSelectDialog.show(supportFragmentManager)
             accountSelectDialog.setOkClickItemLister { id, name ->
                 mDatabind.txtSelectRole.text = name
-                selectRole = id
+
             }
         }
         mDatabind.txtAuthWay.setSingleClickListener {
@@ -53,40 +68,153 @@ class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountC
             accountSelectDialog.setOkClickItemLister { id, name ->
                 mDatabind.txtAuthWay.text = name
                 selectAuthWay = id
+                mDatabind.txtDeliveryStore.text = ""
             }
         }
 
-        var cityPoiDtoList = ArrayList<CityPoiDto>()
-        var shopPoiDtoList = ArrayList<ShopPoiDto>()
+
+        var authStorePoiAll = "0"
         mDatabind.txtDeliveryStore.setSingleClickListener {
             if (selectAuthWay == "1") {
                 var accountSelectDialog =
                     AccountSelectShopOrCityDialog().newInstance("授权发货门店")
                 accountSelectDialog.show(supportFragmentManager)
-                accountSelectDialog.setOkClickItemLister { arrayList, isSelectAll ->  }
+                accountSelectDialog.setOkClickItemLister { arrayList, isSelectAll ->
+                    shopPoiDtoList.clear()
+                    cityPoiDtoList.clear()
+                    shopPoiDtoList.addAll(arrayList)
+                    if (isSelectAll == "1") {
+                        authStorePoiAll = "1"
+                        mDatabind.txtDeliveryStore.text = "选中全部门店"
+                    } else {
+                        authStorePoiAll = "0"
+                        mDatabind.txtDeliveryStore.text = "选中${arrayList.size}个门店"
+                    }
+                }
             } else {
-                var accountSelectDialog =
-                    AccountSelectCityDialog().newInstance("地址授权发货门店")
-                accountSelectDialog.show(supportFragmentManager)
+                var accountSelectCityDialog =
+                    AccountSelectCityDialog().newInstance("授权发货门店")
+                accountSelectCityDialog.show(supportFragmentManager)
+                accountSelectCityDialog.setOkClickItemCityLister { cityDialogList, selectNum ->
+                    Log.d("lwq", "=====${cityDialogList}")
+                    shopPoiDtoList.clear()
+                    cityPoiDtoList.clear()
+                    cityPoiDtoList.addAll(cityDialogList)
+                    mDatabind.txtDeliveryStore.text = "$selectNum"
+                }
+
             }
         }
 
         mDatabind.txtCreateSave.setSingleClickListener {
+            if (mDatabind.edtInputAccount.text.toString().trim().isBlank()) {
+                showToast("请输入账号")
+                return@setSingleClickListener
+            }
+//            mViewModel.checkAccount(mDatabind.edtInputPhone.toString().trim())
 
+            if (mDatabind.edtInputName.text.toString().trim().isBlank()) {
+                showToast("请输入账号昵称")
+                return@setSingleClickListener
+            }
+
+            if (mDatabind.edtInputPhone.text.toString().trim().isBlank()) {
+                showToast("请输入手机号")
+                return@setSingleClickListener
+            }
+            if (!isPhoneNumber(mDatabind.edtInputPhone.text.toString().trim())) {
+                showToast("请输入正确手机号")
+                return@setSingleClickListener
+            }
+
+//            mViewModel.checkAccountPhone(mDatabind.edtInputPhone.toString().trim())
+
+
+            if (selectAuthWay == "1") {
+                if (authStorePoiAll == "0" && shopPoiDtoList.isEmpty()) {
+                    showToast("请选择授权门店")
+                    return@setSingleClickListener
+                }
+            } else {
+                if (cityPoiDtoList.isNullOrEmpty()) {
+                    showToast("请选择授权城市")
+                    return@setSingleClickListener
+                }
+            }
             mViewModel.saveAndUpdate(
                 ReqCreateAccount(
-                    phone = "",
-                    username = "",
-                    nickname = "",
-                    shopPoiDtoList = arrayListOf(),
-                    cityPoiDtoList = arrayListOf(),
+                    adminUserId = adminUserIdEdit,
+                    phone = mDatabind.edtInputPhone.text.toString().trim(),
+                    username = mDatabind.edtInputAccount.text.toString().trim(),
+                    nickname = mDatabind.edtInputName.text.toString().trim(),
+                    shopPoiDtoList = shopPoiDtoList,
+                    cityPoiDtoList = cityPoiDtoList,
                     poiShopIds = "",
                     status = 1,
-                    authStorePoiAll = "0",
-                    roleId = ""
+                    authStorePoiAll = authStorePoiAll,
+                    roleId = selectRole
                 )
             )
         }
     }
 
+
+    override fun createObserver() {
+        mViewModel.disableAccount.onStart.observe(this) {
+            showLoading("请求中")
+
+        }
+        mViewModel.disableAccount.onSuccess.observe(this) {
+            showToast("创建成功")
+            disLoading()
+        }
+        mViewModel.disableAccount.onError.observe(this) {
+            disLoading()
+            showToast(it.msg)
+        }
+
+        mViewModel.roleListDto.onStart.observe(this) {
+            showLoading("请求中")
+        }
+        mViewModel.roleListDto.onSuccess.observe(this) {
+            selectRole = it[0].viewId.toString()
+        }
+        mViewModel.roleListDto.onError.observe(this) {
+            disLoading()
+            showToast(it.msg)
+        }
+
+        mViewModel.accountDetailDto.onStart.observe(this) {
+            showLoading("请求中")
+        }
+        mViewModel.accountDetailDto.onSuccess.observe(this) {
+            disLoading()
+            mDatabind.edtInputPhone.setText(it.adminUser?.phone)
+            mDatabind.edtInputAccount.setText(it.adminUser?.username)
+            mDatabind.edtInputName.setText(it.adminUser?.nickname)
+            mDatabind.txtSelectRole.text = it.roleName
+            if (!it.shopPoiVoList.isNullOrEmpty()) {
+                selectAuthWay = "1"
+                mDatabind.txtAuthWay.text = "按发货门店授权"
+                shopPoiDtoList.addAll(it.shopPoiVoList)
+            }
+
+            if (!it.cityPoiVoList.isNullOrEmpty()) {
+                selectAuthWay = "0"
+                mDatabind.txtAuthWay.text = "按城市授权"
+                cityPoiDtoList.addAll(it.cityPoiVoList)
+            }
+
+        }
+        mViewModel.accountDetailDto.onError.observe(this) {
+            disLoading()
+            showToast(it.msg)
+        }
+
+    }
+
+    private fun isPhoneNumber(input: String): Boolean {
+        val regex = Regex("^1[3-9]\\d{9}$")
+        return regex.matches(input)
+    }
 }

@@ -39,7 +39,7 @@ interface AccountService {
     @GET("saas/poi/citypoi")
     suspend fun getCityPoiList(
         @Query("poiType") poiType: String = "1,2",
-        @Query("hasCityAll") hasCityAll: String = "0",
+        @Query("hasCityAll") hasCityAll: String = "1",
     ): ResultData<ArrayList<CreateShopBean>>
 
     /**
@@ -48,20 +48,37 @@ interface AccountService {
     @GET("uc/adminuser/username/check")
     suspend fun checkAccount(
         @Query("username") username: String,
-    ): ResultData<ArrayList<CreateShopBean>>
+    ): ResultData<Any>
+
+    /**
+     * 检查账号
+     * */
+    @GET("uc/adminuser/userDetail")
+    suspend fun userDetail(
+        @Query("adminUserId") adminUserId: String,
+    ): ResultData<AccountDetailDto>
+
     /**
      * 检查手机号
      * */
     @POST("uc/adminuser/phoneIsRepeat")
     suspend fun checkAccountPhone(
         @Query("phone") phone: String,
-    ): ResultData<ArrayList<CreateShopBean>>
+    ): ResultData<Any>
 
     /**
-     * 获取门店
+     * 创建账号
      * */
     @POST("uc/adminuser/saveAndUpdate")
     suspend fun saveAndUpdate(
         @Body requestDto: ReqCreateAccount,
     ): ResultData<Any>
+
+    /**
+     * 角色
+     * */
+    @POST("uc/role/listName")
+    suspend fun roleList(
+        @Query("poiType") poiType: String = "5",
+    ): ResultData<ArrayList<RoleListDto>>
 }

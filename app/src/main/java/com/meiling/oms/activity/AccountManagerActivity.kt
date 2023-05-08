@@ -116,7 +116,12 @@ class AccountManagerActivity : BaseActivity<AccountViewModel, ActivityAccountMan
 
                 }
                 accountEdit.setOnClickListener {
-                    showToast("编辑")
+                    startActivity(
+                        Intent(
+                            this@AccountManagerActivity,
+                            AccountNewCreateActivity::class.java
+                        ).putExtra("edit", true).putExtra("adminViewId", item.viewId)
+                    )
                 }
 
             }
@@ -132,6 +137,7 @@ class AccountManagerActivity : BaseActivity<AccountViewModel, ActivityAccountMan
 
     private fun initViewRequest() {
         mViewModel.getAccountList(RequestAccount(pageIndex, 10))
+
         accountListAdapter.loadMoreModule.loadMoreView = SS()
         accountListAdapter.loadMoreModule.setOnLoadMoreListener {
             pageIndex++
@@ -146,7 +152,12 @@ class AccountManagerActivity : BaseActivity<AccountViewModel, ActivityAccountMan
 
     override fun initListener() {
         mDatabind.txtCreateNewAccount.setSingleClickListener {
-            startActivity(Intent(this, AccountNewCreateActivity::class.java))
+            startActivity(
+                Intent(this, AccountNewCreateActivity::class.java).putExtra(
+                    "edit",
+                    false
+                )
+            )
         }
     }
 

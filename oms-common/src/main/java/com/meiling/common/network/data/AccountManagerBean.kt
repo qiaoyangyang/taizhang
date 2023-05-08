@@ -169,7 +169,7 @@ data class CreateShopBean(
     @SerializedName("name")
     val name: String? = "",
     @SerializedName("shopList")
-    val shopList: List<ShopList?>? = listOf()
+    val shopList: List<ShopList?> = listOf()
 ) {
     var isSelect = false
 }
@@ -199,7 +199,7 @@ data class ReqCreateAccount(
     @SerializedName("nickname")
     var nickname: String? = "",
     @SerializedName("openAutoPoi")
-    var openAutoPoi: Int? = 0,
+    var openAutoPoi: Int? = 2,
     @SerializedName("phone")
     var phone: String? = "",
     @SerializedName("poiShopIds")
@@ -228,4 +228,136 @@ data class ShopPoiDto(
     var poiIds: String?
 )
 
+data class RoleListDto(
+    @SerializedName("viewId")
+    var viewId: String?,
+    @SerializedName("name")
+    var name: String?
+)
 
+/**
+ * 编辑账号
+ * */
+data class AccountDetailDto(
+    @SerializedName("adminUser")
+    var adminUser: AdminUser?,
+    @SerializedName("authorization")
+    var authorization: List<Any?>?,
+    @SerializedName("channelList")
+    var channelList: Any?,
+    @SerializedName("channelListStr")
+    var channelListStr: String?,
+    @SerializedName("channelPoiVoList")
+    var channelPoiVoList: List<Any?>?,
+    @SerializedName("channelShopsStr")
+    var channelShopsStr: Any?,
+    @SerializedName("cityByChannelPoiVoList")
+    var cityByChannelPoiVoList: List<Any?>?,
+    @SerializedName("cityPoiVoList")
+    var cityPoiVoList: ArrayList<CityPoiDto> = arrayListOf(),
+    @SerializedName("ifAutoContact")
+    var ifAutoContact: Any?,
+    @SerializedName("isNow")
+    var isNow: Any?,
+    @SerializedName("lastLoginTime")
+    var lastLoginTime: Any?,
+    @SerializedName("openAutoPoi")
+    var openAutoPoi: Any?,
+    @SerializedName("poiList")
+    var poiList: Any?,
+    @SerializedName("poiListStr")
+    var poiListStr: String?,
+    @SerializedName("poiShopsStr")
+    var poiShopsStr: Any?,
+    @SerializedName("roleId")
+    var roleId: Long?,
+    @SerializedName("roleName")
+    var roleName: String?,
+    @SerializedName("shopIdList")
+    var shopIdList: Any?,
+    @SerializedName("shopIdListStr")
+    var shopIdListStr: String?,
+    @SerializedName("shopPoiVoList")
+    var shopPoiVoList: List<ShopPoiDto>,
+    @SerializedName("unAuthorization")
+    var unAuthorization: List<UnAuthorization?>?
+) {
+    data class AdminUser(
+        @SerializedName("avatar")
+        var avatar: String?,
+        @SerializedName("createTime")
+        var createTime: Long?,
+        @SerializedName("creator")
+        var creator: Long?,
+        @SerializedName("headPhone")
+        var headPhone: String?,
+        @SerializedName("id")
+        var id: Int?,
+        @SerializedName("ifPush")
+        var ifPush: Int?,
+        @SerializedName("isNew")
+        var isNew: Int?,
+        @SerializedName("lastLoginTime")
+        var lastLoginTime: Long?,
+        @SerializedName("modifier")
+        var modifier: Long?,
+        @SerializedName("nickname")
+        var nickname: String?,
+        @SerializedName("openAutoPoi")
+        var openAutoPoi: Int?,
+        @SerializedName("password")
+        var password: String?,
+        @SerializedName("phone")
+        var phone: String?,
+        @SerializedName("shopId")
+        var shopId: Int?,
+        @SerializedName("status")
+        var status: Int?,
+        @SerializedName("tenantId")
+        var tenantId: Int?,
+        @SerializedName("token")
+        var token: String?,
+        @SerializedName("type")
+        var type: Int?,
+        @SerializedName("umengToken")
+        var umengToken: String?,
+        @SerializedName("updateTime")
+        var updateTime: Long?,
+        @SerializedName("username")
+        var username: String?,
+        @SerializedName("viewId")
+        var viewId: Long?
+    )
+
+    data class ShopPoiVo(
+        @SerializedName("channelIds")
+        var channelIds: Any?,
+        @SerializedName("cityIds")
+        var cityIds: String?,
+        @SerializedName("poiIds")
+        var poiIds: String?,
+        @SerializedName("shopIds")
+        var shopIds: String?
+    )
+
+    data class UnAuthorization(
+        @SerializedName("channel")
+        var channel: String?,
+        @SerializedName("channelId")
+        var channelId: Int?,
+        @SerializedName("city")
+        var city: String?,
+        @SerializedName("cityId")
+        var cityId: Int?,
+        @SerializedName("poiId")
+        var poiId: Int?,
+        @SerializedName("poiName")
+        var poiName: String?,
+        @SerializedName("shopId")
+        var shopId: Int?,
+        @SerializedName("shopName")
+        var shopName: String?,
+        @SerializedName("viewId")
+        var viewId: Long?
+    )
+}
