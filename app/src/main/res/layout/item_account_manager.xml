@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_20"
             android:ellipsize="end"
-            android:maxLength="7"
+            android:maxEms="7"
             android:singleLine="true"
             android:textColor="@color/home_333333"
             android:textSize="@dimen/sp_36"
