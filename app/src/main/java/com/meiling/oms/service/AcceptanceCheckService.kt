@@ -31,7 +31,6 @@ interface BranchInformationService {
 
     @POST("saas/poi")
     suspend fun poiadd(
-
         @Query("id") id: String = "",//门店id
         @Query("poiName") poiName: String = "",//门店名称
         @Query("sinceCode") sinceCode: String = "",//门店编号
@@ -47,6 +46,22 @@ interface BranchInformationService {
         @Query("cityName") cityName: String = "",//省
     ): ResultData<String>
 
+    @POST("saas/poi/registerSavePoi")
+    suspend fun poiaddFromRegist(
+        @Query("id") id: String = "",//门店id
+        @Query("poiName") poiName: String = "",//门店名称
+        @Query("sinceCode") sinceCode: String = "",//门店编号
+        @Query("poiPhone") poiPhone: String = "",//门店电话
+        @Query("poiAddress") poiAddress: String = "",//门店地址
+        @Query("lat") lat: String = "",//
+        @Query("lon") lon: String = "",//
+        @Query("contactPerson") contactPerson: String = "",//联系人姓名
+        @Query("mobilePhone") mobilePhone: String = "",//联系人手机号
+        @Query("provinceCode") provinceCode: String = "",//省
+        @Query("cityCode") cityCode: String = "",//省
+        @Query("districtCode") districtCode: String = "",//省
+        @Query("cityName") cityName: String = "",//省
+    ): ResultData<String>
 
     @GET("saas/channel")
     suspend fun getShopAndChannelVO(

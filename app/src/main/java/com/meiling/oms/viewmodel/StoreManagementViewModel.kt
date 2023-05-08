@@ -1,14 +1,20 @@
 package com.meiling.oms.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
+import com.meiling.common.constant.SPConstants
+import com.meiling.common.network.data.ByTenantId
 import com.meiling.common.network.data.ShopBean
 import com.meiling.common.network.service.meService
+import com.meiling.common.utils.MMKVUtils
+import com.meiling.oms.bean.BranchInformation
+import com.meiling.oms.bean.Channel
+import com.meiling.oms.bean.PoiVoBean
 import com.meiling.oms.bean.*
 import com.meiling.oms.service.branchInformationService
+import okhttp3.Headers.Companion.toHeaders
 
 class StoreManagementViewModel(application: Application) : BaseViewModel(application) {
     /**

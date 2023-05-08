@@ -61,7 +61,9 @@ class ForgetPwdFinishActivity : BaseActivity<LoginViewModel, ActivityForgetPwdSu
         var isAgreement = false
         mDatabind.TitleBar.title = type
         mDatabind.txtTipTip.text = context
-
+        if(type=="注册成功"){
+           mDatabind.btnLoginNext.text="开始使用"
+        }
         mDatabind.cbAgreementv.setOnCheckedChangeListener { buttonView, isChecked ->
             isAgreement = isChecked
         }

@@ -47,3 +47,8 @@ data class ForgetDto(
     @SerializedName("phoneNum")
     var phoneNum: String?
 )
+
+data class SaveSuccess(
+    var tenantId:String,
+    var adminUserViewId:String
+)

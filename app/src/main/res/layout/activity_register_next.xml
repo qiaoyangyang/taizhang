@@ -98,7 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:button="@drawable/login_cb_agreement"
-                        android:text="  个人"
+                        android:text="个人"
                         android:paddingLeft="5dp"
                         android:id="@+id/checkPerson"
                         android:textSize="@dimen/sp_32"
@@ -124,6 +124,7 @@
                         android:text="其他"
                         android:textSize="@dimen/sp_32"
                         android:textColor="#666666"
+                        android:layout_marginRight="2dp"
                         android:checked='@{viewModel.businessDto.tenantType=="3"}'
                         app:layout_constraintEnd_toStartOf="@+id/tips3"
                         android:id="@+id/checkOther" />
@@ -132,6 +133,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/tips3"
+                        android:layout_marginRight="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:src="@drawable/icon_data_tip"
                         app:layout_constraintTop_toTopOf="@+id/checkOther"
@@ -202,6 +204,7 @@
                         android:textColor="#666666"
                         android:paddingLeft="5dp"
                         android:id="@+id/checkUnChain"
+                        app:layout_constraintHorizontal_bias="0.7"
                         android:checked='@{viewModel.businessDto.isChain=="0"}'
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
@@ -359,7 +362,7 @@
                     android:id="@+id/txtLogo2"
                     android:layout_marginTop="10dp"
                     android:textSize="@dimen/sp_24"
-                    android:textColor="#666666" />
+                    android:textColor="#A7A7A7" />
 
                 <ImageView
                     android:layout_width="80dp"
@@ -369,7 +372,31 @@
                     app:layout_constraintTop_toBottomOf="@+id/txtLogo2"
                     android:layout_marginTop="15dp"
                     android:id="@+id/addImg"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="@id/tv_title" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@+id/addImg"
+                    app:layout_constraintLeft_toRightOf="@+id/addImg"
+                    android:id="@+id/closeImg"
+                    android:visibility="gone"
+                    android:src="@drawable/register_close_img"/>
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="60dp"
+                    android:src="@mipmap/default_logo"
+                    app:layout_constraintTop_toBottomOf="@+id/addImg"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/addImg2"
+                    app:layout_constraintStart_toStartOf="@id/tv_title" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@+id/addImg2"
+                    app:layout_constraintLeft_toRightOf="@+id/addImg2"
+                    android:id="@+id/closeImg2"
+                    android:src="@drawable/register_close_img"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -377,7 +404,7 @@
                     android:textSize="@dimen/sp_24"
                     android:textColor="@color/red"
                     app:layout_constraintStart_toStartOf="@id/tv_title"
-                    app:layout_constraintTop_toBottomOf="@id/addImg"
+                    app:layout_constraintTop_toBottomOf="@id/addImg2"
                     android:layout_marginTop="10dp"
                     android:id="@+id/txtAddImg"
                     android:text="使用默认样式" />
@@ -620,6 +647,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
+                    android:enabled="true"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/line9"

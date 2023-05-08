@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.Toast
+import com.blankj.utilcode.util.ActivityUtils
 import com.gyf.immersionbar.ImmersionBar
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -53,7 +54,8 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
         dialog.setOkClickLister {
             dialog.dismiss()
-            finish()
+            startActivity(Intent(this,LoginActivity::class.java))
+            ActivityUtils.finishAllActivities()
         }
         dialog.show(supportFragmentManager)
     }
@@ -62,7 +64,8 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
         dialog.setOkClickLister {
             dialog.dismiss()
-            finish()
+            startActivity(Intent(this,LoginActivity::class.java))
+            ActivityUtils.finishAllActivities()
         }
         dialog.show(supportFragmentManager)
     }
@@ -105,7 +108,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         mDatabind.tips3.setOnClickListener {
             var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
             mpup.apply {
-                setBackground(R.color.zxing_transparent, 5f, 0, 10)
+                setBackground(R.color.zxing_transparent, 1f, 0, 10)
                 setArrow(R.color.black, 1f, ArrowPopupWindow.ArrowSize.BIGGER)
                 setPopupView(layoutInflater.inflate(R.layout.pup_layout3, null))
                 setTiedView(mDatabind.tips3, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
@@ -146,9 +149,30 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             )
         }
         mDatabind.txtAddImg.setOnClickListener {
-            GlideAppUtils.loadResUrl(mDatabind.addImg, R.mipmap.default_logo)
+            mDatabind.addImg.visibility=View.GONE
+            mDatabind.addImg2.visibility=View.VISIBLE
+            mDatabind.closeImg.visibility=View.GONE
+            mDatabind.closeImg2.visibility=View.VISIBLE
             mViewModel.businessDto.value!!.logo = "https://static.igoodsale.com/default-logo-header.png"
         }
+
+        mDatabind.closeImg.setOnClickListener {
+            GlideAppUtils.loadResUrl(mDatabind.addImg, R.mipmap.addimg)
+            mDatabind.addImg.visibility=View.VISIBLE
+            mDatabind.addImg2.visibility=View.GONE
+            mDatabind.closeImg.visibility=View.GONE
+            mDatabind.closeImg2.visibility=View.GONE
+            mViewModel.businessDto.value!!.logo =""
+        }
+        mDatabind.closeImg2.setOnClickListener {
+            GlideAppUtils.loadResUrl(mDatabind.addImg, R.mipmap.addimg)
+            mDatabind.addImg.visibility=View.VISIBLE
+            mDatabind.addImg2.visibility=View.GONE
+            mDatabind.closeImg.visibility=View.GONE
+            mDatabind.closeImg2.visibility=View.GONE
+            mViewModel.businessDto.value!!.logo =""
+        }
+
         //选择图片
         mDatabind.addImg.setOnClickListener {
             PictureSelector.create(this)
@@ -179,6 +203,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                                 },
                                 onSuccess = {
                                     showToast("上传成功")
+                                    mDatabind.closeImg.visibility=View.VISIBLE
                                     mViewModel.businessDto.value!!.logo = it
                                 },
                                 onError = {
@@ -237,6 +262,14 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                         mDatabind.txtShopName2.visibility = View.VISIBLE
                         mDatabind.edtShopName.visibility = View.VISIBLE
                         mViewModel.businessDto.value?.tenantType="1"
+                        mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
+                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType1()})
+                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
+                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
+                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType1()})
+                        if(tenantType1()){
+                            mDatabind.btnNext.setBackgroundResource(R.drawable.login_btn_select_true)
+                        }
                     }
                     if (checkedButton.id == R.id.checkPerson) {
                         mDatabind.txtOperateType.visibility = View.GONE
@@ -250,11 +283,13 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 //                        mViewModel.businessDto.value!!.isChain = ""
 //                        mViewModel.businessDto.value!!.enterpriseName = ""
                         mViewModel.businessDto.value?.tenantType="2"
-                        mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType1()})
+                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType2()})
+                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType2()})
+                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType2()})
+                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType2()})
+                        if(tenantType2()){
+                            mDatabind.btnNext.setBackgroundResource(R.drawable.login_btn_select_true)
+                        }
                     }
                     if (checkedButton.id == R.id.checkOther) {
                         mDatabind.txtOperateType.visibility = View.VISIBLE
@@ -271,13 +306,20 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                         mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType2()})
                         mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType2()})
                         mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType2()})
+                        if(tenantType2()){
+                            mDatabind.btnNext.setBackgroundResource(R.drawable.login_btn_select_true)
+                        }
                     }
 
                 }
 
             }
 
-
+        mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
+        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType1()})
+        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
+        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
+        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType1()})
 
         //注册
         mDatabind.btnNext.setSingleClickListener(1000) {
@@ -389,7 +431,6 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
     private fun register() {
         showLoading("")
-
         mViewModel.launchRequest(
             {
                 loginService.save(mViewModel.businessDto.value!!)
@@ -397,13 +438,20 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             onSuccess = {
                 disLoading()
                 //成功会返回组合id
+//                startActivity(Intent(this,
+//                    BindingLogisticsActivity::class.java)
+//                    .putExtra("tenantId", it!!.tenantId)
+//                    .putExtra("account",mViewModel.businessDto.value!!.userName?.trim().toString())
+//                    .putExtra("pwd",mViewModel.businessDto.value!!.password?.trim().toString())
+//                    .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
                 startActivity(Intent(this,
-                    BindingLogisticsActivity::class.java)
-                    .putExtra("tenantId", it)
+                    NewlyBuiltStoreActivity::class.java)
+                    .putExtra("tenantId",it!!.tenantId)
+                    .putExtra("adminViewId",it!!.adminUserViewId)
+                    .putExtra("fromIntent","regist")
                     .putExtra("account",mViewModel.businessDto.value!!.userName?.trim().toString())
                     .putExtra("pwd",mViewModel.businessDto.value!!.password?.trim().toString())
                     .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
-//                startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
             },
             onError = {
                 disLoading()
