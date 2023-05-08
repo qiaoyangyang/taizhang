@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.os.Bundle
 import android.view.Gravity
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -15,10 +14,8 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hjq.shape.view.ShapeButton
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
-import com.meiling.common.base.WheelItemView
 import com.meiling.common.network.data.*
 import com.meiling.common.network.service.accountService
-import com.meiling.common.network.service.orderDisService
 import com.meiling.oms.R
 import com.meiling.oms.widget.SS
 import com.meiling.oms.widget.setSingleClickListener
@@ -58,7 +55,7 @@ class AccountSelectCityDialog : BaseNiceDialog() {
     var pageIndex = 1
     var cityPoiDtoList = ArrayList<CityPoiDto>()
     var cityArrayList = ArrayList<CityPoiDto>()
-    var type = "1"
+    var type = ""
     var isSelectAll = false
       var selectNum: TextView? = null
       var ivSelectAll: ImageView? = null
@@ -164,10 +161,7 @@ class AccountSelectCityDialog : BaseNiceDialog() {
 
     fun initData() {
         var createSelectPoiDto = BaseLiveData<ArrayList<CreateShopBean>>()
-        BaseViewModel(Application()).request(
-            { accountService.getCityPoiList() },
-            createSelectPoiDto
-        )
+        BaseViewModel(Application()).request({ accountService.getCityPoiList() }, createSelectPoiDto)
         createSelectPoiDto.onSuccess.observe(this) {
 
             if (!type.isNullOrBlank()) {
@@ -181,7 +175,7 @@ class AccountSelectCityDialog : BaseNiceDialog() {
                         // 进行对应的处理
                         poiContentList.isSelect = true
                     }
-                if (it.size == cityArrayList.size) {
+                if (cityArrayList.isNotEmpty()&&it.size == cityArrayList.size) {
                     isSelectAll = true
                     selectNum?.text = "已选择全部城市"
                     ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_true))

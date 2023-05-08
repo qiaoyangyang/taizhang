@@ -54,7 +54,7 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
     var pageIndex = 1
     var arrayList = ArrayList<ShopPoiDto>()
     var shopPoiDtoList = ArrayList<ShopPoiDto>()
-    var type = "1"
+    var type = ""
     var selectNum: TextView? = null
     var ivSelectAll: ImageView? = null
     var isSelectAll = false
@@ -167,9 +167,9 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
 
     fun initData() {
         var createSelectPoiDto = BaseLiveData<CreateSelectPoiDto>()
-        BaseViewModel(Application()).request(
-            { accountService.getPoiList(1, "10") }, createSelectPoiDto
-        )
+//        BaseViewModel(Application()).request(
+//            { accountService.getPoiList(1, "10") }, createSelectPoiDto
+//        )
 //        rvSelectAdapter.loadMoreModule.loadMoreView = SS()
 //        rvSelectAdapter.loadMoreModule.setOnLoadMoreListener {
 //            pageIndex++
@@ -193,7 +193,7 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
                         poiContentList.isSelect = true
                     }
                 rvSelectAdapter.setList(list)
-                if (list.size == it.total) {
+                if (shopPoiDtoList.isNotEmpty()&&list.size == it.total) {
                     selectNum?.text = "已选择全部门店"
                     ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_true))
                     isSelectAll = true
