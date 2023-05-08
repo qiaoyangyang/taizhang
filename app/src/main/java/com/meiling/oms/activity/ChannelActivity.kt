@@ -235,21 +235,21 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
         mViewModel.channel.onSuccess.observe(this) {
             disLoading()
-            if (TextUtils.isEmpty(null)||type=="null") {
+            if (TextUtils.isEmpty(null) || type == "null") {
                 it[0]?.isselect = true
                 channelX = it[0]
                 channelXAdapter.setList(it)
                 mViewModel.shop_list(channelX.id!!, shop?.id!!)
-            } else  {
+            } else {
                 it.forEachIndexed { index, channe ->
-                    if (type=="1") {
+                    if (type == "1") {
                         if (channe.id == "32") {
                             it[index]?.isselect = true
                             channelX = it[index]
                             mDatabind.rectangle1.scrollToPosition(index)
 
                         }
-                    }else if (type=="2"){
+                    } else if (type == "2") {
                         if (channe.id == "7") {
                             it[index]?.isselect = true
                             channelX = it[index]
@@ -260,7 +260,6 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
                 channelXAdapter.setList(it)
                 mViewModel.shop_list(channelX.id!!, shop?.id!!)
-
 
 
             }
@@ -350,9 +349,12 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                                 showToast("已经是当前门店啦，请重新选择门店或关闭窗口")
                                 return
                             }
+                            shopDialog.dismiss()
                             isposition = position
-                            mViewModel.updateShop(channeAdapter.getItem(position)?.id!!, sho?.id!!)
-
+                            mViewModel.updateShop(
+                                channeAdapter.getItem(position)?.id!!,
+                                sho?.id!!
+                            )
                         }
 
                         override fun Ondismiss() {
