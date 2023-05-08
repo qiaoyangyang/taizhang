@@ -79,7 +79,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
     override fun onResume() {
         super.onResume()
-        //   mViewModel.getByTenantId()
+           mViewModel.getByTenantId()
     }
 
 
@@ -182,6 +182,25 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     }
 
     override fun createObserver() {
+
+        mViewModel.getByTenantId.onSuccess.observe(this) {
+            SaveUserBean(it)
+            if (it.logistics == 1) {//物流是否绑定 1绑定;-1没绑定
+                mDatabind.tvIsLogisticsBinding.visibility = View.GONE
+            } else {
+                mDatabind.tvIsLogisticsBinding.visibility = View.VISIBLE
+            }
+            if (it.poi == 1) {//门店是否创建 1绑定;-1没绑定
+                mDatabind.tvIsStoreManagement.visibility = View.GONE
+            } else {
+                mDatabind.tvIsStoreManagement.visibility = View.VISIBLE
+            }
+            if (it.shop == 1) {//渠道是否创建 1绑定;-1没绑定
+                mDatabind.tvIschannel.visibility = View.GONE
+            } else {
+                mDatabind.tvIschannel.visibility = View.VISIBLE
+            }
+        }
         vm.getByTenantId.observe(this) {
             if (it.logistics == 1) {//物流是否绑定 1绑定;-1没绑定
                 mDatabind.tvIsLogisticsBinding.visibility = View.GONE

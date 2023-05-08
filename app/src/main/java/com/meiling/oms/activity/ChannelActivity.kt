@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -77,6 +78,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
     }
 
     var shop: Shop? = null
+    var type = ""
     override fun onTitleClick(view: View) {
         var shopDialog = ShopDialog().newInstance(shopBean!!, "选择发货门店")
 
@@ -106,24 +108,44 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
     var poi = -1
 
     override fun initData() {
-        mViewModel.citypoi()
+        type = intent.getStringExtra("type").toString()
         poi = intent.getIntExtra("poi", -1)
 
     }
 
     override fun onResume() {
         super.onResume()
+        mViewModel.citypoi()
         Log.d("yjk", "${channelXAdapter.data.size}")
         if (channelXAdapter.data.size == 0) {
             mViewModel.getShopAndChannelVO()
         } else {
-            mViewModel.shop_list(channelX.id!!, shop?.id!!)
+            if (shopBean != null) {
+                mViewModel.shop_list(channelX.id!!, shop?.id!!)
+            }
         }
 
     }
 
 
     override fun createObserver() {
+        mainViewModel.getByTenantId.observe(this) {
+
+            if (it.poi == -1) {//门店是否创建 1绑定;-1没绑定
+
+                mDatabind.tvNewlyBuiltStore.visibility = View.GONE
+                val view =
+                    LayoutInflater.from(this).inflate(R.layout.store_managemnet1, null, false)
+                var tv_decreate = view.findViewById<ShapeTextView>(R.id.tv_decreate)
+                tv_decreate.setOnClickListener {
+                    startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
+                }
+
+                channeAdapter.setEmptyView(view)
+            } else {
+                channeAdapter.setEmptyView(R.layout.store_managemnet2)
+            }
+        }
         //设置发货门店
         mViewModel.updateShop.onStart.observe(this) {
             showLoading("")
@@ -131,6 +153,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         mViewModel.updateShop.onSuccess.observe(this) {
             disLoading()
             channeAdapter.removeAt(isposition)
+            showToast("发货门店成功")
             channeAdapter.notifyDataSetChanged()
         }
         mViewModel.updateShop.onError.observe(this) {
@@ -166,7 +189,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                     Intent(this, BindingTiktokListActivity::class.java).putExtra(
                         "channelId", channelX.id
                     )
-                        .putExtra("poiId", shop?.id).putExtra("channename",channelX.name)
+                        .putExtra("poiId", shop?.id).putExtra("channename", channelX.name)
 
                 )
             } else {
@@ -174,7 +197,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                     Intent(this, TiktokBindingActvity::class.java)
                         .putExtra("channelId", channelX.id)
                         .putExtra("poiId", shop?.id)
-                        .putExtra("channename",channelX.name)
+                        .putExtra("channename", channelX.name)
                 )
             }
 
@@ -195,18 +218,8 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                 shop = it.get(0).shopList?.get(0)
                 mDatabind.TitleBar.title =
                     it.get(0).name + "/" + it.get(0).shopList?.get(0)?.name
-
-            } else if (mainViewModel.getByTenantId.value?.poi == -1) {
-                mDatabind.tvNewlyBuiltStore.visibility = View.GONE
-                val view =
-                    LayoutInflater.from(this).inflate(R.layout.store_managemnet1, null, false)
-                var tv_decreate = view.findViewById<ShapeTextView>(R.id.tv_decreate)
-                tv_decreate.setOnClickListener {
-                    startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
-                }
-
-                channelXAdapter.setEmptyView(view)
             }
+
 
         }
         mViewModel.shopBean.onError.observe(this) {
@@ -222,11 +235,36 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
         mViewModel.channel.onSuccess.observe(this) {
             disLoading()
-            it[0]?.isselect = true
+            if (TextUtils.isEmpty(null)||type=="null") {
+                it[0]?.isselect = true
+                channelX = it[0]
+                channelXAdapter.setList(it)
+                mViewModel.shop_list(channelX.id!!, shop?.id!!)
+            } else  {
+                it.forEachIndexed { index, channe ->
+                    if (type=="1") {
+                        if (channe.id == "32") {
+                            it[index]?.isselect = true
+                            channelX = it[index]
+                            mDatabind.rectangle1.scrollToPosition(index)
 
-            channelXAdapter.setList(it)
-            channelX = it[0]
-            mViewModel.shop_list(channelX.id!!, shop?.id!!)
+                        }
+                    }else if (type=="2"){
+                        if (channe.id == "7") {
+                            it[index]?.isselect = true
+                            channelX = it[index]
+                            mDatabind.rectangle1.scrollToPosition(index)
+                        }
+                    }
+                }
+
+                channelXAdapter.setList(it)
+                mViewModel.shop_list(channelX.id!!, shop?.id!!)
+
+
+
+            }
+
         }
 
         mViewModel.channel.onError.observe(this) {
@@ -234,6 +272,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
             showToast(it.msg)
         }
         mViewModel.channShop.onStart.observe(this) {
+
             showLoading("")
 
 
@@ -250,9 +289,10 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
         }
         mViewModel.urlauth.onSuccess.observe(this) {
+
             startActivity(Intent(this, BaseWebActivity::class.java).putExtra("url", it.url))
         }
-        mViewModel.urlauth.onError.observe(this){
+        mViewModel.urlauth.onError.observe(this) {
             showToast(it.msg)
         }
 
@@ -273,10 +313,10 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
             ) {
                 holder.setText(R.id.tv_name_t, "三方平台名称:" + item?.name)
                 holder.setText(R.id.tv_channel_id, "三方平台名称:" + item?.channelShopId)
-                if (item?.mtModel==2){
-                    holder.setGone(R.id.s_status,false);
-                }else{
-                    holder.setGone(R.id.s_status,true);
+                if (item?.mtModel == 2) {
+                    holder.setGone(R.id.s_status, false);
+                } else {
+                    holder.setGone(R.id.s_status, true);
                 }
 
 
@@ -305,10 +345,12 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                             shopid: Int,
                             sho: Shop
                         ) {
-                            if (shop?.id==sho.id){
+
+                            if (shop?.id == sho.id) {
                                 showToast("已经是当前门店啦，请重新选择门店或关闭窗口")
                                 return
                             }
+                            isposition = position
                             mViewModel.updateShop(channeAdapter.getItem(position)?.id!!, sho?.id!!)
 
                         }
