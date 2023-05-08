@@ -22,6 +22,7 @@ import com.meiling.oms.widget.showToast
 class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountCreatBinding>() {
 
     var adminUserIdEdit = ""
+    var isAll = false
     override fun initView(savedInstanceState: Bundle?) {
         var intentEdit = intent.getBooleanExtra("edit", false)
         mViewModel.roleList()
@@ -89,7 +90,8 @@ class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountC
                 var accountSelectDialog = AccountSelectShopOrCityDialog().newInstance(
                     "授权发货门店",
                     adminUserIdEdit,
-                    shopPoiDtoList
+                    shopPoiDtoList,
+                    isAll
                 )
                 accountSelectDialog.show(supportFragmentManager)
                 accountSelectDialog.setOkClickItemLister { arrayList, isSelectAll ->
@@ -212,14 +214,23 @@ class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountC
                 selectAuthWay = "1"
                 mDatabind.txtAuthWay.text = "按发货门店授权"
                 shopPoiDtoList.addAll(it.shopPoiVoList)
-                mDatabind.txtDeliveryStore.text = "选中${shopPoiDtoList.size}个门店"
-            }
+                if (it.isAll){
+                    mDatabind.txtDeliveryStore.text = "全部门店"
+                }else{
+                    mDatabind.txtDeliveryStore.text = "选中${shopPoiDtoList.size}个门店"
+                }
 
+            }
             if (!it.cityPoiVoList.isNullOrEmpty()) {
                 selectAuthWay = "0"
                 mDatabind.txtAuthWay.text = "按城市授权"
                 cityPoiDtoList.addAll(it.cityPoiVoList)
-                mDatabind.txtDeliveryStore.text = "选中${cityPoiDtoList.size}个城市"
+                if (it.isAll){
+                    mDatabind.txtDeliveryStore.text = "全部城市"
+                }else{
+                    mDatabind.txtDeliveryStore.text = "选中${cityPoiDtoList.size}个城市"
+                }
+
             }
 
         }

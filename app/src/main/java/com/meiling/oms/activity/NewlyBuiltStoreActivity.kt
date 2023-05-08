@@ -5,12 +5,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import android.util.Log
 import androidx.annotation.Nullable
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.services.core.PoiItem
+import com.blankj.utilcode.util.ActivityUtils
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseVmActivity
@@ -21,6 +23,7 @@ import com.meiling.common.utils.PermissionUtilis
 import com.meiling.common.utils.RegularUtils
 import com.meiling.oms.bean.PoiVo
 import com.meiling.oms.databinding.ActivityNewlyBuiltStoreBinding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.viewmodel.StoreManagementViewModel
 import com.meiling.oms.widget.KeyBoardUtil
@@ -43,6 +46,36 @@ class NewlyBuiltStoreActivity :
                 ViewModelProvider(this@NewlyBuiltStoreActivity).get(MainViewModel2::class.java)
         }
 
+    }
+
+    override fun onLeftClick(view: View) {
+        if(fromIntent=="regist"){
+            val dialog: MineExitDialog =
+                MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
+            dialog.setOkClickLister {
+                dialog.dismiss()
+                startActivity(Intent(this,LoginActivity::class.java))
+                ActivityUtils.finishAllActivities()
+            }
+            dialog.show(supportFragmentManager)
+        }else{
+            finish()
+        }
+
+    }
+    override fun onBackPressed() {
+        if(fromIntent=="regist"){
+            val dialog: MineExitDialog =
+                MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
+            dialog.setOkClickLister {
+                dialog.dismiss()
+                startActivity(Intent(this,LoginActivity::class.java))
+                ActivityUtils.finishAllActivities()
+            }
+            dialog.show(supportFragmentManager)
+        }else{
+            finish()
+        }
 
     }
 
