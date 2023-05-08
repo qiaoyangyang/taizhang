@@ -81,7 +81,7 @@ class AccountManagerActivity : BaseActivity<AccountViewModel, ActivityAccountMan
                                     )
                                 dialog.setOkClickLister {
                                     dialog.dismiss()
-                                    disableTip = "该账号已禁用"
+                                    disableTip = "禁用成功，账号已无法登录"
                                     mViewModel.setDisableAccount(item.viewId, "9")
                                 }
                                 dialog.show(supportFragmentManager)
@@ -106,7 +106,7 @@ class AccountManagerActivity : BaseActivity<AccountViewModel, ActivityAccountMan
                                 )
                             dialog.setOkClickLister {
                                 dialog.dismiss()
-                                disableTip = "该账号已启用"
+                                disableTip = "启用成功，账号可正常登录"
                                 mViewModel.setDisableAccount(item.viewId, "1")
                             }
                             dialog.show(supportFragmentManager)
@@ -131,9 +131,13 @@ class AccountManagerActivity : BaseActivity<AccountViewModel, ActivityAccountMan
     }
 
     override fun initData() {
-        initViewRequest()
+
     }
 
+    override fun onResume() {
+        super.onResume()
+        initViewRequest()
+    }
 
     private fun initViewRequest() {
         mViewModel.getAccountList(RequestAccount(pageIndex, 10))

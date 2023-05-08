@@ -79,6 +79,7 @@
                         android:gravity="center_vertical|right"
                         android:hint="请输入登录账号"
                         android:singleLine="true"
+                        android:maxLength="25"
                         android:textColor="@color/home_333333"
                         android:textSize="@dimen/sp_32"
                         tools:ignore="RtlHardcoded" />
@@ -117,6 +118,7 @@
                         android:ellipsize="end"
                         android:gravity="center_vertical|right"
                         android:hint="请输入手机号"
+                        android:maxLength="11"
                         android:inputType="number"
                         android:singleLine="true"
                         android:textColor="@color/home_333333"
@@ -157,6 +159,7 @@
                         android:gravity="center_vertical|right"
                         android:hint="请输入账号的昵称"
                         android:singleLine="true"
+                        android:maxLength="20"
                         android:textColor="@color/home_333333"
                         android:textSize="@dimen/sp_32"
                         tools:ignore="RtlHardcoded" />

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.os.Bundle
 import android.view.Gravity
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -15,10 +14,8 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hjq.shape.view.ShapeButton
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
-import com.meiling.common.base.WheelItemView
 import com.meiling.common.network.data.*
 import com.meiling.common.network.service.accountService
-import com.meiling.common.network.service.orderDisService
 import com.meiling.oms.R
 import com.meiling.oms.widget.SS
 import com.meiling.oms.widget.setSingleClickListener
@@ -42,10 +39,14 @@ class AccountSelectCityDialog : BaseNiceDialog() {
     private lateinit var rvSelectAdapter: BaseQuickAdapter<CreateShopBean, BaseViewHolder>
 
     fun newInstance(
-        title: String
+        title: String,
+        type: String,
+        cityPoiDtoList: ArrayList<CityPoiDto>,
     ): AccountSelectCityDialog {
         val args = Bundle()
         args.putString("title", title)
+        args.putString("type", type)
+        args.putSerializable("cityPoiDtoList", cityPoiDtoList)
         val dialog = AccountSelectCityDialog()
         dialog.arguments = args
         return dialog
@@ -53,21 +54,32 @@ class AccountSelectCityDialog : BaseNiceDialog() {
 
     var pageIndex = 1
     var cityPoiDtoList = ArrayList<CityPoiDto>()
+    var cityArrayList = ArrayList<CityPoiDto>()
+    var type = ""
+    var isSelectAll = false
+      var selectNum: TextView? = null
+      var ivSelectAll: ImageView? = null
+
     @SuppressLint("NotifyDataSetChanged")
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
+        if (!arguments?.getString("type").isNullOrBlank()) {
+            cityArrayList =
+                arguments?.getSerializable("cityPoiDtoList") as ArrayList<CityPoiDto>
+            type = arguments?.getString("type").toString()
+        }
+
         var rvSelect = holder?.getView<RecyclerView>(R.id.rv_shop_or_city)
         var btnSelect = holder?.getView<ShapeButton>(R.id.btn_ok_select_shop_city)
         var close = holder?.getView<ImageView>(R.id.iv_close_select_shop_city)
-        var ivSelectAll = holder?.getView<ImageView>(R.id.img_select_all)
+         ivSelectAll = holder?.getView<ImageView>(R.id.img_select_all)
         var llSelectAll = holder?.getView<LinearLayout>(R.id.ll_select_all)
         var title = holder?.getView<TextView>(R.id.txt_title_item_city)
         title?.text = arguments?.getString("title")
-        var selectNum = holder?.getView<TextView>(R.id.txt_select_shop_or_city)
-
+        selectNum = holder?.getView<TextView>(R.id.txt_select_shop_or_city)
         close?.setOnClickListener {
             dismiss()
         }
-        var isSelectAll = false
+        isSelectAll = false
         ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_false))
         rvSelectAdapter = object :
             BaseQuickAdapter<CreateShopBean, BaseViewHolder>(R.layout.item_dialog_account_select_city_or_shop),
@@ -82,7 +94,6 @@ class AccountSelectCityDialog : BaseNiceDialog() {
                     imgShopOrCity.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_false))
                 }
             }
-
         }
 
         rvSelect?.adapter = rvSelectAdapter
@@ -94,11 +105,11 @@ class AccountSelectCityDialog : BaseNiceDialog() {
 
             if (rvSelectAdapter.data.all { it.isSelect }) {
                 isSelectAll = true
-                selectNum?.text = "已选择全部门店"
+                selectNum?.text = "已选择全部城市"
                 ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_true))
             } else {
                 isSelectAll = false
-                selectNum?.text = "已选择${rvSelectAdapter.data.count { it.isSelect }}个门店"
+                selectNum?.text = "已选择${rvSelectAdapter.data.count { it.isSelect }}个城市"
                 ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_false))
             }
 
@@ -150,12 +161,36 @@ class AccountSelectCityDialog : BaseNiceDialog() {
 
     fun initData() {
         var createSelectPoiDto = BaseLiveData<ArrayList<CreateShopBean>>()
-        BaseViewModel(Application()).request(
-            { accountService.getCityPoiList() },
-            createSelectPoiDto
-        )
+        BaseViewModel(Application()).request({ accountService.getCityPoiList() }, createSelectPoiDto)
         createSelectPoiDto.onSuccess.observe(this) {
-            rvSelectAdapter.setList(it as MutableList<CreateShopBean>)
+
+            if (!type.isNullOrBlank()) {
+//                对比显示
+                var list = ArrayList<CreateShopBean>()
+                list.addAll(it as MutableList<CreateShopBean>)
+                val poiIds = cityArrayList.map { shopPoiDtoList -> shopPoiDtoList.cityIds }.toSet()
+                list.filter { poiContentList -> poiIds.contains(poiContentList.id) }
+                    .forEach { poiContentList ->
+                        // 找到了相同的 id
+                        // 进行对应的处理
+                        poiContentList.isSelect = true
+                    }
+                if (cityArrayList.isNotEmpty()&&it.size == cityArrayList.size) {
+                    isSelectAll = true
+                    selectNum?.text = "已选择全部城市"
+                    ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_true))
+                }else{
+                    isSelectAll = false
+                    ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_false))
+                    selectNum?.text = "已选择${rvSelectAdapter.data.count { it.isSelect }}个城市"
+                }
+                rvSelectAdapter.setList(list)
+
+
+            } else {
+                rvSelectAdapter.setList(it as MutableList<CreateShopBean>)
+            }
+
         }
         createSelectPoiDto.onStart.observe(this) {
         }
