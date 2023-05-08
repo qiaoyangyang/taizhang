@@ -143,7 +143,7 @@ class NewlyBuiltStoreActivity :
             }
 
             if (mViewModel.PoiVoBean.value?.poiVo?.sinceCode!!.toString().length<2){
-                showToast("请输入2-20字母/数字")
+                showToast("门店编号仅允许输入2-20个字母/数字")
                 return@setSingleClickListener
             }
 

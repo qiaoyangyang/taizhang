@@ -235,34 +235,32 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
         mViewModel.channel.onSuccess.observe(this) {
             disLoading()
-            if (TextUtils.isEmpty(null) || type == "null") {
-                it[0]?.isselect = true
-                channelX = it[0]
-                channelXAdapter.setList(it)
-                mViewModel.shop_list(channelX.id!!, shop?.id!!)
-            } else {
-                it.forEachIndexed { index, channe ->
-                    if (type == "1") {
-                        if (channe.id == "32") {
-                            it[index]?.isselect = true
-                            channelX = it[index]
-                            mDatabind.rectangle1.scrollToPosition(index)
 
-                        }
-                    } else if (type == "2") {
-                        if (channe.id == "7") {
-                            it[index]?.isselect = true
-                            channelX = it[index]
-                            mDatabind.rectangle1.scrollToPosition(index)
-                        }
+            it.forEachIndexed { index, channe ->
+                if (type == "1") {
+                    if (channe.id == "32") {
+                        it[index]?.isselect = true
+                        channelX = it[index]
+                        mDatabind.rectangle1.scrollToPosition(index)
+
                     }
+                } else if (type == "2") {
+                    if (channe.id == "7") {
+                        it[index]?.isselect = true
+                        channelX = it[index]
+                        mDatabind.rectangle1.scrollToPosition(index)
+                    }
+                } else {
+                    it[0]?.isselect = true
+                    channelX = it[0]
+                    channelXAdapter.setList(it)
+                    mViewModel.shop_list(channelX.id!!, shop?.id!!)
                 }
-
-                channelXAdapter.setList(it)
-                mViewModel.shop_list(channelX.id!!, shop?.id!!)
-
-
             }
+
+            channelXAdapter.setList(it)
+            mViewModel.shop_list(channelX.id!!, shop?.id!!)
+
 
         }
 
