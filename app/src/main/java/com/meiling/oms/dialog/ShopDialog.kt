@@ -49,6 +49,7 @@ class ShopDialog : BaseNiceDialog() {
         var btn_ok_exit = holder?.getView<ShapeButton>(R.id.btn_ok_exit)
         holder?.setOnClickListener(R.id.iv_close_recharge, object : OnClickListener {
             override fun onClick(v: View?) {
+
                 dismiss()
                 onresilience?.Ondismiss()
             }
@@ -70,7 +71,10 @@ class ShopDialog : BaseNiceDialog() {
                     wheel_view_center?.selectedIndex!!,
                     shop!!
                 )
-                dismiss()
+                if (tetle!="设置发货门店") {
+                    dismiss()
+                }
+
             }
 
         }

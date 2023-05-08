@@ -5,11 +5,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
+import android.util.Log
 import androidx.annotation.Nullable
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.services.core.PoiItem
+import com.blankj.utilcode.util.ActivityUtils
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseVmActivity
@@ -20,6 +23,7 @@ import com.meiling.common.utils.PermissionUtilis
 import com.meiling.common.utils.RegularUtils
 import com.meiling.oms.bean.PoiVo
 import com.meiling.oms.databinding.ActivityNewlyBuiltStoreBinding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.viewmodel.StoreManagementViewModel
 import com.meiling.oms.widget.KeyBoardUtil
@@ -42,6 +46,36 @@ class NewlyBuiltStoreActivity :
                 ViewModelProvider(this@NewlyBuiltStoreActivity).get(MainViewModel2::class.java)
         }
 
+    }
+
+    override fun onLeftClick(view: View) {
+        if(fromIntent=="regist"){
+            val dialog: MineExitDialog =
+                MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
+            dialog.setOkClickLister {
+                dialog.dismiss()
+                startActivity(Intent(this,LoginActivity::class.java))
+                ActivityUtils.finishAllActivities()
+            }
+            dialog.show(supportFragmentManager)
+        }else{
+            finish()
+        }
+
+    }
+    override fun onBackPressed() {
+        if(fromIntent=="regist"){
+            val dialog: MineExitDialog =
+                MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
+            dialog.setOkClickLister {
+                dialog.dismiss()
+                startActivity(Intent(this,LoginActivity::class.java))
+                ActivityUtils.finishAllActivities()
+            }
+            dialog.show(supportFragmentManager)
+        }else{
+            finish()
+        }
 
     }
 
@@ -140,8 +174,17 @@ class NewlyBuiltStoreActivity :
             if (!TextUtils.isEmpty(id) && id != "null") {
 
             }
-            if(fromIntent.isNullOrBlank()){
-                mViewModel.poiadd(
+
+            if (mViewModel.PoiVoBean.value?.poiVo?.sinceCode!!.toString().length<2){
+                showToast("请输入2-20字母/数字")
+                return@setSingleClickListener
+            }
+
+
+           if(fromIntent=="regist"){
+                MMKVUtils.putString(SPConstants.adminViewId,adminViewId)
+                MMKVUtils.putString(SPConstants.tenantId,tenantId)
+                mViewModel.poiaddFromRegist(
                     lat,
                     lon,
                     provinceCode,
@@ -149,10 +192,8 @@ class NewlyBuiltStoreActivity :
                     adCode,
                     cityName.replace("市", ""), id
                 )
-            }else if(fromIntent=="regist"){
-                MMKVUtils.putString(SPConstants.adminViewId,adminViewId)
-                MMKVUtils.putString(SPConstants.tenantId,tenantId)
-                mViewModel.poiaddFromRegist(
+            }else {
+                mViewModel.poiadd(
                     lat,
                     lon,
                     provinceCode,
@@ -292,9 +333,21 @@ class NewlyBuiltStoreActivity :
         }
     }
 
-    private fun isPhoneNumber(input: String): Boolean {
-        val regex = Regex("^1[3-9]\\d{9}$")
-        return regex.matches(input)
+
+
+    private fun isPasswordValid(password: String): Boolean {
+
+        Log.d("lwq", "=========1111${password}")
+        // 判断是否是纯数字或纯字母
+        if (password.matches(Regex("\\d+")) || password.matches(Regex("[a-zA-Z]+"))) {
+            return false
+        }
+
+        // 判断是否包含字母和数字
+        if (password.matches(Regex("[a-zA-Z]+")) && password.matches(Regex("\\d+"))) {
+            return true
+        }
+        return true
     }
 
 
