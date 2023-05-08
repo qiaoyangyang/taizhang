@@ -1,14 +1,19 @@
 package com.meiling.oms.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
+import com.meiling.common.constant.SPConstants
+import com.meiling.common.network.data.ByTenantId
 import com.meiling.common.network.data.ShopBean
 import com.meiling.common.network.service.meService
+import com.meiling.common.utils.MMKVUtils
+import com.meiling.oms.bean.BranchInformation
+import com.meiling.oms.bean.PoiVoBean
 import com.meiling.oms.bean.*
 import com.meiling.oms.service.branchInformationService
+import okhttp3.Headers.Companion.toHeaders
 
 class StoreManagementViewModel(application: Application) : BaseViewModel(application) {
     /**
@@ -63,6 +68,36 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
         }, poiaddpoidata)
 
     }
+
+    fun poiaddFromRegist(
+        lat: String,
+        lon: String,
+        provinceCode: String,
+        cityCode: String,
+        districtCode: String,
+        cityName: String,
+        id: String,
+    ) {
+        request({
+            branchInformationService.poiaddFromRegist(
+                id,
+                PoiVoBean?.value?.poiVo?.name!!,
+                PoiVoBean?.value?.poiVo?.sinceCode!!,
+                PoiVoBean?.value?.poiVo?.phone!!,
+                PoiVoBean?.value?.poiVo?.storeaddress!! + " " + PoiVoBean?.value?.poiVo?.etdetailedaddress,
+                lat,
+                lon,
+                PoiVoBean?.value?.poiVo?.contactPerson!!,
+                PoiVoBean?.value?.poiVo?.mobilePhone!!,
+                provinceCode,
+                cityCode,
+                districtCode, cityName
+            )
+        }, poiaddpoidata)
+
+    }
+
+
 
     //门店数据
     var shopBean = BaseLiveData<ArrayList<ShopBean>>()

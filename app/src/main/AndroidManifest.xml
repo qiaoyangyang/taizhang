@@ -249,6 +249,18 @@
             android:name=".activity.ImageActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" /> <!-- 查看大图 -->
+        <activity
+            android:name=".activity.NoPrintDeviceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SelectPrintDeviceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BindPrintDeviceActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.PrintDeviceListActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

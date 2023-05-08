@@ -14,9 +14,9 @@ class AccessTokenInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
         builder.addHeader("platform", "app")
-        builder.addHeader("adminViewId", MMKVUtils.getString(SPConstants.adminViewId))
-        builder.addHeader("adminToken", MMKVUtils.getString(SPConstants.TOKEN))
-        builder.addHeader("tenantId", MMKVUtils.getString(SPConstants.tenantId))
+        builder.header("adminViewId", MMKVUtils.getString(SPConstants.adminViewId))
+        builder.header("adminToken", MMKVUtils.getString(SPConstants.TOKEN))
+        builder.header("tenantId", MMKVUtils.getString(SPConstants.tenantId))
 //        builder.addHeader("Authorization", MMKVUtils.getString(SPConstants.TOKEN)).build()
        // Log.d("OkHttp","adminToken-----"+ MMKVUtils.getString(SPConstants.TOKEN))
 

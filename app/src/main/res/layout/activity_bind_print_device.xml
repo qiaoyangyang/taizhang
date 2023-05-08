@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF7F7F7"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/TitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:barStyle="transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:leftIcon="@drawable/bar_arrows_left_white"
+        app:rightBackground="@null"
+        app:rightTitleSize="@dimen/sp_14"
+        app:titleColor="@color/white"
+        android:background="@color/red"
+        app:title="绑定打印机" />
+
+    <com.hjq.shape.layout.ShapeConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:shape_radius="10dp"
+        app:shape_solidColor="#FFEFD4"
+        android:paddingVertical="8dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/lin2"
+        app:layout_constraintTop_toBottomOf="@+id/TitleBar">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/img_horn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/img"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/img"
+            android:textColor="#993D00"
+            android:textSize="@dimen/dp_26"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="找不到打印机编号，请联系打印机厂商客服"/>
+    </com.hjq.shape.layout.ShapeConstraintLayout>
+
+
+    <com.hjq.shape.layout.ShapeConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:shape_radius="10dp"
+        app:shape_solidColor="@color/white"
+        android:paddingVertical="12dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/lin3"
+        android:paddingHorizontal="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/lin2">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="#777777"
+            android:id="@+id/txtPinPai"
+            android:textSize="@dimen/sp_30"
+            android:text="品牌"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#777777"
+            android:id="@+id/txtPinPai2"
+            android:textSize="@dimen/sp_30"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="商米"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@+id/txtPinPai"
+            android:layout_marginTop="15dp"
+            android:id="@+id/line1"
+            android:background="@color/home_F1F1F1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#777777"
+            android:id="@+id/txtPrintName"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/line1"
+            android:textSize="@dimen/sp_30"
+            android:text="打印机名称"/>
+        <com.meiling.common.view.ClearEditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:id="@+id/editPrintName"
+            android:background="@null"
+            android:gravity="right"
+            app:layout_constraintBaseline_toBaselineOf="@+id/txtPrintName"
+            app:layout_constraintLeft_toRightOf="@+id/txtPrintName"
+            app:layout_constraintTop_toBottomOf="@+id/line1"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@+id/txtPrintName"
+            android:layout_marginTop="15dp"
+            android:id="@+id/line2"
+            android:background="@color/home_F1F1F1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#777777"
+            android:id="@+id/txtShopName"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/line2"
+            android:textSize="@dimen/sp_30"
+            android:text="关联发货门店"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toLeftOf="@+id/selectShop2"
+            app:layout_constraintTop_toBottomOf="@+id/line2"
+            android:textSize="@dimen/sp_30"
+            android:textColor="#333333"
+            android:layout_marginTop="10dp"
+            android:id="@+id/selectShop"
+            android:layout_marginRight="5dp"
+            android:text="全部门店"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line2"
+            android:textSize="16sp"
+            android:textColor="#999999"
+            android:layout_marginTop="10dp"
+            android:id="@+id/selectShop2"
+            android:text=">"/>
+
+
+
+    </com.hjq.shape.layout.ShapeConstraintLayout>
+
+
+    <com.hjq.shape.layout.ShapeConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:shape_radius="10dp"
+        app:shape_solidColor="@color/white"
+        android:paddingVertical="12dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/lin4"
+        android:paddingHorizontal="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/lin3">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="#777777"
+            android:id="@+id/txtPrintNo"
+            android:textSize="@dimen/sp_30"
+            app:layout_constraintBaseline_toBaselineOf="@+id/edtPrintNo"
+            android:text="打印机编号"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toLeftOf="@+id/scanLin"
+            app:layout_constraintLeft_toRightOf="@+id/txtPrintNo"
+            android:gravity="right"
+            android:hint="请输入终端编号/SN号"
+            android:textColorHint="#FF999999"
+            android:id="@+id/edtPrintNo"
+            android:background="@null"
+            android:textSize="@dimen/sp_30"
+            app:layout_constraintTop_toTopOf="@+id/scanLin"
+            app:layout_constraintBottom_toBottomOf="@+id/scanLin"
+            android:layout_marginRight="5dp"/>
+
+        <com.hjq.shape.layout.ShapeConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:shape_solidColor="@color/white"
+            app:shape_radius="10dp"
+            app:shape_strokeColor="@color/red"
+            app:shape_strokeWidth="1dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:id="@+id/scanLin"
+            app:layout_constraintRight_toRightOf="parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:text="扫码识别"
+                android:textSize="@dimen/sp_24"
+                android:textStyle="bold"/>
+        </com.hjq.shape.layout.ShapeConstraintLayout>
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@+id/txtPrintNo"
+            android:layout_marginTop="15dp"
+            android:id="@+id/line3"
+            android:background="@color/home_F1F1F1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#777777"
+            android:id="@+id/txtPrintWidth"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/line3"
+            android:textSize="@dimen/sp_30"
+            android:text="小票宽度"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toLeftOf="@+id/txtPrintWidth3"
+            app:layout_constraintTop_toBottomOf="@+id/line3"
+            android:textSize="@dimen/sp_30"
+            android:textColor="#333333"
+            android:layout_marginTop="10dp"
+            android:id="@+id/txtPrintWidth2"
+            android:layout_marginRight="5dp"
+            android:text="58mm"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line3"
+            android:textSize="16sp"
+            android:textColor="#999999"
+            android:layout_marginTop="10dp"
+            android:id="@+id/txtPrintWidth3"
+            android:text=">"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@+id/txtPrintWidth"
+            android:layout_marginTop="15dp"
+            android:id="@+id/line4"
+            android:background="@color/home_F1F1F1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#777777"
+            android:id="@+id/txtPrintPageNum"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/line4"
+            android:textSize="@dimen/sp_30"
+            android:text="打印张数"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toLeftOf="@+id/txtPrintPageNum2"
+            app:layout_constraintTop_toBottomOf="@+id/line4"
+            android:layout_marginTop="10dp"
+            android:id="@+id/imgReduce"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/print_page_reduce"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtPrintPageNum2"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/line4"
+            app:layout_constraintRight_toLeftOf="@+id/imgAdd"
+            android:text="1"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line4"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/imgAdd"
+            android:src="@drawable/print_page_num_add"/>
+
+    </com.hjq.shape.layout.ShapeConstraintLayout>
+
+
+    <com.hjq.shape.layout.ShapeConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:shape_radius="10dp"
+        app:shape_solidColor="@color/white"
+        android:paddingVertical="12dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="15dp"
+        android:paddingHorizontal="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/lin4">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:id="@+id/txtPrintAuto"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/line4"
+            android:textSize="@dimen/sp_30"
+            android:text="接单自动打印小票"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/checkPrintAuto"
+            app:layout_constraintBaseline_toBaselineOf="@+id/txtPrintAuto"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@+id/txtPrintAuto"
+            android:layout_marginTop="15dp"
+            android:id="@+id/line5"
+            android:background="@color/home_F1F1F1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:id="@+id/txtRefundPrintAuto"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/line5"
+            android:textSize="@dimen/sp_30"
+            android:text="退款自动打印小票"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/checkRefundAuto"
+            app:layout_constraintBaseline_toBaselineOf="@+id/txtRefundPrintAuto"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@+id/txtRefundPrintAuto"
+            android:layout_marginTop="15dp"
+            android:id="@+id/line6"
+            android:background="@color/home_F1F1F1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:id="@+id/txtChangeOrderPrintAuto"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/line6"
+            android:textSize="@dimen/sp_30"
+            android:text="订单修改自动打印小票"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/checkChangeOrderPrintAuto"
+            app:layout_constraintBaseline_toBaselineOf="@+id/txtChangeOrderPrintAuto"
+            />
+
+    </com.hjq.shape.layout.ShapeConstraintLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogin"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_90"
+        android:layout_marginTop="@dimen/dp_80"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/login_btn_selector"
+        android:enabled="true"
+        android:text="保存"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_36"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
