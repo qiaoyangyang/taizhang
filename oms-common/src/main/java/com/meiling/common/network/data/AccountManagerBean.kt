@@ -226,7 +226,7 @@ data class CityPoiDto(
 data class ShopPoiDto(
     @SerializedName("poiIds")
     var poiIds: String?
-):Serializable
+) : Serializable
 
 data class RoleListDto(
     @SerializedName("viewId")
@@ -280,7 +280,12 @@ data class AccountDetailDto(
     @SerializedName("shopPoiVoList")
     var shopPoiVoList: List<ShopPoiDto>,
     @SerializedName("unAuthorization")
-    var unAuthorization: List<UnAuthorization?>?
+    var unAuthorization: List<UnAuthorization?>?,
+    @SerializedName("chooseNum")
+    var chooseNum: String, //选择数量
+    @SerializedName("isAll")
+    var isAll: Boolean,//是否全选
+//    chooseNum：选择数量，isAll：是否全选
 ) {
     data class AdminUser(
         @SerializedName("avatar")

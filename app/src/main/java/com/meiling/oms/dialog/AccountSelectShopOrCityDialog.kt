@@ -41,10 +41,12 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
         title: String,
         type: String,
         shopPoiDtoList: ArrayList<ShopPoiDto>,
+        isAll: Boolean
     ): AccountSelectShopOrCityDialog {
         val args = Bundle()
         args.putString("title", title)
         args.putString("type", type)
+        args.putBoolean("isAll", isAll)
         args.putSerializable("shopPoiDtoList", shopPoiDtoList)
         val dialog = AccountSelectShopOrCityDialog()
         dialog.arguments = args
@@ -58,11 +60,13 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
     var selectNum: TextView? = null
     var ivSelectAll: ImageView? = null
     var isSelectAll = false
+    var isAll: Boolean? = false
 
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
         if (!arguments?.getString("type").isNullOrBlank()) {
             shopPoiDtoList = arguments?.getSerializable("shopPoiDtoList") as ArrayList<ShopPoiDto>
             type = arguments?.getString("type").toString()
+            isAll = arguments?.getBoolean("isAll")
         }
         Log.e("lwq", "convertView:${type}===${shopPoiDtoList} ")
         var rvSelect = holder?.getView<RecyclerView>(R.id.rv_shop_or_city)
@@ -192,8 +196,16 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
                     .forEach { poiContentList ->
                         poiContentList.isSelect = true
                     }
+//
+//                if (isAll!!) {
+//                    list.forEach {
+//                        it.isSelect = true
+//                    }
+//                }
+
                 rvSelectAdapter.setList(list)
-                if (shopPoiDtoList.isNotEmpty()&&list.size == it.total) {
+
+                if (isAll!!) {
                     selectNum?.text = "已选择全部门店"
                     ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_true))
                     isSelectAll = true
