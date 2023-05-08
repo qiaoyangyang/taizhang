@@ -431,7 +431,6 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
     private fun register() {
         showLoading("")
-
         mViewModel.launchRequest(
             {
                 loginService.save(mViewModel.businessDto.value!!)
@@ -439,13 +438,20 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             onSuccess = {
                 disLoading()
                 //成功会返回组合id
+//                startActivity(Intent(this,
+//                    BindingLogisticsActivity::class.java)
+//                    .putExtra("tenantId", it!!.tenantId)
+//                    .putExtra("account",mViewModel.businessDto.value!!.userName?.trim().toString())
+//                    .putExtra("pwd",mViewModel.businessDto.value!!.password?.trim().toString())
+//                    .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
                 startActivity(Intent(this,
-                    BindingLogisticsActivity::class.java)
-                    .putExtra("tenantId", it!!.tenantId)
+                    NewlyBuiltStoreActivity::class.java)
+                    .putExtra("tenantId",it!!.tenantId)
+                    .putExtra("adminViewId",it!!.adminUserViewId)
+                    .putExtra("fromIntent","regist")
                     .putExtra("account",mViewModel.businessDto.value!!.userName?.trim().toString())
                     .putExtra("pwd",mViewModel.businessDto.value!!.password?.trim().toString())
                     .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
-//                startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
             },
             onError = {
                 disLoading()

@@ -7,7 +7,7 @@ data class BusinessDto(
     var enterpriseName: String? = "",//企业名称
     var password: String? = "",
     var phone: String? = "",
-    var logo: String? = "",
+    var logo: String? = "https://static.igoodsale.com/default-logo-header.png",
     var salesChannel: String? = "",//id逗号隔开
     var tenantHead: String? = "",//管理员姓名
     var tenantName: String? = "",//品牌名称

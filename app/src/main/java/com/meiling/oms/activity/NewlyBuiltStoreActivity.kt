@@ -1,15 +1,11 @@
 package com.meiling.oms.activity
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.View
 import androidx.annotation.Nullable
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -17,7 +13,9 @@ import com.amap.api.services.core.PoiItem
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseVmActivity
+import com.meiling.common.constant.SPConstants
 import com.meiling.common.utils.InputTextManager
+import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.PermissionUtilis
 import com.meiling.common.utils.RegularUtils
 import com.meiling.oms.bean.PoiVo
@@ -27,7 +25,6 @@ import com.meiling.oms.viewmodel.StoreManagementViewModel
 import com.meiling.oms.widget.KeyBoardUtil
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
-import kotlinx.coroutines.*
 
 //新建门店
 @Route(path = "/app/NewlyBuiltStoreActivity")
@@ -37,8 +34,15 @@ class NewlyBuiltStoreActivity :
     lateinit var mDatabind: ActivityNewlyBuiltStoreBinding
     lateinit var mainViewModel: MainViewModel2
     override fun initView(savedInstanceState: Bundle?) {
-        mainViewModel =
-            ViewModelProvider(MainActivity.mainActivity!!).get(MainViewModel2::class.java)
+        MainActivity.mainActivity?.let {
+            mainViewModel =
+                ViewModelProvider(it).get(MainViewModel2::class.java)
+        } ?: run {
+            mainViewModel =
+                ViewModelProvider(this@NewlyBuiltStoreActivity).get(MainViewModel2::class.java)
+        }
+
+
     }
 
     private val ACCESS_FINE_LOCATION = 1
@@ -49,6 +53,12 @@ class NewlyBuiltStoreActivity :
     var adCode = ""
     var cityName = ""
     var poiItem: PoiItem? = null
+    var tenantId =""
+    var adminViewId=""
+    var fromIntent=""
+    var account=""
+    var pwd=""
+    var name=""
     override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
@@ -78,6 +88,15 @@ class NewlyBuiltStoreActivity :
         mDatabind.viewModel = mViewModel
         mDatabind.lifecycleOwner = this
         id = intent.getStringExtra("id").toString()
+        tenantId = intent.getStringExtra("tenantId").toString()
+        adminViewId= intent.getStringExtra("adminViewId").toString()
+        fromIntent=intent.getStringExtra("fromIntent").toString()
+        account=intent.getStringExtra("account").toString()
+        pwd=intent.getStringExtra("pwd").toString()
+        name=intent.getStringExtra("name").toString()
+        if(fromIntent=="regist"){
+            mDatabind.tvGoOn.text="下一步"
+        }
         mDatabind.tvGoOn.let {
             InputTextManager.with(this)
                 .addView(mDatabind.etStoreName)
@@ -121,16 +140,28 @@ class NewlyBuiltStoreActivity :
             if (!TextUtils.isEmpty(id) && id != "null") {
 
             }
+            if(fromIntent.isNullOrBlank()){
+                mViewModel.poiadd(
+                    lat,
+                    lon,
+                    provinceCode,
+                    "",
+                    adCode,
+                    cityName.replace("市", ""), id
+                )
+            }else if(fromIntent=="regist"){
+                MMKVUtils.putString(SPConstants.adminViewId,adminViewId)
+                MMKVUtils.putString(SPConstants.tenantId,tenantId)
+                mViewModel.poiaddFromRegist(
+                    lat,
+                    lon,
+                    provinceCode,
+                    "",
+                    adCode,
+                    cityName.replace("市", ""), id
+                )
+            }
 
-
-            mViewModel.poiadd(
-                lat,
-                lon,
-                provinceCode,
-                "",
-                adCode,
-                cityName.replace("市", ""), id
-            )
 
 
         }
@@ -223,7 +254,14 @@ class NewlyBuiltStoreActivity :
             disLoading()
 
             mainViewModel.getByTenantId.value = mainViewModel.getByTenantId.value?.copy(poi = 1)
-
+            if(fromIntent=="regist"){
+                startActivity(Intent(this,
+                    BindingLogisticsActivity::class.java)
+                    .putExtra("tenantId", tenantId)
+                    .putExtra("account",account)
+                    .putExtra("pwd",pwd)
+                    .putExtra("name", name))
+            }else
             finish()
         }
         mViewModel.poiaddpoidata.onError.observe(this) {
