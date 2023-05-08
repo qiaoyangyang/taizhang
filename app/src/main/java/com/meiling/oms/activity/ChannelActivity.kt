@@ -153,6 +153,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         mViewModel.updateShop.onSuccess.observe(this) {
             disLoading()
             channeAdapter.removeAt(isposition)
+            showToast("发货门店成功")
             channeAdapter.notifyDataSetChanged()
         }
         mViewModel.updateShop.onError.observe(this) {
@@ -344,10 +345,12 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                             shopid: Int,
                             sho: Shop
                         ) {
+
                             if (shop?.id == sho.id) {
                                 showToast("已经是当前门店啦，请重新选择门店或关闭窗口")
                                 return
                             }
+                            isposition = position
                             mViewModel.updateShop(channeAdapter.getItem(position)?.id!!, sho?.id!!)
 
                         }

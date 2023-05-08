@@ -86,6 +86,7 @@ class OrderDisActivity : BaseActivity<OrderDisFragmentViewModel, ActivityDisBind
 
     lateinit var orderSendAddress: OrderSendAddress
 
+
     @SuppressLint("SetTextI18n")
     override fun createObserver() {
         mViewModel.orderSendAddress.onStart.observe(this) {}
