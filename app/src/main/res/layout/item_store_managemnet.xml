@@ -12,7 +12,7 @@
     <TextView
         android:maxWidth="@dimen/dp_300"
         android:ellipsize="end"
-        android:maxLength="15"
+        android:maxLength="20"
         app:layout_constraintRight_toLeftOf="@+id/tv_phone"
         android:singleLine="true"
         android:id="@+id/tv_shopName"

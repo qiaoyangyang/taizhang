@@ -39,6 +39,8 @@ public class RegularUtils {
      * 验证汉字
      */
     private static final String REGEX_CHZ = "^[\\u4e00-\\u9fa5]+$";
+
+    private static final String regEx = "^\\w+$";
     /**
      * 验证用户名,取值范围为a-z,A-Z,0-9,"_",汉字，不能以"_"结尾,用户名必须是6-20位
      */
@@ -64,6 +66,12 @@ public class RegularUtils {
      */
     public static boolean isMobileExact(String string) {
         return isMatch(REGEX_MOBILE_EXACT, string);
+    } /**
+     * @param string 待验证文本
+     * @return 是否符合手机号（精确）格式
+     */
+    public static boolean isregEx(String string) {
+        return isMatch(regEx, string);
     }
 
     /**
