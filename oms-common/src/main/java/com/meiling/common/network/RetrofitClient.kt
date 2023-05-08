@@ -37,9 +37,9 @@ class RetrofitClient {
         return client
     }
 
-//    var url = "http://test-oms-api.igoodsale.com"//测试
+    var url = "http://test-oms-api.igoodsale.com"//测试
     // var url="https://ods-api.igoodsale.com"//生产环境
-     var url="http://dev-oms-api.igoodsale.com"//开发环境
+//     var url="http://dev-oms-api.igoodsale.com"//开发环境
 
     private fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
