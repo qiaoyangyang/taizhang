@@ -226,7 +226,7 @@ data class CityPoiDto(
 data class ShopPoiDto(
     @SerializedName("poiIds")
     var poiIds: String?
-)
+):Serializable
 
 data class RoleListDto(
     @SerializedName("viewId")
