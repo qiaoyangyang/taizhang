@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -51,6 +52,7 @@ class OrderChangeAddressActivity :
     var orderId = ""
 
     var index = 1
+    var isreceiveRemark = 0
     override fun initData() {
         val intent = intent
         mDatabind.txtOrderChangeTime.text = intent.getStringExtra("receiveTime")
@@ -58,9 +60,14 @@ class OrderChangeAddressActivity :
         mDatabind.txtOrderChangeName.setText(intent.getStringExtra("receiveName"))
         address = intent.getStringExtra("receiveAddress").toString()
         index = intent.getIntExtra("index", 1)
+        isreceiveRemark = intent.getIntExtra("isreceiveRemark", 0)
         orderId = intent.getStringExtra("orderId").toString()
         lat = intent.getStringExtra("lat").toString()
         lon = intent.getStringExtra("lon").toString()
+        if (isreceiveRemark==1){
+            mDatabind.txtOrderChangePhoneRemarkTip.visibility=View.GONE
+            mDatabind.edtOrderChangeRemark.visibility=View.GONE
+        }
 
         if (address.isNotEmpty()) {
             if (address.contains("@@")) {

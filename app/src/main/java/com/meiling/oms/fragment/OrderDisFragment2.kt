@@ -20,6 +20,7 @@ import com.meiling.common.network.data.*
 import com.meiling.common.utils.SoftKeyBoardListener
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.R
+import com.meiling.oms.activity.OrderDisActivity
 import com.meiling.oms.databinding.FragmentDis2Binding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDisGoodsSelectDialog
@@ -54,6 +55,7 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
     var selectShop: String = "30"
     var orderPrice: String = ""
     lateinit var orderSendAddress: OrderSendAddress
+
     override fun initView(savedInstanceState: Bundle?) {
         //deliveryType 同城2 物流 3
         poid = arguments?.getString("poid").toString()

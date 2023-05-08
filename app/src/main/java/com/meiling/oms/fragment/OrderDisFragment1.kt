@@ -132,7 +132,8 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
                             orderId = orderId,
                             orgId = shopSelectDis.originId ?: "0",
                             wight = text.toString(),
-                            orderAndPoiDeliveryDateDto = orderSendAddress.copy(
+
+                            orderAndPoiDeliveryDateDto =(activity as OrderDisActivity). orderSendAddress.copy(
                                 originId = shopSelectDis.originId ?: "0",
                                 deliverId = shopSelectDis.deliverId ?: "0",
                                 stationChannelId = shopSelectDis.stationChannelId ?: "0",
@@ -384,7 +385,6 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
     private fun addressChange(eventBusChangeAddress: EventBusChangeAddress) {
         orderSendAddress = eventBusChangeAddress.orderSendAddress
         mDatabind.edtAddTipShow.setText(orderSendAddress.goodsWeight)
-        (activity as OrderDisActivity).orderSendAddress
         var orderSendRequest = OrderSendRequest(
             cargoPrice = orderPrice!!,
             cargoType = orderSendAddress.cargoType ?: "0",

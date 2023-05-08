@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.fragment.BaseFragment
+import com.meiling.oms.activity.ChannelActivity
 import com.meiling.oms.activity.VoucherInspectionActivity
 import com.meiling.oms.databinding.FragmentScanBinding
 import com.meiling.oms.dialog.MineExitDialog
@@ -54,14 +55,17 @@ class ScanFragment : BaseFragment<FindViewModel, FragmentScanBinding>() {
         mViewModel.shopBean.onSuccess.observe(this) {
 
             dismissLoading()
+
             if (it.isEmpty()) {
                 val dialog: MineExitDialog =
                     MineExitDialog().newInstance(
-                        "温馨提示", "暂无门店，请去门店管理中创建门店！",
-                        "", "知道了", true
+                        "温馨提示", "您还没有绑定该渠道的店铺\n" +
+                                "在「我的-->渠道店铺」中可以绑定店铺\n",
+                        "知道了", "去绑定", false
                     )
                 dialog.setOkClickLister {
                     dialog.dismiss()
+                    startActivity(Intent(requireActivity(), ChannelActivity::class.java).putExtra("type",type))
 
 
                 }

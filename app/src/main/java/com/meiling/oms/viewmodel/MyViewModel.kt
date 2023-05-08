@@ -20,6 +20,10 @@ class MyViewModel(application: Application) : BaseViewModel(application) {
     fun citypoi(){
         request({ meService.citypoi() }, shopBean)
     }
-
+    //  公共数据
+    var getByTenantId = BaseLiveData<ByTenantId>()
+    fun getByTenantId() {
+        request({ meService.getByTenantId() }, getByTenantId)
+    }
 
 }
