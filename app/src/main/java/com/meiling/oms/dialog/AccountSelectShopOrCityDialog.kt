@@ -3,6 +3,7 @@ package com.meiling.oms.dialog
 import android.annotation.SuppressLint
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -37,10 +38,14 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
     private lateinit var rvSelectAdapter: BaseQuickAdapter<PoiContentList, BaseViewHolder>
 
     fun newInstance(
-        title: String
+        title: String,
+        type: String,
+        shopPoiDtoList: ArrayList<ShopPoiDto>,
     ): AccountSelectShopOrCityDialog {
         val args = Bundle()
         args.putString("title", title)
+        args.putString("type", type)
+        args.putSerializable("shopPoiDtoList", shopPoiDtoList)
         val dialog = AccountSelectShopOrCityDialog()
         dialog.arguments = args
         return dialog
@@ -48,7 +53,14 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
 
     var pageIndex = 1
     var arrayList = ArrayList<ShopPoiDto>()
+    var shopPoiDtoList = ArrayList<ShopPoiDto>()
+    var type = "1"
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
+        if (!arguments?.getString("type").isNullOrBlank()) {
+            shopPoiDtoList = arguments?.getSerializable("shopPoiDtoList") as ArrayList<ShopPoiDto>
+            type = arguments?.getString("type").toString()
+        }
+        Log.e("lwq", "convertView:${type}===${shopPoiDtoList} ", )
         var rvSelect = holder?.getView<RecyclerView>(R.id.rv_shop_or_city)
         var btnSelect = holder?.getView<ShapeButton>(R.id.btn_ok_select_shop_city)
         var close = holder?.getView<ImageView>(R.id.iv_close_select_shop_city)
@@ -165,7 +177,24 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
             { accountService.getPoiList(1, "100") }, createSelectPoiDto
         )
         createSelectPoiDto.onSuccess.observe(this) {
-            rvSelectAdapter.setList(it.content as MutableList<PoiContentList>)
+
+            if (!type.isNullOrBlank()) {
+//                对比显示
+                var list = ArrayList<PoiContentList>()
+                list.addAll(it.content as MutableList<PoiContentList>)
+                val poiIds = shopPoiDtoList.map { shopPoiDtoList -> shopPoiDtoList.poiIds }.toSet()
+                list.filter { poiContentList -> poiIds.contains(poiContentList.id) }
+                    .forEach { poiContentList ->
+                        // 找到了相同的 id
+                        // 进行对应的处理
+                        poiContentList.isSelect = true
+                    }
+                rvSelectAdapter.setList(list)
+            } else {
+                rvSelectAdapter.setList(it.content as MutableList<PoiContentList>)
+            }
+
+
 //            if (it.pageIndex == 1) {
 //                if (it.content.isNullOrEmpty()) {
 //                    rvSelectAdapter.setList(null)

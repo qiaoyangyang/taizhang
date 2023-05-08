@@ -384,7 +384,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
     private fun addressChange(eventBusChangeAddress: EventBusChangeAddress) {
         orderSendAddress = eventBusChangeAddress.orderSendAddress
         mDatabind.edtAddTipShow.setText(orderSendAddress.goodsWeight)
-        (activity as OrderDisActivity).orderSendAddress
+//        (activity as OrderDisActivity).orderSendAddress
         var orderSendRequest = OrderSendRequest(
             cargoPrice = orderPrice!!,
             cargoType = orderSendAddress.cargoType ?: "0",

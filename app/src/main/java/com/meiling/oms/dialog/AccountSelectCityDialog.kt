@@ -42,10 +42,14 @@ class AccountSelectCityDialog : BaseNiceDialog() {
     private lateinit var rvSelectAdapter: BaseQuickAdapter<CreateShopBean, BaseViewHolder>
 
     fun newInstance(
-        title: String
+        title: String,
+        type: String,
+        cityPoiDtoList: ArrayList<CityPoiDto>,
     ): AccountSelectCityDialog {
         val args = Bundle()
         args.putString("title", title)
+        args.putString("type", type)
+        args.putSerializable("cityPoiDtoList", cityPoiDtoList)
         val dialog = AccountSelectCityDialog()
         dialog.arguments = args
         return dialog
@@ -53,8 +57,15 @@ class AccountSelectCityDialog : BaseNiceDialog() {
 
     var pageIndex = 1
     var cityPoiDtoList = ArrayList<CityPoiDto>()
+    var cityArrayList = ArrayList<CityPoiDto>()
+    var type = "1"
     @SuppressLint("NotifyDataSetChanged")
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
+        if (!arguments?.getString("type").isNullOrBlank()) {
+            cityArrayList = arguments?.getSerializable("cityPoiDtoList") as ArrayList<CityPoiDto>
+            type = arguments?.getString("type").toString()
+        }
+
         var rvSelect = holder?.getView<RecyclerView>(R.id.rv_shop_or_city)
         var btnSelect = holder?.getView<ShapeButton>(R.id.btn_ok_select_shop_city)
         var close = holder?.getView<ImageView>(R.id.iv_close_select_shop_city)
@@ -155,7 +166,23 @@ class AccountSelectCityDialog : BaseNiceDialog() {
             createSelectPoiDto
         )
         createSelectPoiDto.onSuccess.observe(this) {
-            rvSelectAdapter.setList(it as MutableList<CreateShopBean>)
+
+            if (!type.isNullOrBlank()) {
+//                对比显示
+                var list = ArrayList<CreateShopBean>()
+                list.addAll(it  as MutableList<CreateShopBean>)
+                val poiIds = cityArrayList.map { shopPoiDtoList -> shopPoiDtoList.cityIds }.toSet()
+                list.filter { poiContentList -> poiIds.contains(poiContentList.id) }
+                    .forEach { poiContentList ->
+                        // 找到了相同的 id
+                        // 进行对应的处理
+                        poiContentList.isSelect = true
+                    }
+                rvSelectAdapter.setList(list)
+            } else {
+                rvSelectAdapter.setList(it as MutableList<CreateShopBean>)
+            }
+
         }
         createSelectPoiDto.onStart.observe(this) {
         }

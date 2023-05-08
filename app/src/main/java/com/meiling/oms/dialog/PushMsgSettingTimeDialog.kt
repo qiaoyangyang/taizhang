@@ -1,26 +1,21 @@
 package com.meiling.oms.dialog
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.meiling.common.network.data.OrderSendChannel
-import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
-import com.meiling.oms.widget.KeyBoardUtil
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
 import java.math.BigDecimal
+
 
 class PushMsgSettingTimeDialog : BaseNiceDialog() {
 
@@ -128,36 +123,77 @@ class PushMsgSettingTimeDialog : BaseNiceDialog() {
 //            edttime.findFocus()
 //        }
 
-        rechargeAdapter =
-            object : BaseQuickAdapter<rechDto, BaseViewHolder>(R.layout.item_recy_recharge_editext) {
-                override fun convert(holder: BaseViewHolder, item: rechDto) {
-                    val rechargeSum = holder.getView<TextView>(R.id.txt_recharge_sum)
-                    val editText = holder.getView<TextView>(R.id.edit_text_recharge)
-                    rechargeSum.text = item.time + "分钟"
-                    if (item.select) {
-                        holder.setBackgroundResource(
-                            R.id.txt_recharge_sum,
-                            R.drawable.recharge_bg_select_true
-                        )
-                        rechargeSum.setTextColor(resources.getColor(R.color.red))
-                        time = item.time
-                        isSelecttime = true
-                    } else {
-                        holder.setBackgroundResource(
-                            R.id.txt_recharge_sum,
-                            R.drawable.recharge_bg_select_false
-                        )
-                        rechargeSum.setTextColor(resources.getColor(R.color.home_666666))
-                    }
+//        rechargeAdapter =
+//            object : BaseQuickAdapter<rechDto, BaseViewHolder>(R.layout.item_recy_recharge_editext) {
+//                override fun convert(holder: BaseViewHolder, item: rechDto) {
+//                    val rechargeSum = holder.getView<TextView>(R.id.txt_recharge_sum)
+//                    val editText = holder.getView<TextView>(R.id.edit_text_recharge)
+//                    rechargeSum.text = item.time + "分钟"
+//                    if (item.select) {
+//                        holder.setBackgroundResource(
+//                            R.id.txt_recharge_sum,
+//                            R.drawable.recharge_bg_select_true
+//                        )
+//                        rechargeSum.setTextColor(resources.getColor(R.color.red))
+//                        time = item.time
+//                        isSelecttime = true
+//                    } else {
+//                        holder.setBackgroundResource(
+//                            R.id.txt_recharge_sum,
+//                            R.drawable.recharge_bg_select_false
+//                        )
+//                        rechargeSum.setTextColor(resources.getColor(R.color.home_666666))
+//                    }
+//
+//                    if (holder.layoutPosition==8){
+//                        editText.visibility = View.VISIBLE
+//                    }else{
+//                        editText.visibility = View.GONE
+//                    }
+//
+//                }
+//            }
 
-                    if (holder.layoutPosition==8){
-                        editText.visibility = View.VISIBLE
-                    }else{
-                        editText.visibility = View.GONE
-                    }
+        rechargeAdapter = object : BaseQuickAdapter<rechDto, BaseViewHolder>(R.layout.item_recy_recharge_editext) {
 
+            // 记录最后一个条目的位置
+            private val lastPosition = data.size - 1
+
+            override fun convert(holder: BaseViewHolder, item: rechDto) {
+                val rechargeSum = holder.getView<TextView>(R.id.txt_recharge_sum)
+                val editText = holder.getView<TextView>(R.id.edit_text_recharge)
+                rechargeSum.text = item.time + "分钟"
+
+                // 判断是否为最后一个条目
+                val isLastPosition = holder.layoutPosition == lastPosition
+
+                if (item.select) {
+                    holder.setBackgroundResource(R.id.txt_recharge_sum, R.drawable.recharge_bg_select_true)
+                    rechargeSum.setTextColor(resources.getColor(R.color.red))
+                    time = item.time
+                    isSelecttime = true
+                } else {
+                    holder.setBackgroundResource(R.id.txt_recharge_sum, R.drawable.recharge_bg_select_false)
+                    rechargeSum.setTextColor(resources.getColor(R.color.home_666666))
+                }
+
+                // 如果是最后一个条目，修改布局
+                if (isLastPosition) {
+                    // 如果当前的 position 是最后一个条目
+                    // 修改最后一个条目的布局方式
+                    val layoutParams = holder.itemView.layoutParams
+                    if (layoutParams is StaggeredGridLayoutManager.LayoutParams) {
+                        (layoutParams as StaggeredGridLayoutManager.LayoutParams).isFullSpan = true
+                    }
+                    // 修改最后一个条目的视图
+                    val textView: TextView = holder.itemView.findViewById(R.id.txt_recharge_sum)
+                    textView.text = "这是最后一个条目"
+                    // TODO: 对最后一个条目的布局进行修改
+                } else {
+                    editText.visibility = View.GONE
                 }
             }
+        }
 
 // 显示EditText
 
