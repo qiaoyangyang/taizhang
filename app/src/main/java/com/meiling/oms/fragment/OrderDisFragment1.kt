@@ -321,7 +321,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
 
     override fun createObserver() {
         mViewModel.sendSuccess.onStart.observe(this) {
-            showLoading("正在请求")
+            showLoading("请求中")
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             dismissLoading()
@@ -330,7 +330,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
             mActivity.finish()
         }
         mViewModel.sendSuccess.onStart.observe(this) {
-            showLoading("正在请求")
+            showLoading("请求中")
         }
         mViewModel.sendSuccess.onError.observe(this) {
             dismissLoading()

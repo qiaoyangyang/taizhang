@@ -117,7 +117,7 @@ class OrderDistributionDetailDialog() : BaseNiceDialog() {
                     holder.setText(R.id.txt_dis_number, "单号：${orderSendDetail.channelDelNum}")
 
                     btnCopy.setSingleClickListener {
-                        copyText(context, "${orderSendDetail.stationChannelId}")
+                        copyText(context, "${orderSendDetail.channelDelNum}")
                         showToast("复制成功")
                     }
 

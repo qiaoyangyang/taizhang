@@ -435,7 +435,7 @@ class BaseHistoryOrderFragment :
         mViewModel.cancelOrderDto.onSuccess.observe(this) {
             dismissLoading()
             EventBus.getDefault().post(MessageEventHistoryUpDataTip())
-            showToast("订单已取消")
+            showToast("配送已取消")
         }
         mViewModel.cancelOrderDto.onError.observe(this) {
             dismissLoading()

@@ -130,7 +130,7 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
 
     override fun createObserver() {
         mViewModel.channelDataList.onStart.observe(this) {
-            showLoading("正在请求")
+            showLoading("请求中")
         }
         mViewModel.channelDataList.onSuccess.observe(this) {
             mDatabind.srfDataChannel.isRefreshing = false
@@ -148,7 +148,7 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
             showToast(it.msg)
         }
         mViewModel.channelHistoryDataList.onStart.observe(this) {
-            showLoading("正在请求")
+            showLoading("请求中")
         }
         mViewModel.channelHistoryDataList.onSuccess.observe(this) {
             mDatabind.srfDataChannel.isRefreshing = false

@@ -219,7 +219,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             }
         }
         mViewModel.disableAccountDto.onStart.observe(this) {
-            showLoading("正在请求")
+            showLoading("请求中")
         }
         mViewModel.disableAccountDto.onSuccess.observe(this) {
             dismissLoading()

@@ -188,7 +188,7 @@ class OrderChangeAddressActivity :
 
     override fun createObserver() {
         mViewModel.changeAddressSuccess.onStart.observe(this) {
-            showLoading("正在请求。。。")
+            showLoading("请求中")
         }
         mViewModel.changeAddressSuccess.onSuccess.observe(this) {
             disLoading()

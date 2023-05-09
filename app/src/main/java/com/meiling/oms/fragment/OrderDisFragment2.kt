@@ -269,7 +269,7 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
         }
 
         mViewModel.sendSuccess.onStart.observe(this) {
-            showLoading("正在请求")
+            showLoading("请求中")
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             dismissLoading()
@@ -299,7 +299,7 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
             }
         }
         mViewModel.orderSendConfirmList.onStart.observe(this) {
-            showLoading("正在请求")
+            showLoading("请求中")
         }
         mViewModel.orderSendConfirmList.onStart.observe(this) {
             showLoading("加载中")

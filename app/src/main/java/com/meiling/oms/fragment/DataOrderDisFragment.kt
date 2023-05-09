@@ -173,7 +173,7 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
 
     override fun createObserver() {
         mViewModel.dataList.onStart.observe(this) {
-            showLoading("正在请求")
+            showLoading("请求中")
         }
         mViewModel.dataList.onSuccess.observe(this) {
             dismissLoading()
@@ -194,7 +194,7 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
             showToast(it.msg)
         }
         mViewModel.dataHistoryList.onStart.observe(this) {
-            showLoading("正在请求")
+            showLoading("请求中")
         }
         mViewModel.dataHistoryList.onSuccess.observe(this) {
             dismissLoading()

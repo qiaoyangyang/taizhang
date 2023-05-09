@@ -28,6 +28,7 @@ import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.R
+import com.meiling.oms.activity.ChannelActivity
 import com.meiling.oms.activity.MainActivity
 import com.meiling.oms.activity.NewlyBuiltStoreActivity
 import com.meiling.oms.activity.NoStoreActivity
@@ -422,10 +423,10 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
     override fun createObserver() {
 
         vm.getByTenantId.observe(this){
-            if(it.poi==-1){
+            if(it.poi==-1 || it.shop==-1){
                 val view = LayoutInflater.from(activity).inflate(R.layout.order_store_empty, null, false)
                 view.findViewById<TextView>(R.id.tv_bind).setOnClickListener {
-                    startActivity(Intent(requireActivity(),NewlyBuiltStoreActivity::class.java))
+                    startActivity(Intent(requireActivity(),ChannelActivity::class.java))
 
                 }
                 orderDisAdapter.setEmptyView(view)
@@ -466,13 +467,13 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         }
 
         mViewModel.cancelOrderDto.onStart.observe(this) {
-            showLoading("正在请求")
+            showLoading("请求中")
         }
         mViewModel.cancelOrderDto.onSuccess.observe(this) {
             dismissLoading()
             mDatabind.sflLayout.autoRefresh()
             EventBus.getDefault().post(MessageEventUpDataTip())
-            showToast("订单已取消")
+            showToast("配送已取消")
         }
         mViewModel.cancelOrderDto.onError.observe(this) {
             dismissLoading()

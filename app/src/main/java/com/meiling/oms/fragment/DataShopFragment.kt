@@ -218,7 +218,7 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
 
     override fun createObserver() {
         mViewModel.dataShopList.onStart.observe(this) {
-            showLoading("正在请求")
+            showLoading("请求中")
         }
         mViewModel.dataShopList.onSuccess.observe(this) {
             mDatabind.refDataShop.isRefreshing = false
@@ -241,7 +241,7 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
             showToast(it.msg)
         }
         mViewModel.shopDataList.onStart.observe(this) {
-            showLoading("正在请求")
+            showLoading("请求中")
         }
         mViewModel.shopDataList.onSuccess.observe(this) {
             mDatabind.refDataShop.isRefreshing = false
@@ -257,7 +257,7 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
 
 
         mViewModel.shopHistoryDataList.onStart.observe(this) {
-            showLoading("正在请求")
+            showLoading("请求中")
         }
         mViewModel.shopHistoryDataList.onSuccess.observe(this) {
             mDatabind.refDataShop.isRefreshing = false
