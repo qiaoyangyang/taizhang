@@ -8,24 +8,19 @@
     tools:context=".activity.MainActivity">
 
     <androidx.viewpager2.widget.ViewPager2
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/ll_nav_view"
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:overScrollMode="never"
         android:orientation="horizontal"
-        />
+        android:layout_marginBottom="@dimen/dp_150"/>
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:paddingBottom="@dimen/dp_10"
-        android:paddingTop="@dimen/dp_10"
         android:id="@+id/ll_nav_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_180"
         android:gravity="center"
-        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

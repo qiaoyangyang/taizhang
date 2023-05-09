@@ -133,7 +133,7 @@
             android:layout_alignParentRight="true"
             android:layout_width="@dimen/dp_100"
             android:layout_above="@+id/txt_order_dis_rec_address"
-            android:src="@drawable/order_edit_icon"
+            android:src="@drawable/bianjie"
             android:layout_height="@dimen/dp_100"/>
 
     </RelativeLayout>
