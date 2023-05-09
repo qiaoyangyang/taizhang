@@ -26,7 +26,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="修改收货地址"
+            android:text="选择地址"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_32"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -103,7 +103,7 @@
                 android:layout_toStartOf="@+id/imgClearLocalSearch"
                 android:layout_toEndOf="@+id/imgLocalSearch"
                 android:background="@null"
-                android:hint="请输入收货地址"
+                android:hint="请输入地址"
                 android:imeOptions="actionSearch"
                 android:minHeight="48dp"
                 android:paddingHorizontal="18dp"
