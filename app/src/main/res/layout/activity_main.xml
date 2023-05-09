@@ -8,6 +8,7 @@
     tools:context=".activity.MainActivity">
 
     <androidx.viewpager2.widget.ViewPager2
+        android:layout_marginBottom="1dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/ll_nav_view"
         android:id="@+id/view_pager"
@@ -19,8 +20,8 @@
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:paddingBottom="@dimen/dp_10"
-        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_20"
         android:id="@+id/ll_nav_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

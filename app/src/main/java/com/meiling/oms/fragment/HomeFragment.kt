@@ -3,8 +3,10 @@ package com.meiling.oms.fragment
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
+import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.R
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
@@ -39,6 +41,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewPagerOrder.isUserInputEnabled = false
+        ImmersionBar.with(this).init()
+        ImmersionBar.setTitleBar(this, mDatabind.clMy)
 
     }
 
@@ -55,9 +59,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         mDatabind.viewPagerOrder.adapter =
             BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
         resetting()
-        mDatabind.txtPendingOrder.isSelected = true
-        mDatabind.txtPendingOrder.setTextColor(Color.WHITE)
-        mDatabind.txtPendingOrder.setBackgroundResource(R.drawable.bg_order_tab1)
         mDatabind.viewPagerOrder.setCurrentItem(0, false)
 //        mDatabind.txtPendingOrder.isSelected = true
     }
@@ -65,17 +66,19 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     override fun initListener() {
         mDatabind.txtPendingOrder.setOnClickListener {
             resetting()
-            mDatabind.txtPendingOrder.isSelected = true
-            mDatabind.txtPendingOrder.setTextColor(Color.WHITE)
-            mDatabind.txtPendingOrder.setBackgroundResource(R.drawable.bg_order_tab1)
+          //  mDatabind.txtPendingOrder.isSelected = true
+         //   mDatabind.txtPendingOrder.setTextColor(Color.WHITE)
+          //  mDatabind.txtPendingOrder.setBackgroundResource(R.drawable.bg_order_tab1)
             mDatabind.viewPagerOrder.setCurrentItem(0, false)
 
         }
         mDatabind.txtHistoryOrder.setOnClickListener {
             resetting()
             mDatabind.txtHistoryOrder.isSelected = true
-            mDatabind.txtHistoryOrder.setTextColor(Color.WHITE)
-            mDatabind.txtHistoryOrder.setBackgroundResource(R.drawable.bg_order_tab2)
+            mDatabind.tvHistoryOrder.visibility=View.VISIBLE
+            mDatabind.tvPendingOrder.visibility=View.GONE
+           // mDatabind.txtHistoryOrder.setTextColor(Color.WHITE)
+           // mDatabind.txtHistoryOrder.setBackgroundResource(R.drawable.bg_order_tab2)
             mDatabind.viewPagerOrder.setCurrentItem(1, false)
         }
 
@@ -91,13 +94,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     }
 
     private fun resetting() {
-        mDatabind.txtPendingOrder.isSelected = false
-        mDatabind.txtHistoryOrder.isSelected = false
-        mDatabind.txtPendingOrder.setBackgroundResource(0)
-        mDatabind.txtHistoryOrder.setBackgroundResource(0)
-        mDatabind.txtPendingOrder.setTextColor(resources.getColor(R.color.home_A8ABB2))
-        mDatabind.txtHistoryOrder.setTextColor(resources.getColor(R.color.home_A8ABB2))
-        mDatabind.llChangeOrder.setBackgroundResource(R.drawable.bg_order_tab)
+        mDatabind.tvHistoryOrder.visibility=View.GONE
+        mDatabind.tvPendingOrder.visibility=View.VISIBLE
     }
 
 
@@ -105,9 +103,11 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     fun eventChange(eventTabChange: MessageEventTabChange){
         resetting()
         mViewModel.setUmToken()
-        mDatabind.txtPendingOrder.isSelected = true
-        mDatabind.txtPendingOrder.setTextColor(Color.WHITE)
-        mDatabind.txtPendingOrder.setBackgroundResource(R.drawable.bg_order_tab1)
+        mDatabind.tvHistoryOrder.visibility=View.GONE
+        mDatabind.tvPendingOrder.visibility=View.VISIBLE
+//        mDatabind.txtPendingOrder.isSelected = true
+//        mDatabind.txtPendingOrder.setTextColor(Color.WHITE)
+//        mDatabind.txtPendingOrder.setBackgroundResource(R.drawable.bg_order_tab1)
         mDatabind.viewPagerOrder.setCurrentItem(0, false)
     }
     override fun onResume() {

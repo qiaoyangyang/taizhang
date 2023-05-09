@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hjq.shape.view.ShapeTextView
-import com.meiling.common.GlideApp
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.Shop
 import com.meiling.common.network.data.ShopBean
@@ -50,19 +48,19 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
 
             } else if (channelX.id == "1") {
-                var bindMeituanShopDialog = BindMeituanShopDialog()
+                val bindMeituanShopDialog = BindMeituanShopDialog()
                 bindMeituanShopDialog.setOnresilience(object : BindMeituanShopDialog.Onresilience {
                     override fun resilience(type: Int) {
                         mViewModel.urlauth(
                             type.toString(),
-                            shop?.id!!, channelX?.id!!
+                            shop?.id!!, channelX.id!!
                         )
                     }
 
                 })
                 bindMeituanShopDialog.show(supportFragmentManager)
             } else {
-                mViewModel.urlauth(channelX.id!!, shop?.id!!, channelX?.id!!)
+                mViewModel.urlauth(channelX.id!!, shop?.id!!, channelX.id!!)
             }
 
         }
@@ -80,7 +78,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
     var shop: Shop? = null
     var type = ""
     override fun onTitleClick(view: View) {
-        var shopDialog = ShopDialog().newInstance(shopBean!!, "选择发货门店")
+        val shopDialog = ShopDialog().newInstance(shopBean!!, "选择发货门店")
 
         shopDialog.setOnresilience(object : ShopDialog.Onresilience {
 
@@ -92,7 +90,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                 sho: Shop
             ) {
                 shop = sho
-                mDatabind.TitleBar.titleView.text = cityidname + "/" + sho.name
+                mDatabind.TitleBar.titleView.text = "${cityidname}/${sho.name}"
 
                 mViewModel.shop_list(channelX.id!!, shop?.id!!)
             }
@@ -136,7 +134,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                 mDatabind.tvNewlyBuiltStore.visibility = View.GONE
                 val view =
                     LayoutInflater.from(this).inflate(R.layout.store_managemnet1, null, false)
-                var tv_decreate = view.findViewById<ShapeTextView>(R.id.tv_decreate)
+                val tv_decreate = view.findViewById<ShapeTextView>(R.id.tv_decreate)
                 tv_decreate.setOnClickListener {
                     startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
                 }
@@ -239,19 +237,19 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
             it.forEachIndexed { index, channe ->
                 if (type == "1") {
                     if (channe.id == "32") {
-                        it[index]?.isselect = true
+                        it[index].isselect = true
                         channelX = it[index]
                         mDatabind.rectangle1.scrollToPosition(index)
 
                     }
                 } else if (type == "2") {
                     if (channe.id == "7") {
-                        it[index]?.isselect = true
+                        it[index].isselect = true
                         channelX = it[index]
                         mDatabind.rectangle1.scrollToPosition(index)
                     }
                 } else {
-                    it[0]?.isselect = true
+                    it[0].isselect = true
                     channelX = it[0]
                     channelXAdapter.setList(it)
                     mViewModel.shop_list(channelX.id!!, shop?.id!!)
@@ -311,16 +309,16 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                 holder.setText(R.id.tv_name_t, "三方平台名称:" + item?.name)
                 holder.setText(R.id.tv_channel_id, "三方平台名称:" + item?.channelShopId)
                 if (item?.mtModel == 2) {
-                    holder.setGone(R.id.s_status, false);
+                    holder.setGone(R.id.s_status, false)
                 } else {
-                    holder.setGone(R.id.s_status, true);
+                    holder.setGone(R.id.s_status, true)
                 }
 
 
             }
         }
         mDatabind.rectangle.layoutManager = LinearLayoutManager(this)
-        var recyclerViewDivider = RecyclerViewDivider()
+        val recyclerViewDivider = RecyclerViewDivider()
         recyclerViewDivider.setDividerHeight(30)
         mDatabind.rectangle.addItemDecoration(recyclerViewDivider)
         mDatabind.rectangle.adapter = channeAdapter
@@ -331,7 +329,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         channeAdapter.setOnItemChildClickListener { adapter, view, position ->
             when (view.id) {
                 R.id.tv_compile -> {
-                    var shopDialog = ShopDialog().newInstance(shopBean!!, "设置发货门店")
+                    val shopDialog = ShopDialog().newInstance(shopBean!!, "设置发货门店")
 
                     shopDialog.setOnresilience(object : ShopDialog.Onresilience {
 
@@ -351,7 +349,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                             isposition = position
                             mViewModel.updateShop(
                                 channeAdapter.getItem(position)?.id!!,
-                                sho?.id!!
+                                sho.id!!
                             )
                         }
 
@@ -400,7 +398,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
             ) {
                 holder.setText(R.id.tv_name, item?.name)
-                var tv_name = holder.getView<TextView>(R.id.tv_name)
+                val tv_name = holder.getView<TextView>(R.id.tv_name)
                 if (item?.isselect == true) {
                     holder.setTextColor(R.id.tv_name, Color.parseColor("#212121"))
                     tv_name.textSize = 18f
@@ -424,7 +422,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
             this,
             RecyclerView.HORIZONTAL, false
         )
-        var recyclerViewDivider = RecyclerViewDivider()
+        val recyclerViewDivider = RecyclerViewDivider()
         mDatabind.rectangle1.addItemDecoration(recyclerViewDivider)
         mDatabind.rectangle1.adapter = channelXAdapter
         channelXAdapter.setList(arrayListOf())
