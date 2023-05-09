@@ -153,7 +153,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         mViewModel.updateShop.onSuccess.observe(this) {
             disLoading()
             channeAdapter.removeAt(isposition)
-            showToast("发货门店成功")
+            showToast("设置发货门店成功")
             channeAdapter.notifyDataSetChanged()
         }
         mViewModel.updateShop.onError.observe(this) {

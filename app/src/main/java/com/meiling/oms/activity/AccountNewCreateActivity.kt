@@ -27,6 +27,7 @@ class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountC
         var intentEdit = intent.getBooleanExtra("edit", false)
         mViewModel.roleList()
         if (intentEdit) {
+            mDatabind.TitleBar.title = "编辑账号"
             var adminViewId = intent.getStringExtra("adminViewId")
             adminUserIdEdit = adminViewId.toString()
             mViewModel.userDetail(adminViewId.toString())
@@ -108,7 +109,7 @@ class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountC
                 }
             } else {
                 var accountSelectCityDialog =
-                    AccountSelectCityDialog().newInstance("授权发货门店",adminUserIdEdit,cityPoiDtoList)
+                    AccountSelectCityDialog().newInstance("授权发货门店", adminUserIdEdit, cityPoiDtoList)
                 accountSelectCityDialog.show(supportFragmentManager)
                 accountSelectCityDialog.setOkClickItemCityLister { cityDialogList, selectNum ->
                     Log.d("lwq", "=====${cityDialogList}")
@@ -214,9 +215,10 @@ class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountC
                 selectAuthWay = "1"
                 mDatabind.txtAuthWay.text = "按发货门店授权"
                 shopPoiDtoList.addAll(it.shopPoiVoList)
-                if (it.isAll){
+                isAll = it.isAll
+                if (it.isAll) {
                     mDatabind.txtDeliveryStore.text = "全部门店"
-                }else{
+                } else {
                     mDatabind.txtDeliveryStore.text = "选中${shopPoiDtoList.size}个门店"
                 }
 
@@ -225,9 +227,9 @@ class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountC
                 selectAuthWay = "0"
                 mDatabind.txtAuthWay.text = "按城市授权"
                 cityPoiDtoList.addAll(it.cityPoiVoList)
-                if (it.isAll){
+                if (it.isAll) {
                     mDatabind.txtDeliveryStore.text = "全部城市"
-                }else{
+                } else {
                     mDatabind.txtDeliveryStore.text = "选中${cityPoiDtoList.size}个城市"
                 }
 
