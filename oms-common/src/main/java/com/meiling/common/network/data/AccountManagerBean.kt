@@ -228,6 +228,74 @@ data class ShopPoiDto(
     var poiIds: String?
 ) : Serializable
 
+data class AuthorizationDto(
+    @SerializedName("address")
+    var address: String?,
+    @SerializedName("autoTransOrder")
+    var autoTransOrder: Int?,
+    @SerializedName("cargoType")
+    var cargoType: Int?,
+    @SerializedName("cityCode")
+    var cityCode: String?,
+    @SerializedName("cityId")
+    var cityId: Int?,
+    @SerializedName("contactPerson")
+    var contactPerson: String?,
+    @SerializedName("createTime")
+    var createTime: Long?,
+    @SerializedName("districtCode")
+    var districtCode: String?,
+    @SerializedName("executeUserId")
+    var executeUserId: Int?,
+    @SerializedName("fuRepertoryCheck")
+    var fuRepertoryCheck: Int?,
+    @SerializedName("id")
+    var id: String?,
+    @SerializedName("keyPerson")
+    var keyPerson: String?,
+    @SerializedName("lat")
+    var lat: String?,
+    @SerializedName("lon")
+    var lon: String?,
+    @SerializedName("manyPeopleInventory")
+    var manyPeopleInventory: Int?,
+    @SerializedName("merchantId")
+    var merchantId: String?,
+    @SerializedName("mobilePhone")
+    var mobilePhone: String?,
+    @SerializedName("name")
+    var name: String?,
+    @SerializedName("phone")
+    var phone: String?,
+    @SerializedName("poiGroupId")
+    var poiGroupId: Any?,
+    @SerializedName("poiGroupNames")
+    var poiGroupNames: Any?,
+    @SerializedName("provinceCode")
+    var provinceCode: String?,
+    @SerializedName("serviceStatus")
+    var serviceStatus: Int?,
+    @SerializedName("shopProperties")
+    var shopProperties: Any?,
+    @SerializedName("sinceCode")
+    var sinceCode: String?,
+    @SerializedName("stationChannelId")
+    var stationChannelId: Any?,
+    @SerializedName("stationCommonId")
+    var stationCommonId: String?,
+    @SerializedName("status")
+    var status: Int?,
+    @SerializedName("tenantId")
+    var tenantId: Int?,
+    @SerializedName("type")
+    var type: Int?,
+    @SerializedName("updateTime")
+    var updateTime: Long?,
+    @SerializedName("viewId")
+    var viewId: Long?
+)
+
+
 data class RoleListDto(
     @SerializedName("viewId")
     var viewId: String?,
@@ -242,7 +310,7 @@ data class AccountDetailDto(
     @SerializedName("adminUser")
     var adminUser: AdminUser?,
     @SerializedName("authorization")
-    var authorization: List<Any?>?,
+    var authorization: ArrayList<AuthorizationDto>?,
     @SerializedName("channelList")
     var channelList: Any?,
     @SerializedName("channelListStr")

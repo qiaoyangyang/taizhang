@@ -177,6 +177,7 @@
                 android:gravity="center_vertical"
                 android:paddingVertical="@dimen/dp_20"
                 android:text="通知设置"
+                android:visibility="gone"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_28"
                 app:drawableStartCompat="@mipmap/icon_my_msg" />
@@ -207,6 +208,7 @@
                     android:gravity="center_vertical"
                     android:paddingVertical="@dimen/dp_20"
                     android:text="打印配置"
+                    android:visibility="gone"
                     android:textColor="@color/home_333333"
                     android:textSize="@dimen/sp_32"
                     app:drawableStartCompat="@drawable/print" />
@@ -284,7 +286,7 @@
                 android:text="账号管理"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_28"
-                app:drawableStartCompat="@mipmap/icon_my_lock" />
+                app:drawableStartCompat="@mipmap/icon_my_account" />
 
             <TextView
                 android:id="@+id/txt_modify_pwd"

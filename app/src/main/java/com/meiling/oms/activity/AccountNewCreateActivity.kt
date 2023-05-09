@@ -61,6 +61,9 @@ class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountC
 
             }
         }
+
+        var authStorePoiAll = "0"
+        var isSelect = "0"
         mDatabind.txtAuthWay.setSingleClickListener {
             var arrayLiatDto = ArrayList<AccountItemSelect>()
             arrayLiatDto.add(AccountItemSelect("1", "按发货门店授权"))
@@ -71,26 +74,38 @@ class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountC
                 mDatabind.txtAuthWay.text = name
                 selectAuthWay = id
                 mDatabind.txtDeliveryStore.text = ""
-                if (adminUserIdEdit.isNullOrBlank()) {
-                    mDatabind.txtDeliveryStore.text = ""
-                } else {
-                    if (selectAuthWay == "1") {
-                        mDatabind.txtDeliveryStore.text = "选中${shopPoiDtoList.size}个门店"
-                    }
-                    if (selectAuthWay == "0") {
-                        mDatabind.txtDeliveryStore.text = "选中${cityPoiDtoList.size}个门店"
-                    }
-                }
+                shopPoiDtoList.clear()
+                cityPoiDtoList.clear()
+
+                mDatabind.txtDeliveryStore.text = ""
+//                if (adminUserIdEdit.isNullOrBlank()) {
+//
+//                } else {
+//                    if (selectAuthWay == "1") {
+//                        if(isAll){
+//                            if (isSelect=="1"){
+//                                mDatabind.txtDeliveryStore.text = "全部门店"
+//                            }else{
+//                                mDatabind.txtDeliveryStore.text = "选中${shopPoiDtoList.size}个门店"
+//                            }
+//                        }else{
+//                            mDatabind.txtDeliveryStore.text = "选中${shopPoiDtoList.size}个门店"
+//                        }
+//                    }
+//                    if (selectAuthWay == "0") {
+//                        mDatabind.txtDeliveryStore.text = "选中${cityPoiDtoList.size}个门店"
+//                    }
+//                }
             }
         }
 
 
-        var authStorePoiAll = "0"
         mDatabind.txtDeliveryStore.setSingleClickListener {
             if (selectAuthWay == "1") {
                 var accountSelectDialog = AccountSelectShopOrCityDialog().newInstance(
                     "授权发货门店",
                     adminUserIdEdit,
+                    isSelect,
                     shopPoiDtoList,
                     isAll
                 )
@@ -99,6 +114,7 @@ class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountC
                     shopPoiDtoList.clear()
                     cityPoiDtoList.clear()
                     shopPoiDtoList.addAll(arrayList)
+                    isSelect = isSelectAll
                     if (isSelectAll == "1") {
                         authStorePoiAll = "1"
                         mDatabind.txtDeliveryStore.text = "选中全部门店"
@@ -211,10 +227,14 @@ class AccountNewCreateActivity : BaseActivity<AccountViewModel, ActivityAccountC
             mDatabind.edtInputAccount.setText(it.adminUser?.username)
             mDatabind.edtInputName.setText(it.adminUser?.nickname)
             mDatabind.txtSelectRole.text = it.roleName
-            if (!it.shopPoiVoList.isNullOrEmpty()) {
+            if (!it.authorization.isNullOrEmpty()) {
                 selectAuthWay = "1"
                 mDatabind.txtAuthWay.text = "按发货门店授权"
-                shopPoiDtoList.addAll(it.shopPoiVoList)
+                for (item in it.authorization!!){
+                    shopPoiDtoList.add(ShopPoiDto(item.id))
+                }
+
+//                shopPoiDtoList.addAll(it.shopPoiVoList)
                 isAll = it.isAll
                 if (it.isAll) {
                     mDatabind.txtDeliveryStore.text = "全部门店"

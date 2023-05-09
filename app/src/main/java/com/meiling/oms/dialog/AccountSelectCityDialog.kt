@@ -182,7 +182,7 @@ class AccountSelectCityDialog : BaseNiceDialog() {
                 }else{
                     isSelectAll = false
                     ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_false))
-                    selectNum?.text = "已选择${rvSelectAdapter.data.count { it.isSelect }}个城市"
+                    selectNum?.text = "已选择${list.count { it.isSelect }}个城市"
                 }
                 rvSelectAdapter.setList(list)
 

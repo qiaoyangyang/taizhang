@@ -40,6 +40,7 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
     fun newInstance(
         title: String,
         type: String,
+        isSelect: String,
         shopPoiDtoList: ArrayList<ShopPoiDto>,
         isAll: Boolean
     ): AccountSelectShopOrCityDialog {
@@ -48,6 +49,7 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
         args.putString("type", type)
         args.putBoolean("isAll", isAll)
         args.putSerializable("shopPoiDtoList", shopPoiDtoList)
+        args.putString("isSelect", isSelect)
         val dialog = AccountSelectShopOrCityDialog()
         dialog.arguments = args
         return dialog
@@ -57,16 +59,18 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
     var arrayList = ArrayList<ShopPoiDto>()
     var shopPoiDtoList = ArrayList<ShopPoiDto>()
     var type = ""
+    var selectAllShow = ""
     var selectNum: TextView? = null
     var ivSelectAll: ImageView? = null
     var isSelectAll = false
     var isAll: Boolean? = false
-
+    var isSelect = "0"
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
         if (!arguments?.getString("type").isNullOrBlank()) {
             shopPoiDtoList = arguments?.getSerializable("shopPoiDtoList") as ArrayList<ShopPoiDto>
             type = arguments?.getString("type").toString()
             isAll = arguments?.getBoolean("isAll")
+            isSelect = arguments?.getString("isSelect").toString()
         }
         Log.e("lwq", "convertView:${type}===${shopPoiDtoList} ")
         var rvSelect = holder?.getView<RecyclerView>(R.id.rv_shop_or_city)
@@ -82,6 +86,7 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
             dismiss()
         }
         isSelectAll = false
+
         ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_false))
         rvSelectAdapter = object :
             BaseQuickAdapter<PoiContentList, BaseViewHolder>(R.layout.item_dialog_account_select_city_or_shop),
@@ -137,7 +142,7 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
                 }
             }
         }
-        var isSelect = "0"
+
         btnSelect?.setOnClickListener {
             if (isSelectAll) {
                 isSelect = "1"
@@ -196,25 +201,46 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
                     .forEach { poiContentList ->
                         poiContentList.isSelect = true
                     }
-//
-//                if (isAll!!) {
-//                    list.forEach {
-//                        it.isSelect = true
-//                    }
-//                }
-
-                rvSelectAdapter.setList(list)
-
                 if (isAll!!) {
                     selectNum?.text = "已选择全部门店"
-                    ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_true))
-                    isSelectAll = true
+                    if (isSelect=="1"){
+                        list.forEach {
+                            it.isSelect = true
+                        }
+                        ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_true))
+                        isSelectAll = true
+                    }else{
+                        if (list.all { it.isSelect }) {
+                            isSelectAll = true
+                            selectNum?.text = "已选择全部门店"
+                            ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_true))
+                        } else {
+                            isSelectAll = false
+                            selectNum?.text = "已选择${list.count { it.isSelect }}个门店"
+                            ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_false))
+                        }
+                    }
                 } else {
-                    ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_false))
-                    isSelectAll = false
-                    selectNum?.text = "已选择${rvSelectAdapter.data.count { it.isSelect }}个门店"
+                    if (isSelect=="1"){
+                        list.forEach {
+                            it.isSelect = true
+                        }
+                        isSelectAll = true
+                        selectNum?.text = "已选择全部门店"
+                        ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_true))
+                    }else{
+                        if (list.all { it.isSelect }) {
+                            isSelectAll = true
+                            selectNum?.text = "已选择全部门店"
+                            ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_true))
+                        } else {
+                            isSelectAll = false
+                            selectNum?.text = "已选择${list.count { it.isSelect }}个门店"
+                            ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_false))
+                        }
+                    }
                 }
-
+                rvSelectAdapter.setList(list)
             } else {
                 rvSelectAdapter.setList(it.content as MutableList<PoiContentList>)
             }

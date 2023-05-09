@@ -36,11 +36,18 @@ interface AccountService {
     /**
      * 获取门店
      * */
-    @GET("saas/poi/citypoi")
+    @GET("saas/poi/cityPoiAll")
     suspend fun getCityPoiList(
-        @Query("poiType") poiType: String = "1,2",
-        @Query("hasCityAll") hasCityAll: String = "1",
+        @Query("poiType") poiType: String = "5",
     ): ResultData<ArrayList<CreateShopBean>>
+///**
+//     * 获取门店
+//     * */
+//    @GET("saas/poi/cityPoi")
+//    suspend fun getCityPoiList(
+//        @Query("poiType") poiType: String = "1,2",
+//        @Query("hasCityAll") hasCityAll: String = "1",
+//    ): ResultData<ArrayList<CreateShopBean>>
 
     /**
      * 检查账号

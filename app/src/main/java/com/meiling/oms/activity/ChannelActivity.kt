@@ -71,6 +71,8 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         mDatabind.refeshLayout.setOnRefreshListener {
             mViewModel.shop_list(channelX.id!!, shop?.id!!)
         }
+        mViewModel.citypoi()
+
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityChannelBinding {
@@ -115,7 +117,6 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
     override fun onResume() {
         super.onResume()
-        mViewModel.citypoi()
         Log.d("yjk", "${channelXAdapter.data.size}")
         if (channelXAdapter.data.size == 0) {
             mViewModel.getShopAndChannelVO()
@@ -309,7 +310,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
             ) {
                 holder.setText(R.id.tv_name_t, "三方平台名称:" + item?.name)
-                holder.setText(R.id.tv_channel_id, "三方平台名称:" + item?.channelShopId)
+                holder.setText(R.id.tv_channel_id, "三方平台ID:" + item?.channelShopId)
                 if (item?.mtModel == 2) {
                     holder.setGone(R.id.s_status, false);
                 } else {
