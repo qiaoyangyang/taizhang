@@ -10,7 +10,7 @@
     app:shape_solidColor="@color/white">
 
     <TextView
-        android:maxWidth="@dimen/dp_300"
+        android:maxWidth="@dimen/dp_350"
         android:singleLine="true"
         android:id="@+id/tv_shopName"
         android:layout_width="wrap_content"
