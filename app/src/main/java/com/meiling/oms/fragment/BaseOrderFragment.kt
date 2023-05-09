@@ -444,7 +444,6 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             if (it.pageIndex == 1) {
                 if (it.content.isNullOrEmpty()) {
                     orderDisAdapter.setList(null)
-                    orderDisAdapter.setEmptyView(R.layout.order_search_empty)
                 } else {
                     orderDisAdapter.setList(it.content as MutableList<OrderDto.Content>)
                 }
