@@ -37,8 +37,8 @@ class RetrofitClient {
      var url="https://ods-api.igoodsale.com"//生产环境
     private fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(SPStaticUtils.getString(SPConstants.IP, "https://ods-api.igoodsale.com"))
-//            .baseUrl("http://dev-oms-api.igoodsale.com")//开发环境
+           // .baseUrl(SPStaticUtils.getString(SPConstants.IP, "https://ods-api.igoodsale.com"))
+           .baseUrl("http://dev-oms-api.igoodsale.com")//开发环境
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(CustomGsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())

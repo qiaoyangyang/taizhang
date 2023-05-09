@@ -3,11 +3,15 @@ package com.meiling.oms.fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
+import com.hjq.bar.OnTitleBarListener
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.Shop
 import com.meiling.common.network.data.ShopBean
+import com.meiling.common.utils.TextDrawableUtils
+import com.meiling.oms.R
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentDataBinding
 import com.meiling.oms.dialog.ShopDialog
@@ -37,17 +41,31 @@ class DataFragment : BaseFragment<DataViewModel, FragmentDataBinding>() {
             BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
         mDatabind.viewPager.setCurrentItem(0, false)
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
-
+        TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
     }
 
     lateinit var shopDialog: ShopDialog
 
+
     override fun initData() {
         mViewModel.cityShop("1")
-        mDatabind.TitleBar.setSingleClickListener {
-            mViewModel.cityShop("1")
-            shopDialog.show(childFragmentManager)
-        }
+//        mDatabind.TitleBar.setSingleClickListener {
+//            mViewModel.cityShop("1")
+//            shopDialog.show(childFragmentManager)
+//        }
+        mDatabind.TitleBar.setOnTitleBarListener(object : OnTitleBarListener {
+            override fun onLeftClick(view: View?) {
+            }
+
+            override fun onTitleClick(view: View?) {
+                mViewModel.cityShop("1")
+                shopDialog.show(childFragmentManager)
+            }
+
+            override fun onRightClick(view: View?) {
+            }
+
+        })
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentDataBinding {
@@ -80,7 +98,7 @@ class DataFragment : BaseFragment<DataViewModel, FragmentDataBinding>() {
                     )
                 )
                 shopBeanList.addAll(it)
-                mDatabind.TitleBar.text =
+                mDatabind.TitleBar.title =
                     shopBeanList[0].name + "/" + "${shopBeanList[0].shopList?.get(0)!!.name}"
                 shopDialog = ShopDialog().newInstance(shopBeanList)
                 shopDialog.setOnresilience(object : ShopDialog.Onresilience {
@@ -94,14 +112,15 @@ class DataFragment : BaseFragment<DataViewModel, FragmentDataBinding>() {
                             idArrayList.addAll(shop.id!!.split(",").toTypedArray())
                         }
                         Log.d("shop", "=====${idArrayList}")
-                        mDatabind.TitleBar.text = cityidname + "/" + shop.name
+                        mDatabind.TitleBar.title = cityidname + "/" + shop.name
                         EventBus.getDefault().post(MessageSelectShopPo(idArrayList))
                     }
+
                     override fun Ondismiss() {
                     }
                 })
-            }else{
-                mDatabind.TitleBar.text = "全国"+ "/" + "所有门店"
+            } else {
+                mDatabind.TitleBar.title = "全国" + "/" + "所有门店"
                 EventBus.getDefault().post(MessageSelectShopPo(ArrayList()))
             }
 

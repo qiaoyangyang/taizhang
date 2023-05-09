@@ -9,7 +9,7 @@
         android:id="@+id/TitleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/app_themes_1f2333"
+        android:background="@color/red"
         app:layout_constraintTop_toTopOf="parent"
         app:leftIcon="@drawable/bar_arrows_left_white"
         app:lineVisible="false"
