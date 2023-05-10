@@ -58,7 +58,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/sv_head"
                 android:layout_toEndOf="@+id/sv_head"
-                android:text="账号昵称"
+                tools:text="账号昵称"
+                android:maxWidth="@dimen/dp_200"
+                android:ellipsize="marquee"
                 android:singleLine="true"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_36"
@@ -70,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/sv_head"
                 android:layout_toEndOf="@+id/sv_head"
-                android:text="管理员 18706714009"
+                tools:text="管理员 18706714009"
                 android:textColor="@color/home_666666"
                 android:textSize="@dimen/sp_24" />
         </RelativeLayout>

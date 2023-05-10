@@ -13,6 +13,7 @@ import com.meiling.common.activity.BaseActivity
 import com.meiling.common.utils.SpannableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityTiktoKnindingBinding
+import com.meiling.oms.dialog.AboutKFDialog
 import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.viewmodel.StoreManagementViewModel
 import com.meiling.oms.widget.copyText
@@ -57,7 +58,7 @@ class TiktokBindingActvity :
 
         }
         mDatabind.tvDelete.setOnClickListener {
-            copyText(this, "http://ods.igoodsale.com/")
+            copyText(this, "美好事物（西安）科技有限公司")
             showToast("复制成功")
         }
 
@@ -108,25 +109,26 @@ class TiktokBindingActvity :
 
     override fun ononClick(type: Int) {
         if (type==1){
-            XXPermissions.with(this).permission(Permission.CALL_PHONE)
-                .request(object : OnPermissionCallback {
-                    override fun onGranted(permissions: List<String>, allGranted: Boolean) {
-                        SpannableUtils.dialPhoneNumber("15535958281", this@TiktokBindingActvity)
-                    }
-
-                    override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
-                        if (doNotAskAgain) {
-                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                            XXPermissions.startPermissionActivity(this@TiktokBindingActvity, permissions)
-                        } else {
-                             showToast("授权失败，请检查权限");
-                            //Toast.makeText(context,"授权失败，请检查权限");
-                        }
-                    }
-                })
+            AboutKFDialog().newInstance().show(supportFragmentManager)
+//            XXPermissions.with(this).permission(Permission.CALL_PHONE)
+//                .request(object : OnPermissionCallback {
+//                    override fun onGranted(permissions: List<String>, allGranted: Boolean) {
+//                        SpannableUtils.dialPhoneNumber("15535958281", this@TiktokBindingActvity)
+//                    }
+//
+//                    override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
+//                        if (doNotAskAgain) {
+//                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
+//                            XXPermissions.startPermissionActivity(this@TiktokBindingActvity, permissions)
+//                        } else {
+//                             showToast("授权失败，请检查权限");
+//                            //Toast.makeText(context,"授权失败，请检查权限");
+//                        }
+//                    }
+//                })
         }else{
            // ImageActivity.start("");
-            ImageActivity().start(this,"https://img2.baidu.com/it/u=1617934108,135390230&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=889")
+            ImageActivity().start(this,"https://static.igoodsale.com/step-first-three.png")
         }
     }
 }

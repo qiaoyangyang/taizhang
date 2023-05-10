@@ -74,20 +74,18 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_marginTop="@dimen/dp_34"
-
-                    android:text="所属服务商名称："
-
+                    android:text="所属服务商："
                     android:textColor="@color/home_333333"
-
-                    android:textSize="@dimen/sp_32"
+                    android:textSize="@dimen/sp_28"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tv_operator_name1"
                     android:textSize="@dimen/sp_28"
                     android:textColor="@color/home_333333"
-                    android:text="xxxxxx有限公司"
+                    android:text="美好事物(西安)科技有限公司"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
                     app:layout_constraintLeft_toRightOf="@+id/tv_operator_name"
                     android:layout_width="wrap_content"
                     app:layout_constraintBaseline_toBaselineOf="@+id/tv_operator_name"
@@ -96,8 +94,7 @@
                     android:id="@+id/tv_selected_applications"
                     android:layout_marginTop="@dimen/dp_16"
                     android:textColor="@color/home_333333"
-
-                    android:textSize="@dimen/sp_32"
+                    android:textSize="@dimen/sp_28"
                     android:textStyle="bold"
                     android:text="选择应用："
                     app:layout_constraintLeft_toLeftOf="@+id/tv_operator_name"
@@ -117,8 +114,7 @@
                     android:id="@+id/tv_Industry_Dealer"
                     android:layout_marginTop="@dimen/dp_16"
                     android:textColor="@color/home_333333"
-
-                    android:textSize="@dimen/sp_32"
+                    android:textSize="@dimen/sp_28"
                     android:textStyle="bold"
                     android:text="授权行业："
                     app:layout_constraintLeft_toLeftOf="@+id/tv_selected_applications"
@@ -130,7 +126,7 @@
                     android:textColor="@color/home_333333"
                     app:layout_constraintBaseline_toBaselineOf="@+id/tv_Industry_Dealer"
                     app:layout_constraintLeft_toRightOf="@+id/tv_Industry_Dealer"
-                    android:text="到店餐饮解决方案"
+                    android:text="团购配送解决方案"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -140,7 +136,6 @@
                     android:id="@+id/tv_scope"
                     android:layout_marginTop="@dimen/dp_16"
                     android:textColor="@color/home_333333"
-
                     android:textSize="@dimen/sp_28"
                     android:text="授权范围："
                     app:layout_constraintLeft_toLeftOf="@+id/tv_Industry_Dealer"
@@ -161,6 +156,7 @@
                     android:paddingRight="@dimen/dp_22"
                     android:paddingBottom="@dimen/dp_10"
                     android:text="复制"
+                    android:visibility="gone"
                     android:textColor="#8C8C8C"
                     app:layout_constraintBaseline_toBaselineOf="@+id/tv_operator_name1"
                     android:textSize="@dimen/dp_24"
@@ -183,7 +179,6 @@
                 android:textSize="@dimen/sp_32"
                 android:textStyle="bold" />
             <TextView
-                android:textStyle="bold"
                 android:id="@+id/tv_service"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

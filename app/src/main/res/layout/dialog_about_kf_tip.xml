@@ -33,7 +33,7 @@
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/kf"
+        android:src="@mipmap/kf_new"
         android:textColor="@color/home_666666" />
 
     <TextView

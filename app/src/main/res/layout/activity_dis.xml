@@ -60,7 +60,7 @@
             tools:text="188****8888"
             android:singleLine="true"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="@dimen/sp_22" />
 
         <TextView
             android:id="@+id/txt_order_dis_address"
@@ -120,7 +120,7 @@
             android:gravity="center"
             tools:text="188****8888"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="@dimen/sp_22" />
 
         <TextView
             android:id="@+id/txt_order_dis_rec_address"

@@ -69,7 +69,11 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         mainViewModel =
             ViewModelProvider(MainActivity.mainActivity!!).get(MainViewModel2::class.java)
         mDatabind.refeshLayout.setOnRefreshListener {
-            mViewModel.shop_list(channelX.id!!, shop?.id!!)
+            if(shop == null){
+                mDatabind.refeshLayout.finishRefresh()
+            }else{
+                mViewModel.shop_list(channelX.id!!, shop?.id!!)
+            }
         }
         mViewModel.citypoi()
 

@@ -3,6 +3,7 @@ package com.meiling.oms.jpush;
 import static anet.channel.util.Utils.context;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -28,6 +29,7 @@ import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
 
+import org.android.agoo.huawei.HuaWeiRegister;
 import org.android.agoo.xiaomi.MiPushRegistar;
 
 //import org.android.agoo.huawei.HuaWeiRegister;
@@ -149,7 +151,7 @@ public class PushHelper {
 //        //小米通道，填写您在小米后台APP对应的xiaomi id和key
         MiPushRegistar.register(context, PushConstants.MI_ID, PushConstants.MI_KEY);
 //        //华为，注意华为通道的初始化参数在minifest中配置
-//        HuaWeiRegister.register((Application) context.getApplicationContext());
+        HuaWeiRegister.register((Application) context.getApplicationContext());
 //        //魅族，填写您在魅族后台APP对应的app id和key
 //        MeizuRegister.register(context, PushConstants.MEI_ZU_ID, PushConstants.MEI_ZU_KEY);
 //        //OPPO，填写您在OPPO后台APP对应的app key和secret

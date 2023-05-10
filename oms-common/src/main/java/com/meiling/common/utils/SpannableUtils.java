@@ -103,7 +103,8 @@ public class SpannableUtils {
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
-
+                ds.setFakeBoldText(true);
+                ds.setTextSize(context.getResources().getDimension(R.dimen.sp_28));
                 ds.setColor(context.getResources().getColor(color));       //设置文字颜色
                 ds.setUnderlineText(false);      //设置下划线//根据需要添加
             }
@@ -125,7 +126,7 @@ public class SpannableUtils {
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setTextSize(context.getResources().getDimension(R.dimen.sp_32));
+                ds.setTextSize(context.getResources().getDimension(R.dimen.sp_28));
                 ds.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
                 ds.setColor(context.getResources().getColor(color));       //设置文字颜色
                 ds.setUnderlineText(false);      //设置下划线//根据需要添加

@@ -101,7 +101,7 @@ class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
 
         }
         mDatabind.stKf.setSingleClickListener {
-            AboutKFDialog().newInstance().newInstance().show(supportFragmentManager)
+            AboutKFDialog().newInstance().show(supportFragmentManager)
         }
     }
 

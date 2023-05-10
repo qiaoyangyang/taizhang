@@ -202,7 +202,7 @@ dependencies {
 
     //华为
     api 'com.umeng.umsdk:huawei-umengaccs:1.4.1'
-    api 'com.huawei.hms:push:6.9.0.300'
+    api 'com.huawei.hms:push:6.7.0.300'
 
 }
 
