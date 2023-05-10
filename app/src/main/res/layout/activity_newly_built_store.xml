@@ -283,12 +283,6 @@
                             app:layout_constraintLeft_toRightOf="@+id/tv_detailed_address"
                             app:layout_constraintRight_toRightOf="parent" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="@dimen/dp_30"
-                            android:background="#F5F5F5"
-                            app:layout_constraintTop_toBottomOf="@+id/et_detailed_address" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

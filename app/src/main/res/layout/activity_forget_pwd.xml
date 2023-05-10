@@ -42,6 +42,8 @@
             android:singleLine="true"
             android:textColorHint="@color/home_999999"
             android:textSize="16sp"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!./?>@#$%^*()_-+={[}]|\\:;\"
+            android:gravity="center_vertical|right"
             app:layout_constraintHorizontal_bias="0.4"
             app:layout_constraintLeft_toRightOf="@+id/iv_password"
             app:layout_constraintRight_toLeftOf="@+id/iv_clean_show"

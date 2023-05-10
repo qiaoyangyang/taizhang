@@ -71,8 +71,8 @@
         android:paddingBottom="10dp"
         android:text="新建发货门店"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="@dimen/sp_32"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:shape_radius="10dp"
+        app:shape_radius="@dimen/dp_50"
         app:shape_solidColor="#FF4C4A" />
 </androidx.constraintlayout.widget.ConstraintLayout>

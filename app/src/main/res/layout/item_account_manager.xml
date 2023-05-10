@@ -65,7 +65,7 @@
             android:paddingEnd="@dimen/dp_5"
             android:text="管理员"
             android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_23"
+            android:textSize="@dimen/sp_28"
             android:maxLength="7"
             android:singleLine="true"
             app:layout_constraintLeft_toRightOf="@+id/img_msg_center_icon"

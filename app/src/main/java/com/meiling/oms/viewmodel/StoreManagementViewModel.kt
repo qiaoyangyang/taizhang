@@ -84,7 +84,7 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
                 PoiVoBean?.value?.poiVo?.name!!,
                 PoiVoBean?.value?.poiVo?.sinceCode!!,
                 PoiVoBean?.value?.poiVo?.phone!!,
-                PoiVoBean?.value?.poiVo?.storeaddress!! + " " + PoiVoBean?.value?.poiVo?.etdetailedaddress,
+                PoiVoBean?.value?.poiVo?.storeaddress!! + "@@" + PoiVoBean?.value?.poiVo?.etdetailedaddress,
                 lat,
                 lon,
                 PoiVoBean?.value?.poiVo?.contactPerson!!,

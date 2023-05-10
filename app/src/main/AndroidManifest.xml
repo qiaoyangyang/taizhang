@@ -347,11 +347,11 @@
             </intent-filter>
         </activity>
 
-        <!--华为 -->
-        <meta-data
-            android:name="com.huawei.hms.client.appid"
-            android:value="appid=108169495" />
     </application>
+    <!--华为 -->
+    <meta-data
+        android:name="com.huawei.hms.client.appid"
+        android:value="appid=108169495" />
     <queries>
         <package android:name="com.tencent.mm" />
         <package android:name="com.eg.android.AlipayGphone" />

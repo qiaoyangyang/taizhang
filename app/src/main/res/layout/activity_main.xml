@@ -21,7 +21,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/ll_nav_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_180"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:background="@drawable/bg_main_white"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,6 +34,7 @@
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:paddingVertical="@dimen/dp_30"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -48,8 +49,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/aiv_home"
-                android:layout_width="@dimen/dp_48"
-                android:layout_height="@dimen/dp_48"
+                android:layout_width="@dimen/dp_52"
+                android:layout_height="@dimen/dp_52"
                 android:src="@drawable/bottom_navigation_item_home_selector" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -60,7 +61,7 @@
                 android:text="订单"
                 android:textStyle="bold"
                 android:textColor="@drawable/bottom_navigation_item_selector"
-                android:textSize="@dimen/sp_20" />
+                android:textSize="@dimen/sp_22" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -70,12 +71,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:paddingVertical="@dimen/dp_30"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/aiv_finds"
-                android:layout_width="@dimen/dp_48"
-                android:layout_height="@dimen/dp_48"
+                android:layout_width="@dimen/dp_52"
+                android:layout_height="@dimen/dp_52"
                 android:src="@drawable/bottom_navigation_item_finds_selector" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -86,7 +88,7 @@
                 android:text="验券"
                 android:textStyle="bold"
                 android:textColor="@drawable/bottom_navigation_item_selector"
-                android:textSize="@dimen/sp_20" />
+                android:textSize="@dimen/sp_22" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -95,13 +97,14 @@
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:paddingVertical="@dimen/dp_30"
             android:gravity="center"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/aiv_message"
-                android:layout_width="@dimen/dp_48"
-                android:layout_height="@dimen/dp_48"
+                android:layout_width="@dimen/dp_52"
+                android:layout_height="@dimen/dp_52"
                 android:src="@drawable/bottom_navigation_item_message_selector" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -112,7 +115,7 @@
                 android:text="数据"
                 android:textStyle="bold"
                 android:textColor="@drawable/bottom_navigation_item_selector"
-                android:textSize="@dimen/sp_20" />
+                android:textSize="@dimen/sp_22" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -121,13 +124,14 @@
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:paddingVertical="@dimen/dp_30"
             android:gravity="center"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/aiv_my"
-                android:layout_width="@dimen/dp_48"
-                android:layout_height="@dimen/dp_48"
+                android:layout_width="@dimen/dp_52"
+                android:layout_height="@dimen/dp_52"
                 android:src="@drawable/bottom_navigation_item_my_selector" />
 
 
@@ -140,7 +144,7 @@
                 android:text="我的"
                 android:textStyle="bold"
                 android:textColor="@drawable/bottom_navigation_item_selector"
-                android:textSize="@dimen/sp_20" />
+                android:textSize="@dimen/sp_22" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
