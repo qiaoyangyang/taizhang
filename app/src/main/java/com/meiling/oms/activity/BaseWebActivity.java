@@ -50,7 +50,7 @@ public class BaseWebActivity extends AppCompatActivity {
 
         mLinearLayout = (LinearLayout) this.findViewById(R.id.container);
         mToolbar = (TitleBar) this.findViewById(R.id.toolbar);
-        mToolbar.setTitle("");
+        mToolbar.setTitle(getIntent().getStringExtra("title"));
         mTitleTextView = (TextView) this.findViewById(R.id.toolbar_title);
         mToolbar.setOnTitleBarListener(new OnTitleBarListener() {
             @Override
@@ -96,7 +96,7 @@ public class BaseWebActivity extends AppCompatActivity {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             //do you  work
-            Log.i("Info", "BaseWebActivity onPageStarted---"+url);
+            Log.i("Info", "BaseWebActivity onPageStarted---" + url);
         }
 
         @Override
@@ -114,7 +114,6 @@ public class BaseWebActivity extends AppCompatActivity {
             }
         }
     };
-
 
 
     private void showDialog() {

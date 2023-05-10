@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.SPStaticUtils
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.constant.SPConstants
 import com.meiling.oms.databinding.ActivityAgreementBinding
 import com.meiling.oms.viewmodel.VoucherinspectionViewModel
 
@@ -22,12 +24,12 @@ class AgreementActivity : BaseActivity<VoucherinspectionViewModel, ActivityAgree
         var url = "file:///android_asset/xy.html"
         if (stringExtraType == "1") {
             mDatabind.TitleBar.title = "小喵来客隐私政策"
-            url = "file:///android_asset/xy.html"
-            url = "http://dev-oms.igoodsale.com/#/privacyPolicy"
+//            url = "file:///android_asset/xy.html"
+            url = "https://ods.igoodsale.com/#/privacyPolicy"
         } else {
             mDatabind.TitleBar.title = "小喵来客用户协议"
 //            url = "file:///android_asset/xy.html"
-            url = "http://dev-oms.igoodsale.com/#/userAgreement"
+            url = "https://ods.igoodsale.com/#/userAgreement"
         }
 
         var mAgentWeb = AgentWeb.with(this)

@@ -112,7 +112,7 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
                     }
                 }
                 logisticsPlatformInformationDidalog.setOnGoWebListener{
-                    var intent=Intent(this,AgreementActivity::class.java)
+                    var intent=Intent(this,BaseWebActivity::class.java)
                     intent.putExtra("title","物流手册")
                     intent.putExtra("url",it.guideUrl)
                     startActivity(intent)
