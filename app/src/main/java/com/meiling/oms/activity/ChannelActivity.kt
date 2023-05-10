@@ -169,6 +169,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         mViewModel.releasebind.onSuccess.observe(this) {
             disLoading()
             channeAdapter.removeAt(isposition)
+            showToast("解绑成功")
             channeAdapter.notifyDataSetChanged()
 
         }

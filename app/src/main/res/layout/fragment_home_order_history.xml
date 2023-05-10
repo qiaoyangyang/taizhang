@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_themes_1f2333"
@@ -8,6 +9,7 @@
     android:orientation="vertical">
 
     <com.angcyo.tablayout.DslTabLayout
+        android:paddingEnd="@dimen/dp_20"
         android:id="@+id/tab_layout"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_60"
@@ -29,7 +31,8 @@
         app:tab_indicator_style="STYLE_BOTTOM"
         app:tab_indicator_width="30dp"
         app:tab_item_is_equ_width="false"
-        app:tab_select_color="@color/white">
+        app:tab_select_color="@color/white"
+        tools:ignore="RtlSymmetry">
 
         <TextView
             android:layout_width="wrap_content"
@@ -56,6 +59,7 @@
                 android:textSize="@dimen/sp_28" />
 
         <TextView
+            android:visibility="invisible"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/dp_20"
