@@ -175,6 +175,7 @@
             android:background="@null"
             android:ellipsize="end"
             android:gravity="end"
+            android:maxLength="200"
             android:hint="请输入详细地址"
             android:paddingVertical="@dimen/dp_20"
             android:singleLine="true"

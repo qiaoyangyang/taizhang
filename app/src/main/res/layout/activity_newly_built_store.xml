@@ -133,14 +133,14 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <EditText
-                            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                            android:maxLength="20"
                             android:id="@+id/et_Store_number"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
+                            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                             android:gravity="right|center"
                             android:hint="请输入门店编号"
+                            android:maxLength="20"
                             android:text="@={viewModel.poiVoBean.poiVo.sinceCode}"
                             android:textColor="@color/home_333333"
 
@@ -273,6 +273,7 @@
                             android:background="@color/white"
                             android:gravity="right|center"
                             android:hint="请填写详细的门店地址"
+                            android:maxLength="200"
                             android:text="@={viewModel.poiVoBean.poiVo.etdetailedaddress}"
                             android:textColor="@color/home_333333"
 
