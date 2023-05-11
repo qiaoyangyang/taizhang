@@ -106,13 +106,13 @@ class OrderDisActivity : BaseActivity<OrderDisFragmentViewModel, ActivityDisBind
                     content.order?.payPrice!!
                 )
             )
-            fragmentList.add(
-                OrderDisFragment2.newInstance(
-                    content.order?.poiId!!,
-                    content.order!!.viewId!!,
-                    content.order?.payPrice!!
-                )
-            )
+//            fragmentList.add(
+//                OrderDisFragment2.newInstance(
+//                    content.order?.poiId!!,
+//                    content.order!!.viewId!!,
+//                    content.order?.payPrice!!
+//                )
+//            )
             fragmentList.add(
                 OrderDisFragment3.newInstance(
                     content.order?.poiId!!,

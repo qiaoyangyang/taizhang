@@ -55,8 +55,9 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                     override fun resilience(type: Int) {
                         mViewModel.urlauth(
                             type.toString(),
-                            shop?.id!!, type.toString()//channelX?.id!!
-                        )
+                            shop?.id!!, type.toString()
+                        )//channelX?.id!!
+
                     }
 
                 })
