@@ -69,9 +69,9 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         mainViewModel =
             ViewModelProvider(MainActivity.mainActivity!!).get(MainViewModel2::class.java)
         mDatabind.refeshLayout.setOnRefreshListener {
-            if(shop == null){
+            if (shop == null) {
                 mDatabind.refeshLayout.finishRefresh()
-            }else{
+            } else {
                 mViewModel.shop_list(channelX.id!!, shop?.id!!)
             }
         }
@@ -172,10 +172,15 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         }
         mViewModel.releasebind.onSuccess.observe(this) {
             disLoading()
-            channeAdapter.removeAt(isposition)
-            showToast("解绑成功")
-            channeAdapter.notifyDataSetChanged()
+            if (channelX.id == "1") {
 
+                startActivity(Intent(this, BaseWebActivity::class.java).putExtra("url", it))
+
+            } else {
+                channeAdapter.removeAt(isposition)
+                showToast("解绑成功")
+                channeAdapter.notifyDataSetChanged()
+            }
         }
         mViewModel.releasebind.onError.observe(this) {
 

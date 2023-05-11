@@ -185,6 +185,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
         mViewModel.getByTenantId.onSuccess.observe(this) {
             SaveUserBean(it)
+            vm.getByTenantId.value = it
             if (it.logistics == 1) {//物流是否绑定 1绑定;-1没绑定
                 mDatabind.tvIsLogisticsBinding.visibility = View.GONE
             } else {
