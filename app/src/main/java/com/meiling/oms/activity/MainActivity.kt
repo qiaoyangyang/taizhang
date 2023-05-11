@@ -30,6 +30,7 @@ import com.meiling.oms.fragment.MyFragment
 import com.meiling.oms.fragment.ScanFragment
 import com.meiling.oms.viewmodel.MainViewModel
 import com.meiling.oms.viewmodel.MainViewModel2
+import com.meiling.oms.widget.UpdateVersion
 import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -89,6 +90,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 //            })
     }
 
+    override fun onResume() {
+        super.onResume()
+        UpdateVersion.getUpdateVersion(this, "0")
+    }
     override fun initData() {
         mainViewModel2= ViewModelProvider(
             MainActivity.mainActivity!!,
