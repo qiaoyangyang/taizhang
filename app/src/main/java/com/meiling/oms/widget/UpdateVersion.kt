@@ -35,6 +35,7 @@ object UpdateVersion {
         UpdateAppManager.Builder().setActivity(context)
             .setHttpManager(UpdateAppHttpUtil())
             .setUpdateUrl(SPStaticUtils.getString(SPConstants.IP, "https://ods-api.igoodsale.com")+"/saas/Version/CheckUpdate")
+//            .setUpdateUrl("http://dev-oms-api.igoodsale.com/saas/Version/CheckUpdate")
             .setPost(true)
             .setParams(map)
             .build()
@@ -45,27 +46,16 @@ object UpdateVersion {
 
                     if (code == 200) {
                         if (data!!.updateId != null && data.downloadUrl != null) {
-
-                            updateAppBean.isConstraint = data.updateInstall == 1
-
+//                            updateInstall 1 强制更新
                             val i: Int = data.versionCode!!.toInt()
 //                            是否更新
-                            //                            是否更新
                             if (i > BuildConfig.VERSION_CODE) {
+                                updateAppBean.isConstraint = data.updateInstall == 1
                                 updateAppBean.update = "Yes"
                             } else {
                                 updateAppBean.update = "No"
                             }
-
-//                            updateInstall 1 强制更新
-                            //是否更新
-//                            Log.d("okhttp", "$====code==${data}")
-//                            if (data.versionCode!!.toInt() > BuildConfig.VERSION_CODE) {
-//                                updateAppBean.update = "Yes"
-//                                updateAppBean.isConstraint = data.updateInstall == 1
-//                            } else {
-//                                updateAppBean.update = "No"
-//                            }
+//
                             //版本号
                             updateAppBean.updateLog = data.versionName
                             updateAppBean.newVersion = data.versionCode
@@ -127,12 +117,20 @@ object UpdateVersion {
         val name: TextView = v.findViewById(R.id.name) as TextView
         val btnSure: TextView = v.findViewById(R.id.ok_update) as TextView
         val cancel: TextView = v.findViewById(R.id.cancel_update) as TextView
+        val line1: View = v.findViewById(R.id.line1) as View
+        val line: View = v.findViewById(R.id.line) as View
         val serverUpdate: TextView = v.findViewById(R.id.server_update) as TextView
         val llUpdate: LinearLayout = v.findViewById(R.id.ll_update) as LinearLayout
         val progressBar = v.findViewById(R.id.pro) as ProgressBar
         txtVersion.text = "快来升级至V${updateLog}版本，体验最新功能吧～"
         val dialog: Dialog = builder.create()
+        dialog.setCanceledOnTouchOutside(false)
         dialog.show()
+        if (updateApp.isConstraint) {
+            cancel.visibility = View.GONE
+            line1.visibility = View.GONE
+            serverUpdate.visibility = View.GONE
+        }
         dialog.window!!.setContentView(v) //自定义布局应该在这里添加，要在dialog.show()的后面
         btnSure.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
@@ -143,7 +141,13 @@ object UpdateVersion {
                 llUpdate.visibility = View.GONE
                 cancel.visibility = View.GONE
                 txtVersion.visibility = View.GONE
-                serverUpdate.visibility = View.VISIBLE
+                if (updateApp.isConstraint) {
+                    serverUpdate.visibility = View.INVISIBLE
+                    line.visibility = View.GONE
+                } else {
+                    line.visibility = View.VISIBLE
+                    serverUpdate.visibility = View.VISIBLE
+                }
                 updateAppManager.download(object : DownloadCallback {
                     override fun onStart() {}
 
@@ -184,8 +188,14 @@ object UpdateVersion {
                 )
             }
         })
-        cancel.setOnClickListener { dialog.dismiss() }
-        serverUpdate.setOnClickListener { dialog.dismiss() }
+
+        cancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        serverUpdate.setOnClickListener {
+            dialog.dismiss()
+        }
+
     }
 
 }

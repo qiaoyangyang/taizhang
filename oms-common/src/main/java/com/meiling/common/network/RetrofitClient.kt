@@ -39,6 +39,7 @@ class RetrofitClient {
         return Retrofit.Builder()
             .baseUrl(SPStaticUtils.getString(SPConstants.IP, "https://ods-api.igoodsale.com"))
 //            .baseUrl("http://dev-oms-api.igoodsale.com")//开发环境
+//            .baseUrl("http://test-oms-api.igoodsale.com")//测试环境
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(CustomGsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
