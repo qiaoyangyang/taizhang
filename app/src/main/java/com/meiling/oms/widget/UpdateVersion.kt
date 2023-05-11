@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.blankj.utilcode.util.SPStaticUtils
 import com.google.gson.Gson
 import com.meiling.common.constant.SPConstants
+import com.meiling.common.utils.MMKVUtils
 import com.meiling.oms.BuildConfig
 import com.meiling.oms.R
 import com.meiling.oms.UpdateAppHttpUtil
@@ -34,7 +35,12 @@ object UpdateVersion {
         map.put("appId", "1")
         UpdateAppManager.Builder().setActivity(context)
             .setHttpManager(UpdateAppHttpUtil())
-            .setUpdateUrl(SPStaticUtils.getString(SPConstants.IP, "https://ods-api.igoodsale.com")+"/saas/Version/CheckUpdate")
+            .setUpdateUrl(
+                SPStaticUtils.getString(
+                    SPConstants.IP,
+                    "https://ods-api.igoodsale.com"
+                ) + "/saas/Version/CheckUpdate"
+            )
 //            .setUpdateUrl("http://dev-oms-api.igoodsale.com/saas/Version/CheckUpdate")
             .setPost(true)
             .setParams(map)
@@ -70,7 +76,7 @@ object UpdateVersion {
                     updateApp: UpdateAppBean,
                     updateAppManager: UpdateAppManager
                 ) {
-                    showDiyDialogNew(context, updateApp, updateAppManager)
+                    showDiyDialogNew(context, updateApp, updateAppManager, type)
                 }
 
                 override fun noNewApp(error: String) {
@@ -98,7 +104,8 @@ object UpdateVersion {
     private fun showDiyDialogNew(
         context: Activity,
         updateApp: UpdateAppBean,
-        updateAppManager: UpdateAppManager
+        updateAppManager: UpdateAppManager,
+        type: String
     ) {
         val targetSize = updateApp.targetSize
         val updateLog = updateApp.updateLog
@@ -125,7 +132,11 @@ object UpdateVersion {
         txtVersion.text = "快来升级至V${updateLog}版本，体验最新功能吧～"
         val dialog: Dialog = builder.create()
         dialog.setCanceledOnTouchOutside(false)
-        dialog.show()
+        if (MMKVUtils.getBoolean("isUpdate")) {
+            dialog.show()
+        } else {
+                dialog.show()
+        }
         if (updateApp.isConstraint) {
             cancel.visibility = View.GONE
             line1.visibility = View.GONE
@@ -190,6 +201,7 @@ object UpdateVersion {
         })
 
         cancel.setOnClickListener {
+            MMKVUtils.putBoolean("isUpdate",false)
             dialog.dismiss()
         }
         serverUpdate.setOnClickListener {

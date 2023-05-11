@@ -19,6 +19,7 @@ import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.PermissionUtilis
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityMainBinding
@@ -88,11 +89,14 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 //                    }
 //                }
 //            })
+        MMKVUtils.putBoolean("isUpdate",true)
     }
 
     override fun onResume() {
         super.onResume()
-        UpdateVersion.getUpdateVersion(this, "0")
+        if (MMKVUtils.getBoolean("isUpdate")){
+            UpdateVersion.getUpdateVersion(this, "0")
+        }
     }
     override fun initData() {
         mainViewModel2= ViewModelProvider(
