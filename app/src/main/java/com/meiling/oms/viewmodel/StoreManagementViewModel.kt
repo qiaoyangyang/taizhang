@@ -138,7 +138,7 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
     fun releasebind(channelId: String,shopId:String) {
         request({ branchInformationService.releasebind(channelId ,shopId) }, releasebind)
     }
-    // 设置发货门店
+    // 修改发货门店
     var updateShop = BaseLiveData<String>()
     fun updateShop(shopId: String,poiId:String) {
         request({ branchInformationService.updateShop(shopId ,poiId) }, updateShop)

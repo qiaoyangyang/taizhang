@@ -38,7 +38,7 @@
             android:layout_width="@dimen/dp_36"
             android:layout_height="@dimen/dp_36"
             android:layout_marginStart="@dimen/dp_20"
-            android:src="@mipmap/logo" />
+            android:src="@mipmap/icon_about_logo" />
 
         <ImageView
             android:id="@+id/closeMsg"
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_toEndOf="@+id/tvMsg"
-            android:text="时间"
+            tools:text="时间"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
@@ -90,7 +90,6 @@
             android:layout_below="@+id/tvMsg"
             android:layout_marginVertical="@dimen/dp_30"
             android:layout_marginStart="@dimen/dp_20"
-            android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_24"
             android:textStyle="bold"

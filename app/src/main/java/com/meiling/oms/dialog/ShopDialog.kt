@@ -71,7 +71,7 @@ class ShopDialog : BaseNiceDialog() {
                     wheel_view_center?.selectedIndex!!,
                     shop!!
                 )
-                if (tetle!="设置发货门店") {
+                if (tetle!="修改发货门店") {
                     dismiss()
                 }
 
