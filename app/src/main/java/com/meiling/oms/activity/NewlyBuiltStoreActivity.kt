@@ -209,7 +209,7 @@ class NewlyBuiltStoreActivity :
         mDatabind.etStoreAddress.setOnClickListener {
 
 
-            XXPermissions.with(this).permission(PermissionUtilis.Group.LOCAL)
+            XXPermissions.with(this).permission(PermissionUtilis.Group.BLUETOOTH)
                 .request(object : OnPermissionCallback {
                     override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
                         if (!allGranted) {
@@ -218,9 +218,9 @@ class NewlyBuiltStoreActivity :
                         }
                         //   startActivity(Intent(this@NewlyBuiltStoreActivity,NewOrderChangeAddressMapActivity::class.java))
                         // initStart()
-                        ARouter.getInstance().build("/app/NewOrderChangeAddressMapActivity")
-                            .withString("title", "门店地址")
-                            .navigation(this@NewlyBuiltStoreActivity, REQUEST_CODE)
+//                        ARouter.getInstance().build("/app/NewOrderChangeAddressMapActivity")
+//                            .withString("title", "门店地址")
+//                            .navigation(this@NewlyBuiltStoreActivity, REQUEST_CODE)
                     }
 
                     override fun onDenied(
