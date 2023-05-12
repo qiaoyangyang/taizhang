@@ -195,6 +195,9 @@
             android:name=".activity.MyRechargeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.MyRechargeToPayActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.WriteOffActivity"
             android:screenOrientation="portrait" />
         <activity
