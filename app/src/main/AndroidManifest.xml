@@ -196,6 +196,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MyRechargeToPayActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.WriteOffActivity"

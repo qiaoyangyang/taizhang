@@ -1,6 +1,7 @@
 package com.meiling.oms.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -56,11 +57,13 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
     override fun initListener() {
 
         mDatabind.btnRecharge.setSingleClickListener {
-            var rechargeDialog = RechargeDialog().newInstance()
-            rechargeDialog.setOkClickLister { money, channel ->
-                mViewModel.rechargeRequest(RechargeRequest(money, "3", channel, ""))
-            }
-            rechargeDialog.show(supportFragmentManager)
+            startActivity(Intent(this, MyRechargeToPayActivity::class.java))
+
+//            var rechargeDialog = RechargeDialog().newInstance()
+//            rechargeDialog.setOkClickLister { money, channel ->
+//                mViewModel.rechargeRequest(RechargeRequest(money, "3", channel, ""))
+//            }
+//            rechargeDialog.show(supportFragmentManager)
         }
 
         mDatabind.radioGroup.setOnCheckedChangeListener { group, checkedId ->
