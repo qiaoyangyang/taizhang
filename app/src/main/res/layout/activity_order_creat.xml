@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.OrderCreateActivity">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/TitleBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        app:leftIcon="@drawable/bar_arrows_left_white"
+        app:title="新建订单"
+        app:titleColor="@color/white" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_btn"
+        android:layout_below="@+id/TitleBar">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_20"
+                android:layout_marginVertical="@dimen/dp_20"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/dp_20"
+                app:shape_radius="@dimen/dp_20"
+                app:shape_solidColor="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/dp_20"
+                    android:text="订单信息"
+                    android:textColor="@color/home_333333"
+                    android:textSize="@dimen/sp_32"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_2"
+                    android:background="@color/account_F5F5F5" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/dp_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_auth_way_tip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="发货门店"
+                        android:textColor="@color/home_666666"
+                        android:textSize="@dimen/sp_32"
+                        app:drawableEndCompat="@drawable/icon_must_input" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_select_store"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_92"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@+id/txt_auth_way_tip"
+                        android:background="@null"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|right"
+                        android:hint="请选择发货门店"
+                        android:singleLine="true"
+                        android:textColor="@color/home_333333"
+                        android:textSize="@dimen/sp_32"
+                        app:drawableEndCompat="@drawable/icon_next"
+                        tools:ignore="RtlHardcoded" />
+                </RelativeLayout>
+
+            </com.hjq.shape.layout.ShapeLinearLayout>
+
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_20"
+                android:layout_marginVertical="@dimen/dp_20"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/dp_20"
+                app:shape_radius="@dimen/dp_20"
+                app:shape_solidColor="@color/white">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/dp_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/dp_20"
+                        android:text="商品信息"
+                        android:textColor="@color/home_333333"
+                        android:textSize="@dimen/sp_32"
+                        android:textStyle="bold" />
+
+                    <com.hjq.shape.view.ShapeTextView
+                        android:id="@+id/txt_delete_goods"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/txt_add_goods"
+                        android:ellipsize="end"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:gravity="center_vertical|right"
+                        android:paddingHorizontal="@dimen/dp_20"
+                        android:paddingVertical="@dimen/dp_10"
+                        android:singleLine="true"
+                        android:text="删除"
+                        android:textSize="@dimen/sp_28"
+                        app:shape_radius="@dimen/dp_20"
+                        app:shape_strokeColor="@color/red"
+                        app:shape_strokeWidth="@dimen/dp_2"
+                        app:shape_textColor="@color/red"
+                        tools:ignore="RtlHardcoded" />
+
+                    <com.hjq.shape.view.ShapeTextView
+                        android:id="@+id/txt_add_goods"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|right"
+                        android:paddingHorizontal="@dimen/dp_20"
+                        android:paddingVertical="@dimen/dp_10"
+                        android:singleLine="true"
+                        android:text="新增商品"
+                        android:textSize="@dimen/sp_28"
+                        app:shape_radius="@dimen/dp_20"
+                        app:shape_strokeColor="@color/red"
+                        app:shape_strokeWidth="@dimen/dp_2"
+                        app:shape_textColor="@color/red"
+                        tools:ignore="RtlHardcoded" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_2"
+                    android:background="@color/account_F5F5F5" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_create_goods"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:spanCount="2"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_create_order_goods" />
+            </com.hjq.shape.layout.ShapeLinearLayout>
+
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_20"
+                android:layout_marginVertical="@dimen/dp_20"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/dp_20"
+                app:shape_radius="@dimen/dp_20"
+                app:shape_solidColor="@color/white">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/dp_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/dp_20"
+                        android:text="收货信息"
+                        android:textColor="@color/home_333333"
+                        android:textSize="@dimen/sp_32"
+                        android:textStyle="bold" />
+
+                    <com.hjq.shape.view.ShapeTextView
+                        android:id="@+id/txt_discern"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|right"
+                        android:paddingHorizontal="@dimen/dp_20"
+                        android:paddingVertical="@dimen/dp_10"
+                        android:singleLine="true"
+                        android:text="智能识别"
+                        android:textSize="@dimen/sp_28"
+                        app:shape_radius="@dimen/dp_20"
+                        app:shape_strokeColor="@color/red"
+                        app:shape_strokeWidth="@dimen/dp_2"
+                        app:shape_textColor="@color/red" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_input_receive_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/dp_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/edt_receive_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:textColor="#ff999999"
+                        android:textSize="@dimen/sp_32"
+                        tools:text="输入或粘贴收货信息文本，自动识别收货人、收货电话电话和收货地址（智能识别）" />
+
+
+                    <com.hjq.shape.view.ShapeTextView
+                        android:id="@+id/txt_discern_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/edt_receive_info"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:gravity="center_vertical|right"
+                        android:paddingHorizontal="@dimen/dp_20"
+                        android:paddingVertical="@dimen/dp_6"
+                        android:text="识别"
+                        android:textSize="@dimen/sp_24"
+                        app:shape_radius="@dimen/dp_50"
+                        app:shape_solidColor="@color/red"
+                        app:shape_textColor="@color/white"
+                        tools:ignore="RtlHardcoded" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_2"
+                    android:background="@color/account_F5F5F5" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/dp_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_input_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="收货方式"
+                        android:textColor="@color/home_666666"
+                        android:textSize="@dimen/sp_32"
+                        app:drawableEndCompat="@drawable/icon_must_input" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_receive_way"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_92"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@+id/txt_input_account"
+                        android:background="@null"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|right"
+                        android:singleLine="true"
+                        android:text="商家配送"
+                        android:textColor="@color/home_333333"
+                        android:textSize="@dimen/sp_32"
+                        app:drawableEndCompat="@drawable/icon_next"
+                        tools:ignore="RtlHardcoded" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_2"
+                    android:background="@color/account_F5F5F5" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_select_receive_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/dp_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_input_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="收货地址"
+                        android:textColor="@color/home_666666"
+                        android:textSize="@dimen/sp_32"
+                        app:drawableEndCompat="@drawable/icon_must_input" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_receive_select_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_92"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@+id/txt_input_phone"
+                        android:background="@null"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|right"
+                        android:hint="请选择收货地址"
+                        android:singleLine="true"
+                        android:textColor="@color/home_333333"
+                        android:textSize="@dimen/sp_32"
+                        app:drawableEndCompat="@drawable/icon_next"
+                        tools:ignore="RtlHardcoded" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_2"
+                    android:background="@color/account_F5F5F5" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_input_receive_detail_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/dp_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_input_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="详细地址"
+                        android:textColor="@color/home_666666"
+                        android:textSize="@dimen/sp_32" />
+
+                    <EditText
+                        android:id="@+id/edt_input_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_92"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@+id/txt_input_name"
+                        android:background="@null"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|right"
+                        android:hint="请填写详细的收货地址"
+                        android:maxLength="20"
+                        android:singleLine="true"
+                        android:textColor="@color/home_333333"
+                        android:textSize="@dimen/sp_32"
+                        tools:ignore="RtlHardcoded" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_2"
+                    android:background="@color/account_F5F5F5" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/dp_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_receive_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="收货人"
+                        android:textColor="@color/home_666666"
+                        android:textSize="@dimen/sp_32"
+                        app:drawableEndCompat="@drawable/icon_must_input" />
+
+                    <EditText
+                        android:id="@+id/edt_receive_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_92"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@+id/txt_receive_name"
+                        android:background="@null"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|right"
+                        android:hint="请输入收货人姓名"
+                        android:maxLength="20"
+                        android:singleLine="true"
+                        android:textColor="@color/home_333333"
+                        android:textSize="@dimen/sp_32"
+                        tools:ignore="RtlHardcoded" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_2"
+                    android:background="@color/account_F5F5F5" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/dp_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_receive_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="收货电话"
+                        android:textColor="@color/home_666666"
+                        android:textSize="@dimen/sp_32"
+                        app:drawableEndCompat="@drawable/icon_must_input" />
+
+                    <EditText
+                        android:id="@+id/edt_receive_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_92"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@+id/txt_receive_phone"
+                        android:background="@null"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|right"
+                        android:hint="请输入收货人电话"
+                        android:maxLength="20"
+                        android:singleLine="true"
+                        android:textColor="@color/home_333333"
+                        android:textSize="@dimen/sp_32"
+                        tools:ignore="RtlHardcoded" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_2"
+                    android:background="@color/account_F5F5F5" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/dp_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_receive_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="收货时间"
+                        android:textColor="@color/home_666666"
+                        android:textSize="@dimen/sp_32"
+                        app:drawableEndCompat="@drawable/icon_must_input" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_receive_select_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_92"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@+id/txt_receive_time"
+                        android:background="@null"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|right"
+                        android:hint="请选择收货地址"
+                        android:singleLine="true"
+                        android:textColor="@color/home_333333"
+                        android:textSize="@dimen/sp_32"
+                        app:drawableEndCompat="@drawable/icon_next"
+                        tools:ignore="RtlHardcoded" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_2"
+                    android:background="@color/account_F5F5F5" />
+
+
+            </com.hjq.shape.layout.ShapeLinearLayout>
+
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_20"
+                android:layout_marginVertical="@dimen/dp_20"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/dp_20"
+                app:shape_radius="@dimen/dp_20"
+                app:shape_solidColor="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/dp_20"
+                    android:text="备注"
+                    android:textColor="@color/home_333333"
+                    android:textSize="@dimen/sp_32"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_2"
+                    android:background="@color/account_F5F5F5" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_order_change_remark"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:layout_marginBottom="@dimen/dp_20"
+                        android:background="@drawable/order_change_bg_f4f4"
+                        android:gravity="top"
+                        android:hint="这是一个备注"
+                        android:maxLength="200"
+                        android:padding="@dimen/dp_20"
+                        android:textColor="@color/home_666666"
+                        android:textSize="@dimen/sp_28"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </RelativeLayout>
+
+            </com.hjq.shape.layout.ShapeLinearLayout>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/dp_30">
+
+
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/btn_save_and_dis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_weight="1"
+            android:background="@drawable/order_bg_red"
+            android:gravity="center"
+            android:paddingVertical="@dimen/dp_20"
+            android:shadowColor="@color/home_666666"
+            android:text="保存并发起配送"
+            android:textColor="@color/red"
+            android:textSize="@dimen/sp_32"
+            app:shape_radius="@dimen/dp_50"
+            app:shape_solidColor="@color/white"
+            app:shape_strokeColor="@color/red"
+            app:shape_strokeWidth="@dimen/dp_1" />
+
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/btn_ok_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingVertical="@dimen/dp_20"
+            android:shadowColor="@color/home_666666"
+            android:text="保存"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_32"
+            app:shape_radius="@dimen/dp_50"
+            app:shape_solidColor="@color/red" />
+    </LinearLayout>
+
+
+</RelativeLayout>

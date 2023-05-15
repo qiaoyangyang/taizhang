@@ -1,5 +1,6 @@
 package com.meiling.oms.fragment
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.R
+import com.meiling.oms.activity.OrderCreateActivity
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentHomeBinding
 import com.meiling.oms.eventBusData.MessageEventTabChange
@@ -29,6 +31,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         super.onCreate(savedInstanceState)
 
     }
+
     override fun onStart() {
         super.onStart()
         EventBus.getDefault().register(this)
@@ -66,24 +69,27 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     override fun initListener() {
         mDatabind.txtPendingOrder.setOnClickListener {
             resetting()
-          //  mDatabind.txtPendingOrder.isSelected = true
-         //   mDatabind.txtPendingOrder.setTextColor(Color.WHITE)
-          //  mDatabind.txtPendingOrder.setBackgroundResource(R.drawable.bg_order_tab1)
+            //  mDatabind.txtPendingOrder.isSelected = true
+            //   mDatabind.txtPendingOrder.setTextColor(Color.WHITE)
+            //  mDatabind.txtPendingOrder.setBackgroundResource(R.drawable.bg_order_tab1)
             mDatabind.viewPagerOrder.setCurrentItem(0, false)
 
         }
         mDatabind.txtHistoryOrder.setOnClickListener {
             resetting()
             mDatabind.txtHistoryOrder.isSelected = true
-            mDatabind.tvHistoryOrder.visibility=View.VISIBLE
-            mDatabind.tvPendingOrder.visibility=View.GONE
-           // mDatabind.txtHistoryOrder.setTextColor(Color.WHITE)
-           // mDatabind.txtHistoryOrder.setBackgroundResource(R.drawable.bg_order_tab2)
+            mDatabind.tvHistoryOrder.visibility = View.VISIBLE
+            mDatabind.tvPendingOrder.visibility = View.GONE
+            // mDatabind.txtHistoryOrder.setTextColor(Color.WHITE)
+            // mDatabind.txtHistoryOrder.setBackgroundResource(R.drawable.bg_order_tab2)
             mDatabind.viewPagerOrder.setCurrentItem(1, false)
         }
 
-        mDatabind.llSearch.setOnClickListener {
+        mDatabind.imgSearchOrder.setOnClickListener {
             ARouter.getInstance().build("/app/Search1Activity").navigation()
+        }
+        mDatabind.imgCreateOrder.setOnClickListener {
+            startActivity(Intent(requireContext(), OrderCreateActivity::class.java))
         }
 //        mDatabind.aivSearch.setOnClickListener {
 //            ARouter.getInstance().build("/app/Search1Activity").navigation()
@@ -94,22 +100,23 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     }
 
     private fun resetting() {
-        mDatabind.tvHistoryOrder.visibility=View.GONE
-        mDatabind.tvPendingOrder.visibility=View.VISIBLE
+        mDatabind.tvHistoryOrder.visibility = View.GONE
+        mDatabind.tvPendingOrder.visibility = View.VISIBLE
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun eventChange(eventTabChange: MessageEventTabChange){
+    fun eventChange(eventTabChange: MessageEventTabChange) {
         resetting()
         mViewModel.setUmToken()
-        mDatabind.tvHistoryOrder.visibility=View.GONE
-        mDatabind.tvPendingOrder.visibility=View.VISIBLE
+        mDatabind.tvHistoryOrder.visibility = View.GONE
+        mDatabind.tvPendingOrder.visibility = View.VISIBLE
 //        mDatabind.txtPendingOrder.isSelected = true
 //        mDatabind.txtPendingOrder.setTextColor(Color.WHITE)
 //        mDatabind.txtPendingOrder.setBackgroundResource(R.drawable.bg_order_tab1)
         mDatabind.viewPagerOrder.setCurrentItem(0, false)
     }
+
     override fun onResume() {
         super.onResume()
 

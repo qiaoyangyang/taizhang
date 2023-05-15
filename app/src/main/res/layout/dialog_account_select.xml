@@ -44,9 +44,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:wheelItemVerticalSpace="16dp"
             app:wheelMaskLineColor="#F5F5F5"
             app:wheelTextColor="#333333"
+            app:wheelItemVerticalSpace="30dp"
             app:wheelTextSize="16sp" />
 
     </LinearLayout>

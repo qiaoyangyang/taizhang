@@ -76,7 +76,6 @@
             android:layout_alignBottom="@+id/ll_change_order"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/dp_20"
             android:gravity="center"
             android:paddingHorizontal="@dimen/dp_20"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -89,13 +88,12 @@
                 android:layout_height="@dimen/dp_62"
                 android:src="@drawable/home_search" />
 
-            <TextView
+            <ImageView
+                android:id="@+id/img_create_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_24" />
+                android:src="@drawable/icon_create_order" />
+
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

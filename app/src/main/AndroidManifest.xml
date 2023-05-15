@@ -168,6 +168,10 @@
             android:name=".activity.OrderChangeAddressMapActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.OrderCreateActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.NewOrderChangeAddressMapActivity"
             android:screenOrientation="portrait" />
         <activity
