@@ -80,7 +80,7 @@
         android:paddingTop="@dimen/dp_15"
         android:paddingRight="@dimen/dp_22"
         android:paddingBottom="@dimen/dp_15"
-        android:text="设置发货门店"
+        android:text="修改发货门店"
         android:textColor="@color/red"
         android:textSize="@dimen/dp_24"
         app:layout_constraintBottom_toBottomOf="parent"

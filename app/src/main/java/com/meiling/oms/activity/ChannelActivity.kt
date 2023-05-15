@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hjq.shape.view.ShapeTextView
-import com.meiling.common.GlideApp
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.Shop
 import com.meiling.common.network.data.ShopBean
@@ -152,14 +150,14 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                 channeAdapter.setEmptyView(R.layout.store_managemnet2)
             }
         }
-        //设置发货门店
+        //修改发货门店
         mViewModel.updateShop.onStart.observe(this) {
             showLoading("")
         }
         mViewModel.updateShop.onSuccess.observe(this) {
             disLoading()
             channeAdapter.removeAt(isposition)
-            showToast("设置发货门店成功")
+            showToast("修改发货门店成功")
             channeAdapter.notifyDataSetChanged()
         }
         mViewModel.updateShop.onError.observe(this) {
@@ -343,7 +341,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
         channeAdapter.setOnItemChildClickListener { adapter, view, position ->
             when (view.id) {
                 R.id.tv_compile -> {
-                    var shopDialog = ShopDialog().newInstance(shopBean!!, "设置发货门店")
+                    var shopDialog = ShopDialog().newInstance(shopBean!!, "修改发货门店")
 
                     shopDialog.setOnresilience(object : ShopDialog.Onresilience {
 
