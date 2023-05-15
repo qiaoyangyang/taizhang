@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
-    android:background="@color/app_themes_1f2333"
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <com.angcyo.tablayout.DslTabLayout
-        android:paddingEnd="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_20"
+        android:background="@color/white"
         android:id="@+id/tab_layout"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_60"
+        android:layout_height="40dp"
         app:layout_constraintBottom_toTopOf="@id/tab_layout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,9 +29,9 @@
         app:tab_indicator_solid_color="@color/red"
         app:tab_indicator_style="STYLE_BOTTOM"
         app:tab_indicator_width="30dp"
+        app:tab_divider_margin_bottom="@dimen/dp_20"
         app:tab_item_is_equ_width="false"
-        app:tab_select_color="@color/white"
-        tools:ignore="RtlSymmetry">
+        app:tab_select_color="@color/home_333333">
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,11 +67,12 @@
             android:paddingBottom="@dimen/dp_10"
             android:textColor="#ff9b9b9b"
             android:textStyle="bold"
-                android:textSize="@dimen/sp_28" />
+            android:textSize="@dimen/sp_28" />
 
     </com.angcyo.tablayout.DslTabLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:background="@color/white"
         android:id="@+id/txt_select_order"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_80"
@@ -82,7 +82,7 @@
         android:gravity="center"
         android:text="筛选"
         android:textSize="@dimen/sp_28"
-        android:textColor="@color/home_999999"
+        android:textColor="@color/home_333333"
         app:layout_constraintBottom_toBottomOf="@+id/tab_layout"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tab_layout" />
@@ -92,6 +92,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tab_layout"
-        android:layout_marginTop="@dimen/dp_20"
         android:background="@color/home_B3B3B3" />
 </RelativeLayout>

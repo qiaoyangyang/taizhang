@@ -3,22 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_themes_1f2333"
+    android:background="@color/red"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
+    <com.hjq.bar.TitleBar
 
-    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/TitleBar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:drawableEnd="@drawable/xia"
-        android:paddingVertical="@dimen/dp_10"
-        android:text="全国/所有门店"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_34" />
+        android:background="@color/red"
+        app:layout_constraintTop_toTopOf="parent"
+        app:leftIcon="@null"
+        app:lineVisible="false"
+        app:rightTitleSize="@dimen/sp_36"
+        app:title="全国/所有门店"
+        app:titleColor="@color/white" />
+
 
     <com.angcyo.tablayout.DslTabLayout
+        android:background="@color/white"
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -39,7 +42,7 @@
         app:tab_indicator_style="STYLE_BOTTOM"
         app:tab_indicator_width="30dp"
         app:tab_item_is_equ_width="true"
-        app:tab_select_color="@color/white">
+        app:tab_select_color="@color/home_333333">
 
         <TextView
             android:layout_width="match_parent"
@@ -71,10 +74,10 @@
     </com.angcyo.tablayout.DslTabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
+
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dp_20"
         android:background="@color/home_B3B3B3" />
 
 
