@@ -81,42 +81,8 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         super.initData()
         phone = intent?.getStringExtra("phone")
         mDatabind.viewModel = mViewModel
-        mDatabind.tips1.setOnClickListener {
-            var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
-            mpup.apply {
-                setBackground(R.color.zxing_transparent, 5f, 20, 10)
-                setArrow(R.color.black, 0.2f, ArrowPopupWindow.ArrowSize.BIGGER)
-                setPopupView(layoutInflater.inflate(R.layout.pup_layout, null))
-                setTiedView(mDatabind.tips1, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
-                preShow()
-                isOutsideTouchable = true
-                show()
-            }
-        }
-        mDatabind.tips2.setOnClickListener {
-            var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
-            mpup.apply {
-                setBackground(R.color.zxing_transparent, 5f, 20, 10)
-                setArrow(R.color.black, 0.6f, ArrowPopupWindow.ArrowSize.BIGGER)
-                setPopupView(layoutInflater.inflate(R.layout.pup_layout2, null))
-                setTiedView(mDatabind.tips2, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
-                preShow()
-                isOutsideTouchable = true
-                show()
-            }
-        }
-        mDatabind.tips3.setOnClickListener {
-            var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
-            mpup.apply {
-                setBackground(R.color.zxing_transparent, 1f, 0, 10)
-                setArrow(R.color.black, 1f, ArrowPopupWindow.ArrowSize.BIGGER)
-                setPopupView(layoutInflater.inflate(R.layout.pup_layout3, null))
-                setTiedView(mDatabind.tips3, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
-                preShow()
-                isOutsideTouchable = true
-                show()
-            }
-        }
+
+
         //选择所属行业
         mDatabind.txtIndustryRight.setOnClickListener {
             mViewModel.launchRequest(
@@ -246,77 +212,9 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             }
         )
 
-        mDatabind.shopTypeRG.checkedChangeListener =
-            object : com.wayne.constraintradiogroup.OnCheckedChangeListener {
-                override fun onCheckedChanged(
-                    group: ConstraintRadioGroup,
-                    checkedButton: CompoundButton,
-                ) {
-                    if (checkedButton.id == R.id.checkEnterprise) {
-                        mDatabind.txtOperateType.visibility = View.VISIBLE
-                        mDatabind.txtOperateTypeRed.visibility = View.VISIBLE
-                        mDatabind.operateTypeRG.visibility = View.VISIBLE
-                        mDatabind.line2.visibility = View.VISIBLE
-                        mDatabind.line4.visibility = View.VISIBLE
-                        mDatabind.txtShopName.visibility = View.VISIBLE
-                        mDatabind.txtShopName2.visibility = View.VISIBLE
-                        mDatabind.edtShopName.visibility = View.VISIBLE
-                        mViewModel.businessDto.value?.tenantType="1"
-                        mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType1()})
-                        if(tenantType1()){
-                            mDatabind.btnNext.setBackgroundResource(R.drawable.login_btn_select_true)
-                        }
-                    }
-                    if (checkedButton.id == R.id.checkPerson) {
-                        mDatabind.txtOperateType.visibility = View.GONE
-                        mDatabind.txtOperateTypeRed.visibility = View.GONE
-                        mDatabind.operateTypeRG.visibility = View.GONE
-                        mDatabind.line2.visibility = View.GONE
-                        mDatabind.line4.visibility = View.GONE
-                        mDatabind.txtShopName.visibility = View.GONE
-                        mDatabind.txtShopName2.visibility = View.GONE
-                        mDatabind.edtShopName.visibility = View.GONE
-//                        mViewModel.businessDto.value!!.isChain = ""
-//                        mViewModel.businessDto.value!!.enterpriseName = ""
-                        mViewModel.businessDto.value?.tenantType="2"
-                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType2()})
-                        if(tenantType2()){
-                            mDatabind.btnNext.setBackgroundResource(R.drawable.login_btn_select_true)
-                        }
-                    }
-                    if (checkedButton.id == R.id.checkOther) {
-                        mDatabind.txtOperateType.visibility = View.VISIBLE
-                        mDatabind.txtOperateTypeRed.visibility = View.VISIBLE
-                        mDatabind.operateTypeRG.visibility = View.VISIBLE
-                        mDatabind.line2.visibility = View.VISIBLE
-                        mDatabind.line4.visibility = View.GONE
-                        mDatabind.txtShopName.visibility = View.GONE
-                        mDatabind.txtShopName2.visibility = View.GONE
-                        mDatabind.edtShopName.visibility = View.GONE
-//                        mViewModel.businessDto.value!!.enterpriseName = ""
-                        mViewModel.businessDto.value?.tenantType="3"
-                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType2()})
-                        if(tenantType2()){
-                            mDatabind.btnNext.setBackgroundResource(R.drawable.login_btn_select_true)
-                        }
-                    }
-
-                }
-
-            }
 
         mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
-        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType1()})
+//        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType1()})
         mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
         mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
         mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType1()})
