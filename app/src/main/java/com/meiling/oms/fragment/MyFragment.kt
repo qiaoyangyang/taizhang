@@ -118,16 +118,24 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         //物流绑定
         mDatabind.llLogisticsBinding.setOnClickListener {
             //门店是否创建
-//            if(vm.getByTenantId.value?.poi==-1){
+            if(vm.getByTenantId.value?.poi==-1){
             startActivity(Intent(requireActivity(), NoStoreActivity::class.java))
-//            }else{
-//                //物流是否绑定
-//                if(vm.getByTenantId.value?.logistics==-1){
-//                    startActivity(Intent(requireActivity(),BindingLogisticsActivity::class.java))
-//                }else{
-//                    startActivity(Intent(requireActivity(),BindingLogisticsActivity::class.java))
-//                }
-//            }
+            }else{
+                //物流是否绑定
+                if(vm.getByTenantId.value?.logistics==-1){
+                    startActivity(
+                        Intent(requireActivity(),BindingLogisticsActivity::class.java)
+
+//                        .putExtra("accountount",account)
+//                        .putExtra("name", name)
+//                        .putExtra("poid",it)
+
+                    )
+                }else{
+                    startActivity(Intent(requireActivity(),BindingLogisticsActivity::class.java)
+                        )
+                }
+            }
         }
         mDatabind.txtRecharge.setSingleClickListener {
             ARouter.getInstance().build("/app/MyRechargeActivity").navigation()

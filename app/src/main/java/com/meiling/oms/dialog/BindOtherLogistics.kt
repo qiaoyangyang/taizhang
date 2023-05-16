@@ -20,6 +20,12 @@ class BindOtherLogistics : BaseNiceDialog() {
     override fun intLayoutId(): Int {
         return R.layout.dialog_binding_other
     }
+
+    var sureOnclickListener:(()->Unit)?=null
+    fun setMySureOnclickListener(listener: ()->Unit){
+        this.sureOnclickListener=listener
+    }
+
     fun newInstance(title:String,tips:String): BindOtherLogistics{
         val args = Bundle()
         args.putString("title",title)
@@ -39,7 +45,10 @@ class BindOtherLogistics : BaseNiceDialog() {
         ivCloseRecharge?.setOnClickListener { dismiss() }
         txtTitle2?.text=title
         txtUuTip?.text=tips
-        btn?.setOnClickListener { dismiss() }
+        btn?.setOnClickListener {
+            dismiss()
+            sureOnclickListener?.invoke()
+        }
 
     }
 }
