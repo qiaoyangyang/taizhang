@@ -364,11 +364,13 @@ class NewOrderChangeAddressMapActivity() :
                 Log.d("yjl", "onLocationChanged: " + Gson().toJson(amapLocation))
                 Log.d("yjl", "onLocationChanged: " + amapLocation.latitude)
                 Log.d("yjl", "onLocationChanged: " + amapLocation.latitude)
+                cityCode = amapLocation.cityCode
                 lat = amapLocation.latitude.toString()
                 lon = amapLocation.longitude.toString()
                 txtMapLocalCity?.text = amapLocation.city
                 getGeocodeSearch(latLng, amapLocation.city)
             } else {
+                cityCode = ""
                 txtMapLocalCity?.text = "定位失败"
                 val errText = "定位失败," + amapLocation.errorCode + ": " + amapLocation.errorInfo
                 Log.e("AmapErr", errText)
