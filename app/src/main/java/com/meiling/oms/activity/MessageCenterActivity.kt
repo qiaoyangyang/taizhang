@@ -57,7 +57,6 @@ class MessageCenterActivity : BaseActivity<MessageViewModel, ActivityMessageCent
                     "pushOrderId",
                     (adapter.data[position] as MessageDto.Content).orderViewId
                 ).navigation()
-            finish()
         }
 
         msgCenterAdapter.setEmptyView(R.layout.empty_msg_center)

@@ -9,7 +9,6 @@
     android:orientation="vertical">
 
     <com.hjq.bar.TitleBar
-
         android:id="@+id/TitleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

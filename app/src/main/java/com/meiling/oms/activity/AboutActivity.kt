@@ -45,7 +45,7 @@ class AboutActivity : BaseActivity<LoginViewModel, ActivityAboutBinding>() {
             ARouter.getInstance().build("/app/AgreementActivity").withString("YSXY", "1")
                 .navigation()
         }
-        mDatabind.txtVersion.text = "V${BuildConfig.VERSION_NAME}"
+        mDatabind.txtVersion.text = "当前版本:V${BuildConfig.VERSION_NAME}"
             mDatabind.imgAbout.setOnClickListener {
                 if (breakthrough > 0) {
                     if (isFastClickEachOneSec()) {

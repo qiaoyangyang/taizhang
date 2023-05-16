@@ -84,7 +84,7 @@ object UpdateVersion {
                     if (type == "1") {
                         val toast = Toast.makeText(
                             context,
-                            "当前已经是最新包",
+                            "当前已经是最新版本",
                             Toast.LENGTH_SHORT
                         )
                         toast.setGravity(Gravity.CENTER, 0, 0)
