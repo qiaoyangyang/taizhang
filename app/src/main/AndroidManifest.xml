@@ -260,6 +260,7 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".activity.PrintDeviceListActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
         <provider

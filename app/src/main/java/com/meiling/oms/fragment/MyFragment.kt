@@ -86,24 +86,25 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     override fun initListener() {
         //打印机配置
         mDatabind.llPrintBinding.setSingleClickListener {
-            if(vm.getByTenantId.value?.poi==-1){
-                //未创建门店
-//                startActivity(Intent(requireActivity(), NoStoreActivity::class.java))
-//                startActivity(Intent(requireActivity(), NoPrintDeviceActivity::class.java))
-                startActivity(Intent(requireActivity(), PrintDeviceListActivity::class.java))
-
-            }else{
-                //未绑定打印机
-//                startActivity(Intent(requireActivity(), NoPrintDeviceActivity::class.java))
-                startActivity(Intent(requireActivity(), PrintDeviceListActivity::class.java))
-
-                //物流是否绑定
-//                if(vm.getByTenantId.value?.logistics==-1){
-//                    startActivity(Intent(requireActivity(),BindingLogisticsActivity::class.java))
-//                }else{
-//                    startActivity(Intent(requireActivity(),BindingLogisticsActivity::class.java))
-//                }
-            }
+            startActivity(Intent(requireActivity(), PrintDeviceListActivity::class.java))
+//            if(vm.getByTenantId.value?.poi==-1){
+//                //未创建门店
+////                startActivity(Intent(requireActivity(), NoStoreActivity::class.java))
+////                startActivity(Intent(requireActivity(), NoPrintDeviceActivity::class.java))
+//                startActivity(Intent(requireActivity(), PrintDeviceListActivity::class.java))
+//
+//            }else{
+//                //未绑定打印机
+////                startActivity(Intent(requireActivity(), NoPrintDeviceActivity::class.java))
+//                startActivity(Intent(requireActivity(), PrintDeviceListActivity::class.java))
+//
+//                //物流是否绑定
+////                if(vm.getByTenantId.value?.logistics==-1){
+////                    startActivity(Intent(requireActivity(),BindingLogisticsActivity::class.java))
+////                }else{
+////                    startActivity(Intent(requireActivity(),BindingLogisticsActivity::class.java))
+////                }
+//            }
         }
         //渠道店铺管理
         mDatabind.llChannel.setSingleClickListener {

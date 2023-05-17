@@ -24,7 +24,7 @@ import com.shehuan.nicedialog.ViewHolder
 class BindMeituanShopDialog : BaseNiceDialog() {
     init {
         setGravity(Gravity.BOTTOM)
-        setOutCancel(false)
+        setOutCancel(true)
     }
 
     override fun intLayoutId(): Int {
@@ -80,10 +80,11 @@ class BindMeituanShopDialog : BaseNiceDialog() {
         }
         holder?.setOnClickListener(R.id.btn_ok_exit) {
             if (onresilience != null) {
-                if (bindMeituanShopBean != null) {
+                if (bindMeituanShopBean != null&& bindMeituanShopBean.isIsselect) {
                     onresilience?.resilience(bindMeituanShopBean.type)
                     dismiss()
                 } else {
+                    showToast("选择绑定方式")
                     Log.d("yjk", "convertView: ")
                 }
             }

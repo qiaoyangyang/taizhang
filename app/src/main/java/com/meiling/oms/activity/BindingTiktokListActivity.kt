@@ -30,19 +30,25 @@ class BindingTiktokListActivity :
 
     BaseActivity<StoreManagementViewModel, ActivityBindingTiktokBinding>() {
     lateinit var bindingTiktokAdapter: BaseQuickAdapter<TiktokData?, BaseViewHolder>
-    lateinit var tiktokData: TiktokData
+     var tiktokData: TiktokData?=null
 
     override fun initView(savedInstanceState: Bundle?) {
         initRecycleyView()
         mDatabind.tvOk.setOnClickListener {
             //
-            if (tiktokData != null) {
-                mViewModel.bindShop(
-                    poiId,
-                    tiktokData?.address!!,
-                    tiktokData?.poiName!!,
-                    tiktokData.poiId!!
-                )
+            if (tiktokData != null ) {
+                if(tiktokData?.isstatus==true) {
+                    mViewModel.bindShop(
+                        poiId,
+                        tiktokData?.address!!,
+                        tiktokData?.poiName!!,
+                        tiktokData?.poiId!!
+                    )
+                }else{
+                    showToast("选择店铺")
+                }
+            }else{
+                showToast("选择店铺")
             }
         }
         mDatabind.btnSearch.setOnClickListener {
@@ -142,17 +148,19 @@ class BindingTiktokListActivity :
         bindingTiktokAdapter.setList(arrayListOf())
         bindingTiktokAdapter.setEmptyView(R.layout.store_managemnet)
         bindingTiktokAdapter.setOnItemClickListener { adapter, view, position ->
-            if (bindingTiktokAdapter.data.get(position)?.isstatus == true) {
-                bindingTiktokAdapter.data.get(position)?.isstatus = false
-                bindingTiktokAdapter.notifyDataSetChanged()
+            if (bindingTiktokAdapter.data.get(position)?.status==false) {
+                if (bindingTiktokAdapter.data.get(position)?.isstatus == true) {
+                    bindingTiktokAdapter.data.get(position)?.isstatus = false
+                    bindingTiktokAdapter.notifyDataSetChanged()
 
-            } else {
-                bindingTiktokAdapter.data.forEach {
-                    it?.isstatus = false
+                } else {
+                    bindingTiktokAdapter.data.forEach {
+                        it?.isstatus = false
+                    }
+                    tiktokData = bindingTiktokAdapter?.getItem(position)!!
+                    bindingTiktokAdapter.data.get(position)?.isstatus = true
+                    bindingTiktokAdapter.notifyDataSetChanged()
                 }
-                tiktokData = bindingTiktokAdapter?.getItem(position)!!
-                bindingTiktokAdapter.data.get(position)?.isstatus = true
-                bindingTiktokAdapter.notifyDataSetChanged()
             }
 
         }

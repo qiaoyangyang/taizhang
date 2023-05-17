@@ -80,7 +80,7 @@ class StoreManagementActivity :
         mDatabind.ryOrderLeft.addItemDecoration(recyclerViewDivider)
         mDatabind.ryOrderLeft.adapter = storeManagemenAdapter
         storeManagemenAdapter.setList(arrayListOf())
-        storeManagemenAdapter.setEmptyView(R.layout.store_managemnet)
+
         storeManagemenAdapter.setOnItemClickListener { adapter, view, position ->
 
         }
@@ -122,6 +122,7 @@ class StoreManagementActivity :
             storeManagemenAdapter.notifyDataSetChanged()
             if (storeManagemenAdapter.data.size==0){
                 mDatabind.tvType.visibility=View.GONE
+                storeManagemenAdapter.setEmptyView(R.layout.store_managemnet)
             }else{
                 mDatabind.tvType.visibility=View.VISIBLE
             }

@@ -59,12 +59,12 @@
         app:layout_constraintTop_toBottomOf="@+id/lin">
 
         <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="@dimen/dp_120"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="20dp"
             android:id="@+id/printImg"
-            android:src="@mipmap/print_img1"
+            android:background="@mipmap/print_img1"
             />
 
         <TextView
@@ -73,9 +73,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/printImg"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="@dimen/dp_20"
             android:textSize="15sp"
-            android:textColor="#333333"
+            android:textStyle="bold"
+            android:textColor="@color/home_333333"
             android:text="芯烨云"/>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -106,11 +107,11 @@
         app:layout_constraintTop_toBottomOf="@+id/lin2">
 
         <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="@dimen/dp_120"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="20dp"
-            android:src="@mipmap/print_img2"
+            android:background="@mipmap/print_img2"
             android:id="@+id/printImg2"
             />
 
@@ -120,9 +121,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/printImg2"
-            android:layout_marginLeft="20dp"
-            android:textSize="15sp"
-            android:textColor="#333333"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:textStyle="bold"
+            android:textColor="@color/home_333333"
             android:text="佳博云"/>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -152,12 +153,12 @@
         app:layout_constraintTop_toBottomOf="@+id/lin3">
 
         <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="@dimen/dp_120"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="20dp"
             android:id="@+id/printImg3"
-            android:src="@mipmap/print_img3"
+            android:background="@mipmap/print_img3"
             />
 
         <TextView
@@ -166,9 +167,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/printImg3"
-            android:layout_marginLeft="20dp"
-            android:textSize="15sp"
-            android:textColor="#333333"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:textStyle="bold"
+            android:textColor="@color/home_333333"
             android:text="商米"/>
 
         <androidx.appcompat.widget.AppCompatButton
