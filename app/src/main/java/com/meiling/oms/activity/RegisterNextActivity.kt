@@ -186,54 +186,48 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 })
         }
         //获取销售渠道id
-        mViewModel.launchRequest(
-            { loginService.getChannel() },
-            onSuccess = {
-                it.let {
-                    mViewModel.businessDto.value!!.salesChannel =
-                        it!!.map { it.id }.toList().joinToString(",")
-                }
-            },
-            onError = {
-
-            }
-        )
-        //获取城市id
-        mViewModel.launchRequest(
-            { loginService.getCity() },
-            onSuccess = {
-                it?.let {
-                    mViewModel.businessDto.value!!.city =
-                        it.map { it.id }.toList().joinToString(",")
-                }
-            },
-            onError = {
-
-            }
-        )
+//        mViewModel.launchRequest(
+//            { loginService.getChannel() },
+//            onSuccess = {
+//                it.let {
+//                    mViewModel.businessDto.value!!.salesChannel =
+//                        it!!.map { it.id }.toList().joinToString(",")
+//                }
+//            },
+//            onError = {
+//
+//            }
+//        )
+//        //获取城市id
+//        mViewModel.launchRequest(
+//            { loginService.getCity() },
+//            onSuccess = {
+//                it?.let {
+//                    mViewModel.businessDto.value!!.city =
+//                        it.map { it.id }.toList().joinToString(",")
+//                }
+//            },
+//            onError = {
+//
+//            }
+//        )
 
 
         mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
 //        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType1()})
         mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
         mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
-        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType1()})
 
         //注册
         mDatabind.btnNext.setSingleClickListener(1000) {
 
             mViewModel.businessDto.value!!.phone = this@RegisterNextActivity.phone
 
-            if (mViewModel.businessDto.value!!.tenantType == "1") {
-                if (mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()) {
-                    showToast("企业名称未填写")
-                    return@setSingleClickListener
-                }
-            }
-            if (mViewModel.businessDto.value!!.tenantName.isNullOrBlank()) {
-                showToast("品牌名称未填写")
+            if (mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()) {
+                showToast("企业名称未填写")
                 return@setSingleClickListener
             }
+
             if (mViewModel.businessDto.value!!.logo.isNullOrBlank()) {
                 showToast("品牌LOGO未上传")
                 return@setSingleClickListener
@@ -250,33 +244,36 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 showToast("登录账号未填写")
                 return@setSingleClickListener
             }
-            if (mViewModel.businessDto.value!!.password.isNullOrBlank()) {
-                showToast("登录密码未填写")
-                return@setSingleClickListener
-            }
-            if (mViewModel.businessDto.value!!.password?.trim().toString()
-                    .toString().length > 20 || mViewModel.businessDto.value!!.password?.trim().toString()
-                    .toString().length < 8
-            ) {
-                showToast("密码长度需要在8-20位字符之间")
-                return@setSingleClickListener
-            }
-            if (!isPasswordValid(mViewModel.businessDto.value!!.password?.trim().toString())) {
-                showToast("密码不能是纯数字/纯字母/纯字符")
-                return@setSingleClickListener
-            }
+//            if (mViewModel.businessDto.value!!.password.isNullOrBlank()) {
+//                showToast("登录密码未填写")
+//                return@setSingleClickListener
+//            }
+//            if (mViewModel.businessDto.value!!.password?.trim().toString()
+//                    .toString().length > 20 || mViewModel.businessDto.value!!.password?.trim().toString()
+//                    .toString().length < 8
+//            ) {
+//                showToast("密码长度需要在8-20位字符之间")
+//                return@setSingleClickListener
+//            }
+//            if (!isPasswordValid(mViewModel.businessDto.value!!.password?.trim().toString())) {
+//                showToast("密码不能是纯数字/纯字母/纯字符")
+//                return@setSingleClickListener
+//            }
 
-            //校验账户名
-            mViewModel.launchRequest(
-                {
-                    loginService.checkUserName(mViewModel.businessDto.value!!.userName!!)
-                }, onSuccess = {
-                    //校验品牌名
-                    checkTenantName()
-                }, onError = {
-                    it?.let { showToast(it) }
-                }
-            )
+            //注册
+            register()
+
+//            //校验账户名
+//            mViewModel.launchRequest(
+//                {
+//                    loginService.checkUserName(mViewModel.businessDto.value!!.userName!!)
+//                }, onSuccess = {
+//                    //校验品牌名
+//                    checkTenantName()
+//                }, onError = {
+//                    it?.let { showToast(it) }
+//                }
+//            )
 
         }
 
@@ -284,7 +281,6 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
     fun tenantType1():Boolean{
         return !mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.tenantName.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.logo.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
@@ -292,8 +288,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 &&!mViewModel.businessDto.value!!.password.isNullOrBlank()
     }
     fun tenantType2():Boolean{
-        return !mViewModel.businessDto.value!!.tenantName.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.logo.isNullOrBlank()
+        return  !mViewModel.businessDto.value!!.logo.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
@@ -315,16 +310,16 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     }
 
     private fun checkTenantName() {
-        mViewModel.launchRequest(
-            {
-                loginService.thanBrand(mViewModel.businessDto.value!!.tenantName!!)
-            }, onSuccess = {
-                //注册
-                register()
-            }, onError = {
-                it?.let { showToast(it) }
-            }
-        )
+//        mViewModel.launchRequest(
+//            {
+//                loginService.thanBrand(mViewModel.businessDto.value!!.tenantName!!)
+//            }, onSuccess = {
+//                //注册
+//                register()
+//            }, onError = {
+//                it?.let { showToast(it) }
+//            }
+//        )
     }
 
     private fun register() {
@@ -349,7 +344,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                     .putExtra("fromIntent","regist")
                     .putExtra("account",mViewModel.businessDto.value!!.userName?.trim().toString())
                     .putExtra("pwd",mViewModel.businessDto.value!!.password?.trim().toString())
-                    .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
+                    .putExtra("name", mViewModel.businessDto.value!!.enterpriseName.toString()))
             },
             onError = {
                 disLoading()
