@@ -41,197 +41,15 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="@dimen/sp_32"
+                    android:textColor="#666666"
                     android:layout_marginTop="25dp"
-                    android:layout_marginEnd="32dp"
-                    android:textColor="#666666"
-                    android:text="商家类型"
-                    android:textSize="@dimen/sp_32"
                     android:layout_marginLeft="@dimen/dp_18"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="*"
-                    android:textSize="@dimen/sp_32"
-                    android:textColor="@color/red"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/tv_title"
-                    app:layout_constraintStart_toEndOf="@+id/tv_title" />
-
-
-                <com.wayne.constraintradiogroup.ConstraintRadioGroup
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/shopTypeRG"
-                    android:padding="10dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_title"
-                    app:layout_constraintStart_toStartOf="@+id/tv_title"
-                    app:layout_constraintEnd_toEndOf="parent">
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/login_cb_agreement"
-                        android:text="企业"
-                        android:paddingLeft="5dp"
-                        android:textSize="@dimen/sp_32"
-                        android:textColor="#666666"
-                        android:checked='@{viewModel.businessDto.tenantType=="1"}'
-                        android:id="@+id/checkEnterprise" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:id="@+id/tips1"
-                        android:src="@drawable/icon_data_tip"
-                        app:layout_constraintStart_toEndOf="@+id/checkEnterprise"
-                        app:layout_constraintTop_toTopOf="@+id/checkEnterprise"
-                        app:layout_constraintBottom_toBottomOf="@+id/checkEnterprise" />
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/login_cb_agreement"
-                        android:text="个人"
-                        android:paddingLeft="5dp"
-                        android:id="@+id/checkPerson"
-                        android:textSize="@dimen/sp_32"
-                        android:textColor="#666666"
-                        android:checked='@{viewModel.businessDto.tenantType=="2"}'
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tips2"
-                        android:src="@drawable/icon_data_tip"
-                        app:layout_constraintStart_toEndOf="@+id/checkPerson"
-                        app:layout_constraintTop_toTopOf="@+id/checkPerson"
-                        app:layout_constraintBottom_toBottomOf="@+id/checkPerson" />
-
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/login_cb_agreement"
-                        android:text="其他"
-                        android:textSize="@dimen/sp_32"
-                        android:textColor="#666666"
-                        android:layout_marginRight="2dp"
-                        android:checked='@{viewModel.businessDto.tenantType=="3"}'
-                        app:layout_constraintEnd_toStartOf="@+id/tips3"
-                        android:id="@+id/checkOther" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tips3"
-                        android:layout_marginRight="10dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:src="@drawable/icon_data_tip"
-                        app:layout_constraintTop_toTopOf="@+id/checkOther"
-                        app:layout_constraintBottom_toBottomOf="@+id/checkOther" />
-
-                </com.wayne.constraintradiogroup.ConstraintRadioGroup>
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/home_F1F1F1"
-                    app:layout_constraintTop_toBottomOf="@+id/shopTypeRG"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:id="@+id/line" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/line"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/txtOperateType"
-                    android:textSize="@dimen/sp_32"
-                    android:textColor="#666666"
-                    app:layout_constraintStart_toStartOf="@+id/tv_title"
-                    android:text="经营类型" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/sp_32"
-                    android:layout_marginLeft="5dp"
-                    android:textColor="@color/red"
-                    android:id="@+id/txtOperateTypeRed"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/txtOperateType"
-                    app:layout_constraintStart_toEndOf="@+id/txtOperateType"
-                    android:text="*" />
-
-                <com.wayne.constraintradiogroup.ConstraintRadioGroup
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/operateTypeRG"
-                    android:padding="10dp"
-                    app:layout_constraintTop_toBottomOf="@+id/txtOperateType"
-                    app:layout_constraintStart_toStartOf="@+id/tv_title"
-                    app:layout_constraintEnd_toEndOf="parent">
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/login_cb_agreement"
-                        android:text="连锁"
-                        android:textSize="@dimen/sp_32"
-                        android:textColor="#666666"
-                        android:paddingLeft="5dp"
-                        android:checked='@{viewModel.businessDto.isChain=="1"}'
-                        android:id="@+id/checkChain" />
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/login_cb_agreement"
-                        android:text="非连锁"
-                        android:textSize="@dimen/sp_32"
-                        android:textColor="#666666"
-                        android:paddingLeft="5dp"
-                        android:id="@+id/checkUnChain"
-                        app:layout_constraintHorizontal_bias="0.7"
-                        android:checked='@{viewModel.businessDto.isChain=="0"}'
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-
-                </com.wayne.constraintradiogroup.ConstraintRadioGroup>
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/home_F1F1F1"
-                    app:layout_constraintTop_toBottomOf="@+id/operateTypeRG"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:id="@+id/line2" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtShopName"
-                    app:layout_constraintStart_toStartOf="@+id/tv_title"
-                    app:layout_constraintTop_toBottomOf="@+id/line2"
-                    android:textSize="@dimen/sp_32"
-                    android:textColor="#666666"
-                    android:layout_marginTop="10dp"
                     android:text="企业名称" />
 
                 <TextView
@@ -240,16 +58,16 @@
                     android:id="@+id/txtShopName2"
                     android:textColor="@color/red"
                     android:layout_marginLeft="5dp"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/txtShopName"
-                    app:layout_constraintStart_toEndOf="@+id/txtShopName"
-                    app:layout_constraintTop_toBottomOf="@+id/line2"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tv_title"
+                    app:layout_constraintStart_toEndOf="@+id/tv_title"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:text="*" />
 
                 <com.meiling.common.view.ClearEditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:hint="必须和营业执照的名称一致"
+                    android:hint="请输入企业简称"
                     android:id="@+id/edtShopName"
                     android:layout_marginHorizontal="10dp"
                     android:background="@null"
@@ -261,7 +79,7 @@
                     android:textColor="#666666"
                     android:text="@={viewModel.businessDto.enterpriseName}"
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtShopName2"
-                    app:layout_constraintTop_toBottomOf="@+id/line2"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/txtShopName2"
                     app:layout_constraintBottom_toTopOf="@+id/line4"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -271,72 +89,18 @@
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="@color/home_F1F1F1"
-                    app:layout_constraintTop_toBottomOf="@+id/txtShopName"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="12dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     android:id="@+id/line4" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtShopBrandName"
-                    app:layout_constraintStart_toStartOf="@+id/tv_title"
-                    app:layout_constraintTop_toBottomOf="@+id/line4"
-                    android:textSize="@dimen/sp_32"
-                    android:textColor="#666666"
-                    android:layout_marginTop="10dp"
-                    android:text="品牌名称" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtShopBrandName2"
-                    android:textColor="@color/red"
-                    android:layout_marginLeft="5dp"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/txtShopBrandName"
-                    app:layout_constraintStart_toEndOf="@+id/txtShopBrandName"
-                    app:layout_constraintTop_toBottomOf="@+id/line4"
-                    android:text="*" />
-
-                <com.meiling.common.view.ClearEditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:hint="用于对外展示"
-                    android:id="@+id/edtShopBrandName"
-                    android:layout_marginHorizontal="10dp"
-                    android:background="@null"
-                    android:maxLines="1"
-                    android:maxLength="20"
-                    android:singleLine="true"
-                    android:textSize="@dimen/sp_32"
-                    android:textColor="#666666"
-                    android:textColorHint="#999999"
-                    android:text="@={viewModel.businessDto.tenantName}"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/txtShopBrandName"
-                    app:layout_constraintTop_toBottomOf="@+id/line4"
-                    app:layout_constraintStart_toEndOf="@+id/txtShopBrandName2"
-                    app:layout_constraintBottom_toTopOf="@+id/line5"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/home_F1F1F1"
-                    app:layout_constraintTop_toBottomOf="@+id/txtShopBrandName2"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:id="@+id/line5" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/line5"
+                    app:layout_constraintTop_toBottomOf="@+id/line9"
                     app:layout_constraintStart_toStartOf="@+id/tv_title"
                     android:text="品牌LOGO"
                     android:id="@+id/txtLogo"
@@ -383,11 +147,12 @@
                     android:visibility="gone"
                     android:src="@drawable/register_close_img"/>
                 <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
                     android:src="@mipmap/default_logo"
                     app:layout_constraintTop_toBottomOf="@+id/addImg"
                     android:layout_marginTop="15dp"
+                    android:scaleType="fitXY"
                     android:id="@+id/addImg2"
                     app:layout_constraintStart_toStartOf="@id/tv_title" />
                 <ImageView
@@ -407,7 +172,7 @@
                     app:layout_constraintTop_toBottomOf="@id/addImg2"
                     android:layout_marginTop="10dp"
                     android:id="@+id/txtAddImg"
-                    android:text="使用默认样式" />
+                    android:text="使用默认LOGO" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -415,7 +180,7 @@
                     android:textSize="@dimen/sp_32"
                     android:textColor="#666666"
                     app:layout_constraintStart_toStartOf="@id/tv_title"
-                    app:layout_constraintTop_toBottomOf="@+id/txtAddImg"
+                    app:layout_constraintTop_toBottomOf="@+id/line4"
                     android:layout_marginTop="15dp"
                     android:id="@+id/txtIndustry"
                     android:text="所属行业" />
@@ -592,7 +357,7 @@
                     app:layout_constraintStart_toStartOf="@id/tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/line8"
                     android:layout_marginTop="15dp"
-                    android:text="管理员登录密码" />
+                    android:text="邀请码" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -604,6 +369,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/line6"
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="5dp"
+                    android:visibility="invisible"
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtAdministratorsLoginPassWord"
                     android:text="*" />
 
@@ -615,13 +381,13 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtAdministratorsLoginPassWord"
                     android:background="@null"
                     android:layout_marginTop="15dp"
-                    android:hint="用于登录管理系统"
-                    android:text="@={viewModel.businessDto.password}"
+                    android:hint="请输入"
+                    android:text="@={viewModel.businessDto.inviteCode}"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:gravity="right"
                     android:layout_marginHorizontal="15dp"
-                    android:id="@+id/editAdministratorsLoginPassWord"
+                    android:id="@+id/editInviteCode"
                     android:textColor="#666666"
                     android:textColorHint="#999999"
                     android:textSize="@dimen/sp_32" />
@@ -652,7 +418,7 @@
                     android:enabled="true"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/line9"
+                    app:layout_constraintTop_toBottomOf="@+id/txtAddImg"
                     app:layout_constraintBottom_toBottomOf="parent" />
 
 

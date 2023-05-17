@@ -90,9 +90,9 @@ class NewlyBuiltStoreActivity :
     var tenantId =""
     var adminViewId=""
     var fromIntent=""
-    var account=""
+    var account=""//管理员账号，默认注册时输入的手机号
     var pwd=""
-    var name=""
+    var name=""//品牌名称，默认企业名称的简称
     override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
@@ -125,9 +125,10 @@ class NewlyBuiltStoreActivity :
         tenantId = intent.getStringExtra("tenantId").toString()
         adminViewId= intent.getStringExtra("adminViewId").toString()
         fromIntent=intent.getStringExtra("fromIntent").toString()
-        account=intent.getStringExtra("account").toString()
+        account=intent.getStringExtra("account").toString()//管理员账号
         pwd=intent.getStringExtra("pwd").toString()
         name=intent.getStringExtra("name").toString()
+
         if(fromIntent=="regist"){
             mDatabind.tvGoOn.text="下一步"
         }

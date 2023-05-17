@@ -81,42 +81,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         super.initData()
         phone = intent?.getStringExtra("phone")
         mDatabind.viewModel = mViewModel
-        mDatabind.tips1.setOnClickListener {
-            var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
-            mpup.apply {
-                setBackground(R.color.zxing_transparent, 5f, 20, 10)
-                setArrow(R.color.black, 0.2f, ArrowPopupWindow.ArrowSize.BIGGER)
-                setPopupView(layoutInflater.inflate(R.layout.pup_layout, null))
-                setTiedView(mDatabind.tips1, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
-                preShow()
-                isOutsideTouchable = true
-                show()
-            }
-        }
-        mDatabind.tips2.setOnClickListener {
-            var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
-            mpup.apply {
-                setBackground(R.color.zxing_transparent, 5f, 20, 10)
-                setArrow(R.color.black, 0.6f, ArrowPopupWindow.ArrowSize.BIGGER)
-                setPopupView(layoutInflater.inflate(R.layout.pup_layout2, null))
-                setTiedView(mDatabind.tips2, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
-                preShow()
-                isOutsideTouchable = true
-                show()
-            }
-        }
-        mDatabind.tips3.setOnClickListener {
-            var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
-            mpup.apply {
-                setBackground(R.color.zxing_transparent, 1f, 0, 10)
-                setArrow(R.color.black, 1f, ArrowPopupWindow.ArrowSize.BIGGER)
-                setPopupView(layoutInflater.inflate(R.layout.pup_layout3, null))
-                setTiedView(mDatabind.tips3, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
-                preShow()
-                isOutsideTouchable = true
-                show()
-            }
-        }
+        mViewModel.businessDto.value!!.userName=phone
         //选择所属行业
         mDatabind.txtIndustryRight.setOnClickListener {
             mViewModel.launchRequest(
@@ -219,123 +184,22 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
                 })
         }
-        //获取销售渠道id
-        mViewModel.launchRequest(
-            { loginService.getChannel() },
-            onSuccess = {
-                it.let {
-                    mViewModel.businessDto.value!!.salesChannel =
-                        it!!.map { it.id }.toList().joinToString(",")
-                }
-            },
-            onError = {
 
-            }
-        )
-        //获取城市id
-        mViewModel.launchRequest(
-            { loginService.getCity() },
-            onSuccess = {
-                it?.let {
-                    mViewModel.businessDto.value!!.city =
-                        it.map { it.id }.toList().joinToString(",")
-                }
-            },
-            onError = {
-
-            }
-        )
-
-        mDatabind.shopTypeRG.checkedChangeListener =
-            object : com.wayne.constraintradiogroup.OnCheckedChangeListener {
-                override fun onCheckedChanged(
-                    group: ConstraintRadioGroup,
-                    checkedButton: CompoundButton,
-                ) {
-                    if (checkedButton.id == R.id.checkEnterprise) {
-                        mDatabind.txtOperateType.visibility = View.VISIBLE
-                        mDatabind.txtOperateTypeRed.visibility = View.VISIBLE
-                        mDatabind.operateTypeRG.visibility = View.VISIBLE
-                        mDatabind.line2.visibility = View.VISIBLE
-                        mDatabind.line4.visibility = View.VISIBLE
-                        mDatabind.txtShopName.visibility = View.VISIBLE
-                        mDatabind.txtShopName2.visibility = View.VISIBLE
-                        mDatabind.edtShopName.visibility = View.VISIBLE
-                        mViewModel.businessDto.value?.tenantType="1"
-                        mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType1()})
-                        if(tenantType1()){
-                            mDatabind.btnNext.setBackgroundResource(R.drawable.login_btn_select_true)
-                        }
-                    }
-                    if (checkedButton.id == R.id.checkPerson) {
-                        mDatabind.txtOperateType.visibility = View.GONE
-                        mDatabind.txtOperateTypeRed.visibility = View.GONE
-                        mDatabind.operateTypeRG.visibility = View.GONE
-                        mDatabind.line2.visibility = View.GONE
-                        mDatabind.line4.visibility = View.GONE
-                        mDatabind.txtShopName.visibility = View.GONE
-                        mDatabind.txtShopName2.visibility = View.GONE
-                        mDatabind.edtShopName.visibility = View.GONE
-//                        mViewModel.businessDto.value!!.isChain = ""
-//                        mViewModel.businessDto.value!!.enterpriseName = ""
-                        mViewModel.businessDto.value?.tenantType="2"
-                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType2()})
-                        if(tenantType2()){
-                            mDatabind.btnNext.setBackgroundResource(R.drawable.login_btn_select_true)
-                        }
-                    }
-                    if (checkedButton.id == R.id.checkOther) {
-                        mDatabind.txtOperateType.visibility = View.VISIBLE
-                        mDatabind.txtOperateTypeRed.visibility = View.VISIBLE
-                        mDatabind.operateTypeRG.visibility = View.VISIBLE
-                        mDatabind.line2.visibility = View.VISIBLE
-                        mDatabind.line4.visibility = View.GONE
-                        mDatabind.txtShopName.visibility = View.GONE
-                        mDatabind.txtShopName2.visibility = View.GONE
-                        mDatabind.edtShopName.visibility = View.GONE
-//                        mViewModel.businessDto.value!!.enterpriseName = ""
-                        mViewModel.businessDto.value?.tenantType="3"
-                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType2()})
-                        if(tenantType2()){
-                            mDatabind.btnNext.setBackgroundResource(R.drawable.login_btn_select_true)
-                        }
-                    }
-
-                }
-
-            }
 
         mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
-        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType1()})
         mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
         mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
-        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType1()})
 
         //注册
         mDatabind.btnNext.setSingleClickListener(1000) {
 
             mViewModel.businessDto.value!!.phone = this@RegisterNextActivity.phone
 
-            if (mViewModel.businessDto.value!!.tenantType == "1") {
-                if (mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()) {
-                    showToast("企业名称未填写")
-                    return@setSingleClickListener
-                }
-            }
-            if (mViewModel.businessDto.value!!.tenantName.isNullOrBlank()) {
-                showToast("品牌名称未填写")
+            if (mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()) {
+                showToast("企业名称未填写")
                 return@setSingleClickListener
             }
+
             if (mViewModel.businessDto.value!!.logo.isNullOrBlank()) {
                 showToast("品牌LOGO未上传")
                 return@setSingleClickListener
@@ -352,33 +216,36 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 showToast("登录账号未填写")
                 return@setSingleClickListener
             }
-            if (mViewModel.businessDto.value!!.password.isNullOrBlank()) {
-                showToast("登录密码未填写")
-                return@setSingleClickListener
-            }
-            if (mViewModel.businessDto.value!!.password?.trim().toString()
-                    .toString().length > 20 || mViewModel.businessDto.value!!.password?.trim().toString()
-                    .toString().length < 8
-            ) {
-                showToast("密码长度需要在8-20位字符之间")
-                return@setSingleClickListener
-            }
-            if (!isPasswordValid(mViewModel.businessDto.value!!.password?.trim().toString())) {
-                showToast("密码不能是纯数字/纯字母/纯字符")
-                return@setSingleClickListener
-            }
+//            if (mViewModel.businessDto.value!!.password.isNullOrBlank()) {
+//                showToast("登录密码未填写")
+//                return@setSingleClickListener
+//            }
+//            if (mViewModel.businessDto.value!!.password?.trim().toString()
+//                    .toString().length > 20 || mViewModel.businessDto.value!!.password?.trim().toString()
+//                    .toString().length < 8
+//            ) {
+//                showToast("密码长度需要在8-20位字符之间")
+//                return@setSingleClickListener
+//            }
+//            if (!isPasswordValid(mViewModel.businessDto.value!!.password?.trim().toString())) {
+//                showToast("密码不能是纯数字/纯字母/纯字符")
+//                return@setSingleClickListener
+//            }
 
-            //校验账户名
-            mViewModel.launchRequest(
-                {
-                    loginService.checkUserName(mViewModel.businessDto.value!!.userName!!)
-                }, onSuccess = {
-                    //校验品牌名
-                    checkTenantName()
-                }, onError = {
-                    it?.let { showToast(it) }
-                }
-            )
+            //注册
+            register()
+
+//            //校验账户名
+//            mViewModel.launchRequest(
+//                {
+//                    loginService.checkUserName(mViewModel.businessDto.value!!.userName!!)
+//                }, onSuccess = {
+//                    //校验品牌名
+//                    checkTenantName()
+//                }, onError = {
+//                    it?.let { showToast(it) }
+//                }
+//            )
 
         }
 
@@ -386,7 +253,6 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
     fun tenantType1():Boolean{
         return !mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.tenantName.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.logo.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
@@ -394,8 +260,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 &&!mViewModel.businessDto.value!!.password.isNullOrBlank()
     }
     fun tenantType2():Boolean{
-        return !mViewModel.businessDto.value!!.tenantName.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.logo.isNullOrBlank()
+        return  !mViewModel.businessDto.value!!.logo.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
@@ -417,16 +282,16 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     }
 
     private fun checkTenantName() {
-        mViewModel.launchRequest(
-            {
-                loginService.thanBrand(mViewModel.businessDto.value!!.tenantName!!)
-            }, onSuccess = {
-                //注册
-                register()
-            }, onError = {
-                it?.let { showToast(it) }
-            }
-        )
+//        mViewModel.launchRequest(
+//            {
+//                loginService.thanBrand(mViewModel.businessDto.value!!.tenantName!!)
+//            }, onSuccess = {
+//                //注册
+//                register()
+//            }, onError = {
+//                it?.let { showToast(it) }
+//            }
+//        )
     }
 
     private fun register() {
@@ -451,7 +316,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                     .putExtra("fromIntent","regist")
                     .putExtra("account",mViewModel.businessDto.value!!.userName?.trim().toString())
                     .putExtra("pwd",mViewModel.businessDto.value!!.password?.trim().toString())
-                    .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
+                    .putExtra("name", mViewModel.businessDto.value!!.enterpriseName.toString()))
             },
             onError = {
                 disLoading()
