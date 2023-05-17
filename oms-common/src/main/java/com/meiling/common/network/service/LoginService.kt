@@ -184,7 +184,7 @@ interface LoginService {
     /**
      *获取三方门店列表
      */
-    @GET("/saaslogistics/auth/shop_list")
+    @GET("/saas/logistics/auth/shop_list")
     suspend fun getShopList(@Query("pageNum")pageNum:String,
                             @Query("pageSize")pageSize:String,
                             @Query("poiId")poiId:String,

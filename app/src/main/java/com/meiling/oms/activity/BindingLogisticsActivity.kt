@@ -186,10 +186,14 @@ class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,Activity
         )
         //getShopList
         mViewModel.launchRequest(
-            { loginService.getShopList("1","20",poid,"")},
+            { loginService.getShopList("1","20","156207273","uu")},
             true,
             onSuccess = {},
-            onError = {}
+            onError = {
+                it?.let {
+                    showToast(it)
+                }
+            }
         )
 
         //注册成功
