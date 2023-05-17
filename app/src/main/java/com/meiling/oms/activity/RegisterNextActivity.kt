@@ -81,8 +81,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         super.initData()
         phone = intent?.getStringExtra("phone")
         mDatabind.viewModel = mViewModel
-
-
+        mViewModel.businessDto.value!!.userName=phone
         //选择所属行业
         mDatabind.txtIndustryRight.setOnClickListener {
             mViewModel.launchRequest(
@@ -185,36 +184,9 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
                 })
         }
-        //获取销售渠道id
-//        mViewModel.launchRequest(
-//            { loginService.getChannel() },
-//            onSuccess = {
-//                it.let {
-//                    mViewModel.businessDto.value!!.salesChannel =
-//                        it!!.map { it.id }.toList().joinToString(",")
-//                }
-//            },
-//            onError = {
-//
-//            }
-//        )
-//        //获取城市id
-//        mViewModel.launchRequest(
-//            { loginService.getCity() },
-//            onSuccess = {
-//                it?.let {
-//                    mViewModel.businessDto.value!!.city =
-//                        it.map { it.id }.toList().joinToString(",")
-//                }
-//            },
-//            onError = {
-//
-//            }
-//        )
 
 
         mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
-//        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType1()})
         mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
         mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
 
