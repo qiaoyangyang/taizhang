@@ -108,6 +108,7 @@
             android:background="@null"
             android:gravity="right"
             android:textColor="#333333"
+            android:text=""
             app:layout_constraintBaseline_toBaselineOf="@+id/txtPrintName"
             app:layout_constraintLeft_toRightOf="@+id/txtPrintName"
             app:layout_constraintRight_toRightOf="parent"
@@ -183,6 +184,7 @@
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <EditText
+            android:layout_marginLeft="@dimen/dp_20"
             android:id="@+id/edtPrintNo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -195,7 +197,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/scanLin"
             app:layout_constraintLeft_toRightOf="@+id/txtPrintNo"
             app:layout_constraintRight_toLeftOf="@+id/scanLin"
-            app:layout_constraintTop_toTopOf="@+id/scanLin" />
+            app:layout_constraintTop_toTopOf="@+id/scanLin"
+            />
 
         <com.hjq.shape.layout.ShapeConstraintLayout
             android:id="@+id/scanLin"
@@ -227,7 +230,7 @@
             android:background="@color/home_F1F1F1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtPrintNo" />
+            app:layout_constraintTop_toBottomOf="@+id/edtPrintNo" />
 
 
         <TextView
@@ -344,6 +347,7 @@
 
 
             <com.meiling.common.view.SwitchButton
+                android:checked="true"
                 android:id="@+id/checkPrintAuto"
                 android:layout_width="@dimen/dp_100"
                 android:layout_height="wrap_content"
@@ -378,6 +382,7 @@
                 />
 
             <com.meiling.common.view.SwitchButton
+                android:checked="true"
                 android:id="@+id/checkRefundAuto"
                 android:layout_width="@dimen/dp_100"
                 android:layout_height="wrap_content"

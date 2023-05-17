@@ -28,6 +28,7 @@ import com.meiling.oms.dialog.AccountSelectShopOrCityDialog
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.SelectPrintPageSizeDialog
 import com.meiling.oms.viewmodel.RegisterViewModel
+import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 
 /**
@@ -252,7 +253,7 @@ class BindPrintDeviceActivity :
                 })
         }
         //关联发货门店
-        mDatabind.selectShop.setOnClickListener {
+        mDatabind.selectShop.setSingleClickListener {
 
             var accountSelectDialog = AccountSelectShopOrCityDialog().newInstance(
                 "授权发货门店",

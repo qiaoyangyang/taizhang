@@ -145,7 +145,7 @@ class PrintDeviceListActivity :
                         holder.setBackgroundResource(R.id.img_print_online,R.drawable.print_online)
                        // GlideAppUtils.loadResUrl(img, R.drawable.print_online)
 
-                    } else if (item.printStatus == 3) {
+                    } else if (item.printStatus == 2) {
                         holder.setBackgroundResource(R.id.img_print_online,R.drawable.print_nopage)
                        // GlideAppUtils.loadResUrl(img, R.drawable.print_nopage)
 
