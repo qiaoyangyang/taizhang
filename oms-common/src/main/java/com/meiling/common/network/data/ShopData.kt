@@ -32,7 +32,6 @@ data class Shop(
     @SerializedName("status")
     var status: String? = ""
 
-
 ) : Serializable, IWheel {
     override fun getShowText(): String {
         var name1=""

@@ -120,9 +120,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/dp_20"
                         android:layout_toStartOf="@+id/txt_add_goods"
                         android:ellipsize="end"
-                        android:layout_marginEnd="@dimen/dp_20"
                         android:gravity="center_vertical|right"
                         android:paddingHorizontal="@dimen/dp_20"
                         android:paddingVertical="@dimen/dp_10"
@@ -231,9 +231,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
+                        android:hint="输入或粘贴收货信息文本，自动识别收货人、收货电话电话和收货地址（智能识别）"
                         android:textColor="#ff999999"
-                        android:textSize="@dimen/sp_32"
-                        tools:text="输入或粘贴收货信息文本，自动识别收货人、收货电话电话和收货地址（智能识别）" />
+                        android:textSize="@dimen/sp_32" />
 
 
                     <com.hjq.shape.view.ShapeTextView
@@ -296,6 +296,7 @@
                 </RelativeLayout>
 
                 <View
+                    android:id="@+id/line_address"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_2"
                     android:background="@color/account_F5F5F5" />
@@ -312,8 +313,9 @@
                     <TextView
                         android:id="@+id/txt_input_phone"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dp_92"
                         android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
                         android:text="收货地址"
                         android:textColor="@color/home_666666"
                         android:textSize="@dimen/sp_32"
@@ -322,14 +324,14 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_receive_select_address"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_92"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/txt_input_phone"
                         android:background="@null"
                         android:ellipsize="end"
                         android:gravity="center_vertical|right"
                         android:hint="请选择收货地址"
-                        android:singleLine="true"
                         android:textColor="@color/home_333333"
                         android:textSize="@dimen/sp_32"
                         app:drawableEndCompat="@drawable/icon_next"
@@ -337,6 +339,7 @@
                 </RelativeLayout>
 
                 <View
+                    android:id="@+id/line_address_detail"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_2"
                     android:background="@color/account_F5F5F5" />
@@ -360,7 +363,7 @@
                         android:textSize="@dimen/sp_32" />
 
                     <EditText
-                        android:id="@+id/edt_input_name"
+                        android:id="@+id/edt_address_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dp_92"
                         android:layout_alignParentEnd="true"
@@ -369,7 +372,6 @@
                         android:ellipsize="end"
                         android:gravity="center_vertical|right"
                         android:hint="请填写详细的收货地址"
-                        android:maxLength="20"
                         android:singleLine="true"
                         android:textColor="@color/home_333333"
                         android:textSize="@dimen/sp_32"
@@ -449,7 +451,8 @@
                         android:ellipsize="end"
                         android:gravity="center_vertical|right"
                         android:hint="请输入收货人电话"
-                        android:maxLength="20"
+                        android:inputType="number"
+                        android:maxLength="11"
                         android:singleLine="true"
                         android:textColor="@color/home_333333"
                         android:textSize="@dimen/sp_32"
@@ -489,7 +492,7 @@
                         android:background="@null"
                         android:ellipsize="end"
                         android:gravity="center_vertical|right"
-                        android:hint="请选择收货地址"
+                        android:hint="请选择收货时间"
                         android:singleLine="true"
                         android:textColor="@color/home_333333"
                         android:textSize="@dimen/sp_32"
@@ -533,23 +536,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/dp_20"
+                    android:background="@drawable/order_change_bg_f4f4"
+                    android:minHeight="@dimen/dp_260"
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/edt_order_change_remark"
+                        android:id="@+id/edt_order_create_remark"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_marginTop="@dimen/dp_20"
-                        android:layout_marginBottom="@dimen/dp_20"
-                        android:background="@drawable/order_change_bg_f4f4"
+                        android:layout_height="match_parent"
+                        android:background="@null"
                         android:gravity="top"
-                        android:hint="这是一个备注"
+                        android:hint="请输入备注信息"
                         android:maxLength="200"
+                        android:minHeight="@dimen/dp_260"
                         android:padding="@dimen/dp_20"
+                        android:textColor="@color/home_999999"
+                        android:textSize="@dimen/sp_28" />
+
+                    <TextView
+                        android:id="@+id/txt_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/edt_order_create_remark"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginHorizontal="@dimen/dp_20"
+                        android:layout_marginBottom="@dimen/dp_20"
+                        android:text="0/200"
                         android:textColor="@color/home_666666"
-                        android:textSize="@dimen/sp_28"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        android:textSize="@dimen/sp_28" />
 
                 </RelativeLayout>
 

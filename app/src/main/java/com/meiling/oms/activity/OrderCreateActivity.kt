@@ -1,94 +1,491 @@
 package com.meiling.oms.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.*
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.annotation.Nullable
+import com.alibaba.android.arouter.launcher.ARouter
+import com.amap.api.services.core.PoiItem
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.codbking.widget.DatePickDialog
 import com.codbking.widget.bean.DateType
+import com.hjq.permissions.OnPermissionCallback
+import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.AccountItemSelect
 import com.meiling.common.network.data.OrderCreateGoodsDto
+import com.meiling.common.network.data.OrderCreateSaveDto
+import com.meiling.common.network.data.Shop
+import com.meiling.common.utils.PermissionUtilis
+import com.meiling.common.utils.SoftKeyBoardListener
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityOrderCreatBinding
 import com.meiling.oms.dialog.AccountSelectDialog
+import com.meiling.oms.dialog.ShopDialog
 import com.meiling.oms.viewmodel.OrderCreateViewModel
 import com.meiling.oms.widget.KeyBoardUtil
 import com.meiling.oms.widget.formatCurrentDateToString
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import java.util.*
+import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
 
 class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCreatBinding>() {
 
+    private val REQUEST_CODE = 1002
+    private val ACCESS_FINE_LOCATION = 1
 
     var goodsList = ArrayList<OrderCreateGoodsDto>()
+    var goodsArrayList = ArrayList<OrderCreateGoodsDto>()
     lateinit var orderGoodsAdapter: BaseQuickAdapter<OrderCreateGoodsDto, BaseViewHolder>
 
     override fun initView(savedInstanceState: Bundle?) {
-        goodsList.add(OrderCreateGoodsDto("默认商品", 1, "0"))
+        goodsList.add(OrderCreateGoodsDto(name = "默认商品", num = 1, "0", totalPrice = "","默认规格", imgUrl = "https://static.igoodsale.com/default-goods.png"))
         orderGoodsAdapter = object :
             BaseQuickAdapter<OrderCreateGoodsDto, BaseViewHolder>(R.layout.item_create_order_goods) {
             override fun convert(holder: BaseViewHolder, item: OrderCreateGoodsDto) {
-                holder.setText(R.id.txt_order_goods_name, item.name)
-                holder.setText(R.id.txt_order_goods_price, item.price)
-                var view = holder.getView<EditText>(R.id.edt_add_num)
+                var goodsName = holder.getView<EditText>(R.id.txt_order_goods_name)
+                var price = holder.getView<EditText>(R.id.txt_order_goods_price)
+                var num = holder.getView<EditText>(R.id.edt_add_num)
                 var selectImg = holder.getView<ImageView>(R.id.img_order_goods_select)
-                view.setText("${item.num}")
-                if (itemCount - 1 == 0) {
+                var add = holder.getView<ImageView>(R.id.edt_add_jia)
+                var sub = holder.getView<ImageView>(R.id.edt_add_jian)
+
+                num.setText("${item.num}")
+                price.setText(item.salePrice)
+                goodsName.setText(item.name)
+                num.setSelection(item.num.toString().length)
+
+                if (item.num > 1) {
+                    sub.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_subtract_true))
+                } else {
+                    sub.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_subtract_false))
+                }
+
+                if (item.num >= 999) {
+                    add.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_add_false))
+                } else {
+                    add.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_add_true))
+                }
+                add.setOnClickListener {
+                    if (item.num <= 999) {
+                        item.num = item.num + 1
+                    } else {
+                        item.num = item.num
+                    }
+                    num.setText(item.num.toString())
+                }
+                sub.setOnClickListener {
+                    if (item.num > 1) {
+                        item.num = item.num - 1
+                    } else {
+                        item.num = item.num
+                    }
+                    num.setText(item.num.toString())
+                }
+
+
+                if (itemCount == 1) {
                     mDatabind.txtDeleteGoods.visibility = View.GONE
                     selectImg.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_checkbox))
                 } else {
                     if (item.isSelectGoods) {
-                        mDatabind.txtDeleteGoods.visibility = View.VISIBLE
-                        selectImg.setImageDrawable(resources.getDrawable(R.drawable.ic_spu_true))
+                        selectImg.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_true))
                     } else {
-                        mDatabind.txtDeleteGoods.visibility = View.GONE
-                        selectImg.setImageDrawable(resources.getDrawable(R.drawable.ic_spu_fase1))
+                        selectImg.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_fase))
+                    }
+                }
+                num.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                        // 在文本变化之前的操作，可以不做处理
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+//                        val input = s.toString()
+//                        Log.d("TAG", "convert:${item.num} ")
+//                        Log.d("TAG", "convert:${input} ")
+//
+////                        // 如果输入的内容为空，直接返回
+//                        if (input.isEmpty()) {
+//                            return
+//                        }
+////
+//                        // 检查输入的长度是否超过 3 位
+//                        if (input.length > 3) {
+//                            num.setText(input.substring(0, 3))
+//                            num.setSelection(3)
+//                            return
+//                        }
+//
+//                        // 检查输入是否为 00 或 01
+//                        if (input == "00") {
+//                            num.setText("1")
+//                            return
+//                        }
+//
+//                        // 检查输入是否大于 999
+//                        val number = input.toIntOrNull()
+//                        if (number != null && number > 999) {
+//                            num.setText("999")
+//                            num.setSelection(3)
+//                        }
+//
+//                        // 检查是否为01或100.22这样的数字
+//                        if (input.startsWith("0") && input != "0" ) {
+//                            // 不合法的数字格式，禁止输入
+//                            val newText = input.substring(0, input.length - 1)
+//                            num.setText(newText)
+//                            num.setSelection(newText.length)
+//                            return
+//                        }
+//                        item.num = input.toInt()
+//                        if (item.num >= 1) {
+//                            sub.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_subtract_true))
+//                        } else {
+//                            sub.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_subtract_false))
+//                        }
+//                        if (item.num >= 999) {
+//                            add.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_add_false))
+//                        } else {
+//                            add.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_add_true))
+//                        }
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+                        val input = s.toString()
+                        Log.d("TAG", "convert:${item.num} ")
+                        Log.d("TAG", "convert:${input} ")
+
+//                        // 如果输入的内容为空，直接返回
+                        if (input.isEmpty()) {
+                            return
+                        }
+//
+                        // 检查输入的长度是否超过 3 位
+                        if (input.length > 3) {
+                            num.setText(input.substring(0, 3))
+                            num.setSelection(3)
+                            return
+                        }
+
+                        // 检查输入是否为 00 或 01
+                        if (input == "00") {
+                            num.setText("1")
+                            return
+                        }
+
+                        // 检查输入是否大于 999
+                        val number = input.toIntOrNull()
+                        if (number != null && number > 999) {
+                            num.setText("999")
+                            num.setSelection(3)
+                        }
+
+                        // 检查是否为01或100.22这样的数字
+                        if (input.startsWith("0") && input != "0") {
+                            // 不合法的数字格式，禁止输入
+                            val newText = input.substring(0, input.length - 1)
+                            num.setText(newText)
+                            num.setSelection(newText.length)
+                            return
+                        }
+                        item.num = input.toInt()
+                        if (item.num > 1) {
+                            sub.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_subtract_true))
+                        } else {
+                            sub.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_subtract_false))
+                        }
+                        if (item.num >= 999) {
+                            add.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_add_false))
+                        } else {
+                            add.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_add_true))
+                        }
+                    }
+                })
+
+                num.setOnClickListener {
+                    num.isFocusable = true
+                    num.isFocusableInTouchMode = true
+                    num.requestFocus()
+                    num.findFocus()
+                    num.setSelection(1)
+                    KeyBoardUtil.openKeyBord(num, context)
+                }
+
+                num.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+                    if (!hasFocus) {
+                        val inputText = num.text.toString()
+                        if (inputText.isEmpty()) {
+                            num.setText("1")
+                            item.num = 1
+                            num.setSelection(1)
+                            KeyBoardUtil.closeKeyBord(num, context)
+                        }
                     }
                 }
 
+                num.setOnEditorActionListener { view, actionId, event ->
+                    if (actionId == 0 || actionId == 3) {
+                        num.isFocusable = false
+                        if (num.text.toString().isEmpty()) {
+                            num.setText("1")
+                            item.num = 1
+                            num.setSelection(0)
+                            notifyDataSetChanged()
+                        }
+                    }
+                    false
+                }
+
+                price.setOnClickListener {
+                    price.isFocusable = true
+                    price.isFocusableInTouchMode = true
+                    price.requestFocus()
+                    price.findFocus()
+                    price.setSelection(1)
+                    KeyBoardUtil.openKeyBord(price, context)
+                }
+
+                price.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+                    if (!hasFocus) {
+                        val inputText = price.text.toString()
+                        if (inputText.isEmpty()) {
+                            price.setText("0")
+                            KeyBoardUtil.closeKeyBord(price, context)
+                        }
+                    }
+                }
+
+                price.setOnEditorActionListener { view, actionId, event ->
+                    if (actionId == 0 || actionId == 3) {
+                        // 键盘消失
+                        // 在这里执行你的逻辑操作
+                        if (price.text.toString().isEmpty()) {
+                            price.setText("0")
+                            price.setSelection(0)
+                            price.isFocusable = false
+                        }
+                    }
+                    false
+                }
+
+                goodsName.setOnClickListener {
+                    goodsName.isFocusable = true
+                    goodsName.isFocusableInTouchMode = true
+                    goodsName.requestFocus()
+                    goodsName.findFocus()
+                    goodsName.setSelection(1)
+                    KeyBoardUtil.openKeyBord(goodsName, context)
+                }
+
+                goodsName.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+                    if (!hasFocus) {
+                        val inputText = goodsName.text.toString()
+                        if (inputText.isEmpty()) {
+                            goodsName.setText("默认商品")
+                            KeyBoardUtil.closeKeyBord(goodsName, context)
+                        }
+                    }
+                }
+
+                goodsName.setOnEditorActionListener { view, actionId, event ->
+                    if (actionId == 0 || actionId == 3) {
+                        // 键盘消失
+                        price.isFocusable = false
+                        if (goodsName.text.toString().isEmpty()) {
+                            goodsName.setText("默认商品")
+                        }
+                    }
+                    false
+                }
+
+                //键盘隐藏之后数据
+                SoftKeyBoardListener.setListener(this@OrderCreateActivity, object :
+                    SoftKeyBoardListener.OnSoftKeyBoardChangeListener {
+                    override fun keyBoardShow(height: Int) {
+                    }
+
+                    override fun keyBoardHide(height: Int) {
+                        if (TextUtils.isEmpty(price.text.toString())) {
+                            price.setText("0")
+                            price.setSelection(0)
+
+                        }
+                        price.isFocusable = false
+                        num.isFocusable = false
+                        goodsName.isFocusable = false
+                        if (TextUtils.isEmpty(num.text.toString())) {
+                            num.setText("1")
+                            num.setSelection(1)
+                            item.num = 1
+
+                        }
+                        if (TextUtils.isEmpty(goodsName.text.toString())) {
+                            goodsName.setText("默认商品")
+                            goodsName.setSelection(1)
+                        }
+                    }
+                })
+                price.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                        // 在文本变化之前的操作，可以不做处理
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                        val input = s.toString()
+                        // 如果输入的内容为空，直接返回
+                        if (input.isEmpty()) {
+                            return
+                        }
+
+                        // 如果输入的内容为小数点，将其替换为0
+                        if (input == ".") {
+                            price.setText("0.")
+                            price.setSelection(1)
+                            return
+                        }
+
+                        // 检查小数点前的数字是否合法
+                        val numberPattern = Pattern.compile("^([1-9]\\d{0,6}|0)(\\.\\d{0,2})?$")
+//                        val numberPattern = Pattern.compile("[0-9]{0,5}(\\.[0-9]{0,2})?")
+                        val numberMatcher = numberPattern.matcher(input)
+                        if (!numberMatcher.matches()) {
+                            // 不合法的数字格式，禁止输入
+                            val newText = input.substring(0, input.length - 1)
+                            price.setText(newText)
+                            price.setSelection(newText.length)
+                            return
+                        }
+
+                        // 检查小数点前是否满足要求
+                        val prefix = input.substringBefore(".")
+                        if (prefix.length > 5 || prefix == "00" || prefix == "000" || prefix == "0000" || prefix == "00000") {
+                            // 不满足要求，禁止输入
+                            val newText = input.substring(0, input.length - 1)
+                            price.setText(newText)
+                            price.setSelection(newText.length)
+                            return
+                        }
+
+                        // 检查小数点后的数字是否合法
+                        val decimalPattern = Pattern.compile("\\d{0,2}")
+                        val decimalMatcher = decimalPattern.matcher(input.substringAfter(".", ""))
+                        if (!decimalMatcher.matches()) {
+                            // 不合法的小数格式，禁止输入
+                            val newText = input.substring(0, input.length - 1)
+                            price.setText(newText)
+                            price.setSelection(newText.length)
+                            return
+                        }
+
+                        // 检查小数点后是否超过两位
+                        if (input.substringAfter(".", "").length > 2) {
+                            // 超过两位小数，禁止输入第三位小数
+                            val newText = input.substring(0, input.length - 1)
+                            price.setText(newText)
+                            price.setSelection(newText.length)
+                            return
+                        }
+
+                        // 检查是否为01或100.22这样的数字
+                        if (input.startsWith("0") && input != "0" && !input.startsWith("0.")) {
+                            // 不合法的数字格式，禁止输入
+                            val newText = input.substring(0, input.length - 1)
+                            price.setText(newText)
+                            price.setSelection(newText.length)
+                            return
+                        }
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {}
+
+                })
+                goodsName.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                        // 在文本变化之前的操作，可以不做处理
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+                        val inputText = s.toString()
+                        if (inputText != null) {
+                            item.name = inputText
+                        } else {
+                            item.name = "默认商品"
+                        }
+                        goodsName.setSelection(item.name.toString().length)
+                    }
+                })
             }
         }
         orderGoodsAdapter.setNewInstance(goodsList)
         mDatabind.rvCreateGoods.adapter = orderGoodsAdapter
 
-        orderGoodsAdapter.addChildClickViewIds(R.id.edt_add_jian, R.id.edt_add_jia);
+        orderGoodsAdapter.addChildClickViewIds(
+            R.id.edt_add_jian,
+            R.id.edt_add_jia,
+            R.id.img_order_goods_select
+        )
 
         orderGoodsAdapter.setOnItemChildClickListener { adapter, view, position ->
             when (view.id) {
-                R.id.edt_add_jian -> {
-                    if ((adapter.data[position] as OrderCreateGoodsDto).num <= 1) {
-                        (R.id.edt_add_jian as ImageView).setImageDrawable(resources.getDrawable(R.drawable.icon_goods_subtract_false))
-                    } else {
-                        (R.id.edt_add_jian as ImageView).setImageDrawable(resources.getDrawable(R.drawable.icon_goods_subtract_true))
-                        (adapter.data[position] as OrderCreateGoodsDto).num =
-                            (adapter.data[position] as OrderCreateGoodsDto).num - 1
-                    }
-                    orderGoodsAdapter.notifyDataSetChanged()
-                }
-                R.id.edt_add_jia -> {
-                    (adapter.data[position] as OrderCreateGoodsDto).num =
-                        (adapter.data[position] as OrderCreateGoodsDto).num + 1
-                    orderGoodsAdapter.notifyDataSetChanged()
-                }
-
                 R.id.img_order_goods_select -> {
                     if (orderGoodsAdapter.data.size > 1) {
                         (adapter.data[position] as OrderCreateGoodsDto).isSelectGoods =
                             !(adapter.data[position] as OrderCreateGoodsDto).isSelectGoods
                         orderGoodsAdapter.notifyItemChanged(position)
                     }
+                    if (orderGoodsAdapter.data.count { it.isSelectGoods } > 0) {
+                        mDatabind.txtDeleteGoods.visibility = View.VISIBLE
+                    } else {
+                        mDatabind.txtDeleteGoods.visibility = View.GONE
+                    }
                     orderGoodsAdapter.notifyDataSetChanged()
                 }
             }
-
         }
     }
 
@@ -96,11 +493,49 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
         return ActivityOrderCreatBinding.inflate(layoutInflater)
     }
 
-    var selectAuthWay = "1"
-    private var isSelectDiscern = true
+    var selectAuthWay = "1" //1商家配送 2商家自提
+    private var isSelectDiscern = true //智能识别输入控制
+    var address = "" //地址
+    var lat = ""
+    var lon = ""
+    var provinceCode = ""
+    var adCode = ""
+    var cityName = ""
+    var poiItem: PoiItem? = null
+    var tenantId = ""
+    var adminViewId = ""
+    var fromIntent = ""
+    var account = ""
+    var pwd = ""
+    var name = ""
+    var shopId: String? = ""
+    var poiId: String? = ""
     override fun initListener() {
+
+        mDatabind.edtOrderCreateRemark.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                var input = s.toString()
+                if (input.isEmpty()) {
+                    mDatabind.txtCount.setText("${0}/200")
+                } else {
+                    if (input.length == 200) {
+                        input = input.substring(0, s.toString().length - 1)
+                    }
+                    mDatabind.txtCount.setText("${input.length}/200")
+                }
+
+            }
+        })
+
+
         mDatabind.txtSelectStore.setSingleClickListener {
-            showToast("发货门店")
+            mViewModel.getCityPoiOffline()
         }
         mDatabind.txtDiscern.setSingleClickListener {
             if (isSelectDiscern) {
@@ -115,13 +550,67 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
         mDatabind.txtDiscernInfo.setSingleClickListener {
             showToast("地址识别")
         }
-        mDatabind.txtSelectStore.setSingleClickListener {
-            showToast("发货门店")
+        mDatabind.txtReceiveSelectAddress.setSingleClickListener {
+            XXPermissions.with(this).permission(PermissionUtilis.Group.LOCAL)
+                .request(object : OnPermissionCallback {
+                    override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
+                        if (!allGranted) {
+                            showToast("获取部分权限成功，但部分权限未正常授予")
+                            return
+                        }
+                        //   startActivity(Intent(this@NewlyBuiltStoreActivity,NewOrderChangeAddressMapActivity::class.java))
+                        // initStart()
+                        ARouter.getInstance().build("/app/NewOrderChangeAddressMapActivity")
+                            .withString("title", "收货地址")
+                            .navigation(this@OrderCreateActivity, REQUEST_CODE)
+                    }
+
+                    override fun onDenied(
+                        permissions: MutableList<String>,
+                        doNotAskAgain: Boolean
+                    ) {
+                        if (doNotAskAgain) {
+                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                            XXPermissions.startPermissionActivity(
+                                this@OrderCreateActivity,
+                                permissions
+                            )
+                        } else {
+                            showToast("授权失败，请检查权限")
+                        }
+                    }
+                })
         }
         mDatabind.txtAddGoods.setSingleClickListener {
-            goodsList.add(OrderCreateGoodsDto("默认商品", 1, "0"))
+            var orderCreate = OrderCreateGoodsDto(name = "默认商品", num = 1, "0", totalPrice = "","默认规格", imgUrl = "https://static.igoodsale.com/default-goods.png")
+            orderGoodsAdapter.addData(orderCreate)
             KeyBoardUtil.openKeyBoard(this, mDatabind.txtAddGoods)
             orderGoodsAdapter.notifyDataSetChanged()
+        }
+
+        mDatabind.txtDeleteGoods.setSingleClickListener {
+            val selectedItems = mutableListOf<OrderCreateGoodsDto>()
+            var selectNumber = orderGoodsAdapter.data.count { it.isSelectGoods }
+            for (goods in orderGoodsAdapter.data) {
+                if (goods.isSelectGoods) {
+                    selectedItems.add(goods)
+                }
+            }
+            if (orderGoodsAdapter.data.size == selectedItems.size) {
+                showToast("请至少保留一个商品")
+                return@setSingleClickListener
+            } else {
+                for (index in selectedItems) {
+                    orderGoodsAdapter.data.remove(index)
+                }
+            }
+
+            for (item in orderGoodsAdapter.data) {
+                item.isSelectGoods = false
+                orderGoodsAdapter.notifyDataSetChanged()
+            }
+            mDatabind.txtDeleteGoods.visibility = View.GONE
+            orderGoodsAdapter.data.forEach { it.isSelectGoods }
         }
         mDatabind.txtReceiveSelectTime.setSingleClickListener {
             showDatePickDialog(DateType.TYPE_YMDHM)//收货时间选择
@@ -141,12 +630,16 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                     mDatabind.btnSaveAndDis.visibility = View.VISIBLE
                     mDatabind.rlInputReceiveDetailAddress.visibility = View.VISIBLE
                     mDatabind.rlSelectReceiveAddress.visibility = View.VISIBLE
-                    mDatabind.txtDiscernInfo.visibility = View.VISIBLE
+                    mDatabind.txtDiscern.visibility = View.VISIBLE
+                    mDatabind.lineAddress.visibility = View.VISIBLE
+                    mDatabind.lineAddressDetail.visibility = View.VISIBLE
                 } else {
                     mDatabind.btnSaveAndDis.visibility = View.GONE
                     mDatabind.rlInputReceiveDetailAddress.visibility = View.GONE
                     mDatabind.rlSelectReceiveAddress.visibility = View.GONE
-                    mDatabind.txtDiscernInfo.visibility = View.GONE
+                    mDatabind.txtDiscern.visibility = View.GONE
+                    mDatabind.lineAddress.visibility = View.GONE
+                    mDatabind.lineAddressDetail.visibility = View.GONE
                 }
             }
         }
@@ -172,6 +665,29 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                 return@setSingleClickListener
             }
 
+            if (selectAuthWay == "1") {
+                if (mDatabind.txtReceiveSelectAddress.text.toString().trim().isNullOrBlank()) {
+                    showToast("请选择收货地址")
+                    return@setSingleClickListener
+                }
+            }
+            goodsArrayList.addAll(orderGoodsAdapter.data)
+            mViewModel.saveOrder(
+                OrderCreateSaveDto(
+                    arriveTime = mDatabind.txtReceiveSelectTime.text.toString(),
+                    channelId = "11",
+                    poiId = poiId,
+                    lat = lat,
+                    lon = lon,
+                    deliveryType = selectAuthWay,
+                    recvAddr = mDatabind.txtReceiveSelectAddress.text.toString() + "@@" + mDatabind.edtAddressDetail.text.toString(),
+                    recvName = mDatabind.edtReceiveName.text.toString(),
+                    recvPhone = mDatabind.edtReceivePhone.text.toString(),
+                    remark = mDatabind.edtOrderCreateRemark.text.toString(),
+                    selfGoodsDtoList = goodsArrayList
+                )
+            )
+
             showToast("保存成功")
         }
         mDatabind.btnSaveAndDis.setSingleClickListener {
@@ -179,7 +695,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                 showToast("请选择发货门店")
                 return@setSingleClickListener
             }
-            if (mDatabind.txtSelectStore.text.toString().trim().isNullOrBlank()) {
+            if (mDatabind.txtReceiveSelectAddress.text.toString().trim().isNullOrBlank()) {
                 showToast("请选择收货地址")
                 return@setSingleClickListener
             }
@@ -204,6 +720,53 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
         }
     }
 
+    override fun createObserver() {
+        mViewModel.cityPoiOfflineDto.onStart.observe(this) {
+            showLoading("加载中")
+        }
+
+        mViewModel.cityPoiOfflineDto.onSuccess.observe(this) {
+            disLoading()
+            var shopDialog = ShopDialog().newInstance(it, "修改发货门店")
+            shopDialog.setOnresilience(object : ShopDialog.Onresilience {
+                override fun resilience(
+                    cityid: Int,
+                    cityidname: String,
+                    shopid: Int,
+                    sho: Shop
+                ) {
+                    poiId = sho.poiId
+                    mDatabind.txtSelectStore.text = "${cityidname}/${sho.name}"
+                    shopDialog.dismiss()
+                }
+
+                override fun Ondismiss() {
+                }
+
+            })
+            shopDialog.show(supportFragmentManager)
+        }
+        mViewModel.cityPoiOfflineDto.onError.observe(this) {
+            disLoading()
+            showToast(it.msg)
+        }
+        mViewModel.saveCreateDto.onStart.observe(this) {
+            showLoading("加载中")
+            showToast("保存成功")
+            finish()
+        }
+
+        mViewModel.saveCreateDto.onSuccess.observe(this) {
+            disLoading()
+        }
+        mViewModel.saveCreateDto.onError.observe(this) {
+            disLoading()
+            showToast(it.msg)
+        }
+    }
+
+
+    //时间选择
     @SuppressLint("SetTextI18n")
     private fun showDatePickDialog(
         type: DateType,
@@ -229,7 +792,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
 //                showToast("请选择正确时间")
 //            }
 
-            mDatabind.txtSelectStore.text = "${formatCurrentDateToString(date)}:00"
+            mDatabind.txtReceiveSelectTime.text = "${formatCurrentDateToString(date)}:00"
         }
         dialog.show()
     }
@@ -237,5 +800,39 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
     private fun isPhoneNumber(input: String): Boolean {
         val regex = Regex("^1[3-9]\\d{9}$")
         return regex.matches(input)
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            // 处理返回的结果
+            lon = data.getStringExtra("lon").toString()
+            lat = data.getStringExtra("lat").toString()
+            address = data.getStringExtra("address").toString()
+            poiItem = data.getParcelableExtra("poiItem")
+            provinceCode = poiItem?.provinceCode!!
+            adCode = poiItem?.adCode!!
+            cityName = poiItem?.cityName!!
+            mDatabind.txtReceiveSelectAddress.text = address
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == ACCESS_FINE_LOCATION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 如果有权限跳转
+                ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
+                    .navigation(this, REQUEST_CODE)
+            } else {
+                showToast("您已经禁止权限，请手动开启")
+                // 如果用户拒绝了权限，可以在这里处理相应的逻辑
+            }
+        }
     }
 }
