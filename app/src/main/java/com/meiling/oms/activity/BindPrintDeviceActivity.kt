@@ -102,7 +102,7 @@ class BindPrintDeviceActivity :
                 poiIds.add(id)
                 shopPoiDtoList.add(ShopPoiDto(id))
             }
-            isadd(mDatabind.txtPrintPageNum?.text.toString(), mDatabind.imgAdd, "5")
+           // isadd(mDatabind.txtPrintPageNum?.text.toString(), mDatabind.imgAdd, "5")
         }
 
         mViewModel.getPoiListsize.onSuccess.observe(this) { it ->
@@ -256,7 +256,7 @@ class BindPrintDeviceActivity :
         mDatabind.selectShop.setSingleClickListener {
 
             var accountSelectDialog = AccountSelectShopOrCityDialog().newInstance(
-                "授权发货门店",
+                "关联发货门店",
                 iscompile,
                 isSelect,
                 shopPoiDtoList,

@@ -36,7 +36,7 @@ public class ClearEditText extends androidx.appcompat.widget.AppCompatEditText i
         mClearDrawable = getCompoundDrawables()[2]; // 获取drawableRight
         if (mClearDrawable == null) {
             // 如果为空，即没有设置drawableRight，则使用R.mipmap.close这张图片
-            mClearDrawable = getResources().getDrawable(R.drawable.search_close_edt);
+            mClearDrawable = getResources().getDrawable(R.drawable.input_delete_ic);
         }
         mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
         setOnFocusChangeListener(this);
