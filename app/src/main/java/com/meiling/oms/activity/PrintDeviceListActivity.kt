@@ -55,6 +55,7 @@ class PrintDeviceListActivity :
 
                 mAdapter.setEmptyView(view)
             } else {
+                mViewModel.getprintChannelList()mViewModel.getprintChannelList()
                 //mAdapter.setEmptyView(R.layout.activity_no_print_device)
             }
         }
@@ -185,7 +186,10 @@ class PrintDeviceListActivity :
 
     override fun initData() {
         super.initData()
-        mViewModel.getprintChannelList()
+
+        if (mainViewModel.getByTenantId.value?.poi!=-1) {
+            mViewModel.getprintChannelList()
+        }
 
 
     }
