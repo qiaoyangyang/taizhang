@@ -314,7 +314,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                     .putExtra("tenantId",it!!.tenantId)
                     .putExtra("adminViewId",it!!.adminUserViewId)
                     .putExtra("fromIntent","regist")
-                    .putExtra("account",mViewModel.businessDto.value!!.userName?.trim().toString())
+                    .putExtra("account",phone)
                     .putExtra("pwd",mViewModel.businessDto.value!!.password?.trim().toString())
                     .putExtra("name", mViewModel.businessDto.value!!.enterpriseName.toString()))
             },

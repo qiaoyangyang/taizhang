@@ -131,6 +131,8 @@ class NewlyBuiltStoreActivity :
 
         if(fromIntent=="regist"){
             mDatabind.tvGoOn.text="下一步"
+            mViewModel.PoiVoBean.value?.poiVo?.name=name
+            mViewModel.PoiVoBean.value?.poiVo?.phone=account
         }
         mDatabind.tvGoOn.let {
             InputTextManager.with(this)

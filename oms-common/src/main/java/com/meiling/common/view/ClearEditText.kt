@@ -40,7 +40,7 @@ class ClearEditText @JvmOverloads constructor(
     }
 
     private fun setDrawableVisible(visible: Boolean) {
-        if (clearDrawable.isVisible == visible) {
+        if (clearDrawable.isVisible == visible && !visible) {
             return
         }
         clearDrawable.setVisible(visible, false)
@@ -102,5 +102,6 @@ class ClearEditText @JvmOverloads constructor(
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-    override fun afterTextChanged(s: Editable?) {}
-}
+    override fun afterTextChanged(s: Editable?) {
+//        setDrawableVisible(s.toString().isNotEmpty())
+    }}

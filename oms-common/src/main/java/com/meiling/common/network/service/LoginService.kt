@@ -177,9 +177,9 @@ interface LoginService {
      * 三方跳转链接授权
      */
     @GET("/saas/logistics/auth/get_url")
-    suspend fun getUrl(@Query("originId")originId:String,
+    suspend fun getUrl(@Query("originId")originId:String?,
                        @Query("poiId")poiId: String,
-                       @Query("type")type:String):ResultData<Any>
+                       @Query("type")type:String):ResultData<String>
 
     /**
      *获取三方门店列表
@@ -188,5 +188,5 @@ interface LoginService {
     suspend fun getShopList(@Query("pageNum")pageNum:String,
                             @Query("pageSize")pageSize:String,
                             @Query("poiId")poiId:String,
-                            @Query("type")type:String):ResultData<Any>
+                            @Query("type")type:String):ResultData<ArrayList<OtherShop>>
 }
