@@ -28,7 +28,7 @@
         android:layout_marginVertical="@dimen/dp_24"
         android:text="@string/agreement"
         android:textColor="@color/home_666666"
-        android:textSize="@dimen/sp_28" />
+        android:textSize="@dimen/sp_30" />
 
 
     <com.hjq.shape.view.ShapeTextView
@@ -53,14 +53,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_sure_agreement"
         android:layout_marginHorizontal="@dimen/dp_20"
-        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_30"
         android:gravity="center"
         android:paddingVertical="@dimen/dp_24"
-        android:text="不同意并退出应用"
+        android:text="不同意并退出App"
         android:textColor="@color/home_999999"
         android:textSize="@dimen/sp_32"
         app:shape_radius="100dp"
-
         app:shape_strokeColor="@color/home_999999"
         app:shape_strokeWidth="@dimen/dp_2" />
 

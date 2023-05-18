@@ -95,7 +95,7 @@ public class SpannableUtils {
         builder.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-                ARouter.getInstance().build("/app/AgreementActivity").withString("YSXY", "0").navigation();
+                ARouter.getInstance().build("/app/AgreementActivity").withString("YSXY", "1").navigation();
             }
 
             @Override
