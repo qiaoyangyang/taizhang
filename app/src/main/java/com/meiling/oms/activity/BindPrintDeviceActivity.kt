@@ -264,11 +264,15 @@ class BindPrintDeviceActivity :
             )
             accountSelectDialog.show(supportFragmentManager)
             accountSelectDialog.setOkClickItemLister { arrayList, isSelectAll ->
+                isSelect=isSelectAll
                 if (arrayList.size != 0) {
-
+                    iscompile="1"
+                    shopPoiDtoList.clear()
                     poiIds.clear()
                     arrayList.forEach {
                         poiIds.add(it?.poiIds.toString())
+                        shopPoiDtoList.add(ShopPoiDto(it?.poiIds.toString()))
+
 
                     }
                     mDatabind.selectShop.text="已选择${arrayList.size}个门店"

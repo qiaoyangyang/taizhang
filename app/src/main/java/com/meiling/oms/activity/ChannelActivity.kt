@@ -61,6 +61,8 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
                 })
                 bindMeituanShopDialog.show(supportFragmentManager)
+            }else if (channelX.id=="100"){
+                startActivity(Intent(this,LebaiRetailBindingActivity::class.java))
             } else {
                 mViewModel.urlauth(channelX.id!!, shop?.id!!, channelX?.id!!)
             }
