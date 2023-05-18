@@ -144,6 +144,10 @@
         <activity
             android:name=".activity.ForgetPwdFinishActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LebaiRetailBindingActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" >
 
         </activity>
@@ -260,6 +264,7 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".activity.PrintDeviceListActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
         <provider

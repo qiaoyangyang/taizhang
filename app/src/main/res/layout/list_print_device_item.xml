@@ -5,146 +5,131 @@
     android:id="@+id/lin3"
     android:layout_width="match_parent"
     android:layout_height="160dp"
-    android:layout_marginHorizontal="20dp"
     android:layout_marginBottom="15dp"
     android:paddingHorizontal="15dp"
     app:layout_constraintTop_toTopOf="parent"
     app:shape_radius="10dp"
     app:shape_solidColor="@color/white">
 
-<ImageView
-    android:id="@+id/img_print_online"
-    android:layout_width="40dp"
-    android:layout_height="40dp"
-    android:src="@drawable/print_online"
-    app:layout_constraintBottom_toBottomOf="@+id/line1"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    app:layout_constraintStart_toEndOf="@+id/img_print_online"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toBottomOf="@+id/line1">
-    <androidx.constraintlayout.widget.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/guideline2"
-        app:layout_constraintGuide_percent="0.5"/>
-
-    <TextView
-        android:id="@+id/txtPrintName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="打印机名称"
-        android:textColor="#777777"
-        android:textSize="@dimen/sp_30"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="10dp"
+    <ImageView
+        android:id="@+id/img_print_online"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/line1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2" />
-
-    <TextView
-        android:id="@+id/txtPrintName2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:gravity="right"
-        android:text="商米12"
-        android:textColor="#333333"
-        android:textSize="@dimen/sp_30"
-        app:layout_constraintBaseline_toBaselineOf="@+id/txtPrintName"
-        app:layout_constraintLeft_toRightOf="@+id/txtPrintName"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtPinPai"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="打印品牌"
-        android:textColor="#777777"
-        android:textSize="@dimen/sp_30"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/line1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_print_online"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/txtPrintName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="打印机名称"
+            android:textColor="#777777"
+            android:textSize="@dimen/sp_30"
+            app:layout_constraintBottom_toTopOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/txtPrintName2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="right"
+            android:text="商米12"
+            android:textColor="#333333"
+            android:textSize="@dimen/sp_30"
+            app:layout_constraintBaseline_toBaselineOf="@+id/txtPrintName"
+            app:layout_constraintLeft_toRightOf="@+id/txtPrintName"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtPinPai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="打印品牌"
+            android:textColor="#777777"
+            android:textSize="@dimen/sp_30"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guideline2" />
+
+        <TextView
+            android:id="@+id/txtPinPai2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="商米"
+            android:textColor="@color/home_333333"
+            android:textSize="@dimen/sp_30"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guideline2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/home_F1F1F1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline2" />
-
-    <TextView
-        android:id="@+id/txtPinPai2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="商米"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/home_333333"
-        android:textSize="@dimen/sp_30"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline2" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-<View
-    android:id="@+id/line1"
-    android:layout_width="0dp"
-    android:layout_height="1dp"
-    android:background="@color/home_F1F1F1"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.6"
-    app:layout_constraintBottom_toBottomOf="parent"/>
-
-<com.hjq.shape.layout.ShapeConstraintLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:shape_strokeColor="#414364"
-    app:shape_strokeWidth="1dp"
-    app:shape_radius="22dp"
-    android:paddingHorizontal="30dp"
-    android:paddingVertical="10dp"
-    app:shape_solidColor="@color/white"
-    android:id="@+id/btn_del"
-    app:layout_constraintTop_toTopOf="@+id/line1"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_28"
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/btn_del"
         android:textColor="#414364"
-        android:id="@+id/txtDel"
-        android:text="删除"/>
-
-
-</com.hjq.shape.layout.ShapeConstraintLayout>
-
-<com.hjq.shape.layout.ShapeConstraintLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:shape_strokeColor="#FF4C4A"
-    app:shape_strokeWidth="1dp"
-    app:shape_radius="22dp"
-    android:paddingHorizontal="30dp"
-    android:paddingVertical="10dp"
-    app:shape_solidColor="@color/white"
-    android:id="@+id/btn_change"
-    app:layout_constraintTop_toTopOf="@+id/line1"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    >
-    <TextView
+        android:textSize="@dimen/sp_28"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_28"
-        android:textColor="#FF4C4A"
-        android:id="@+id/txtChange"
-        android:text="修改"/>
+        android:paddingHorizontal="28dp"
+        android:paddingVertical="7dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/line1"
+        app:shape_radius="22dp"
+        app:shape_strokeColor="#414364"
+        android:text="删除"
+        app:shape_strokeWidth="1dp"/>
 
-</com.hjq.shape.layout.ShapeConstraintLayout>
+
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/btn_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="28dp"
+        android:paddingVertical="7dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/line1"
+        app:shape_radius="22dp"
+        app:shape_solidColor="@color/white"
+        android:text="修改"
+        android:textColor="#FF4C4A"
+        android:textSize="@dimen/sp_28"
+        app:shape_strokeColor="#FF4C4A"
+        app:shape_strokeWidth="1dp"/>
+
 </com.hjq.shape.layout.ShapeConstraintLayout>

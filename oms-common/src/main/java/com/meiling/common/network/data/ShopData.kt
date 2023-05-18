@@ -14,7 +14,8 @@ data class ShopBean(
     @SerializedName("name")
     val name: String? = "",
     @SerializedName("shopList")
-    val shopList: List<Shop?>? = listOf()
+    val shopList: List<Shop?>? = listOf(),
+    var isselect:Boolean?=false
 ) : IWheel, Serializable {
     override fun getShowText(): String {
         return name.toString()
@@ -30,8 +31,8 @@ data class Shop(
     @SerializedName("poiId")
     var poiId: String? = "",
     @SerializedName("status")
-    var status: String? = ""
-
+    var status: String? = "",
+    var isselect:Boolean?=false
 
 ) : Serializable, IWheel {
     override fun getShowText(): String {
