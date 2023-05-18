@@ -75,5 +75,25 @@ public class SpannableUtils {
         textView.setText(builder);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
+    public static void setAgreeTextColor(Context context, String content, TextView textView, int ling, int begin, int color) {
+        SpannableStringBuilder builder = new SpannableStringBuilder(content);
+        builder.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                ARouter.getInstance().build("/app/AgreementActivity").withString("YSXY", "0").navigation();
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setColor(context.getResources().getColor(color));       //设置文字颜色
+                ds.setUnderlineText(false);      //设置下划线//根据需要添加
+            }
+        }, ling, begin, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        textView.setHighlightColor(Color.TRANSPARENT); //设置点击后的颜色为透明，否则会一直出现高亮
+        textView.setText(builder);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+    }
 
 }
