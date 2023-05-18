@@ -257,13 +257,11 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 &&!mViewModel.businessDto.value!!.logo.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.password.isNullOrBlank()
     }
     fun tenantType2():Boolean{
         return  !mViewModel.businessDto.value!!.logo.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.password.isNullOrBlank()
     }
 
     private fun isPasswordValid(password: String): Boolean {
