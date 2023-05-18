@@ -35,6 +35,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shape_radius="100dp"
+            app:shape_width="@dimen/dp_2"
             app:shape_solidColor="#1758F1" />
 
 

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dp_10"
+    android:background="@drawable/scan_bg_input"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="隐私政策"
+        android:textColor="@color/home_212121"
+        android:textSize="@dimen/sp_36" />
+
+    <TextView
+        android:id="@+id/txt_agree_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginVertical="@dimen/dp_24"
+        android:text="@string/agreement"
+        android:textColor="@color/home_666666"
+        android:textSize="@dimen/sp_28" />
+
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/btn_sure_agreement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_agree_tip"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginVertical="@dimen/dp_24"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/dp_20"
+        android:paddingVertical="@dimen/dp_24"
+        android:text="同意"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_32"
+        app:shape_radius="@dimen/dp_50"
+        app:shape_solidColor="@color/red" />
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/btn_no_agreement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_sure_agreement"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:gravity="center"
+        android:paddingVertical="@dimen/dp_24"
+        android:text="不同意并退出应用"
+        android:textColor="@color/home_999999"
+        android:textSize="@dimen/sp_32"
+        app:shape_radius="100dp"
+
+        app:shape_strokeColor="@color/home_999999"
+        app:shape_strokeWidth="@dimen/dp_2" />
+
+
+</RelativeLayout>
