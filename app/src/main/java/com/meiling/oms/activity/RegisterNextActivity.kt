@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -204,10 +205,10 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 showToast("品牌LOGO未上传")
                 return@setSingleClickListener
             }
-            if (mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()) {
-                showToast("所属行业未选择")
-                return@setSingleClickListener
-            }
+//            if (mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()) {
+//                showToast("所属行业未选择")
+//                return@setSingleClickListener
+//            }
             if (mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()) {
                 showToast("管理员姓名未填写")
                 return@setSingleClickListener
@@ -254,14 +255,12 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     fun tenantType1():Boolean{
         return !mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.logo.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.password.isNullOrBlank()
     }
     fun tenantType2():Boolean{
         return  !mViewModel.businessDto.value!!.logo.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.password.isNullOrBlank()
@@ -315,7 +314,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                     .putExtra("adminViewId",it!!.adminUserViewId)
                     .putExtra("fromIntent","regist")
                     .putExtra("account",mViewModel.businessDto.value!!.userName?.trim().toString())
-                    .putExtra("pwd",mViewModel.businessDto.value!!.password?.trim().toString())
+                    .putExtra("pwd", String(Base64.decode(it!!.secret,0)))
                     .putExtra("name", mViewModel.businessDto.value!!.enterpriseName.toString()))
             },
             onError = {
