@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
-import com.luck.picture.lib.tools.SPUtils
 import com.meiling.common.BaseViewModel
 import com.meiling.common.dialog.LoadingDialog
 import com.meiling.common.getVmClazz
