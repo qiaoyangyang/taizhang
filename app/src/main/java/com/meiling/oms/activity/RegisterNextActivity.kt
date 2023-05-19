@@ -1,32 +1,36 @@
 package com.meiling.oms.activity
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.CompoundButton
 import android.widget.EditText
-import android.widget.Toast
 import com.blankj.utilcode.util.ActivityUtils
 import com.gyf.immersionbar.ImmersionBar
-import com.luck.picture.lib.PictureSelector
-import com.luck.picture.lib.config.PictureMimeType
+import com.hjq.permissions.OnPermissionCallback
+import com.hjq.permissions.XXPermissions
+import com.luck.picture.lib.basic.PictureSelector
+import com.luck.picture.lib.config.SelectMimeType
+import com.luck.picture.lib.config.SelectModeConfig
+import com.luck.picture.lib.engine.CompressFileEngine
+import com.luck.picture.lib.engine.UriToFileTransformEngine
 import com.luck.picture.lib.entity.LocalMedia
-import com.luck.picture.lib.listener.OnResultCallbackListener
+import com.luck.picture.lib.interfaces.OnKeyValueResultCallbackListener
+import com.luck.picture.lib.interfaces.OnResultCallbackListener
+import com.luck.picture.lib.utils.SandboxTransformUtils
 import com.meiling.common.activity.BaseVmActivity
-import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.Children
 import com.meiling.common.network.service.loginService
 import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.GlideEngine
-import com.meiling.common.view.ArrowPopupWindow
-import com.meiling.common.view.ArrowTiedPopupWindow
+import com.meiling.common.utils.PermissionUtilis
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityRegisterNextBinding
 import com.meiling.oms.dialog.MineExitDialog
@@ -34,12 +38,11 @@ import com.meiling.oms.dialog.SelectIndustryShopDialog
 import com.meiling.oms.viewmodel.RegisterViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
-import com.wayne.constraintradiogroup.ConstraintRadioGroup
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.parse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import top.zibin.luban.Luban
+import top.zibin.luban.OnNewCompressListener
 import java.io.File
 
 class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
@@ -141,49 +144,73 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
         //选择图片
         mDatabind.addImg.setOnClickListener {
-            PictureSelector.create(this)
-                .openGallery(PictureMimeType.ofImage())
-                .imageEngine(GlideEngine.createGlideEngine())
-                .maxSelectNum(1)
-                .minSelectNum(1)
-                .isCompress(true)
+            XXPermissions.with(this).permission(PermissionUtilis.Group.RICHSCAN,PermissionUtilis.Group.STORAGE)
+                .request(object : OnPermissionCallback {
+                    override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
+                        if (!allGranted) {
+                            showToast("获取部分权限成功，但部分权限未正常授予")
+                            return
+                        }
+                        PictureSelector.create(this@RegisterNextActivity)
+                            .openGallery(SelectMimeType.ofImage())
+                            .setImageEngine(GlideEngine.createGlideEngine())
+                            .setMaxSelectNum(1)
+                            .setCompressEngine(ImageFileCompressEngine())
+                            .setSandboxFileEngine(MeSandboxFileEngine())
+                            .setSelectionMode(SelectModeConfig.SINGLE)
+                            .isPreviewImage(true)
+                            .forResult(object : OnResultCallbackListener<LocalMedia> {
+                                override fun onResult(result: java.util.ArrayList<LocalMedia>?) {
+                                    if (result?.isNotEmpty() == true) {
+                                        GlideAppUtils.loadUrl(mDatabind.addImg, result.get(0).compressPath)
 
-                .isReturnEmpty(true)
-                .isDisplayOriginalSize(true)
-                .isPreviewImage(true)
-                .minimumCompressSize(2048)
-                .cutOutQuality(90)
-                .forResult(object : OnResultCallbackListener<LocalMedia> {
-                    override fun onResult(result: MutableList<LocalMedia>?) {
-                        if (result?.isNotEmpty() == true) {
-                            GlideAppUtils.loadUrl(mDatabind.addImg, result.get(0).compressPath)
-
-                            val file = File(result.get(0).compressPath)
-                            val part = MultipartBody.Part.createFormData(
-                                "file",
-                                result.get(0).fileName, RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
-                            )
-                            mViewModel.launchRequest(
-                                {
-                                    loginService.upload("",part)
-                                },
-                                onSuccess = {
-                                    showToast("上传成功")
-                                    mDatabind.closeImg.visibility=View.VISIBLE
-                                    mViewModel.businessDto.value!!.logo = it
-                                },
-                                onError = {
-                                    showToast("上传失败")
+                                        val file = File(result.get(0).compressPath)
+                                        val part = MultipartBody.Part.createFormData(
+                                            "file",
+                                            result.get(0).fileName, RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+                                        )
+                                        mViewModel.launchRequest(
+                                            {
+                                                loginService.upload("",part)
+                                            },
+                                            onSuccess = {
+                                                showToast("上传成功")
+                                                mDatabind.closeImg.visibility=View.VISIBLE
+                                                mViewModel.businessDto.value!!.logo = it
+                                            },
+                                            onError = {
+                                                showToast("上传失败")
+                                            }
+                                        )
+                                    }
                                 }
+
+                                override fun onCancel() {
+
+                                }
+
+                            })
+
+                    }
+
+                    override fun onDenied(
+                        permissions: MutableList<String>,
+                        doNotAskAgain: Boolean
+                    ) {
+                        if (doNotAskAgain) {
+                            showToast("被永久拒绝授权，请手动授予录音和日历权限")
+                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                            XXPermissions.startPermissionActivity(
+                                this@RegisterNextActivity,
+                                permissions
                             )
+                        } else {
+                            showToast("获取录音和日历权限失败")
                         }
                     }
 
-                    override fun onCancel() {
-
-                    }
-
                 })
+
         }
 
 
@@ -348,4 +375,38 @@ fun Button.falseBackground(et: EditText, method:()->Boolean){
             }
         }
     })
+}
+
+class MeSandboxFileEngine : UriToFileTransformEngine{
+    override fun onUriToFileAsyncTransform(
+        context: Context?,
+        srcPath: String?,
+        mineType: String?,
+        call: OnKeyValueResultCallbackListener?,
+    ) {
+        call?.onCallback(srcPath,SandboxTransformUtils.copyPathToSandbox(context,srcPath,mineType))
+    }
+
+}
+class ImageFileCompressEngine : CompressFileEngine{
+    override fun onStartCompress(
+        context: Context?,
+        source: java.util.ArrayList<Uri>?,
+        call: OnKeyValueResultCallbackListener?,
+    ) {
+        Luban.with(context).load(source).ignoreBy(2048).setCompressListener(object :OnNewCompressListener{
+            override fun onStart() {
+            }
+
+            override fun onSuccess(source: String?, compressFile: File?) {
+                call?.onCallback(source,compressFile?.absolutePath)
+            }
+
+            override fun onError(source: String?, e: Throwable?) {
+                call?.onCallback(source,null)
+            }
+
+        }).launch()
+    }
+
 }
