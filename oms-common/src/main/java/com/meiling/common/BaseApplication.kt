@@ -50,10 +50,6 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
 
             }
         })
-        CrashManagerUtil.getInstance(this).init()
-
-        CrashReport.initCrashReport(this, "0e93bafb3e", false);
-
     }
 
     private var activitys: Activity? = null
