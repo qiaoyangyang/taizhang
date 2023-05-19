@@ -82,14 +82,14 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true"
             android:screenOrientation="portrait">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                        <intent-filter>-->
+<!--                            <action android:name="android.intent.action.MAIN" />-->
 
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
-            <!--            <meta-data-->
-            <!--                android:name="android.app.lib_name"-->
-            <!--                android:value="" />-->
+<!--                            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--                        </intent-filter>-->
+<!--                        <meta-data-->
+<!--                            android:name="android.app.lib_name"-->
+<!--                            android:value="" />-->
         </activity>
 
         <activity
@@ -143,6 +143,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ForgetPwdFinishActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LebaiRetailBindingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" >
 
@@ -268,6 +272,7 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".activity.PrintDeviceListActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
         <provider
@@ -364,6 +369,19 @@
         <package android:name="com.tencent.mm" />
         <package android:name="com.eg.android.AlipayGphone" />
         <package android:name="hk.alipay.wallet" />
+    </queries>
+
+    <queries package="com.meiling.oms.OmsApplication">
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE">
+
+            </action>
+        </intent>
+        <intent>
+            <action android:name="android.media.action.ACTION_VIDEO_CAPTURE">
+
+            </action>
+        </intent>
     </queries>
 
 </manifest>

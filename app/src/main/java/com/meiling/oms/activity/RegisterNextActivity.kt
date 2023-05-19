@@ -1,31 +1,36 @@
 package com.meiling.oms.activity
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.CompoundButton
 import android.widget.EditText
-import android.widget.Toast
 import com.blankj.utilcode.util.ActivityUtils
 import com.gyf.immersionbar.ImmersionBar
-import com.luck.picture.lib.PictureSelector
-import com.luck.picture.lib.config.PictureMimeType
+import com.hjq.permissions.OnPermissionCallback
+import com.hjq.permissions.XXPermissions
+import com.luck.picture.lib.basic.PictureSelector
+import com.luck.picture.lib.config.SelectMimeType
+import com.luck.picture.lib.config.SelectModeConfig
+import com.luck.picture.lib.engine.CompressFileEngine
+import com.luck.picture.lib.engine.UriToFileTransformEngine
 import com.luck.picture.lib.entity.LocalMedia
-import com.luck.picture.lib.listener.OnResultCallbackListener
+import com.luck.picture.lib.interfaces.OnKeyValueResultCallbackListener
+import com.luck.picture.lib.interfaces.OnResultCallbackListener
+import com.luck.picture.lib.utils.SandboxTransformUtils
 import com.meiling.common.activity.BaseVmActivity
-import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.Children
 import com.meiling.common.network.service.loginService
 import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.GlideEngine
-import com.meiling.common.view.ArrowPopupWindow
-import com.meiling.common.view.ArrowTiedPopupWindow
+import com.meiling.common.utils.PermissionUtilis
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityRegisterNextBinding
 import com.meiling.oms.dialog.MineExitDialog
@@ -33,12 +38,11 @@ import com.meiling.oms.dialog.SelectIndustryShopDialog
 import com.meiling.oms.viewmodel.RegisterViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
-import com.wayne.constraintradiogroup.ConstraintRadioGroup
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.parse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import top.zibin.luban.Luban
+import top.zibin.luban.OnNewCompressListener
 import java.io.File
 
 class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
@@ -81,42 +85,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         super.initData()
         phone = intent?.getStringExtra("phone")
         mDatabind.viewModel = mViewModel
-        mDatabind.tips1.setOnClickListener {
-            var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
-            mpup.apply {
-                setBackground(R.color.zxing_transparent, 5f, 20, 10)
-                setArrow(R.color.black, 0.2f, ArrowPopupWindow.ArrowSize.BIGGER)
-                setPopupView(layoutInflater.inflate(R.layout.pup_layout, null))
-                setTiedView(mDatabind.tips1, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
-                preShow()
-                isOutsideTouchable = true
-                show()
-            }
-        }
-        mDatabind.tips2.setOnClickListener {
-            var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
-            mpup.apply {
-                setBackground(R.color.zxing_transparent, 5f, 20, 10)
-                setArrow(R.color.black, 0.6f, ArrowPopupWindow.ArrowSize.BIGGER)
-                setPopupView(layoutInflater.inflate(R.layout.pup_layout2, null))
-                setTiedView(mDatabind.tips2, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
-                preShow()
-                isOutsideTouchable = true
-                show()
-            }
-        }
-        mDatabind.tips3.setOnClickListener {
-            var mpup = ArrowTiedPopupWindow(this@RegisterNextActivity)
-            mpup.apply {
-                setBackground(R.color.zxing_transparent, 1f, 0, 10)
-                setArrow(R.color.black, 1f, ArrowPopupWindow.ArrowSize.BIGGER)
-                setPopupView(layoutInflater.inflate(R.layout.pup_layout3, null))
-                setTiedView(mDatabind.tips3, ArrowTiedPopupWindow.TiedDirection.BOTTOM)
-                preShow()
-                isOutsideTouchable = true
-                show()
-            }
-        }
+        mViewModel.businessDto.value!!.userName=phone
         //选择所属行业
         mDatabind.txtIndustryRight.setOnClickListener {
             mViewModel.launchRequest(
@@ -175,175 +144,98 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
         //选择图片
         mDatabind.addImg.setOnClickListener {
-            PictureSelector.create(this)
-                .openGallery(PictureMimeType.ofImage())
-                .imageEngine(GlideEngine.createGlideEngine())
-                .maxSelectNum(1)
-                .minSelectNum(1)
-                .isCompress(true)
-
-                .isReturnEmpty(true)
-                .isDisplayOriginalSize(true)
-                .isPreviewImage(true)
-                .minimumCompressSize(2048)
-                .cutOutQuality(90)
-                .forResult(object : OnResultCallbackListener<LocalMedia> {
-                    override fun onResult(result: MutableList<LocalMedia>?) {
-                        if (result?.isNotEmpty() == true) {
-                            GlideAppUtils.loadUrl(mDatabind.addImg, result.get(0).compressPath)
-
-                            val file = File(result.get(0).compressPath)
-                            val part = MultipartBody.Part.createFormData(
-                                "file",
-                                result.get(0).fileName, RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
-                            )
-                            mViewModel.launchRequest(
-                                {
-                                    loginService.upload("",part)
-                                },
-                                onSuccess = {
-                                    showToast("上传成功")
-                                    mDatabind.closeImg.visibility=View.VISIBLE
-                                    mViewModel.businessDto.value!!.logo = it
-                                },
-                                onError = {
-                                    showToast("上传失败")
-                                }
-                            )
+            XXPermissions.with(this).permission(PermissionUtilis.Group.RICHSCAN,PermissionUtilis.Group.STORAGE)
+                .request(object : OnPermissionCallback {
+                    override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
+                        if (!allGranted) {
+                            showToast("获取部分权限成功，但部分权限未正常授予")
+                            return
                         }
+                        PictureSelector.create(this@RegisterNextActivity)
+                            .openGallery(SelectMimeType.ofImage())
+                            .setImageEngine(GlideEngine.createGlideEngine())
+                            .setMaxSelectNum(1)
+                            .setCompressEngine(ImageFileCompressEngine())
+                            .setSandboxFileEngine(MeSandboxFileEngine())
+                            .setSelectionMode(SelectModeConfig.SINGLE)
+                            .isPreviewImage(true)
+                            .forResult(object : OnResultCallbackListener<LocalMedia> {
+                                override fun onResult(result: java.util.ArrayList<LocalMedia>?) {
+                                    if (result?.isNotEmpty() == true) {
+                                        GlideAppUtils.loadUrl(mDatabind.addImg, result.get(0).compressPath)
+
+                                        val file = File(result.get(0).compressPath)
+                                        val part = MultipartBody.Part.createFormData(
+                                            "file",
+                                            result.get(0).fileName, RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+                                        )
+                                        mViewModel.launchRequest(
+                                            {
+                                                loginService.upload("",part)
+                                            },
+                                            onSuccess = {
+                                                showToast("上传成功")
+                                                mDatabind.closeImg.visibility=View.VISIBLE
+                                                mViewModel.businessDto.value!!.logo = it
+                                            },
+                                            onError = {
+                                                showToast("上传失败")
+                                            }
+                                        )
+                                    }
+                                }
+
+                                override fun onCancel() {
+
+                                }
+
+                            })
+
                     }
 
-                    override fun onCancel() {
-
+                    override fun onDenied(
+                        permissions: MutableList<String>,
+                        doNotAskAgain: Boolean
+                    ) {
+                        if (doNotAskAgain) {
+                            showToast("被永久拒绝授权，请手动授予录音和日历权限")
+                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                            XXPermissions.startPermissionActivity(
+                                this@RegisterNextActivity,
+                                permissions
+                            )
+                        } else {
+                            showToast("获取录音和日历权限失败")
+                        }
                     }
 
                 })
+
         }
-        //获取销售渠道id
-        mViewModel.launchRequest(
-            { loginService.getChannel() },
-            onSuccess = {
-                it.let {
-                    mViewModel.businessDto.value!!.salesChannel =
-                        it!!.map { it.id }.toList().joinToString(",")
-                }
-            },
-            onError = {
 
-            }
-        )
-        //获取城市id
-        mViewModel.launchRequest(
-            { loginService.getCity() },
-            onSuccess = {
-                it?.let {
-                    mViewModel.businessDto.value!!.city =
-                        it.map { it.id }.toList().joinToString(",")
-                }
-            },
-            onError = {
-
-            }
-        )
-
-        mDatabind.shopTypeRG.checkedChangeListener =
-            object : com.wayne.constraintradiogroup.OnCheckedChangeListener {
-                override fun onCheckedChanged(
-                    group: ConstraintRadioGroup,
-                    checkedButton: CompoundButton,
-                ) {
-                    if (checkedButton.id == R.id.checkEnterprise) {
-                        mDatabind.txtOperateType.visibility = View.VISIBLE
-                        mDatabind.txtOperateTypeRed.visibility = View.VISIBLE
-                        mDatabind.operateTypeRG.visibility = View.VISIBLE
-                        mDatabind.line2.visibility = View.VISIBLE
-                        mDatabind.line4.visibility = View.VISIBLE
-                        mDatabind.txtShopName.visibility = View.VISIBLE
-                        mDatabind.txtShopName2.visibility = View.VISIBLE
-                        mDatabind.edtShopName.visibility = View.VISIBLE
-                        mViewModel.businessDto.value?.tenantType="1"
-                        mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType1()})
-                        if(tenantType1()){
-                            mDatabind.btnNext.setBackgroundResource(R.drawable.login_btn_select_true)
-                        }
-                    }
-                    if (checkedButton.id == R.id.checkPerson) {
-                        mDatabind.txtOperateType.visibility = View.GONE
-                        mDatabind.txtOperateTypeRed.visibility = View.GONE
-                        mDatabind.operateTypeRG.visibility = View.GONE
-                        mDatabind.line2.visibility = View.GONE
-                        mDatabind.line4.visibility = View.GONE
-                        mDatabind.txtShopName.visibility = View.GONE
-                        mDatabind.txtShopName2.visibility = View.GONE
-                        mDatabind.edtShopName.visibility = View.GONE
-//                        mViewModel.businessDto.value!!.isChain = ""
-//                        mViewModel.businessDto.value!!.enterpriseName = ""
-                        mViewModel.businessDto.value?.tenantType="2"
-                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType2()})
-                        if(tenantType2()){
-                            mDatabind.btnNext.setBackgroundResource(R.drawable.login_btn_select_true)
-                        }
-                    }
-                    if (checkedButton.id == R.id.checkOther) {
-                        mDatabind.txtOperateType.visibility = View.VISIBLE
-                        mDatabind.txtOperateTypeRed.visibility = View.VISIBLE
-                        mDatabind.operateTypeRG.visibility = View.VISIBLE
-                        mDatabind.line2.visibility = View.VISIBLE
-                        mDatabind.line4.visibility = View.GONE
-                        mDatabind.txtShopName.visibility = View.GONE
-                        mDatabind.txtShopName2.visibility = View.GONE
-                        mDatabind.edtShopName.visibility = View.GONE
-//                        mViewModel.businessDto.value!!.enterpriseName = ""
-                        mViewModel.businessDto.value?.tenantType="3"
-                        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType2()})
-                        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType2()})
-                        if(tenantType2()){
-                            mDatabind.btnNext.setBackgroundResource(R.drawable.login_btn_select_true)
-                        }
-                    }
-
-                }
-
-            }
 
         mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
-        mDatabind.btnNext.falseBackground(mDatabind.edtShopBrandName,{tenantType1()})
         mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
         mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
-        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginPassWord,{tenantType1()})
 
         //注册
         mDatabind.btnNext.setSingleClickListener(1000) {
 
             mViewModel.businessDto.value!!.phone = this@RegisterNextActivity.phone
 
-            if (mViewModel.businessDto.value!!.tenantType == "1") {
-                if (mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()) {
-                    showToast("企业名称未填写")
-                    return@setSingleClickListener
-                }
-            }
-            if (mViewModel.businessDto.value!!.tenantName.isNullOrBlank()) {
-                showToast("品牌名称未填写")
+            if (mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()) {
+                showToast("企业名称未填写")
                 return@setSingleClickListener
             }
+
             if (mViewModel.businessDto.value!!.logo.isNullOrBlank()) {
                 showToast("品牌LOGO未上传")
                 return@setSingleClickListener
             }
-            if (mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()) {
-                showToast("所属行业未选择")
-                return@setSingleClickListener
-            }
+//            if (mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()) {
+//                showToast("所属行业未选择")
+//                return@setSingleClickListener
+//            }
             if (mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()) {
                 showToast("管理员姓名未填写")
                 return@setSingleClickListener
@@ -352,33 +244,36 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 showToast("登录账号未填写")
                 return@setSingleClickListener
             }
-            if (mViewModel.businessDto.value!!.password.isNullOrBlank()) {
-                showToast("登录密码未填写")
-                return@setSingleClickListener
-            }
-            if (mViewModel.businessDto.value!!.password?.trim().toString()
-                    .toString().length > 20 || mViewModel.businessDto.value!!.password?.trim().toString()
-                    .toString().length < 8
-            ) {
-                showToast("密码长度需要在8-20位字符之间")
-                return@setSingleClickListener
-            }
-            if (!isPasswordValid(mViewModel.businessDto.value!!.password?.trim().toString())) {
-                showToast("密码不能是纯数字/纯字母/纯字符")
-                return@setSingleClickListener
-            }
+//            if (mViewModel.businessDto.value!!.password.isNullOrBlank()) {
+//                showToast("登录密码未填写")
+//                return@setSingleClickListener
+//            }
+//            if (mViewModel.businessDto.value!!.password?.trim().toString()
+//                    .toString().length > 20 || mViewModel.businessDto.value!!.password?.trim().toString()
+//                    .toString().length < 8
+//            ) {
+//                showToast("密码长度需要在8-20位字符之间")
+//                return@setSingleClickListener
+//            }
+//            if (!isPasswordValid(mViewModel.businessDto.value!!.password?.trim().toString())) {
+//                showToast("密码不能是纯数字/纯字母/纯字符")
+//                return@setSingleClickListener
+//            }
 
-            //校验账户名
-            mViewModel.launchRequest(
-                {
-                    loginService.checkUserName(mViewModel.businessDto.value!!.userName!!)
-                }, onSuccess = {
-                    //校验品牌名
-                    checkTenantName()
-                }, onError = {
-                    it?.let { showToast(it) }
-                }
-            )
+            //注册
+            register()
+
+//            //校验账户名
+//            mViewModel.launchRequest(
+//                {
+//                    loginService.checkUserName(mViewModel.businessDto.value!!.userName!!)
+//                }, onSuccess = {
+//                    //校验品牌名
+//                    checkTenantName()
+//                }, onError = {
+//                    it?.let { showToast(it) }
+//                }
+//            )
 
         }
 
@@ -386,20 +281,14 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
     fun tenantType1():Boolean{
         return !mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.tenantName.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.logo.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.password.isNullOrBlank()
     }
     fun tenantType2():Boolean{
-        return !mViewModel.businessDto.value!!.tenantName.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.logo.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()
+        return  !mViewModel.businessDto.value!!.logo.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
                 &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.password.isNullOrBlank()
     }
 
     private fun isPasswordValid(password: String): Boolean {
@@ -417,16 +306,16 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     }
 
     private fun checkTenantName() {
-        mViewModel.launchRequest(
-            {
-                loginService.thanBrand(mViewModel.businessDto.value!!.tenantName!!)
-            }, onSuccess = {
-                //注册
-                register()
-            }, onError = {
-                it?.let { showToast(it) }
-            }
-        )
+//        mViewModel.launchRequest(
+//            {
+//                loginService.thanBrand(mViewModel.businessDto.value!!.tenantName!!)
+//            }, onSuccess = {
+//                //注册
+//                register()
+//            }, onError = {
+//                it?.let { showToast(it) }
+//            }
+//        )
     }
 
     private fun register() {
@@ -450,8 +339,8 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                     .putExtra("adminViewId",it!!.adminUserViewId)
                     .putExtra("fromIntent","regist")
                     .putExtra("account",mViewModel.businessDto.value!!.userName?.trim().toString())
-                    .putExtra("pwd",mViewModel.businessDto.value!!.password?.trim().toString())
-                    .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
+                    .putExtra("pwd", String(Base64.decode(it!!.secret,0)))
+                    .putExtra("name", mViewModel.businessDto.value!!.enterpriseName.toString()))
             },
             onError = {
                 disLoading()
@@ -486,4 +375,38 @@ fun Button.falseBackground(et: EditText, method:()->Boolean){
             }
         }
     })
+}
+
+class MeSandboxFileEngine : UriToFileTransformEngine{
+    override fun onUriToFileAsyncTransform(
+        context: Context?,
+        srcPath: String?,
+        mineType: String?,
+        call: OnKeyValueResultCallbackListener?,
+    ) {
+        call?.onCallback(srcPath,SandboxTransformUtils.copyPathToSandbox(context,srcPath,mineType))
+    }
+
+}
+class ImageFileCompressEngine : CompressFileEngine{
+    override fun onStartCompress(
+        context: Context?,
+        source: java.util.ArrayList<Uri>?,
+        call: OnKeyValueResultCallbackListener?,
+    ) {
+        Luban.with(context).load(source).ignoreBy(2048).setCompressListener(object :OnNewCompressListener{
+            override fun onStart() {
+            }
+
+            override fun onSuccess(source: String?, compressFile: File?) {
+                call?.onCallback(source,compressFile?.absolutePath)
+            }
+
+            override fun onError(source: String?, e: Throwable?) {
+                call?.onCallback(source,null)
+            }
+
+        }).launch()
+    }
+
 }

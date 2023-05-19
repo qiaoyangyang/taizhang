@@ -49,7 +49,7 @@ class BaseHistoryOrderFragment :
     private lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
     lateinit var orderGoodsListAdapter: BaseQuickAdapter<OrderDto.Content.GoodsVo, BaseViewHolder>
 
-    var pageIndex = 1;
+    var pageIndex = 1
 
     companion object {
         fun newInstance(type: String, isSelect: Boolean): Fragment {
@@ -505,6 +505,7 @@ class BaseHistoryOrderFragment :
         mViewModel.printDto.onStart.observe(this) {
         }
         mViewModel.printDto.onSuccess.observe(this) {
+            showToast("已发送打印任务")
         }
         mViewModel.printDto.onError.observe(this) {
             dismissLoading()

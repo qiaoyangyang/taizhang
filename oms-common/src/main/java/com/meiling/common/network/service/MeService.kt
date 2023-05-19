@@ -85,5 +85,40 @@ interface MeService {
     ): ResultData<ByTenantId>
 
 
+    /**
+     * 云打印 列表
+     * */
+    @POST("saas/printer/printChannelList")
+    suspend fun printChannelList(
+
+    ): ResultData<ArrayList<Printing>>
+    /**
+     * 云打印 列表打印详情
+     * */
+    @POST("saas/printer/printDetail")
+    suspend fun printDetail(
+        @Query("deviceID") deviceID: String="",
+    ): ResultData<Printing>
+ /**
+     * 云打印 列表删除
+     * */
+    @POST("saas/printer/delDev")
+    suspend fun delDev(
+        @Query("deviceID") deviceID: String="",
+    ): ResultData<String>
+/**
+     * 云打印 添加打印机
+     * */
+    @POST("saas/printer/addDev")
+    suspend fun addDev
+    (@Body rechargeDto: PrinterConfigDto):
+     ResultData<String>/**
+     * 云打印 编辑打印机
+     * */
+    @POST("saas/printer/update")
+    suspend fun update
+    (@Body rechargeDto: PrinterConfigDto):
+     ResultData<String>
+
 
 }

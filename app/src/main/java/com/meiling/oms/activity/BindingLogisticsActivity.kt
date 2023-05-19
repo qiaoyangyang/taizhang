@@ -27,9 +27,9 @@ import com.meiling.oms.widget.showToast
 class BindingLogisticsActivity : BaseActivity<BindingLogisticsViewModel,ActivityBandingLogistcsLayoutBinding>() {
 
     lateinit var adapter:BaseQuickAdapter<Merchant,BaseViewHolder>
-    var name=""
+    var name=""//品牌名称，默认企业名称的简称
     var tenantId=""
-    var account=""
+    var account=""//管理员账号，默认注册时输入的手机号
     var pwd=""
     override fun initView(savedInstanceState: Bundle?) {
     }

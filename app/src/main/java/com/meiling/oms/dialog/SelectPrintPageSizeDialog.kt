@@ -27,12 +27,12 @@ class SelectPrintPageSizeDialog : BaseNiceDialog() {
         var size58=holder?.getView<TextView>(R.id.size58)
         var size80=holder?.getView<TextView>(R.id.size80)
         size58?.setOnClickListener {
-            selectPageClick?.invoke("58")
+            selectPageClick?.invoke("58",1)
             dismiss()
         }
 
         size80?.setOnClickListener {
-            selectPageClick?.invoke("80")
+            selectPageClick?.invoke("80",2)
             dismiss()
         }
         btn_ok_exit?.setOnClickListener {
@@ -42,8 +42,8 @@ class SelectPrintPageSizeDialog : BaseNiceDialog() {
 
     }
 
-    private var selectPageClick: ((size:String)-> Unit)? =null
-    fun setSelectPageClick(selectListener:(size:String)->Unit){
+    private var selectPageClick: ((size:String,type:Int)-> Unit)? =null
+    fun setSelectPageClick(selectListener:(size:String,type:Int)->Unit){
         this.selectPageClick=selectListener
     }
 

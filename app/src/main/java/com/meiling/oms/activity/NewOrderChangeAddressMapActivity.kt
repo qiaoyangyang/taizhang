@@ -368,6 +368,7 @@ class NewOrderChangeAddressMapActivity() :
                 lat = amapLocation.latitude.toString()
                 lon = amapLocation.longitude.toString()
                 txtMapLocalCity?.text = amapLocation.city
+                cityCode = amapLocation.cityCode
                 getGeocodeSearch(latLng, amapLocation.city)
             } else {
                 cityCode = ""

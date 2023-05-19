@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -60,6 +61,8 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
                 })
                 bindMeituanShopDialog.show(supportFragmentManager)
+            }else if (channelX.id=="100"){
+                startActivity(Intent(this,LebaiRetailBindingActivity::class.java))
             } else {
                 mViewModel.urlauth(channelX.id!!, shop?.id!!, channelX?.id!!)
             }
@@ -84,29 +87,36 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
     var shop: Shop? = null
     var type = ""
+    var cityposition= 0
+    var shopidposition = 0
     override fun onTitleClick(view: View) {
-        var shopDialog = ShopDialog().newInstance(shopBean!!, "选择发货门店")
 
+
+       var shopDialog = ShopDialog().newInstance(shopBean!!, "选择发货门店",cityposition,shopidposition)
+        shopDialog.show(supportFragmentManager)
         shopDialog.setOnresilience(object : ShopDialog.Onresilience {
 
 
             override fun resilience(
-                cityid: Int,
+                cityi: Int,
                 cityidname: String,
                 shopid: Int,
                 sho: Shop
             ) {
+                cityposition=cityi
+                shopidposition=shopid
                 shop = sho
                 mDatabind.TitleBar.titleView.text = cityidname + "/" + sho.name
 
                 mViewModel.shop_list(channelX.id!!, shop?.id!!)
+
             }
 
             override fun Ondismiss() {
             }
 
         })
-        shopDialog.show(supportFragmentManager)
+
     }
 
     var shopBean: ArrayList<ShopBean>? = null
@@ -319,7 +329,8 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
             ) {
                 holder.setText(R.id.tv_name_t, "三方平台名称:" + item?.name)
-                holder.setText(R.id.tv_channel_id, "三方平台ID:" + item?.channelShopId)
+                if (TextUtils.isEmpty(item?.channelShopId))
+                    holder.setText(R.id.tv_channel_id, "三方平台ID:" + item?.channelShopId)
                 if (item?.mtModel == 2) {
                     holder.setGone(R.id.s_status, false);
                 } else {
