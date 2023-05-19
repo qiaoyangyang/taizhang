@@ -103,14 +103,15 @@ class VoucherInspectionActivity :
 
 
     }
-
+    var cityposition= 0
+    var shopidposition = 0
     override fun onTitleClick(view: View) {
         super.onTitleClick(view)
 
         mViewModel.shopBean.onSuccess.observe(this) {
             //DataPickerUtitl.setpickData(this,it)
             if (it.size != 0) {
-                var shopDialog = ShopDialog().newInstance(it)
+                var shopDialog = ShopDialog().newInstance(it,"",cityposition,shopidposition)
 
                 shopDialog.setOnresilience(object : ShopDialog.Onresilience {
                     override fun resilience(
@@ -119,6 +120,8 @@ class VoucherInspectionActivity :
                         shopid: Int,
                         shop: Shop
                     ) {
+                        cityposition=cityid
+                        shopidposition=shopid
                         mViewModel.Shop.onSuccess.postValue(shop)
                         shopId = shop?.id.toString()
                         shopdata = shop

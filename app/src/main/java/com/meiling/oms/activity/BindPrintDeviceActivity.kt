@@ -113,10 +113,12 @@ class BindPrintDeviceActivity :
         }
         mViewModel.delDev.onSuccess.observe(this) {
             disLoading()
+            showToast("绑定成功")
             startActivity(Intent(this, PrintDeviceListActivity::class.java))
         }
         mViewModel.update.onSuccess.observe(this) {
             startActivity(Intent(this, PrintDeviceListActivity::class.java))
+            showToast("绑定成功")
         }
         mViewModel.delDev.onStart.observe(this) {
             showLoading("")
@@ -191,8 +193,8 @@ class BindPrintDeviceActivity :
                 printerConfigDto.brandCode = "xinye"
             } else if (mDatabind.txtPinPai2.text.toString() == "佳博云") {
                 printerConfigDto.brandCode = "jiabo"
-            } else if (mDatabind.txtPinPai2.text.toString() == "sunmi") {
-                printerConfigDto.brandCode = "商米"
+            } else if (mDatabind.txtPinPai2.text.toString() == "商米") {
+                printerConfigDto.brandCode = "sunmi"
             }
 
             printerConfigDto.deviceid = mDatabind.edtPrintNo.text.toString()

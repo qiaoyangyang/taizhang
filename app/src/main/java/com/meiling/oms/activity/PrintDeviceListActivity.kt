@@ -45,7 +45,8 @@ class PrintDeviceListActivity :
         mainViewModel.getByTenantId.observe(this) {
 
             if (it.poi == -1) {//门店是否创建 1绑定;-1没绑定
-
+                mDatabind.lin2.visibility=View.GONE
+                mDatabind.btnAdd.visibility=View.GONE
                 val view =
                     LayoutInflater.from(this).inflate(R.layout.activity_no_store, null, false)
                 var tv_decreate = view.findViewById<AppCompatButton>(R.id.creatStoreBtn)
@@ -55,6 +56,7 @@ class PrintDeviceListActivity :
 
                 mAdapter.setEmptyView(view)
             } else {
+                mViewModel.getprintChannelList()
                 //mAdapter.setEmptyView(R.layout.activity_no_print_device)
             }
         }
@@ -185,7 +187,10 @@ class PrintDeviceListActivity :
 
     override fun initData() {
         super.initData()
-        mViewModel.getprintChannelList()
+
+        if (mainViewModel.getByTenantId.value?.poi!=-1) {
+            mViewModel.getprintChannelList()
+        }
 
 
     }
