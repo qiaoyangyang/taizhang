@@ -156,7 +156,7 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
             for (xx in adapter.data) {
                 (xx as rechDto).select = xx == data
             }
-            mDatabind.txtRechargeOther.setText("")
+            mDatabind.txtRechargeOther.setText(data.money)
             rechargeAdapter.notifyDataSetChanged()
         }
 

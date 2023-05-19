@@ -134,15 +134,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"
-            android:drawableEnd="@drawable/order_icon_phone"
             android:drawablePadding="@dimen/dp_10"
             android:gravity="center"
             android:textColor="@color/home_333333"
-            android:textSize="@dimen/dp_24"
+            android:textSize="@dimen/sp_24"
             app:layout_constraintBottom_toBottomOf="@+id/txt_order_delivery_name"
             app:layout_constraintLeft_toRightOf="@+id/txt_order_delivery_name"
             app:layout_constraintTop_toTopOf="@+id/txt_order_delivery_name"
-            tools:text="139933 " />
+            tools:text="139933 "
+            app:drawableEndCompat="@drawable/order_icon_phone" />
 
         <TextView
             android:id="@+id/txt_change_order"
@@ -166,7 +166,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
             android:textColor="@color/home_333333"
-            android:textSize="@dimen/dp_26"
+            android:textSize="@dimen/sp_28"
             app:layout_constraintEnd_toEndOf="@+id/txt_change_order"
             app:layout_constraintStart_toStartOf="@+id/txt_order_delivery_name"
             app:layout_constraintTop_toBottomOf="@+id/txt_change_order"
