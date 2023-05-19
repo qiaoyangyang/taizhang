@@ -26,6 +26,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
+import com.meiling.common.utils.SaveDecimalUtils.decimalUtils
 import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.R
 import com.meiling.oms.activity.ChannelActivity
@@ -131,15 +132,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         "${transToString(item.order?.createTime!!)}下单  ${item.channelName}店铺"
                     )
                     holder.setText(R.id.txt_shop_name, "${item.shopName}")
-                    if (item.order?.deliveryType == "1" || item.order?.deliveryType == "3") {
-                        changeOrder.visibility = View.VISIBLE
-                        holder.setText(R.id.txt_order_delivery_type, "配送")
-                        holder.setGone(R.id.txt_order_dis, false)
-                    } else {
-                        holder.setText(R.id.txt_order_delivery_type, "自提")
-                        holder.setGone(R.id.txt_order_dis, true)
-                        changeOrder.visibility = View.INVISIBLE
-                    }
+
                     showMsg.setSingleClickListener {
                         holder.setGone(R.id.cos_hide, true)
                         holder.setGone(R.id.cos_shop_show, false)
@@ -234,7 +227,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         ) {
                             val view = holder.getView<ImageView>(R.id.img_order_shop_icon)
                             holder.setText(R.id.txt_order_shop_name, item.gname)
-                            holder.setText(R.id.txt_order_shop_spec, item.specs)
+                            holder.setText(R.id.txt_order_shop_spec, item.sku)
                             holder.setText(R.id.txt_order_shop_num, "X" + item.number)
                             holder.setText(R.id.txt_order_shop_price, "¥" + item.price)
                             val txtRefund = holder.getView<TextView>(R.id.txt_order_refund)
@@ -268,7 +261,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         holder.setText(
                             R.id.txt_order_shop_msg, "${item.goodsVoList?.size}种商品，共${sumNumber}件"
                         )
-                        holder.setText(R.id.txt_total_money, "¥${sum}")
+                        holder.setText(R.id.txt_total_money, "¥${decimalUtils(sum)}")
                     }
 
                     changeOrder.setSingleClickListener {
@@ -304,17 +297,33 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     btnSendDis.setSingleClickListener {
                         when (item.order!!.logisticsStatus) {
                             "0" -> {
-                                ARouter.getInstance().build("/app/OrderDisActivity")
-                                    .withSerializable("kk", item).navigation()
+                                if (item.order!!.deliveryType == "2") {
+//                                    val dialog: MineExitDialog =
+//                                        MineExitDialog().newInstance(
+//                                            "温馨提示",
+//                                            "确定确认出货吗？",
+//                                            "取消",
+//                                            "确认",
+//                                            false
+//                                        )
+//                                    dialog.setOkClickLister {
+                                        mViewModel.orderFinish(item.order!!.viewId!!)
+//                                        dialog.dismiss()
+//                                    }
+//                                    dialog.show(childFragmentManager)
+                                } else {
+                                    ARouter.getInstance().build("/app/OrderDisActivity")
+                                        .withSerializable("kk", item.order).navigation()
+                                }
                             }
                             "20" -> {
                                 ARouter.getInstance().build("/app/OrderDisAddTipActivity")
-                                    .withSerializable("kk", item).navigation()
+                                    .withSerializable("kk", item.order).navigation()
                             }
 
                             "70" -> {
                                 ARouter.getInstance().build("/app/OrderDisActivity")
-                                    .withSerializable("kk", item).navigation()
+                                    .withSerializable("kk", item.order).navigation()
                             }
                             "30", "50", "80" -> {
                                 orderDisDialog.show(childFragmentManager)
@@ -322,15 +331,47 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
 
                         }
                     }
+                    if (item.order!!.deliveryType == "2") {
+                        holder.setText(R.id.txt_order_delivery_type, "自提")
+                        holder.setText(R.id.txt_order_delivery_1, "自提")
+                        holder.setGone(R.id.txt_order_dis, true)
+                        changeOrder.visibility = View.INVISIBLE
+                        btnSendDis.text = "确认出货"
+                        btnSendDis.visibility = View.VISIBLE
+                        holder.setText(R.id.txt_order_delivery_state, "自提")
+                        holder.setGone(R.id.txt_order_delivery_address, true)
+                    } else {
+                        holder.setText(R.id.txt_order_delivery_type, "配送")
+                        holder.setText(R.id.txt_order_delivery_1, "前送达")
+                        holder.setGone(R.id.txt_order_dis, false)
+                        holder.setText(R.id.txt_order_delivery_state, "待配送")
+                        holder.setGone(R.id.txt_order_delivery_address, false)
+                        btnCancelDis.visibility = View.GONE
+                        changeOrder.visibility = View.VISIBLE
+                    }
                     //0.待配送  20.待抢单 30.待取货 50.配送中 70.取消 80.已送达
                     when (item.order!!.logisticsStatus) {
                         "0" -> {
-                            holder.setText(
-                                R.id.txt_order_delivery_state, "待配送"
-                            )
-                            btnCancelDis.visibility = View.GONE
-                            changeOrder.visibility = View.VISIBLE
-                            btnSendDis.text = "发起配送"
+                            //deliveryType == "1" ,"3" 待配送 2:自提
+                            if (item.order!!.deliveryType == "2") {
+                                holder.setText(R.id.txt_order_delivery_type, "自提")
+                                holder.setText(R.id.txt_order_delivery_1, "自提")
+                                holder.setGone(R.id.txt_order_dis, true)
+                                changeOrder.visibility = View.INVISIBLE
+                                btnSendDis.text = "确认出货"
+                                btnSendDis.visibility = View.VISIBLE
+                                holder.setText(R.id.txt_order_delivery_state, "自提")
+                                holder.setGone(R.id.txt_order_delivery_address, true)
+                            } else {
+                                holder.setText(R.id.txt_order_delivery_type, "配送")
+                                holder.setText(R.id.txt_order_delivery_1, "前送达")
+                                holder.setGone(R.id.txt_order_dis, false)
+                                holder.setText(R.id.txt_order_delivery_state, "待配送")
+                                holder.setGone(R.id.txt_order_delivery_address, false)
+                                btnCancelDis.visibility = View.GONE
+                                changeOrder.visibility = View.VISIBLE
+                                btnSendDis.text = "发起配送"
+                            }
                         }
                         "20" -> {
                             holder.setText(
@@ -365,12 +406,22 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             btnSendDis.text = "重新配送"
                         }
                         "80" -> {
-                            holder.setText(
-                                R.id.txt_order_delivery_state, "已送达"
-                            )
+
                             btnCancelDis.visibility = View.GONE
                             changeOrder.visibility = View.INVISIBLE
-                            btnSendDis.text = "配送详情"
+                            if (item.order!!.deliveryType == "2") {
+                                btnSendDis.visibility = View.GONE
+                                holder.setText(
+                                    R.id.txt_order_delivery_state, "已完成"
+                                )
+                            } else {
+                                holder.setText(
+                                    R.id.txt_order_delivery_state, "已送达"
+                                )
+                                btnSendDis.visibility = View.VISIBLE
+                                btnSendDis.text = "配送详情"
+                            }
+
                         }
                     }
 
@@ -422,15 +473,16 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
 
     override fun createObserver() {
 
-        vm.getByTenantId.observe(this){
-            if(it.poi==-1 || it.shop==-1){
-                val view = LayoutInflater.from(activity).inflate(R.layout.order_store_empty, null, false)
+        vm.getByTenantId.observe(this) {
+            if (it.poi == -1 || it.shop == -1) {
+                val view =
+                    LayoutInflater.from(activity).inflate(R.layout.order_store_empty, null, false)
                 view.findViewById<TextView>(R.id.tv_bind).setOnClickListener {
-                    startActivity(Intent(requireActivity(),ChannelActivity::class.java))
+                    startActivity(Intent(requireActivity(), ChannelActivity::class.java))
 
                 }
                 orderDisAdapter.setEmptyView(view)
-            }else{
+            } else {
                 orderDisAdapter.setEmptyView(R.layout.order_search_empty)
             }
         }
@@ -451,7 +503,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             } else {
                 orderDisAdapter.addData(it.content as MutableList<OrderDto.Content>)
             }
-            if (it.content.size < 20) {
+            if (it.content!!.size < 20) {
                 dismissLoading()
                 orderDisAdapter.footerWithEmptyEnable = false
                 orderDisAdapter.footerLayout?.visibility = View.GONE
@@ -476,6 +528,20 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             showToast("配送已取消")
         }
         mViewModel.cancelOrderDto.onError.observe(this) {
+            dismissLoading()
+//            mDatabind.sflLayout.autoRefresh()
+            showToast(it.msg)
+        }
+        mViewModel.orderFinish.onStart.observe(this) {
+            showLoading("请求中")
+        }
+        mViewModel.orderFinish.onSuccess.observe(this) {
+            dismissLoading()
+            mDatabind.sflLayout.autoRefresh()
+            EventBus.getDefault().post(MessageEventUpDataTip())
+            showToast("出货成功")
+        }
+        mViewModel.orderFinish.onError.observe(this) {
             dismissLoading()
 //            mDatabind.sflLayout.autoRefresh()
             showToast(it.msg)

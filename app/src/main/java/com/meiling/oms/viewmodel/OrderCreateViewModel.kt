@@ -3,14 +3,16 @@ package com.meiling.oms.viewmodel
 import android.app.Application
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
+import com.meiling.common.network.data.OrderCreateFinishDto
 import com.meiling.common.network.data.OrderCreateSaveDto
+import com.meiling.common.network.data.OrderDto
 import com.meiling.common.network.data.ShopBean
 import com.meiling.common.network.service.orderCreateService
 
 class OrderCreateViewModel(application: Application) : BaseViewModel(application) {
 
     var cityPoiOfflineDto = BaseLiveData<ArrayList<ShopBean>>()
-    var saveCreateDto = BaseLiveData<Any>()
+    var saveCreateDto = BaseLiveData<OrderDto.Content.Order>()
     fun getCityPoiOffline() {
         request({ orderCreateService.getCityPoiOffline() }, cityPoiOfflineDto)
     }

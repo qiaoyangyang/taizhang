@@ -161,7 +161,6 @@
             app:layout_constraintTop_toTopOf="@+id/txt_order_delivery_name" />
 
         <TextView
-
             android:id="@+id/txt_order_delivery_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -520,7 +519,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_20"
-        android:layout_marginBottom="@dimen/dp_48"
+        android:layout_marginBottom="@dimen/dp_20"
         android:textColor="#ffb3b3b3"
         android:textSize="@dimen/sp_24"
         app:layout_constraintBottom_toBottomOf="parent"

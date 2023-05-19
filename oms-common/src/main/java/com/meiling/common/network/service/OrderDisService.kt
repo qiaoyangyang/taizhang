@@ -34,6 +34,10 @@ interface OrderDisService {
     @POST("saas/logistics/cancelOrder")
     suspend fun cancelOrderSend(@Body cancelCouponSum: CancelOrderSend): ResultData<String>
 
+    //自提订单确认
+    @POST("saas/order/orderOutStorage")
+    suspend fun orderFinish(@Query("orderId") orderId: String): ResultData<Any>
+
 
     //发起配送
     @POST("/saas/logistics/insertOrderApp")
@@ -60,7 +64,8 @@ interface OrderDisService {
     //配送渠道/平台
     @GET("/saas/channel")
     suspend fun orderChannelPlatForm(): ResultData<ArrayList<OrderSelectPlatform>>
-//    入参 sourceId 订单号
+
+    //    入参 sourceId 订单号
 //    shopId 店铺id
 //    printTemplateType 收银小票:1 退款小票:3
     //打印

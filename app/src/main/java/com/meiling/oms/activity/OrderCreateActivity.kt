@@ -19,11 +19,10 @@ import com.codbking.widget.DatePickDialog
 import com.codbking.widget.bean.DateType
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
+import com.meiling.common.GlideApp
 import com.meiling.common.activity.BaseActivity
-import com.meiling.common.network.data.AccountItemSelect
-import com.meiling.common.network.data.OrderCreateGoodsDto
-import com.meiling.common.network.data.OrderCreateSaveDto
-import com.meiling.common.network.data.Shop
+import com.meiling.common.network.data.*
+import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.PermissionUtilis
 import com.meiling.common.utils.SoftKeyBoardListener
 import com.meiling.oms.R
@@ -35,6 +34,7 @@ import com.meiling.oms.widget.KeyBoardUtil
 import com.meiling.oms.widget.formatCurrentDateToString
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
+import java.math.BigDecimal
 import java.util.*
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
@@ -46,11 +46,20 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
     private val ACCESS_FINE_LOCATION = 1
 
     var goodsList = ArrayList<OrderCreateGoodsDto>()
-    var goodsArrayList = ArrayList<OrderCreateGoodsDto>()
+    var goodsArrayList = ArrayList<OrderCreateGoodsDto1>()
     lateinit var orderGoodsAdapter: BaseQuickAdapter<OrderCreateGoodsDto, BaseViewHolder>
 
     override fun initView(savedInstanceState: Bundle?) {
-        goodsList.add(OrderCreateGoodsDto(name = "默认商品", num = 1, "0", totalPrice = "","默认规格", imgUrl = "https://static.igoodsale.com/default-goods.png"))
+        goodsList.add(
+            OrderCreateGoodsDto(
+                name = "默认商品",
+                num = 1,
+                "0",
+                totalPrice = "",
+                "默认规格",
+                imgUrl = "https://static.igoodsale.com/default-goods.png"
+            )
+        )
         orderGoodsAdapter = object :
             BaseQuickAdapter<OrderCreateGoodsDto, BaseViewHolder>(R.layout.item_create_order_goods) {
             override fun convert(holder: BaseViewHolder, item: OrderCreateGoodsDto) {
@@ -60,12 +69,12 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                 var selectImg = holder.getView<ImageView>(R.id.img_order_goods_select)
                 var add = holder.getView<ImageView>(R.id.edt_add_jia)
                 var sub = holder.getView<ImageView>(R.id.edt_add_jian)
-
+                var icon = holder.getView<ImageView>(R.id.img_order_goods_icon)
+                GlideAppUtils.loadUrl(icon, item.imgUrl)
                 num.setText("${item.num}")
                 price.setText(item.salePrice)
                 goodsName.setText(item.name)
                 num.setSelection(item.num.toString().length)
-
                 if (item.num > 1) {
                     sub.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_subtract_true))
                 } else {
@@ -231,7 +240,6 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                     num.setSelection(1)
                     KeyBoardUtil.openKeyBord(num, context)
                 }
-
                 num.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
                     if (!hasFocus) {
                         val inputText = num.text.toString()
@@ -243,7 +251,6 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                         }
                     }
                 }
-
                 num.setOnEditorActionListener { view, actionId, event ->
                     if (actionId == 0 || actionId == 3) {
                         num.isFocusable = false
@@ -256,7 +263,18 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                     }
                     false
                 }
-
+                price.setOnEditorActionListener { view, actionId, event ->
+                    if (actionId == 0 || actionId == 3) {
+                        // 在这里执行你的逻辑操作
+                        if (price.text.toString().isEmpty()) {
+                            price.setText("0")
+                            price.setSelection(0)
+                            price.isFocusable = false
+                            item.salePrice = "0"
+                        }
+                    }
+                    false
+                }
                 price.setOnClickListener {
                     price.isFocusable = true
                     price.isFocusableInTouchMode = true
@@ -265,7 +283,6 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                     price.setSelection(1)
                     KeyBoardUtil.openKeyBord(price, context)
                 }
-
                 price.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
                     if (!hasFocus) {
                         val inputText = price.text.toString()
@@ -275,20 +292,6 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                         }
                     }
                 }
-
-                price.setOnEditorActionListener { view, actionId, event ->
-                    if (actionId == 0 || actionId == 3) {
-                        // 键盘消失
-                        // 在这里执行你的逻辑操作
-                        if (price.text.toString().isEmpty()) {
-                            price.setText("0")
-                            price.setSelection(0)
-                            price.isFocusable = false
-                        }
-                    }
-                    false
-                }
-
                 goodsName.setOnClickListener {
                     goodsName.isFocusable = true
                     goodsName.isFocusableInTouchMode = true
@@ -297,7 +300,6 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                     goodsName.setSelection(1)
                     KeyBoardUtil.openKeyBord(goodsName, context)
                 }
-
                 goodsName.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
                     if (!hasFocus) {
                         val inputText = goodsName.text.toString()
@@ -307,7 +309,6 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                         }
                     }
                 }
-
                 goodsName.setOnEditorActionListener { view, actionId, event ->
                     if (actionId == 0 || actionId == 3) {
                         // 键盘消失
@@ -318,7 +319,6 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                     }
                     false
                 }
-
                 //键盘隐藏之后数据
                 SoftKeyBoardListener.setListener(this@OrderCreateActivity, object :
                     SoftKeyBoardListener.OnSoftKeyBoardChangeListener {
@@ -329,7 +329,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                         if (TextUtils.isEmpty(price.text.toString())) {
                             price.setText("0")
                             price.setSelection(0)
-
+                            item.salePrice = "0"
                         }
                         price.isFocusable = false
                         num.isFocusable = false
@@ -427,7 +427,9 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                         }
                     }
 
-                    override fun afterTextChanged(s: Editable?) {}
+                    override fun afterTextChanged(s: Editable?) {
+                        item.salePrice = s.toString() ?: "0"
+                    }
 
                 })
                 goodsName.addTextChangedListener(object : TextWatcher {
@@ -494,6 +496,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
     }
 
     var selectAuthWay = "1" //1商家配送 2商家自提
+    var saveCreateOrder = "1" //1保存 2保存并且配送
     private var isSelectDiscern = true //智能识别输入控制
     var address = "" //地址
     var lat = ""
@@ -503,10 +506,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
     var cityName = ""
     var poiItem: PoiItem? = null
     var tenantId = ""
-    var adminViewId = ""
-    var fromIntent = ""
     var account = ""
-    var pwd = ""
     var name = ""
     var shopId: String? = ""
     var poiId: String? = ""
@@ -582,7 +582,14 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                 })
         }
         mDatabind.txtAddGoods.setSingleClickListener {
-            var orderCreate = OrderCreateGoodsDto(name = "默认商品", num = 1, "0", totalPrice = "","默认规格", imgUrl = "https://static.igoodsale.com/default-goods.png")
+            var orderCreate = OrderCreateGoodsDto(
+                name = "默认商品",
+                num = 1,
+                salePrice = "0",
+                totalPrice = "",
+                goodsSpec = "默认规格",
+                imgUrl = "https://static.igoodsale.com/default-goods.png"
+            )
             orderGoodsAdapter.addData(orderCreate)
             KeyBoardUtil.openKeyBoard(this, mDatabind.txtAddGoods)
             orderGoodsAdapter.notifyDataSetChanged()
@@ -644,6 +651,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
             }
         }
         mDatabind.btnOkSave.setSingleClickListener {
+            saveCreateOrder = "1"
             if (mDatabind.txtSelectStore.text.toString().trim().isNullOrBlank()) {
                 showToast("请选择发货门店")
                 return@setSingleClickListener
@@ -671,7 +679,19 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                     return@setSingleClickListener
                 }
             }
-            goodsArrayList.addAll(orderGoodsAdapter.data)
+//            goodsArrayList.addAll(orderGoodsAdapter.data)
+            for (item in orderGoodsAdapter.data) {
+                goodsArrayList.add(
+                    OrderCreateGoodsDto1(
+                        name = item.name,
+                        num = item.num,
+                        salePrice = item.salePrice,
+                        totalPrice = "${BigDecimal(item.salePrice).multiply(BigDecimal(item.num))}",
+                        goodsSpec = item.goodsSpec,
+                        imgUrl = item.imgUrl
+                    )
+                )
+            }
             mViewModel.saveOrder(
                 OrderCreateSaveDto(
                     arriveTime = mDatabind.txtReceiveSelectTime.text.toString(),
@@ -687,16 +707,11 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                     selfGoodsDtoList = goodsArrayList
                 )
             )
-
-            showToast("保存成功")
         }
         mDatabind.btnSaveAndDis.setSingleClickListener {
+            saveCreateOrder = "2"
             if (mDatabind.txtSelectStore.text.toString().trim().isNullOrBlank()) {
                 showToast("请选择发货门店")
-                return@setSingleClickListener
-            }
-            if (mDatabind.txtReceiveSelectAddress.text.toString().trim().isNullOrBlank()) {
-                showToast("请选择收货地址")
                 return@setSingleClickListener
             }
             if (mDatabind.edtReceiveName.text.toString().trim().isNullOrBlank()) {
@@ -716,7 +731,40 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                 return@setSingleClickListener
             }
 
-            showToast("保存并且发送成功")
+            if (selectAuthWay == "1") {
+                if (mDatabind.txtReceiveSelectAddress.text.toString().trim().isNullOrBlank()) {
+                    showToast("请选择收货地址")
+                    return@setSingleClickListener
+                }
+            }
+//            goodsArrayList.addAll(orderGoodsAdapter.data)
+            for (item in orderGoodsAdapter.data) {
+                goodsArrayList.add(
+                    OrderCreateGoodsDto1(
+                        name = item.name,
+                        num = item.num,
+                        salePrice = item.salePrice,
+                        totalPrice = "${BigDecimal(item.salePrice).multiply(BigDecimal(item.num))}",
+                        goodsSpec = item.goodsSpec,
+                        imgUrl = item.imgUrl
+                    )
+                )
+            }
+            mViewModel.saveOrder(
+                OrderCreateSaveDto(
+                    arriveTime = mDatabind.txtReceiveSelectTime.text.toString(),
+                    channelId = "11",
+                    poiId = poiId,
+                    lat = lat,
+                    lon = lon,
+                    deliveryType = selectAuthWay,
+                    recvAddr = mDatabind.txtReceiveSelectAddress.text.toString() + "@@" + mDatabind.edtAddressDetail.text.toString(),
+                    recvName = mDatabind.edtReceiveName.text.toString(),
+                    recvPhone = mDatabind.edtReceivePhone.text.toString(),
+                    remark = mDatabind.edtOrderCreateRemark.text.toString(),
+                    selfGoodsDtoList = goodsArrayList
+                )
+            )
         }
     }
 
@@ -752,12 +800,17 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
         }
         mViewModel.saveCreateDto.onStart.observe(this) {
             showLoading("加载中")
-            showToast("保存成功")
-            finish()
         }
 
         mViewModel.saveCreateDto.onSuccess.observe(this) {
             disLoading()
+            showToast("创建订单成功")
+            if (selectAuthWay == "1" && saveCreateOrder == "2") {
+                showToast("发起配送跳转")
+                ARouter.getInstance().build("/app/OrderDisActivity")
+                    .withSerializable("kk", it).navigation()
+            }
+            finish()
         }
         mViewModel.saveCreateDto.onError.observe(this) {
             disLoading()

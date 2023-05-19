@@ -27,24 +27,24 @@ import org.greenrobot.eventbus.ThreadMode
 class OrderDisActivity : BaseActivity<OrderDisFragmentViewModel, ActivityDisBinding>() {
 
     private val fragmentList: MutableList<Fragment> = ArrayList()
-    lateinit var content: OrderDto.Content
+    lateinit var content: OrderDto.Content.Order
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewPager.isUserInputEnabled = false
 
 
         content =
-            intent.getSerializableExtra("kk") as OrderDto.Content
+            intent.getSerializableExtra("kk") as OrderDto.Content.Order
         mDatabind.ivDetail.setOnClickListener {
             if (orderSendAddress != null) {
                 ARouter.getInstance().build("/app/OrderChangeAddressActivity")
-                    .withString("receiveTime", content?.order?.arriveTime)
+                    .withString("receiveTime", content?.arriveTime)
                     .withString("receiveName", orderSendAddress?.recvName)
                     .withString("receivePhone", orderSendAddress?.recvPhone)
                     .withString("receiveAddress", orderSendAddress?.recvAddr)
                     .withString("receiveRemark", "")
                     .withString("lat", orderSendAddress?.lat)
                     .withString("lon", orderSendAddress?.lon)
-                    .withString("orderId", content.order!!.viewId)
+                    .withString("orderId", content!!.viewId)
                     .withInt("isreceiveRemark", 1)
                     .withInt("index", index)
                     .navigation()
@@ -68,8 +68,8 @@ class OrderDisActivity : BaseActivity<OrderDisFragmentViewModel, ActivityDisBind
     override fun initData() {
 
         mViewModel.getOrderAndPoiDeliveryDate(
-            content.order?.poiId!!,
-            content.order!!.viewId!!,
+            content?.poiId!!,
+            content!!.viewId!!,
             "TC"
         )
 
@@ -101,9 +101,9 @@ class OrderDisActivity : BaseActivity<OrderDisFragmentViewModel, ActivityDisBind
             fragmentList.add(
                 OrderDisFragment1.newInstance(
                     it,
-                    content.order?.poiId!!,
-                    content.order!!.viewId!!,
-                    content.order?.payPrice!!
+                    content?.poiId!!,
+                    content!!.viewId!!,
+                    content?.payPrice!!
                 )
             )
 //            fragmentList.add(
@@ -115,9 +115,9 @@ class OrderDisActivity : BaseActivity<OrderDisFragmentViewModel, ActivityDisBind
 //            )
             fragmentList.add(
                 OrderDisFragment3.newInstance(
-                    content.order?.poiId!!,
-                    content.order!!.viewId!!,
-                    content.order?.payPrice!!
+                    content?.poiId!!,
+                    content!!.viewId!!,
+                    content?.payPrice!!
                 )
             )
 
@@ -144,8 +144,8 @@ class OrderDisActivity : BaseActivity<OrderDisFragmentViewModel, ActivityDisBind
             Log.d("yjk","onMessageEvent")
             index = event.message
             mViewModel.getOrderAndPoiDeliveryDate(
-                content.order?.poiId!!,
-                content.order!!.viewId!!,
+                content?.poiId!!,
+                content!!.viewId!!,
                 "TC"
             )
         }

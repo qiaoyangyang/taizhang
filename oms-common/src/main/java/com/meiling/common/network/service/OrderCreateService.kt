@@ -26,7 +26,7 @@ interface OrderCreateService {
      * */
     @POST("/saas/order/shop/selforder")
     suspend fun saveOrder(
-        @Body selfGoodsDtoList:OrderCreateSaveDto): ResultData<Any>
+        @Body selfGoodsDtoList:OrderCreateSaveDto): ResultData<OrderDto.Content.Order>
 
 //    /**
 //     * 获取订单和门店配送时间
