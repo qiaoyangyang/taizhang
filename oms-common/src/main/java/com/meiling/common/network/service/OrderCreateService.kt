@@ -37,8 +37,8 @@ interface OrderCreateService {
 //    ): ResultData<Any>
 //
 
-    //物流询价接口
-    @POST("/saas/logistics/orderConfirm")
-    suspend fun orderSendConfirm(@Body orderSendRequest: OrderSendRequest): ResultData<ArrayList<OrderSendChannel>>
+    //智能识别接口
+    @GET("/saas/juhe/addressParse")
+    suspend fun addressParse( @Query("keyWorlds") keyWorlds: String ): ResultData<OrderCreateAddressDiscern>
 
 }

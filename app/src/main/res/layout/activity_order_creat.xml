@@ -223,16 +223,20 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/dp_10"
                     android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/dp_10"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                   >
 
                     <EditText
                         android:id="@+id/edt_receive_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
+                        android:gravity="top"
                         android:hint="输入或粘贴收货信息文本，自动识别收货人、收货电话电话和收货地址（智能识别）"
-                        android:textColor="#ff999999"
+                        android:textColor="@color/home_999999"
+                        android:maxLength="200"
                         android:textSize="@dimen/sp_32" />
 
 
@@ -243,10 +247,9 @@
                         android:layout_below="@+id/edt_receive_info"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="@dimen/dp_10"
                         android:gravity="center_vertical|right"
-                        android:paddingHorizontal="@dimen/dp_20"
-                        android:paddingVertical="@dimen/dp_6"
+                        android:paddingHorizontal="@dimen/dp_30"
+                        android:paddingVertical="@dimen/dp_8"
                         android:text="识别"
                         android:textSize="@dimen/sp_24"
                         app:shape_radius="@dimen/dp_50"

@@ -524,10 +524,11 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                 if (input.isEmpty()) {
                     mDatabind.txtCount.setText("${0}/200")
                 } else {
-                    if (input.length == 200) {
-                        input = input.substring(0, s.toString().length - 1)
-                    }
-                    mDatabind.txtCount.setText("${input.length}/200")
+//                    if (input.length == 201) {
+//                        input = input.substring(0, s.toString().length - 1)
+                        mDatabind.txtCount.setText("${input.length}/200")
+//                    }
+
                 }
 
             }
@@ -548,7 +549,11 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
 
         }
         mDatabind.txtDiscernInfo.setSingleClickListener {
-            showToast("地址识别")
+            if (mDatabind.edtReceiveInfo.text.toString().isNullOrBlank()){
+                showToast("请输入收货信息")
+                return@setSingleClickListener
+            }
+            mViewModel.addressParse(mDatabind.edtReceiveInfo.text.toString())
         }
         mDatabind.txtReceiveSelectAddress.setSingleClickListener {
             XXPermissions.with(this).permission(PermissionUtilis.Group.LOCAL)
@@ -772,7 +777,6 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
         mViewModel.cityPoiOfflineDto.onStart.observe(this) {
             showLoading("加载中")
         }
-
         mViewModel.cityPoiOfflineDto.onSuccess.observe(this) {
             disLoading()
             var shopDialog = ShopDialog().newInstance(it, "修改发货门店")
@@ -798,10 +802,10 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
             disLoading()
             showToast(it.msg)
         }
+
         mViewModel.saveCreateDto.onStart.observe(this) {
             showLoading("加载中")
         }
-
         mViewModel.saveCreateDto.onSuccess.observe(this) {
             disLoading()
             showToast("创建订单成功")
@@ -811,6 +815,24 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                     .withSerializable("kk", it).navigation()
             }
             finish()
+        }
+        mViewModel.saveCreateDto.onError.observe(this) {
+            disLoading()
+            showToast(it.msg)
+        }
+
+        mViewModel.orderCreateAddressDiscern.onStart.observe(this) {
+            showLoading("加载中")
+        }
+        mViewModel.orderCreateAddressDiscern.onSuccess.observe(this) {
+            disLoading()
+            lon =it.lng.toString()
+            lat = it.lat.toString()
+            address =it.province+it.city+it.county+it.town
+            mDatabind.txtReceiveSelectAddress.text = address
+            mDatabind.edtAddressDetail.setText("${it.detail}")
+            mDatabind.edtReceivePhone.setText("${it.phonenum}")
+            mDatabind.edtReceiveName.setText("${it.person}")
         }
         mViewModel.saveCreateDto.onError.observe(this) {
             disLoading()

@@ -3,16 +3,14 @@ package com.meiling.oms.viewmodel
 import android.app.Application
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
-import com.meiling.common.network.data.OrderCreateFinishDto
-import com.meiling.common.network.data.OrderCreateSaveDto
-import com.meiling.common.network.data.OrderDto
-import com.meiling.common.network.data.ShopBean
+import com.meiling.common.network.data.*
 import com.meiling.common.network.service.orderCreateService
 
 class OrderCreateViewModel(application: Application) : BaseViewModel(application) {
 
     var cityPoiOfflineDto = BaseLiveData<ArrayList<ShopBean>>()
     var saveCreateDto = BaseLiveData<OrderDto.Content.Order>()
+    var orderCreateAddressDiscern = BaseLiveData<OrderCreateAddressDiscern>()
     fun getCityPoiOffline() {
         request({ orderCreateService.getCityPoiOffline() }, cityPoiOfflineDto)
     }
@@ -30,33 +28,45 @@ class OrderCreateViewModel(application: Application) : BaseViewModel(application
 //"deliveryType":"",//配送类型(1配送,2自提,3,现售)
 //"selfGoodsDtoList":goodsArr
     fun saveOrder(orderCreateSave: OrderCreateSaveDto) {
-        if (orderCreateSave.deliveryType=="1"){
-            request({ orderCreateService.saveOrder(OrderCreateSaveDto(
-                arriveTime = orderCreateSave.arriveTime,
-                channelId = "11",
-                poiId = orderCreateSave.poiId,
-                lat = orderCreateSave.lat,
-                lon = orderCreateSave.lon,
-                deliveryType = orderCreateSave.deliveryType,
-                recvAddr = orderCreateSave.recvAddr,
-                recvName = orderCreateSave.recvName,
-                recvPhone = orderCreateSave.recvPhone,
-                remark = orderCreateSave.remark,
-                selfGoodsDtoList = orderCreateSave.selfGoodsDtoList
-            )) }, saveCreateDto)
-        }else{
-                request({ orderCreateService.saveOrder(OrderCreateSaveDto(
-                    arriveTime = orderCreateSave.arriveTime,
-                    channelId = "11",
-                    poiId = orderCreateSave.poiId,
-                    deliveryType = orderCreateSave.deliveryType,
-                    recvName = orderCreateSave.recvName,
-                    recvPhone = orderCreateSave.recvPhone,
-                    remark = orderCreateSave.remark,
-                    selfGoodsDtoList = orderCreateSave.selfGoodsDtoList
-                )) }, saveCreateDto)
+        if (orderCreateSave.deliveryType == "1") {
+            request({
+                orderCreateService.saveOrder(
+                    OrderCreateSaveDto(
+                        arriveTime = orderCreateSave.arriveTime,
+                        channelId = "11",
+                        poiId = orderCreateSave.poiId,
+                        lat = orderCreateSave.lat,
+                        lon = orderCreateSave.lon,
+                        deliveryType = orderCreateSave.deliveryType,
+                        recvAddr = orderCreateSave.recvAddr,
+                        recvName = orderCreateSave.recvName,
+                        recvPhone = orderCreateSave.recvPhone,
+                        remark = orderCreateSave.remark,
+                        selfGoodsDtoList = orderCreateSave.selfGoodsDtoList
+                    )
+                )
+            }, saveCreateDto)
+        } else {
+            request({
+                orderCreateService.saveOrder(
+                    OrderCreateSaveDto(
+                        arriveTime = orderCreateSave.arriveTime,
+                        channelId = "11",
+                        poiId = orderCreateSave.poiId,
+                        deliveryType = orderCreateSave.deliveryType,
+                        recvName = orderCreateSave.recvName,
+                        recvPhone = orderCreateSave.recvPhone,
+                        remark = orderCreateSave.remark,
+                        selfGoodsDtoList = orderCreateSave.selfGoodsDtoList
+                    )
+                )
+            }, saveCreateDto)
         }
 
     }
 
+
+    fun addressParse(keyWorlds: String) {
+        request({ orderCreateService.addressParse(keyWorlds) }, orderCreateAddressDiscern)
+    }
 }
