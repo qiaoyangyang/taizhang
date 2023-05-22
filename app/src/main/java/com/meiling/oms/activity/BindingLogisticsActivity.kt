@@ -58,7 +58,7 @@ class BindingLogisticsActivity :
             ) {
                 poid = sho.id.toString()
                 mDatabind.TitleBar.titleView.text = sho.name
-
+                getLogisticsList(poid)
             }
 
             override fun Ondismiss() {
@@ -113,22 +113,28 @@ class BindingLogisticsActivity :
         if (from.isNullOrBlank()) {
             TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
             mDatabind.btnSuccess.visibility = View.GONE
-        }
-        //获取门店列表
-        mViewModel.launchRequest(
-            { meService.citypoi() },
-            false,
-            onSuccess = {
-                it?.let {
-                    if (it.size >= 1) {
-                        mDatabind.TitleBar.titleView.text = it.get(0).shopList?.get(0)?.name
-                        poid = it.get(0).shopList?.get(0)?.id.toString()
+            //获取门店列表
+            mViewModel.launchRequest(
+                { meService.citypoi() },
+                false,
+                onSuccess = {
+                    it?.let {
+                        if (it.size >= 1) {
+                            mDatabind.TitleBar.titleView.text = it.get(0).shopList?.get(0)?.name
+                            poid = it.get(0).shopList?.get(0)?.id.toString()
+                            getLogisticsList(poid)
+                        }
+                        shopList = it
+
                     }
-                    shopList = it
-                }
-            },
-            onError = {}
-        )
+                },
+                onError = {}
+            )
+        }else{
+            getLogisticsList(poid)
+        }
+
+
 
         adapter = object : BaseQuickAdapter<Merchant, BaseViewHolder>(R.layout.item_merchant) {
             override fun convert(holder: BaseViewHolder, item: Merchant) {
@@ -140,35 +146,22 @@ class BindingLogisticsActivity :
         adapterNoBind= object : BaseQuickAdapter<Merchant, BaseViewHolder>(R.layout.item_merchant) {
             override fun convert(holder: BaseViewHolder, item: Merchant) {
                 holder.setText(R.id.name, item.typeName)
+                holder.setText(R.id.textBind,"更换")
                 var img = holder.getView<ImageView>(R.id.img)
                 GlideAppUtils.loadUrl(img, item.iconUrl)
             }
         }
 
         adapter.setOnItemClickListener { adapte, view, position ->
-            click(position)
+            click(adapte,position)
         }
 
         adapterNoBind.setOnItemClickListener { adapte, view, position ->
-            click(position)
+            click(adapte,position)
         }
 
         mDatabind.recyClerView.adapter = adapter
         mDatabind.recyClerView2.adapter = adapterNoBind
-        //获取物流
-        mViewModel.launchRequest(//9024
-            { loginService.getMerChantList("") },
-            onSuccess = {
-                it?.let {
-                    adapter.setList(it.filter { it.status=="0" })
-                    adapterNoBind.setList(it.filter { it.status=="1" })
-                }
-            },
-            onError = {
-                it?.let { showToast(it) }
-            }
-        )
-
 
         //注册成功
         mDatabind.btnSuccess.setSingleClickListener(1000L) {
@@ -224,8 +217,8 @@ class BindingLogisticsActivity :
 
     }
 
-    private fun click(position: Int) {
-        var merchant = adapter.data.get(position)
+    private fun click(adapte: BaseQuickAdapter<*, *>, position: Int) {
+        var merchant = adapte.data.get(position) as Merchant
 
         if (merchant.type == "uu") {
 
@@ -272,7 +265,7 @@ class BindingLogisticsActivity :
                     var bindingOther = BindOtherLogistics().newInstance("已有顺丰同城账号",
                         "顺丰同城帐号授权后即可发单，与顺丰同城里价格、优惠等活动一致。\n如果没有账号，请先下载顺丰同城APP，注册并开通商户版。")
                     bindingOther.setMySureOnclickListener {
-                        getUrl("ss")
+                        getUrl("sf_tc")
                     }
                     bindingOther.show(supportFragmentManager)
                 }
@@ -288,13 +281,31 @@ class BindingLogisticsActivity :
             }
         }
     }
+
+    fun getLogisticsList(poid:String){
+        //获取物流
+        mViewModel.launchRequest(//9024
+            { loginService.getMerChantList(poid) },
+            onSuccess = {
+                it?.let {
+                    adapter.setList(it.filter { it.status=="0" })
+                    adapterNoBind.setList(it.filter { it.status=="1" })
+                }
+            },
+            onError = {
+                it?.let { showToast(it) }
+            }
+        )
+    }
+
+
     /**
      * 手动获取三方门店列表
      */
     fun getShopList(type: String) {
         //getShopList
         mViewModel.launchRequest(
-            { loginService.getShopList("1", "20", "156207276", type) },
+            { loginService.getShopList("1", "20", poid, type) },
             true,
             onSuccess = {
                 it?.let {

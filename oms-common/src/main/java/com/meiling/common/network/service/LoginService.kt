@@ -138,7 +138,7 @@ interface LoginService {
      *  获取物流列表
      */
     @GET("/saas/express/merchant/list")
-    suspend fun getMerChantList(@Header("tenantId") tenantId:String):ResultData<ArrayList<Merchant>>
+    suspend fun getMerChantList(@Query("poiId") poiId:String):ResultData<ArrayList<Merchant>>
 
     /**
      * 绑定物流

@@ -40,6 +40,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/login_btn_select_true"
         android:text="绑定"
+        android:id="@+id/textBind"
         android:textColor="@color/white"
         android:paddingHorizontal="15dp"
         android:layout_marginTop="5dp"
