@@ -176,16 +176,18 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
         mDatabind.radioButton1.isChecked = true
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun payMoney(messType: MessageEventPayMoney) {
-        if (messType.type == "1") {//完成支付
-            mViewModel.getBalance()
-        } else {
-            var rechargeDialog = RechargeDialog().newInstance()
-            rechargeDialog.setOkClickLister { money, channel ->
-                mViewModel.rechargeRequest(RechargeRequest(money, "3", channel, ""))
-            }
-            rechargeDialog.show(supportFragmentManager)
-        }
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    fun payMoney(messType: MessageEventPayMoney) {
+//        if (messType.type == "1") {//完成支付
+//           finish()
+//        }
+//
+////        else {
+////            var rechargeDialog = RechargeDialog().newInstance()
+////            rechargeDialog.setOkClickLister { money, channel ->
+//////                mViewModel.rechargeRequest(RechargeRequest(money, "3", channel, ""))
+////            }
+////            rechargeDialog.show(supportFragmentManager)
+////        }
+//    }
 }

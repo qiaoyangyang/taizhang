@@ -4,8 +4,7 @@ import android.app.Application
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
 import com.meiling.common.network.data.*
-import com.meiling.common.network.service.meService
-import retrofit2.http.Query
+import com.meiling.common.network.service.myRechargeService
 
 class RechargeViewModel(application: Application) : BaseViewModel(application) {
 
@@ -14,21 +13,22 @@ class RechargeViewModel(application: Application) : BaseViewModel(application) {
     var rechargeRecord = BaseLiveData<RechargeRecordDto>()
     var financialRecord = BaseLiveData<FinancialRecord>()
     var financialRecordDetail = BaseLiveData<FinancialRecordDetail>()
+    var rechargeListDto = BaseLiveData<ArrayList<RechargeDto>>()
 
     fun rechargeRequest(rechargeRequest: RechargeRequest) {
-        request({ meService.rechargeRequest(rechargeRequest) }, rechargeDto)
+        request({ myRechargeService.rechargeRequest(rechargeRequest) }, rechargeDto)
     }
 
     fun getBalance() {
-        request({ meService.getPayAccountAmountVo() }, balance)
+        request({ myRechargeService.getPayAccountAmountVo() }, balance)
     }
 
     fun getRecord(rechargeRecordListReq: RechargeRecordListReq) {
-        request({ meService.getRecord(rechargeRecordListReq) }, rechargeRecord)
+        request({ myRechargeService.getRecord(rechargeRecordListReq) }, rechargeRecord)
     }
 
     fun getFinancialRecord(rechargeRecordListReq: RechargeRecordListReq) {
-        request({ meService.getFinancialRecord(rechargeRecordListReq) }, financialRecord)
+        request({ myRechargeService.getFinancialRecord(rechargeRecordListReq) }, financialRecord)
     }
 
     fun getFinancialRecordDetail(
@@ -37,8 +37,15 @@ class RechargeViewModel(application: Application) : BaseViewModel(application) {
         pageSize: String
     ) {
         request(
-            { meService.getFinancialRecordDetail(viewId, pageIndex, pageSize) },
+            { myRechargeService.getFinancialRecordDetail(viewId, pageIndex, pageSize) },
             financialRecordDetail
+        )
+    }
+
+    fun getFinancialRecordDetail() {
+        request(
+            { myRechargeService.tenantWalletList() },
+            rechargeListDto
         )
     }
 }

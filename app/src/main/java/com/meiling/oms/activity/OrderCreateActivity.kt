@@ -526,7 +526,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                 } else {
 //                    if (input.length == 201) {
 //                        input = input.substring(0, s.toString().length - 1)
-                        mDatabind.txtCount.setText("${input.length}/200")
+                    mDatabind.txtCount.setText("${input.length}/200")
 //                    }
 
                 }
@@ -539,17 +539,19 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
             mViewModel.getCityPoiOffline()
         }
         mDatabind.txtDiscern.setSingleClickListener {
-            if (isSelectDiscern) {
-                isSelectDiscern = false
-                mDatabind.rlInputReceiveAddress.visibility = View.VISIBLE
-            } else {
-                isSelectDiscern = true
-                mDatabind.rlInputReceiveAddress.visibility = View.GONE
-            }
+//            if (isSelectDiscern) {
+            isSelectDiscern = false
+            mDatabind.rlInputReceiveAddress.visibility = View.VISIBLE
+            mDatabind.txtDiscern.visibility = View.GONE
+//            }
+//            else {
+//                isSelectDiscern = true
+//                mDatabind.rlInputReceiveAddress.visibility = View.GONE
+//            }
 
         }
         mDatabind.txtDiscernInfo.setSingleClickListener {
-            if (mDatabind.edtReceiveInfo.text.toString().isNullOrBlank()){
+            if (mDatabind.edtReceiveInfo.text.toString().isNullOrBlank()) {
                 showToast("请输入收货信息")
                 return@setSingleClickListener
             }
@@ -645,6 +647,10 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                     mDatabind.txtDiscern.visibility = View.VISIBLE
                     mDatabind.lineAddress.visibility = View.VISIBLE
                     mDatabind.lineAddressDetail.visibility = View.VISIBLE
+                    if (!isSelectDiscern) {
+                        mDatabind.txtDiscern.visibility = View.GONE
+                        mDatabind.rlInputReceiveAddress.visibility = View.VISIBLE
+                    }
                 } else {
                     mDatabind.btnSaveAndDis.visibility = View.GONE
                     mDatabind.rlInputReceiveDetailAddress.visibility = View.GONE
@@ -652,6 +658,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                     mDatabind.txtDiscern.visibility = View.GONE
                     mDatabind.lineAddress.visibility = View.GONE
                     mDatabind.lineAddressDetail.visibility = View.GONE
+                    mDatabind.rlInputReceiveAddress.visibility = View.GONE
                 }
             }
         }
@@ -779,7 +786,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
         }
         mViewModel.cityPoiOfflineDto.onSuccess.observe(this) {
             disLoading()
-            if (it.isNullOrEmpty()){
+            if (it.isNullOrEmpty()) {
                 showToast("暂无门店数据")
                 return@observe
             }
@@ -830,9 +837,9 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
         }
         mViewModel.orderCreateAddressDiscern.onSuccess.observe(this) {
             disLoading()
-            lon =it.lng.toString()
+            lon = it.lng.toString()
             lat = it.lat.toString()
-            address =it.province+it.city+it.county+it.town
+            address = it.province + it.city + it.county + it.town
             mDatabind.txtReceiveSelectAddress.text = address
             mDatabind.edtAddressDetail.setText("${it.detail}")
             mDatabind.edtReceivePhone.setText("${it.phonenum}")

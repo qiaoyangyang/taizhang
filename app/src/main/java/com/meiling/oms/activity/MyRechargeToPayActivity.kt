@@ -1,15 +1,19 @@
 package com.meiling.oms.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.Nullable
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.network.data.RechargeDto
 import com.meiling.common.network.data.RechargeRequest
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
@@ -30,25 +34,17 @@ import java.math.BigDecimal
  * **/
 class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReachargeToPayBinding>() {
 
-    data class rechDto(var money: String, var give: String?) {
-        var select = false
-    }
 
-    lateinit var rechargeAdapter: BaseQuickAdapter<rechDto, BaseViewHolder>
+    lateinit var rechargeAdapter: BaseQuickAdapter<RechargeDto, BaseViewHolder>
 
-    var list = ArrayList<rechDto>()
     var money = ""
     var channel = "2"
 
     var isSelectMoney = false
     var isPayType = true
+    var giveMoney: String? = ""
     override fun initView(savedInstanceState: Bundle?) {
-        list.add(rechDto("200", "100"))
-        list.add(rechDto("500", "100"))
-        list.add(rechDto("1000", ""))
-        list.add(rechDto("2000", "300"))
-        list.add(rechDto("5000", "500"))
-        list.add(rechDto("10000", "1000"))
+        mViewModel.getFinancialRecordDetail()
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityReachargeToPayBinding {
@@ -61,18 +57,32 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
             mDatabind.txtRechargeOther.isFocusable = false
             if (!isSelectMoney) {
                 money = mDatabind.txtRechargeOther.text.toString()
+                for (rechargeDto in rechargeAdapter.data) {
+                    if (rechargeDto.payAmount?.toInt()==money.toDouble().toInt()) {
+                        giveMoney = rechargeDto.presentedAmount?.toInt().toString()
+                        break
+                    } else {
+                        giveMoney = "0"
+                    }
+                }
             }
-
             if (money.isNullOrBlank()) {
-                showToast("请选择或者输入金额")
+                showToast("请选择或者输入充值金额")
                 return@setSingleClickListener
             }
             if (BigDecimal(money) <= BigDecimal("0")) {
-                showToast("请选择或者输入正确金额")
+                showToast("请选择或者输入充值金额")
                 return@setSingleClickListener
             }
-
-            mViewModel.rechargeRequest(RechargeRequest(money, "3", channel, ""))
+            mViewModel.rechargeRequest(
+                RechargeRequest(
+                    money,
+                    "3",
+                    channel,
+                    presentedAmount = giveMoney,
+                    ""
+                )
+            )
         }
 
         mDatabind.btnCancelRecharge.setSingleClickListener {
@@ -118,26 +128,27 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
 
         rechargeAdapter =
             object :
-                BaseQuickAdapter<rechDto, BaseViewHolder>(R.layout.item_recy_recharge_to_pay) {
+                BaseQuickAdapter<RechargeDto, BaseViewHolder>(R.layout.item_recy_recharge_to_pay) {
                 @SuppressLint("SetTextI18n")
-                override fun convert(holder: BaseViewHolder, item: rechDto) {
+                override fun convert(holder: BaseViewHolder, item: RechargeDto) {
                     val rechargeSum = holder.getView<TextView>(R.id.txt_recharge_money)
-                    val  rechargeGive = holder.getView<TextView>(R.id.txt_recharge_give)
-                    rechargeSum.text = item.money + "元"
-                    if (item.give?.isNotEmpty() == true) {
-                        rechargeGive.visibility = View.VISIBLE
-                    } else {
+                    val rechargeGive = holder.getView<TextView>(R.id.txt_recharge_give)
+                    rechargeSum.text = "¥${item.payAmount?.toInt()}"
+                    if (item.presentedAmount?.toInt() == 0) {
                         rechargeGive.visibility = View.GONE
+                    } else {
+                        rechargeGive.visibility = View.VISIBLE
                     }
-                    rechargeGive.text = "赠送${item.give}元"
+                    rechargeGive.text = "赠送${item.presentedAmount?.toInt()}元"
                     if (item.select) {
                         holder.setBackgroundResource(
                             R.id.ll_recharge,
                             R.drawable.recharge_bg_true
                         )
-                        rechargeSum.setTextColor(resources.getColor(R.color.red))
-                        rechargeGive.setTextColor(resources.getColor(R.color.red))
-                        money = item.money
+                        rechargeSum.setTextColor(resources.getColor(R.color.white))
+                        rechargeGive.setTextColor(resources.getColor(R.color.white))
+                        money = item.payAmount?.toInt().toString()
+                        giveMoney = item.presentedAmount?.toInt().toString()
                         isSelectMoney = true
                         mDatabind.txtRechargeOther?.isFocusable = false
                     } else {
@@ -145,24 +156,24 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
                             R.id.ll_recharge,
                             R.drawable.recharge_bg_false
                         )
-                        rechargeSum.setTextColor(resources.getColor(R.color.home_666666))
-                        rechargeGive.setTextColor(resources.getColor(R.color.home_666666))
+                        rechargeSum.setTextColor(resources.getColor(R.color.home_333333))
+                        rechargeGive.setTextColor(resources.getColor(R.color.home_333333))
                     }
                 }
             }
 
         rechargeAdapter.setOnItemClickListener { adapter, view, position ->
-            val data = adapter.data[position] as rechDto
+            val data = adapter.data[position] as RechargeDto
             for (xx in adapter.data) {
-                (xx as rechDto).select = xx == data
+                (xx as RechargeDto).select = xx == data
             }
-            mDatabind.txtRechargeOther.setText(data.money)
+            mDatabind.txtRechargeOther.setText("${data.payAmount?.toInt()}")
             rechargeAdapter.notifyDataSetChanged()
         }
 
         mDatabind.rvRecharge?.adapter = rechargeAdapter
 //        list[0].select = true
-        rechargeAdapter.setList(list as MutableList<rechDto>)
+
     }
 
     override fun onResume() {
@@ -192,9 +203,10 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
                     }
 
                     override fun onNext(t: AliPayResp) {
+                        startActivityForResult(Intent(this@MyRechargeToPayActivity,RechargeFinishActivity::class.java),REQUEST_CODE)
 //                        if (t.isSuccess) {
-                        ARouter.getInstance().build("/app/RechargeFinishActivity")
-                            .navigation()
+//                        ARouter.getInstance().build("/app/RechargeFinishActivity")
+//                            .navigation()
 //                        } else {
 ////                            showToast(t.message)
 //                            ARouter.getInstance().build("/app/RechargeFinishActivity")
@@ -208,8 +220,18 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
         mViewModel.rechargeDto.onError.observe(this) {
             disLoading()
         }
-        mViewModel.balance.onSuccess.observe(this) {
 
+        mViewModel.rechargeListDto.onStart.observe(this) {
+            showLoading("加载中")
+        }
+        mViewModel.rechargeListDto.onSuccess.observe(this) {
+            disLoading()
+            if (!it.isNullOrEmpty()) {
+                rechargeAdapter.setList(it)
+            }
+        }
+        mViewModel.rechargeListDto.onError.observe(this) {
+            disLoading()
         }
     }
 
@@ -220,6 +242,15 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
     override fun onDestroy() {
         super.onDestroy()
     }
-
+    private val REQUEST_CODE = 2003
+    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            // 处理返回的结果
+            if (data.getStringExtra("payType")=="1"){
+                finish()
+            }
+        }
+    }
 
 }

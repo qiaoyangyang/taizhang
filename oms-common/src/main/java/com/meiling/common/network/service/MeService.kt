@@ -13,40 +13,6 @@ val meService: MeService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
 
 interface MeService {
 
-
-    //充值
-    @POST("/saas/payAccountAmount/paymentApp")
-    suspend fun rechargeRequest(@Body rechargeDto: RechargeRequest): ResultData<String>
-
-
-    /**
-     * 余额
-     * **/
-    @GET("/saas/payAccountAmount/getPayAccountAmountVo")
-    suspend fun getPayAccountAmountVo(): ResultData<BalanceDto>
-
-    /**
-     * 充值记录
-     * */
-    @POST("/saas/payAccountAmount/getRecordList")
-    suspend fun getRecord(@Body rechargeRecordListReq: RechargeRecordListReq): ResultData<RechargeRecordDto>
-
-    /**
-     * 财务结算明细
-     * */
-    @POST("/saas/financial/getRecordList")
-    suspend fun getFinancialRecord(@Body rechargeRecordListReq: RechargeRecordListReq): ResultData<FinancialRecord>
-
-    /**
-     * 财务结算记录明细
-     * */
-    @POST("/saas/financial/getRecordListByViewId")
-    suspend fun getFinancialRecordDetail(
-        @Query("viewId") viewId: String,
-        @Query("pageIndex") pageIndex: String,
-        @Query("pageSize") pageSize: String
-    ): ResultData<FinancialRecordDetail>
-
     /**
      * 消息中心
      * */
