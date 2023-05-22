@@ -17,6 +17,7 @@ import com.meiling.common.network.data.ShopBean
 import com.meiling.common.network.service.loginService
 import com.meiling.common.network.service.meService
 import com.meiling.common.utils.GlideAppUtils
+import com.meiling.common.utils.SpannableUtils
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityBandingLogistcsLayoutBinding
@@ -134,7 +135,19 @@ class BindingLogisticsActivity :
             getLogisticsList(poid)
         }
 
+        SpannableUtils.setTextcolor(
+            this,
+            "绑定完成后,点击刷新,可获取绑定结果",
+            mDatabind.bindRefresh,
+            8,10,
+            R.color.red
+        )
 
+        mDatabind.bindRefresh.setOnClickListener {
+
+            getLogisticsList(poid)
+
+        }
 
         adapter = object : BaseQuickAdapter<Merchant, BaseViewHolder>(R.layout.item_merchant) {
             override fun convert(holder: BaseViewHolder, item: Merchant) {
@@ -288,8 +301,29 @@ class BindingLogisticsActivity :
             { loginService.getMerChantList(poid) },
             onSuccess = {
                 it?.let {
-                    adapter.setList(it.filter { it.status=="0" })
-                    adapterNoBind.setList(it.filter { it.status=="1" })
+                    var hasBindingList=it.filter { it.status=="0" }
+                    if(hasBindingList.isNullOrEmpty()){
+                        mDatabind.view1.visibility=View.GONE
+                        mDatabind.title.visibility=View.GONE
+                        mDatabind.recyClerView.visibility=View.GONE
+                    }else{
+                        mDatabind.view1.visibility=View.VISIBLE
+                        mDatabind.title.visibility=View.VISIBLE
+                        mDatabind.recyClerView.visibility=View.VISIBLE
+                        adapter.setList(hasBindingList)
+                    }
+
+                    var noBindList=it.filter { it.status=="1" }
+                    if(noBindList.isNullOrEmpty()){
+                        mDatabind.recyClerView2.visibility=View.GONE
+                        mDatabind.title2.visibility=View.GONE
+                        mDatabind.view2.visibility=View.GONE
+                    }else{
+                        mDatabind.recyClerView2.visibility=View.VISIBLE
+                        mDatabind.title2.visibility=View.VISIBLE
+                        mDatabind.view2.visibility=View.VISIBLE
+                        adapterNoBind.setList(it.filter { it.status=="1" })
+                    }
                 }
             },
             onError = {

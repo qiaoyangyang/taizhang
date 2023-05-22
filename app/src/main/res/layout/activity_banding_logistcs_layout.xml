@@ -90,18 +90,32 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyClerView2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                tools:listitem="@layout/item_merchant"
-                android:id="@+id/recyClerView2"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/title2"
                 app:spanCount="4"
-                app:layout_constraintTop_toBottomOf="@+id/title2"/>
+                tools:listitem="@layout/item_merchant" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/recyClerView2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:id="@+id/bindRefresh"
+                android:text="绑定完成后,点击刷新,可获取绑定结果"
+                android:layout_marginTop="10dp"
+                android:textSize="@dimen/sp_28"
+                android:textColor="#ff999999"
+                />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
