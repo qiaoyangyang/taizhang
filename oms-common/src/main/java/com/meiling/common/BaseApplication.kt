@@ -20,7 +20,7 @@ import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
-import com.tencent.smtt.sdk.QbSdk
+//import com.tencent.smtt.sdk.QbSdk
 
 open class BaseApplication : Application(), ViewModelStoreOwner {
 
@@ -41,15 +41,15 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
         Logger.addLogAdapter(AndroidLogAdapter())
         MMKV.initialize(this);
         this.registerActivityLifecycleCallbacks(lifcycleCallBack)
-        QbSdk.initX5Environment(this, object : QbSdk.PreInitCallback {
-            override fun onCoreInitFinished() {
-
-            }
-
-            override fun onViewInitFinished(p0: Boolean) {
-
-            }
-        })
+//        QbSdk.initX5Environment(this, object : QbSdk.PreInitCallback {
+//            override fun onCoreInitFinished() {
+//
+//            }
+//
+//            override fun onViewInitFinished(p0: Boolean) {
+//
+//            }
+//        })
     }
 
     private var activitys: Activity? = null
