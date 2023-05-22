@@ -779,6 +779,10 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
         }
         mViewModel.cityPoiOfflineDto.onSuccess.observe(this) {
             disLoading()
+            if (it.isNullOrEmpty()){
+                showToast("暂无门店数据")
+                return@observe
+            }
             var shopDialog = ShopDialog().newInstance(it, "修改发货门店")
             shopDialog.setOnresilience(object : ShopDialog.Onresilience {
                 override fun resilience(
