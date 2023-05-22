@@ -49,31 +49,32 @@ class NewlyBuiltStoreActivity :
     }
 
     override fun onLeftClick(view: View) {
-        if(fromIntent=="regist"){
+        if (fromIntent == "regist") {
             val dialog: MineExitDialog =
                 MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
             dialog.setOkClickLister {
                 dialog.dismiss()
-                startActivity(Intent(this,LoginActivity::class.java))
+                startActivity(Intent(this, LoginActivity::class.java))
                 ActivityUtils.finishAllActivities()
             }
             dialog.show(supportFragmentManager)
-        }else{
+        } else {
             finish()
         }
 
     }
+
     override fun onBackPressed() {
-        if(fromIntent=="regist"){
+        if (fromIntent == "regist") {
             val dialog: MineExitDialog =
                 MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
             dialog.setOkClickLister {
                 dialog.dismiss()
-                startActivity(Intent(this,LoginActivity::class.java))
+                startActivity(Intent(this, LoginActivity::class.java))
                 ActivityUtils.finishAllActivities()
             }
             dialog.show(supportFragmentManager)
-        }else{
+        } else {
             finish()
         }
 
@@ -87,12 +88,12 @@ class NewlyBuiltStoreActivity :
     var adCode = ""
     var cityName = ""
     var poiItem: PoiItem? = null
-    var tenantId =""
-    var adminViewId=""
-    var fromIntent=""
-    var account=""//管理员账号，默认注册时输入的手机号
-    var pwd=""
-    var name=""//品牌名称，默认企业名称的简称
+    var tenantId = ""
+    var adminViewId = ""
+    var fromIntent = ""
+    var account = ""//管理员账号，默认注册时输入的手机号
+    var pwd = ""
+    var name = ""//品牌名称，默认企业名称的简称
     override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
@@ -117,22 +118,31 @@ class NewlyBuiltStoreActivity :
     }
 
     var id = ""
+    override fun onRightClick(view: View) {
+        super.onRightClick(view)
+        if (!fromIntent.isNullOrBlank()) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            ActivityUtils.finishAllActivities()
+        }
+    }
+
     override fun initData() {
         super.initData()
         mDatabind.viewModel = mViewModel
         mDatabind.lifecycleOwner = this
         id = intent.getStringExtra("id").toString()
         tenantId = intent.getStringExtra("tenantId").toString()
-        adminViewId= intent.getStringExtra("adminViewId").toString()
-        fromIntent=intent.getStringExtra("fromIntent").toString()
-        account=intent.getStringExtra("account").toString()//管理员账号
-        pwd=intent.getStringExtra("pwd").toString()
-        name=intent.getStringExtra("name").toString()
+        adminViewId = intent.getStringExtra("adminViewId").toString()
+        fromIntent = intent.getStringExtra("fromIntent").toString()
+        account = intent.getStringExtra("account").toString()//管理员账号
+        pwd = intent.getStringExtra("pwd").toString()
+        name = intent.getStringExtra("name").toString()
 
-        if(fromIntent=="regist"){
-            mDatabind.tvGoOn.text="下一步"
-            mViewModel.PoiVoBean.value?.poiVo?.name=name
-            mViewModel.PoiVoBean.value?.poiVo?.phone=account
+        if (fromIntent == "regist") {
+            mDatabind.tvGoOn.text = "下一步"
+            mViewModel.PoiVoBean.value?.poiVo?.name = name
+            mViewModel.PoiVoBean.value?.poiVo?.phone = account
+            mDatabind.TitleBar.rightTitle = "跳过"
         }
         mDatabind.tvGoOn.let {
             InputTextManager.with(this)
@@ -178,15 +188,15 @@ class NewlyBuiltStoreActivity :
 
             }
 
-            if (mViewModel.PoiVoBean.value?.poiVo?.sinceCode!!.toString().length<2){
+            if (mViewModel.PoiVoBean.value?.poiVo?.sinceCode!!.toString().length < 2) {
                 showToast("门店编号仅允许输入2-20个字母/数字")
                 return@setSingleClickListener
             }
 
 
-           if(fromIntent=="regist"){
-                MMKVUtils.putString(SPConstants.adminViewId,adminViewId)
-                MMKVUtils.putString(SPConstants.tenantId,tenantId)
+            if (fromIntent == "regist") {
+                MMKVUtils.putString(SPConstants.adminViewId, adminViewId)
+                MMKVUtils.putString(SPConstants.tenantId, tenantId)
                 mViewModel.poiaddFromRegist(
                     lat,
                     lon,
@@ -195,7 +205,7 @@ class NewlyBuiltStoreActivity :
                     adCode,
                     cityName.replace("市", ""), id
                 )
-            }else {
+            } else {
                 mViewModel.poiadd(
                     lat,
                     lon,
@@ -205,7 +215,6 @@ class NewlyBuiltStoreActivity :
                     cityName.replace("市", ""), id
                 )
             }
-
 
 
         }
@@ -228,7 +237,7 @@ class NewlyBuiltStoreActivity :
 
                     override fun onDenied(
                         permissions: MutableList<String>,
-                        doNotAskAgain: Boolean
+                        doNotAskAgain: Boolean,
                     ) {
                         if (doNotAskAgain) {
                             // 如果是被永久拒绝就跳转到应用权限系统设置页面
@@ -273,7 +282,7 @@ class NewlyBuiltStoreActivity :
         }
         mViewModel.poidata.onSuccess.observe(this) {
             disLoading()
-            val x = it.poiVo?.address!!.split("@@", " ","&&")
+            val x = it.poiVo?.address!!.split("@@", " ", "&&")
             if (x.size != 0) {
                 it?.poiVo?.storeaddress = x[0]
                 it?.poiVo?.etdetailedaddress = x[1]
@@ -298,17 +307,17 @@ class NewlyBuiltStoreActivity :
             disLoading()
             showToast("门店信息保存成功")
             mainViewModel.getByTenantId.value = mainViewModel.getByTenantId.value?.copy(poi = 1)
-            if(fromIntent=="regist"){
+            if (fromIntent == "regist") {
                 startActivity(Intent(this,
                     BindingLogisticsActivity::class.java)
                     .putExtra("tenantId", tenantId)
-                    .putExtra("account",account)
-                    .putExtra("pwd",pwd)
+                    .putExtra("account", account)
+                    .putExtra("pwd", pwd)
                     .putExtra("name", name)
-                    .putExtra("poid",it)
-                    .putExtra("from",fromIntent))
-            }else
-            finish()
+                    .putExtra("poid", it)
+                    .putExtra("from", fromIntent))
+            } else
+                finish()
         }
         mViewModel.poiaddpoidata.onError.observe(this) {
             disLoading()
@@ -323,7 +332,7 @@ class NewlyBuiltStoreActivity :
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == ACCESS_FINE_LOCATION) {
@@ -337,7 +346,6 @@ class NewlyBuiltStoreActivity :
             }
         }
     }
-
 
 
     private fun isPasswordValid(password: String): Boolean {

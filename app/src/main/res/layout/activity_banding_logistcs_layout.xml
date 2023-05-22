@@ -6,6 +6,7 @@
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.hjq.bar.TitleBar
+
         android:id="@+id/TitleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:leftIcon="@drawable/bar_arrows_left_white"
         android:background="#FF4545"
-        app:rightTitleSize="@dimen/sp_14"
+        app:rightTitleSize="@dimen/sp_28"
         app:titleColor="@color/white"
         app:title="绑定物流" />
 

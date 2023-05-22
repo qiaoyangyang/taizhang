@@ -86,6 +86,16 @@ class BindingLogisticsActivity :
         dialog.show(supportFragmentManager)
     }
 
+    override fun onRightClick(view: View) {
+        super.onRightClick(view)
+        if (!from.isNullOrBlank()) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            ActivityUtils.finishAllActivities()
+        }
+    }
+
+
+
     override fun onBackPressed() {
         val dialog: MineExitDialog =
             MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
@@ -114,6 +124,7 @@ class BindingLogisticsActivity :
         if (from.isNullOrBlank()) {
             TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
             mDatabind.btnSuccess.visibility = View.GONE
+
             //获取门店列表
             mViewModel.launchRequest(
                 { meService.citypoi() },
@@ -132,6 +143,7 @@ class BindingLogisticsActivity :
                 onError = {}
             )
         }else{
+            mDatabind.TitleBar.rightTitle = "跳过"
             getLogisticsList(poid)
         }
 
@@ -383,7 +395,7 @@ class BindingLogisticsActivity :
                 startActivity(Intent(this, BaseWebActivity::class.java).putExtra("url", it))
             },
             onError = {
-
+                it?.let { it1 -> showToast(it1) }
             }
         )
     }
