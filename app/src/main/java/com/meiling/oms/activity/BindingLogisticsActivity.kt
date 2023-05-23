@@ -84,13 +84,22 @@ class BindingLogisticsActivity :
 
         }
         dialog.show(supportFragmentManager)
+
     }
 
     override fun onRightClick(view: View) {
         super.onRightClick(view)
         if (!from.isNullOrBlank()) {
-            startActivity(Intent(this, LoginActivity::class.java))
-            ActivityUtils.finishAllActivities()
+            val dialog: MineExitDialog =
+                MineExitDialog().newInstance("温馨提示", "确定跳过新建发货门店和绑定物流流程？\n" +
+                        "（登录后可在「我的」中进行设置）", "取消", "确认", false)
+            dialog.setOkClickLister {
+                dialog.dismiss()
+                startActivity(Intent(this, LoginActivity::class.java))
+                ActivityUtils.finishAllActivities()
+            }
+            dialog.show(supportFragmentManager)
+
         }
     }
 

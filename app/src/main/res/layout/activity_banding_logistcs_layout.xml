@@ -15,6 +15,7 @@
         app:leftIcon="@drawable/bar_arrows_left_white"
         android:background="#FF4545"
         app:rightTitleSize="@dimen/sp_28"
+        app:rightTitleColor="@color/white"
         app:titleColor="@color/white"
         app:title="绑定物流" />
 

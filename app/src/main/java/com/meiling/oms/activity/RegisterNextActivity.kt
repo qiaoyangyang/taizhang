@@ -339,7 +339,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                     .putExtra("adminViewId",it!!.adminUserViewId)
                     .putExtra("fromIntent","regist")
                     .putExtra("account",phone)
-                    .putExtra("pwd",mViewModel.businessDto.value!!.password?.trim().toString())
+                    .putExtra("pwd", String(Base64.decode(it!!.secret,0)))
                     .putExtra("name", mViewModel.businessDto.value!!.enterpriseName.toString()))
             },
             onError = {
