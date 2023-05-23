@@ -57,12 +57,17 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
             mDatabind.txtRechargeOther.isFocusable = false
             if (!isSelectMoney) {
                 money = mDatabind.txtRechargeOther.text.toString()
-                for (rechargeDto in rechargeAdapter.data) {
-                    if (rechargeDto.payAmount?.toInt()==money.toDouble().toInt()) {
-                        giveMoney = rechargeDto.presentedAmount?.toInt().toString()
-                        break
-                    } else {
-                        giveMoney = "0"
+                if (money.isNullOrBlank()){
+                    showToast("请选择或者输入充值金额")
+                    return@setSingleClickListener
+                }else{
+                    for (rechargeDto in rechargeAdapter.data) {
+                        if (rechargeDto.payAmount?.toInt()==money.toDouble().toInt()) {
+                            giveMoney = rechargeDto.presentedAmount?.toInt().toString()
+                            break
+                        } else {
+                            giveMoney = "0"
+                        }
                     }
                 }
             }

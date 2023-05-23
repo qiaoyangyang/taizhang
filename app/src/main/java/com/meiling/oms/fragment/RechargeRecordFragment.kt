@@ -55,7 +55,7 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
                     }else{
                         holder .setGone(R.id.txt_service_charge_give,false)
                     }
-                    holder.setText(R.id.txt_service_charge_give, "+" + item.payAmount)
+                    holder.setText(R.id.txt_service_charge_give, "+" + item.presentedAmount)
                     holder.setText(R.id.txt_recharge_name, item.createTime)
                 }
             }

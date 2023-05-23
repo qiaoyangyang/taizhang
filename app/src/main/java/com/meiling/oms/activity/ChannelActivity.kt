@@ -25,9 +25,7 @@ import com.meiling.oms.R
 import com.meiling.oms.bean.ChannShop
 import com.meiling.oms.bean.ChannelX
 import com.meiling.oms.databinding.ActivityChannelBinding
-import com.meiling.oms.dialog.BindMeituanShopDialog
-import com.meiling.oms.dialog.MineExitDialog
-import com.meiling.oms.dialog.ShopDialog
+import com.meiling.oms.dialog.*
 import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.viewmodel.StoreManagementViewModel
 import com.meiling.oms.widget.setSingleClickListener
@@ -62,7 +60,9 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                 })
                 bindMeituanShopDialog.show(supportFragmentManager)
             }else if (channelX.id=="100"){
-                startActivity(Intent(this,LebaiRetailBindingActivity::class.java))
+                AboutKFELMDialog().newInstance().show(supportFragmentManager)
+
+//                startActivity(Intent(this,LebaiRetailBindingActivity::class.java))
             } else {
                 mViewModel.urlauth(channelX.id!!, shop?.id!!, channelX?.id!!)
             }
