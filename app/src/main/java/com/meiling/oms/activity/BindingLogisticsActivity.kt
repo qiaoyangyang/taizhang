@@ -164,9 +164,9 @@ class BindingLogisticsActivity :
                 onError = {}
             )
         }else{
+            mDatabind.shopName2.text=shopName
             mDatabind.shopName.visibility=View.VISIBLE
             mDatabind.shopName2.visibility=View.VISIBLE
-            mDatabind.shopName2.text=shopName
             mDatabind.TitleBar.rightTitle = "跳过"
             getLogisticsList(poid)
         }

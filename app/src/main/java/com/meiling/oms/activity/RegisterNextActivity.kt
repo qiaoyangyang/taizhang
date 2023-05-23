@@ -50,7 +50,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     lateinit var mDatabind: ActivityRegisterNextBinding
     var phone: String? = ""
     override fun initView(savedInstanceState: Bundle?) {
-           ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
+        ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
     }
 
     override fun onLeftClick(view: View) {
@@ -58,17 +58,18 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
         dialog.setOkClickLister {
             dialog.dismiss()
-            startActivity(Intent(this,LoginActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             ActivityUtils.finishAllActivities()
         }
         dialog.show(supportFragmentManager)
     }
+
     override fun onBackPressed() {
         val dialog: MineExitDialog =
             MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
         dialog.setOkClickLister {
             dialog.dismiss()
-            startActivity(Intent(this,LoginActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             ActivityUtils.finishAllActivities()
         }
         dialog.show(supportFragmentManager)
@@ -85,7 +86,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         super.initData()
         phone = intent?.getStringExtra("phone")
         mDatabind.viewModel = mViewModel
-        mViewModel.businessDto.value!!.userName=phone
+        mViewModel.businessDto.value!!.userName = phone
         //选择所属行业
         mDatabind.txtIndustryRight.setOnClickListener {
             mViewModel.launchRequest(
@@ -118,33 +119,35 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             )
         }
         mDatabind.txtAddImg.setOnClickListener {
-            mDatabind.addImg.visibility=View.GONE
-            mDatabind.addImg2.visibility=View.VISIBLE
-            mDatabind.closeImg.visibility=View.GONE
-            mDatabind.closeImg2.visibility=View.VISIBLE
-            mViewModel.businessDto.value!!.logo = "https://static.igoodsale.com/default-logo-header.png"
+            mDatabind.addImg.visibility = View.GONE
+            mDatabind.addImg2.visibility = View.VISIBLE
+            mDatabind.closeImg.visibility = View.GONE
+            mDatabind.closeImg2.visibility = View.VISIBLE
+            mViewModel.businessDto.value!!.logo =
+                "https://static.igoodsale.com/default-logo-header.png"
         }
 
         mDatabind.closeImg.setOnClickListener {
             GlideAppUtils.loadResUrl(mDatabind.addImg, R.mipmap.addimg)
-            mDatabind.addImg.visibility=View.VISIBLE
-            mDatabind.addImg2.visibility=View.GONE
-            mDatabind.closeImg.visibility=View.GONE
-            mDatabind.closeImg2.visibility=View.GONE
-            mViewModel.businessDto.value!!.logo =""
+            mDatabind.addImg.visibility = View.VISIBLE
+            mDatabind.addImg2.visibility = View.GONE
+            mDatabind.closeImg.visibility = View.GONE
+            mDatabind.closeImg2.visibility = View.GONE
+            mViewModel.businessDto.value!!.logo = ""
         }
         mDatabind.closeImg2.setOnClickListener {
             GlideAppUtils.loadResUrl(mDatabind.addImg, R.mipmap.addimg)
-            mDatabind.addImg.visibility=View.VISIBLE
-            mDatabind.addImg2.visibility=View.GONE
-            mDatabind.closeImg.visibility=View.GONE
-            mDatabind.closeImg2.visibility=View.GONE
-            mViewModel.businessDto.value!!.logo =""
+            mDatabind.addImg.visibility = View.VISIBLE
+            mDatabind.addImg2.visibility = View.GONE
+            mDatabind.closeImg.visibility = View.GONE
+            mDatabind.closeImg2.visibility = View.GONE
+            mViewModel.businessDto.value!!.logo = ""
         }
 
         //选择图片
         mDatabind.addImg.setOnClickListener {
-            XXPermissions.with(this).permission(PermissionUtilis.Group.RICHSCAN,PermissionUtilis.Group.STORAGE)
+            XXPermissions.with(this)
+                .permission(PermissionUtilis.Group.RICHSCAN, PermissionUtilis.Group.STORAGE)
                 .request(object : OnPermissionCallback {
                     override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
                         if (!allGranted) {
@@ -155,33 +158,86 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                             .openGallery(SelectMimeType.ofImage())
                             .setImageEngine(GlideEngine.createGlideEngine())
                             .setMaxSelectNum(1)
-                            .setCompressEngine(ImageFileCompressEngine())
+                            .setCompressEngine(object : CompressFileEngine {
+                                override fun onStartCompress(
+                                    context: Context?,
+                                    source: java.util.ArrayList<Uri>?,
+                                    call: OnKeyValueResultCallbackListener?,
+                                ) {
+                                    Luban.with(context).load(source).ignoreBy(2048)
+                                        .setCompressListener(object : OnNewCompressListener {
+                                            override fun onStart() {
+                                            }
+
+                                            override fun onSuccess(
+                                                source: String?,
+                                                compressFile: File?,
+                                            ) {
+                                                Log.e("compress", "压缩成功")
+                                                call?.onCallback(source, compressFile?.absolutePath)
+                                                if(compressFile!=null){
+                                                    GlideAppUtils.loadUrl(mDatabind.addImg,
+                                                        compressFile?.absolutePath!!)
+                                                    val file = File(compressFile?.absolutePath)
+                                                    val part = MultipartBody.Part.createFormData(
+                                                        "file",
+                                                        file.name,
+                                                        RequestBody.create("multipart/form-data".toMediaTypeOrNull(),
+                                                            file)
+                                                    )
+                                                    mViewModel.launchRequest(
+                                                        {
+                                                            loginService.upload("", part)
+                                                        },
+                                                        onSuccess = {
+                                                            showToast("上传成功")
+                                                            mDatabind.closeImg.visibility = View.VISIBLE
+                                                            mViewModel.businessDto.value!!.logo = it
+                                                        },
+                                                        onError = {
+                                                            showToast("上传失败")
+                                                        }
+                                                    )
+                                                }
+
+                                            }
+
+                                            override fun onError(source: String?, e: Throwable?) {
+                                                Log.e("compress", "压缩失败")
+                                                call?.onCallback(source, null)
+                                            }
+
+                                        }).launch()
+                                }
+
+                            })
                             .setSandboxFileEngine(MeSandboxFileEngine())
                             .setSelectionMode(SelectModeConfig.SINGLE)
                             .isPreviewImage(true)
                             .forResult(object : OnResultCallbackListener<LocalMedia> {
                                 override fun onResult(result: java.util.ArrayList<LocalMedia>?) {
                                     if (result?.isNotEmpty() == true) {
-                                        GlideAppUtils.loadUrl(mDatabind.addImg, result.get(0).compressPath)
 
-                                        val file = File(result.get(0).compressPath)
-                                        val part = MultipartBody.Part.createFormData(
-                                            "file",
-                                            result.get(0).fileName, RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
-                                        )
-                                        mViewModel.launchRequest(
-                                            {
-                                                loginService.upload("",part)
-                                            },
-                                            onSuccess = {
-                                                showToast("上传成功")
-                                                mDatabind.closeImg.visibility=View.VISIBLE
-                                                mViewModel.businessDto.value!!.logo = it
-                                            },
-                                            onError = {
-                                                showToast("上传失败")
-                                            }
-                                        )
+//                                        GlideAppUtils.loadUrl(mDatabind.addImg, result.get(0).compressPath)
+
+//                                        val file = File(result.get(0).compressPath)
+//                                        val part = MultipartBody.Part.createFormData(
+//                                            "file",
+//                                            result.get(0).fileName, RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+//                                        )
+//                                        mViewModel.launchRequest(
+//                                            {
+//                                                loginService.upload("",part)
+//                                            },
+//                                            onSuccess = {
+//                                                showToast("上传成功")
+//                                                mDatabind.closeImg.visibility=View.VISIBLE
+//                                                mViewModel.businessDto.value!!.logo = it
+//                                            },
+//                                            onError = {
+//                                                showToast("上传失败")
+//                                            }
+//                                        )
                                     }
                                 }
 
@@ -195,7 +251,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
                     override fun onDenied(
                         permissions: MutableList<String>,
-                        doNotAskAgain: Boolean
+                        doNotAskAgain: Boolean,
                     ) {
                         if (doNotAskAgain) {
                             showToast("被永久拒绝授权，请手动授予录音和日历权限")
@@ -214,9 +270,9 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         }
 
 
-        mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
-        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
-        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
+        mDatabind.btnNext.falseBackground(mDatabind.edtShopName, { tenantType1() })
+        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead, { tenantType1() })
+        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName, { tenantType1() })
 
 
         //注册
@@ -280,11 +336,10 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
     }
 
-    fun tenantType1():Boolean{
-        var canEnable=!mDatabind.edtShopName.text.toString().trim().isNullOrBlank()
-                &&!mDatabind.edtTenantHead.text.toString().trim().isNullOrBlank()
-                &&!mDatabind.editAdministratorsLoginName.text.toString().isNullOrBlank()
-        Log.e("qyy",""+canEnable)
+    fun tenantType1(): Boolean {
+        var canEnable = !mDatabind.edtShopName.text.toString().trim().isNullOrBlank()
+                && !mDatabind.edtTenantHead.text.toString().trim().isNullOrBlank()
+                && !mDatabind.editAdministratorsLoginName.text.toString().isNullOrBlank()
         return canEnable
     }
 
@@ -332,11 +387,11 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 //                    .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
                 startActivity(Intent(this,
                     NewlyBuiltStoreActivity::class.java)
-                    .putExtra("tenantId",it!!.tenantId)
-                    .putExtra("adminViewId",it!!.adminUserViewId)
-                    .putExtra("fromIntent","regist")
-                    .putExtra("account",phone)
-                    .putExtra("pwd", String(Base64.decode(it!!.secret,0)))
+                    .putExtra("tenantId", it!!.tenantId)
+                    .putExtra("adminViewId", it!!.adminUserViewId)
+                    .putExtra("fromIntent", "regist")
+                    .putExtra("account", phone)
+                    .putExtra("pwd", String(Base64.decode(it!!.secret, 0)))
                     .putExtra("name", mViewModel.businessDto.value!!.enterpriseName.toString()))
             },
             onError = {
@@ -357,55 +412,64 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
 }
 
-fun Button.falseBackground(et: EditText, method:()->Boolean){
-    val btn=this
+fun Button.falseBackground(et: EditText, method: () -> Boolean) {
+    val btn = this
     et.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
 
         }
+
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         }
+
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            if(method()){
+            if (method()) {
                 btn.setBackgroundResource(R.drawable.login_btn_select_true)
-            }else{
+            } else {
                 btn.setBackgroundResource(R.drawable.login_btn_select_false)
             }
         }
     })
 }
 
-class MeSandboxFileEngine : UriToFileTransformEngine{
+class MeSandboxFileEngine : UriToFileTransformEngine {
     override fun onUriToFileAsyncTransform(
         context: Context?,
         srcPath: String?,
         mineType: String?,
         call: OnKeyValueResultCallbackListener?,
     ) {
-        call?.onCallback(srcPath,SandboxTransformUtils.copyPathToSandbox(context,srcPath,mineType))
+        call?.onCallback(srcPath,
+            SandboxTransformUtils.copyPathToSandbox(context, srcPath, mineType))
     }
 
 }
-class ImageFileCompressEngine : CompressFileEngine{
+
+class ImageFileCompressEngine : CompressFileEngine {
     override fun onStartCompress(
         context: Context?,
         source: java.util.ArrayList<Uri>?,
         call: OnKeyValueResultCallbackListener?,
     ) {
-        Luban.with(context).load(source).ignoreBy(2048).setCompressListener(object :OnNewCompressListener{
-            override fun onStart() {
-            }
+        Luban.with(context).load(source).ignoreBy(2048)
+            .setCompressListener(object : OnNewCompressListener {
+                override fun onStart() {
+                }
 
-            override fun onSuccess(source: String?, compressFile: File?) {
-                call?.onCallback(source,compressFile?.absolutePath)
-            }
+                override fun onSuccess(source: String?, compressFile: File?) {
+                    Log.e("compress", "压缩成功")
+                    Log.e("compress",
+                        "压缩成功compressFile?.absolutePath=" + compressFile?.absolutePath)
+                    call?.onCallback(source, compressFile?.absolutePath)
 
-            override fun onError(source: String?, e: Throwable?) {
-                Log.e("onError","压缩失败")
-                call?.onCallback(source,null)
-            }
+                }
 
-        }).launch()
+                override fun onError(source: String?, e: Throwable?) {
+                    Log.e("compress", "压缩失败")
+                    call?.onCallback(source, null)
+                }
+
+            }).launch()
     }
 
 }

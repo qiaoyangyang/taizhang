@@ -41,17 +41,21 @@
                 android:visibility="gone"
                 android:text="发货门店："/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/shopName"
+                app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginTop="15dp"
-                android:layout_marginLeft="15dp"
                 android:id="@+id/shopName2"
-                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_28"
-                tools:text="123"/>
+                app:layout_constraintHorizontal_bias="0"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:visibility="gone"
+                android:layout_marginRight="15dp"
+                tools:text="123123131231231313131231231312313121312313"/>
             <com.hjq.shape.layout.ShapeConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -156,11 +160,12 @@
             </com.hjq.shape.layout.ShapeConstraintLayout>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/outShpLay2"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                android:gravity="center"
                 android:id="@+id/bindRefresh"
                 android:text="绑定完成后,点击刷新,可获取绑定结果"
                 android:layout_marginTop="10dp"
