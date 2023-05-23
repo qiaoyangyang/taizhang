@@ -54,7 +54,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
             OrderCreateGoodsDto(
                 name = "默认商品",
                 num = 1,
-                "0",
+                "1",
                 totalPrice = "",
                 "默认规格",
                 imgUrl = "https://static.igoodsale.com/default-goods.png"
@@ -267,10 +267,14 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                     if (actionId == 0 || actionId == 3) {
                         // 在这里执行你的逻辑操作
                         if (price.text.toString().isEmpty()) {
-                            price.setText("0")
-                            price.setSelection(0)
+                            price.setText("0.01")
+//                            price.setSelection(price.text.toString().length)
                             price.isFocusable = false
-                            item.salePrice = "0"
+                            item.salePrice = "0.01"
+                        } else if (price.text.toString() == "0.0" ||  price.text.toString() == "0.00"|| price.text.toString()=="0") {
+                            price.setText("0.01")
+                            price.isFocusable = false
+                            item.salePrice = "0.01"
                         }
                     }
                     false
@@ -280,14 +284,14 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                     price.isFocusableInTouchMode = true
                     price.requestFocus()
                     price.findFocus()
-                    price.setSelection(1)
+                    price.setSelection(item.salePrice.length)
                     KeyBoardUtil.openKeyBord(price, context)
                 }
                 price.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
                     if (!hasFocus) {
                         val inputText = price.text.toString()
                         if (inputText.isEmpty()) {
-                            price.setText("0")
+                            price.setText("0.01")
                             KeyBoardUtil.closeKeyBord(price, context)
                         }
                     }
@@ -329,9 +333,13 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
 
                     override fun keyBoardHide(height: Int) {
                         if (TextUtils.isEmpty(price.text.toString())) {
-                            price.setText("0")
-                            price.setSelection(0)
-                            item.salePrice = "0"
+                            price.setText("0.01")
+//                            price.setSelection(price.text.toString().length)
+                            item.salePrice = "0.01"
+                        } else if (price.text.toString() == "0.0" || price.text.toString() == "0.00"|| price.text.toString()=="0") {
+                            price.setText("0.01")
+                            price.isFocusable = false
+                            item.salePrice = "0.01"
                         }
                         price.isFocusable = false
                         num.isFocusable = false
@@ -390,7 +398,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                             // 不合法的数字格式，禁止输入
                             val newText = input.substring(0, input.length - 1)
                             price.setText(newText)
-//                            price.setSelection(newText.length)
+                            price.setSelection(price.text.length)
                             item.salePrice = newText
                             return
                         }
@@ -400,9 +408,9 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                         if (prefix.length > 5 || prefix == "00" || prefix == "000" || prefix == "0000" || prefix == "00000") {
                             // 不满足要求，禁止输入
                             val newText = input.substring(0, input.length - 1)
-                            price.setText(newText)
-                            price.setSelection(newText.length)
-                            item.salePrice = newText
+                            price.setText("1")
+                            price.setSelection(1)
+                            item.salePrice = "1"
                             return
                         }
 
@@ -412,9 +420,9 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                         if (!decimalMatcher.matches()) {
                             // 不合法的小数格式，禁止输入
                             val newText = input.substring(0, input.length - 1)
-                            price.setText(newText)
-                            price.setSelection(newText.length)
-                            item.salePrice = newText
+                            price.setText("0.01")
+                            price.setSelection(3)
+                            item.salePrice = "0.01"
                             return
                         }
 
@@ -466,10 +474,10 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                         if (inputText.isEmpty()) {
                             return
                         }
-                        if (inputText.length>100){
-                            item.name =  inputText.substring(0, s.toString().length - 1)
-                        }else{
-                            item.name  = s.toString() ?: "默认商品"
+                        if (inputText.length > 100) {
+                            item.name = inputText.substring(0, s.toString().length - 1)
+                        } else {
+                            item.name = s.toString() ?: "默认商品"
                         }
 //                        item.name = s.toString() ?: "默认商品"
 //                        goodsName.setSelection(item.name.toString().length)
@@ -619,7 +627,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
             var orderCreate = OrderCreateGoodsDto(
                 name = "默认商品",
                 num = 1,
-                salePrice = "0",
+                salePrice = "1",
                 totalPrice = "",
                 goodsSpec = "默认规格",
                 imgUrl = "https://static.igoodsale.com/default-goods.png"
