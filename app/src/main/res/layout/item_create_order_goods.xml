@@ -49,6 +49,7 @@
             app:shape_radius="@dimen/dp_8"
             app:shape_strokeColor="@color/home_F0F0F0"
             app:shape_strokeWidth="1dp"
+            android:maxLength="100"
             android:paddingVertical="@dimen/dp_8"
             android:paddingHorizontal="@dimen/dp_16"
             app:layout_constraintLeft_toRightOf="@+id/img_order_goods_icon"

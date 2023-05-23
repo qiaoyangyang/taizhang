@@ -466,7 +466,12 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                         if (inputText.isEmpty()) {
                             return
                         }
-                        item.name = s.toString() ?: "默认商品"
+                        if (inputText.length>100){
+                            item.name =  inputText.substring(0, s.toString().length - 1)
+                        }else{
+                            item.name  = s.toString() ?: "默认商品"
+                        }
+//                        item.name = s.toString() ?: "默认商品"
 //                        goodsName.setSelection(item.name.toString().length)
                     }
                 })
@@ -475,28 +480,41 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
         orderGoodsAdapter.setNewInstance(goodsList)
         mDatabind.rvCreateGoods.adapter = orderGoodsAdapter
 
-        orderGoodsAdapter.addChildClickViewIds(
-            R.id.edt_add_jian,
-            R.id.edt_add_jia,
-            R.id.img_order_goods_select
-        )
-
-        orderGoodsAdapter.setOnItemChildClickListener { adapter, view, position ->
-            when (view.id) {
-                R.id.img_order_goods_select -> {
-                    if (orderGoodsAdapter.data.size > 1) {
-                        (adapter.data[position] as OrderCreateGoodsDto).isSelectGoods =
-                            !(adapter.data[position] as OrderCreateGoodsDto).isSelectGoods
-                        orderGoodsAdapter.notifyItemChanged(position)
-                    }
-                    if (orderGoodsAdapter.data.count { it.isSelectGoods } > 0) {
-                        mDatabind.txtDeleteGoods.visibility = View.VISIBLE
-                    } else {
-                        mDatabind.txtDeleteGoods.visibility = View.GONE
-                    }
-                    orderGoodsAdapter.notifyDataSetChanged()
-                }
+//        orderGoodsAdapter.addChildClickViewIds(
+//            R.id.edt_add_jian,
+//            R.id.edt_add_jia,
+//            R.id.img_order_goods_select
+//        )
+//
+//        orderGoodsAdapter.setOnItemChildClickListener { adapter, view, position ->
+//            when (view.id) {
+//                R.id.img_order_goods_select -> {
+//                    if (orderGoodsAdapter.data.size > 1) {
+//                        (adapter.data[position] as OrderCreateGoodsDto).isSelectGoods =
+//                            !(adapter.data[position] as OrderCreateGoodsDto).isSelectGoods
+//                        orderGoodsAdapter.notifyItemChanged(position)
+//                    }
+//                    if (orderGoodsAdapter.data.count { it.isSelectGoods } > 0) {
+//                        mDatabind.txtDeleteGoods.visibility = View.VISIBLE
+//                    } else {
+//                        mDatabind.txtDeleteGoods.visibility = View.GONE
+//                    }
+//                    orderGoodsAdapter.notifyDataSetChanged()
+//                }
+//            }
+//        }
+        orderGoodsAdapter.setOnItemClickListener { adapter, view, position ->
+            if (orderGoodsAdapter.data.size > 1) {
+                (adapter.data[position] as OrderCreateGoodsDto).isSelectGoods =
+                    !(adapter.data[position] as OrderCreateGoodsDto).isSelectGoods
+                orderGoodsAdapter.notifyItemChanged(position)
             }
+            if (orderGoodsAdapter.data.count { it.isSelectGoods } > 0) {
+                mDatabind.txtDeleteGoods.visibility = View.VISIBLE
+            } else {
+                mDatabind.txtDeleteGoods.visibility = View.GONE
+            }
+            orderGoodsAdapter.notifyDataSetChanged()
         }
     }
 

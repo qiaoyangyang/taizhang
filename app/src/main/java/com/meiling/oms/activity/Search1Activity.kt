@@ -292,16 +292,18 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                         holder.setGone(R.id.txt_order_dis, true)
                         changeOrder.visibility = View.INVISIBLE
                         btnSendDis.text = "确认出货"
+                        btnCancelDis.visibility = View.GONE
                         btnSendDis.visibility = View.VISIBLE
                         holder.setText(R.id.txt_order_delivery_state, "自提")
                         holder.setGone(R.id.txt_order_delivery_address, true)
                     } else {
-                        changeOrder.visibility = View.VISIBLE
                         holder.setText(R.id.txt_order_delivery_type, "配送")
                         holder.setText(R.id.txt_order_delivery_1, "前送达")
                         holder.setGone(R.id.txt_order_dis, false)
                         holder.setText(R.id.txt_order_delivery_state, "待配送")
                         holder.setGone(R.id.txt_order_delivery_address, false)
+                        btnCancelDis.visibility = View.GONE
+                        changeOrder.visibility = View.VISIBLE
                     }
                     when (item.order!!.logisticsStatus) {
                         "0" -> {
@@ -313,10 +315,10 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                                 changeOrder.visibility = View.INVISIBLE
                                 btnSendDis.text = "确认出货"
                                 btnSendDis.visibility = View.VISIBLE
+                                btnCancelDis.visibility = View.GONE
                                 holder.setText(R.id.txt_order_delivery_state, "自提")
                                 holder.setGone(R.id.txt_order_delivery_address, true)
                             } else {
-                                changeOrder.visibility = View.VISIBLE
                                 holder.setText(R.id.txt_order_delivery_type, "配送")
                                 holder.setText(R.id.txt_order_delivery_1, "前送达")
                                 holder.setGone(R.id.txt_order_dis, false)

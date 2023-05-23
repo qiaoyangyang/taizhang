@@ -345,6 +345,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         holder.setGone(R.id.txt_order_dis, true)
                         changeOrder.visibility = View.INVISIBLE
                         btnSendDis.text = "确认出货"
+                        btnCancelDis.visibility = View.GONE
                         btnSendDis.visibility = View.VISIBLE
                         holder.setText(R.id.txt_order_delivery_state, "自提")
                         holder.setGone(R.id.txt_order_delivery_address, true)
@@ -368,6 +369,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                                 changeOrder.visibility = View.INVISIBLE
                                 btnSendDis.text = "确认出货"
                                 btnSendDis.visibility = View.VISIBLE
+                                btnCancelDis.visibility = View.GONE
                                 holder.setText(R.id.txt_order_delivery_state, "自提")
                                 holder.setGone(R.id.txt_order_delivery_address, true)
                             } else {
