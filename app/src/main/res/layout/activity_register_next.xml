@@ -211,6 +211,7 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtIndustry"
                     app:layout_constraintEnd_toStartOf="@+id/txtIndustryRight2"
                     android:hint="请选择"
+                    android:gravity="right"
                     android:textColorHint="#999999"
                      />
 

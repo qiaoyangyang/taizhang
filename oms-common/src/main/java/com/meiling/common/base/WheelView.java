@@ -345,6 +345,9 @@ public class WheelView extends View implements IWheelViewSetting {
         if (!isEmpty()) {
             averageShowTextLength = calAverageShowTextLength();
             invalidate();
+        }else{
+            averageShowTextLength=0;
+            invalidate();
         }
     }
 

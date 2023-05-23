@@ -53,14 +53,24 @@ class SelectIndustryShopDialog : BaseNiceDialog() {
         })
         cityid_view?.setOnSelectedListener { context, selectedIndex ->
             loadData1(wheel_view_center!!, shopBean, selectedIndex)
+            Log.d("yjk","context---")
         }
         wheel_view_center?.setOnSelectedListener { context, selectedIndex ->
-            Log.d("yjk", "convertView: $selectedIndex")
+
         }
         btn_ok_exit?.setOnClickListener {
             if (onresilience != null) {
+                if(shopBean[cityid_view?.selectedIndex!!].children==null){
+                    onresilience?.resilience(
+                        0,
+                        "",
+                        0,
+                        Children(name=shopBean[cityid_view?.selectedIndex!!].name,id=shopBean[cityid_view?.selectedIndex!!].id)
+                    )
+                    dismiss()
+                    return@setOnClickListener
+                }
                 var shop = shopBean[cityid_view?.selectedIndex!!].children?.get(wheel_view_center!!.selectedIndex) as Children
-
                 onresilience?.resilience(
                     cityid_view?.selectedIndex!!,
                     shopBean.get(cityid_view?.selectedIndex!!).name!!,
@@ -88,14 +98,17 @@ class SelectIndustryShopDialog : BaseNiceDialog() {
     }
 
     private fun loadData1(wheelItemView: WheelItemView, label: ArrayList<Children>, int: Int) {
-        val items = arrayOfNulls<Children>(label.get(int)!!.children!!.size)
-
-        label.get(int).children?.forEachIndexed { index, shop ->
-            items[index] = shop
+        if(label.get(int)!!.children==null){
+            wheelItemView.setItems(arrayOfNulls<Children>(0))
+        }else{
+            val items = arrayOfNulls<Children>(label.get(int)!!.children!!.size)
+            label.get(int).children?.forEachIndexed { index, shop ->
+                items[index] = shop
+            }
+            wheelItemView.setItems(items)
         }
 
 
-        wheelItemView.setItems(items)
     }
 
     fun setOnresilience(onresilience: Onresilience) {
