@@ -98,6 +98,7 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
             mDatabind.txtRechargeOther.isFocusableInTouchMode = true
             mDatabind.txtRechargeOther.requestFocus()
             mDatabind.txtRechargeOther.findFocus()
+            KeyBoardUtil.openKeyBord(mDatabind.txtRechargeOther, this)
         }
 
 
@@ -109,7 +110,7 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
                     moneyDto.select = false
                     isSelectMoney = false
                     rechargeAdapter.notifyDataSetChanged()
-                    KeyBoardUtil.openKeyBord(mDatabind.txtRechargeOther, this)
+//                    KeyBoardUtil.openKeyBord(mDatabind.txtRechargeOther, this)
                 }
 //                v?.setBackgroundResource(R.drawable.recharge_bg_select_true);
             } else {

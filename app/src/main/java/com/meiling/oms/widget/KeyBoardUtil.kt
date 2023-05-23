@@ -41,7 +41,7 @@ object KeyBoardUtil {
     /**
      * 关闭软键盘
      */
-    fun openKeyBoard(context: Context, view: TextView) {
+    fun closeKeyBoard(context: Context, view: TextView) {
         view.inputType = InputType.TYPE_CLASS_NUMBER
         val imm = getSystemService(context,Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)

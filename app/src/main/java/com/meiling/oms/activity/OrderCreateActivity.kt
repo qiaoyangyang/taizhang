@@ -19,7 +19,6 @@ import com.codbking.widget.DatePickDialog
 import com.codbking.widget.bean.DateType
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
-import com.meiling.common.GlideApp
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.*
 import com.meiling.common.utils.GlideAppUtils
@@ -641,7 +640,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                 imgUrl = "https://static.igoodsale.com/default-goods.png"
             )
             orderGoodsAdapter.addData(orderCreate)
-            KeyBoardUtil.openKeyBoard(this, mDatabind.txtAddGoods)
+            KeyBoardUtil.closeKeyBoard(this, mDatabind.txtAddGoods)
             orderGoodsAdapter.notifyDataSetChanged()
         }
 
