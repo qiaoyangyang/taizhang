@@ -318,7 +318,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             }
                             "20" -> {
                                 ARouter.getInstance().build("/app/OrderDisAddTipActivity")
-                                    .withSerializable("kk", item.order).navigation()
+                                    .withSerializable("kk", item).navigation()
                             }
 
                             "70" -> {

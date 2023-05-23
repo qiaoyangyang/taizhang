@@ -119,43 +119,45 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
 
     @SuppressLint("SetTextI18n")
     override fun createObserver() {
-        mViewModel.rechargeDto.onStart.observe(this) {
+        mViewModel.balance.onStart.observe(this) {
             showLoading("加载中")
         }
-        mViewModel.rechargeDto.onSuccess.observe(this) {
+//        mViewModel.rechargeDto.onSuccess.observe(this) {
+//            disLoading()
+//            val jsonObject = JSONObject(it)
+//            var from = jsonObject.get("form")
+//            PayUtils.aliPay(this,
+//                from.toString(),
+//                object : Observer<AliPayResp> {
+//                    override fun onSubscribe(d: Disposable) {
+//                    }
+//
+//                    override fun onError(e: Throwable) {
+//                    }
+//
+//                    override fun onComplete() {
+//                    }
+//
+//                    override fun onNext(t: AliPayResp) {
+////                        if (t.isSuccess) {
+//                        ARouter.getInstance().build("/app/RechargeFinishActivity")
+//                            .navigation()
+////                        } else {
+//////                            showToast(t.message)
+////                            ARouter.getInstance().build("/app/RechargeFinishActivity")
+////                                .navigation()
+////                        }
+//                    }
+//
+//                }
+//            )
+//        }
+        mViewModel.balance.onError.observe(this) {
             disLoading()
-            val jsonObject = JSONObject(it)
-            var from = jsonObject.get("form")
-            PayUtils.aliPay(this,
-                from.toString(),
-                object : Observer<AliPayResp> {
-                    override fun onSubscribe(d: Disposable) {
-                    }
-
-                    override fun onError(e: Throwable) {
-                    }
-
-                    override fun onComplete() {
-                    }
-
-                    override fun onNext(t: AliPayResp) {
-//                        if (t.isSuccess) {
-                        ARouter.getInstance().build("/app/RechargeFinishActivity")
-                            .navigation()
-//                        } else {
-////                            showToast(t.message)
-//                            ARouter.getInstance().build("/app/RechargeFinishActivity")
-//                                .navigation()
-//                        }
-                    }
-
-                }
-            )
-        }
-        mViewModel.rechargeDto.onError.observe(this) {
-            disLoading()
+            showToast(it.msg)
         }
         mViewModel.balance.onSuccess.observe(this) {
+            disLoading()
             mDatabind.txtBalance.text = it.payAmount
             mDatabind.txtServiceFee.text = it.unitPrice
             mDatabind.txtFreezeAmount.text = "已冻结 ${it.freezeAmount}"

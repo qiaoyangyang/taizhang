@@ -49,7 +49,13 @@ class RechargeRecordFragment : BaseFragment<RechargeViewModel, FragmentRechargeR
                 LoadMoreModule {
                 override fun convert(holder: BaseViewHolder, item: PageData) {
                     holder.setText(R.id.txt_channel_name, item.payTypeName)
-                    holder.setText(R.id.txt_service_charge_money, "+" + item.payAmount)
+                    holder.setText(R.id.txt_service_charge_money,  item.payAmount)
+                    if (item.presentedAmount?.toDouble()?.toInt()==0){
+                       holder .setGone(R.id.txt_service_charge_give,true)
+                    }else{
+                        holder .setGone(R.id.txt_service_charge_give,false)
+                    }
+                    holder.setText(R.id.txt_service_charge_give, "+" + item.payAmount)
                     holder.setText(R.id.txt_recharge_name, item.createTime)
                 }
             }

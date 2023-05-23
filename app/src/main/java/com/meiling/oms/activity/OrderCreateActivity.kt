@@ -297,7 +297,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                     goodsName.isFocusableInTouchMode = true
                     goodsName.requestFocus()
                     goodsName.findFocus()
-                    goodsName.setSelection(1)
+                    goodsName.setSelection(item.name.length)
                     KeyBoardUtil.openKeyBord(goodsName, context)
                 }
                 goodsName.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
@@ -315,6 +315,8 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                         price.isFocusable = false
                         if (goodsName.text.toString().isEmpty()) {
                             goodsName.setText("默认商品")
+                            goodsName.isFocusable = false
+                            item.name = "默认商品"
                         }
                     }
                     false
@@ -362,6 +364,10 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                         before: Int,
                         count: Int
                     ) {
+
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
                         val input = s.toString()
                         // 如果输入的内容为空，直接返回
                         if (input.isEmpty()) {
@@ -372,6 +378,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                         if (input == ".") {
                             price.setText("0.")
                             price.setSelection(1)
+                            item.salePrice = input
                             return
                         }
 
@@ -383,7 +390,8 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                             // 不合法的数字格式，禁止输入
                             val newText = input.substring(0, input.length - 1)
                             price.setText(newText)
-                            price.setSelection(newText.length)
+//                            price.setSelection(newText.length)
+                            item.salePrice = newText
                             return
                         }
 
@@ -394,6 +402,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                             val newText = input.substring(0, input.length - 1)
                             price.setText(newText)
                             price.setSelection(newText.length)
+                            item.salePrice = newText
                             return
                         }
 
@@ -405,6 +414,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                             val newText = input.substring(0, input.length - 1)
                             price.setText(newText)
                             price.setSelection(newText.length)
+                            item.salePrice = newText
                             return
                         }
 
@@ -413,6 +423,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                             // 超过两位小数，禁止输入第三位小数
                             val newText = input.substring(0, input.length - 1)
                             price.setText(newText)
+                            item.salePrice = newText
                             price.setSelection(newText.length)
                             return
                         }
@@ -422,14 +433,13 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                             // 不合法的数字格式，禁止输入
                             val newText = input.substring(0, input.length - 1)
                             price.setText(newText)
+                            item.salePrice = newText
                             price.setSelection(newText.length)
                             return
                         }
+                        item.salePrice = input
                     }
 
-                    override fun afterTextChanged(s: Editable?) {
-                        item.salePrice = s.toString() ?: "0"
-                    }
 
                 })
                 goodsName.addTextChangedListener(object : TextWatcher {
@@ -453,12 +463,11 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
 
                     override fun afterTextChanged(s: Editable?) {
                         val inputText = s.toString()
-                        if (inputText != null) {
-                            item.name = inputText
-                        } else {
-                            item.name = "默认商品"
+                        if (inputText.isEmpty()) {
+                            return
                         }
-                        goodsName.setSelection(item.name.toString().length)
+                        item.name = s.toString() ?: "默认商品"
+//                        goodsName.setSelection(item.name.toString().length)
                     }
                 })
             }

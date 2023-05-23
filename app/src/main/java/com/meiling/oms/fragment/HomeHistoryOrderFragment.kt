@@ -145,12 +145,12 @@ class HomeHistoryOrderFragment :
             mDatabind.tabLayout.updateTabBadge(1) {
                 badgeTextSize = 30f
                 badgeGravity = Gravity.RIGHT or Gravity.TOP
-                badgeText="100"
-//                badgeText = if (it.deliveryCancel == 0) {
-//                    null
-//                } else {
-//                    it.deliveryCancel.toString()
-//                }
+//                badgeText="100"
+                badgeText = if (it.deliveryCancel == 0) {
+                    null
+                } else {
+                    it.deliveryCancel.toString()
+                }
                 badgeOffsetX = 5
                 badgeOffsetY = 30
             }

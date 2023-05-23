@@ -39,7 +39,7 @@ data class FinancialRecordDetailListReq(
     @SerializedName("pageSize")
     var pageSize: String?,
 
-)
+    )
 
 
 data class BalanceDto(
@@ -70,39 +70,41 @@ data class RechargeRecordDto(
 
 data class PageData(
     @SerializedName("createTime")
-    var createTime: String?,
+    var createTime: String? = "",
     @SerializedName("createUserId")
-    var createUserId: Long?,
+    var createUserId: Long? = 0,
     @SerializedName("dealTradeNo")
-    var dealTradeNo: String?,
+    var dealTradeNo: String? = "",
     @SerializedName("id")
-    var id: Int?,
+    var id: Int? = 0,
     @SerializedName("payAmount")
-    var payAmount: String?,
+    var payAmount: String? = "",
     @SerializedName("payDate")
-    var payDate: String?,
+    var payDate: String? = "",
     @SerializedName("payEntrance")
-    var payEntrance: Int?,
+    var payEntrance: Int? = 0,
     @SerializedName("payEntranceName")
-    var payEntranceName: String?,
+    var payEntranceName: String? = "",
     @SerializedName("payType")
-    var payType: Int?,
+    var payType: Int? = 0,
     @SerializedName("payTypeName")
-    var payTypeName: String?,
+    var payTypeName: String? = "",
     @SerializedName("status")
-    var status: Int?,
+    var status: Int? = 0,
     @SerializedName("tenantId")
-    var tenantId: Int?,
+    var tenantId: Int? = 0,
     @SerializedName("tradeNo")
-    var tradeNo: String?,
+    var tradeNo: String? = "",
     @SerializedName("updateTime")
-    var updateTime: Long?,
+    var updateTime: Long? = 0,
     @SerializedName("updateUserId")
-    var updateUserId: Long?,
+    var updateUserId: Long? = 0,
     @SerializedName("username")
-    var username: String?,
+    var username: String? = "",
     @SerializedName("viewId")
-    var viewId: String?
+    var viewId: String? = "",
+    @SerializedName("presentedAmount")
+    var presentedAmount: Double? = 0.0
 )
 
 data class FinancialRecordDetail(
@@ -215,7 +217,6 @@ data class FinancialRecord(
             var viewId: String?
         )
     }
-
 
 
 }
