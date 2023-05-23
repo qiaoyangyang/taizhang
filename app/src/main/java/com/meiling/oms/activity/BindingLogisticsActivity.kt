@@ -277,7 +277,7 @@ class BindingLogisticsActivity :
                     { loginService.getCode(it, "uu") },
                     true,
                     onSuccess = {
-
+                        showToast("获取验证码成功")
                     },
                     onError = {
                         it?.let { it1 -> showToast(it1) }
