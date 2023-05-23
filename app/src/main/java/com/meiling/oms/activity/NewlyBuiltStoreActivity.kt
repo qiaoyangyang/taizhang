@@ -125,7 +125,11 @@ class NewlyBuiltStoreActivity :
                         "（登录后可在「我的」中进行设置）", "取消", "确认", false)
             dialog.setOkClickLister {
                 dialog.dismiss()
-                startActivity(Intent(this, LoginActivity::class.java))
+                startActivity(Intent(this, ForgetPwdFinishActivity::class.java)
+                    .putExtra("account", account)
+                    .putExtra("password", pwd)
+                    .putExtra("title", "注册成功")
+                    .putExtra("context", "注册成功"))
                 ActivityUtils.finishAllActivities()
             }
             dialog.show(supportFragmentManager)
@@ -323,6 +327,7 @@ class NewlyBuiltStoreActivity :
                     .putExtra("pwd", pwd)
                     .putExtra("name", name)
                     .putExtra("poid", it)
+                    .putExtra("shopName", mViewModel.PoiVoBean.value?.poiVo?.name)
                     .putExtra("from", fromIntent))
             } else
                 finish()

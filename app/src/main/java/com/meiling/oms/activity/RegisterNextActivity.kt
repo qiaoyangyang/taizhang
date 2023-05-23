@@ -218,6 +218,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
         mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
 
+
         //注册
         mDatabind.btnNext.setSingleClickListener(1000) {
 
@@ -280,15 +281,11 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     }
 
     fun tenantType1():Boolean{
-        return !mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.logo.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
-    }
-    fun tenantType2():Boolean{
-        return  !mViewModel.businessDto.value!!.logo.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
+        var canEnable=!mDatabind.edtShopName.text.toString().trim().isNullOrBlank()
+                &&!mDatabind.edtTenantHead.text.toString().trim().isNullOrBlank()
+                &&!mDatabind.editAdministratorsLoginName.text.toString().isNullOrBlank()
+        Log.e("qyy",""+canEnable)
+        return canEnable
     }
 
     private fun isPasswordValid(password: String): Boolean {
@@ -364,6 +361,7 @@ fun Button.falseBackground(et: EditText, method:()->Boolean){
     val btn=this
     et.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
+
         }
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         }
@@ -403,6 +401,7 @@ class ImageFileCompressEngine : CompressFileEngine{
             }
 
             override fun onError(source: String?, e: Throwable?) {
+                Log.e("onError","压缩失败")
                 call?.onCallback(source,null)
             }
 

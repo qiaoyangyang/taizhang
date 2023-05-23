@@ -32,6 +32,7 @@ class BindingLogisticsActivity :
     lateinit var adapter: BaseQuickAdapter<Merchant, BaseViewHolder>
     lateinit var adapterNoBind: BaseQuickAdapter<Merchant, BaseViewHolder>
     var name = ""//品牌名称，默认企业名称的简称
+    var  shopName=""//门店名称
     var tenantId = ""
     var account = ""//管理员账号，默认注册时输入的手机号
     var pwd = ""
@@ -70,20 +71,20 @@ class BindingLogisticsActivity :
     }
 
     override fun onLeftClick(view: View) {
-
-        val dialog: MineExitDialog =
-            MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
-        dialog.setOkClickLister {
-            dialog.dismiss()
-            if (from.isNullOrBlank()) {
-                finish()
-            } else {
+        if (from.isNullOrBlank()) {
+            finish()
+        }else{
+            val dialog: MineExitDialog =
+                MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
+            dialog.setOkClickLister {
+                dialog.dismiss()
                 startActivity(Intent(this, LoginActivity::class.java))
                 ActivityUtils.finishAllActivities()
-            }
 
+            }
+            dialog.show(supportFragmentManager)
         }
-        dialog.show(supportFragmentManager)
+
 
     }
 
@@ -91,11 +92,15 @@ class BindingLogisticsActivity :
         super.onRightClick(view)
         if (!from.isNullOrBlank()) {
             val dialog: MineExitDialog =
-                MineExitDialog().newInstance("温馨提示", "确定跳过新建发货门店和绑定物流流程？\n" +
+                MineExitDialog().newInstance("温馨提示", "确定跳过绑定物流流程？\n" +
                         "（登录后可在「我的」中进行设置）", "取消", "确认", false)
             dialog.setOkClickLister {
                 dialog.dismiss()
-                startActivity(Intent(this, LoginActivity::class.java))
+                startActivity(Intent(this, ForgetPwdFinishActivity::class.java)
+                    .putExtra("account", account)
+                    .putExtra("password", pwd)
+                    .putExtra("title", "注册成功")
+                    .putExtra("context", "注册成功"))
                 ActivityUtils.finishAllActivities()
             }
             dialog.show(supportFragmentManager)
@@ -106,20 +111,27 @@ class BindingLogisticsActivity :
 
 
     override fun onBackPressed() {
-        val dialog: MineExitDialog =
-            MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
-        dialog.setOkClickLister {
-            dialog.dismiss()
-            if (from.isNullOrBlank()) {
-                finish()
-            } else {
+        if (from.isNullOrBlank()) {
+            finish()
+        }else{
+            val dialog: MineExitDialog =
+                MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
+            dialog.setOkClickLister {
+                dialog.dismiss()
                 startActivity(Intent(this, LoginActivity::class.java))
                 ActivityUtils.finishAllActivities()
+
             }
+            dialog.show(supportFragmentManager)
         }
-        dialog.show(supportFragmentManager)
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(!poid.isNullOrBlank()){
+            getLogisticsList(poid)
+        }
+    }
     @SuppressLint("SuspiciousIndentation")
     override fun initData() {
         super.initData()
@@ -129,7 +141,7 @@ class BindingLogisticsActivity :
         pwd = intent?.getStringExtra("pwd") ?: ""
         poid = intent?.getStringExtra("poid") ?: ""
         from = intent?.getStringExtra("from") ?: ""
-
+        shopName= intent?.getStringExtra("shopName") ?: ""
         if (from.isNullOrBlank()) {
             TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
             mDatabind.btnSuccess.visibility = View.GONE
@@ -152,6 +164,9 @@ class BindingLogisticsActivity :
                 onError = {}
             )
         }else{
+            mDatabind.shopName.visibility=View.VISIBLE
+            mDatabind.shopName2.visibility=View.VISIBLE
+            mDatabind.shopName2.text=shopName
             mDatabind.TitleBar.rightTitle = "跳过"
             getLogisticsList(poid)
         }
@@ -371,6 +386,7 @@ class BindingLogisticsActivity :
                             { loginService.bindShop(poid, it.thirdShopId, it.thirdShopName, type) },
                             onSuccess = {
                                 showToast("绑定成功")
+                                getLogisticsList(poid)
                                 disLoading()
                             },
                             onError = {

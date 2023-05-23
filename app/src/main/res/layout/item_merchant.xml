@@ -10,8 +10,8 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_50"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
         android:scaleType="centerInside"
         android:layout_centerHorizontal="true"
         app:layout_constraintTop_toTopOf="parent"
