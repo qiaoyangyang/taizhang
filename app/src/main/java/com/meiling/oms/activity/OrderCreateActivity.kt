@@ -677,28 +677,31 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                 showToast("请选择发货门店")
                 return@setSingleClickListener
             }
-            if (mDatabind.edtReceiveName.text.toString().trim().isNullOrBlank()) {
-                showToast("请输入收货人姓名")
-                return@setSingleClickListener
-            }
-            if (mDatabind.edtReceivePhone.text.toString().trim().isNullOrBlank()) {
-                showToast("请输入收货人电话")
-                return@setSingleClickListener
-            }
-            if (!isPhoneNumber(mDatabind.edtReceivePhone.text.toString().trim())) {
-                showToast("请输入正确手机号")
-                return@setSingleClickListener
-            }
-            if (mDatabind.txtReceiveSelectTime.text.toString().trim().isNullOrBlank()) {
-                showToast("请选择收货时间")
-                return@setSingleClickListener
-            }
 
             if (selectAuthWay == "1") {
                 if (mDatabind.txtReceiveSelectAddress.text.toString().trim().isNullOrBlank()) {
                     showToast("请选择收货地址")
                     return@setSingleClickListener
                 }
+            }
+            if (mDatabind.edtReceiveName.text.toString().trim().isNullOrBlank()) {
+                showToast("请输入收货人姓名")
+                return@setSingleClickListener
+            }
+
+            if (mDatabind.edtReceivePhone.text.toString().trim().isNullOrBlank()) {
+                showToast("请输入收货人电话")
+                return@setSingleClickListener
+            }
+
+            if (!isPhoneNumber(mDatabind.edtReceivePhone.text.toString().trim())) {
+                showToast("请输入正确手机号")
+                return@setSingleClickListener
+            }
+
+            if (mDatabind.txtReceiveSelectTime.text.toString().trim().isNullOrBlank()) {
+                showToast("请选择收货时间")
+                return@setSingleClickListener
             }
 //            goodsArrayList.addAll(orderGoodsAdapter.data)
             for (item in orderGoodsAdapter.data) {
@@ -735,22 +738,6 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                 showToast("请选择发货门店")
                 return@setSingleClickListener
             }
-            if (mDatabind.edtReceiveName.text.toString().trim().isNullOrBlank()) {
-                showToast("请输入收货人姓名")
-                return@setSingleClickListener
-            }
-            if (mDatabind.edtReceivePhone.text.toString().trim().isNullOrBlank()) {
-                showToast("请输入收货人电话")
-                return@setSingleClickListener
-            }
-            if (!isPhoneNumber(mDatabind.edtReceivePhone.text.toString().trim())) {
-                showToast("请输入正确手机号")
-                return@setSingleClickListener
-            }
-            if (mDatabind.txtReceiveSelectTime.text.toString().trim().isNullOrBlank()) {
-                showToast("请选择收货时间")
-                return@setSingleClickListener
-            }
 
             if (selectAuthWay == "1") {
                 if (mDatabind.txtReceiveSelectAddress.text.toString().trim().isNullOrBlank()) {
@@ -758,6 +745,26 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                     return@setSingleClickListener
                 }
             }
+            if (mDatabind.edtReceiveName.text.toString().trim().isNullOrBlank()) {
+                showToast("请输入收货人姓名")
+                return@setSingleClickListener
+            }
+
+            if (mDatabind.edtReceivePhone.text.toString().trim().isNullOrBlank()) {
+                showToast("请输入收货人电话")
+                return@setSingleClickListener
+            }
+
+            if (!isPhoneNumber(mDatabind.edtReceivePhone.text.toString().trim())) {
+                showToast("请输入正确手机号")
+                return@setSingleClickListener
+            }
+
+            if (mDatabind.txtReceiveSelectTime.text.toString().trim().isNullOrBlank()) {
+                showToast("请选择收货时间")
+                return@setSingleClickListener
+            }
+
 //            goodsArrayList.addAll(orderGoodsAdapter.data)
             for (item in orderGoodsAdapter.data) {
                 goodsArrayList.add(

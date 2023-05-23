@@ -18,6 +18,7 @@ import com.meiling.common.activity.BaseActivity
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityRechargeSuccessBinding
 import com.meiling.oms.databinding.DialogOrderJpushBinding
+import com.meiling.oms.widget.CaptchaCountdownTool
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.formatCurrentDate3
 
@@ -54,6 +55,7 @@ class PushDialogActivity : AppCompatActivity() {
         }
         ImmersionBar.with(this).init()
         ImmersionBar.setTitleBar(this, findViewById<TitleBar>(R.id.TitleBar))
+
     }
 
 
