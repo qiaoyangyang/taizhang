@@ -47,6 +47,8 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
 
     var goodsList = ArrayList<OrderCreateGoodsDto>()
     var goodsArrayList = ArrayList<OrderCreateGoodsDto1>()
+
+    var shopBeanList = ArrayList<ShopBean>()
     lateinit var orderGoodsAdapter: BaseQuickAdapter<OrderCreateGoodsDto, BaseViewHolder>
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -198,7 +200,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                         }
 
                         // 检查输入是否为 00 或 01
-                        if (input == "00") {
+                        if (input == "00"||input=="0") {
                             num.setText("1")
                             return
                         }
@@ -219,6 +221,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                             return
                         }
                         item.num = input.toInt()
+                        num.setSelection( item.num.toString().length)
                         if (item.num > 1) {
                             sub.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_subtract_true))
                         } else {
@@ -271,7 +274,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
 //                            price.setSelection(price.text.toString().length)
                             price.isFocusable = false
                             item.salePrice = "0.01"
-                        } else if (price.text.toString() == "0.0" ||  price.text.toString() == "0.00"|| price.text.toString()=="0") {
+                        } else if (price.text.toString() == "0.0" || price.text.toString() == "0.00" || price.text.toString() == "0") {
                             price.setText("0.01")
                             price.isFocusable = false
                             item.salePrice = "0.01"
@@ -336,7 +339,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                             price.setText("0.01")
 //                            price.setSelection(price.text.toString().length)
                             item.salePrice = "0.01"
-                        } else if (price.text.toString() == "0.0" || price.text.toString() == "0.00"|| price.text.toString()=="0") {
+                        } else if (price.text.toString() == "0.0" || price.text.toString() == "0.00" || price.text.toString() == "0") {
                             price.setText("0.01")
                             price.isFocusable = false
                             item.salePrice = "0.01"
@@ -488,29 +491,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
         orderGoodsAdapter.setNewInstance(goodsList)
         mDatabind.rvCreateGoods.adapter = orderGoodsAdapter
 
-//        orderGoodsAdapter.addChildClickViewIds(
-//            R.id.edt_add_jian,
-//            R.id.edt_add_jia,
-//            R.id.img_order_goods_select
-//        )
-//
-//        orderGoodsAdapter.setOnItemChildClickListener { adapter, view, position ->
-//            when (view.id) {
-//                R.id.img_order_goods_select -> {
-//                    if (orderGoodsAdapter.data.size > 1) {
-//                        (adapter.data[position] as OrderCreateGoodsDto).isSelectGoods =
-//                            !(adapter.data[position] as OrderCreateGoodsDto).isSelectGoods
-//                        orderGoodsAdapter.notifyItemChanged(position)
-//                    }
-//                    if (orderGoodsAdapter.data.count { it.isSelectGoods } > 0) {
-//                        mDatabind.txtDeleteGoods.visibility = View.VISIBLE
-//                    } else {
-//                        mDatabind.txtDeleteGoods.visibility = View.GONE
-//                    }
-//                    orderGoodsAdapter.notifyDataSetChanged()
-//                }
-//            }
-//        }
+
         orderGoodsAdapter.setOnItemClickListener { adapter, view, position ->
             if (orderGoodsAdapter.data.size > 1) {
                 (adapter.data[position] as OrderCreateGoodsDto).isSelectGoods =
@@ -524,6 +505,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
             }
             orderGoodsAdapter.notifyDataSetChanged()
         }
+        mViewModel.getCityPoiOffline()
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityOrderCreatBinding {
@@ -545,6 +527,8 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
     var name = ""
     var shopId: String? = ""
     var poiId: String? = ""
+    var cityposition: Int = 0
+    var shopidposition: Int = 0
     override fun initListener() {
 
         mDatabind.edtOrderCreateRemark.addTextChangedListener(object : TextWatcher {
@@ -569,9 +553,33 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
             }
         })
 
-
         mDatabind.txtSelectStore.setSingleClickListener {
-            mViewModel.getCityPoiOffline()
+            if (shopBeanList.isNullOrEmpty()) {
+                showToast("暂无门店数据")
+                return@setSingleClickListener
+            }
+            var shopDialog =
+                ShopDialog().newInstance(shopBeanList, "修改发货门店", cityposition, shopidposition)
+            shopDialog.setOnresilience(object : ShopDialog.Onresilience {
+                override fun resilience(
+                    cityid: Int,
+                    cityidname: String,
+                    shopid: Int,
+                    sho: Shop
+                ) {
+                    cityposition = cityid
+                    shopidposition = shopid
+                    poiId = sho.poiId
+                    mDatabind.txtSelectStore.text = "${cityidname}/${sho.name}"
+                    shopDialog.dismiss()
+                }
+
+                override fun Ondismiss() {
+                }
+
+            })
+            shopDialog.show(supportFragmentManager)
+
         }
         mDatabind.txtDiscern.setSingleClickListener {
 //            if (isSelectDiscern) {
@@ -828,28 +836,16 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
         }
         mViewModel.cityPoiOfflineDto.onSuccess.observe(this) {
             disLoading()
-            if (it.isNullOrEmpty()) {
-                showToast("暂无门店数据")
-                return@observe
+            shopBeanList.addAll(it)
+            if (shopBeanList.size == 1) {
+                cityposition = 0
+                shopidposition = 0
+                poiId = shopBeanList[0].shopList!![0]!!.poiId
+                mDatabind.txtSelectStore.text =
+                    "${shopBeanList[0].name}/${shopBeanList[0].shopList!![0]!!.name}"
             }
-            var shopDialog = ShopDialog().newInstance(it, "修改发货门店")
-            shopDialog.setOnresilience(object : ShopDialog.Onresilience {
-                override fun resilience(
-                    cityid: Int,
-                    cityidname: String,
-                    shopid: Int,
-                    sho: Shop
-                ) {
-                    poiId = sho.poiId
-                    mDatabind.txtSelectStore.text = "${cityidname}/${sho.name}"
-                    shopDialog.dismiss()
-                }
 
-                override fun Ondismiss() {
-                }
 
-            })
-            shopDialog.show(supportFragmentManager)
         }
         mViewModel.cityPoiOfflineDto.onError.observe(this) {
             disLoading()
