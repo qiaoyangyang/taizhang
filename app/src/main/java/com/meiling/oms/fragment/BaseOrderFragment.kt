@@ -483,6 +483,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         mViewModel.printDto.onStart.observe(this) {
         }
         mViewModel.printDto.onSuccess.observe(this) {
+            showToast("已发送打印任务")
         }
         mViewModel.printDto.onError.observe(this) {
             dismissLoading()

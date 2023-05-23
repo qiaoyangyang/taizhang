@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             app:layout_constraintLeft_toLeftOf="@+id/tv_name_t"
             android:layout_marginRight="@dimen/dp_32"
-            android:text="三方平台ID：3287162"
+            android:text="三方平台ID："
             android:textColor="@color/home_666666"
             android:textSize="@dimen/sp_28"
             android:layout_height="wrap_content"/>

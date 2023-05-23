@@ -5,7 +5,7 @@ data class BusinessDto(
     var businessCategory: String? = "",//经营类目，id逗号隔开
 //    var city: String? = "",//id逗号隔开
     var enterpriseName: String? = "",//企业名称
-    var password: String? = "Admin8888!!",
+//    var password: String? = "Admin8888!!",
     var phone: String? = "",
     var inviteCode:String?="",
     var logo: String? = "https://static.igoodsale.com/default-logo-header.png",

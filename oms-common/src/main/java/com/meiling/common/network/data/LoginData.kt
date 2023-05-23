@@ -50,5 +50,6 @@ data class ForgetDto(
 
 data class SaveSuccess(
     var tenantId:String,
-    var adminUserViewId:String
+    var adminUserViewId:String,
+    var secret:String?
 )

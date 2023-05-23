@@ -18,6 +18,7 @@ import com.meiling.common.BaseViewModel
 import com.meiling.common.network.data.*
 import com.meiling.common.network.service.accountService
 import com.meiling.oms.R
+import com.meiling.oms.activity.BindPrintDeviceActivity
 import com.meiling.oms.widget.showToast
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
@@ -242,6 +243,15 @@ class AccountSelectShopOrCityDialog : BaseNiceDialog() {
                 }
                 rvSelectAdapter.setList(list)
             } else {
+                if (activity is BindPrintDeviceActivity){
+                    it.content?.forEach {
+                        it?.isSelect=true
+                    }
+                    isSelectAll = true
+                    selectNum?.text = "已选择全部门店"
+                    ivSelectAll?.setImageDrawable(resources.getDrawable(R.drawable.icon_checkbox_true))
+
+                }
                 rvSelectAdapter.setList(it.content as MutableList<PoiContentList>)
             }
 

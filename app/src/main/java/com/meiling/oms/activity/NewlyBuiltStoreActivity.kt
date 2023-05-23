@@ -63,7 +63,6 @@ class NewlyBuiltStoreActivity :
         }
 
     }
-
     override fun onBackPressed() {
         if (fromIntent == "regist") {
             val dialog: MineExitDialog =
@@ -88,12 +87,12 @@ class NewlyBuiltStoreActivity :
     var adCode = ""
     var cityName = ""
     var poiItem: PoiItem? = null
-    var tenantId = ""
-    var adminViewId = ""
-    var fromIntent = ""
-    var account = ""//管理员账号，默认注册时输入的手机号
-    var pwd = ""
-    var name = ""//品牌名称，默认企业名称的简称
+    var tenantId =""
+    var adminViewId=""
+    var fromIntent=""
+    var account=""//管理员账号，默认注册时输入的手机号
+    var pwd=""
+    var name=""//品牌名称，默认企业名称的简称
     override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
@@ -132,11 +131,11 @@ class NewlyBuiltStoreActivity :
         mDatabind.lifecycleOwner = this
         id = intent.getStringExtra("id").toString()
         tenantId = intent.getStringExtra("tenantId").toString()
-        adminViewId = intent.getStringExtra("adminViewId").toString()
-        fromIntent = intent.getStringExtra("fromIntent").toString()
-        account = intent.getStringExtra("account").toString()//管理员账号
-        pwd = intent.getStringExtra("pwd").toString()
-        name = intent.getStringExtra("name").toString()
+        adminViewId= intent.getStringExtra("adminViewId").toString()
+        fromIntent=intent.getStringExtra("fromIntent").toString()
+        account=intent.getStringExtra("account").toString()//管理员账号
+        pwd=intent.getStringExtra("pwd").toString()
+        name=intent.getStringExtra("name").toString()
 
         if (fromIntent == "regist") {
             mDatabind.tvGoOn.text = "下一步"
@@ -188,15 +187,15 @@ class NewlyBuiltStoreActivity :
 
             }
 
-            if (mViewModel.PoiVoBean.value?.poiVo?.sinceCode!!.toString().length < 2) {
+            if (mViewModel.PoiVoBean.value?.poiVo?.sinceCode!!.toString().length<2){
                 showToast("门店编号仅允许输入2-20个字母/数字")
                 return@setSingleClickListener
             }
 
 
-            if (fromIntent == "regist") {
-                MMKVUtils.putString(SPConstants.adminViewId, adminViewId)
-                MMKVUtils.putString(SPConstants.tenantId, tenantId)
+           if(fromIntent=="regist"){
+                MMKVUtils.putString(SPConstants.adminViewId,adminViewId)
+                MMKVUtils.putString(SPConstants.tenantId,tenantId)
                 mViewModel.poiaddFromRegist(
                     lat,
                     lon,
@@ -205,7 +204,7 @@ class NewlyBuiltStoreActivity :
                     adCode,
                     cityName.replace("市", ""), id
                 )
-            } else {
+            }else {
                 mViewModel.poiadd(
                     lat,
                     lon,
@@ -215,6 +214,7 @@ class NewlyBuiltStoreActivity :
                     cityName.replace("市", ""), id
                 )
             }
+
 
 
         }
@@ -237,7 +237,7 @@ class NewlyBuiltStoreActivity :
 
                     override fun onDenied(
                         permissions: MutableList<String>,
-                        doNotAskAgain: Boolean,
+                        doNotAskAgain: Boolean
                     ) {
                         if (doNotAskAgain) {
                             // 如果是被永久拒绝就跳转到应用权限系统设置页面
@@ -282,7 +282,7 @@ class NewlyBuiltStoreActivity :
         }
         mViewModel.poidata.onSuccess.observe(this) {
             disLoading()
-            val x = it.poiVo?.address!!.split("@@", " ", "&&")
+            val x = it.poiVo?.address!!.split("@@", " ","&&")
             if (x.size != 0) {
                 it?.poiVo?.storeaddress = x[0]
                 it?.poiVo?.etdetailedaddress = x[1]
@@ -332,7 +332,7 @@ class NewlyBuiltStoreActivity :
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
-        grantResults: IntArray,
+        grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == ACCESS_FINE_LOCATION) {
@@ -346,6 +346,7 @@ class NewlyBuiltStoreActivity :
             }
         }
     }
+
 
 
     private fun isPasswordValid(password: String): Boolean {

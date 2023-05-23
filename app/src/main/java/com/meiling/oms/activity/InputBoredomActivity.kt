@@ -89,7 +89,8 @@ class InputBoredomActivity :
 
 
     }
-
+    var cityposition= 0
+    var shopidposition = 0
     var shopdata: Shop? = null
     override fun onTitleClick(view: View) {
         super.onTitleClick(view)
@@ -107,7 +108,7 @@ class InputBoredomActivity :
 
                     }
                 }
-                var shopDialog = ShopDialog().newInstance(it)
+                var shopDialog = ShopDialog().newInstance(it,"",cityposition,shopidposition)
 
                 shopDialog.setOnresilience(object : ShopDialog.Onresilience {
 
@@ -118,6 +119,8 @@ class InputBoredomActivity :
                         shopid: Int,
                         shop: Shop
                     ) {
+                        cityposition=cityid
+                        shopidposition=shopid
                         mViewModel.Shop.onSuccess.postValue(shop)
                         shopId = shop?.id.toString()
                         shopdata = shop

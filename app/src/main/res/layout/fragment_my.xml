@@ -211,9 +211,8 @@
                     android:gravity="center_vertical"
                     android:paddingVertical="@dimen/dp_20"
                     android:text="打印配置"
-                    android:visibility="gone"
                     android:textColor="@color/home_333333"
-                    android:textSize="@dimen/sp_32"
+                    android:textSize="@dimen/sp_28"
                     app:drawableStartCompat="@drawable/print" />
             </LinearLayout>
             <LinearLayout

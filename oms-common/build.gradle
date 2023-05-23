@@ -167,9 +167,9 @@ dependencies {
 
 
     //https://gitcode.net/mirrors/lucksiege/pictureselector/-/blob/master/README_CN.md
-    api 'io.github.lucksiege:pictureselector:v2.7.3-rc10'
+    api 'io.github.lucksiege:pictureselector:v3.11.1'
     // 图片压缩 (按需引入)
-    implementation 'io.github.lucksiege:compress:v3.11.1'
+    api 'io.github.lucksiege:compress:v3.11.1'
     //AgentWeb
     api 'com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx' // (必选)
     api 'com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.0-alpha.1-androidx'// (可选)
