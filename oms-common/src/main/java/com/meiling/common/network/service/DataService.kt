@@ -59,10 +59,6 @@ interface DataService {
         @Query("businessNumber") businessNumber: String = "",
     ): ResultData<StatusCountDto>
 
-    @GET("/api/v1/app/home/recentTab")
-    suspend fun recentTab(): ResultData<HomeRecentTabVO>
-
-
     @GET("/saas/poi/citypoi")
     suspend fun cityPoi(
         @Query("hasCityAll") hasCityAll: String = "1"

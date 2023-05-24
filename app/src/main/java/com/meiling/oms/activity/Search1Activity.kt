@@ -3,7 +3,6 @@ package com.meiling.oms.activity
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.drawable.PictureDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -12,7 +11,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -20,30 +18,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.blankj.utilcode.util.ToastUtils
-import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.meiling.common.BaseViewModel
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
+import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.SaveDecimalUtils
-import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivitySearch1Binding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
-import com.meiling.oms.eventBusData.MessageEvent
-import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.*
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 @Route(path = "/app/Search1Activity")
 class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1Binding>() {
@@ -84,9 +74,9 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                     holder.setText(R.id.txt_order_total_money, "¥${item.order?.actualIncome}")
                     val options = RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)
                     //加载svg图片
-                    Glide.with(context).`as`(PictureDrawable::class.java).load(item.channelLogo)
-                        .apply(options).listener(SvgSoftwareLayerSetter()).into(channelLogoImg)
-
+//                    Glide.with(context).`as`(PictureDrawable::class.java).load(item.channelLogo)
+//                        .apply(options).listener(SvgSoftwareLayerSetter()).into(channelLogoImg)
+                    GlideAppUtils.loadUrl(channelLogoImg,item.channelLogo?:"https://static.igoodsale.com/default-goods.png")
                     orderId.text = "${item.order?.viewId}"
                     holder.setText(R.id.txt_order_remark, "${item.order?.remark}")
                     if(item.order?.channelCreateTime.isNullOrBlank()){
@@ -200,7 +190,8 @@ class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1
                             } else {
                                 txtRefund.visibility = View.GONE
                             }
-                            Glide.with(context).load(item.avater).into(view)
+                            GlideAppUtils.loadUrl(view,item.avater?:"https://static.igoodsale.com/default-goods.png")
+//                            Glide.with(context).load(item.avater).into(view)
                         }
                     }
                     ryOrderSendDisDetail!!.adapter = orderGoodsListAdapter

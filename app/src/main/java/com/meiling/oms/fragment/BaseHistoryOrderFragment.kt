@@ -3,7 +3,6 @@ package com.meiling.oms.fragment
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.drawable.PictureDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,25 +15,21 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DecodeFormat
-import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
+import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.SaveDecimalUtils
-import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
-import com.meiling.oms.eventBusData.MessageEvent
-import com.meiling.oms.eventBusData.MessageEventHistoryUpDataTip
-import com.meiling.oms.eventBusData.MessageHistoryEventSelect
 import com.meiling.oms.R
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
-import com.meiling.oms.eventBusData.MessageEventUpDataTip
+import com.meiling.oms.eventBusData.MessageEvent
+import com.meiling.oms.eventBusData.MessageEventHistoryUpDataTip
+import com.meiling.oms.eventBusData.MessageHistoryEventSelect
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.*
 import org.greenrobot.eventbus.EventBus
@@ -110,18 +105,19 @@ class BaseHistoryOrderFragment :
                     holder.setText(R.id.txt_pay_money, "¥${item.order?.payPrice}")
                     holder.setText(R.id.txt_pay_fee, "¥${item.order?.platformServiceFee}")
                     holder.setText(R.id.txt_order_total_money, "¥${item.order?.actualIncome}")
-                    val options = RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)
                     //加载svg图片
-                    Glide.with(context).`as`(PictureDrawable::class.java).load(item.channelLogo)
-                        .apply(options).listener(SvgSoftwareLayerSetter()).into(channelLogoImg)
+                    GlideAppUtils.loadUrl(
+                        channelLogoImg,
+                        item.channelLogo ?: "https://static.igoodsale.com/%E7%BA%BF%E4%B8%8B.svg"
+                    )
                     orderId.text = "${item.order?.viewId}"
                     holder.setText(R.id.txt_order_remark, "${item.order?.remark}")
-                    if(item.order?.channelCreateTime.isNullOrBlank()){
+                    if (item.order?.channelCreateTime.isNullOrBlank()) {
                         holder.setText(
                             R.id.txt_time_shop,
                             "${transToString(item.order?.createTime!!)}下单  ${item.channelName}店铺"
                         )
-                    }else{
+                    } else {
                         holder.setText(
                             R.id.txt_time_shop,
                             "${item.order?.channelCreateTime}下单  ${item.channelName}店铺"
@@ -220,7 +216,7 @@ class BaseHistoryOrderFragment :
                             } else {
                                 txtRefund.visibility = View.GONE
                             }
-                            Glide.with(context).load(item.avater).into(view)
+                            GlideAppUtils.loadUrl(view,item.avater ?: "https://static.igoodsale.com/default-goods.png")
                         }
                     }
                     ryOrderSendDisDetail!!.adapter = orderGoodsListAdapter
@@ -235,7 +231,10 @@ class BaseHistoryOrderFragment :
                         holder.setText(
                             R.id.txt_order_shop_msg, "${item.goodsVoList?.size}种商品，共${sumNumber}件"
                         )
-                        holder.setText(R.id.txt_total_money, "¥${SaveDecimalUtils.decimalUtils(sum)}")
+                        holder.setText(
+                            R.id.txt_total_money,
+                            "¥${SaveDecimalUtils.decimalUtils(sum)}"
+                        )
                     }
 
                     if (item.order!!.type == 1) {
@@ -278,18 +277,18 @@ class BaseHistoryOrderFragment :
                     btnSendDis.setSingleClickListener {
                         when (item.order!!.logisticsStatus) {
                             "0" -> {
-                               if (item.order!!.deliveryType == "2") {
+                                if (item.order!!.deliveryType == "2") {
 //                                   val dialog: MineExitDialog =
 //                                       MineExitDialog().newInstance("温馨提示", "确定确认出货吗？", "取消", "确认", false)
 //                                   dialog.setOkClickLister {
-                                       mViewModel.orderFinish(item.order!!.viewId!!)
+                                    mViewModel.orderFinish(item.order!!.viewId!!)
 //                                       dialog.dismiss()
 //                                   }
 //                                   dialog.show(childFragmentManager)
-                               }else{
-                                   ARouter.getInstance().build("/app/OrderDisActivity")
-                                       .withSerializable("kk", item.order).navigation()
-                               }
+                                } else {
+                                    ARouter.getInstance().build("/app/OrderDisActivity")
+                                        .withSerializable("kk", item.order).navigation()
+                                }
                             }
                             "20" -> {
                                 ARouter.getInstance().build("/app/OrderDisAddTipActivity")

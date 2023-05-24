@@ -3,7 +3,6 @@ package com.meiling.oms.fragment
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.drawable.PictureDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
-import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -26,13 +24,11 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
+import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.SaveDecimalUtils.decimalUtils
-import com.meiling.common.utils.svg.SvgSoftwareLayerSetter
 import com.meiling.oms.R
 import com.meiling.oms.activity.ChannelActivity
 import com.meiling.oms.activity.MainActivity
-import com.meiling.oms.activity.NewlyBuiltStoreActivity
-import com.meiling.oms.activity.NoStoreActivity
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
@@ -119,12 +115,8 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     holder.setText(R.id.txt_pay_money, "¥${item.order?.payPrice}")
                     holder.setText(R.id.txt_pay_fee, "¥${item.order?.platformServiceFee}")
                     holder.setText(R.id.txt_order_total_money, "¥${item.order?.actualIncome}")
-                    val options = RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)
                     //加载svg图片
-                    Glide.with(context).`as`(PictureDrawable::class.java).load(item.channelLogo)
-                        .apply(options).listener(SvgSoftwareLayerSetter()).into(channelLogoImg)
-
-
+                    GlideAppUtils.loadUrl(channelLogoImg,item.channelLogo?:"https://static.igoodsale.com/%E7%BA%BF%E4%B8%8B.svg")
                     orderId.text = "${item.order?.viewId}"
                     holder.setText(R.id.txt_order_remark, "${item.order?.remark}")
                     if(item.order?.channelCreateTime.isNullOrBlank()){
@@ -245,11 +237,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             } else {
                                 txtRefund.visibility = View.GONE
                             }
-
-//                            Glide.with(context).load(item.avater).into(view)
-                            Glide.with(context).load(item.avater)
-                                .apply(options).into(view)
-
+                            GlideAppUtils.loadUrl(view,item.avater ?: "https://static.igoodsale.com/default-goods.png")
                         }
                     }
                     ryOrderSendDisDetail!!.adapter = orderGoodsListAdapter

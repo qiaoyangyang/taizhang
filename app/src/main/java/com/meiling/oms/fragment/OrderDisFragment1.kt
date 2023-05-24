@@ -259,7 +259,7 @@ class  OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1B
             }
 
             override fun afterTextChanged(s: Editable?) {
-              var  words = s.toString()
+              val  words = s.toString()
                 //首先内容进行非空判断，空内容（""和null）不处理
                 if (!TextUtils.isEmpty(words)) {
                     if (Integer.parseInt(s.toString()) > 25) {
