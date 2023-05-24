@@ -211,6 +211,7 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/txtIndustry"
                     app:layout_constraintEnd_toStartOf="@+id/txtIndustryRight2"
                     android:hint="请选择"
+                    android:gravity="right"
                     android:textColorHint="#999999"
                      />
 
@@ -417,7 +418,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
-                    android:enabled="true"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtAddImg"

@@ -7,11 +7,13 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.EncodeUtils
 import com.hjq.widget.view.RegexEditText.Companion.REGEX_MOBILE
 import com.hjq.widget.view.RegexEditText.Companion.REGEX_NAME
 import com.meiling.common.activity.BaseActivity
@@ -21,6 +23,7 @@ import com.meiling.common.utils.InputTextManager
 import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.SpannableUtils
 import com.meiling.common.utils.TextDrawableUtils
+import com.meiling.oms.DesUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityLoginBinding
 import com.meiling.oms.dialog.LogisticsPlatformInformationDidalog
@@ -57,6 +60,20 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             mDatabind.tvAgreement,
             R.color.pwd_1180FF
         )
+
+        var encodeString= "zzR8DzkHjXN03nQToakn8Q=="
+        println("encodeString=="+encodeString)
+        var decodeString= DesUtils.decode("9588028820109132570743325311898426347857298773549468758875018579537757772163084478873699447306034466200616411960574122434059469100235892702736860872901247123456",encodeString)
+        println("decodeString=="+decodeString)
+
+        var ss="QWRtaW44ODg4ISE="
+        var sss=EncodeUtils.base64Decode(ss)
+
+
+        println("bse64=="+String(Base64.decode(ss,0)))
+        println("bse64=="+String(sss))
+//        var decod= Base64().decode(ss.toByte()!!,Base64.DEFAULT)
+
 //        SpannableUtils.setTextLoginYSColor(
 //            this,
 //            conet,

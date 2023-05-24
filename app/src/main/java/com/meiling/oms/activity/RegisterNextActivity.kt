@@ -144,7 +144,8 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
         //选择图片
         mDatabind.addImg.setOnClickListener {
-            XXPermissions.with(this).permission(PermissionUtilis.Group.RICHSCAN,PermissionUtilis.Group.STORAGE)
+            XXPermissions.with(this)
+                .permission(PermissionUtilis.Group.RICHSCAN, PermissionUtilis.Group.STORAGE)
                 .request(object : OnPermissionCallback {
                     override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
                         if (!allGranted) {
@@ -155,33 +156,86 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                             .openGallery(SelectMimeType.ofImage())
                             .setImageEngine(GlideEngine.createGlideEngine())
                             .setMaxSelectNum(1)
-                            .setCompressEngine(ImageFileCompressEngine())
+                            .setCompressEngine(object : CompressFileEngine {
+                                override fun onStartCompress(
+                                    context: Context?,
+                                    source: java.util.ArrayList<Uri>?,
+                                    call: OnKeyValueResultCallbackListener?,
+                                ) {
+                                    Luban.with(context).load(source).ignoreBy(2048)
+                                        .setCompressListener(object : OnNewCompressListener {
+                                            override fun onStart() {
+                                            }
+
+                                            override fun onSuccess(
+                                                source: String?,
+                                                compressFile: File?,
+                                            ) {
+                                                Log.e("compress", "压缩成功")
+                                                call?.onCallback(source, compressFile?.absolutePath)
+                                                if(compressFile!=null){
+                                                    GlideAppUtils.loadUrl(mDatabind.addImg,
+                                                        compressFile?.absolutePath!!)
+                                                    val file = File(compressFile?.absolutePath)
+                                                    val part = MultipartBody.Part.createFormData(
+                                                        "file",
+                                                        file.name,
+                                                        RequestBody.create("multipart/form-data".toMediaTypeOrNull(),
+                                                            file)
+                                                    )
+                                                    mViewModel.launchRequest(
+                                                        {
+                                                            loginService.upload("", part)
+                                                        },
+                                                        onSuccess = {
+                                                            showToast("上传成功")
+                                                            mDatabind.closeImg.visibility = View.VISIBLE
+                                                            mViewModel.businessDto.value!!.logo = it
+                                                        },
+                                                        onError = {
+                                                            showToast("上传失败")
+                                                        }
+                                                    )
+                                                }
+
+                                            }
+
+                                            override fun onError(source: String?, e: Throwable?) {
+                                                Log.e("compress", "压缩失败")
+                                                call?.onCallback(source, null)
+                                            }
+
+                                        }).launch()
+                                }
+
+                            })
                             .setSandboxFileEngine(MeSandboxFileEngine())
                             .setSelectionMode(SelectModeConfig.SINGLE)
                             .isPreviewImage(true)
                             .forResult(object : OnResultCallbackListener<LocalMedia> {
                                 override fun onResult(result: java.util.ArrayList<LocalMedia>?) {
                                     if (result?.isNotEmpty() == true) {
-                                        GlideAppUtils.loadUrl(mDatabind.addImg, result.get(0).compressPath)
 
-                                        val file = File(result.get(0).compressPath)
-                                        val part = MultipartBody.Part.createFormData(
-                                            "file",
-                                            result.get(0).fileName, RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
-                                        )
-                                        mViewModel.launchRequest(
-                                            {
-                                                loginService.upload("",part)
-                                            },
-                                            onSuccess = {
-                                                showToast("上传成功")
-                                                mDatabind.closeImg.visibility=View.VISIBLE
-                                                mViewModel.businessDto.value!!.logo = it
-                                            },
-                                            onError = {
-                                                showToast("上传失败")
-                                            }
-                                        )
+//                                        GlideAppUtils.loadUrl(mDatabind.addImg, result.get(0).compressPath)
+
+//                                        val file = File(result.get(0).compressPath)
+//                                        val part = MultipartBody.Part.createFormData(
+//                                            "file",
+//                                            result.get(0).fileName, RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+//                                        )
+//                                        mViewModel.launchRequest(
+//                                            {
+//                                                loginService.upload("",part)
+//                                            },
+//                                            onSuccess = {
+//                                                showToast("上传成功")
+//                                                mDatabind.closeImg.visibility=View.VISIBLE
+//                                                mViewModel.businessDto.value!!.logo = it
+//                                            },
+//                                            onError = {
+//                                                showToast("上传失败")
+//                                            }
+//                                        )
                                     }
                                 }
 
@@ -279,16 +333,11 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
     }
 
-    fun tenantType1():Boolean{
-        return !mViewModel.businessDto.value!!.enterpriseName.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.logo.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
-    }
-    fun tenantType2():Boolean{
-        return  !mViewModel.businessDto.value!!.logo.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.tenantHead.isNullOrBlank()
-                &&!mViewModel.businessDto.value!!.userName.isNullOrBlank()
+    fun tenantType1(): Boolean {
+        var canEnable = !mDatabind.edtShopName.text.toString().trim().isNullOrBlank()
+                && !mDatabind.edtTenantHead.text.toString().trim().isNullOrBlank()
+                && !mDatabind.editAdministratorsLoginName.text.toString().isNullOrBlank()
+        return canEnable
     }
 
     private fun isPasswordValid(password: String): Boolean {
@@ -335,11 +384,12 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 //                    .putExtra("name", mViewModel.businessDto.value!!.tenantName.toString()))
                 startActivity(Intent(this,
                     NewlyBuiltStoreActivity::class.java)
-                    .putExtra("tenantId",it!!.tenantId)
-                    .putExtra("adminViewId",it!!.adminUserViewId)
-                    .putExtra("fromIntent","regist")
-                    .putExtra("account",mViewModel.businessDto.value!!.userName?.trim().toString())
-                    .putExtra("pwd", String(Base64.decode(it!!.secret,0)))
+                    .putExtra("tenantId", it!!.tenantId)
+                    .putExtra("adminViewId", it!!.adminUserViewId)
+                    .putExtra("fromIntent", "regist")
+                    .putExtra("account",  mViewModel.businessDto.value!!.userName)
+                    .putExtra("phone", phone)
+                    .putExtra("pwd", String(Base64.decode(it!!.secret, 0)))
                     .putExtra("name", mViewModel.businessDto.value!!.enterpriseName.toString()))
             },
             onError = {
@@ -394,19 +444,25 @@ class ImageFileCompressEngine : CompressFileEngine{
         source: java.util.ArrayList<Uri>?,
         call: OnKeyValueResultCallbackListener?,
     ) {
-        Luban.with(context).load(source).ignoreBy(2048).setCompressListener(object :OnNewCompressListener{
-            override fun onStart() {
-            }
+        Luban.with(context).load(source).ignoreBy(2048)
+            .setCompressListener(object : OnNewCompressListener {
+                override fun onStart() {
+                }
 
-            override fun onSuccess(source: String?, compressFile: File?) {
-                call?.onCallback(source,compressFile?.absolutePath)
-            }
+                override fun onSuccess(source: String?, compressFile: File?) {
+                    Log.e("compress", "压缩成功")
+                    Log.e("compress",
+                        "压缩成功compressFile?.absolutePath=" + compressFile?.absolutePath)
+                    call?.onCallback(source, compressFile?.absolutePath)
 
-            override fun onError(source: String?, e: Throwable?) {
-                call?.onCallback(source,null)
-            }
+                }
 
-        }).launch()
+                override fun onError(source: String?, e: Throwable?) {
+                    Log.e("compress", "压缩失败")
+                    call?.onCallback(source, null)
+                }
+
+            }).launch()
     }
 
 }

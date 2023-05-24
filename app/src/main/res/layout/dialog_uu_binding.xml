@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt_uu_tip"
-        android:text="授权后即可发单,与UU跑腿里价格、优惠一致。如果没有账号,可致电UU跑腿4006-997-999咨询注册事宜。或下载UU跑腿APP,注册并开通企业账号。"
+        android:text="授权后即可发单,与UU跑腿里价格、优惠一致。\n如果没有账号,可致电UU跑腿4006-997-999咨询注册事宜。或下载UU跑腿APP,注册并开通企业账号。"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0"

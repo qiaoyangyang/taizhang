@@ -117,6 +117,26 @@ class NewlyBuiltStoreActivity :
     }
 
     var id = ""
+    override fun onRightClick(view: View) {
+        super.onRightClick(view)
+        if (!fromIntent.isNullOrBlank()) {
+            val dialog: MineExitDialog =
+                MineExitDialog().newInstance("温馨提示", "确定跳过新建发货门店和绑定物流流程？\n" +
+                        "（登录后可在「我的」中进行设置）", "取消", "确认", false)
+            dialog.setOkClickLister {
+                dialog.dismiss()
+                startActivity(Intent(this, ForgetPwdFinishActivity::class.java)
+                    .putExtra("account", account)
+                    .putExtra("password", pwd)
+                    .putExtra("title", "注册成功")
+                    .putExtra("context", "注册成功"))
+                ActivityUtils.finishAllActivities()
+            }
+            dialog.show(supportFragmentManager)
+
+        }
+    }
+
     override fun initData() {
         super.initData()
         mDatabind.viewModel = mViewModel
@@ -128,11 +148,12 @@ class NewlyBuiltStoreActivity :
         account=intent.getStringExtra("account").toString()//管理员账号
         pwd=intent.getStringExtra("pwd").toString()
         name=intent.getStringExtra("name").toString()
-
-        if(fromIntent=="regist"){
-            mDatabind.tvGoOn.text="下一步"
-            mViewModel.PoiVoBean.value?.poiVo?.name=name
-            mViewModel.PoiVoBean.value?.poiVo?.phone=account
+        var phone = intent.getStringExtra("phone").toString()
+        if (fromIntent == "regist") {
+            mDatabind.tvGoOn.text = "下一步"
+            mViewModel.PoiVoBean.value?.poiVo?.name = name
+            mViewModel.PoiVoBean.value?.poiVo?.phone = phone
+            mDatabind.TitleBar.rightTitle = "跳过"
         }
         mDatabind.tvGoOn.let {
             InputTextManager.with(this)
@@ -298,17 +319,18 @@ class NewlyBuiltStoreActivity :
             disLoading()
             showToast("门店信息保存成功")
             mainViewModel.getByTenantId.value = mainViewModel.getByTenantId.value?.copy(poi = 1)
-            if(fromIntent=="regist"){
+            if (fromIntent == "regist") {
                 startActivity(Intent(this,
                     BindingLogisticsActivity::class.java)
                     .putExtra("tenantId", tenantId)
-                    .putExtra("account",account)
-                    .putExtra("pwd",pwd)
+                    .putExtra("account", account)
+                    .putExtra("pwd", pwd)
                     .putExtra("name", name)
-                    .putExtra("poid",it)
-                    .putExtra("from",fromIntent))
-            }else
-            finish()
+                    .putExtra("poid", it)
+                    .putExtra("shopName", mViewModel.PoiVoBean.value?.poiVo?.name)
+                    .putExtra("from", fromIntent))
+            } else
+                finish()
         }
         mViewModel.poiaddpoidata.onError.observe(this) {
             disLoading()
