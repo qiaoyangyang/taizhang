@@ -49,6 +49,8 @@
                     android:gravity="center"
                     android:paddingVertical="@dimen/dp_24"
                     android:text="充值方式"
+                    android:drawablePadding="@dimen/dp_8"
+                    android:drawableEnd="@drawable/icon_recharge_info"
                     android:textColor="@color/home_333333"
                     android:textSize="@dimen/sp_32" />
 

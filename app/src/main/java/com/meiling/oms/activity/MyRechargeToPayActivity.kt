@@ -53,6 +53,10 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
 
     override fun initListener() {
 
+        mDatabind.tvRechargeType.setSingleClickListener {
+            showToast("充值金额和赠送金额不可提现、不支持退款。技术服务费优先扣除充值本金，本金不足时扣除充值赠送金额。")
+        }
+
         mDatabind.btnOkRecharge.setSingleClickListener {
             mDatabind.txtRechargeOther.isFocusable = false
             if (!isSelectMoney) {
