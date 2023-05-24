@@ -24,6 +24,17 @@ class UUBinding: BaseNiceDialog() {
         return R.layout.dialog_uu_binding
     }
 
+    var getCodeListener: ((phone:String) -> Unit?)? = null
+    var sureOnclickListener:((phone:String,code:String)->Unit)?=null
+
+    fun setCodeListener(listener:(phone:String) -> Unit){
+        this.getCodeListener=listener
+    }
+
+    fun setUUSureOnclickListener(listener: (phone:String,code:String)->Unit){
+        this.sureOnclickListener=listener
+    }
+
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
 
         var btn=holder?.getView<Button>(R.id.btn_uu_sure)
@@ -40,6 +51,19 @@ class UUBinding: BaseNiceDialog() {
                 .addView(edtUuBindPhone)
                 .setMain(it)
                 .build()
+        }
+        btn?.setOnClickListener {
+            if(!edtUuBindPhone?.text?.trim().toString().isNullOrBlank()){
+                if(!isPhoneNumber(edtUuBindPhone?.text?.trim().toString())){
+                    showToast("请输入正确手机号")
+                    return@setOnClickListener
+                }
+            }
+            if(edtUuBindCode?.text?.trim().toString().isNullOrBlank()){
+                showToast("请输入验证码")
+                return@setOnClickListener
+            }
+            sureOnclickListener?.invoke(edtUuBindPhone?.text?.trim().toString(),edtUuBindCode?.text?.trim().toString())
         }
         edtUuBindPhone?.addTextChangedListener {
             if(!it?.toString().isNullOrBlank()){
@@ -67,6 +91,7 @@ class UUBinding: BaseNiceDialog() {
                     showToast("请输入正确手机号")
                     return@setOnClickListener
                 }
+                getCodeListener?.invoke(edtUuBindPhone?.text?.trim().toString())
                 captchaCountdownTool.startCountdown()
             }
         }

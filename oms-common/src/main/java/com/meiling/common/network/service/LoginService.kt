@@ -90,7 +90,7 @@ interface LoginService {
      */
     @Multipart
     @POST("/saas/system/file/upload")
-    suspend fun upload(@Header("platform") platform:String,@Part parts: MultipartBody.Part ):ResultData<String>
+    suspend fun upload(@Header("platform") platform:String?,@Part parts: MultipartBody.Part ):ResultData<String>
 
     /**
      * 所属行业
@@ -138,7 +138,7 @@ interface LoginService {
      *  获取物流列表
      */
     @GET("/saas/express/merchant/list")
-    suspend fun getMerChantList(@Header("tenantId") tenantId:String):ResultData<ArrayList<Merchant>>
+    suspend fun getMerChantList(@Query("poiId") poiId:String):ResultData<ArrayList<Merchant>>
 
     /**
      * 绑定物流
@@ -146,4 +146,47 @@ interface LoginService {
     @POST("/saas/express/merchant/save")
     suspend fun merChantSave(@Body putMerChant:PutMerChant):ResultData<Any>
 
+    /**
+     * 手动绑定门店
+     * poiId门店编号
+     * thirdShopId三方门店编号
+     * thirdShopName三方门店名称
+     * type物流类型(uu,ss,sf_tc,dada)
+     */
+    @GET("/saas/logistics/auth/bind_shop")
+    suspend fun bindShop(@Query("poiId") poiId:String,
+                         @Query("thirdShopId") thirdShopId:String,
+                         @Query("thirdShopName") thirdShopName:String,
+                         @Query("type") type:String):ResultData<Any>
+    /**
+     * 获取短信验证码
+     */
+    @GET("/saas/logistics/auth/get_code")
+    suspend fun getCode(@Query("phone")phone:String,
+                        @Query("type")type:String):ResultData<Any>
+
+    /**
+     * 验证码静默授权
+     */
+    @GET("/saas/logistics/auth/get_openId")
+    suspend fun getOpenId(@Query("code")code:String,
+                          @Query("phone")phone:String,
+                          @Query("poiId")poiId:String,
+                          @Query("type")type:String):ResultData<Any>
+    /**
+     * 三方跳转链接授权
+     */
+    @GET("/saas/logistics/auth/get_url")
+    suspend fun getUrl(@Query("originId")originId:String?,
+                       @Query("poiId")poiId: String,
+                       @Query("type")type:String):ResultData<String>
+
+    /**
+     *获取三方门店列表
+     */
+    @GET("/saas/logistics/auth/shop_list")
+    suspend fun getShopList(@Query("pageNum")pageNum:String,
+                            @Query("pageSize")pageSize:String,
+                            @Query("poiId")poiId:String,
+                            @Query("type")type:String):ResultData<ArrayList<OtherShop>>
 }

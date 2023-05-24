@@ -62,8 +62,6 @@ class StoreManagementViewModel(application: Application) : BaseViewModel(applica
                 provinceCode,
                 cityCode,
                 districtCode, cityName
-
-
             )
         }, poiaddpoidata)
 

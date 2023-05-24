@@ -3,6 +3,7 @@ package com.meiling.oms.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.meiling.common.activity.BaseVmDbActivity
 import com.meiling.oms.databinding.ActivityNoStoreBinding
@@ -15,6 +16,11 @@ class NoStoreActivity : BaseVmDbActivity<RegisterViewModel,ActivityNoStoreBindin
 
     override fun createObserver() {
 
+    }
+
+    override fun onLeftClick(view: View) {
+        super.onLeftClick(view)
+        finish()
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityNoStoreBinding {

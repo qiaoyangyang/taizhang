@@ -11,14 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/red"
-        android:visibility="gone"
         app:barStyle="transparent"
         app:layout_constraintTop_toTopOf="parent"
         app:leftIcon="@drawable/bar_arrows_left_white"
         app:rightBackground="@null"
         app:rightTitleSize="@dimen/sp_14"
-        app:title=""
-        app:titleColor="@color/red" />
+        app:title="创建门店"
+        app:titleColor="@color/white" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/noStoreLine"
