@@ -1,5 +1,6 @@
 package com.meiling.oms.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -37,7 +38,7 @@ import org.greenrobot.eventbus.EventBus
 import java.util.regex.Pattern
 
 
-class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Binding>() {
+class  OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Binding>() {
 
     companion object {
         fun newInstance(
@@ -78,7 +79,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
 //        EventBus.getDefault().post(orderSendAddress)
         orderId = arguments?.getString("orderId").toString()
         orderPrice = arguments?.getString("orderPrice").toString()
-        addressChange(EventBusChangeAddress(orderSendAddress, "TC"))
+//        addressChange(EventBusChangeAddress(orderSendAddress, "TC"))
         shopSelectDisWayAdapter =
             object : BaseQuickAdapter<OrderSendChannel, BaseViewHolder>(R.layout.item_dis_send) {
                 override fun convert(holder: BaseViewHolder, item: OrderSendChannel) {
@@ -309,6 +310,12 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
     }
 
 
+    override fun onResume() {
+        super.onResume()
+//        addressChange(EventBusChangeAddress(orderSendAddress, "TC"))
+        addressChange(EventBusChangeAddress((activity as OrderDisActivity). orderSendAddress, "TC"))
+    }
+
     override fun getBind(inflater: LayoutInflater): FragmentDis1Binding {
         return FragmentDis1Binding.inflate(inflater)
     }
@@ -383,7 +390,7 @@ class OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1Bi
 
 
     private fun addressChange(eventBusChangeAddress: EventBusChangeAddress) {
-        orderSendAddress = eventBusChangeAddress.orderSendAddress
+            orderSendAddress = eventBusChangeAddress.orderSendAddress
         mDatabind.edtAddTipShow.setText(orderSendAddress.goodsWeight)
         var orderSendRequest = OrderSendRequest(
             cargoPrice = orderPrice!!,
