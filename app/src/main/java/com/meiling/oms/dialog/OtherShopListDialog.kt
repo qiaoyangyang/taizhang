@@ -4,11 +4,16 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.Button
 import android.widget.ImageView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.network.data.OtherShop
+import com.meiling.common.network.service.loginService
 import com.meiling.oms.R
+import com.meiling.oms.viewmodel.BindingLogisticsViewModel
+import com.meiling.oms.widget.showToast
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
 
@@ -30,19 +35,23 @@ class OtherShopListDialog : BaseNiceDialog() {
         this.sureOnclickListener=listener
     }
 
-    fun newInstance(list:ArrayList<OtherShop>): OtherShopListDialog{
+    fun newInstance(poid:String): OtherShopListDialog{
         val args = Bundle()
-        args.putSerializable("list",list)
+        args.putString("poid",poid)
         val fragment = OtherShopListDialog()
         fragment.arguments = args
         return fragment
     }
 
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
-        var list=arguments?.getSerializable("list") as ArrayList<OtherShop>
+        var poid=arguments?.getString("poid")
         var btn=holder?.getView<Button>(R.id.btn_ok_select_shop_city)
         var recy=holder?.getView<RecyclerView>(R.id.rv_shop_or_city)
         var ivCloseRecharge=holder?.getView<ImageView>(R.id.iv_close_select_shop_city)
+        var refeshLayout=holder?.getView<SmartRefreshLayout>(R.id.refeshLayout)
+        var pageIndex = 1
+        var mViewModel=ViewModelProvider(requireActivity()).get(BindingLogisticsViewModel::class.java)
+
         var adapter=object :BaseQuickAdapter<OtherShop,BaseViewHolder>(R.layout.item_dialog_shop_list){
             override fun convert(holder: BaseViewHolder, item: OtherShop) {
                 holder.setText(R.id.txt_shop_or_city,item.thirdShopName)
@@ -57,21 +66,64 @@ class OtherShopListDialog : BaseNiceDialog() {
         }
         adapter.setOnItemClickListener { adapter, view, position ->
 
-            list.forEachIndexed { index, otherShop ->
+            (adapter.data as ArrayList<OtherShop> ).forEachIndexed { index, otherShop ->
                 otherShop.select = index==position
             }
             adapter.notifyDataSetChanged()
         }
-        if(list.size>=1){
-            list.get(0).select=true
-        }
-        adapter.setList(list)
+
         recy?.adapter=adapter
+        refeshLayout?.setOnRefreshListener {
+            mViewModel.launchRequest(
+                { loginService.getShopList("1", "20", poid!!, "uu") },
+                true,
+                onSuccess = {
+                    it?.let {
+                        if(it.size>=1){
+                            it.get(0).select=true
+                        }
+                        refeshLayout?.finishRefresh()
+                        adapter.setList(it)
+                    }
+
+                },
+                onError = {
+                    refeshLayout?.finishRefresh()
+                    it?.let {
+                        showToast(it)
+                    }
+                }
+            )
+        }
+        refeshLayout?.autoRefresh()
+        refeshLayout?.setEnableLoadMore(true)
+        refeshLayout?.setOnLoadMoreListener {
+            pageIndex++
+            mViewModel.launchRequest(
+                { loginService.getShopList(pageIndex.toString(), "20", poid!!, "uu") },
+                true,
+                onSuccess = {
+                    it?.let {
+                        refeshLayout?.finishLoadMore()
+                        adapter.addData(it)
+                    }?: let{
+                        refeshLayout?.finishLoadMore()
+                    }
+
+                },
+                onError = {
+                    refeshLayout?.finishLoadMore()
+                    it?.let {
+                        showToast(it)
+                    }
+                }
+            )
+        }
 
         ivCloseRecharge?.setOnClickListener { dismiss() }
         btn?.setOnClickListener {
             dismiss()
-            var selectShop=list.filter { it.select==true }
+            var selectShop=adapter.data.filter { it.select==true }
             sureOnclickListener?.invoke(selectShop!!.get(0) as OtherShop)
         }
 

@@ -32,6 +32,14 @@
         app:layout_constraintTop_toTopOf="@+id/txt_title_item_city" />
 
 
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        app:srlEnableLoadMore="false"
+        android:id="@+id/refeshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_above="@+id/btn_ok_select_shop_city"
+        android:layout_below="@+id/txt_title_item_city">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_shop_or_city"
         android:layout_width="match_parent"
@@ -47,6 +55,8 @@
         tools:listitem="@layout/item_dialog_shop_list">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     <com.hjq.shape.view.ShapeButton
         android:id="@+id/btn_ok_select_shop_city"

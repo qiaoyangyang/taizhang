@@ -373,38 +373,23 @@ class BindingLogisticsActivity :
      * 手动获取三方门店列表
      */
     fun getShopList(type: String) {
-        //getShopList
-        mViewModel.launchRequest(
-            { loginService.getShopList("1", "20", poid, type) },
-            true,
-            onSuccess = {
-                it?.let {
-                    var otherShopListDialog = OtherShopListDialog().newInstance(it)
-                    otherShopListDialog.setMySureOnclickListener {
-                        showLoading("正在绑定")
-                        mViewModel.launchRequest(
-                            { loginService.bindShop(poid, it.thirdShopId, it.thirdShopName, type) },
-                            onSuccess = {
-                                showToast("绑定成功")
-                                getLogisticsList(poid)
-                                disLoading()
-                            },
-                            onError = {
-                                disLoading()
-                                it?.let { showToast(it) }
-                            }
-                        )
-                    }
-                    otherShopListDialog.show(supportFragmentManager)
+        var otherShopListDialog = OtherShopListDialog().newInstance(poid)
+        otherShopListDialog.setMySureOnclickListener {
+            showLoading("正在绑定")
+            mViewModel.launchRequest(
+                { loginService.bindShop(poid, it.thirdShopId, it.thirdShopName, type) },
+                onSuccess = {
+                    showToast("绑定成功")
+                    getLogisticsList(poid)
+                    disLoading()
+                },
+                onError = {
+                    disLoading()
+                    it?.let { showToast(it) }
                 }
-
-            },
-            onError = {
-                it?.let {
-                    showToast(it)
-                }
-            }
-        )
+            )
+        }
+        otherShopListDialog.show(supportFragmentManager)
     }
 
     /**

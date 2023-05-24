@@ -50,7 +50,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
     lateinit var mDatabind: ActivityRegisterNextBinding
     var phone: String? = ""
     override fun initView(savedInstanceState: Bundle?) {
-        ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
+           ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
     }
 
     override fun onLeftClick(view: View) {
@@ -58,18 +58,17 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
         dialog.setOkClickLister {
             dialog.dismiss()
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this,LoginActivity::class.java))
             ActivityUtils.finishAllActivities()
         }
         dialog.show(supportFragmentManager)
     }
-
     override fun onBackPressed() {
         val dialog: MineExitDialog =
             MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
         dialog.setOkClickLister {
             dialog.dismiss()
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this,LoginActivity::class.java))
             ActivityUtils.finishAllActivities()
         }
         dialog.show(supportFragmentManager)
@@ -86,7 +85,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         super.initData()
         phone = intent?.getStringExtra("phone")
         mDatabind.viewModel = mViewModel
-        mViewModel.businessDto.value!!.userName = phone
+        mViewModel.businessDto.value!!.userName=phone
         //选择所属行业
         mDatabind.txtIndustryRight.setOnClickListener {
             mViewModel.launchRequest(
@@ -119,29 +118,28 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
             )
         }
         mDatabind.txtAddImg.setOnClickListener {
-            mDatabind.addImg.visibility = View.GONE
-            mDatabind.addImg2.visibility = View.VISIBLE
-            mDatabind.closeImg.visibility = View.GONE
-            mDatabind.closeImg2.visibility = View.VISIBLE
-            mViewModel.businessDto.value!!.logo =
-                "https://static.igoodsale.com/default-logo-header.png"
+            mDatabind.addImg.visibility=View.GONE
+            mDatabind.addImg2.visibility=View.VISIBLE
+            mDatabind.closeImg.visibility=View.GONE
+            mDatabind.closeImg2.visibility=View.VISIBLE
+            mViewModel.businessDto.value!!.logo = "https://static.igoodsale.com/default-logo-header.png"
         }
 
         mDatabind.closeImg.setOnClickListener {
             GlideAppUtils.loadResUrl(mDatabind.addImg, R.mipmap.addimg)
-            mDatabind.addImg.visibility = View.VISIBLE
-            mDatabind.addImg2.visibility = View.GONE
-            mDatabind.closeImg.visibility = View.GONE
-            mDatabind.closeImg2.visibility = View.GONE
-            mViewModel.businessDto.value!!.logo = ""
+            mDatabind.addImg.visibility=View.VISIBLE
+            mDatabind.addImg2.visibility=View.GONE
+            mDatabind.closeImg.visibility=View.GONE
+            mDatabind.closeImg2.visibility=View.GONE
+            mViewModel.businessDto.value!!.logo =""
         }
         mDatabind.closeImg2.setOnClickListener {
             GlideAppUtils.loadResUrl(mDatabind.addImg, R.mipmap.addimg)
-            mDatabind.addImg.visibility = View.VISIBLE
-            mDatabind.addImg2.visibility = View.GONE
-            mDatabind.closeImg.visibility = View.GONE
-            mDatabind.closeImg2.visibility = View.GONE
-            mViewModel.businessDto.value!!.logo = ""
+            mDatabind.addImg.visibility=View.VISIBLE
+            mDatabind.addImg2.visibility=View.GONE
+            mDatabind.closeImg.visibility=View.GONE
+            mDatabind.closeImg2.visibility=View.GONE
+            mViewModel.businessDto.value!!.logo =""
         }
 
         //选择图片
@@ -251,7 +249,7 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
                     override fun onDenied(
                         permissions: MutableList<String>,
-                        doNotAskAgain: Boolean,
+                        doNotAskAgain: Boolean
                     ) {
                         if (doNotAskAgain) {
                             showToast("被永久拒绝授权，请手动授予录音和日历权限")
@@ -270,10 +268,9 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
         }
 
 
-        mDatabind.btnNext.falseBackground(mDatabind.edtShopName, { tenantType1() })
-        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead, { tenantType1() })
-        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName, { tenantType1() })
-
+        mDatabind.btnNext.falseBackground(mDatabind.edtShopName,{tenantType1()})
+        mDatabind.btnNext.falseBackground(mDatabind.edtTenantHead,{tenantType1()})
+        mDatabind.btnNext.falseBackground(mDatabind.editAdministratorsLoginName,{tenantType1()})
 
         //注册
         mDatabind.btnNext.setSingleClickListener(1000) {
@@ -390,7 +387,8 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                     .putExtra("tenantId", it!!.tenantId)
                     .putExtra("adminViewId", it!!.adminUserViewId)
                     .putExtra("fromIntent", "regist")
-                    .putExtra("account", phone)
+                    .putExtra("account",  mViewModel.businessDto.value!!.userName)
+                    .putExtra("phone", phone)
                     .putExtra("pwd", String(Base64.decode(it!!.secret, 0)))
                     .putExtra("name", mViewModel.businessDto.value!!.enterpriseName.toString()))
             },
@@ -412,40 +410,35 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
 
 }
 
-fun Button.falseBackground(et: EditText, method: () -> Boolean) {
-    val btn = this
+fun Button.falseBackground(et: EditText, method:()->Boolean){
+    val btn=this
     et.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
-
         }
-
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         }
-
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            if (method()) {
+            if(method()){
                 btn.setBackgroundResource(R.drawable.login_btn_select_true)
-            } else {
+            }else{
                 btn.setBackgroundResource(R.drawable.login_btn_select_false)
             }
         }
     })
 }
 
-class MeSandboxFileEngine : UriToFileTransformEngine {
+class MeSandboxFileEngine : UriToFileTransformEngine{
     override fun onUriToFileAsyncTransform(
         context: Context?,
         srcPath: String?,
         mineType: String?,
         call: OnKeyValueResultCallbackListener?,
     ) {
-        call?.onCallback(srcPath,
-            SandboxTransformUtils.copyPathToSandbox(context, srcPath, mineType))
+        call?.onCallback(srcPath,SandboxTransformUtils.copyPathToSandbox(context,srcPath,mineType))
     }
 
 }
-
-class ImageFileCompressEngine : CompressFileEngine {
+class ImageFileCompressEngine : CompressFileEngine{
     override fun onStartCompress(
         context: Context?,
         source: java.util.ArrayList<Uri>?,

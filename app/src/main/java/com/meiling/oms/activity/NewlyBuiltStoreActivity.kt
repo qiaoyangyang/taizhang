@@ -49,31 +49,31 @@ class NewlyBuiltStoreActivity :
     }
 
     override fun onLeftClick(view: View) {
-        if (fromIntent == "regist") {
+        if(fromIntent=="regist"){
             val dialog: MineExitDialog =
                 MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
             dialog.setOkClickLister {
                 dialog.dismiss()
-                startActivity(Intent(this, LoginActivity::class.java))
+                startActivity(Intent(this,LoginActivity::class.java))
                 ActivityUtils.finishAllActivities()
             }
             dialog.show(supportFragmentManager)
-        } else {
+        }else{
             finish()
         }
 
     }
     override fun onBackPressed() {
-        if (fromIntent == "regist") {
+        if(fromIntent=="regist"){
             val dialog: MineExitDialog =
                 MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
             dialog.setOkClickLister {
                 dialog.dismiss()
-                startActivity(Intent(this, LoginActivity::class.java))
+                startActivity(Intent(this,LoginActivity::class.java))
                 ActivityUtils.finishAllActivities()
             }
             dialog.show(supportFragmentManager)
-        } else {
+        }else{
             finish()
         }
 
@@ -148,11 +148,11 @@ class NewlyBuiltStoreActivity :
         account=intent.getStringExtra("account").toString()//管理员账号
         pwd=intent.getStringExtra("pwd").toString()
         name=intent.getStringExtra("name").toString()
-
+        var phone = intent.getStringExtra("phone").toString()
         if (fromIntent == "regist") {
             mDatabind.tvGoOn.text = "下一步"
             mViewModel.PoiVoBean.value?.poiVo?.name = name
-            mViewModel.PoiVoBean.value?.poiVo?.phone = account
+            mViewModel.PoiVoBean.value?.poiVo?.phone = phone
             mDatabind.TitleBar.rightTitle = "跳过"
         }
         mDatabind.tvGoOn.let {
