@@ -179,6 +179,9 @@
             android:name=".activity.NewOrderChangeAddressMapActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.NewScanOrderChangeAddressMapActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.TiktokBindingActvity"
             android:screenOrientation="portrait" />
         <activity

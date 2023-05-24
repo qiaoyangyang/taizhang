@@ -199,7 +199,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                         }
 
                         // 检查输入是否为 00 或 01
-                        if (input == "00"||input=="0") {
+                        if (input == "00" || input == "0") {
                             num.setText("1")
                             return
                         }
@@ -220,7 +220,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                             return
                         }
                         item.num = input.toInt()
-                        num.setSelection( item.num.toString().length)
+                        num.setSelection(item.num.toString().length)
                         if (item.num > 1) {
                             sub.setImageDrawable(resources.getDrawable(R.drawable.icon_goods_subtract_true))
                         } else {
@@ -519,7 +519,8 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
     var lon = ""
     var provinceCode = ""
     var adCode = ""
-    var cityName = ""
+    var cityName: String? = ""
+    var city: String? = "" //识别城市
     var poiItem: PoiItem? = null
     var tenantId = ""
     var account = ""
@@ -600,35 +601,8 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
             mViewModel.addressParse(mDatabind.edtReceiveInfo.text.toString())
         }
         mDatabind.txtReceiveSelectAddress.setSingleClickListener {
-            XXPermissions.with(this).permission(PermissionUtilis.Group.LOCAL)
-                .request(object : OnPermissionCallback {
-                    override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
-                        if (!allGranted) {
-                            showToast("获取部分权限成功，但部分权限未正常授予")
-                            return
-                        }
-                        //   startActivity(Intent(this@NewlyBuiltStoreActivity,NewOrderChangeAddressMapActivity::class.java))
-                        // initStart()
-                        ARouter.getInstance().build("/app/NewOrderChangeAddressMapActivity")
-                            .withString("title", "收货地址")
-                            .navigation(this@OrderCreateActivity, REQUEST_CODE)
-                    }
-
-                    override fun onDenied(
-                        permissions: MutableList<String>,
-                        doNotAskAgain: Boolean
-                    ) {
-                        if (doNotAskAgain) {
-                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                            XXPermissions.startPermissionActivity(
-                                this@OrderCreateActivity,
-                                permissions
-                            )
-                        } else {
-                            showToast("授权失败，请检查权限")
-                        }
-                    }
-                })
+            initMapAddress()
+            isScanAddress = false
         }
         mDatabind.txtAddGoods.setSingleClickListener {
             var orderCreate = OrderCreateGoodsDto(
@@ -878,9 +852,12 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
             lat = it.lat.toString()
             address = it.province + it.city + it.county + it.town
             mDatabind.txtReceiveSelectAddress.text = address
+            cityName = it.city
+            isScanAddress = true
             mDatabind.edtAddressDetail.setText("${it.detail}")
             mDatabind.edtReceivePhone.setText("${it.phonenum}")
             mDatabind.edtReceiveName.setText("${it.person}")
+            initMapAddress()
         }
         mViewModel.saveCreateDto.onError.observe(this) {
             disLoading()
@@ -925,7 +902,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
         return regex.matches(input)
     }
 
-
+    var isScanAddress = false
     override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
@@ -938,6 +915,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
             adCode = poiItem?.adCode!!
             cityName = poiItem?.cityName!!
             mDatabind.txtReceiveSelectAddress.text = address
+            isScanAddress = false
         }
     }
 
@@ -957,5 +935,68 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                 // 如果用户拒绝了权限，可以在这里处理相应的逻辑
             }
         }
+    }
+
+
+    private fun initMapAddress() {
+        XXPermissions.with(this).permission(PermissionUtilis.Group.LOCAL)
+            .request(object : OnPermissionCallback {
+                override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
+                    if (!allGranted) {
+                        showToast("获取部分权限成功，但部分权限未正常授予")
+                        return
+                    }
+                    if (!mDatabind.txtReceiveSelectAddress.text.toString().isNullOrBlank()) {
+                        if (isScanAddress) {
+                            startActivityForResult(
+                                Intent(
+                                    this@OrderCreateActivity,
+                                    NewScanOrderChangeAddressMapActivity::class.java
+                                )
+                                    .putExtra("title", "收货地址")
+                                    .putExtra("type", "2")
+                                    .putExtra("cityName", cityName)
+                                    .putExtra(
+                                        "address",
+                                        mDatabind.txtReceiveSelectAddress.text.toString()+mDatabind.edtAddressDetail.text.toString()
+                                    ),REQUEST_CODE
+                            )
+                        } else {
+                            startActivityForResult(
+                                Intent(
+                                    this@OrderCreateActivity,
+                                    NewScanOrderChangeAddressMapActivity::class.java
+                                )
+                                    .putExtra("title", "收货地址")
+                                    .putExtra("type", "1")
+                                    .putExtra("cityName", cityName)
+                                    .putExtra(
+                                        "address",
+                                        mDatabind.txtReceiveSelectAddress.text.toString()+mDatabind.edtAddressDetail.text.toString()
+                                    ),REQUEST_CODE
+                            )
+                        }
+                    } else {
+                        ARouter.getInstance().build("/app/NewOrderChangeAddressMapActivity")
+                            .withString("title", "收货地址")
+                            .navigation(this@OrderCreateActivity, REQUEST_CODE)
+                    }
+                }
+
+                override fun onDenied(
+                    permissions: MutableList<String>,
+                    doNotAskAgain: Boolean
+                ) {
+                    if (doNotAskAgain) {
+                        // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                        XXPermissions.startPermissionActivity(
+                            this@OrderCreateActivity,
+                            permissions
+                        )
+                    } else {
+                        showToast("授权失败，请检查权限")
+                    }
+                }
+            })
     }
 }
