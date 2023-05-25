@@ -69,7 +69,7 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
             DataListDto(
                 startTime = formatCurrentDate() + " 00:00:00",
                 endTime = formatCurrentDate() + " 23:59:59",
-                poiId
+                poiIds = poiId
             )
         )
 

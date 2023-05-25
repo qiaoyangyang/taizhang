@@ -74,14 +74,14 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
             DataListDto(
                 startTime = formatCurrentDate(),
                 endTime = formatCurrentDate(),
-                poiId
+                poiId = poiId
             )
         )
         mViewModel.dataHistoryDisList(
             DataListDto(
                 startTime = "$startTime",
                 endTime = formatCurrentDateBeforeDay(),
-                poiId
+                poiId = poiId
             )
         )
     }
@@ -115,7 +115,7 @@ class DataOrderDisFragment : BaseFragment<DataFragmentViewModel, FragmentDataDis
                     DataListDto(
                         startTime = "$it",
                         endTime = "${formatCurrentDateBeforeDay()}",
-                        poiId
+                        poiId = poiId
                     )
                 )
             }

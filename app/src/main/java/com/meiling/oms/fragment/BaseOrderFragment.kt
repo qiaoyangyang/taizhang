@@ -122,12 +122,12 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     if(item.order?.channelCreateTime.isNullOrBlank()){
                         holder.setText(
                             R.id.txt_time_shop,
-                            "${transToString(item.order?.createTime!!)}下单  ${item.channelName}店铺"
+                            "${transToString(item.order?.createTime!!)}下单  ${item.channelName}"
                         )
                     }else{
                         holder.setText(
                             R.id.txt_time_shop,
-                            "${item.order?.channelCreateTime}下单  ${item.channelName}店铺"
+                            "${item.order?.channelCreateTime}下单  ${item.channelName}"
                         )
                     }
 
