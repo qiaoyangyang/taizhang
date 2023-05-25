@@ -64,6 +64,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
         orderGoodsAdapter = object :
             BaseQuickAdapter<OrderCreateGoodsDto, BaseViewHolder>(R.layout.item_create_order_goods) {
             override fun convert(holder: BaseViewHolder, item: OrderCreateGoodsDto) {
+                holder.setIsRecyclable(false)
                 var goodsName = holder.getView<EditText>(R.id.txt_order_goods_name)
                 var price = holder.getView<EditText>(R.id.txt_order_goods_price)
                 var num = holder.getView<EditText>(R.id.edt_add_num)
