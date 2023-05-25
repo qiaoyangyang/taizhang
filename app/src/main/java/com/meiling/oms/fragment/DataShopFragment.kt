@@ -69,7 +69,7 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
             DataListDto(
                 startTime = formatCurrentDate() + " 00:00:00",
                 endTime = formatCurrentDate() + " 23:59:59",
-                poiId
+                poiIds = poiId
             )
         )
 
@@ -225,8 +225,8 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
             dismissLoading()
             mDatabind.textDataShopCount.text =
                 calculationMinDataStr(it.orderCountTotal, it.orderRefundTotal)//减去
-            mDatabind.textDataInsertOrderCount.text = it.orderCountTotal
-            mDatabind.textDataRefundOrderCount.text = it.orderRefundTotal
+            mDatabind.textDataInsertOrderCount.text = it.orderCountTotal ?: "0"
+            mDatabind.textDataRefundOrderCount.text = it.orderRefundTotal ?:"0"
             mDatabind.textDataAvgOrderCount.text = calculationDivDataStr(
                 it.validPriceTotal,
                 mDatabind.textDataShopCount.text.toString()
