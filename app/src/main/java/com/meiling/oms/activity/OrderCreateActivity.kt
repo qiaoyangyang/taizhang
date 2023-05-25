@@ -848,16 +848,25 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
         }
         mViewModel.orderCreateAddressDiscern.onSuccess.observe(this) {
             disLoading()
-            lon = it.lng.toString()
-            lat = it.lat.toString()
-            address = it.province + it.city + it.county + it.town
-            mDatabind.txtReceiveSelectAddress.text = address
-            cityName = it.city
-            isScanAddress = true
+            if (it.city.isNullOrBlank()||it.detail.isNullOrBlank()){
+                address = ""
+                lon = ""
+                lat = ""
+                mDatabind.txtReceiveSelectAddress.text = ""
+                cityName = ""
+            }else{
+                address = it.province + it.city + it.county + it.town
+                lon = it.lng.toString()
+                lat = it.lat.toString()
+                mDatabind.txtReceiveSelectAddress.text = address
+                cityName = it.city
+                isScanAddress = true
+                initMapAddress()
+            }
             mDatabind.edtAddressDetail.setText("${it.detail}")
             mDatabind.edtReceivePhone.setText("${it.phonenum}")
             mDatabind.edtReceiveName.setText("${it.person}")
-            initMapAddress()
+
         }
         mViewModel.saveCreateDto.onError.observe(this) {
             disLoading()

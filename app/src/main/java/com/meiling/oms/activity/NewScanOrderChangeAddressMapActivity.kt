@@ -255,6 +255,7 @@ class NewScanOrderChangeAddressMapActivity() :
                         lat = geocodeAddress.latLonPoint.latitude.toString()
                         cityCode = geocodeAddress.adcode
                         val lng = LatLng(latitude, longititude)
+                        edtLocalSearch?.setText("")
                         aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(lng))
                         if (intent.getStringExtra("type").toString() == "2") {
                             if (edtLocalSearch?.text.toString().isNullOrEmpty()) {
@@ -493,7 +494,7 @@ class NewScanOrderChangeAddressMapActivity() :
     fun getGeocodeSearch(targe: LatLng, code: String?) {
         var queryQuery = PoiSearch.Query("住宿|商场|学校|住宅区|楼宇", "", cityCode)
         var poiSearch = PoiSearch(this, queryQuery)
-        queryQuery.pageSize = 10
+        queryQuery.pageSize = 20
         poiSearch.bound = PoiSearch.SearchBound(
             LatLonPoint(targe.latitude, targe.longitude), 1000
         ) //设置周边搜索的中心点以及半径

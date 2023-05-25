@@ -330,7 +330,11 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
             ) {
                 holder.setText(R.id.tv_name_t, "三方平台名称:" + item?.name)
 //                if (TextUtils.isEmpty(item?.channelShopId))
-                    holder.setText(R.id.tv_channel_id, "三方平台ID:" + item?.channelShopId)
+                if (item?.channelShopId.isNullOrEmpty()){
+                    holder.setText(R.id.tv_channel_id, "三方平台ID:" )
+                }else{
+                    holder.setText(R.id.tv_channel_id, "三方平台ID:" + item?.channelShopId ?:"")
+                }
                 if (item?.mtModel == 2) {
                     holder.setGone(R.id.s_status, false);
                 } else {

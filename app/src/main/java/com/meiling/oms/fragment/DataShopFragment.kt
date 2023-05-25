@@ -225,8 +225,8 @@ class DataShopFragment : BaseFragment<DataFragmentViewModel, FragmentDataShopBin
             dismissLoading()
             mDatabind.textDataShopCount.text =
                 calculationMinDataStr(it.orderCountTotal, it.orderRefundTotal)//减去
-            mDatabind.textDataInsertOrderCount.text = it.orderCountTotal
-            mDatabind.textDataRefundOrderCount.text = it.orderRefundTotal
+            mDatabind.textDataInsertOrderCount.text = it.orderCountTotal ?: "0"
+            mDatabind.textDataRefundOrderCount.text = it.orderRefundTotal ?:"0"
             mDatabind.textDataAvgOrderCount.text = calculationDivDataStr(
                 it.validPriceTotal,
                 mDatabind.textDataShopCount.text.toString()
