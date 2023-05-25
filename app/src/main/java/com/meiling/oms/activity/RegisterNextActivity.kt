@@ -282,10 +282,10 @@ class RegisterNextActivity : BaseVmActivity<RegisterViewModel>() {
                 return@setSingleClickListener
             }
 
-            if (mViewModel.businessDto.value!!.logo.isNullOrBlank()) {
-                showToast("品牌LOGO未上传")
-                return@setSingleClickListener
-            }
+//            if (mViewModel.businessDto.value!!.logo.isNullOrBlank()) {
+//                showToast("品牌LOGO未上传")
+//                return@setSingleClickListener
+//            }
 //            if (mViewModel.businessDto.value!!.businessCategory.isNullOrBlank()) {
 //                showToast("所属行业未选择")
 //                return@setSingleClickListener

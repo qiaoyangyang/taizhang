@@ -52,30 +52,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt_uu_tip"
-        android:text="授权后即可发单,与UU跑腿里价格、优惠一致。\n如果没有账号,可致电UU跑腿4006-997-999咨询注册事宜。或下载UU跑腿APP,注册并开通企业账号。"
+        android:text="授权后即可发单,与UU跑腿里价格、优惠一致。\n如果没有账号,可致电UU跑腿4006-997-999咨询注册事宜。或下载UU跑腿APP,注册并开通商户账号。"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0"
         android:paddingHorizontal="15dp"
+        android:paddingVertical="5dp"
         android:layout_marginTop="15dp"
         app:layout_constraintTop_toBottomOf="@+id/txt_title2"/>
 
     <View
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="#E7E7E7"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_uu_tip"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/uu_bind_line"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintTop_toBottomOf="@+id/uu_bind_line"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="15dp"
@@ -86,10 +87,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintTop_toBottomOf="@+id/uu_bind_line"
         app:layout_constraintLeft_toRightOf="@+id/uu_txt_phone"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="5dp"
         android:textSize="14sp"
         android:textColor="@color/red"
         android:id="@+id/uu_txt_phone_red"
@@ -105,20 +106,20 @@
         android:textSize="14sp"
         android:layout_marginRight="15dp"
         android:background="@null"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/edt_uu_bind_phone"
         android:paddingRight="5dp"
         android:hint="请输入"/>
 
     <View
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="#E7E7E7"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/uu_txt_phone"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/uu_bind_line2"
         />
 
@@ -126,7 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginLeft="15dp"
         android:id="@+id/txt_uu_bind_code"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -136,8 +137,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
         android:id="@+id/txt_uu_bind_code2"
         android:textColor="@color/red"
         app:layout_constraintLeft_toRightOf="@+id/txt_uu_bind_code"
@@ -154,7 +155,7 @@
         android:textSize="14sp"
         android:layout_marginRight="15dp"
         android:background="@null"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/edt_uu_bind_code"
         android:paddingRight="5dp"
         android:hint="请输入"/>
@@ -180,19 +181,20 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/uu_bind_line2"
         app:layout_constraintBottom_toBottomOf="@+id/uu_bind_line3"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edt_uu_bind_code"
         app:shape_radius="@dimen/dp_100"
         app:shape_solidColor="@color/red"
         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     <View
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="#E7E7E7"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_uu_bind_code"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/uu_bind_line3"
         />
 
