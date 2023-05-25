@@ -124,7 +124,7 @@ class  OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1B
                     insertOrderSendList.add(
                         LogisticsInsertDto(
                             amount = shopSelectDis.payMoney,
-                            cargoPrice = shopSelectDis.payMoney,
+                            cargoPrice = shopSelectDis.totalMoney,
                             cargoType = selectShop,
                             channelType = shopSelectDis.channelType,
                             deliveryTime = "",
