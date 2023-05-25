@@ -304,7 +304,7 @@ class BindingLogisticsActivity :
                     var bindingOther = BindOtherLogistics()
                         .newInstance(
                             "已有达达快送APP账号",
-                            "达达快送APP帐号授权后即可发单，与达达里价格、优惠等活动一致。\n如果没有账号，如果没有账号，请先下载达达快送APP后，注册并开通企业版。")
+                            "达达快送APP帐号授权后即可发单，与达达里价格、优惠等活动一致。\n如果没有账号，如果没有账号，请先下载达达快送APP后，注册并开通商户版。")
                     bindingOther.setMySureOnclickListener {
                         getUrl("dada")
                     }
