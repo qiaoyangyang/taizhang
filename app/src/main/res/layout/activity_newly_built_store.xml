@@ -97,7 +97,7 @@
                             android:background="@color/white"
                             android:gravity="right|center"
                             android:hint="请输入门店名称"
-                            android:maxLength="20"
+                            android:maxLength="30"
                             android:text="@={viewModel.PoiVoBean.poiVo.name}"
                             android:textColor="@color/home_333333"
                             android:textColorHint="@color/home_999999"

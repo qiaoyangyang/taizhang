@@ -59,7 +59,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
                 })
                 bindMeituanShopDialog.show(supportFragmentManager)
-            }else if (channelX.id=="100"){
+            } else if (channelX.id == "100") {
                 AboutKFELMDialog().newInstance().show(supportFragmentManager)
 
 //                startActivity(Intent(this,LebaiRetailBindingActivity::class.java))
@@ -87,7 +87,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
     var shop: Shop? = null
     var type = ""
-    var cityposition= 0
+    var cityposition = 0
     var shopidposition = 0
     override fun onTitleClick(view: View) {
 
@@ -103,8 +103,8 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
                 shopid: Int,
                 sho: Shop
             ) {
-                cityposition=cityi
-                shopidposition=shopid
+                cityposition = cityi
+                shopidposition = shopid
                 shop = sho
                 mDatabind.TitleBar.titleView.text = cityidname + "/" + sho.name
 
@@ -306,8 +306,14 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
         }
         mViewModel.urlauth.onSuccess.observe(this) {
+            if (!TextUtils.isEmpty(it.url)) {
 
-            startActivity(Intent(this, BaseWebActivity::class.java).putExtra("url", it.url))
+                startActivity(Intent(this, BaseWebActivity::class.java).putExtra("url", it.url))
+            } else if (channelX.id == "11") {
+                showToast("绑定成功")
+                mViewModel.shop_list(channelX.id!!, shop?.id!!)
+
+            }
         }
         mViewModel.urlauth.onError.observe(this) {
             showToast(it.msg)
@@ -329,12 +335,29 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
             ) {
                 holder.setText(R.id.tv_name_t, "三方平台名称:" + item?.name)
-                if (TextUtils.isEmpty(item?.channelShopId))
-                    holder.setText(R.id.tv_channel_id, "三方平台ID:" + item?.channelShopId)
+                //if (TextUtils.isEmpty(item?.channelShopId))
+
+                holder.setText(
+                    R.id.tv_channel_id, "三方平台ID:" + if (item?.channelShopId.isNullOrEmpty()) {
+                        ""
+                    } else {
+                        item?.channelShopId
+
+                    }
+                )
                 if (item?.mtModel == 2) {
                     holder.setGone(R.id.s_status, false);
                 } else {
                     holder.setGone(R.id.s_status, true);
+                }
+                if (channelX.id == "11") {
+                    holder.setGone(R.id.tv_delete, true)
+                    holder.setGone(R.id.tv_compile, true)
+
+
+                } else {
+                    holder.setGone(R.id.tv_delete, false)
+                    holder.setGone(R.id.tv_compile, false)
                 }
 
 

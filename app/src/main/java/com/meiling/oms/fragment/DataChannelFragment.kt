@@ -68,14 +68,14 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
             DataListDto(
                 startTime = formatCurrentDate(),
                 endTime = formatCurrentDate(),
-                poiId
+                poiId = poiId
             )
         )
         mViewModel.channelHistoryDataList(
             DataListDto(
                 startTime = startTime,
                 endTime = formatCurrentDateBeforeDay(),
-                poiId
+                poiId = poiId
             )
         )
 //        LiveDataShopData.INSTANCE.observe(this, changeObserver)
@@ -94,7 +94,7 @@ class DataChannelFragment : BaseFragment<DataFragmentViewModel, FragmentDataChan
                     DataListDto(
                         startTime = it,
                         endTime = formatCurrentDateBeforeDay(),
-                        poiId
+                        poiId = poiId
                     )
                 )
             }
