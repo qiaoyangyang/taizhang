@@ -125,9 +125,11 @@
             android:textColor="@color/home_333333"
             android:textSize="@dimen/sp_34"
             android:textStyle="bold"
+            android:singleLine="true"
+            android:maxWidth="@dimen/dp_300"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_line"
-            tools:text="王冰 recvName" />
+            tools:text="王冰 recvName " />
 
         <TextView
             android:id="@+id/txt_order_delivery_phone"
@@ -136,12 +138,14 @@
             android:layout_marginStart="@dimen/dp_10"
             android:drawablePadding="@dimen/dp_10"
             android:gravity="center"
+            android:maxWidth="@dimen/dp_200"
             android:textColor="@color/home_333333"
             android:textSize="@dimen/sp_24"
+            android:singleLine="true"
             app:layout_constraintBottom_toBottomOf="@+id/txt_order_delivery_name"
             app:layout_constraintLeft_toRightOf="@+id/txt_order_delivery_name"
             app:layout_constraintTop_toTopOf="@+id/txt_order_delivery_name"
-            tools:text="139933 "
+            tools:text="13993336594040 "
             app:drawableEndCompat="@drawable/order_icon_phone" />
 
         <TextView

@@ -92,8 +92,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
     override fun onTitleClick(view: View) {
 
 
-        var shopDialog =
-            ShopDialog().newInstance(shopBean!!, "选择发货门店", cityposition, shopidposition)
+       var shopDialog = ShopDialog().newInstance(shopBean!!, "选择发货门店",cityposition,shopidposition)
         shopDialog.show(supportFragmentManager)
         shopDialog.setOnresilience(object : ShopDialog.Onresilience {
 
