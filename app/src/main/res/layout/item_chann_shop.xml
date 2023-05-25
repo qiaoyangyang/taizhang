@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:shape_solidColor="@color/white"
     app:shape_radius="@dimen/dp_24"
+    android:paddingBottom="@dimen/dp_22"
 
     android:layout_height="wrap_content">
 
@@ -75,7 +76,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_22"
         android:layout_marginRight="@dimen/dp_24"
-        android:layout_marginBottom="@dimen/dp_22"
         android:paddingLeft="@dimen/dp_22"
         android:paddingTop="@dimen/dp_15"
         android:paddingRight="@dimen/dp_22"
