@@ -255,7 +255,6 @@ class NewScanOrderChangeAddressMapActivity() :
                         lat = geocodeAddress.latLonPoint.latitude.toString()
                         cityCode = geocodeAddress.adcode
                         val lng = LatLng(latitude, longititude)
-                        edtLocalSearch?.setText("")
                         aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(lng))
                         if (intent.getStringExtra("type").toString() == "2") {
                             if (edtLocalSearch?.text.toString().isNullOrEmpty()) {
