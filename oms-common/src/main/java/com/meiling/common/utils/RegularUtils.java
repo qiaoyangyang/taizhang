@@ -26,7 +26,7 @@ public class RegularUtils {
      * 验证座机号,正确格式：xxx/xxxx-xxxxxxx/xxxxxxxx/
      */
     private static final String REGEX_TEL = "^0(10|2[0-5789]-|\\\\d{3})-?\\\\d{7,8}$";
-    private static final String REGEX_TEL_phone = "(010\\d{8})|(0[2-9]\\d{9})|(13\\d{9})|(14[57]\\d{8})|(15[0-35-9]\\d{8})|(16\\d{9})|(17\\d{9})|(19\\d{9})|(18[0-35-9]\\d{8})";
+    private static final String REGEX_TEL_phone = "(010\\d{8})|(0[2-9]\\d{9})|(13\\d{9})|(14\\d{9})|(15\\d{9})|(16\\d{9})|(17\\d{9})|(19\\d{9})|(18\\d{9})";
     /**
      * 验证邮箱
      */
