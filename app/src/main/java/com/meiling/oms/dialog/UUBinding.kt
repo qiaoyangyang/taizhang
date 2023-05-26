@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import com.meiling.common.utils.InputTextManager
 import com.meiling.oms.R
-import com.meiling.oms.widget.CaptchaCountdownTool
+import com.meiling.oms.widget.CaptchaCountdownTool2
 import com.meiling.oms.widget.showToast
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
@@ -72,8 +72,8 @@ class UUBinding: BaseNiceDialog() {
         }
 
 
-        val captchaCountdownTool: CaptchaCountdownTool =
-            CaptchaCountdownTool(object : CaptchaCountdownTool.CaptchaCountdownListener {
+        val captchaCountdownTool: CaptchaCountdownTool2 =
+            CaptchaCountdownTool2(object : CaptchaCountdownTool2.CaptchaCountdownListener {
                 override fun onCountdownTick(countDownText: String) {
                     txtAuthCode?.text = "$countDownText s"
                     txtAuthCode?.isClickable = false
