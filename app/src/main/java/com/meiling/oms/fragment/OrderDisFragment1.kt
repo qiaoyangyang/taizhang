@@ -124,7 +124,7 @@ class  OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1B
                     insertOrderSendList.add(
                         LogisticsInsertDto(
                             amount = shopSelectDis.payMoney,
-                            cargoPrice = shopSelectDis.payMoney,
+                            cargoPrice = shopSelectDis.totalMoney,
                             cargoType = selectShop,
                             channelType = shopSelectDis.channelType,
                             deliveryTime = "",
@@ -181,7 +181,7 @@ class  OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1B
 
             if (mDatabind.edtAddTipShow.text.toString().toInt() >= 25) {
 
-                showToast("不能再减啦")
+                showToast("不能再加啦")
                 return@setSingleClickListener
             }
             mDatabind.edtAddTipShow.setText(
@@ -204,7 +204,7 @@ class  OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1B
         mDatabind.txtAddTipMinus.setSingleClickListener {
 
             if (mDatabind.edtAddTipShow.text.toString().toInt() <= 1) {
-                showToast("不能再加啦")
+                showToast("不能再减啦")
                 return@setSingleClickListener
             }
             mDatabind.edtAddTipShow.setText(
