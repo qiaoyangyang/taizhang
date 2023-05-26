@@ -14,24 +14,12 @@ class LebaiRetailBindingActivity : BaseActivity<StoreManagementViewModel, Activi
     override fun initView(savedInstanceState: Bundle?) {
         GlideApp.with(this)
             .load("https://static.igoodsale.com/elem-write.jpeg")
-            .into(mDatabind.ivArrow)
-        mDatabind.ivArrow.setOnClickListener {
+            .into(mDatabind.ivArrow3)
+        mDatabind.ivArrow3.setOnClickListener {
             ImageActivity().start(this,"https://static.igoodsale.com/elem-write.jpeg")
 
         }
-        mDatabind.tvOk.setOnClickListener {
-            if (TextUtils.isEmpty(mDatabind.etBindTenant.text.toString())){
-                showToast("请输入饿了么零售中应用的APP ID")
-                return@setOnClickListener
 
-            }
-            if (TextUtils.isEmpty(mDatabind.etSecret.text.toString())){
-                showToast("请输入饿了么零售中应用的APP Secret")
-                return@setOnClickListener
-
-            }
-
-        }
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityLebaiRetailBindingBinding {

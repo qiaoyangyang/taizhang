@@ -263,24 +263,6 @@ class NewlyBuiltStoreActivity :
                     }
                 })
 
-////            var intent = Intent(this, OrderChangeAddressMapActivity::class.java)
-////            requestDataLauncher.launch(intent)
-//            if (ContextCompat.checkSelfPermission(
-//                    this,
-//                    Manifest.permission.ACCESS_FINE_LOCATION
-//                ) == PackageManager.PERMISSION_GRANTED
-//            ) {
-//                // 如果有权限，拨打电话
-//                ARouter.getInstance().build("/app/OrderChangeAddressMapActivity")
-//                    .navigation(this, REQUEST_CODE)
-//            } else {
-//                // 如果没有权限，申请权限
-//                ActivityCompat.requestPermissions(
-//                    this,
-//                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-//                    ACCESS_FINE_LOCATION
-//                )
-//            }
         }
 
     }
