@@ -127,7 +127,7 @@ dependencies {
     api 'com.journeyapps:zxing-android-embedded:4.3.0'
 
 
-    api 'com.tencent.tbs:tbssdk:44216'
+//    api 'com.tencent.tbs:tbssdk:44216'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
