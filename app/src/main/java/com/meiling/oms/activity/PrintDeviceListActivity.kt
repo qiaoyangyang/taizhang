@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.ViewModelProvider
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.hjq.bar.TitleBar
 import com.hjq.shape.view.ShapeTextView
 import com.meiling.common.activity.BaseVmDbActivity
 import com.meiling.common.network.data.Merchant
@@ -50,6 +51,8 @@ class PrintDeviceListActivity :
                 val view =
                     LayoutInflater.from(this).inflate(R.layout.activity_no_store, null, false)
                 var tv_decreate = view.findViewById<AppCompatButton>(R.id.creatStoreBtn)
+                var titleBar = view.findViewById<TitleBar>(R.id.TitleBar)
+                titleBar.visibility=View.GONE
                 tv_decreate.setOnClickListener {
                     startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
                 }
