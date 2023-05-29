@@ -171,7 +171,6 @@
                 android:gravity="center_vertical"
                 android:paddingVertical="@dimen/dp_20"
                 android:text="通知设置"
-                android:visibility="gone"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_28"
                 app:drawableStartCompat="@mipmap/icon_my_msg" />

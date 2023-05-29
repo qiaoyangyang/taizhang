@@ -79,6 +79,7 @@
                 android:layout_height="wrap_content">
                 <com.hjq.shape.view.ShapeTextView
                     android:id="@+id/tv_shopid"
+                    app:shape_solidColor="#FFF5F7FA"
                     android:layout_marginRight="@dimen/dp_20"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -95,7 +96,7 @@
                     app:shape_strokeColor="#DDDFE6"
                     app:shape_strokeWidth="1dp" />
                 <com.hjq.shape.view.ShapeTextView
-
+                    app:shape_solidColor="#20FE4B48"
                     android:paddingTop="@dimen/dp_10"
                     android:paddingBottom="@dimen/dp_10"
                     android:paddingRight="@dimen/dp_20"

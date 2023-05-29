@@ -3,6 +3,7 @@ package com.meiling.oms.dialog
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -153,19 +154,18 @@ class PushMsgSettingTimeDialog : BaseNiceDialog() {
 //
 //                }
 //            }
-
+        // 记录最后一个条目的位置
         rechargeAdapter = object : BaseQuickAdapter<rechDto, BaseViewHolder>(R.layout.item_recy_recharge_editext) {
 
-            // 记录最后一个条目的位置
-            private val lastPosition = data.size - 1
+
 
             override fun convert(holder: BaseViewHolder, item: rechDto) {
                 val rechargeSum = holder.getView<TextView>(R.id.txt_recharge_sum)
-                val editText = holder.getView<TextView>(R.id.edit_text_recharge)
+                val editText = holder.getView<EditText>(R.id.edit_text_recharge)
                 rechargeSum.text = item.time + "分钟"
 
                 // 判断是否为最后一个条目
-                val isLastPosition = holder.layoutPosition == lastPosition
+                val isLastPosition = holder.layoutPosition ==  (rechargeAdapter.data.size - 1)
 
                 if (item.select) {
                     holder.setBackgroundResource(R.id.txt_recharge_sum, R.drawable.recharge_bg_select_true)
@@ -179,16 +179,17 @@ class PushMsgSettingTimeDialog : BaseNiceDialog() {
 
                 // 如果是最后一个条目，修改布局
                 if (isLastPosition) {
-                    // 如果当前的 position 是最后一个条目
-                    // 修改最后一个条目的布局方式
-                    val layoutParams = holder.itemView.layoutParams
-                    if (layoutParams is StaggeredGridLayoutManager.LayoutParams) {
-                        (layoutParams as StaggeredGridLayoutManager.LayoutParams).isFullSpan = true
-                    }
-                    // 修改最后一个条目的视图
-                    val textView: TextView = holder.itemView.findViewById(R.id.txt_recharge_sum)
-                    textView.text = "这是最后一个条目"
-                    // TODO: 对最后一个条目的布局进行修改
+                    editText.visibility = View.VISIBLE
+//                    // 如果当前的 position 是最后一个条目
+//                    // 修改最后一个条目的布局方式
+//                    val layoutParams = holder.itemView.layoutParams
+//                    if (layoutParams is StaggeredGridLayoutManager.LayoutParams) {
+//                        (layoutParams as StaggeredGridLayoutManager.LayoutParams).isFullSpan = true
+//                    }
+//                    // 修改最后一个条目的视图
+//                    val textView: TextView = holder.itemView.findViewById(R.id.txt_recharge_sum)
+//                    textView.text = "这是最后一个条目"
+//                    // TODO: 对最后一个条目的布局进行修改
                 } else {
                     editText.visibility = View.GONE
                 }
