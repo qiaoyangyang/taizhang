@@ -301,12 +301,17 @@ class BindingLogisticsActivity :
         } else {
             when (merchant.type) {
                 "dada" -> {
-                    var bindingOther = BindOtherLogistics()
+                    var bindingOther = BindDadaOtherLogistics()
                         .newInstance(
                             "已有达达快送APP账号",
-                            "达达快送APP帐号授权后即可发单，与达达里价格、优惠等活动一致。\n如果没有账号，如果没有账号，请先下载达达快送APP后，注册并开通商户版。")
-                    bindingOther.setMySureOnclickListener {
-                        getUrl("dada")
+                            "达达快送APP帐号授权后即可发单，与达达里价格、优惠等活动一致。","dada")
+                    bindingOther.setMySureOnclickListener {type,type2->
+                        if(type2=="1"){
+                            getUrl(type)
+
+                        }else{
+                            //TODO 去注册
+                        }
                     }
                     bindingOther.show(supportFragmentManager)
                 }
