@@ -86,7 +86,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         }
 
         mDatabind.imgSearchOrder.setOnClickListener {
-            ARouter.getInstance().build("/app/Search1Activity").navigation()
+            ARouter.getInstance().build("/app/PushDialogActivity")
+                .withString("pushTitle", "1212" ?: "小喵来客")
+                .withString("pushDetail","1212小喵来客")
+                .withString("pushOrderId", "1212" ?: null)
+                .navigation()
+//            ARouter.getInstance().build("/app/Search1Activity").navigation()
         }
         mDatabind.imgCreateOrder.setOnClickListener {
             startActivity(Intent(requireContext(), OrderCreateActivity::class.java))

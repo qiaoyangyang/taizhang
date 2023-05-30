@@ -113,7 +113,9 @@ data class OrderSendChannel(
     @SerializedName("totalMoney")
     var totalMoney: String,
     @SerializedName("typeName")
-    var typeName: String
+    var typeName: String,
+    @SerializedName("couponMoney")
+    var couponMoney: String
 ) {
     var select = false
 }

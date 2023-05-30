@@ -87,14 +87,21 @@ class  OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1B
                     var money = holder.getView<TextView>(R.id.txt_money)
                     var viewPrice = holder.getView<TextView>(R.id.txtTip)
                     var name = holder.getView<TextView>(R.id.txt_name)
-                    Glide.with(context)
-                        .load(item.iconUrl)
-                        .transition(DrawableTransitionOptions().crossFade())
-                        .apply(
-                            RequestOptions()
-                                .diskCacheStrategy(DiskCacheStrategy.DATA)
-                        )
-                        .into(imgSelect)
+                    var discount = holder.getView<TextView>(R.id.txt_discount_money)
+                    if (item.couponMoney.isNullOrEmpty()){
+                        discount.visibility = View.INVISIBLE
+                    }else{
+                        discount.visibility = View.VISIBLE
+                        discount.text = item.couponMoney
+                    }
+//                    Glide.with(context)
+//                        .load(item.iconUrl)
+//                        .transition(DrawableTransitionOptions().crossFade())
+//                        .apply(
+//                            RequestOptions()
+//                                .diskCacheStrategy(DiskCacheStrategy.DATA)
+//                        )
+//                        .into(imgSelect)
                     money.text = item.payMoney
                     name.text = item.typeName
                     if (item.select) {

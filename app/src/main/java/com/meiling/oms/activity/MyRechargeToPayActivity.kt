@@ -214,14 +214,6 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
 
                     override fun onNext(t: AliPayResp) {
                         startActivityForResult(Intent(this@MyRechargeToPayActivity,RechargeFinishActivity::class.java),REQUEST_CODE)
-//                        if (t.isSuccess) {
-//                        ARouter.getInstance().build("/app/RechargeFinishActivity")
-//                            .navigation()
-//                        } else {
-////                            showToast(t.message)
-//                            ARouter.getInstance().build("/app/RechargeFinishActivity")
-//                                .navigation()
-//                        }
                     }
 
                 }
@@ -229,6 +221,7 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
         }
         mViewModel.rechargeDto.onError.observe(this) {
             disLoading()
+            showToast(it.msg)
         }
 
         mViewModel.rechargeListDto.onStart.observe(this) {
