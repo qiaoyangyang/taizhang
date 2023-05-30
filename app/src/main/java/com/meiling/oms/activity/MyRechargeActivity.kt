@@ -8,14 +8,14 @@ import android.view.MotionEvent
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.angcyo.tablayout.delegate2.ViewPager2Delegate
+import com.blankj.utilcode.util.FragmentUtils
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.RechargeRequest
 import com.meiling.oms.R
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityRechargeBinding
 import com.meiling.oms.dialog.RechargeSelectTimeDialog
-import com.meiling.oms.dialog.RechargeDialog
+//import com.meiling.oms.dialog.RechargeDialog
 import com.meiling.oms.eventBusData.MessageEventPayMoney
 import com.meiling.oms.eventBusData.MessageEventTime
 import com.meiling.oms.eventBusData.MessageEventTimeShow
@@ -41,13 +41,16 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
 
     override fun initView(savedInstanceState: Bundle?) {
         EventBus.getDefault().register(this)
-        mDatabind.viewPager.isUserInputEnabled = false
-        fragmentList.add(RechargeSettlementFragment.newInstance())
-        fragmentList.add(RechargeRecordFragment.newInstance())
-        mDatabind.viewPager.setCurrentItem(0, false)
-        mDatabind.viewPager.adapter =
-            BaseFragmentPagerAdapter(supportFragmentManager, lifecycle, fragmentList)
-        ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
+        var type=intent?.getStringExtra("type")
+        if(type=="1"){
+            var rechargeRecordFragment=RechargeRecordFragment.newInstance()
+            FragmentUtils.add(supportFragmentManager,rechargeRecordFragment,R.id.view_pager)
+            mDatabind.TitleBar.title = "充值记录"
+        }else{
+            var rechargeSettlementFragment=RechargeSettlementFragment.newInstance()
+            FragmentUtils.add(supportFragmentManager,rechargeSettlementFragment,R.id.view_pager)
+            mDatabind.TitleBar.title = "财务结算"
+        }
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityRechargeBinding {
@@ -56,15 +59,6 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
 
     override fun initListener() {
 
-        mDatabind.btnRecharge.setSingleClickListener {
-            startActivity(Intent(this, MyRechargeToPayActivity::class.java))
-
-//            var rechargeDialog = RechargeDialog().newInstance()
-//            rechargeDialog.setOkClickLister { money, channel ->
-//                mViewModel.rechargeRequest(RechargeRequest(money, "3", channel, ""))
-//            }
-//            rechargeDialog.show(supportFragmentManager)
-        }
 
         mDatabind.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
@@ -114,14 +108,11 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
 
     override fun onResume() {
         super.onResume()
-        mViewModel.getBalance()
     }
 
     @SuppressLint("SetTextI18n")
     override fun createObserver() {
-        mViewModel.balance.onStart.observe(this) {
-            showLoading("加载中")
-        }
+
 //        mViewModel.rechargeDto.onSuccess.observe(this) {
 //            disLoading()
 //            val jsonObject = JSONObject(it)
@@ -152,16 +143,7 @@ class MyRechargeActivity : BaseActivity<RechargeViewModel, ActivityRechargeBindi
 //                }
 //            )
 //        }
-        mViewModel.balance.onError.observe(this) {
-            disLoading()
-            showToast(it.msg)
-        }
-        mViewModel.balance.onSuccess.observe(this) {
-            disLoading()
-            mDatabind.txtBalance.text = it.payAmount
-            mDatabind.txtServiceFee.text = it.unitPrice
-            mDatabind.txtFreezeAmount.text = "已冻结 ${it.freezeAmount}"
-        }
+
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {

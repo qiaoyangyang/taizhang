@@ -79,11 +79,15 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
     override fun onResume() {
         super.onResume()
-           mViewModel.getByTenantId()
+        mViewModel.getByTenantId()
+        mViewModel.getBalance()
     }
 
 
     override fun initListener() {
+        mDatabind.btnRecharge.setSingleClickListener {
+            startActivity(Intent(requireActivity(), MyRechargeToPayActivity::class.java))
+        }
         //打印机配置
         mDatabind.llPrintBinding.setSingleClickListener {
             startActivity(Intent(requireActivity(), PrintDeviceListActivity::class.java))
@@ -139,7 +143,10 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             }
         }
         mDatabind.txtRecharge.setSingleClickListener {
-            ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
+            ARouter.getInstance().build("/app/MyRechargeActivity").withString("type","1").navigation()
+        }
+        mDatabind.txtSettlement.setSingleClickListener {
+            ARouter.getInstance().build("/app/MyRechargeActivity").withString("type","2").navigation()
         }
         mDatabind.txtAccountManager.setSingleClickListener {
             startActivity(Intent(requireActivity(), AccountManagerActivity::class.java))
@@ -191,7 +198,14 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     }
 
     override fun createObserver() {
-
+        mViewModel.balance.onError.observe(this) {
+            showToast(it.msg)
+        }
+        mViewModel.balance.onSuccess.observe(this) {
+            mDatabind.txtBalance.text = it.payAmount
+            mDatabind.txtServiceFee.text = it.unitPrice
+//            mDatabind.txtFreezeAmount.text = "已冻结 ${it.freezeAmount}"
+        }
         mViewModel.getByTenantId.onSuccess.observe(this) {
             SaveUserBean(it)
             vm.getByTenantId.value = it
