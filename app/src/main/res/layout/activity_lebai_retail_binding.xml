@@ -16,7 +16,7 @@
         app:leftIcon="@drawable/bar_arrows_left_white"
         app:lineVisible="false"
         app:rightTitleSize="@dimen/sp_36"
-        app:title="绑定饿了么零售店铺"
+        app:title="绑定美团闪购店铺"
         app:titleColor="@color/white"
         tools:layout_editor_absoluteX="37dp" />
 
@@ -56,14 +56,6 @@
                 android:text="第一步 复制门店编码"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-            <TextView
-                android:textColor="@color/home_000000"
-                android:lineSpacingMultiplier="1.2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_16"
-                android:text="请复制下方关联发货门店的编号 "
-                android:textSize="@dimen/sp_28" />
             <TextView
                 android:textColor="@color/home_333333"
                 android:lineSpacingMultiplier="1.2"
