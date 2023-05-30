@@ -1,253 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_my"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_110"
+        android:background="@color/white">
 
-        <com.angcyo.tablayout.DslTabLayout
-
-
-            android:background="@color/white"
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+        <LinearLayout
+            android:id="@+id/ll_select_store"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:layout_marginStart="@dimen/dp_20"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ll_search"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tab_deselect_color="@color/home_A8ABB2"
-            app:tab_draw_indicator="true"
-            app:tab_enable_gradient_scale="false"
-            app:tab_enable_text_bold="true"
-            app:tab_indicator_color="@color/red"
-            app:tab_indicator_drawable="@drawable/indicator_bottom_line_1"
-            app:tab_indicator_enable_flow="true"
-            app:tab_indicator_height="@dimen/dp_5"
-            app:tab_indicator_solid_color="@color/red"
-            app:tab_indicator_style="STYLE_BOTTOM"
-            app:tab_indicator_width="30dp"
-            app:tab_item_is_equ_width="true"
-            app:tab_draw_badge="true"
-            app:tab_select_color="@color/home_333333">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/txt_select_store"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:marqueeRepeatLimit="-1"
+                android:singleLine="true"
+                android:text="当前门店"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_36"
+                app:drawableEndCompat="@drawable/icon_home_next" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/ll_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/dp_20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/img_search_order"
+                android:layout_width="@dimen/dp_62"
+                android:layout_height="@dimen/dp_62"
+                android:src="@drawable/home_search" />
+
+            <ImageView
+                android:id="@+id/img_create_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="@dimen/dp_10"
-                android:text="待配送"
-                android:textColor="#ff9b9b9b"
-                android:textStyle="bold"
-                android:textSize="@dimen/sp_28" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="@dimen/dp_10"
-                android:text="待抢单"
-                android:textColor="#ff9b9b9b"
-                android:textStyle="bold"
-                android:textSize="@dimen/sp_28" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="@dimen/dp_10"
-                android:text="待取货"
-                android:textColor="#ff9b9b9b"
-                android:textStyle="bold"
-                android:textSize="@dimen/sp_28" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="@dimen/dp_10"
-                android:text="配送中"
-                android:textColor="#ff9b9b9b"
-                android:textStyle="bold"
-                android:textSize="@dimen/sp_28" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="@dimen/dp_10"
-                android:text="取消"
-                android:textColor="#ff9b9b9b"
-                android:textStyle="bold"
-                android:textSize="@dimen/sp_28" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingEnd="@dimen/dp_10"
-                android:paddingBottom="@dimen/dp_10"
-                android:text="已送达"
-                android:maxLines="1"
-                android:textColor="#ff9b9b9b"
-                android:textStyle="bold"
-                android:textSize="@dimen/sp_28"
-                tools:ignore="RtlSymmetry" />
+                android:src="@drawable/icon_create_order" />
 
-<!--           <RelativeLayout-->
-<!--               android:layout_width="wrap_content"-->
-<!--               android:gravity="center"-->
-<!--               android:layout_height="wrap_content">-->
-<!--               <TextView-->
-<!--                   android:layout_width="match_parent"-->
-<!--                   android:layout_height="wrap_content"-->
-<!--                   android:gravity="center"-->
-<!--                   android:paddingBottom="@dimen/dp_10"-->
-<!--                   android:text="进行中"-->
-<!--                   android:textColor="#ff9b9b9b"-->
-<!--                   android:textStyle="bold"
-                android:textSize="@dimen/sp_28" />-->
-<!--               <TextView-->
-<!--                   android:id="@+id/tab1"-->
-<!--                   android:layout_width="wrap_content"-->
-<!--                   android:layout_height="wrap_content"-->
-<!--                   android:text="2"-->
-<!--                   android:paddingVertical="@dimen/dp_3"-->
-<!--                   android:paddingHorizontal="@dimen/dp_6"-->
-<!--                   android:background="@drawable/order_bg_red"-->
-<!--                   android:layout_alignParentEnd="true"-->
-<!--                   android:textColor="@color/white"-->
-<!--                   android:textSize="@dimen/sp_12" />-->
-<!--           </RelativeLayout>-->
-<!--           <RelativeLayout-->
-<!--               android:layout_width="wrap_content"-->
-<!--               android:gravity="center"-->
-<!--               android:layout_height="wrap_content">-->
-<!--               <TextView-->
-<!--                   android:layout_width="match_parent"-->
-<!--                   android:layout_height="wrap_content"-->
-<!--                   android:gravity="center"-->
-<!--                   android:paddingBottom="@dimen/dp_10"-->
-<!--                   android:text="进行中"-->
-<!--                   android:textColor="#ff9b9b9b"-->
-<!--                   android:textStyle="bold"
-                android:textSize="@dimen/sp_28" />-->
-<!--               <TextView-->
-<!--                   android:layout_width="wrap_content"-->
-<!--                   android:layout_height="wrap_content"-->
-<!--                   android:text="112"-->
-<!--                   android:paddingVertical="@dimen/dp_3"-->
-<!--                   android:paddingHorizontal="@dimen/dp_6"-->
-<!--                   android:background="@drawable/order_bg_red"-->
-<!--                   android:layout_alignParentEnd="true"-->
-<!--                   android:textColor="@color/white"-->
-<!--                   android:textSize="@dimen/sp_12" />-->
-<!--           </RelativeLayout>-->
-<!--           <RelativeLayout-->
-<!--               android:layout_width="wrap_content"-->
-<!--               android:gravity="center"-->
-<!--               android:layout_height="wrap_content">-->
-<!--               <TextView-->
-<!--                   android:layout_width="match_parent"-->
-<!--                   android:layout_height="wrap_content"-->
-<!--                   android:gravity="center"-->
-<!--                   android:paddingBottom="@dimen/dp_10"-->
-<!--                   android:text="进行中"-->
-<!--                   android:textColor="#ff9b9b9b"-->
-<!--                   android:textStyle="bold"
-                android:textSize="@dimen/sp_28" />-->
-<!--               <TextView-->
-<!--                   android:layout_width="wrap_content"-->
-<!--                   android:layout_height="wrap_content"-->
-<!--                   android:text="112"-->
-<!--                   android:paddingVertical="@dimen/dp_3"-->
-<!--                   android:paddingHorizontal="@dimen/dp_6"-->
-<!--                   android:background="@drawable/order_bg_red"-->
-<!--                   android:layout_alignParentEnd="true"-->
-<!--                   android:textColor="@color/white"-->
-<!--                   android:textSize="@dimen/sp_12" />-->
-<!--           </RelativeLayout>-->
-<!--           <RelativeLayout-->
-<!--               android:layout_width="wrap_content"-->
-<!--               android:gravity="center"-->
-<!--               android:layout_height="wrap_content">-->
-<!--               <TextView-->
-<!--                   android:layout_width="match_parent"-->
-<!--                   android:layout_height="wrap_content"-->
-<!--                   android:gravity="center"-->
-<!--                   android:paddingBottom="@dimen/dp_10"-->
-<!--                   android:text="进行中"-->
-<!--                   android:textColor="#ff9b9b9b"-->
-<!--                   android:textStyle="bold"
-                android:textSize="@dimen/sp_28" />-->
-<!--               <TextView-->
-<!--                   android:layout_width="wrap_content"-->
-<!--                   android:layout_height="wrap_content"-->
-<!--                   android:text="112"-->
-<!--                   android:paddingVertical="@dimen/dp_3"-->
-<!--                   android:paddingHorizontal="@dimen/dp_6"-->
-<!--                   android:background="@drawable/order_bg_red"-->
-<!--                   android:layout_alignParentEnd="true"-->
-<!--                   android:textColor="@color/white"-->
-<!--                   android:textSize="@dimen/sp_12" />-->
-<!--           </RelativeLayout>-->
-<!--           <RelativeLayout-->
-<!--               android:layout_width="wrap_content"-->
-<!--               android:gravity="center"-->
-<!--               android:layout_height="wrap_content">-->
-<!--               <TextView-->
-<!--                   android:layout_width="match_parent"-->
-<!--                   android:layout_height="wrap_content"-->
-<!--                   android:gravity="center"-->
-<!--                   android:paddingBottom="@dimen/dp_10"-->
-<!--                   android:text="进行中"-->
-<!--                   android:textColor="#ff9b9b9b"-->
-<!--                   android:textStyle="bold"
-                android:textSize="@dimen/sp_28" />-->
-<!--               <TextView-->
-<!--                   android:layout_width="wrap_content"-->
-<!--                   android:layout_height="wrap_content"-->
-<!--                   android:text="112"-->
-<!--                   android:paddingVertical="@dimen/dp_3"-->
-<!--                   android:paddingHorizontal="@dimen/dp_6"-->
-<!--                   android:background="@drawable/order_bg_red"-->
-<!--                   android:layout_alignParentEnd="true"-->
-<!--                   android:textColor="@color/white"-->
-<!--                   android:textSize="@dimen/sp_12" />-->
-<!--           </RelativeLayout>-->
-<!--           <RelativeLayout-->
-<!--               android:layout_width="wrap_content"-->
-<!--               android:gravity="center"-->
-<!--               android:layout_height="wrap_content">-->
-<!--               <TextView-->
-<!--                   android:layout_width="match_parent"-->
-<!--                   android:layout_height="wrap_content"-->
-<!--                   android:gravity="center"-->
-<!--                   android:paddingBottom="@dimen/dp_10"-->
-<!--                   android:text="进行中"-->
-<!--                   android:textColor="#ff9b9b9b"-->
-<!--                   android:textStyle="bold"
-                android:textSize="@dimen/sp_28" />-->
-<!--               <TextView-->
-<!--                   android:layout_width="wrap_content"-->
-<!--                   android:layout_height="wrap_content"-->
-<!--                   android:text="112"-->
-<!--                   android:paddingVertical="@dimen/dp_3"-->
-<!--                   android:paddingHorizontal="@dimen/dp_6"-->
-<!--                   android:background="@drawable/order_bg_red"-->
-<!--                   android:layout_alignParentEnd="true"-->
-<!--                   android:textColor="@color/white"-->
-<!--                   android:textSize="@dimen/sp_12" />-->
-<!--           </RelativeLayout>-->
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-           
+    <com.angcyo.tablayout.DslTabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tab_deselect_color="@color/home_A8ABB2"
+        app:tab_draw_badge="true"
+        android:paddingTop="@dimen/dp_40"
+        android:paddingBottom="@dimen/dp_15"
+        app:tab_draw_indicator="true"
+        app:tab_enable_gradient_scale="false"
+        app:tab_enable_text_bold="true"
+        app:tab_indicator_color="@color/red"
+        app:tab_indicator_enable_flow="true"
+        app:tab_indicator_height="@dimen/dp_5"
+        app:tab_indicator_y_offset="@dimen/dp_10"
+        app:tab_indicator_solid_color="@color/white"
+        app:tab_indicator_style="STYLE_BOTTOM"
+        app:tab_indicator_width="30dp"
+        app:tab_badge_gravity="center"
+        app:tab_badge_text_size="@dimen/sp_30"
+        app:tab_badge_solid_color="@color/white"
+        app:tab_badge_text_color="@color/red"
+        app:tab_item_is_equ_width="true"
+        app:tab_select_color="@color/home_333333">
 
-        </com.angcyo.tablayout.DslTabLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="待配送"
+            android:textColor="#ff9b9b9b"
+            android:textSize="@dimen/sp_28"
+            android:textStyle="bold" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="待抢单"
+            android:textColor="#ff9b9b9b"
+            android:textSize="@dimen/sp_28"
+            android:textStyle="bold" />
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/home_B3B3B3"
-            />
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="待取货"
+            android:textColor="#ff9b9b9b"
+            android:textSize="@dimen/sp_28"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="配送中"
+            android:textColor="#ff9b9b9b"
+            android:textSize="@dimen/sp_28"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="取消"
+            android:textColor="#ff9b9b9b"
+            android:textSize="@dimen/sp_28"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingEnd="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="已送达"
+            android:textColor="#ff9b9b9b"
+            android:textSize="@dimen/sp_28"
+            android:textStyle="bold"
+            tools:ignore="RtlSymmetry" />
+
+    </com.angcyo.tablayout.DslTabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/home_B3B3B3" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

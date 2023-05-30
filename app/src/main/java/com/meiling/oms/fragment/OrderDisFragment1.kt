@@ -92,7 +92,7 @@ class  OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1B
                         discount.visibility = View.INVISIBLE
                     }else{
                         discount.visibility = View.VISIBLE
-                        discount.text = item.couponMoney
+                        discount.text = "已减${item.couponMoney} 元"
                     }
 //                    Glide.with(context)
 //                        .load(item.iconUrl)

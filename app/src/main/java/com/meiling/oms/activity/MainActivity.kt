@@ -2,13 +2,20 @@ package com.meiling.oms.activity
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -25,10 +32,7 @@ import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityMainBinding
 import com.meiling.oms.eventBusData.MessageEvent
 import com.meiling.oms.eventBusData.MessageEventTabChange
-import com.meiling.oms.fragment.DataFragment
-import com.meiling.oms.fragment.HomeFragment
-import com.meiling.oms.fragment.MyFragment
-import com.meiling.oms.fragment.ScanFragment
+import com.meiling.oms.fragment.*
 import com.meiling.oms.viewmodel.MainViewModel
 import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.widget.UpdateVersion
@@ -47,6 +51,22 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     lateinit var mainViewModel2: MainViewModel2
     private val ACCESS_NOTIFICATION_POLICY = 1
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        window.statusBarColor = Color.TRANSPARENT
+        val controller = WindowInsetsControllerCompat(window, window.decorView)
+        controller.isAppearanceLightStatusBars = false
+        controller.show(WindowInsetsCompat.Type.statusBars()) // 状态栏显示
+        window.navigationBarColor = Color.TRANSPARENT
+        controller.show(WindowInsetsCompat.Type.navigationBars()) // 导航栏显示
+        WindowCompat.setDecorFitsSystemWindows(window, false) // 打开沉浸式
+        val params = window.attributes
+        params.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+        window.attributes = params
+        controller.isAppearanceLightStatusBars = true // 黑色状态栏
+        super.onCreate(savedInstanceState)
+    }
     override fun initView(savedInstanceState: Bundle?) {
 //        EventBus.getDefault().register(this)
         mainActivity=this
@@ -105,7 +125,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         ).get(MainViewModel2::class.java)
 
 
-        fragmentList.add(HomeFragment.newInstance())
+        fragmentList.add(HomeOningOrderFragment.newInstance())
         fragmentList.add(ScanFragment.newInstance())
         fragmentList.add(DataFragment.newInstance())
         fragmentList.add(MyFragment.newInstance())

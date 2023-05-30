@@ -192,7 +192,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
      * 状态栏字体深色模式
      */
     open fun isStatusBarDarkFont(): Boolean {
-        return false
+        return true
     }
     /**
      * 获取状态栏沉浸的配置对象

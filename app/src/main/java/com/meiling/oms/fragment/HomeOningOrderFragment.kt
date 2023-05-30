@@ -55,19 +55,6 @@ class HomeOningOrderFragment :
         mDatabind.viewPager.setCurrentItem(0, false)
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
         mDatabind.viewPager.offscreenPageLimit = 1
-//        mViewModel.statusCount(
-//            logisticsStatus = "",
-//            startTime = formatCurrentDateBeforeWeek(),
-//            endTime = formatCurrentDate(),
-//            businessNumberType = "1",
-//            pageIndex = "1",
-//            pageSize = "20",
-//            orderTime = "1",
-//            deliverySelect = "0",
-//            isValid = "",
-//            businessNumber = ""
-//        )
-
     }
 
 
@@ -94,7 +81,6 @@ class HomeOningOrderFragment :
             isValid = "",
             businessNumber = ""
         )
-//        EventBus.getDefault().post(MessageEventUpDateOrder())
     }
 
     override fun createObserver() {
@@ -102,64 +88,51 @@ class HomeOningOrderFragment :
         }
         mViewModel.statusCountDto.onSuccess.observe(this) {
             mDatabind.tabLayout.updateTabBadge(0) {
-                badgeTextSize = 30f
-                badgeGravity = Gravity.RIGHT or Gravity.TOP
+                badgeGravity =  Gravity.CENTER or Gravity.TOP
                 badgeText = if (it.deliveryNot == 0) {
-                    null
+                    "--"
                 } else {
                     it.deliveryNot.toString()
                 }
-                badgeOffsetX = 5
-                badgeOffsetY = 30
-
+                badgeOffsetY = -20
             }
             mDatabind.tabLayout.updateTabBadge(1) {
-                badgeTextSize = 30f
-                badgeGravity = Gravity.RIGHT or Gravity.TOP
+                badgeGravity =  Gravity.CENTER or Gravity.TOP
                 badgeText = if (it.deliveryOrder == 0) {
-                    null
+                    "--"
                 } else {
                     it.deliveryOrder.toString()
                 }
-                badgeOffsetX = 5
-                badgeOffsetY = 30
+                badgeOffsetY = -20
 
             }
             mDatabind.tabLayout.updateTabBadge(2) {
-                badgeTextSize = 30f
-                badgeGravity = Gravity.RIGHT or Gravity.TOP
+                badgeGravity =  Gravity.CENTER or Gravity.TOP
                 badgeText = if (it.deliveryGoods == 0) {
-                    null
+                    "--"
                 } else {
                     it.deliveryGoods.toString()
                 }
-                badgeOffsetX = 5
-                badgeOffsetY = 30
+                badgeOffsetY = -20
 
             }
             mDatabind.tabLayout.updateTabBadge(3) {
-                badgeTextSize = 30f
-                badgeGravity = Gravity.RIGHT or Gravity.TOP
+                badgeGravity =  Gravity.CENTER or Gravity.TOP
                 badgeText = if (it.deliverying == 0) {
-                    null
+                    "--"
                 } else {
                     it.deliverying.toString()
                 }
-                badgeOffsetX = 5
-                badgeOffsetY = 30
-
+                badgeOffsetY = -20
             }
             mDatabind.tabLayout.updateTabBadge(4) {
-                badgeTextSize = 30f
-                badgeGravity = Gravity.RIGHT or Gravity.TOP
+                badgeGravity =  Gravity.CENTER or Gravity.TOP
                 badgeText = if (it.deliveryCancel == 0) {
-                    null
+                    "--"
                 } else {
                     it.deliveryCancel.toString()
                 }
-                badgeOffsetX = 20
-                badgeOffsetY = 30
-
+                badgeOffsetY = -20
             }
 //            mDatabind.tabLayout.updateTabBadge(5) {
 //                badgeTextSize = 30f
