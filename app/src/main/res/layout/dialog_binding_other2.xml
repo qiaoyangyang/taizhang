@@ -85,6 +85,8 @@
             android:layout_marginRight="10dp"
             android:button="@drawable/login_cb_agreement"
             android:id="@+id/checkBox"
+            android:enabled="false"
+            android:clickable="false"
             android:checked="true"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -137,7 +139,8 @@
             android:id="@+id/checkBox2"
             android:button="@drawable/login_cb_agreement"
             android:layout_marginRight="10dp"
-
+            android:enabled="false"
+            android:clickable="false"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

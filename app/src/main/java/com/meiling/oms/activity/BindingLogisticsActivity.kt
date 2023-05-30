@@ -311,6 +311,8 @@ class BindingLogisticsActivity :
 
                         }else{
                             //TODO 去注册
+                            var dialogRegistDadaLogistics=DialogRegistDadaLogistics()
+                            dialogRegistDadaLogistics.show(supportFragmentManager)
                         }
                     }
                     bindingOther.show(supportFragmentManager)
