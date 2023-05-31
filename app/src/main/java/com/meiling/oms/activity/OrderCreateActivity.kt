@@ -45,7 +45,6 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
     private val ACCESS_FINE_LOCATION = 1
 
     var goodsList = ArrayList<OrderCreateGoodsDto>()
-    var goodsArrayList = ArrayList<OrderCreateGoodsDto1>()
 
     var shopBeanList = ArrayList<ShopBean>()
     lateinit var orderGoodsAdapter: BaseQuickAdapter<OrderCreateGoodsDto, BaseViewHolder>
@@ -712,6 +711,8 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
                 return@setSingleClickListener
             }
 //            goodsArrayList.addAll(orderGoodsAdapter.data)
+            var goodsArrayList = ArrayList<OrderCreateGoodsDto1>()
+
             for (item in orderGoodsAdapter.data) {
                 goodsArrayList.add(
                     OrderCreateGoodsDto1(
@@ -774,6 +775,7 @@ class OrderCreateActivity : BaseActivity<OrderCreateViewModel, ActivityOrderCrea
             }
 
 //            goodsArrayList.addAll(orderGoodsAdapter.data)
+            var goodsArrayList = ArrayList<OrderCreateGoodsDto1>()
             for (item in orderGoodsAdapter.data) {
                 goodsArrayList.add(
                     OrderCreateGoodsDto1(
