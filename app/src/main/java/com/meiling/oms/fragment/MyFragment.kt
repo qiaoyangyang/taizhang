@@ -55,7 +55,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         ).get(MainViewModel2::class.java)
 
 
-        ImmersionBar.with(this).init()
+       // ImmersionBar.with(this).statusBarDarkFont(false) .autoDarkModeEnable(true, 0.2f).init()
         ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
         mDatabind.txtNickName.text = MMKVUtils.getString(SPConstants.NICK_NAME)
         mDatabind.txtPhone.text = "${
@@ -86,8 +86,8 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     override fun initListener() {
         //打印机配置
         mDatabind.llPrintBinding.setSingleClickListener {
-           // startActivity(Intent(requireActivity(), PrintDeviceListActivity::class.java))
-            startActivity(Intent(requireActivity(), OrderDetailActivity::class.java))
+           startActivity(Intent(requireActivity(), PrintDeviceListActivity::class.java))
+
 //            if(vm.getByTenantId.value?.poi==-1){
 //                //未创建门店
 ////                startActivity(Intent(requireActivity(), NoStoreActivity::class.java))
@@ -259,6 +259,10 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             showToast(it.msg)
         }
 
+    }
+
+    override fun isStatusBarDarkFont(): Boolean {
+        return true
     }
 
 }

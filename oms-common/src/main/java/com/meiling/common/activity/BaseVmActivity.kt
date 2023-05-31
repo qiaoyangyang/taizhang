@@ -104,6 +104,9 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
             }else{
                 Log.d("yjk", "initListener ==null ")
             }
+        }else{
+            ImmersionBar.with(this).statusBarDarkFont(true)
+                .autoDarkModeEnable(true, 0.2f).init()
         }
     }
     open fun initDataBind() {

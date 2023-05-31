@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
+import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.oms.activity.OrderCreateActivity
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
@@ -59,6 +60,8 @@ class HomeOningOrderFragment :
         mDatabind.viewPager.setCurrentItem(0, false)
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
         mDatabind.viewPager.offscreenPageLimit = 1
+       // ImmersionBar.with(this).statusBarDarkFont(true) .autoDarkModeEnable(true, 0.2f).init()
+       ImmersionBar.setTitleBar(this, mDatabind.clMy)
     }
 
     override fun initListener() {

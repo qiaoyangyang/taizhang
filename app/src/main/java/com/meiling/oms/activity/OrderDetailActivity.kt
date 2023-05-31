@@ -41,9 +41,16 @@ class OrderDetailActivity : BaseActivity<OrderCreateViewModel, ActivityOrderDeta
 
 
 
-        behavior= BottomSheetBehavior.from(mDatabind.bottomSheet)
+        behavior = BottomSheetBehavior.from(mDatabind.bottomSheet)
         behavior?.addBottomSheetCallback(bottomSheetCallback())
-        behavior?.state=  BottomSheetBehavior.STATE_HALF_EXPANDED
+        behavior?.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+
+
+    }
+
+    override fun initData() {
+        super.initData()
+        var orderid = intent.getStringExtra("orderid").toString()
 
 
     }
@@ -71,7 +78,9 @@ class OrderDetailActivity : BaseActivity<OrderCreateViewModel, ActivityOrderDeta
         super.onSaveInstanceState(outState)
         mDatabind.map.onSaveInstanceState(outState)
     }
+
     private val ZOOM = 15f
+
     /**
      * 添加带生长效果marker
      */
@@ -105,7 +114,7 @@ class OrderDetailActivity : BaseActivity<OrderCreateViewModel, ActivityOrderDeta
                     BottomSheetBehavior.STATE_HALF_EXPANDED -> //列表滑动到顶端
                     {
                         if (
-                            mDatabind.TitleBar?.translationY!==0f) {
+                            mDatabind.TitleBar?.translationY !== 0f) {
                             mDatabind.TitleBar?.translationY = 0f
                         }
                     }
@@ -126,7 +135,7 @@ class OrderDetailActivity : BaseActivity<OrderCreateViewModel, ActivityOrderDeta
                     mDatabind.map.translationY = -distance
 
                 } else { //在peekHeight位置以下 滑动(向上、向下)  slideOffset 是PeekHeight的高度的比例
-                   // distance = behavior?.peekHeight * slideOffset
+                    // distance = behavior?.peekHeight * slideOffset
                 }
 
             }
