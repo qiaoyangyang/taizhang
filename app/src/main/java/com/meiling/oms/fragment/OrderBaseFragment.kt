@@ -92,7 +92,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 override fun convert(holder: BaseViewHolder, item: OrderDto.Content) {
                     val imgPrint = holder.getView<TextView>(R.id.img_order_print)
                     val checkMap = holder.getView<TextView>(R.id.txt_check_map)
-                    val orderDelivery = holder.getView<TextView>(R.id.txt_order_delivery_1)
+                    val orderDelivery = holder.getView<TextView>(R.id.txt_base_order_delivery_1)
                     val btnSendDis =
                         holder.getView<ShapeTextView>(R.id.txt_base_order_dis)//发起配送或查看配送详情
                     val btnCancelDis =
@@ -100,8 +100,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     val btnOrderDisIgnore = holder.getView<TextView>(R.id.txt_order_ignore)//忽略配送
                     val btnShopDetail =
                         holder.getView<ShapeRelativeLayout>(R.id.srl_check_shop)//商品详情
-                    val changeOrder =
-                        holder.getView<ShapeRelativeLayout>(R.id.srl_check_order_detail)//修改订单
+
                     val phone = holder.getView<TextView>(R.id.txt_base_order_delivery_phone)
                     val orderAddress =
                         holder.getView<TextView>(R.id.txt_base_order_delivery_address)
@@ -195,22 +194,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     }
 
 //
-                    changeOrder.setSingleClickListener {
 
-                        if (item.order!!.deliveryType != "2") {
-                            ARouter.getInstance().build("/app/OrderChangeAddressActivity")
-                                .withString("receiveTime", item.order?.arriveTimeDate)
-                                .withString("receiveName", item.order?.recvName)
-                                .withString("receivePhone", item.order?.recvPhone)
-                                .withString("receiveAddress", item.order?.recvAddr)
-                                .withString("receiveRemark", item.order?.remark)
-                                .withString("lat", item.order?.lat)
-                                .withString("lon", item.order?.lon)
-                                .withString("orderId", item.order?.viewId)
-                                .withInt("index", holder.adapterPosition).navigation()
-                        }
-
-                    }
                     checkMap.setSingleClickListener {
                         showToast("查看地图")
                     }

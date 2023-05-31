@@ -90,6 +90,7 @@
                 app:shape_strokeWidth="1dp" />
 
             <com.hjq.shape.view.ShapeButton
+                android:id="@+id/btn_change_address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_26"
