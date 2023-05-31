@@ -7,17 +7,16 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
     <com.hjq.bar.TitleBar
-
         android:id="@+id/TitleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/red"
+        android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:leftIcon="@null"
         app:lineVisible="false"
         app:rightTitleSize="@dimen/sp_36"
         app:title="全国/所有门店"
-        app:titleColor="@color/white" />
+        app:titleColor="@color/black" />
 
 
     <com.angcyo.tablayout.DslTabLayout

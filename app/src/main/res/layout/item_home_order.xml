@@ -230,6 +230,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/dp_20"
             android:layout_marginTop="8dp"
+            tools:itemCount="2"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_shop_msg"
             tools:layout_editor_absoluteX="14dp"

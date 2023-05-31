@@ -8,6 +8,8 @@ import com.meiling.common.network.data.LogisticsInsertDto
 import com.meiling.common.network.data.OrderSendAddress
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.databinding.FragmentDis3Binding
+import com.meiling.oms.dialog.OrderDisGoodsSelectDialog
+import com.meiling.oms.dialog.OrderDisPlatformDialog
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
@@ -36,7 +38,14 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
     var orderPrice: String = ""
     lateinit var orderSendAddress: OrderSendAddress
     override fun initView(savedInstanceState: Bundle?) {
-
+        var orderDisGoodsSelectDialog = OrderDisPlatformDialog().newInstance()
+        mDatabind.txtRecPlatform.setSingleClickListener {
+            orderDisGoodsSelectDialog.show(childFragmentManager)
+            orderDisGoodsSelectDialog.setOkClickLister { id, name ->
+                mDatabind.txtRecPlatform.text = name
+//                selectShop = id
+            }
+        }
         poid = arguments?.getString("poid").toString()
         orderId = arguments?.getString("orderId").toString()
         orderPrice = arguments?.getString("orderPrice").toString()
@@ -46,6 +55,20 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
             "SELF"
         )
         mDatabind.btnSendDis.setSingleClickListener {
+
+            if (mDatabind.edtRecName.text.toString().isNullOrEmpty()) {
+                showToast("请输入配送员姓名")
+                return@setSingleClickListener
+            }
+            if (mDatabind.edtRecPhone.text.toString().isNullOrEmpty()) {
+                showToast("请输入配送员手机号")
+                return@setSingleClickListener
+            }
+            if (mDatabind.edtRecPlatformOrder.text.toString().isNullOrEmpty()) {
+                showToast("请输入手机号")
+                return@setSingleClickListener
+            }
+
             var insertOrderSendList = ArrayList<LogisticsInsertDto>()
             insertOrderSendList.add(
                 LogisticsInsertDto(
@@ -59,17 +82,16 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
                 )
             )
 
-            if (orderSendAddress!!.lon.isNullOrBlank() || orderSendAddress!!.lat.isNullOrBlank()) {
-                showToast("经纬度无效，请重新修改地址")
-                return@setSingleClickListener
-            }
-
-            if (orderSendAddress!!.recvName.isNullOrBlank() || orderSendAddress!!.recvAddr.isNullOrBlank() ||
-                orderSendAddress!!.recvPhone.isNullOrBlank()
-            ) {
-                showToast("请补全收货信息")
-                return@setSingleClickListener
-            }
+//            if (orderSendAddress!!.lon.isNullOrBlank() || orderSendAddress!!.lat.isNullOrBlank()) {
+//                showToast("经纬度无效，请重新修改地址")
+//                return@setSingleClickListener
+//            }
+//            if (orderSendAddress!!.recvName.isNullOrBlank() || orderSendAddress!!.recvAddr.isNullOrBlank() ||
+//                orderSendAddress!!.recvPhone.isNullOrBlank()
+//            ) {
+//                showToast("请补全收货信息")
+//                return@setSingleClickListener
+//            }
             if (!insertOrderSendList.isNullOrEmpty()) {
                 mViewModel.insertOrderSend(LogisticsConfirmDtoList(logisticsConfirmDtoList = insertOrderSendList))
             }

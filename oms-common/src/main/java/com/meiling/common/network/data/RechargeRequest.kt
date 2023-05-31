@@ -171,8 +171,8 @@ data class PageResult(
         var tenantId: Int?,
         @SerializedName("updateTime")
         var updateTime: Long?,
-        @SerializedName("updateUserId")
-        var updateUserId: Int?,
+//        @SerializedName("updateUserId")
+//        var updateUserId: Int?,
         @SerializedName("viewId")
         var viewId: String?
     )
@@ -222,26 +222,27 @@ data class FinancialRecord(
 }
 
 data class RechargeDto(
-    @SerializedName("createTime")
-    var createTime: Long? = 0,
-    @SerializedName("createUserId")
-    var createUserId: Int? = 0,
-    @SerializedName("id")
-    var id: Int? = 0,
+//    @SerializedName("createTime")
+//    var createTime: Long? = 0,
+//    @SerializedName("createUserId")
+//    var createUserId: Int? = 0,
+//    @SerializedName("id")
+//    var id: Int? = 0,
     @SerializedName("payAmount")
     var payAmount: Double? = 0.0,
     @SerializedName("presentedAmount")
     var presentedAmount: Double? = 0.0,
-    @SerializedName("status")
-    var status: Int? = 0,
-    @SerializedName("tenantId")
-    var tenantId: Int? = 0,
-    @SerializedName("updateTime")
-    var updateTime: Long? = 0,
-    @SerializedName("updateUserId")
-    var updateUserId: Int? = 0,
-    @SerializedName("viewId")
-    var viewId: String? = ""
+//    @SerializedName("status")
+//    var status: Int? = 0,
+//    @SerializedName("tenantId")
+//    var tenantId: Int? = 0,
+//    @SerializedName("updateTime")
+//    var updateTime: Long? = 0,
+//    @SerializedName("updateUserId")
+//    var updateUserId: Int? = 0,
+//    @SerializedName("viewId")
+//    var viewId: String? = ""
 ) {
     var select = false
 }
+

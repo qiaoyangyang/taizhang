@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjq.shape.layout.ShapeLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dp_20"
+    android:layout_marginVertical="@dimen/dp_20"
+    android:orientation="vertical"
+    app:layout_constraintLeft_toRightOf="@dimen/dp_20"
+    app:shape_solidColor="@color/white"
+    app:shape_topLeftRadius="@dimen/dp_20">
+
+    <com.hjq.shape.layout.ShapeRelativeLayout
+        android:id="@+id/srl_check_order_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/dp_20"
+        app:shape_solidColor="@color/home_fff6e8"
+        app:shape_topLeftRadius="@dimen/dp_20"
+        app:shape_topRightRadius="@dimen/dp_20">
+
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/txt_base_order_delivery_yu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/ims_delivery_way"
+            android:paddingHorizontal="@dimen/dp_16"
+            android:paddingVertical="@dimen/dp_6"
+            android:text="预"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_20"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/img_order_channel_icon"
+            app:shape_radius="5dp"
+            app:shape_solidColor="@color/home_FAAD14" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ims_delivery_way"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/icon_order_ziti"
+            android:textColor="#ffb3b3b3"
+            android:textSize="@dimen/sp_24"
+            android:visibility="invisible" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_order_channel_icon"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_marginTop="@dimen/dp_20"
+            android:src="@drawable/home_order_meituan"
+            android:text="2023-03-22 11:00:20下单 美团店铺桃源门店"
+            android:textColor="#ffb3b3b3"
+            android:textSize="@dimen/sp_24" />
+
+        <TextView
+            android:id="@+id/txt_base_order_No"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/img_order_channel_icon"
+            android:layout_alignBottom="@+id/img_order_channel_icon"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_toEndOf="@+id/img_order_channel_icon"
+            android:textColor="@color/app_themes_1f2333"
+            android:textSize="@dimen/sp_48"
+            android:textStyle="bold"
+            tools:text="3" />
+
+        <TextView
+            android:id="@+id/txt_base_order_delivery_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/img_order_channel_icon"
+            android:layout_alignBottom="@+id/img_order_channel_icon"
+            android:layout_marginStart="@dimen/dp_40"
+            android:layout_toEndOf="@+id/txt_base_order_No"
+            android:gravity="center_vertical"
+            android:textColor="@color/red"
+            android:textSize="@dimen/sp_32"
+            android:textStyle="bold"
+            app:layout_constraintRight_toLeftOf="@+id/txt_order_delivery_1"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2023-03-23 15:00:00" />
+
+        <TextView
+            android:id="@+id/txt_order_delivery_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/txt_base_order_delivery_time"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_toEndOf="@+id/txt_base_order_delivery_time"
+            android:text="前自提"
+            android:textColor="@color/home_000000"
+            android:textSize="@dimen/sp_32"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_order_store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_order_channel_icon"
+            android:layout_marginVertical="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:text=""
+            android:textColor="#a6000000"
+            android:textSize="@dimen/sp_28"
+            tools:text="美团店铺" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:src="@drawable/icon_next"
+            android:textColor="#a6000000"
+            android:textSize="@dimen/sp_28"
+            tools:text="美团店铺" />
+
+    </com.hjq.shape.layout.ShapeRelativeLayout>
+
+
+    <com.hjq.shape.layout.ShapeRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dp_20">
+
+        <TextView
+            android:id="@+id/txt_order_delivery_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:maxWidth="@dimen/dp_300"
+            android:singleLine="true"
+            android:textColor="@color/home_333333"
+            android:textSize="@dimen/sp_32"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_line"
+            tools:text="王冰 recvName " />
+
+        <TextView
+            android:id="@+id/txt_base_order_delivery_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_order_delivery_name"
+            android:layout_toStartOf="@+id/txt_check_map"
+            android:gravity="left"
+            android:paddingVertical="@dimen/dp_10"
+            android:singleLine="true"
+            android:textColor="@color/home_333333"
+            android:textSize="@dimen/sp_32"
+            tools:text="13993336594040 " />
+
+        <TextView
+            android:id="@+id/txt_check_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/txt_order_delivery_name"
+            android:layout_alignBottom="@+id/txt_base_order_delivery_phone"
+            android:layout_marginVertical="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_toStartOf="@+id/iv_call_phone"
+            android:gravity="center_vertical"
+            android:textColor="@color/home_646A89"
+            android:textSize="@dimen/sp_28"
+            app:drawableStartCompat="@drawable/icon_order_local"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:text="1.2km" />
+
+        <ImageView
+            android:id="@+id/iv_call_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/txt_order_delivery_name"
+            android:layout_alignBottom="@+id/txt_base_order_delivery_phone"
+            android:layout_alignParentEnd="true"
+            android:layout_marginVertical="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/dp_20"
+            android:src="@drawable/icon_order_phone"
+            android:textColor="@color/home_646A89"
+            android:textSize="@dimen/sp_28"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_order_delivery_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_base_order_delivery_phone"
+            android:layout_marginTop="@dimen/dp_10"
+            android:textColor="@color/home_333333"
+            android:textSize="@dimen/sp_28"
+            app:layout_constraintEnd_toEndOf="@+id/txt_check_map"
+            app:layout_constraintStart_toStartOf="@+id/txt_order_delivery_name"
+            app:layout_constraintTop_toBottomOf="@+id/txt_check_map"
+            tools:text="陕西省西安市莲湖区 桃园假日酒店29层 recvAddr桃园假日酒店29层桃园假日酒店29层桃园假日酒店29层桃园假日酒店29层桃园假日酒店29层" />
+
+        <com.hjq.shape.layout.ShapeLinearLayout
+            android:id="@+id/ll_remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_order_delivery_address"
+            android:layout_marginVertical="@dimen/dp_20"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/dp_20"
+            app:shape_radius="@dimen/dp_20"
+            app:shape_solidColor="@color/account_F5F5F5">
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_10"
+                android:text="备注"
+                android:textColor="@color/home_000000"
+                android:textSize="@dimen/sp_28"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_base_order_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_28"
+                tools:text="宝贝，生日快乐～顾客不需要辅导餐具，   需要18根蜡烛。" />
+        </com.hjq.shape.layout.ShapeLinearLayout>
+    </com.hjq.shape.layout.ShapeRelativeLayout>
+
+
+    <com.hjq.shape.layout.ShapeRelativeLayout
+        android:id="@+id/srl_check_shop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dp_20">
+
+        <TextView
+            android:id="@+id/txt_base_order_shop_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/dp_10"
+            android:textColor="@color/home_333333"
+            android:textSize="@dimen/sp_28"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_remark"
+            tools:text="商品1件" />
+
+        <TextView
+            android:id="@+id/txt_base_order_shop_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_base_order_shop_msg"
+            android:textColor="@color/home_333333"
+            android:textSize="@dimen/sp_28"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_remark"
+            tools:text="商品名称" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_next"
+            android:text=""
+            android:textColor="#a6000000"
+            android:textSize="@dimen/sp_28"
+            tools:text="美团店铺" />
+    </com.hjq.shape.layout.ShapeRelativeLayout>
+
+    <View
+        android:id="@+id/view_shop_line_all"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@color/home_F1F1F1"
+        app:layout_constraintTop_toBottomOf="@+id/cos_shop_show" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/dp_20"
+        android:paddingVertical="@dimen/dp_20">
+
+        <TextView
+            android:id="@+id/img_order_print"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/txt_base_order_dis"
+            android:gravity="center"
+            android:text="打印小票"
+            android:textColor="@color/home_646A89"
+            android:textSize="@dimen/sp_28"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:drawableStartCompat="@drawable/icon_order_print"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_order_ignore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="忽略订单"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/icon_order_ignore"
+            app:layout_constraintLeft_toRightOf="@+id/img_order_print"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/txt_base_order_dis"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txt_base_order_dis_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/order_home_send"
+            android:paddingHorizontal="@dimen/dp_34"
+            android:paddingVertical="@dimen/dp_10"
+            android:text="取消配送"
+            android:visibility="gone"
+            android:textColor="@color/home_646A89"
+            android:textSize="@dimen/sp_32"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/img_order_print"
+            app:layout_constraintRight_toLeftOf="@+id/txt_base_order_dis"            />
+
+
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/txt_base_order_dis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/dp_32"
+            android:paddingVertical="@dimen/dp_10"
+            android:text="发起配送"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_32"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:shape_radius="@dimen/dp_20"
+            app:shape_solidColor="@color/red" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.hjq.shape.layout.ShapeLinearLayout>
+
+

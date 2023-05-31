@@ -16,9 +16,9 @@
             android:id="@+id/rv_order_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/home_order_bg"
+            android:background="@color/account_F5F5F5"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_home_order" />
+            tools:listitem="@layout/item_home_base_order" />
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 

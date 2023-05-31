@@ -10,23 +10,17 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.hjq.permissions.OnPermissionCallback
-import com.hjq.permissions.Permission
-import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.utils.MMKVUtils
-import com.meiling.common.utils.PermissionUtilis
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityMainBinding
 import com.meiling.oms.eventBusData.MessageEvent
 import com.meiling.oms.eventBusData.MessageEventTabChange
 import com.meiling.oms.fragment.DataFragment
-import com.meiling.oms.fragment.HomeFragment
+import com.meiling.oms.fragment.HomeOningOrderFragment
 import com.meiling.oms.fragment.MyFragment
 import com.meiling.oms.fragment.ScanFragment
 import com.meiling.oms.viewmodel.MainViewModel
@@ -47,6 +41,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     lateinit var mainViewModel2: MainViewModel2
     private val ACCESS_NOTIFICATION_POLICY = 1
+
+
     override fun initView(savedInstanceState: Bundle?) {
 //        EventBus.getDefault().register(this)
         mainActivity=this
@@ -105,7 +101,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         ).get(MainViewModel2::class.java)
 
 
-        fragmentList.add(HomeFragment.newInstance())
+        fragmentList.add(HomeOningOrderFragment.newInstance())
         fragmentList.add(ScanFragment.newInstance())
         fragmentList.add(DataFragment.newInstance())
         fragmentList.add(MyFragment.newInstance())
