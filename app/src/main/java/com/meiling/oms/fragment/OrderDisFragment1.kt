@@ -1,26 +1,18 @@
 package com.meiling.oms.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.alibaba.android.arouter.launcher.ARouter
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.meiling.common.constant.SPConstants
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.*
-import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.SoftKeyBoardListener
 import com.meiling.common.utils.SoftKeyBoardListener.OnSoftKeyBoardChangeListener
 import com.meiling.oms.R
@@ -88,11 +80,11 @@ class  OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1B
                     var viewPrice = holder.getView<TextView>(R.id.txtTip)
                     var name = holder.getView<TextView>(R.id.txt_name)
                     var discount = holder.getView<TextView>(R.id.txt_discount_money)
-                    if (item.couponMoney.isNullOrEmpty()){
+                    if (item.couponMoney.isNullOrEmpty() || item.couponMoney == "0") {
                         discount.visibility = View.INVISIBLE
-                    }else{
+                    } else {
                         discount.visibility = View.VISIBLE
-                        discount.text = "已减${item.couponMoney} 元"
+                        discount.text = "已减 ${item.couponMoney} 元"
                     }
 //                    Glide.with(context)
 //                        .load(item.iconUrl)
