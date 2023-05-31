@@ -55,8 +55,8 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         ).get(MainViewModel2::class.java)
 
 
-        ImmersionBar.with(this).init()
-        ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
+       // ImmersionBar.with(this).statusBarDarkFont(false) .autoDarkModeEnable(true, 0.2f).init()
+      //  ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
         mDatabind.txtNickName.text = MMKVUtils.getString(SPConstants.NICK_NAME)
         mDatabind.txtPhone.text = "${
             if (MMKVUtils.getInt(SPConstants.ROLE) == 1) {
@@ -259,6 +259,10 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             showToast(it.msg)
         }
 
+    }
+
+    override fun isStatusBarDarkFont(): Boolean {
+        return true
     }
 
 }

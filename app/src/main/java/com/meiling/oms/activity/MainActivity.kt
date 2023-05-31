@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
@@ -12,7 +13,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.utils.MMKVUtils
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
@@ -34,18 +37,22 @@ import org.greenrobot.eventbus.ThreadMode
 
 @Route(path = "/app/MainActivity")
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
-    companion object{
-        var mainActivity:ViewModelStoreOwner?=null
+    companion object {
+        var mainActivity: ViewModelStoreOwner? = null
     }
+
     private val fragmentList: MutableList<Fragment> = ArrayList()
 
     lateinit var mainViewModel2: MainViewModel2
     private val ACCESS_NOTIFICATION_POLICY = 1
 
+    override fun isStatusBarEnabled(): Boolean {
+        return false
+    }
 
     override fun initView(savedInstanceState: Bundle?) {
 //        EventBus.getDefault().register(this)
-        mainActivity=this
+        mainActivity = this
         mDatabind.viewPager.isUserInputEnabled = false
         mViewModel.setUmToken()
         if (ContextCompat.checkSelfPermission(
@@ -60,6 +67,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                 ACCESS_NOTIFICATION_POLICY
             )
         }
+
 
 //        XXPermissions.with(this).permission(PermissionUtilis.Group.NOTIFICATION)
 //            .request(object : OnPermissionCallback {
@@ -85,17 +93,18 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 //                    }
 //                }
 //            })
-        MMKVUtils.putBoolean("isUpdate",true)
+        MMKVUtils.putBoolean("isUpdate", true)
     }
 
     override fun onResume() {
         super.onResume()
-        if (MMKVUtils.getBoolean("isUpdate")){
+        if (MMKVUtils.getBoolean("isUpdate")) {
             UpdateVersion.getUpdateVersion(this, "0")
         }
     }
+
     override fun initData() {
-        mainViewModel2= ViewModelProvider(
+        mainViewModel2 = ViewModelProvider(
             MainActivity.mainActivity!!,
             ViewModelProvider.NewInstanceFactory()
         ).get(MainViewModel2::class.java)
@@ -109,12 +118,33 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             BaseFragmentPagerAdapter(supportFragmentManager, lifecycle, fragmentList)
         mDatabind.viewPager.setCurrentItem(0, false)
         mDatabind.viewPager.offscreenPageLimit = 1
+        mDatabind.viewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                ImmersionBar.with(this@MainActivity).statusBarDarkFont(true)
+                        .autoDarkModeEnable(true, 0.2f).init()
+
+                if (position == 1) {
+                    Log.d("yjk","-----2-------")
+//
+                } else {
+                    Log.d("yjk","-----1-------")
+//                    ImmersionBar.with(this@MainActivity).statusBarDarkFont(true)
+//                        .autoDarkModeEnable(true, 0.2f).init()
+
+                }
+
+            }
+
+        })
 //        mDatabind.aivHome.isSelected = true
 //        mDatabind.atvHome.isSelected = true
         mDatabind.aivHomeSelect.visibility = View.VISIBLE
         mDatabind.aivHome.visibility = View.GONE
         mDatabind.atvHome.visibility = View.GONE
         mViewModel.getByTenantId()
+
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityMainBinding {
@@ -124,6 +154,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun initListener() {
         mDatabind.llHome.setOnClickListener {
+
             resetting()
             mDatabind.aivHomeSelect.visibility = View.VISIBLE
             mDatabind.aivHome.visibility = View.GONE
@@ -134,18 +165,21 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             mDatabind.viewPager.setCurrentItem(0, false)
         }
         mDatabind.llScan.setOnClickListener {
+
             resetting()
             mDatabind.aivFinds.isSelected = true
             mDatabind.atvFinds.isSelected = true
             mDatabind.viewPager.setCurrentItem(1, false)
         }
         mDatabind.llData.setOnClickListener {
+
             resetting()
             mDatabind.atvMessage.isSelected = true
             mDatabind.aivMessage.isSelected = true
             mDatabind.viewPager.setCurrentItem(2, false)
         }
         mDatabind.llMy.setOnClickListener {
+
             resetting()
             mDatabind.aivMy.isSelected = true
             mDatabind.atvMy.isSelected = true

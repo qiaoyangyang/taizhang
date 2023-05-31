@@ -2,11 +2,13 @@ package com.meiling.common.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
+import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.BaseViewModel
 import com.meiling.common.dialog.LoadingDialog
 import com.meiling.common.getVmClazz
@@ -51,8 +53,55 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
         createObserver()
         initData()
         initListener()
+       // initImmersion()
     }
 
+    /**
+     * 初始化沉浸式
+     */
+    protected open fun initImmersion() {
+        Log.d("yjk","initImmersion---${isStatusBarEnabled()}")
+        // 初始化沉浸式状态栏
+            getStatusBarConfig().init()
+            Log.d("yjk","BaseVmFragment---isStatusBarEnabled")
+
+    }
+    /**
+     * 状态栏字体深色模式
+     */
+    open fun isStatusBarDarkFont(): Boolean {
+        return true
+    }
+
+    /** 状态栏沉浸 */
+    private var immersionBar: ImmersionBar? = null
+    /**
+     * 获取状态栏沉浸的配置对象
+     */
+    open fun getStatusBarConfig(): ImmersionBar {
+        if (immersionBar == null) {
+
+            immersionBar = createStatusBarConfig()
+        }else{
+            immersionBar = createStatusBarConfig()
+        }
+        return immersionBar!!
+    }
+    /**
+     * 初始化沉浸式状态栏
+     */
+    protected open fun createStatusBarConfig(): ImmersionBar {
+        Log.d("yjk","初始化沉浸式状态栏--------"+isStatusBarDarkFont())
+        return ImmersionBar.with(this) // 默认状态栏字体颜色为黑色
+            .statusBarDarkFont(isStatusBarDarkFont()) // 指定导航栏背景颜色
+            .autoDarkModeEnable(true, 0.2f)
+    }
+    /**
+     * 是否在Fragment使用沉浸式
+     */
+    open fun isStatusBarEnabled(): Boolean {
+        return false
+    }
 
 
     private fun createViewModel(): VM {
