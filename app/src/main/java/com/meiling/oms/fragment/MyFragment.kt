@@ -56,7 +56,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
 
        // ImmersionBar.with(this).statusBarDarkFont(false) .autoDarkModeEnable(true, 0.2f).init()
-      //  ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
+        ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
         mDatabind.txtNickName.text = MMKVUtils.getString(SPConstants.NICK_NAME)
         mDatabind.txtPhone.text = "${
             if (MMKVUtils.getInt(SPConstants.ROLE) == 1) {
