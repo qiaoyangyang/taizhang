@@ -73,6 +73,11 @@
 
         </activity>
 
+
+        <activity
+            android:name=".activity.OrderDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -82,14 +87,14 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true"
             android:screenOrientation="portrait">
-<!--                        <intent-filter>-->
-<!--                            <action android:name="android.intent.action.MAIN" />-->
+            <!--                        <intent-filter>-->
+            <!--                            <action android:name="android.intent.action.MAIN" />-->
 
-<!--                            <category android:name="android.intent.category.LAUNCHER" />-->
-<!--                        </intent-filter>-->
-<!--                        <meta-data-->
-<!--                            android:name="android.app.lib_name"-->
-<!--                            android:value="" />-->
+            <!--                            <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--                        </intent-filter>-->
+            <!--                        <meta-data-->
+            <!--                            android:name="android.app.lib_name"-->
+            <!--                            android:value="" />-->
         </activity>
 
         <activity
@@ -97,14 +102,14 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true"
             android:screenOrientation="portrait">
-<!--                        <intent-filter>-->
-<!--                            <action android:name="android.intent.action.MAIN" />-->
+            <!--                        <intent-filter>-->
+            <!--                            <action android:name="android.intent.action.MAIN" />-->
 
-<!--                            <category android:name="android.intent.category.LAUNCHER" />-->
-<!--                        </intent-filter>-->
-<!--                        <meta-data-->
-<!--                            android:name="android.app.lib_name"-->
-<!--                            android:value="" />-->
+            <!--                            <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--                        </intent-filter>-->
+            <!--                        <meta-data-->
+            <!--                            android:name="android.app.lib_name"-->
+            <!--                            android:value="" />-->
         </activity>
 
         <activity
@@ -131,8 +136,8 @@
         <activity
             android:name=".activity.PushDialogActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:theme="@style/dialogActivityTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/dialogActivityTheme" />
         <activity
             android:name=".activity.ForgetPwdActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -148,7 +153,7 @@
         <activity
             android:name=".activity.LebaiRetailBindingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
 
         </activity>
         <activity
@@ -173,8 +178,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.OrderCreateActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.NewOrderChangeAddressMapActivity"
             android:screenOrientation="portrait" />
@@ -207,8 +212,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MyRechargeToPayActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.WriteOffActivity"
             android:screenOrientation="portrait" />
@@ -274,9 +279,10 @@
             android:name=".activity.BindPrintDeviceActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.PrintDeviceListActivity"
+        <activity
+            android:name=".activity.PrintDeviceListActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -368,6 +374,7 @@
     <meta-data
         android:name="com.huawei.hms.client.appid"
         android:value="appid=108169495" />
+
     <queries>
         <package android:name="com.tencent.mm" />
         <package android:name="com.eg.android.AlipayGphone" />

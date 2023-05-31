@@ -252,6 +252,7 @@ class NewOrderChangeAddressMapActivity() :
         aMap!!.uiSettings.isMyLocationButtonEnabled = true // 设置默认定位按钮是否显示
         aMap!!.isMyLocationEnabled = true // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap!!.setOnMapTouchListener(this)
+
     }
 
     /**
