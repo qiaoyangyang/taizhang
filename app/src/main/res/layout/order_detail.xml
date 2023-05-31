@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <com.hjq.shape.layout.ShapeConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:shadowColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
         app:shape_bottomLeftRadius="@dimen/dp_20"
-        app:shape_bottomRightRadius="@dimen/dp_20"
-        app:layout_constraintTop_toTopOf="parent">
+        app:shape_bottomRightRadius="@dimen/dp_20">
 
 
         <TextView
-            android:layout_marginTop="@dimen/dp_16"
             android:id="@+id/tv_status_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
             android:drawableLeft="@drawable/to_be_delivered"
             android:gravity="center"
             android:text="待取货"
@@ -76,77 +77,442 @@
         </LinearLayout>
 
     </com.hjq.shape.layout.ShapeConstraintLayout>
+
     <com.hjq.shape.layout.ShapeConstraintLayout
-        android:layout_marginTop="@dimen/dp_16"
-        android:layout_marginLeft="@dimen/dp_24"
-        android:layout_marginRight="@dimen/dp_24"
-        app:shape_topRightRadius="@dimen/dp_16"
-        app:shape_topLeftRadius="@dimen/dp_16"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_24"
         android:background="#FFFFF6E8"
-        android:layout_height="wrap_content">
+        app:shape_topLeftRadius="@dimen/dp_16"
+        app:shape_topRightRadius="@dimen/dp_16">
+
         <ImageView
             android:id="@+id/iv_Platform_icon"
-            android:layout_marginTop="@dimen/dp_16"
-            android:layout_marginLeft="@dimen/dp_24"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/douyin"
             android:layout_width="@dimen/dp_64"
-            android:layout_height="@dimen/dp_64"/>
+            android:layout_height="@dimen/dp_64"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_16"
+            android:src="@drawable/douyin"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
-            app:layout_constraintTop_toTopOf="@+id/iv_Platform_icon"
-            android:layout_marginLeft="@dimen/dp_12"
             android:id="@+id/tv_odd"
-            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:gravity="center"
+            android:text="3"
             android:textColor="@color/home_000000"
             android:textSize="28sp"
-            android:gravity="center"
-            app:layout_constraintLeft_toRightOf="@+id/iv_Platform_icon"
-            android:text="3"
+            android:textStyle="bold"
 
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"/>
+            app:layout_constraintLeft_toRightOf="@+id/iv_Platform_icon"
+            app:layout_constraintTop_toTopOf="@+id/iv_Platform_icon" />
+
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_20"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="@dimen/dp_16"
             android:text="美团店铺MONTCAKE SKPxxxxx门店"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/iv_Platform_icon"
-            app:layout_constraintTop_toBottomOf="@+id/tv_odd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_odd" />
+
         <TextView
-            android:textSize="@dimen/sp_32"
             android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_42"
-            android:textColor="@color/red"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_Platform_icon"
-            app:layout_constraintTop_toTopOf="@+id/iv_Platform_icon"
             android:text="今天15:00"
-            app:layout_constraintLeft_toRightOf="@+id/tv_odd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_marginLeft="@dimen/dp_20"
+            android:textColor="@color/red"
             android:textSize="@dimen/sp_32"
-            android:textColor="#E5000000"
-            android:text="前送达"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tv_time"
-            app:layout_constraintLeft_toRightOf="@+id/tv_time"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_Platform_icon"
+            app:layout_constraintLeft_toRightOf="@+id/tv_odd"
+            app:layout_constraintTop_toTopOf="@+id/iv_Platform_icon" />
+
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:text="前送达"
+            android:textColor="#E5000000"
+            android:textSize="@dimen/sp_32"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_time"
+            app:layout_constraintLeft_toRightOf="@+id/tv_time" />
 
 
     </com.hjq.shape.layout.ShapeConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_24"
         android:layout_marginRight="@dimen/dp_24"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_500">
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:id="@+id/rl_t"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+
+            android:paddingHorizontal="@dimen/dp_20"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/txt_order_delivery_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:maxWidth="@dimen/dp_300"
+                android:singleLine="true"
+                android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_32"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="王冰 recvName " />
+
+            <TextView
+                android:id="@+id/txt_base_order_delivery_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_order_delivery_name"
+                android:layout_toStartOf="@+id/txt_check_map"
+                android:gravity="left"
+                android:paddingVertical="@dimen/dp_10"
+                android:singleLine="true"
+                android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_32"
+                android:text="13993336594040 " />
+
+            <TextView
+                android:id="@+id/txt_check_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/txt_order_delivery_name"
+                android:layout_alignBottom="@+id/txt_base_order_delivery_phone"
+                android:layout_marginVertical="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_toStartOf="@+id/iv_call_phone"
+                android:gravity="center_vertical"
+                android:textColor="@color/home_646A89"
+                android:textSize="@dimen/sp_28"
+                app:drawableStartCompat="@drawable/icon_order_local"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="1.2km" />
+
+            <ImageView
+                android:id="@+id/iv_call_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/txt_order_delivery_name"
+                android:layout_alignBottom="@+id/txt_base_order_delivery_phone"
+                android:layout_alignParentEnd="true"
+                android:layout_marginVertical="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/dp_20"
+                android:src="@drawable/icon_order_phone"
+                android:textColor="@color/home_646A89"
+                android:textSize="@dimen/sp_28"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_order_delivery_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_base_order_delivery_phone"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textColor="@color/home_333333"
+                android:textSize="@dimen/sp_28"
+                app:layout_constraintEnd_toEndOf="@+id/txt_check_map"
+                app:layout_constraintStart_toStartOf="@+id/txt_order_delivery_name"
+                app:layout_constraintTop_toBottomOf="@+id/txt_check_map"
+                android:text="陕西省西安市莲湖区 桃园假日酒店29层 recvAddr桃园假日酒店29层桃园假日酒店29层桃园假日酒店29层桃园假日酒店29层桃园假日酒店29层" />
+
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:id="@+id/ll_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_order_delivery_address"
+                android:layout_marginVertical="@dimen/dp_20"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/dp_20"
+                android:paddingRight="@dimen/dp_20"
+                app:shape_radius="@dimen/dp_20"
+                app:shape_solidColor="@color/account_F5F5F5">
+
+                <com.hjq.shape.view.ShapeTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:text="备注"
+                    android:textColor="@color/home_000000"
+                    android:textSize="@dimen/sp_28"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_base_order_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:textColor="@color/home_333333"
+                    android:textSize="@dimen/sp_28"
+                    android:text="宝贝，生日快乐～顾客不需要辅导餐具，   需要18根蜡烛。" />
+            </com.hjq.shape.layout.ShapeLinearLayout>
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyClerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/rl_t" />
+
+        <TextView
+            android:id="@+id/tv_common"
+            android:layout_marginBottom="@dimen/dp_20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyClerView"
+            android:text="商品1件，共50.00元"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent" />
+        <TextView
+            android:id="@+id/tv_2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_common"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_24"
+            android:background="#0A000000"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <LinearLayout
+            android:paddingBottom="@dimen/dp_16"
+            app:layout_constraintTop_toBottomOf="@+id/tv_2"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_24"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/sp_28"
+                    android:textColor="#80000000"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="顾客实际支付"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textColor="#E6000000"
+                    android:textSize="@dimen/sp_32"
+                    android:text="¥50.00"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/sp_28"
+                    android:textColor="#80000000"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="平台服务费"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textColor="#E6000000"
+                    android:textSize="@dimen/sp_32"
+                    android:text="¥50.00"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/sp_28"
+                    android:textColor="#80000000"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="本单支付入账"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp_32"
+                    android:text="¥50.00"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_3"
+                android:background="#0A000000"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/sp_28"
+                    android:textColor="#80000000"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="送达时间"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textColor="#E5000000"
+                    android:textSize="@dimen/sp_32"
+                    android:text="2023/03-23 15:00:00"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/sp_28"
+                    android:textColor="#80000000"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="下单时间"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textColor="#E5000000"
+                    android:textSize="@dimen/sp_32"
+                    android:text="2023/03-23 15:00:00"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/sp_28"
+                    android:textColor="#80000000"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="发货门店"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textColor="#E5000000"
+                    android:textSize="@dimen/sp_32"
+                    android:text="桃源门店"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/sp_28"
+                    android:textColor="#80000000"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="渠道店铺"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textColor="#E5000000"
+                    android:textSize="@dimen/sp_32"
+                    android:text="t_X1ca3rIE#1美团"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/sp_28"
+                    android:textColor="#80000000"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="订单编号"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textColor="#E5000000"
+                    android:textSize="@dimen/sp_32"
+                    android:text="8543895349543"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/sp_28"
+                    android:textColor="#80000000"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="三方编号"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textColor="#E5000000"
+                    android:textSize="@dimen/sp_32"
+                    android:text="8543895349543"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 
 </LinearLayout>
