@@ -148,6 +148,9 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         mDatabind.txtSettlement.setSingleClickListener {
             ARouter.getInstance().build("/app/MyRechargeActivity").withString("type","2").navigation()
         }
+        mDatabind.txtLogisticsRecharge.setSingleClickListener {
+            startActivity(Intent(requireActivity(),LogisticsRechargeActivity::class.java))
+        }
         mDatabind.txtAccountManager.setSingleClickListener {
             startActivity(Intent(requireActivity(), AccountManagerActivity::class.java))
         }

@@ -273,7 +273,9 @@
         <activity
             android:name=".activity.BindPrintDeviceActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".activity.LogisticsRechargeActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.PrintDeviceListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>

@@ -17,16 +17,19 @@
         android:orientation="horizontal"
         android:paddingVertical="10dp"
         android:paddingHorizontal="10dp"
+        android:layout_gravity="center_vertical"
         >
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:id="@+id/img"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="@dimen/sp_32"
+            android:layout_marginLeft="10dp"
             android:textColor="@color/home_333333"
             tools:text="uu跑腿"
             android:id="@+id/txtLogistcsName"/>
