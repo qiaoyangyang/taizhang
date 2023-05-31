@@ -90,6 +90,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 override fun convert(holder: BaseViewHolder, item: OrderDto.Content) {
                     val imgPrint = holder.getView<TextView>(R.id.img_order_print)
                     val checkMap = holder.getView<TextView>(R.id.txt_check_map)
+                    val orderDelivery = holder.getView<TextView>(R.id.txt_order_delivery_1)
                     val btnSendDis =
                         holder.getView<ShapeTextView>(R.id.txt_base_order_dis)//发起配送或查看配送详情
                     val btnCancelDis =
@@ -100,6 +101,8 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     val changeOrder =
                         holder.getView<ShapeRelativeLayout>(R.id.srl_check_order_detail)//修改订单
                     val phone = holder.getView<TextView>(R.id.txt_base_order_delivery_phone)
+                    val orderAddress =
+                        holder.getView<TextView>(R.id.txt_base_order_delivery_address)
                     val callPhone = holder.getView<ImageView>(R.id.iv_call_phone)
                     val channelLogoImg =
                         holder.getView<AppCompatImageView>(R.id.img_order_channel_icon)
@@ -108,12 +111,9 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     phone.text = item.order?.recvPhone
                     checkMap.text = "1.2km"
                     telPhone = item.order?.recvPhone ?: ""
+                    orderAddress.text = item.order?.recvAddr!!.replace("@@", "")
                     holder.setText(
-                        R.id.txt_order_delivery_address,
-                        item.order?.recvAddr!!.replace("@@", "")
-                    )
-                    holder.setText(
-                        R.id.txt_base_order_shop_msg, "${item.goodsVoList?.size}种商品，共${1}件"
+                        R.id.txt_base_order_shop_msg, "共${item.goodsVoList?.size}种商品，共100元"
                     )
                     holder.setText(
                         R.id.txt_base_order_shop_name, "商品名称"
@@ -194,15 +194,20 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
 
 //
                     changeOrder.setSingleClickListener {
-                        ARouter.getInstance().build("/app/OrderChangeAddressActivity")
-                            .withString("receiveTime", item.order?.arriveTimeDate)
-                            .withString("receiveName", item.order?.recvName)
-                            .withString("receivePhone", item.order?.recvPhone)
-                            .withString("receiveAddress", item.order?.recvAddr)
-                            .withString("receiveRemark", item.order?.remark)
-                            .withString("lat", item.order?.lat).withString("lon", item.order?.lon)
-                            .withString("orderId", item.order?.viewId)
-                            .withInt("index", holder.adapterPosition).navigation()
+
+                        if (item.order!!.deliveryType != "2") {
+                            ARouter.getInstance().build("/app/OrderChangeAddressActivity")
+                                .withString("receiveTime", item.order?.arriveTimeDate)
+                                .withString("receiveName", item.order?.recvName)
+                                .withString("receivePhone", item.order?.recvPhone)
+                                .withString("receiveAddress", item.order?.recvAddr)
+                                .withString("receiveRemark", item.order?.remark)
+                                .withString("lat", item.order?.lat)
+                                .withString("lon", item.order?.lon)
+                                .withString("orderId", item.order?.viewId)
+                                .withInt("index", holder.adapterPosition).navigation()
+                        }
+
                     }
                     checkMap.setSingleClickListener {
                         showToast("查看地图")
@@ -263,10 +268,14 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     if (item.order!!.deliveryType == "2") {
                         imsDeliveryWay.visibility = View.VISIBLE
                         checkMap.visibility = View.INVISIBLE
-
+                        orderAddress.visibility = View.GONE
+                        orderDelivery.text = "前自提"
                     } else {
+                        orderDelivery.text = "送达"
                         imsDeliveryWay.visibility = View.INVISIBLE
                         checkMap.visibility = View.VISIBLE
+                        orderAddress.visibility = View.GONE
+                        orderDelivery.text = "前送达"
                     }
                     //0.待配送  20.待抢单 30.待取货 50.配送中 70.取消 80.已送达
                     when (item.order!!.logisticsStatus) {
