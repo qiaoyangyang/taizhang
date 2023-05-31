@@ -147,7 +147,7 @@ class HomeOningOrderFragment :
                 badgeOffsetY = -20
             }
             mDatabind.tabLayout.updateTabBadge(5) {
-                badgeGravity = Gravity.RIGHT or Gravity.TOP
+                badgeGravity =  Gravity.CENTER or Gravity.TOP
                 badgeText = if (it.deliveryComplete == 0) {
                     "--"
                 } else {
