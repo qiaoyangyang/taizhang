@@ -513,3 +513,103 @@ data class SelectDialogDto(
 ) : Serializable
 
 
+data class GoodsListVo(
+    @SerializedName("actualAmount")
+    var actualAmount: Double? = 0.0,
+    @SerializedName("actualPrice")
+    var actualPrice: Double? = 0.0,
+    @SerializedName("avater")
+    var avater: String? = "",
+    @SerializedName("baseStockUnitName")
+    var baseStockUnitName: Any? = Any(),
+    @SerializedName("baseStockUnitStatus")
+    var baseStockUnitStatus: Any? = Any(),
+    @SerializedName("baseStockUnitTypeId")
+    var baseStockUnitTypeId: Any? = Any(),
+    @SerializedName("baseStockUnitViewId")
+    var baseStockUnitViewId: Any? = Any(),
+    @SerializedName("baseUnitName")
+    var baseUnitName: Any? = Any(),
+    @SerializedName("baseUnitStatus")
+    var baseUnitStatus: Any? = Any(),
+    @SerializedName("baseUnitViewId")
+    var baseUnitViewId: Any? = Any(),
+    @SerializedName("channelId")
+    var channelId: Any? = Any(),
+    @SerializedName("channelImg")
+    var channelImg: Any? = Any(),
+    @SerializedName("countWithUnit")
+    var countWithUnit: String? = "",
+    @SerializedName("currentGoodsUnitStockNumber")
+    var currentGoodsUnitStockNumber: Any? = Any(),
+    @SerializedName("customCode")
+    var customCode: String? = "",
+    @SerializedName("depositPrice")
+    var depositPrice: Double? = 0.0,
+    @SerializedName("gid")
+    var gid: Any? = Any(),
+    @SerializedName("gname")
+    var gname: String? = "",
+    @SerializedName("goodsStockDeduction")
+    var goodsStockDeduction: String? = "",
+    @SerializedName("goodsTotalCost")
+    var goodsTotalCost: Double? = 0.0,
+    @SerializedName("goodsType")
+    var goodsType: Int? = 0,
+    @SerializedName("goodsUnitRatio")
+    var goodsUnitRatio: Any? = Any(),
+    @SerializedName("goodsUnitViewId")
+    var goodsUnitViewId: String? = "",
+    @SerializedName("modelType")
+    var modelType: Any? = Any(),
+    @SerializedName("multiUnit")
+    var multiUnit: Any? = Any(),
+    @SerializedName("multiUnitCurrentStock")
+    var multiUnitCurrentStock: Any? = Any(),
+    @SerializedName("negativeNumber")
+    var negativeNumber: Double? = 0.0,
+    @SerializedName("number")
+    var number: Int? = 0,
+    @SerializedName("orderGoodsId")
+    var orderGoodsId: Int? = 0,
+    @SerializedName("originalPrice")
+    var originalPrice: Double? = 0.0,
+    @SerializedName("parentGoodsUnitViewId")
+    var parentGoodsUnitViewId: Any? = Any(),
+    @SerializedName("price")
+    var price: Double? = 0.0,
+    @SerializedName("profit")
+    var profit: Double? = 0.0,
+    @SerializedName("reasonsforpricechange")
+    var reasonsforpricechange: String? = "",
+    @SerializedName("refundNum")
+    var refundNum: Int? = 0,
+    @SerializedName("refundPrice")
+    var refundPrice: Double? = 0.0,
+    @SerializedName("shopNames")
+    var shopNames: Any? = Any(),
+    @SerializedName("sku")
+    var sku: String? = "",
+    @SerializedName("spuId")
+    var spuId: Any? = Any(),
+    @SerializedName("status")
+    var status: Int? = 0,
+    @SerializedName("supplierPrice")
+    var supplierPrice: Int? = 0,
+    @SerializedName("totalPrice")
+    var totalPrice: Double? = 0.0,
+    @SerializedName("unitPrice")
+    var unitPrice: Double? = 0.0,
+    @SerializedName("unitSpecBarcode")
+    var unitSpecBarcode: Any? = Any(),
+    @SerializedName("unitType")
+    var unitType: Int? = 0,
+    @SerializedName("unitTypeId")
+    var unitTypeId: Any? = Any(),
+    @SerializedName("unitUseBusinessTypeStr")
+    var unitUseBusinessTypeStr: Any? = Any(),
+    @SerializedName("unitUseType")
+    var unitUseType: Any? = Any(),
+    @SerializedName("specs")
+    var specs: String? =""
+):Serializable

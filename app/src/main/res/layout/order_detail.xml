@@ -353,7 +353,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyClerView"
+                android:id="@+id/recy_shop_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_24"
@@ -369,7 +369,7 @@
                 android:layout_gravity="end"
                 android:layout_marginBottom="@dimen/dp_20"
                 android:text="商品1件，共50.00元"
-                app:layout_constraintTop_toBottomOf="@+id/recyClerView" />
+                app:layout_constraintTop_toBottomOf="@+id/recy_shop_list" />
         </LinearLayout>
 
         <TextView

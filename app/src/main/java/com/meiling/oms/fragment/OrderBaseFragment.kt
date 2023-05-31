@@ -27,6 +27,8 @@ import com.meiling.common.utils.GlideAppUtils
 import com.meiling.oms.R
 import com.meiling.oms.activity.ChannelActivity
 import com.meiling.oms.activity.MainActivity
+import com.meiling.oms.activity.OrderDetail1Activity
+import com.meiling.oms.activity.OrderDetailActivity
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
@@ -320,6 +322,23 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             }
         mDatabind.rvOrderList.adapter = orderDisAdapter
         orderDisAdapter.setOnItemClickListener { adapter, view, position ->
+
+            if (orderDisAdapter.data.get(position).order!!.deliveryType.toString() == "2") {
+                startActivity(
+                    Intent(
+                        requireActivity(),
+                        OrderDetail1Activity::class.java
+                    ).putExtra("orderId", orderDisAdapter.data.get(position).order!!.viewId)
+                )
+            } else {
+                startActivity(
+                    Intent(
+                        requireActivity(),
+                        OrderDetailActivity::class.java
+                    ).putExtra("orderId", orderDisAdapter.data.get(position).order!!.viewId)
+                )
+            }
+
             showToast("订单详情")
         }
         mDatabind.sflLayout.setOnRefreshListener {

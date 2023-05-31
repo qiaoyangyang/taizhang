@@ -22,7 +22,9 @@
         android:background="@color/order_remark_F4F4F4">
 
 
-        <include layout="@layout/order_detail" />
+        <include
+            android:id="@+id/included"
+            layout="@layout/order_detail" />
 
 
     </androidx.core.widget.NestedScrollView>
