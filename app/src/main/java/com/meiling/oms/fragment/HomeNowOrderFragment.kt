@@ -10,25 +10,30 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.fragment.BaseFragment
+import com.meiling.common.network.data.SelectDialogDto
 import com.meiling.oms.activity.OrderCreateActivity
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentHomeOrderOningBinding
+import com.meiling.oms.dialog.OrderSelectDialog
+import com.meiling.oms.dialog.OrderSelectStoreDialog
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
+import com.meiling.oms.eventBusData.MessageHistoryEventSelect
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.formatCurrentDateBeforeWeek
+import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-class HomeOningOrderFragment :
+class HomeNowOrderFragment :
     BaseFragment<BaseOrderFragmentViewModel, FragmentHomeOrderOningBinding>() {
 
 
     companion object {
-        fun newInstance() = HomeOningOrderFragment()
+        fun newInstance() = HomeNowOrderFragment()
     }
 
 
@@ -61,16 +66,64 @@ class HomeOningOrderFragment :
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
         mDatabind.viewPager.offscreenPageLimit = 1
        // ImmersionBar.with(this).statusBarDarkFont(true) .autoDarkModeEnable(true, 0.2f).init()
-       ImmersionBar.setTitleBar(this, mDatabind.clMy)
+        ImmersionBar.setTitleBar(this, mDatabind.clMy)
     }
-
+    var selectDialogDto = SelectDialogDto(
+        startDate = formatCurrentDate(),
+        endDate = formatCurrentDate(),
+        timetype = 2,
+        orderTime = "1",
+        channelId = "0",
+    )
     override fun initListener() {
         mDatabind.imgSearchOrder.setOnClickListener {
             ARouter.getInstance().build("/app/Search1Activity").navigation()
         }
         mDatabind.imgCreateOrder.setOnClickListener {
+            var orderSelectDialog = OrderSelectDialog().newInstance(
+                selectDialogDto
+            )
+            orderSelectDialog.setSelectOrder {
+                selectDialogDto = it
+//                EventBus.getDefault().post(MessageHistoryEventSelect(it))
+                mViewModel.statusCount(
+                    logisticsStatus = "",
+                    startTime = it.startDate,
+                    endTime = it.endDate,
+                    businessNumberType = "1",
+                    pageIndex = "1",
+                    pageSize = "20",
+                    orderTime = it.orderTime,
+                    deliverySelect = "0",
+                    isValid = "",
+                    businessNumber = "",
+                    channelId = it.channelId!!
+                )
+            }
+
+            orderSelectDialog.setSelectCloseOrder {
+                selectDialogDto = it
+            }
+            orderSelectDialog.show(childFragmentManager)
+        }
+        mDatabind.imgOrderScreen.setOnClickListener {
             startActivity(Intent(requireContext(), OrderCreateActivity::class.java))
         }
+
+        mDatabind.txtSelectStore.setSingleClickListener {
+            var orderSelectStoreDialog = OrderSelectStoreDialog().newInstance(
+                "授权发货门店",
+                "",
+                "",
+                ArrayList(),
+                false
+            )
+            orderSelectStoreDialog.show(childFragmentManager)
+            orderSelectStoreDialog.setOkClickItemLister { arrayList, isSelectAll ->
+                mDatabind.txtSelectStore.text = "选中选中选中选中选中选中选中选中选中选中个门店"
+            }
+        }
+
     }
 
     override fun onDestroy() {

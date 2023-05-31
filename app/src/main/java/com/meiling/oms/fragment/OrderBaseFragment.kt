@@ -32,6 +32,7 @@ import com.meiling.oms.activity.OrderDetailActivity
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
+import com.meiling.oms.dialog.OrderGoodsListDetailDialog
 import com.meiling.oms.eventBusData.MessageEvent
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
@@ -133,17 +134,6 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         channelLogoImg,
                         item.channelLogo ?: "https://static.igoodsale.com/%E7%BA%BF%E4%B8%8B.svg"
                     )
-//                    if (item.order?.channelCreateTime.isNullOrBlank()) {
-//                        holder.setText(
-//                            R.id.txt_order_store,
-//                            "${transToString(item.order?.createTime!!)}下单  ${item.channelName} ${item.shopName}"
-//                        )
-//                    } else {
-//                        holder.setText(
-//                            R.id.txt_order_store,
-//                            "${item.order?.channelCreateTime}下单  ${item.channelName}"
-//                        )
-//                    }
                     callPhone.setSingleClickListener {
                         if (ContextCompat.checkSelfPermission(
                                 context,
@@ -163,7 +153,9 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         }
                     }
                     btnShopDetail.setSingleClickListener {
-                        showToast("商品详情")
+                        val orderGoodsListDetailDialog =
+                            OrderGoodsListDetailDialog().newInstance("12")
+                        orderGoodsListDetailDialog.show(childFragmentManager)
                     }
 //
 //                    if (item.order!!.type == 1) {
