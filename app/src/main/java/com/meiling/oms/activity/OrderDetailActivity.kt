@@ -20,7 +20,7 @@ import com.meiling.oms.viewmodel.OrderCreateViewModel
 import io.reactivex.annotations.NonNull
 
 
-//订单详情
+//配送订单详情
 class OrderDetailActivity : BaseActivity<OrderCreateViewModel, ActivityOrderDetailBinding>() {
     //初始化地图控制器对象
     var aMap: AMap? = null
