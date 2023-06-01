@@ -11,6 +11,8 @@
     app:shape_shadowColor="#a1000000"
     app:shape="rectangle"
     app:shape_solidColor="@color/white"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground"
     app:shape_shadowSize="0dp">
     <!--    app:shape_shadowOffsetY="2dp"-->
     <!--    app:shape_shadowOffsetX="2dp"-->
