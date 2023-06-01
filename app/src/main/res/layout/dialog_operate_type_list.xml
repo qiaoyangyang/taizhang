@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:background="@drawable/scan_bg_input">
+
+    <TextView
+        android:id="@+id/txt_title_item_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="经营类目"
+        android:textColor="@color/home_333333"
+        android:textSize="@dimen/sp_32"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_close_select_shop_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/txt_title_item_city"
+        android:layout_alignBottom="@+id/txt_title_item_city"
+        android:layout_alignParentEnd="true"
+        android:paddingHorizontal="@dimen/dp_20"
+        android:src="@drawable/icon_close_x_balck"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_title_item_city" />
+
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        app:srlEnableLoadMore="false"
+        android:id="@+id/refeshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_above="@+id/btn_ok_select_shop_city"
+        android:layout_below="@+id/txt_title_item_city">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_shop_or_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_ok_select_shop_city"
+        android:layout_below="@+id/txt_title_item_city"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        app:spanCount="4"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/item_operate_type_layout">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+    <com.hjq.shape.view.ShapeButton
+        android:id="@+id/btn_ok_select_shop_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:shadowColor="@color/home_666666"
+        android:text="确定"
+        android:paddingVertical="@dimen/dp_25"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_32"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:shape_radius="@dimen/dp_50"
+        app:shape_solidColor="@color/red" />
+
+
+</RelativeLayout>

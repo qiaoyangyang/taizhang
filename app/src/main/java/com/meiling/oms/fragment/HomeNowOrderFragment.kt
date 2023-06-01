@@ -10,25 +10,29 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.fragment.BaseFragment
+import com.meiling.common.network.data.SelectDialogDto
+import com.meiling.common.network.data.SelectOrderDialogDto
 import com.meiling.oms.activity.OrderCreateActivity
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentHomeOrderOningBinding
+import com.meiling.oms.dialog.OrderFilterSortDialog
+import com.meiling.oms.dialog.OrderSelectStoreDialog
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
+import com.meiling.oms.eventBusData.MessageHistoryEventSelect
+import com.meiling.oms.eventBusData.MessageOrderEventSelect
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
-import com.meiling.oms.widget.formatCurrentDate
-import com.meiling.oms.widget.formatCurrentDateBeforeWeek
-import com.meiling.oms.widget.showToast
+import com.meiling.oms.widget.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-class HomeOningOrderFragment :
+class HomeNowOrderFragment :
     BaseFragment<BaseOrderFragmentViewModel, FragmentHomeOrderOningBinding>() {
 
 
     companion object {
-        fun newInstance() = HomeOningOrderFragment()
+        fun newInstance() = HomeNowOrderFragment()
     }
 
 
@@ -61,9 +65,13 @@ class HomeOningOrderFragment :
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
         mDatabind.viewPager.offscreenPageLimit = 1
        // ImmersionBar.with(this).statusBarDarkFont(true) .autoDarkModeEnable(true, 0.2f).init()
-       ImmersionBar.setTitleBar(this, mDatabind.clMy)
+        ImmersionBar.setTitleBar(this, mDatabind.clMy)
     }
-
+    var selectDialogDto = SelectOrderDialogDto(
+        channelId = "0",
+        orderSort = "1",
+    )
+    var poiId = "0"
     override fun initListener() {
         mDatabind.imgSearchOrder.setOnClickListener {
             ARouter.getInstance().build("/app/Search1Activity").navigation()
@@ -71,6 +79,44 @@ class HomeOningOrderFragment :
         mDatabind.imgCreateOrder.setOnClickListener {
             startActivity(Intent(requireContext(), OrderCreateActivity::class.java))
         }
+        mDatabind.imgOrderScreen.setOnClickListener {
+            val orderFilterSortDialog = OrderFilterSortDialog().newInstance(selectDialogDto)
+            orderFilterSortDialog.setSelectOrder {
+                selectDialogDto = it
+                EventBus.getDefault().post(MessageOrderEventSelect(it,poiId))
+                mViewModel.statusCount(
+                    logisticsStatus = "",
+                    startTime = formatCurrentDateBeforeMouth(),
+                    endTime = formatCurrentDate(),
+                    businessNumberType = "1",
+                    pageIndex = "1",
+                    pageSize = "10",
+                    orderTime = "",
+                    deliverySelect = "0",
+                    isValid = "",
+                    businessNumber = "",
+                    channelId = it.channelId!!
+                )
+            }
+
+            orderFilterSortDialog.setSelectCloseOrder {
+                selectDialogDto = it
+            }
+            orderFilterSortDialog.show(childFragmentManager)
+        }
+
+        mDatabind.txtSelectStore.setSingleClickListener {
+            var orderSelectStoreDialog = OrderSelectStoreDialog().newInstance(
+                mDatabind.txtSelectStore.text.toString(),
+            )
+            orderSelectStoreDialog.show(childFragmentManager)
+            orderSelectStoreDialog.setOkClickItemLister { arrayList, isSelectAll ->
+                mDatabind.txtSelectStore.text = isSelectAll
+                poiId = arrayList[0].poiIds!!
+                EventBus.getDefault().post(MessageOrderEventSelect(selectDialogDto,poiId))
+            }
+        }
+
     }
 
     override fun onDestroy() {
@@ -86,7 +132,7 @@ class HomeOningOrderFragment :
     fun eventDay(messageEventTime: MessageEventUpDataTip) {
         mViewModel.statusCount(
             logisticsStatus = "",
-            startTime = formatCurrentDateBeforeWeek(),
+            startTime = formatCurrentDateBeforeMouth(),
             endTime = formatCurrentDate(),
             businessNumberType = "1",
             pageIndex = "1",
@@ -94,7 +140,8 @@ class HomeOningOrderFragment :
             orderTime = "1",
             deliverySelect = "0",
             isValid = "",
-            businessNumber = ""
+            businessNumber = "",
+            channelId = selectDialogDto.channelId.toString()
         )
     }
 

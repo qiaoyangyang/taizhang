@@ -23,7 +23,7 @@ import com.meiling.oms.databinding.ActivityMainBinding
 import com.meiling.oms.eventBusData.MessageEvent
 import com.meiling.oms.eventBusData.MessageEventTabChange
 import com.meiling.oms.fragment.DataFragment
-import com.meiling.oms.fragment.HomeOningOrderFragment
+import com.meiling.oms.fragment.HomeNowOrderFragment
 import com.meiling.oms.fragment.MyFragment
 import com.meiling.oms.fragment.ScanFragment
 import com.meiling.oms.viewmodel.MainViewModel
@@ -110,7 +110,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         ).get(MainViewModel2::class.java)
 
 
-        fragmentList.add(HomeOningOrderFragment.newInstance())
+        fragmentList.add(HomeNowOrderFragment.newInstance())
         fragmentList.add(ScanFragment.newInstance())
         fragmentList.add(DataFragment.newInstance())
         fragmentList.add(MyFragment.newInstance())

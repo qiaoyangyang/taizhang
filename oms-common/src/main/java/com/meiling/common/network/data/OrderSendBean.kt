@@ -437,4 +437,12 @@ data class OrderSelectPlatform(
 ) {
     var select = false
 }
+data class OrderSelectSort(
+    @SerializedName("id")
+    var id: String?,
+    @SerializedName("name")
+    var name: String?,
+) {
+    var select = false
+}
 

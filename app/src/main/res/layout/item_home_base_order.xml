@@ -4,18 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/dp_20"
-    android:layout_marginVertical="@dimen/dp_20"
+    android:layout_marginHorizontal="@dimen/dp_10"
+    android:layout_marginTop="@dimen/dp_20"
     android:orientation="vertical"
-    app:layout_constraintLeft_toRightOf="@dimen/dp_20"
+    app:shape="rectangle"
+    app:shape_shadowColor="@color/black"
+    app:shape_shadowSize="5dp"
     app:shape_solidColor="@color/white"
-    app:shape_topLeftRadius="@dimen/dp_20">
+    app:shape_topLeftRadius="@dimen/dp_20"
+    app:shape_topRightRadius="@dimen/dp_20"
+    >
 
     <com.hjq.shape.layout.ShapeRelativeLayout
         android:id="@+id/srl_check_order_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_30"
         app:shape_solidColor="@color/home_fff6e8"
         app:shape_topLeftRadius="@dimen/dp_20"
         app:shape_topRightRadius="@dimen/dp_20">
