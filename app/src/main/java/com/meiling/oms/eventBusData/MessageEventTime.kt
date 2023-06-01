@@ -11,7 +11,7 @@ class MessageEventUpDataTip()
 class MessageEventHistoryUpDataTip()
 class MessageEventTabChange()
 
-class MessageHistoryEventSelect(var selectDialogDto: SelectDialogDto)
+class MessageHistoryEventSelect(var selectDialogDto: SelectDialogDto,var shopId: String)
 class MessageOrderEventSelect(var selectDialogDto: SelectOrderDialogDto, var shopId: String)
 
 class MessageSelectShopPo(var idArrayList: ArrayList<String>)

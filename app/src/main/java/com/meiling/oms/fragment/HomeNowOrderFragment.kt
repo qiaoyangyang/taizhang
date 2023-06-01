@@ -209,7 +209,7 @@ class HomeNowOrderFragment :
             Log.e("order", "createObserver: " + it)
         }
         mViewModel.statusCountDto.onError.observe(this) {
-            showToast("${it.msg}")
+            showToast(it.msg)
         }
     }
 

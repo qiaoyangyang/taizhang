@@ -8,11 +8,11 @@ import androidx.fragment.app.Fragment
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.SelectDialogDto
-import com.meiling.oms.eventBusData.MessageEventHistoryUpDataTip
-import com.meiling.oms.eventBusData.MessageHistoryEventSelect
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentHomeOrderHistoryBinding
 import com.meiling.oms.dialog.OrderSelectDialog
+import com.meiling.oms.eventBusData.MessageEventHistoryUpDataTip
+import com.meiling.oms.eventBusData.MessageHistoryEventSelect
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.setSingleClickListener
@@ -61,7 +61,6 @@ class HomeHistoryOrderFragment :
     //    logisticsStatus：0.待配送  20.带抢单 30.待取货 50.配送中 70.取消 80.已送达
     @SuppressLint("RtlHardcoded")
     override fun initData() {
-        var isSelect = arguments?.getBoolean("isSelect", true)
         fragmentList.add(BaseHistoryOrderFragment.newInstance("", true))
         fragmentList.add(BaseHistoryOrderFragment.newInstance("70", true))
         mDatabind.viewPager.adapter =
@@ -69,14 +68,13 @@ class HomeHistoryOrderFragment :
         mDatabind.viewPager.setCurrentItem(0, false)
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
 
-
         mDatabind.txtSelectOrder.setSingleClickListener {
             var orderSelectDialog = OrderSelectDialog().newInstance(
                 selectDialogDto
             )
             orderSelectDialog.setSelectOrder {
                 selectDialogDto = it
-                EventBus.getDefault().post(MessageHistoryEventSelect(it))
+                EventBus.getDefault().post(MessageHistoryEventSelect(it, ""))
                 mViewModel.statusCount(
                     logisticsStatus = "",
                     startTime = it.startDate,
@@ -108,7 +106,7 @@ class HomeHistoryOrderFragment :
             orderTime = "1",
             channelId = "0",
         )
-        EventBus.getDefault().post(MessageHistoryEventSelect(selectDialogDto))
+        EventBus.getDefault().post(MessageHistoryEventSelect(selectDialogDto, ""))
         mViewModel.statusCount(
             logisticsStatus = "",
             startTime = formatCurrentDate(),
@@ -129,30 +127,24 @@ class HomeHistoryOrderFragment :
         mViewModel.statusCountDto.onSuccess.observe(this) {
             dismissLoading()
             mDatabind.tabLayout.updateTabBadge(0) {
-                badgeTextSize = 30f
                 badgeGravity = Gravity.RIGHT or Gravity.TOP
                 badgeText = if (it.deliveryAll == 0) {
-                    null
+                    "--"
                 } else {
                     it.deliveryAll.toString()
                 }
-                badgeOffsetX = 5
-                badgeOffsetY = 30
+                badgeOffsetY = -20
 
             }
 
-
             mDatabind.tabLayout.updateTabBadge(1) {
-                badgeTextSize = 30f
-                badgeGravity = Gravity.RIGHT or Gravity.TOP
-//                badgeText="100"
+                badgeGravity = Gravity.CENTER or Gravity.TOP
                 badgeText = if (it.deliveryCancel == 0) {
-                    null
+                    "--"
                 } else {
                     it.deliveryCancel.toString()
                 }
-                badgeOffsetX = 5
-                badgeOffsetY = 30
+                badgeOffsetY = -20
             }
 
         }
