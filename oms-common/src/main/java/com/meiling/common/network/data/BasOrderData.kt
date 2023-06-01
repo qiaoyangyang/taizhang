@@ -512,6 +512,11 @@ data class SelectDialogDto(
 
 ) : Serializable
 
+data class SelectOrderDialogDto(
+    var channelId: String? = "0",// 平台  渠道全部传null,根据返回渠道
+    var orderSort: String? = "1",// 排序
+) : Serializable
+
 
 data class GoodsListVo(
     @SerializedName("actualAmount")

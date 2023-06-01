@@ -16,7 +16,6 @@
             android:id="@+id/ll_select_store"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="left"
             android:layout_marginStart="@dimen/dp_20"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ll_search"
@@ -27,13 +26,16 @@
                 android:id="@+id/txt_select_store"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="left"
-                android:marqueeRepeatLimit="-1"
+                android:gravity="center"
                 android:singleLine="true"
-                android:text="当前门店"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_36"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:ellipsize="marquee"
+                android:scrollHorizontally="true"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
+                android:text="全部门店"
                 app:drawableEndCompat="@drawable/icon_home_next" />
+
         </LinearLayout>
 
         <LinearLayout

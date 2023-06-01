@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
@@ -35,6 +36,7 @@ import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.oms.dialog.OrderGoodsListDetailDialog
 import com.meiling.oms.eventBusData.MessageEvent
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
+import com.meiling.oms.eventBusData.MessageOrderEventSelect
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.widget.*
@@ -325,35 +327,39 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
     }
 
     var list = ArrayList<String>()
-
+    var orderSore = "1"
+    var poiId = "1"
+    var channelId = "0"
     private fun initViewData() {
         mViewModel.orderList(
             logisticsStatus = requireArguments().getString("type").toString(),
-            startTime = formatCurrentDateBeforeWeek(),
+            startTime = formatCurrentDateBeforeMouth(),
             endTime = formatCurrentDate(),
             businessNumberType = "1",
             pageIndex = pageIndex,
-            pageSize = "20",
+            pageSize = "10",
             orderTime = "1",
             deliverySelect = "0",
             isValid = "",
             businessNumber = "",
+            channelId = channelId
         )
         orderDisAdapter.loadMoreModule.loadMoreView = SS()
         orderDisAdapter.loadMoreModule.setOnLoadMoreListener {
             pageIndex++
             mViewModel.orderList(
                 logisticsStatus = requireArguments().getString("type").toString(),
-                startTime = formatCurrentDateBeforeWeek(),
+                startTime = formatCurrentDateBeforeMouth(),
                 endTime = formatCurrentDate(),
                 businessNumberType = "1",
                 pageIndex = pageIndex,
-                pageSize = "20",
+                pageSize = "10",
                 orderTime = "1",
                 deliverySelect = "0",
                 isValid = "",
                 businessNumber = "",
-                selectText = ""
+                selectText = "",
+                channelId = channelId
             )
         }
     }
@@ -386,11 +392,14 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     orderDisAdapter.setList(null)
                 } else {
                     orderDisAdapter.setList(it.content as MutableList<OrderDto.Content>)
+                    orderDisAdapter.notifyDataSetChanged()
                 }
             } else {
                 orderDisAdapter.addData(it.content as MutableList<OrderDto.Content>)
+                orderDisAdapter.notifyDataSetChanged()
             }
-            if (it.content!!.size < 20) {
+
+            if (it.content!!.size < 10) {
                 dismissLoading()
                 orderDisAdapter.footerWithEmptyEnable = false
                 orderDisAdapter.footerLayout?.visibility = View.GONE
@@ -456,6 +465,20 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         // 在这里处理事件
         val message: Int = event.message
         orderDisAdapter.notifyItemChanged(message)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEventChange(event: MessageOrderEventSelect) {
+        // 在这里处理事件
+        channelId = event.selectDialogDto.channelId.toString()
+        orderSore = event.selectDialogDto.orderSort.toString()
+        poiId = event.shopId
+//        mDatabind.sflLayout.autoRefresh()
+        initViewData()
+        (mDatabind.rvOrderList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+            0,
+            0
+        )
     }
 
     var REQUEST_CALL_PHONE_PERMISSION = 1

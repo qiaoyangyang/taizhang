@@ -121,7 +121,7 @@
             app:shape_strokeWidth="1dp" />
 
         <com.hjq.shape.view.ShapeButton
-            android:id="@+id/tv_go_on"
+            android:id="@+id/txt_order_sort"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/dp_20"
