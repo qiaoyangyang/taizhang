@@ -90,8 +90,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         }
         //打印机配置
         mDatabind.llPrintBinding.setSingleClickListener {
-         //  startActivity(Intent(requireActivity(), PrintDeviceListActivity::class.java))
-           startActivity(Intent(requireActivity(), OrderDetailActivity::class.java))
+          startActivity(Intent(requireActivity(), PrintDeviceListActivity::class.java))
 
 //            if(vm.getByTenantId.value?.poi==-1){
 //                //未创建门店

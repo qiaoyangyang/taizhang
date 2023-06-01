@@ -5,20 +5,19 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/red"
     android:orientation="vertical">
 
     <com.hjq.bar.TitleBar
         android:id="@+id/TitleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/red"
+        android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:leftIcon="@null"
         app:lineVisible="false"
         app:rightTitleSize="@dimen/sp_36"
         app:title="我的"
-        app:titleColor="@color/white" />
+        app:titleColor="@color/home_333333" />
 
 
     <androidx.appcompat.widget.LinearLayoutCompat

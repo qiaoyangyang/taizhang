@@ -317,7 +317,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 )
             }
 
-            showToast("订单详情")
+           // showToast("订单详情")
         }
         mDatabind.sflLayout.setOnRefreshListener {
             pageIndex = 1
