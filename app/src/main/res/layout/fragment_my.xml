@@ -227,6 +227,8 @@
                 android:paddingVertical="@dimen/dp_20"
                 android:text="订单查询"
                 android:textColor="@color/home_333333"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:textSize="@dimen/sp_28"
                 app:drawableTopCompat="@drawable/order_search" />
 
@@ -240,6 +242,8 @@
                 android:gravity="center_horizontal"
                 app:layout_constraintRight_toLeftOf="@+id/ll_channel"
                 android:orientation="vertical"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
                 >
 
                 <TextView
@@ -257,7 +261,6 @@
                     android:visibility="gone"
                     android:id="@+id/tv_isStore_management"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/dp_14"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingRight="@dimen/dp_10"
                     android:paddingTop="@dimen/dp_2"
@@ -280,6 +283,8 @@
                 app:layout_constraintLeft_toRightOf="@+id/ll_Store_management"
                 app:layout_constraintRight_toLeftOf="@+id/ll_Logistics_binding"
                 android:orientation="vertical"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
                 >
 
                 <TextView
@@ -300,7 +305,6 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/dp_14"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingTop="@dimen/dp_2"
                     android:paddingRight="@dimen/dp_10"
@@ -321,6 +325,8 @@
                 android:gravity="center_horizontal"
                 app:layout_constraintLeft_toRightOf="@+id/ll_channel"
                 app:layout_constraintRight_toRightOf="parent"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
                 >
 
                 <TextView
@@ -365,6 +371,8 @@
                 android:text="物流充值"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_28"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
                 app:drawableTopCompat="@drawable/logistcs_recharge_bg" />
 
 
@@ -397,6 +405,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/title2"
                 app:layout_constraintRight_toLeftOf="@+id/txt_notification_settings"
                 android:layout_width="0dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/txt_print_binding"
@@ -422,6 +432,8 @@
                 android:gravity="center_horizontal"
                 android:paddingVertical="@dimen/dp_20"
                 android:text="通知设置"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_28"
                 app:drawableTopCompat="@drawable/icon_my_msg" />
@@ -437,6 +449,8 @@
                 android:gravity="center_horizontal"
                 android:paddingVertical="@dimen/dp_20"
                 android:text="消息中心"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_28"
                 app:drawableTopCompat="@drawable/icon_my_mess" />
@@ -452,6 +466,8 @@
                 android:gravity="center_horizontal"
                 android:paddingVertical="@dimen/dp_20"
                 android:text="关于小喵"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_28"
                 app:drawableTopCompat="@drawable/drawable_my_about" />
@@ -465,6 +481,8 @@
                 android:gravity="center_horizontal"
                 android:paddingVertical="@dimen/dp_20"
                 android:text="账号管理"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:textColor="@color/home_333333"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/txt_modify_pwd"
@@ -483,6 +501,8 @@
                 android:gravity="center_horizontal"
                 android:paddingVertical="@dimen/dp_20"
                 android:text="修改密码"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_28"
                 app:drawableTopCompat="@drawable/drawable_my_lock" />
@@ -499,6 +519,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/ll_print_binding"
                 android:paddingVertical="@dimen/dp_20"
                 android:text="注销账号"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_28"
                 app:drawableTopCompat="@drawable/drawable_my_exit" />
@@ -514,6 +536,8 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll_print_binding"
                 android:text="退出登录"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_28"
                 app:drawableTopCompat="@drawable/drawable_my_off" />
