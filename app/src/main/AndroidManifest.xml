@@ -172,7 +172,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.OrderDisAddTipActivity"
+            android:name=".activity.OrderHistoryActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.OrderChangeAddressActivity"

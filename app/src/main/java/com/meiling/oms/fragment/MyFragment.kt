@@ -116,6 +116,12 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             // mViewModel.citypoi()
             startActivity(Intent(requireActivity(), ChannelActivity::class.java))
         }
+
+        //订单查询
+        mDatabind.txtOrderSelect.setSingleClickListener {
+            // mViewModel.citypoi()
+            startActivity(Intent(requireActivity(), OrderHistoryActivity::class.java))
+        }
         //门店管理
         mDatabind.llStoreManagement.setSingleClickListener {
             startActivity(Intent(requireActivity(), StoreManagementActivity::class.java))

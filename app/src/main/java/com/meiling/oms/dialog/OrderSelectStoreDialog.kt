@@ -86,6 +86,7 @@ class OrderSelectStoreDialog : BaseNiceDialog() {
                 arrayList,
                 isSelect,
             )
+            dismiss()
         }
         initData()
     }
