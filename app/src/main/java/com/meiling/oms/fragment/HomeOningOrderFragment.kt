@@ -44,7 +44,7 @@ class HomeOningOrderFragment :
         EventBus.getDefault().unregister(this)
     }
     override fun initView(savedInstanceState: Bundle?) {
-        mDatabind.viewPager.isUserInputEnabled = false
+        mDatabind.viewPager.isUserInputEnabled = true
     }
 
     //    logisticsStatus：0.待配送  20.带抢单 30.待取货 50.配送中 70.取消 80.已送达
@@ -57,7 +57,7 @@ class HomeOningOrderFragment :
         fragmentList.add(OrderBaseFragment.newInstance("80", false))
         mDatabind.viewPager.adapter =
             BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
-        mDatabind.viewPager.setCurrentItem(0, false)
+        mDatabind.viewPager.setCurrentItem(0, true)
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
         mDatabind.viewPager.offscreenPageLimit = 1
        // ImmersionBar.with(this).statusBarDarkFont(true) .autoDarkModeEnable(true, 0.2f).init()

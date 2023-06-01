@@ -6,7 +6,7 @@
     <ImageView
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/add_no"
+        android:src="@drawable/add_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

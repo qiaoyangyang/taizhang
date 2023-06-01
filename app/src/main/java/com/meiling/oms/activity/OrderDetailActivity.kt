@@ -14,7 +14,9 @@ import com.amap.api.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.network.data.GoodsListVo
 import com.meiling.oms.R
+import com.meiling.oms.adapter.OrderBaseShopListAdapter
 import com.meiling.oms.databinding.ActivityOrderDetailBinding
 import com.meiling.oms.viewmodel.OrderCreateViewModel
 import io.reactivex.annotations.NonNull
@@ -26,6 +28,8 @@ class OrderDetailActivity : BaseActivity<OrderCreateViewModel, ActivityOrderDeta
     var aMap: AMap? = null
     var uiSettings: UiSettings? = null
     private var behavior: BottomSheetBehavior<View>? = null
+    //商品
+    private lateinit var orderDisAdapter: OrderBaseShopListAdapter
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.map?.onCreate(savedInstanceState)
         if (aMap == null) {
@@ -37,20 +41,44 @@ class OrderDetailActivity : BaseActivity<OrderCreateViewModel, ActivityOrderDeta
             aMap?.moveCamera(CameraUpdateFactory.zoomTo(12f))
             val latLng = LatLng(39.906901, 116.397972)
             addGrowMarker(latLng)
+            val latLng1 = LatLng(34.242593, 108.903436)
+            addGrowMarker(latLng1)
         }
 
 
 
         behavior = BottomSheetBehavior.from(mDatabind.bottomSheet)
         behavior?.addBottomSheetCallback(bottomSheetCallback())
+        behavior?.peekHeight = 400
         behavior?.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+
+        orderDisAdapter = OrderBaseShopListAdapter()
+        var goods = ArrayList<GoodsListVo>()
+        goods.add(GoodsListVo(gname = "张三"))
+        goods.add(GoodsListVo(gname = "张三1"))
+        goods.add(GoodsListVo(gname = "张三2"))
+        goods.add(GoodsListVo(gname = "张三3"))
+        goods.add(GoodsListVo(gname = "张三3"))
+        goods.add(GoodsListVo(gname = "张三3"))
+        goods.add(GoodsListVo(gname = "张三3"))
+        goods.add(GoodsListVo(gname = "张三3"))
+        goods.add(GoodsListVo(gname = "张三3"))
+        goods.add(GoodsListVo(gname = "张三3"))
+        goods.add(GoodsListVo(gname = "张三3"))
+        goods.add(GoodsListVo(gname = "张三3"))
+        goods.add(GoodsListVo(gname = "张三3"))
+        goods.add(GoodsListVo(gname = "张三3"))
+        goods.add(GoodsListVo(gname = "张三3"))
+        goods.add(GoodsListVo(gname = "张三3"))
+        orderDisAdapter.setList(goods)
+        mDatabind.included.recyShopList.adapter = orderDisAdapter
 
 
     }
 
     override fun initData() {
         super.initData()
-        var orderid = intent.getStringExtra("orderid").toString()
+        var orderid = intent.getStringExtra("orderId").toString()
 
 
     }
