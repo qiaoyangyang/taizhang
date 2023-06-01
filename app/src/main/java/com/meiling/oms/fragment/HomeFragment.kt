@@ -1,7 +1,6 @@
 package com.meiling.oms.fragment
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +8,11 @@ import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
 import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.fragment.BaseFragment
-import com.meiling.oms.R
 import com.meiling.oms.activity.OrderCreateActivity
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.FragmentHomeBinding
 import com.meiling.oms.eventBusData.MessageEventTabChange
 import com.meiling.oms.viewmodel.HomeViewModel
-import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -57,7 +54,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     override fun initData() {
         val fragmentList: MutableList<Fragment> = ArrayList()
-        fragmentList.add(HomeOningOrderFragment.newInstance())
+        fragmentList.add(HomeNowOrderFragment.newInstance())
         fragmentList.add(HomeHistoryOrderFragment.newInstance())
         mDatabind.viewPagerOrder.adapter =
             BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)

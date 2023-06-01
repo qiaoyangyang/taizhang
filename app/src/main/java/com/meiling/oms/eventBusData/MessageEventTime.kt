@@ -1,6 +1,7 @@
 package com.meiling.oms.eventBusData
 
 import com.meiling.common.network.data.SelectDialogDto
+import com.meiling.common.network.data.SelectOrderDialogDto
 
 class MessageEventTimeShow()
 class MessageEventPayMoney(val type: String)
@@ -10,7 +11,8 @@ class MessageEventUpDataTip()
 class MessageEventHistoryUpDataTip()
 class MessageEventTabChange()
 
-class MessageHistoryEventSelect(var selectDialogDto: SelectDialogDto)
+class MessageHistoryEventSelect(var selectDialogDto: SelectDialogDto,var shopId: String)
+class MessageOrderEventSelect(var selectDialogDto: SelectOrderDialogDto, var shopId: String)
 
 class MessageSelectShopPo(var idArrayList: ArrayList<String>)
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/red"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
     <com.hjq.bar.TitleBar
@@ -18,7 +18,10 @@
         app:title="全国/所有门店"
         app:titleColor="@color/black" />
 
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_2"
+        android:background="@color/account_F5F5F5" />
     <com.angcyo.tablayout.DslTabLayout
         android:background="@color/white"
         android:id="@+id/tab_layout"

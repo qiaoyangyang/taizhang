@@ -36,6 +36,7 @@ import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.oms.dialog.OrderGoodsListDetailDialog
 import com.meiling.oms.eventBusData.MessageEvent
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
+import com.meiling.oms.eventBusData.MessageHistoryEventSelect
 import com.meiling.oms.eventBusData.MessageOrderEventSelect
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.viewmodel.MainViewModel2
@@ -45,7 +46,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseOrderBinding>() {
+class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseOrderBinding>() {
 
 
     private lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
@@ -53,7 +54,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
 
     companion object {
         fun newInstance(type: String, isSelect: Boolean): Fragment {
-            val orderBaseFragment = OrderBaseFragment()
+            val orderBaseFragment = OrderBaseHostoryFragment()
             val bundle = Bundle()
             bundle.putString("type", type)
             bundle.putBoolean("isSelect", isSelect)
@@ -61,6 +62,10 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             return orderBaseFragment
         }
     }
+    var startTime = formatCurrentDate()
+    var endTime = formatCurrentDate()
+    var orderTime = "1"
+    var channelId = "0"
 
 
     override fun onResume() {
@@ -298,8 +303,6 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     }
                 }
             }
-//        orderDisAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInBottom)
-//        orderDisAdapter.animationEnable=true
         mDatabind.rvOrderList.adapter = orderDisAdapter
         orderDisAdapter.setOnItemClickListener { adapter, view, position ->
 
@@ -331,16 +334,15 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
     var list = ArrayList<String>()
     var orderSore = "1"
     var poiId = "1"
-    var channelId = "0"
     private fun initViewData() {
         mViewModel.orderList(
             logisticsStatus = requireArguments().getString("type").toString(),
-            startTime = formatCurrentDateBeforeMouth(),
-            endTime = formatCurrentDate(),
+            startTime = startTime,
+            endTime = endTime,
             businessNumberType = "1",
             pageIndex = pageIndex,
-            pageSize = "10",
-            orderTime = "1",
+            pageSize = "20",
+            orderTime = orderTime,
             deliverySelect = "0",
             isValid = "",
             businessNumber = "",
@@ -351,12 +353,12 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             pageIndex++
             mViewModel.orderList(
                 logisticsStatus = requireArguments().getString("type").toString(),
-                startTime = formatCurrentDateBeforeMouth(),
-                endTime = formatCurrentDate(),
+                startTime = startTime,
+                endTime = endTime,
                 businessNumberType = "1",
                 pageIndex = pageIndex,
-                pageSize = "10",
-                orderTime = "1",
+                pageSize = "20",
+                orderTime = orderTime,
                 deliverySelect = "0",
                 isValid = "",
                 businessNumber = "",
@@ -469,13 +471,13 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         orderDisAdapter.notifyItemChanged(message)
     }
 
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEventChange(event: MessageOrderEventSelect) {
-        // 在这里处理事件
-        channelId = event.selectDialogDto.channelId.toString()
-        orderSore = event.selectDialogDto.orderSort.toString()
-        poiId = event.shopId
-//        mDatabind.sflLayout.autoRefresh()
+    fun eventSelectTime(messageHistoryEventTime: MessageHistoryEventSelect) {
+        startTime = messageHistoryEventTime.selectDialogDto.startDate
+        endTime = messageHistoryEventTime.selectDialogDto.endDate
+        orderTime = messageHistoryEventTime.selectDialogDto.orderTime
+        channelId = messageHistoryEventTime.selectDialogDto.channelId!!
         initViewData()
         (mDatabind.rvOrderList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
             0,
