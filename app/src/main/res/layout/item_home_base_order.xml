@@ -8,10 +8,12 @@
     android:layout_marginTop="@dimen/dp_20"
     android:orientation="vertical"
     app:shape_radius="@dimen/dp_32"
-    app:shape_shadowColor="#E6000000"
+    app:shape_shadowColor="#a1000000"
     app:shape="rectangle"
     app:shape_solidColor="@color/white"
-    app:shape_shadowSize="5dp">
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:shape_shadowSize="0dp">
     <!--    app:shape_shadowOffsetY="2dp"-->
     <!--    app:shape_shadowOffsetX="2dp"-->
     <com.hjq.shape.layout.ShapeRelativeLayout
