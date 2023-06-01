@@ -9,6 +9,8 @@
     android:orientation="vertical"
     app:layout_constraintLeft_toRightOf="@dimen/dp_20"
     app:shape_solidColor="@color/white"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground"
     app:shape_topLeftRadius="@dimen/dp_20">
 
     <com.hjq.shape.layout.ShapeRelativeLayout
@@ -295,6 +297,8 @@
             android:layout_toStartOf="@+id/txt_base_order_dis"
             android:gravity="center"
             android:text="打印小票"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:textColor="@color/home_646A89"
             android:textSize="@dimen/sp_28"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -341,6 +345,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/sp_32"
             android:textStyle="bold"
+            android:foreground="?attr/selectableItemBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

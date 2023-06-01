@@ -304,6 +304,8 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     }
                 }
             }
+//        orderDisAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInBottom)
+//        orderDisAdapter.animationEnable=true
         mDatabind.rvOrderList.adapter = orderDisAdapter
         orderDisAdapter.setOnItemClickListener { adapter, view, position ->
 
