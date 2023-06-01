@@ -1,9 +1,12 @@
 package com.meiling.oms.activity
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.UiSettings
@@ -16,6 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCa
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.GoodsListVo
 import com.meiling.oms.R
+import com.meiling.oms.R.id.iv_arrow
 import com.meiling.oms.adapter.OrderBaseShopListAdapter
 import com.meiling.oms.databinding.ActivityOrderDetailBinding
 import com.meiling.oms.viewmodel.OrderCreateViewModel
@@ -40,16 +44,16 @@ class OrderDetailActivity : BaseActivity<OrderCreateViewModel, ActivityOrderDeta
             uiSettings?.isZoomControlsEnabled = false
             aMap?.moveCamera(CameraUpdateFactory.zoomTo(12f))
             val latLng = LatLng(39.906901, 116.397972)
-            addGrowMarker(latLng)
+            addGrowMarker(latLng,1)
             val latLng1 = LatLng(34.242593, 108.903436)
-            addGrowMarker(latLng1)
+            addGrowMarker(latLng1,2)
         }
 
 
 
         behavior = BottomSheetBehavior.from(mDatabind.bottomSheet)
         behavior?.addBottomSheetCallback(bottomSheetCallback())
-        behavior?.peekHeight = 400
+        behavior?.peekHeight =dp2px( 100)
         behavior?.state = BottomSheetBehavior.STATE_HALF_EXPANDED
 
         orderDisAdapter = OrderBaseShopListAdapter()
@@ -57,19 +61,7 @@ class OrderDetailActivity : BaseActivity<OrderCreateViewModel, ActivityOrderDeta
         goods.add(GoodsListVo(gname = "张三"))
         goods.add(GoodsListVo(gname = "张三1"))
         goods.add(GoodsListVo(gname = "张三2"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
+
         orderDisAdapter.setList(goods)
         mDatabind.included.recyShopList.adapter = orderDisAdapter
 
@@ -112,17 +104,21 @@ class OrderDetailActivity : BaseActivity<OrderCreateViewModel, ActivityOrderDeta
     /**
      * 添加带生长效果marker
      */
-    private fun addGrowMarker(latLng: LatLng) {
+    private fun addGrowMarker(latLng: LatLng,int: Int) {
         val options = MarkerOptions()
         options.position(latLng)
         val view = LayoutInflater.from(this).inflate(R.layout.addimg, null, false)
+        var iv_icon = view.findViewById<ImageView>(R.id.iv_icon)
+        var tv_distance = view.findViewById<TextView>(R.id.tv_distance)
+        if (int==1){
+            iv_icon.setBackgroundResource(R.drawable.add_1)
+            tv_distance.visibility=View.INVISIBLE
+        }else{
+            iv_icon.setBackgroundResource(R.drawable.collected)
+            tv_distance.visibility=View.VISIBLE
+        }
 
-        options.icon(
-            BitmapDescriptorFactory.fromView(
-
-                view
-
-            )
+        options.icon(BitmapDescriptorFactory.fromView(view)
         )
         val marker: Marker = aMap!!.addMarker(options)
         marker.startAnimation()
@@ -168,6 +164,9 @@ class OrderDetailActivity : BaseActivity<OrderCreateViewModel, ActivityOrderDeta
 
             }
         }
+    }
+    private fun dp2px(dp: Int): Int {
+        return (dp * Resources.getSystem().displayMetrics.density).toInt()
     }
 
 
