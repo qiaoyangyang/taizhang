@@ -37,7 +37,8 @@
             android:layout_below="@+id/img"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_30"
-            android:text="您还没有发货门店"
+            android:text="您还没有绑定物流账号"
+            android:textStyle="bold"
             android:textColor="@color/home_333333"
             android:textSize="@dimen/sp_32"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -50,7 +51,7 @@
             android:text="店铺需关联发货门店，请去新建门店"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/txt_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -58,7 +59,7 @@
             android:id="@+id/tv_decreate"
             android:layout_marginTop="@dimen/dp_22"
             android:textColor="@color/red"
-            android:text="去新建"
+            android:text="去绑定"
             android:paddingLeft="@dimen/dp_44"
             android:paddingRight="@dimen/dp_44"
             android:paddingTop="@dimen/dp_20"
