@@ -18,6 +18,15 @@ class OrderDisFragmentViewModel(application: Application) : BaseViewModel(applic
             { orderDisService.getOrderAndPoiDeliveryDate(poiId, orderId, logisticsType) },
             orderSendAddress
         )
+    } /**
+     * 配送地址获取
+     * */
+    var logisticsMenu = BaseLiveData<ArrayList<SelectLabel>>()
+    fun logisticsMenu() {
+        request(
+            { orderDisService.logisticsMenu() },
+            logisticsMenu
+        )
     }
 
     /**
