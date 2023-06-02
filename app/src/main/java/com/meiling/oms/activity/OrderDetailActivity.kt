@@ -65,7 +65,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
         behavior = BottomSheetBehavior.from(mDatabind.bottomSheet)
         behavior?.addBottomSheetCallback(bottomSheetCallback())
-        behavior?.peekHeight = dp2px(100)
+        behavior?.peekHeight = dp2px(120)
         behavior?.state = BottomSheetBehavior.STATE_HALF_EXPANDED
 
         orderDisAdapter = OrderBaseShopListAdapter()
@@ -215,7 +215,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             }
             //修改订单
             R.id.btn_change_address -> {
-
+                startActivity(Intent(this,OrderChangeAddressActivity::class.java))
 
             }
             //打电话

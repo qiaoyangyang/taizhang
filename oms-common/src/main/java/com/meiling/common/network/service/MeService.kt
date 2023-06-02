@@ -25,6 +25,12 @@ interface MeService {
     ): ResultData<MessageDto>
 
     /**
+     * 退出登陆
+     * */
+    @POST("/uc/admin/logout")
+    suspend fun setUmengToken(
+    ): ResultData<Any>
+    /**
      * 注销账号
      * */
     @POST("/uc/adminuser/disableAccount")

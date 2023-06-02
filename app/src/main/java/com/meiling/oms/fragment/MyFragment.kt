@@ -85,6 +85,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
 
     override fun initListener() {
+        //充值
         mDatabind.btnRecharge.setSingleClickListener {
             startActivity(Intent(requireActivity(), MyRechargeToPayActivity::class.java))
         }
@@ -95,7 +96,6 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         }
         //渠道店铺管理
         mDatabind.llChannel.setSingleClickListener {
-            // mViewModel.citypoi()
             startActivity(Intent(requireActivity(), ChannelActivity::class.java))
         }
 
@@ -147,9 +147,9 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             val dialog: MineExitDialog =
                 MineExitDialog().newInstance("温馨提示", "确认退出当前账号吗？", "取消", "确认", false)
             dialog.setOkClickLister {
-                MMKVUtils.clear()
-                ARouter.getInstance().build("/app/LoginActivity").navigation()
-                requireActivity().finish()
+
+                mViewModel.setUmengToken()
+
             }
             dialog.show(childFragmentManager)
         }
@@ -190,6 +190,18 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     }
 
     override fun createObserver() {
+        mViewModel.UmengToken.onSuccess.observe(this){
+            MMKVUtils.clear()
+            ARouter.getInstance().build("/app/LoginActivity").navigation()
+            requireActivity().finish()
+        }
+        mViewModel.UmengToken.onStart.observe(this){
+            showLoading("")
+        }
+        mViewModel.UmengToken.onError.observe(this){
+            dismissLoading()
+            showToast(it.msg)
+        }
         mViewModel.balance.onError.observe(this) {
             showToast(it.msg)
         }
