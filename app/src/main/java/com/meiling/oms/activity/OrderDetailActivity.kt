@@ -1,12 +1,18 @@
 package com.meiling.oms.activity
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.UiSettings
@@ -16,14 +22,20 @@ import com.amap.api.maps.model.Marker
 import com.amap.api.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
+import com.hjq.permissions.OnPermissionCallback
+import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.GoodsListVo
+import com.meiling.common.utils.PermissionUtilis
 import com.meiling.oms.R
 import com.meiling.oms.R.id.iv_arrow
 import com.meiling.oms.adapter.OrderBaseShopListAdapter
 import com.meiling.oms.databinding.ActivityOrderDetailBinding
+import com.meiling.oms.dialog.DataTipDialog
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.viewmodel.OrderCreateViewModel
+import com.meiling.oms.widget.copyText
 import com.meiling.oms.widget.showToast
 import io.reactivex.annotations.NonNull
 
@@ -46,6 +58,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
             uiSettings = aMap?.uiSettings;//实例化UiSettings类对象
             uiSettings?.isZoomControlsEnabled = false
+
             aMap?.moveCamera(CameraUpdateFactory.zoomTo(12f))
             val latLng = LatLng(39.906901, 116.397972)
             addGrowMarker(latLng, 1)
@@ -189,7 +202,13 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         when (v?.id) {
             //忽略订单
             R.id.tv_revocation -> {
-
+                val dialog: MineExitDialog =
+                    MineExitDialog().newInstance("温馨提示", "确定忽略订单？", "取消", "确认", false)
+                dialog.setOkClickLister {
+                    showToast("订单已经忽略")
+                    dialog.dismiss()
+                }
+                dialog.show(supportFragmentManager)
             }
             //自提完成
             R.id.tv_go_on -> {
@@ -206,22 +225,53 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             }
             //打电话
             R.id.iv_call_phone -> {
+                XXPermissions.with(this).permission(PermissionUtilis.Group.PHONE_CALL).request(object :OnPermissionCallback{
+                    override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
+                        if (!allGranted) {
+                            showToast("获取部分权限成功，但部分权限未正常授予")
+                            return
+                        }
+                        dialPhoneNumber("12345678")
+                    }
+
+                    override fun onDenied(
+                        permissions: MutableList<String>,
+                        doNotAskAgain: Boolean
+                    ) {
+                        if (doNotAskAgain) {
+                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                            XXPermissions.startPermissionActivity(
+                                this@OrderDetailActivity,
+                                permissions
+                            )
+                        } else {
+                            showToast("授权失败，请检查权限")
+                        }
+
+                    }
+
+                })
 
             }
             //平台服务费
             R.id.txt_order_platform_account -> {
-
+                DataTipDialog().newInstance("部分外卖平台存在服务费，仅记录展示，非小喵来客收取","平台服务费").show(supportFragmentManager)
             }
             //本单支付入账
             R.id.txt_order_account -> {
+                DataTipDialog().newInstance("本单支付入账=顾客实际支付-平台服务费","本单支付入账").show(supportFragmentManager)
 
             }
             //订单编号
             R.id.txt_order_ID -> {
+                copyText(this, "")
+                showToast("复制成功")
 
             }
             //三方编号
             R.id.txt_order_id_1 -> {
+                copyText(this, "")
+                showToast("复制成功")
 
             }
         }
@@ -240,5 +290,8 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         }
     }
 
-
+    private fun dialPhoneNumber(phoneNumber: String) {
+        val dialIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${phoneNumber}"))
+        startActivity(dialIntent)
+    }
 }

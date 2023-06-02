@@ -9,24 +9,20 @@
 
 
     <com.hjq.bar.TitleBar
+        style="@style/TitleBar_white"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/TitleBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/red"
-        app:leftIcon="@drawable/bar_arrows_left_white"
-        app:rightTitleSize="@dimen/sp_14"
         app:title="关于小喵来客"
-        app:titleColor="@color/white" />
+        />
 
     <ImageView
-        app:shape_radius="@dimen/dp_100"
+        android:id="@+id/imgAbout"
         android:layout_width="@dimen/dp_140"
         android:layout_height="@dimen/dp_140"
         android:layout_gravity="center"
-        android:src="@mipmap/icon_about_logo"
         android:layout_marginTop="@dimen/dp_50"
-        android:id="@+id/imgAbout"
-        />
+        android:src="@mipmap/icon_about_logo"
+        app:shape_radius="@dimen/dp_100" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,9 +30,9 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp_20"
         android:text="小喵来客"
-        android:textStyle="bold"
         android:textColor="@color/home_000000"
-        android:textSize="@dimen/sp_32" />
+        android:textSize="@dimen/sp_32"
+        android:textStyle="bold" />
 
     <com.hjq.shape.view.ShapeTextView
         android:id="@+id/stKf"
@@ -146,9 +142,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:drawableEnd="@drawable/icon_next"
             android:gravity="end"
             android:textColor="@color/home_666666"
-            android:drawableEnd="@drawable/icon_next"
             android:textSize="@dimen/sp_28"
             tools:text="当前版本：V1.0" />
 

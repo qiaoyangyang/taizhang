@@ -7,16 +7,13 @@
     android:background="@color/order_remark_F4F4F4">
 
     <com.hjq.bar.TitleBar
+        style="@style/TitleBar_white"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/TitleBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/red"
         app:layout_constraintTop_toTopOf="parent"
-        app:leftIcon="@drawable/bar_arrows_left_white"
         app:lineVisible="false"
         app:title="通知设置"
-        app:titleColor="@color/white"
-        app:titleSize="@dimen/sp_36" />
+        />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
