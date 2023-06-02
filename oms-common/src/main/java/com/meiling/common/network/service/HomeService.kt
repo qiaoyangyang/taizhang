@@ -30,7 +30,7 @@ interface HomeService {
         @Query("channelId") channelId: String = "0",
     ): ResultData<OrderDto>
 
-    //订单详情
+    //订单列表
     @GET("/saas/order/orderList")
     suspend fun orderList(
         @Query("logisticsStatus") logisticsStatus: String,
@@ -47,6 +47,12 @@ interface HomeService {
         @Query("selectText") selectText: String = "",
         @Query("channelId") channelId: String = "0",
     ): ResultData<OrderDto>
+
+  //订单详情
+    @GET("/saas/order/orderDetailVo")
+    suspend fun orderDetail(
+        @Query("orderViewId") orderViewId: String,
+    ): ResultData<OrderDetailDto>
 
 
     //忽略订单

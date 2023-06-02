@@ -3,37 +3,23 @@ package com.meiling.oms.activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.network.data.OrderDetailDto
 import com.meiling.common.network.data.OrderGoodsVo
 import com.meiling.oms.adapter.OrderBaseShopListAdapter
 import com.meiling.oms.databinding.ActivityOrderZitiDetailBinding
-import com.meiling.oms.viewmodel.OrderCreateViewModel
+import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
+import com.meiling.oms.widget.showToast
 
 //自提订单详情
-class OrderDetail1Activity : BaseActivity<OrderCreateViewModel, ActivityOrderZitiDetailBinding>() {
+class OrderDetail1Activity :
+    BaseActivity<BaseOrderFragmentViewModel, ActivityOrderZitiDetailBinding>() {
 
     private lateinit var orderDisAdapter: OrderBaseShopListAdapter
-
+    lateinit var orderDetailDto: OrderDetailDto
     override fun initView(savedInstanceState: Bundle?) {
+        mViewModel.getOrderDetail(intent.getStringExtra("orderViewId").toString())
         orderDisAdapter = OrderBaseShopListAdapter()
-        var goods = ArrayList<OrderGoodsVo>()
-        goods.add(OrderGoodsVo(gname = "张三"))
-        goods.add(OrderGoodsVo(gname = "张三1"))
-        goods.add(OrderGoodsVo(gname = "张三2"))
-        goods.add(OrderGoodsVo(gname = "张三3"))
-        goods.add(OrderGoodsVo(gname = "张三3"))
-        goods.add(OrderGoodsVo(gname = "张三3"))
-        goods.add(OrderGoodsVo(gname = "张三3"))
-        goods.add(OrderGoodsVo(gname = "张三3"))
-        goods.add(OrderGoodsVo(gname = "张三3"))
-        goods.add(OrderGoodsVo(gname = "张三3"))
-        goods.add(OrderGoodsVo(gname = "张三3"))
-        goods.add(OrderGoodsVo(gname = "张三3"))
-        goods.add(OrderGoodsVo(gname = "张三3"))
-        goods.add(OrderGoodsVo(gname = "张三3"))
-        goods.add(OrderGoodsVo(gname = "张三3"))
-        goods.add(OrderGoodsVo(gname = "张三3"))
-        orderDisAdapter.setList(goods)
         mDatabind.included.recyShopList.adapter = orderDisAdapter
     }
 
@@ -61,6 +47,26 @@ class OrderDetail1Activity : BaseActivity<OrderCreateViewModel, ActivityOrderZit
 //
 //            }
         }
+    }
+
+    override fun createObserver() {
+        mViewModel.printDto.onStart.observe(this) {
+        }
+        mViewModel.printDto.onSuccess.observe(this) {
+            disLoading()
+            showToast("已发送打印任务")
+        }
+        mViewModel.printDto.onError.observe(this) {
+            showToast(it.msg)
+        }
+
+        mViewModel.orderDetailDto.onStart.observe(this) {}
+        mViewModel.orderDetailDto.onSuccess.observe(this) {
+            orderDetailDto = it
+            orderDisAdapter.setList(it.goodsVoList as MutableList<OrderGoodsVo>)
+        }
+        mViewModel.orderDetailDto.onError.observe(this) {}
+
     }
 
 }
