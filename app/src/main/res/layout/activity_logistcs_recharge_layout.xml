@@ -5,16 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.hjq.bar.TitleBar
+        app:layout_constraintLeft_toLeftOf="parent"
+        style="@style/TitleBar_white"
         android:id="@+id/TitleBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         app:barStyle="transparent"
         app:layout_constraintTop_toTopOf="parent"
-        app:leftIcon="@drawable/bar_arrows_left_white"
-        android:background="#FF4545"
         app:rightTitleSize="@dimen/sp_28"
-        app:rightTitleColor="@color/white"
-        app:titleColor="@color/white"
         app:title="物流充值" />
 
 

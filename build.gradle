@@ -3,7 +3,7 @@
 buildscript {
     apply from: 'versions.gradle'
     dependencies {
-        classpath 'com.huawei.agconnect:agcp:1.6.0.300'
+        classpath 'com.huawei.agconnect:agcp:1.8.1.300'
     }
 }
 plugins {

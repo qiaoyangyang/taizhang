@@ -9,8 +9,8 @@
     tools:context=".activity.ForgetPwdGetCodeActivity">
 
     <com.hjq.bar.TitleBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TitleBar_white"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:title="忘记密码" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
