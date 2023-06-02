@@ -8,5 +8,9 @@ data class OtherShop(
     var thirdShopId: String = "",
     @SerializedName("thirdShopName")
     var thirdShopName: String = "",
-    var select:Boolean?=false
-):java.io.Serializable
+    var select:Boolean?=false, override var isSelect: Boolean=false
+):java.io.Serializable,ListSelectModel {
+    override fun getTypeName(): String {
+        return thirdShopName
+    }
+}

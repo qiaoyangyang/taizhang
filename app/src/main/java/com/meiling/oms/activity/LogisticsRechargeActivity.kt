@@ -280,23 +280,29 @@ class LogisticsRechargeActivity :
      * 手动获取三方门店列表
      */
     fun getShopList(type: String) {
-        var otherShopListDialog = OtherShopListDialog().newInstance(poid)
-        otherShopListDialog.setMySureOnclickListener {
-            showLoading("正在绑定")
-            mViewModel.launchRequest(
-                { loginService.bindShop(poid, it.thirdShopId, it.thirdShopName, type) },
-                onSuccess = {
-                    showToast("绑定成功")
-                    getLogisticsList(poid)
-                    disLoading()
-                },
-                onError = {
-                    disLoading()
-                    it?.let { showToast(it) }
-                }
-            )
+//        var otherShopListDialog = OtherShopListDialog().newInstance(poid)
+//        otherShopListDialog.setMySureOnclickListener {
+//            showLoading("正在绑定")
+//            mViewModel.launchRequest(
+//                { loginService.bindShop(poid, it.thirdShopId, it.thirdShopName, type) },
+//                onSuccess = {
+//                    showToast("绑定成功")
+//                    getLogisticsList(poid)
+//                    disLoading()
+//                },
+//                onError = {
+//                    disLoading()
+//                    it?.let { showToast(it) }
+//                }
+//            )
+//        }
+//        otherShopListDialog.show(supportFragmentManager)
+
+        var chooseViewDialog=ChooseViewDialog().newInstance(poid)
+        chooseViewDialog.setMySureOnclickListener {
+            showToast(it.thirdShopName)
         }
-        otherShopListDialog.show(supportFragmentManager)
+        chooseViewDialog.show(supportFragmentManager)
     }
 
     /**
