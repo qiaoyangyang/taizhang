@@ -37,7 +37,6 @@ import com.meiling.oms.dialog.OrderGoodsListDetailDialog
 import com.meiling.oms.eventBusData.MessageEvent
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.eventBusData.MessageHistoryEventSelect
-import com.meiling.oms.eventBusData.MessageOrderEventSelect
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.widget.*
@@ -161,7 +160,7 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
                     }
                     btnShopDetail.setSingleClickListener {
                         val orderGoodsListDetailDialog =
-                            OrderGoodsListDetailDialog().newInstance("12")
+                            OrderGoodsListDetailDialog().newInstance("12",item.goodsVoList!!)
                         orderGoodsListDetailDialog.show(childFragmentManager)
                     }
 //

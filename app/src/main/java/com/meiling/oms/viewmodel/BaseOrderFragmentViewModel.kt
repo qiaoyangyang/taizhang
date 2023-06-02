@@ -1,6 +1,7 @@
 package com.meiling.oms.viewmodel
 
 import android.app.Application
+import android.util.Log
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
 import com.meiling.common.network.data.CancelOrderSend
@@ -8,13 +9,13 @@ import com.meiling.common.network.data.OrderDto
 import com.meiling.common.network.data.StatusCountDto
 import com.meiling.common.network.service.homeService
 import com.meiling.common.network.service.orderDisService
-import retrofit2.http.Query
 
 class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(application) {
 
     var orderList = BaseLiveData<OrderDto>()
     var statusCountDto = BaseLiveData<StatusCountDto>()
     var cancelOrderDto = BaseLiveData<String>()
+    var invalidDto = BaseLiveData<String>()
     var printDto = BaseLiveData<Any>()
     var orderFinish = BaseLiveData<Any>()
 
@@ -34,7 +35,7 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
         channelId: String = "0"//渠道全部传null,根据返回渠道
     ) {
         request({
-            homeService.orderStatus(
+            homeService.orderList(
                 logisticsStatus,
                 startTime,
                 endTime,
@@ -49,6 +50,22 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
                 channelId = channelId
             )
         }, orderList)
+//        request({
+//            homeService.orderStatus(
+//                logisticsStatus,
+//                startTime,
+//                endTime,
+//                businessNumberType,
+//                pageIndex.toString(),
+//                orderTime,
+//                pageSize,
+//                deliverySelect,
+//                isValid,
+//                businessNumber = businessNumber,
+//                selectText = selectText,
+//                channelId = channelId
+//            )
+//        }, orderList)
     }
 
     fun statusCount(
@@ -60,7 +77,7 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
         orderTime: String = "1",
         pageSize: String = "20",
         deliverySelect: String = "0",
-        isValid: String = "",
+        isValid: String = "1",
         businessNumber: String = "",
         channelId: String = "0"
     ) {
@@ -83,6 +100,11 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
 
     fun cancelOrder(cancelCouponSum: CancelOrderSend) {
         request({ orderDisService.cancelOrderSend(cancelCouponSum) }, cancelOrderDto)
+    }
+
+    fun invalid(orderViewId: String, value: String) {
+        Log.d("TAG", "invalid: ${orderViewId}")
+        request({ homeService.invalid(orderViewId, value) }, invalidDto)
     }
 
     fun orderFinish(orderId: String) {

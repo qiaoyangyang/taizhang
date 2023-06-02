@@ -15,12 +15,8 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.bumptech.glide.load.DecodeFormat
-import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -29,8 +25,8 @@ import com.hjq.shape.view.ShapeTextView
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
+import com.meiling.common.network.data.OrderGoodsVo
 import com.meiling.common.utils.GlideAppUtils
-import com.meiling.common.utils.SaveDecimalUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivitySearch1Binding
 import com.meiling.oms.dialog.MineExitDialog
@@ -43,7 +39,6 @@ import com.meiling.oms.widget.*
 class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1Binding>() {
 
     lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
-    lateinit var orderGoodsListAdapter: BaseQuickAdapter<OrderDto.Content.GoodsVo, BaseViewHolder>
 
     var telPhone = ""
     override fun initView(savedInstanceState: Bundle?) {
@@ -115,7 +110,7 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                     }
                     btnShopDetail.setSingleClickListener {
                         val orderGoodsListDetailDialog =
-                            OrderGoodsListDetailDialog().newInstance("12")
+                            OrderGoodsListDetailDialog().newInstance("12",item.goodsVoList!!)
                         orderGoodsListDetailDialog.show(supportFragmentManager)
                     }
 //

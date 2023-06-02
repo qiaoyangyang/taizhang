@@ -6,15 +6,15 @@ import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.meiling.common.network.data.GoodsListVo
+import com.meiling.common.network.data.OrderGoodsVo
 import com.meiling.common.utils.GlideAppUtils
 import com.meiling.oms.R
 
 class OrderBaseShopListAdapter :
-    BaseQuickAdapter<GoodsListVo, BaseViewHolder>(R.layout.item_home_order_shop),
+    BaseQuickAdapter<OrderGoodsVo, BaseViewHolder>(R.layout.item_home_order_shop),
     LoadMoreModule {
     override fun convert(
-        holder: BaseViewHolder, item: GoodsListVo
+        holder: BaseViewHolder, item: OrderGoodsVo
     ) {
         val view = holder.getView<ImageView>(R.id.img_order_shop_icon)
         holder.setText(R.id.txt_order_shop_name, item.gname)

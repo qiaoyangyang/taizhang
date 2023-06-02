@@ -2,9 +2,8 @@ package com.meiling.oms.activity
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import com.alibaba.android.arouter.launcher.ARouter
 import com.meiling.common.activity.BaseActivity
-import com.meiling.common.network.data.GoodsListVo
+import com.meiling.common.network.data.OrderGoodsVo
 import com.meiling.oms.adapter.OrderBaseShopListAdapter
 import com.meiling.oms.databinding.ActivityOrderZitiDetailBinding
 import com.meiling.oms.viewmodel.OrderCreateViewModel
@@ -17,23 +16,23 @@ class OrderDetail1Activity : BaseActivity<OrderCreateViewModel, ActivityOrderZit
 
     override fun initView(savedInstanceState: Bundle?) {
         orderDisAdapter = OrderBaseShopListAdapter()
-        var goods = ArrayList<GoodsListVo>()
-        goods.add(GoodsListVo(gname = "张三"))
-        goods.add(GoodsListVo(gname = "张三1"))
-        goods.add(GoodsListVo(gname = "张三2"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
+        var goods = ArrayList<OrderGoodsVo>()
+        goods.add(OrderGoodsVo(gname = "张三"))
+        goods.add(OrderGoodsVo(gname = "张三1"))
+        goods.add(OrderGoodsVo(gname = "张三2"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
         orderDisAdapter.setList(goods)
         mDatabind.included.recyShopList.adapter = orderDisAdapter
     }

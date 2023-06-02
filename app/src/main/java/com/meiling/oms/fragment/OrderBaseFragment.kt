@@ -25,6 +25,7 @@ import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.GlideAppUtils
+import com.meiling.common.utils.SaveDecimalUtils
 import com.meiling.oms.R
 import com.meiling.oms.activity.ChannelActivity
 import com.meiling.oms.activity.MainActivity
@@ -113,15 +114,25 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     val imsDeliveryWay = holder.getView<AppCompatImageView>(R.id.ims_delivery_way)
                     holder.setText(R.id.txt_order_delivery_name, item.order?.recvName)
                     phone.text = item.order?.recvPhone
-                    checkMap.text = "1.2km"
+                    checkMap.text = "${item.distance}km"
                     telPhone = item.order?.recvPhone ?: ""
                     orderAddress.text = item.order?.recvAddr!!.replace("@@", "")
-                    holder.setText(
-                        R.id.txt_base_order_shop_msg, "共${item.goodsVoList?.size}种商品，共100元"
-                    )
-                    holder.setText(
-                        R.id.txt_base_order_shop_name, "商品名称"
-                    )
+                    if (item.goodsVoList?.isNotEmpty() == true) {
+                        var sum: Double = 0.0
+                        var sumNumber: Int = 0
+                        for (ne in item.goodsVoList!!) {
+                            sum += ne?.totalPrice!!
+                            sumNumber += ne?.number!!
+                        }
+                        holder.setText(
+                            R.id.txt_base_order_shop_msg,
+                            "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(sum)}元"
+                        )
+                        holder.setText(
+                            R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}"
+                        )
+                    }
+
                     holder.setText(R.id.txt_base_order_No, "${item.order?.channelDaySn}")
                     holder.setText(
                         R.id.txt_base_order_delivery_time,
@@ -156,7 +167,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     }
                     btnShopDetail.setSingleClickListener {
                         val orderGoodsListDetailDialog =
-                            OrderGoodsListDetailDialog().newInstance("12")
+                            OrderGoodsListDetailDialog().newInstance("12",item.goodsVoList!!)
                         orderGoodsListDetailDialog.show(childFragmentManager)
                     }
 //
@@ -212,7 +223,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         val dialog: MineExitDialog =
                             MineExitDialog().newInstance("温馨提示", "确定忽略订单？", "取消", "确认", false)
                         dialog.setOkClickLister {
-                            showToast("订单已经忽略")
+                            mViewModel.invalid(item.order!!.viewId.toString(),"0")
                             dialog.dismiss()
                         }
                         dialog.show(childFragmentManager)
@@ -254,7 +265,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         orderDelivery.text = "送达"
                         imsDeliveryWay.visibility = View.INVISIBLE
                         checkMap.visibility = View.VISIBLE
-                        orderAddress.visibility = View.GONE
+                        orderAddress.visibility = View.VISIBLE
                         orderDelivery.text = "前送达"
                     }
                     //0.待配送  20.待抢单 30.待取货 50.配送中 70.取消 80.已送达
@@ -342,7 +353,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             pageSize = "10",
             orderTime = "1",
             deliverySelect = "0",
-            isValid = "",
+            isValid = "1",
             businessNumber = "",
             channelId = channelId
         )
@@ -358,7 +369,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 pageSize = "10",
                 orderTime = "1",
                 deliverySelect = "0",
-                isValid = "",
+                isValid = "1",
                 businessNumber = "",
                 selectText = "",
                 channelId = channelId
@@ -451,6 +462,15 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         }
         mViewModel.printDto.onError.observe(this) {
             dismissLoading()
+            showToast(it.msg)
+        }
+
+        mViewModel.invalidDto.onSuccess.observe(this) {
+            showToast("订单已忽略")
+            mDatabind.sflLayout.autoRefresh()
+            EventBus.getDefault().post(MessageEventUpDataTip())
+        }
+        mViewModel.invalidDto.onError.observe(this) {
             showToast(it.msg)
         }
 

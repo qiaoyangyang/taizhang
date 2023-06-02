@@ -14,7 +14,7 @@ import com.amap.api.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.meiling.common.activity.BaseActivity
-import com.meiling.common.network.data.GoodsListVo
+import com.meiling.common.network.data.OrderGoodsVo
 import com.meiling.oms.R
 import com.meiling.oms.adapter.OrderBaseShopListAdapter
 import com.meiling.oms.databinding.ActivityOrderDetailBinding
@@ -53,23 +53,23 @@ class OrderDetailActivity : BaseActivity<OrderCreateViewModel, ActivityOrderDeta
         behavior?.state = BottomSheetBehavior.STATE_HALF_EXPANDED
 
         orderDisAdapter = OrderBaseShopListAdapter()
-        var goods = ArrayList<GoodsListVo>()
-        goods.add(GoodsListVo(gname = "张三"))
-        goods.add(GoodsListVo(gname = "张三1"))
-        goods.add(GoodsListVo(gname = "张三2"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
+        var goods = ArrayList<OrderGoodsVo>()
+        goods.add(OrderGoodsVo(gname = "张三"))
+        goods.add(OrderGoodsVo(gname = "张三1"))
+        goods.add(OrderGoodsVo(gname = "张三2"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
+        goods.add(OrderGoodsVo(gname = "张三3"))
         orderDisAdapter.setList(goods)
         mDatabind.included.recyShopList.adapter = orderDisAdapter
 

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.meiling.common.network.data.GoodsListVo
+import com.meiling.common.network.data.OrderGoodsVo
 import com.meiling.oms.R
 import com.meiling.oms.adapter.OrderBaseShopListAdapter
 import com.meiling.oms.widget.setSingleClickListener
@@ -23,9 +23,10 @@ class OrderGoodsListDetailDialog : BaseNiceDialog() {
         setOutCancel(false)
     }
 
-    fun newInstance(orderId: String): OrderGoodsListDetailDialog {
+    fun newInstance(orderId: String, orderGoodsVo: ArrayList<OrderGoodsVo?>): OrderGoodsListDetailDialog {
         val args = Bundle()
         args.putString("orderId", orderId)
+        args.putSerializable("orderGoodsVo", orderGoodsVo)
         val dialog = OrderGoodsListDetailDialog()
         dialog.arguments = args
         return dialog
@@ -36,35 +37,16 @@ class OrderGoodsListDetailDialog : BaseNiceDialog() {
     }
 
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
+        val orderGoodsVoList = requireArguments().getSerializable("orderGoodsVo") as ArrayList<OrderGoodsVo>
         val recyclerViewList = holder?.getView<RecyclerView>(R.id.recy_dialog_shop_list)
         val closeGoodsDialog = holder?.getView<ImageView>(R.id.iv_close_goods)
         var orderDisAdapter = OrderBaseShopListAdapter()
-        var goods = ArrayList<GoodsListVo>()
-        goods.add(GoodsListVo(gname = "张三"))
-        goods.add(GoodsListVo(gname = "张三1"))
-        goods.add(GoodsListVo(gname = "张三2"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        goods.add(GoodsListVo(gname = "张三3"))
-        orderDisAdapter.setList(goods)
+        var goods = ArrayList<OrderGoodsVo>()
+        goods.addAll(orderGoodsVoList)
         recyclerViewList!!.adapter = orderDisAdapter
         closeGoodsDialog?.setSingleClickListener {
             dismiss()
         }
     }
 }
+

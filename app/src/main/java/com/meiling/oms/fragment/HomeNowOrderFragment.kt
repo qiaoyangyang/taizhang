@@ -93,7 +93,7 @@ class HomeNowOrderFragment :
                     pageSize = "10",
                     orderTime = "",
                     deliverySelect = "0",
-                    isValid = "",
+                    isValid = "1",
                     businessNumber = "",
                     channelId = it.channelId!!
                 )
@@ -139,7 +139,7 @@ class HomeNowOrderFragment :
             pageSize = "20",
             orderTime = "1",
             deliverySelect = "0",
-            isValid = "",
+            isValid = "1",
             businessNumber = "",
             channelId = selectDialogDto.channelId.toString()
         )
