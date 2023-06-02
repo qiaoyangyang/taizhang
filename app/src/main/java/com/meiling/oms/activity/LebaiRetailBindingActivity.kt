@@ -1,5 +1,6 @@
 package com.meiling.oms.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import com.meiling.common.GlideApp
 import com.meiling.common.activity.BaseActivity
 import com.meiling.oms.databinding.ActivityLebaiRetailBindingBinding
 import com.meiling.oms.viewmodel.StoreManagementViewModel
+import com.meiling.oms.widget.copyText
 import com.meiling.oms.widget.showToast
 
 //
@@ -14,23 +16,29 @@ class LebaiRetailBindingActivity : BaseActivity<StoreManagementViewModel, Activi
     override fun initView(savedInstanceState: Bundle?) {
         GlideApp.with(this)
             .load("https://static.igoodsale.com/elem-write.jpeg")
-            .into(mDatabind.ivArrow)
-        mDatabind.ivArrow.setOnClickListener {
+            .into(mDatabind.ivArrow3)
+        mDatabind.ivArrow3.setOnClickListener {
             ImageActivity().start(this,"https://static.igoodsale.com/elem-write.jpeg")
 
         }
+
+
+    }
+
+    override fun initData() {
+        super.initData()
+       var sinceCode=intent.getStringExtra("sinceCode").toString()
+
+       var url=intent.getStringExtra("url").toString()
+
+        mDatabind.tvShopid.text=sinceCode
+
         mDatabind.tvOk.setOnClickListener {
-            if (TextUtils.isEmpty(mDatabind.etBindTenant.text.toString())){
-                showToast("请输入饿了么零售中应用的APP ID")
-                return@setOnClickListener
-
-            }
-            if (TextUtils.isEmpty(mDatabind.etSecret.text.toString())){
-                showToast("请输入饿了么零售中应用的APP Secret")
-                return@setOnClickListener
-
-            }
-
+            startActivity(Intent(this, BaseWebActivity::class.java).putExtra("url", url))
+        }
+        mDatabind.tvCopy.setOnClickListener {
+            copyText(this,sinceCode )
+            showToast("复制成功")
         }
     }
 

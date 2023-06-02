@@ -1,136 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.hjq.bar.TitleBar
-
-
         android:id="@+id/TitleBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/red"
+        style="@style/TitleBar_white"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:leftIcon="@drawable/bar_arrows_left_white"
         app:lineVisible="false"
         app:rightTitleSize="@dimen/sp_36"
-        app:title="绑定饿了么零售店铺"
-        app:titleColor="@color/white" />
+        app:title="绑定美团闪购店铺"
+        tools:layout_editor_absoluteX="37dp" />
 
     <androidx.core.widget.NestedScrollView
-        android:background="@drawable/bg_whete_10"
-        app:layout_constraintBottom_toTopOf="@+id/tv_ok"
-
         android:layout_width="match_parent"
         android:layout_height="0dp"
 
         android:layout_margin="@dimen/dp_20"
+        android:background="@drawable/bg_whete_10"
+
+        app:layout_constraintBottom_toTopOf="@+id/tv_ok"
         app:layout_constraintTop_toBottomOf="@+id/TitleBar">
 
         <com.hjq.shape.layout.ShapeLinearLayout
-            android:paddingBottom="@dimen/dp_20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="@dimen/dp_32"
-
             android:paddingRight="@dimen/dp_32"
+
+            android:paddingBottom="@dimen/dp_20"
             app:shape_radius="@dimen/dp_24"
             app:shape_solidColor="@color/white">
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="@dimen/dp_34"
-
-                android:text="应用信息填写"
-
+                android:text="第一步 复制门店编码"
                 android:textColor="@color/home_000000"
-
                 android:textSize="@dimen/sp_32"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_first_step"
-                android:lineSpacingMultiplier="1.2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_16"
-                android:text="应用新建成功后，将饿了么零售中应用的APP ID和APP Secret（点击图片查看大图）填写至下方输入框 "
+                android:lineSpacingMultiplier="1.2"
+                android:text="请复制下方关联发货门店的编号： "
                 android:textColor="@color/home_333333"
                 android:textSize="@dimen/sp_28" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20">
+
+                <com.hjq.shape.view.ShapeTextView
+                    android:id="@+id/tv_shopid"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:maxLength="30"
+                    android:padding="@dimen/dp_24"
+                    android:textColor="@color/home_333333"
+                    android:textColorHighlight="#8C8C8C"
+                    android:textColorHint="#A8ABB2"
+                    android:textSize="@dimen/dp_32"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/tv_copy"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shape_radius="@dimen/dp_8"
+                    app:shape_solidColor="#FFF5F7FA"
+                    app:shape_strokeColor="#DDDFE6"
+                    app:shape_strokeWidth="1dp" />
+
+                <com.hjq.shape.view.ShapeTextView
+                    android:id="@+id/tv_copy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_20"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:text="复制"
+                    android:textColor="#FFFE4B48"
+                    android:textColorHighlight="#8C8C8C"
+                    android:textSize="@dimen/dp_32"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_shopid"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_shopid"
+                    app:shape_radius="@dimen/dp_8"
+                    app:shape_solidColor="#20FE4B48"
+
+                    app:shape_strokeColor="@color/red"
+                    app:shape_strokeWidth="1dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="@dimen/dp_34"
+                android:text="第二步 闪购授权绑定"
+                android:textColor="@color/home_000000"
+                android:textSize="@dimen/sp_32"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:lineSpacingMultiplier="1.2"
+                android:text="@string/shan"
+                android:textColor="@color/home_000000"
+                android:textSize="@dimen/sp_28" />
+
+
             <com.hjq.shape.view.ShapeImageView
-                android:layout_marginTop="10dp"
-                android:id="@+id/iv_arrow"
+                android:id="@+id/iv_arrow3"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_300">
-
-            </com.hjq.shape.view.ShapeImageView>
-
-            <TextView
-                android:layout_marginTop="@dimen/dp_10"
-                android:drawableLeft="@drawable/icon_must_input"
-                android:id="@+id/tv_Store_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/dp_30"
-                android:text="APP ID："
-                android:textColor="@color/home_666666"
-                android:textSize="@dimen/sp_32"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.hjq.shape.view.ShapeEditText
-                android:maxLength="30"
-                android:id="@+id/et_bindTenant"
-                android:padding="@dimen/dp_24"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="#A8ABB2"
-                android:hint="请输入饿了么零售中应用的APP ID"
-                android:textColorHighlight="#8C8C8C"
-                android:textColor="@color/home_333333"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_operator_name1"
-                android:textSize="@dimen/dp_32"
-                app:layout_constraintLeft_toRightOf="@+id/tv_operator_name1"
-                app:shape_radius="@dimen/dp_8"
-                app:shape_strokeColor="#DDDFE6"
-                app:shape_strokeWidth="1dp" />
-            <TextView
-                android:id="@+id/tv_secret"
-                android:layout_marginTop="@dimen/dp_10"
-                android:drawableLeft="@drawable/icon_must_input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/dp_30"
-                android:text="APP Secret："
-                android:textColor="@color/home_666666"
-                android:textSize="@dimen/sp_32"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            <com.hjq.shape.view.ShapeEditText
-                android:maxLength="30"
-                android:id="@+id/et_secret"
-                android:padding="@dimen/dp_24"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="#A8ABB2"
-                android:hint="请输入饿了么零售中应用的APP Secret"
-                android:textColorHighlight="#8C8C8C"
-                android:textColor="@color/home_333333"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_operator_name1"
-                android:textSize="@dimen/dp_32"
-                app:layout_constraintLeft_toRightOf="@+id/tv_operator_name1"
-                app:shape_radius="@dimen/dp_8"
-                app:shape_strokeColor="#DDDFE6"
-                app:shape_strokeWidth="1dp" />
-
+                android:layout_height="@dimen/dp_500"
+                android:layout_marginTop="10dp" />
 
         </com.hjq.shape.layout.ShapeLinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
     <com.hjq.shape.view.ShapeButton
         android:id="@+id/tv_ok"
         android:layout_width="match_parent"

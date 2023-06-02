@@ -11,7 +11,7 @@
     <com.hjq.bar.TitleBar
         android:id="@+id/TitleBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
+        android:layout_height="wrap_content"
         app:barStyle="transparent"
         app:layout_constraintTop_toTopOf="parent"
         app:leftIcon="@drawable/bar_arrows_left_white"

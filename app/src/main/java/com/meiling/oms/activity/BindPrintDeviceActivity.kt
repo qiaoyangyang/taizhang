@@ -91,11 +91,13 @@ class BindPrintDeviceActivity :
                 type = 2
                 mDatabind.txtPrintWidth2.text = "80mm"//打印机编号
             }
-            isSelect = it.poiList.size.toString()
+            var size = it.poiList.size.toString()
+
+            Log.d("yjk", "printDetail--: $size")
             if (it?.flag==true){
                 mDatabind.selectShop.text="全部门店"
             }else {
-                mDatabind.selectShop.text="已选择${isSelect}个门店"
+                mDatabind.selectShop.text="已选择${size}个门店"
             }
 
             it.poiList.forEach { id ->
@@ -106,9 +108,12 @@ class BindPrintDeviceActivity :
         }
 
         mViewModel.getPoiListsize.onSuccess.observe(this) { it ->
+
             isSelect = it?.content?.size.toString()
+            Log.d("yjk", "getPoiListsize--: $isSelect")
             it.content?.forEach {
                 poiIds.add(it?.id.toString())
+                shopPoiDtoList.add(ShopPoiDto(it?.id.toString()))
             }
         }
         mViewModel.delDev.onSuccess.observe(this) {
@@ -158,7 +163,7 @@ class BindPrintDeviceActivity :
         var name = intent.getStringExtra("name")
         var deviceid = intent.getStringExtra("deviceid").toString()
         if (TextUtils.isEmpty(name)) {
-            iscompile = "bianji"
+            iscompile = "1"
             mDatabind.scanLin.visibility = View.GONE
             mDatabind.edtPrintNo.keyListener = null
             mViewModel.printDetail(deviceid)
@@ -279,6 +284,7 @@ class BindPrintDeviceActivity :
                     }
                     mDatabind.selectShop.text="已选择${arrayList.size}个门店"
                 }else{
+                    mViewModel.getPoiList()
                     mDatabind.selectShop.text="全部门店"
                 }
 

@@ -1,10 +1,13 @@
-package com.meiling.oms.fragment
+package com.meiling.oms.activity
 
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -12,82 +15,38 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hjq.shape.layout.ShapeRelativeLayout
 import com.hjq.shape.view.ShapeTextView
-import com.meiling.common.fragment.BaseFragment
+import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.GlideAppUtils
+import com.meiling.common.utils.SaveDecimalUtils
 import com.meiling.oms.R
-import com.meiling.oms.activity.ChannelActivity
-import com.meiling.oms.activity.MainActivity
-import com.meiling.oms.activity.OrderDetail1Activity
-import com.meiling.oms.activity.OrderDetailActivity
-import com.meiling.oms.databinding.FragmentBaseOrderBinding
+import com.meiling.oms.databinding.ActivitySearch1Binding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.oms.dialog.OrderGoodsListDetailDialog
-import com.meiling.oms.eventBusData.MessageEvent
-import com.meiling.oms.eventBusData.MessageEventUpDataTip
-import com.meiling.oms.eventBusData.MessageOrderEventSelect
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
-import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.widget.*
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
+@Route(path = "/app/Search1Activity")
+class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1Binding>() {
 
-class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseOrderBinding>() {
-
-
-    private lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
-    var pageIndex = 1
-
-    companion object {
-        fun newInstance(type: String, isSelect: Boolean): Fragment {
-            val orderBaseFragment = OrderBaseFragment()
-            val bundle = Bundle()
-            bundle.putString("type", type)
-            bundle.putBoolean("isSelect", isSelect)
-            orderBaseFragment.arguments = bundle
-            return orderBaseFragment
-        }
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        initViewData()
-        EventBus.getDefault().post(MessageEventUpDataTip())
-    }
-
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
-    }
-
+    lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
+    lateinit var orderGoodsListAdapter: BaseQuickAdapter<OrderDto.Content.GoodsVo, BaseViewHolder>
 
     var telPhone = ""
-    lateinit var vm: MainViewModel2
     override fun initView(savedInstanceState: Bundle?) {
-        vm = ViewModelProvider(
-            MainActivity.mainActivity!!,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(MainViewModel2::class.java)
-        requireArguments().getString("type").toString()
         orderDisAdapter =
             object :
                 BaseQuickAdapter<OrderDto.Content, BaseViewHolder>(R.layout.item_home_base_order),
@@ -148,7 +107,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         } else {
                             // 如果没有权限，申请权限
                             ActivityCompat.requestPermissions(
-                                requireActivity(),
+                                this@OrderSearchActivity,
                                 arrayOf(Manifest.permission.CALL_PHONE),
                                 REQUEST_CALL_PHONE_PERMISSION
                             )
@@ -157,7 +116,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     btnShopDetail.setSingleClickListener {
                         val orderGoodsListDetailDialog =
                             OrderGoodsListDetailDialog().newInstance("12")
-                        orderGoodsListDetailDialog.show(childFragmentManager)
+                        orderGoodsListDetailDialog.show(supportFragmentManager)
                     }
 //
 //                    if (item.order!!.type == 1) {
@@ -206,7 +165,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             )
                             dialog.dismiss()
                         }
-                        dialog.show(childFragmentManager)
+                        dialog.show(supportFragmentManager)
                     }
                     btnOrderDisIgnore.setSingleClickListener {
                         val dialog: MineExitDialog =
@@ -215,7 +174,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             showToast("订单已经忽略")
                             dialog.dismiss()
                         }
-                        dialog.show(childFragmentManager)
+                        dialog.show(supportFragmentManager)
                     }
                     var orderDisDialog =
                         OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
@@ -239,7 +198,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                                     .withSerializable("kk", item.order).navigation()
                             }
                             "30", "50", "80" -> {
-                                orderDisDialog.show(childFragmentManager)
+                                orderDisDialog.show(supportFragmentManager)
                             }
 
                         }
@@ -298,190 +257,163 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     }
                 }
             }
-//        orderDisAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInBottom)
-//        orderDisAdapter.animationEnable=true
-        mDatabind.rvOrderList.adapter = orderDisAdapter
-        orderDisAdapter.setOnItemClickListener { adapter, view, position ->
+        mDatabind.rvHistoryOrderList.adapter = orderDisAdapter
 
-            if (orderDisAdapter.data.get(position).order!!.deliveryType.toString() == "2") {
-                startActivity(
-                    Intent(
-                        requireActivity(),
-                        OrderDetail1Activity::class.java
-                    ).putExtra("orderId", orderDisAdapter.data.get(position).order!!.viewId)
-                )
-            } else {
-                startActivity(
-                    Intent(
-                        requireActivity(),
-                        OrderDetailActivity::class.java
-                    ).putExtra("orderId", orderDisAdapter.data.get(position).order!!.viewId)
-                )
-            }
-
-           // showToast("订单详情")
-        }
-        mDatabind.sflLayout.setOnRefreshListener {
-            pageIndex = 1
-            initViewData()
-            EventBus.getDefault().post(MessageEventUpDataTip())
+        var intentOrderId = intent.getStringExtra("pushOrderId")
+        if (intentOrderId != null) {
+            b = true
+            mDatabind.edtSearch.setText(intentOrderId)
+        } else {
+            b = false
         }
     }
 
-    var list = ArrayList<String>()
-    var orderSore = "1"
-    var poiId = "1"
-    var channelId = "0"
-    private fun initViewData() {
-        mViewModel.orderList(
-            logisticsStatus = requireArguments().getString("type").toString(),
-            startTime = formatCurrentDateBeforeMouth(),
-            endTime = formatCurrentDate(),
-            businessNumberType = "1",
-            pageIndex = pageIndex,
-            pageSize = "10",
-            orderTime = "1",
-            deliverySelect = "0",
-            isValid = "",
-            businessNumber = "",
-            channelId = channelId
-        )
-        orderDisAdapter.loadMoreModule.loadMoreView = SS()
-        orderDisAdapter.loadMoreModule.setOnLoadMoreListener {
-            pageIndex++
+    override fun getBind(layoutInflater: LayoutInflater): ActivitySearch1Binding {
+        return ActivitySearch1Binding.inflate(layoutInflater)
+    }
+
+    private var b = false
+
+    override fun initListener() {
+
+        mDatabind.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0.toString().isNotEmpty()) {
+                    mDatabind.imgSearchEditClear.visibility = View.VISIBLE
+                } else {
+                    mDatabind.imgSearchEditClear.visibility = View.GONE
+                }
+            }
+        })
+
+        mDatabind.imgSearchEditClear.setSingleClickListener {
+            mDatabind.edtSearch.setText("")
+            orderDisAdapter.setList(null)
+            orderDisAdapter.notifyDataSetChanged()
+            mDatabind.rlOrderEmpty.visibility = View.VISIBLE
+            mDatabind.rvHistoryOrderList.visibility = View.GONE
+            mDatabind.txtErrorMsg.text = "支持通过订单编号、收货人姓名、手机号进行搜索"
+        }
+
+        mDatabind.btnSearch.setSingleClickListener {
+            KeyBoardUtil.closeKeyBord(mDatabind.edtSearch, this)
             mViewModel.orderList(
-                logisticsStatus = requireArguments().getString("type").toString(),
-                startTime = formatCurrentDateBeforeMouth(),
-                endTime = formatCurrentDate(),
+                logisticsStatus = "",
+                startTime = "",
+                endTime = "",
                 businessNumberType = "1",
-                pageIndex = pageIndex,
-                pageSize = "10",
+                pageIndex = 1,
+                pageSize = "50",
                 orderTime = "1",
                 deliverySelect = "0",
                 isValid = "",
                 businessNumber = "",
-                selectText = "",
-                channelId = channelId
+                selectText = mDatabind.edtSearch.text.trim().toString()
             )
+
+        }
+
+
+//        mDatabind.aivImg.setOnClickListener {
+//            if (b) {
+//                ARouter.getInstance().build("/app/SearchActivity").navigation()
+//            } else {
+//                finish()
+//            }
+//            b = !b
+//        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (b) {
+            KeyBoardUtil.closeKeyBord(mDatabind.edtSearch, this)
+            mViewModel.orderList(
+                logisticsStatus = "",
+                startTime = "",
+                endTime = "",
+                businessNumberType = "1",
+                pageIndex = 1,
+                pageSize = "50",
+                orderTime = "1",
+                deliverySelect = "0",
+                isValid = "",
+                businessNumber = "",
+                selectText = mDatabind.edtSearch.text.trim().toString()
+            )
+
         }
     }
 
     override fun createObserver() {
-
-        vm.getByTenantId.observe(this) {
-            if (it.poi == -1 || it.shop == -1) {
-                val view =
-                    LayoutInflater.from(activity).inflate(R.layout.order_store_empty, null, false)
-                view.findViewById<TextView>(R.id.tv_bind).setOnClickListener {
-                    startActivity(Intent(requireActivity(), ChannelActivity::class.java))
-
-                }
-                orderDisAdapter.setEmptyView(view)
-            } else {
-                orderDisAdapter.setEmptyView(R.layout.order_search_empty)
-            }
-        }
-
         mViewModel.orderList.onStart.observe(this) {
-            showLoading("加载中")
-        }
-        mViewModel.orderList.onSuccess.observe(this) {
-            dismissLoading()
-            EventBus.getDefault().post(MessageEventUpDataTip())
-            mDatabind.sflLayout.finishRefresh()
-            if (it.pageIndex == 1) {
-                if (it.content.isNullOrEmpty()) {
-                    orderDisAdapter.setList(null)
-                } else {
-                    orderDisAdapter.setList(it.content as MutableList<OrderDto.Content>)
-                    orderDisAdapter.notifyDataSetChanged()
-                }
-            } else {
-                orderDisAdapter.addData(it.content as MutableList<OrderDto.Content>)
-                orderDisAdapter.notifyDataSetChanged()
-            }
-
-            if (it.content!!.size < 10) {
-                dismissLoading()
-                orderDisAdapter.footerWithEmptyEnable = false
-                orderDisAdapter.footerLayout?.visibility = View.GONE
-                orderDisAdapter.loadMoreModule.loadMoreEnd()
-            } else {
-                orderDisAdapter.loadMoreModule.loadMoreComplete()
-            }
-        }
-        mViewModel.orderList.onError.observe(this) {
-            dismissLoading()
-            mDatabind.sflLayout.finishRefresh()
-            showToast("${it.msg}")
-        }
-
-        mViewModel.cancelOrderDto.onStart.observe(this) {
             showLoading("请求中")
         }
-        mViewModel.cancelOrderDto.onSuccess.observe(this) {
-            dismissLoading()
-            mDatabind.sflLayout.autoRefresh()
-            EventBus.getDefault().post(MessageEventUpDataTip())
-            showToast("配送已取消")
+        mViewModel.orderList.onSuccess.observe(this) {
+            disLoading()
+            if (it.content.isNullOrEmpty()) {
+                orderDisAdapter.setList(null)
+                mDatabind.rlOrderEmpty.visibility = View.VISIBLE
+                mDatabind.rvHistoryOrderList.visibility = View.GONE
+                mDatabind.txtErrorMsg.text = "未查询到订单"
+            } else {
+                mDatabind.rvHistoryOrderList.visibility = View.VISIBLE
+                mDatabind.rlOrderEmpty.visibility = View.GONE
+                orderDisAdapter.setList(it.content as MutableList<OrderDto.Content>)
+            }
+            orderDisAdapter.notifyDataSetChanged()
+            Log.e("order", "createObserver: " + it)
         }
-        mViewModel.cancelOrderDto.onError.observe(this) {
-            dismissLoading()
-//            mDatabind.sflLayout.autoRefresh()
-            showToast(it.msg)
+        mViewModel.orderList.onError.observe(this) {
+            disLoading()
+            orderDisAdapter.setList(null)
+            mDatabind.rvHistoryOrderList.visibility = View.GONE
+            mDatabind.rlOrderEmpty.visibility = View.VISIBLE
+            mDatabind.txtErrorMsg.text = "支持通过订单编号、收货人姓名、手机号进行搜索"
+            showToast("${it.msg}")
         }
         mViewModel.orderFinish.onStart.observe(this) {
             showLoading("请求中")
         }
         mViewModel.orderFinish.onSuccess.observe(this) {
-            dismissLoading()
-            mDatabind.sflLayout.autoRefresh()
-            EventBus.getDefault().post(MessageEventUpDataTip())
+            disLoading()
+            mViewModel.orderList(
+                logisticsStatus = "",
+                startTime = "",
+                endTime = "",
+                businessNumberType = "1",
+                pageIndex = 1,
+                pageSize = "50",
+                orderTime = "1",
+                deliverySelect = "0",
+                isValid = "",
+                businessNumber = "",
+                selectText = mDatabind.edtSearch.text.trim().toString()
+            )
             showToast("出货成功")
         }
         mViewModel.orderFinish.onError.observe(this) {
-            dismissLoading()
-//            mDatabind.sflLayout.autoRefresh()
+            disLoading()
             showToast(it.msg)
         }
         mViewModel.printDto.onStart.observe(this) {
         }
         mViewModel.printDto.onSuccess.observe(this) {
             showToast("已发送打印任务")
+
         }
         mViewModel.printDto.onError.observe(this) {
-            dismissLoading()
             showToast(it.msg)
         }
 
     }
 
-
-    override fun getBind(inflater: LayoutInflater): FragmentBaseOrderBinding {
-        return FragmentBaseOrderBinding.inflate(inflater)
-    }
-
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: MessageEvent) {
-        // 在这里处理事件
-        val message: Int = event.message
-        orderDisAdapter.notifyItemChanged(message)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEventChange(event: MessageOrderEventSelect) {
-        // 在这里处理事件
-        channelId = event.selectDialogDto.channelId.toString()
-        orderSore = event.selectDialogDto.orderSort.toString()
-        poiId = event.shopId
-//        mDatabind.sflLayout.autoRefresh()
-        initViewData()
-        (mDatabind.rvOrderList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
-            0,
-            0
-        )
-    }
 
     var REQUEST_CALL_PHONE_PERMISSION = 1
     override fun onRequestPermissionsResult(
@@ -489,6 +421,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         permissions: Array<String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CALL_PHONE_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // 如果用户授权了权限，拨打电话

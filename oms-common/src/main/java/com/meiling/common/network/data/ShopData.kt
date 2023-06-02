@@ -32,6 +32,8 @@ data class Shop(
     var poiId: String? = "",
     @SerializedName("status")
     var status: String? = "",
+    @SerializedName("sinceCode")
+    var sinceCode: String? = "",
     var isselect:Boolean?=false
 
 ) : Serializable, IWheel {

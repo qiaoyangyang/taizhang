@@ -8,10 +8,9 @@
     android:orientation="vertical">
 
     <com.hjq.bar.TitleBar
+        style="@style/TitleBar_white"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/TitleBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/red"
         app:barStyle="transparent"
         app:layout_constraintTop_toTopOf="parent"
         app:rightBackground="@null"

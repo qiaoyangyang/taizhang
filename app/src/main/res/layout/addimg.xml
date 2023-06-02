@@ -1,12 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <ImageView
+
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/iv_icon"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/add_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.hjq.shape.view.ShapeTextView
+        android:textSize="@dimen/sp_32"
+        android:layout_marginTop="@dimen/dp_10"
+
+        app:shape_textColor="@color/home_333333"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:textColor="@color/textColorHint"
+        app:shape_radius="@dimen/dp_10"
+        app:shape_strokeColor="@color/red"
+        app:shape_strokeWidth="1dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/tv_distance"
+        android:text="顾客距离门店2km"
+        app:layout_constraintTop_toBottomOf="@+id/iv_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

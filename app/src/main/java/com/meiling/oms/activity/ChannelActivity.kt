@@ -62,7 +62,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
             } else if (channelX.id == "100") {
                 AboutKFELMDialog().newInstance().show(supportFragmentManager)
 
-//                startActivity(Intent(this,LebaiRetailBindingActivity::class.java))
+//
             } else {
                 mViewModel.urlauth(channelX.id!!, shop?.id!!, channelX?.id!!)
             }
@@ -92,7 +92,8 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
     override fun onTitleClick(view: View) {
 
 
-       var shopDialog = ShopDialog().newInstance(shopBean!!, "选择发货门店",cityposition,shopidposition)
+        var shopDialog =
+            ShopDialog().newInstance(shopBean!!, "选择发货门店", cityposition, shopidposition)
         shopDialog.show(supportFragmentManager)
         shopDialog.setOnresilience(object : ShopDialog.Onresilience {
 
@@ -306,13 +307,21 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
 
         }
         mViewModel.urlauth.onSuccess.observe(this) {
-            if (!TextUtils.isEmpty(it.url)) {
+            if (channelX.id == "66") {
+                startActivity(
+                    Intent(
+                        this,
+                        LebaiRetailBindingActivity::class.java
+                    ).putExtra("sinceCode", shop?.sinceCode.toString()).putExtra("url",it.url)
+                )
+            } else {
+                if (!TextUtils.isEmpty(it.url)) {
+                    startActivity(Intent(this, BaseWebActivity::class.java).putExtra("url", it.url))
+                } else if (channelX.id == "11") {
+                    showToast("绑定成功")
+                    mViewModel.shop_list(channelX.id!!, shop?.id!!)
 
-                startActivity(Intent(this, BaseWebActivity::class.java).putExtra("url", it.url))
-            } else if (channelX.id == "11") {
-                showToast("绑定成功")
-                mViewModel.shop_list(channelX.id!!, shop?.id!!)
-
+                }
             }
         }
         mViewModel.urlauth.onError.observe(this) {

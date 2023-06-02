@@ -8,7 +8,7 @@
     android:layout_marginTop="@dimen/dp_20"
     android:orientation="vertical"
     app:shape_radius="@dimen/dp_32"
-    app:shape_shadowColor="#a1000000"
+    app:shape_shadowColor="#E6000000"
     app:shape="rectangle"
     app:shape_solidColor="@color/white"
     android:clickable="true"

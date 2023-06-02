@@ -149,4 +149,7 @@ class RegisterActivity : BaseActivity<RegisterViewModel, ActivityRegisterBinding
         val regex = Regex("^1[3-9]\\d{9}$")
         return regex.matches(input)
     }
+    override fun isStatusBarDarkFont(): Boolean {
+        return false
+    }
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
+import com.gyf.immersionbar.ImmersionBar
 import com.hjq.bar.OnTitleBarListener
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.Shop
@@ -33,15 +34,16 @@ class DataFragment : BaseFragment<DataViewModel, FragmentDataBinding>() {
     private val fragmentList: MutableList<Fragment> = ArrayList()
 
     override fun initView(savedInstanceState: Bundle?) {
-        mDatabind.viewPager.isUserInputEnabled = false
+        mDatabind.viewPager.isUserInputEnabled = true
         fragmentList.add(DataShopFragment.newInstance())
         fragmentList.add(DataChannelFragment.newInstance())
         fragmentList.add(DataOrderDisFragment.newInstance())
         mDatabind.viewPager.adapter =
             BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
-        mDatabind.viewPager.setCurrentItem(0, false)
+        mDatabind.viewPager.setCurrentItem(0, true)
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
         TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
+        ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
     }
 
     lateinit var shopDialog: ShopDialog

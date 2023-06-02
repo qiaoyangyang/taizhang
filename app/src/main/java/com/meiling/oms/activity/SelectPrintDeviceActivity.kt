@@ -31,8 +31,11 @@ class SelectPrintDeviceActivity : BaseVmDbActivity<RegisterViewModel,ActivitySel
             startActivity(Intent(this,BindPrintDeviceActivity::class.java).putExtra("name","佳博云"))
         }
         mDatabind.btnPrintBind3.setOnClickListener {
-            startActivity(Intent(this,BindPrintDeviceActivity::class.java).putExtra("name","商米"))
+            startActivity(Intent(this,BindPrintDeviceActivity::class.java).putExtra("name","商米云"))
         }
+    }
+    override fun isStatusBarDarkFont(): Boolean {
+        return false
     }
 
 }

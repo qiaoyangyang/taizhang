@@ -316,4 +316,8 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         return regex.matches(input)
     }
 
+    override fun isStatusBarDarkFont(): Boolean {
+        return false
+    }
+
 }

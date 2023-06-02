@@ -8,17 +8,15 @@
 
 
     <com.hjq.bar.TitleBar
+        app:layout_constraintLeft_toLeftOf="parent"
+        style="@style/TitleBar_white"
         android:id="@+id/TitleBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/red"
         app:barStyle="transparent"
         app:layout_constraintTop_toTopOf="parent"
-        app:leftIcon="@drawable/bar_arrows_left_white"
         app:rightBackground="@null"
-        app:rightTitleSize="@dimen/sp_14"
+        app:rightTitleSize="@dimen/sp_28"
         app:title="绑定打印机"
-        app:titleColor="@color/white" />
+        />
 
     <TextView
 

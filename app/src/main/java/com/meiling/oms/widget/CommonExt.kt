@@ -46,6 +46,8 @@ inline fun <T : View> T.setSingleClickListener(time: Long = 300, crossinline blo
 }
 
 
+
+
 /**
  * 格式化当前日期
  */
@@ -213,6 +215,7 @@ fun formatCurrentDateMM(str: String?): String {
         "--"
     }
 }
+
 @SuppressLint("SimpleDateFormat")
 fun formatCurrentDateMYY(str: String?): String {
     return try {

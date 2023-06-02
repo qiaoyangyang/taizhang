@@ -5,16 +5,14 @@
     android:background="@color/order_remark_F4F4F4"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.hjq.bar.TitleBar
+        style="@style/TitleBar_white"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/TitleBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
-        app:leftIcon="@drawable/bar_arrows_left_black"
         app:lineVisible="false"
         app:rightTitleSize="@dimen/sp_14"
         app:title="核销详情"
-        app:titleColor="@color/home_333333" />
+        />
 
     <com.hjq.shape.layout.ShapeConstraintLayout
         android:id="@+id/shapecl"

@@ -149,8 +149,10 @@ class HomeNowOrderFragment :
         mViewModel.statusCountDto.onStart.observe(this) {
         }
         mViewModel.statusCountDto.onSuccess.observe(this) {
+
             mDatabind.tabLayout.updateTabBadge(0) {
                 badgeGravity =  Gravity.CENTER or Gravity.TOP
+
                 badgeText = if (it.deliveryNot == 0) {
                     "--"
                 } else {

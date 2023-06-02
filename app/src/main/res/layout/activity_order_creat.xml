@@ -8,13 +8,11 @@
     tools:context=".activity.OrderCreateActivity">
 
     <com.hjq.bar.TitleBar
+        style="@style/TitleBar_white"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/TitleBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/red"
-        app:leftIcon="@drawable/bar_arrows_left_white"
         app:title="新建订单"
-        app:titleColor="@color/white" />
+        />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
