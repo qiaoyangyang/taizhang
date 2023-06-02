@@ -28,13 +28,14 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
         endTime: String,
         businessNumberType: String,//1.订单编号 2.商户单号 3.商会退款 4.交易流水
         pageIndex: Int,
-        orderTime: String = "1",//1.下单时间，2 收货时间，出货时间 4,完成时间
+        orderTime: String = "1",//1.下单时间，2 收货时间，3出货时间 4,完成时间
         pageSize: String = "20",
         deliverySelect: String = "0",
         isValid: String = "1",//全部，1。有效，0。无效
         businessNumber: String = "",
         selectText: String = "",
-        channelId: String = "0"//渠道全部传null,根据返回渠道
+        channelId: String = "0",//渠道全部传null,根据返回渠道,
+        poiId: String = "0"
     ) {
         request({
             homeService.orderList(
@@ -49,7 +50,8 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
                 isValid = isValid,
                 businessNumber = businessNumber,
                 selectText = selectText,
-                channelId = channelId
+                channelId = channelId,
+                poiId = poiId
             )
         }, orderList)
 //        request({
@@ -81,7 +83,8 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
         deliverySelect: String = "0",
         isValid: String = "1",
         businessNumber: String = "",
-        channelId: String = "0"
+        channelId: String = "0",
+        poiId :String =  "0"
     ) {
         request({
             homeService.statusCount(
@@ -95,7 +98,8 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
                 deliverySelect = deliverySelect,
                 isValid = isValid,
                 businessNumber = businessNumber,
-                channelId = channelId
+                channelId = channelId,
+                poiId = poiId
             )
         }, statusCountDto)
     }

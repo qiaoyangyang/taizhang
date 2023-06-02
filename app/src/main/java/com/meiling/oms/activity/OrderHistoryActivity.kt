@@ -198,7 +198,8 @@ class OrderHistoryActivity :
             deliverySelect = "0",
             isValid = "",
             businessNumber = "",
-            channelId = selectDialogDto.channelId!!
+            channelId = selectDialogDto.channelId!!,
+            poiId = poiId
         )
     }
 }

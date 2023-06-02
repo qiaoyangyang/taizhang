@@ -117,9 +117,10 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     checkMap.text = "${item.distance}km"
                     telPhone = item.order?.recvPhone ?: ""
                     orderAddress.text = item.order?.recvAddr!!.replace("@@", "")
+                    var sum: Double = 0.0
+                    var sumNumber: Int = 0
                     if (item.goodsVoList?.isNotEmpty() == true) {
-                        var sum: Double = 0.0
-                        var sumNumber: Int = 0
+
                         for (ne in item.goodsVoList!!) {
                             sum += ne?.totalPrice!!
                             sumNumber += ne?.number!!
@@ -167,7 +168,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     }
                     btnShopDetail.setSingleClickListener {
                         val orderGoodsListDetailDialog =
-                            OrderGoodsListDetailDialog().newInstance("12",item.goodsVoList!!)
+                            OrderGoodsListDetailDialog().newInstance(sumNumber,SaveDecimalUtils.decimalUtils(sum).toString(),item.goodsVoList!!)
                         orderGoodsListDetailDialog.show(childFragmentManager)
                     }
 //
@@ -262,7 +263,6 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         orderAddress.visibility = View.GONE
                         orderDelivery.text = "前自提"
                     } else {
-                        orderDelivery.text = "送达"
                         imsDeliveryWay.visibility = View.INVISIBLE
                         checkMap.visibility = View.VISIBLE
                         orderAddress.visibility = View.VISIBLE
@@ -341,7 +341,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
 
     var list = ArrayList<String>()
     var orderSore = "1"
-    var poiId = "1"
+    var poiId = "0"
     var channelId = "0"
     private fun initViewData() {
         mViewModel.orderList(
@@ -355,7 +355,8 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             deliverySelect = "0",
             isValid = "1",
             businessNumber = "",
-            channelId = channelId
+            channelId = channelId,
+            poiId = poiId
         )
         orderDisAdapter.loadMoreModule.loadMoreView = SS()
         orderDisAdapter.loadMoreModule.setOnLoadMoreListener {
@@ -372,7 +373,8 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 isValid = "1",
                 businessNumber = "",
                 selectText = "",
-                channelId = channelId
+                channelId = channelId,
+                poiId = poiId
             )
         }
     }

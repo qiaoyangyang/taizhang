@@ -27,6 +27,7 @@ import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
 import com.meiling.common.network.data.OrderGoodsVo
 import com.meiling.common.utils.GlideAppUtils
+import com.meiling.common.utils.SaveDecimalUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivitySearch1Binding
 import com.meiling.oms.dialog.MineExitDialog
@@ -67,15 +68,26 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                     val imsDeliveryWay = holder.getView<AppCompatImageView>(R.id.ims_delivery_way)
                     holder.setText(R.id.txt_order_delivery_name, item.order?.recvName)
                     phone.text = item.order?.recvPhone
-                    checkMap.text = "1.2km"
+                    checkMap.text = "${item.distance}km"
                     telPhone = item.order?.recvPhone ?: ""
                     orderAddress.text = item.order?.recvAddr!!.replace("@@", "")
-                    holder.setText(
-                        R.id.txt_base_order_shop_msg, "共${item.goodsVoList?.size}种商品，共100元"
-                    )
-                    holder.setText(
-                        R.id.txt_base_order_shop_name, "商品名称"
-                    )
+                    var sum: Double = 0.0
+                    var sumNumber: Int = 0
+                    if (item.goodsVoList?.isNotEmpty() == true) {
+
+                        for (ne in item.goodsVoList!!) {
+                            sum += ne?.totalPrice!!
+                            sumNumber += ne?.number!!
+                        }
+                        holder.setText(
+                            R.id.txt_base_order_shop_msg,
+                            "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(sum)}元"
+                        )
+                        holder.setText(
+                            R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}"
+                        )
+                    }
+
                     holder.setText(R.id.txt_base_order_No, "${item.order?.channelDaySn}")
                     holder.setText(
                         R.id.txt_base_order_delivery_time,
@@ -110,7 +122,8 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                     }
                     btnShopDetail.setSingleClickListener {
                         val orderGoodsListDetailDialog =
-                            OrderGoodsListDetailDialog().newInstance("12",item.goodsVoList!!)
+                            OrderGoodsListDetailDialog().newInstance(sumNumber,
+                                SaveDecimalUtils.decimalUtils(sum).toString(),item.goodsVoList!!)
                         orderGoodsListDetailDialog.show(supportFragmentManager)
                     }
 //
@@ -166,7 +179,7 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                         val dialog: MineExitDialog =
                             MineExitDialog().newInstance("温馨提示", "确定忽略订单？", "取消", "确认", false)
                         dialog.setOkClickLister {
-                            showToast("订单已经忽略")
+                            mViewModel.invalid(item.order!!.viewId.toString(),"0")
                             dialog.dismiss()
                         }
                         dialog.show(supportFragmentManager)
@@ -205,10 +218,9 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                         orderAddress.visibility = View.GONE
                         orderDelivery.text = "前自提"
                     } else {
-                        orderDelivery.text = "送达"
                         imsDeliveryWay.visibility = View.INVISIBLE
                         checkMap.visibility = View.VISIBLE
-                        orderAddress.visibility = View.GONE
+                        orderAddress.visibility = View.VISIBLE
                         orderDelivery.text = "前送达"
                     }
                     //0.待配送  20.待抢单 30.待取货 50.配送中 70.取消 80.已送达

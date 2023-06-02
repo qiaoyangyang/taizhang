@@ -116,8 +116,8 @@ class OrderFilterSortDialog : BaseNiceDialog() {
                 }
             }
         var arralist = ArrayList<OrderSelectSort>()
-        arralist.add(OrderSelectSort("1", "最近下单在前"))
-        arralist.add(OrderSelectSort("2", "最早下单在前"))
+        arralist.add(OrderSelectSort("4", "最近下单在前"))
+        arralist.add(OrderSelectSort("3", "最早下单在前"))
         arralist.add(OrderSelectSort("3", "最近收货在前"))
         arralist.add(OrderSelectSort("4", "最近发货在前"))
         Log.d("lwq", "convertView:${selectDialogDto.toString()} ")
