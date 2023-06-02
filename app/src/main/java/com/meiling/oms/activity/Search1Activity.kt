@@ -35,7 +35,6 @@ import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.*
 
-@Route(path = "/app/Search1Activity")
 class Search1Activity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1Binding>() {
 
     lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
