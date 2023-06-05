@@ -21,7 +21,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCa
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.network.data.OrderDetailDto
 import com.meiling.common.network.data.OrderGoodsVo
+import com.meiling.common.utils.DoubleClickHelper
 import com.meiling.common.utils.PermissionUtilis
 import com.meiling.oms.R
 import com.meiling.oms.adapter.OrderBaseShopListAdapter
@@ -45,7 +47,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
     //商品
     private lateinit var orderDisAdapter: OrderBaseShopListAdapter
     override fun initView(savedInstanceState: Bundle?) {
-        mViewModel.getOrderDetail(intent.getStringExtra("orderViewId").toString())
+
         mDatabind.map?.onCreate(savedInstanceState)
         if (aMap == null) {
 
@@ -92,7 +94,8 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
     override fun initData() {
         super.initData()
-        var orderid = intent.getStringExtra("orderId").toString()
+        var orderid = intent.getStringExtra("orderViewId").toString()
+        mViewModel.getOrderDetail(orderid)
 
 
     }
@@ -194,85 +197,119 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
     }
 
     override fun onClick(v: View?) {
-        when (v?.id) {
-            //忽略订单
-            R.id.tv_revocation -> {
-                val dialog: MineExitDialog =
-                    MineExitDialog().newInstance("温馨提示", "确定忽略订单？", "取消", "确认", false)
-                dialog.setOkClickLister {
-                    showToast("订单已经忽略")
-                    dialog.dismiss()
+        if (!DoubleClickHelper.isOnDoubleClick()) {
+            when (v?.id) {
+
+                //忽略订单
+                R.id.tv_revocation -> {
+                    if (orderDetailDto!=null){
+                        val dialog: MineExitDialog =
+                            MineExitDialog().newInstance("温馨提示", "确定忽略订单？", "取消", "确认", false)
+                        dialog.setOkClickLister {
+                            mViewModel.invalid(orderDetailDto?.order!!.viewId.toString(), "0")
+                            showToast("订单已经忽略")
+                            dialog.dismiss()
+                        }
+                        dialog.show(supportFragmentManager)
+                    }
                 }
-                dialog.show(supportFragmentManager)
-            }
-            //自提完成
-            R.id.tv_go_on -> {
+                //自提完成
+                R.id.tv_go_on -> {
 
-            }
-            //打印小票
-            R.id.btn_Print_receipt -> {
-
-            }
-            //修改订单
-            R.id.btn_change_address -> {
-                startActivity(Intent(this,OrderChangeAddressActivity::class.java))
-
-            }
-            //打电话
-            R.id.iv_call_phone -> {
-                XXPermissions.with(this).permission(PermissionUtilis.Group.PHONE_CALL).request(object :OnPermissionCallback{
-                    override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
-                        if (!allGranted) {
-                            showToast("获取部分权限成功，但部分权限未正常授予")
-                            return
-                        }
-                        dialPhoneNumber("12345678")
-                    }
-
-                    override fun onDenied(
-                        permissions: MutableList<String>,
-                        doNotAskAgain: Boolean
-                    ) {
-                        if (doNotAskAgain) {
-                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                            XXPermissions.startPermissionActivity(
-                                this@OrderDetailActivity,
-                                permissions
+                }
+                //打印小票
+                R.id.btn_Print_receipt -> {
+                    //收银小票:1 退款小票:3
+                    when (orderDetailDto?.order!!.logisticsStatus) {
+                        "70" -> {
+                            mViewModel.getPrint(
+                                orderDetailDto?.order?.viewId.toString(),
+                                orderDetailDto?.order?.shopId.toString(),
+                                "3"
                             )
-                        } else {
-                            showToast("授权失败，请检查权限")
+                        }
+                        else -> {
+                            mViewModel.getPrint(
+                                orderDetailDto?.order?.viewId.toString(),
+                                orderDetailDto?.order?.shopId.toString(),
+                                "1"
+                            )
                         }
 
                     }
 
-                })
+                }
+                //修改订单
+                R.id.btn_change_address -> {
+                    startActivity(Intent(this, OrderChangeAddressActivity::class.java))
 
-            }
-            //平台服务费
-            R.id.txt_order_platform_account -> {
-                DataTipDialog().newInstance("部分外卖平台存在服务费，仅记录展示，非小喵来客收取","平台服务费").show(supportFragmentManager)
-            }
-            //本单支付入账
-            R.id.txt_order_account -> {
-                DataTipDialog().newInstance("本单支付入账=顾客实际支付-平台服务费","本单支付入账").show(supportFragmentManager)
+                }
+                //打电话
+                R.id.iv_call_phone -> {
+                    XXPermissions.with(this).permission(PermissionUtilis.Group.PHONE_CALL)
+                        .request(object : OnPermissionCallback {
+                            override fun onGranted(
+                                permissions: MutableList<String>,
+                                allGranted: Boolean
+                            ) {
+                                if (!allGranted) {
+                                    showToast("获取部分权限成功，但部分权限未正常授予")
+                                    return
+                                }
+                                dialPhoneNumber("12345678")
+                            }
 
-            }
-            //订单编号
-            R.id.txt_order_ID -> {
-                copyText(this, "")
-                showToast("复制成功")
+                            override fun onDenied(
+                                permissions: MutableList<String>,
+                                doNotAskAgain: Boolean
+                            ) {
+                                if (doNotAskAgain) {
+                                    // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                                    XXPermissions.startPermissionActivity(
+                                        this@OrderDetailActivity,
+                                        permissions
+                                    )
+                                } else {
+                                    showToast("授权失败，请检查权限")
+                                }
 
-            }
-            //三方编号
-            R.id.txt_order_id_1 -> {
-                copyText(this, "")
-                showToast("复制成功")
+                            }
 
+                        })
+
+                }
+                //平台服务费
+                R.id.txt_order_platform_account -> {
+                    DataTipDialog().newInstance("部分外卖平台存在服务费，仅记录展示，非小喵来客收取", "平台服务费")
+                        .show(supportFragmentManager)
+                }
+                //本单支付入账
+                R.id.txt_order_account -> {
+                    DataTipDialog().newInstance("本单支付入账=顾客实际支付-平台服务费", "本单支付入账")
+                        .show(supportFragmentManager)
+
+                }
+                //订单编号
+                R.id.txt_order_ID -> {
+                    copyText(this, "")
+                    showToast("复制成功")
+
+                }
+                //三方编号
+                R.id.txt_order_id_1 -> {
+                    copyText(this, "")
+                    showToast("复制成功")
+
+                }
             }
+        }else{
+            Log.d("yjk","请勿重复点击")
         }
     }
+    var orderDetailDto: OrderDetailDto?=null
 
     override fun createObserver() {
+
         super.createObserver()
         mViewModel.printDto.onStart.observe(this) {
         }
@@ -289,6 +326,9 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             Log.d("TAG", "createObserver:${it.goodsVoList.toString()} ")
             orderDisAdapter.setList(it.goodsVoList as MutableList<OrderGoodsVo>)
             orderDisAdapter.notifyDataSetChanged()
+            orderDetailDto=it
+            mDatabind.included.txtActualMoney.text=it?.order?.actualPayPrice//顾客实际支付
+            mDatabind.included.txtPlatformMoney.text=it?.order?.actualPayPrice//平台服务费
         }
         mViewModel.orderDetailDto.onError.observe(this) {}
     }

@@ -664,7 +664,7 @@ data class OrderDetail(
     @SerializedName("actualIncome")
     var actualIncome: Double? = 0.0,
     @SerializedName("actualPayPrice")
-    var actualPayPrice: Double? = 0.0,
+    var actualPayPrice: String? = "",
     @SerializedName("addressDesensitization")
     var addressDesensitization: String? = "",
     @SerializedName("adminUserId")
