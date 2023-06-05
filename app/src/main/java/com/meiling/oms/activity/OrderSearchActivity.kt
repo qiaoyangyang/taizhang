@@ -92,7 +92,7 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                     holder.setText(R.id.txt_base_order_No, "${item.order?.channelDaySn}")
                     holder.setText(
                         R.id.txt_base_order_delivery_time,
-                        "${item.order?.arriveTimeDate}"
+                        "${item.arriveTime}"
                     )
                     holder.setText(R.id.txt_base_order_remark, "${item.order?.remark}")
                     holder.setText(

@@ -509,6 +509,8 @@ data class OrderDetailDto(
     var centerLon: String? = "",
     @SerializedName("shopName")
         var shopName: String? = "",
+    @SerializedName("arriveTime")
+        var arriveTime: String? = "",
 
     ):Serializable
 
