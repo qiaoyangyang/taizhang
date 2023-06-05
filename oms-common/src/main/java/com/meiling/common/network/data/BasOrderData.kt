@@ -125,7 +125,7 @@ data class OrderDto(
         var shop: OrderShop? = OrderShop(),
         @SerializedName("poi")
         var poi: OrderPoi? = OrderPoi()
-    ):Serializable {
+    ) : Serializable {
 
 
         data class Order(
@@ -296,7 +296,6 @@ data class OrderDto(
         ) : Serializable
     }
 }
-
 
 
 data class OrderShop(
@@ -641,8 +640,8 @@ data class OrderGoodsVo(
     @SerializedName("unitUseType")
     var unitUseType: Any? = Any(),
     @SerializedName("specs")
-    var specs: String? =""
-):Serializable
+    var specs: String? = ""
+) : Serializable
 
 data class OrderDetailDto(
     @SerializedName("deliveryConsume")
@@ -656,8 +655,25 @@ data class OrderDetailDto(
     @SerializedName("orderId")
     var orderId: Long? = 0,
     @SerializedName("remark")
-    var remark: String? = ""
-)
+    var remark: String? = "",
+    @SerializedName("shop")
+    var shop: OrderShop? = OrderShop(),
+    @SerializedName("poi")
+    var poi: OrderPoi? = OrderPoi(),
+    @SerializedName("channelName")
+    var channelName: String? = "",
+    @SerializedName("channelLogo")
+    var channelLogo: String? = "",
+    @SerializedName("distance")
+    var distance: String? = "",
+    @SerializedName("centerLat")
+    var centerLat: String? = "",
+    @SerializedName("centerLon")
+    var centerLon: String? = "",
+
+
+    )
+
 data class OrderDetail(
     @SerializedName("activityFee")
     var activityFee: Double? = 0.0,
@@ -780,7 +796,7 @@ data class OrderDetail(
     @SerializedName("perfectGoodsInfo")
     var perfectGoodsInfo: Boolean? = false,
     @SerializedName("platformServiceFee")
-    var platformServiceFee: Double? = 0.0,
+    var platformServiceFee: String? = "",
     @SerializedName("poiId")
     var poiId: String? = "",
     @SerializedName("preMode")
