@@ -80,14 +80,14 @@ class OrderFilterSortDialog : BaseNiceDialog() {
                     if (item.select) {
                         holder.setBackgroundResource(
                             R.id.txt_recharge_sum,
-                            R.drawable.selected_true
+                            R.drawable.bg_order_red_ture
                         )
-                        rechargeSum.setTextColor(resources.getColor(R.color.white))
+                        rechargeSum.setTextColor(resources.getColor(R.color.red))
                         selectDialogDto.channelId = item.id
                     } else {
                         holder.setBackgroundResource(
                             R.id.txt_recharge_sum,
-                            R.drawable.selected_false
+                            R.drawable.bg_order_red_false
                         )
                         rechargeSum.setTextColor(resources.getColor(R.color.home_666666))
                     }
@@ -102,24 +102,24 @@ class OrderFilterSortDialog : BaseNiceDialog() {
                     if (item.select) {
                         holder.setBackgroundResource(
                             R.id.txt_recharge_sum,
-                            R.drawable.selected_true
+                            R.drawable.bg_order_red_ture
                         )
-                        rechargeSum.setTextColor(resources.getColor(R.color.white))
+                        rechargeSum.setTextColor(resources.getColor(R.color.red))
                         selectDialogDto.orderSort = item.id
                     } else {
                         holder.setBackgroundResource(
                             R.id.txt_recharge_sum,
-                            R.drawable.selected_false
+                            R.drawable.bg_order_red_false
                         )
                         rechargeSum.setTextColor(resources.getColor(R.color.home_666666))
                     }
                 }
             }
         var arralist = ArrayList<OrderSelectSort>()
-        arralist.add(OrderSelectSort("4", "最近下单在前"))
-        arralist.add(OrderSelectSort("3", "最早下单在前"))
-        arralist.add(OrderSelectSort("3", "最近收货在前"))
-        arralist.add(OrderSelectSort("4", "最近发货在前"))
+        arralist.add(OrderSelectSort("0", "最近下单在前"))
+        arralist.add(OrderSelectSort("1", "最早下单在前"))
+        arralist.add(OrderSelectSort("2", "最近收货在前"))
+        arralist.add(OrderSelectSort("3", "最近发货在前"))
         Log.d("lwq", "convertView:${selectDialogDto.toString()} ")
         for (platform in arralist) {
             platform.select =

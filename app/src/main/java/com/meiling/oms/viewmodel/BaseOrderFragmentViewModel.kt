@@ -81,7 +81,7 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
         orderTime: String = "1",
         pageSize: String = "20",
         deliverySelect: String = "0",
-        isValid: String = "1",
+        isValid: String = "",
         businessNumber: String = "",
         channelId: String = "0",
         poiId :String =  "0"

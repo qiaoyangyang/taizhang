@@ -534,6 +534,7 @@ data class SelectDialogDto(
     var timetype: Int,//时间类型 0自定义时间 1 昨天 2 今天 3 近七天 4 进30天
     var channelId: String?,// 平台  渠道全部传null,根据返回渠道
     var orderTime: String,// 日期类型  1.下单时间，2 收货时间，出货时间 4,完成时间
+    var isValid: String = "",// 忽略订单  1.有效订单，0 无效订单， 4,所有订单是空
 
 ) : Serializable
 

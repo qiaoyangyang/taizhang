@@ -198,7 +198,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             //忽略订单
             R.id.tv_revocation -> {
                 val dialog: MineExitDialog =
-                    MineExitDialog().newInstance("温馨提示", "确定忽略订单？", "取消", "确认", false)
+                    MineExitDialog().newInstance("温馨提示", "您确认要忽略该订单吗？ \n忽略后可去「订单查询」中查找到该订单", "取消", "确认", false)
                 dialog.setOkClickLister {
                     showToast("订单已经忽略")
                     dialog.dismiss()

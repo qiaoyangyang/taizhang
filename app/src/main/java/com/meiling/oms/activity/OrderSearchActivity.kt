@@ -177,7 +177,7 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                     }
                     btnOrderDisIgnore.setSingleClickListener {
                         val dialog: MineExitDialog =
-                            MineExitDialog().newInstance("温馨提示", "确定忽略订单？", "取消", "确认", false)
+                            MineExitDialog().newInstance("温馨提示", "您确认要忽略该订单吗？ \n忽略后可去「订单查询」中查找到该订单", "取消", "确认", false)
                         dialog.setOkClickLister {
                             mViewModel.invalid(item.order!!.viewId.toString(),"0")
                             dialog.dismiss()

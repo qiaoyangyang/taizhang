@@ -76,6 +76,7 @@ class OrderSelectDialog : BaseNiceDialog() {
 
         RG_time = holder?.getView<RadioGroup>(R.id.RG_time)
         var Rg_isVoucher = holder?.getView<RadioGroup>(R.id.Rg_isVoucher)
+        var rgIsValid = holder?.getView<RadioGroup>(R.id.rg_isValid)
 
         rb_starting_time = holder?.getView<RadioButton>(R.id.rb_starting_time)
         tv_final_time = holder?.getView<RadioButton>(R.id.tv_final_time)
@@ -83,6 +84,10 @@ class OrderSelectDialog : BaseNiceDialog() {
         var rb_isVoucher = holder?.getView<RadioButton>(R.id.rb_isVoucher)
         var rb_voucher = holder?.getView<RadioButton>(R.id.rb_voucher)
         var rb_meal_voucher = holder?.getView<RadioButton>(R.id.rb_meal_voucher)
+
+        var rbIsValidAll = holder?.getView<RadioButton>(R.id.rb_isValid_all)
+        var rbIsValid1 = holder?.getView<RadioButton>(R.id.rb_isValid1)
+        var rbIsValid0 = holder?.getView<RadioButton>(R.id.rb_isValid0)
 
 
         var tv_go_on = holder?.getView<ShapeButton>(R.id.tv_go_on)
@@ -97,7 +102,8 @@ class OrderSelectDialog : BaseNiceDialog() {
             selectDialogDto.timetype = 2
             rb_isVoucher?.isChecked = true
             selectDialogDto.orderTime = "1"
-
+            selectDialogDto.isValid = ""
+            rbIsValidAll?.isChecked = true
             for (xx in selectOrderPlatformAdapter.data) {
                 xx.select = false
             }
@@ -116,6 +122,16 @@ class OrderSelectDialog : BaseNiceDialog() {
         } else if (selectDialogDto.orderTime == "3") {
             rb_meal_voucher?.isChecked = true
         }
+        // 标签时间
+        if (selectDialogDto.isValid.isNullOrEmpty()) {
+            rbIsValidAll?.isChecked = true
+        } else {
+            if (selectDialogDto.isValid == "1") {
+                rbIsValid1?.isChecked = true
+            } else {
+                rbIsValid0?.isChecked = true
+            }
+        }
         Rg_isVoucher?.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.rb_isVoucher -> {
@@ -130,7 +146,21 @@ class OrderSelectDialog : BaseNiceDialog() {
 
             }
         }
-        //验券日期
+        rgIsValid?.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.rb_isValid_all -> {
+                    selectDialogDto.isValid = ""
+                }
+                R.id.rb_isValid1 -> {
+                    selectDialogDto.isValid = "1"
+                }
+                R.id.rb_isValid0 -> {
+                    selectDialogDto.isValid = "0"
+                }
+
+            }
+        }
+        //订单日期
         if (selectDialogDto.timetype == 2) {//今日
             rb_today?.isChecked = true
         } else if (selectDialogDto.timetype == 1) {//昨天
@@ -142,11 +172,11 @@ class OrderSelectDialog : BaseNiceDialog() {
         } else if (selectDialogDto.timetype == 5) {
             iscustom = 1
             rb_starting_time?.text = selectDialogDto.startDate
-            rb_starting_time?.setBackgroundResource(R.drawable.selected_true)
-            rb_starting_time?.setTextColor(Color.parseColor("#FFFFFFFF"))
+            rb_starting_time?.setBackgroundResource(R.drawable.bg_order_red_ture)
+            rb_starting_time?.setTextColor(Color.parseColor("#FD4B48"))
             tv_final_time?.text = selectDialogDto.endDate
-            tv_final_time?.setBackgroundResource(R.drawable.selected_true)
-            tv_final_time?.setTextColor(Color.parseColor("#FFFFFFFF"))
+            tv_final_time?.setBackgroundResource(R.drawable.bg_order_red_ture)
+            tv_final_time?.setTextColor(Color.parseColor("#FD4B48"))
         }
         rb_starting_time?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -157,12 +187,12 @@ class OrderSelectDialog : BaseNiceDialog() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (rb_starting_time?.text.toString() == "起始时间") {
-                    rb_starting_time?.setBackgroundResource(R.drawable.selected_false)
+                    rb_starting_time?.setBackgroundResource(R.drawable.bg_order_red_false)
                     rb_starting_time?.setTextColor(Color.parseColor("#666666"))
 
                 } else {
-                    rb_starting_time?.setBackgroundResource(R.drawable.selected_true)
-                    rb_starting_time?.setTextColor(Color.parseColor("#FFFFFFFF"))
+                    rb_starting_time?.setBackgroundResource(R.drawable.bg_order_red_ture)
+                    rb_starting_time?.setTextColor(Color.parseColor("#FD4B48"))
 
                 }
             }
@@ -177,12 +207,12 @@ class OrderSelectDialog : BaseNiceDialog() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (tv_final_time?.text.toString() == "终止时间") {
-                    tv_final_time?.setBackgroundResource(R.drawable.selected_false)
+                    tv_final_time?.setBackgroundResource(R.drawable.bg_order_red_false)
                     tv_final_time?.setTextColor(Color.parseColor("#666666"))
 
                 } else {
-                    tv_final_time?.setBackgroundResource(R.drawable.selected_true)
-                    tv_final_time?.setTextColor(Color.parseColor("#FFFFFFFF"))
+                    tv_final_time?.setBackgroundResource(R.drawable.bg_order_red_ture)
+                    tv_final_time?.setTextColor(Color.parseColor("#FD4B48"))
 
                 }
             }
@@ -277,14 +307,14 @@ class OrderSelectDialog : BaseNiceDialog() {
                     if (item.select) {
                         holder.setBackgroundResource(
                             R.id.txt_recharge_sum,
-                            R.drawable.selected_true
+                            R.drawable.bg_order_red_ture
                         )
-                        rechargeSum.setTextColor(resources.getColor(R.color.white))
+                        rechargeSum.setTextColor(resources.getColor(R.color.red))
                         selectDialogDto.channelId = item.id
                     } else {
                         holder.setBackgroundResource(
                             R.id.txt_recharge_sum,
-                            R.drawable.selected_false
+                            R.drawable.bg_order_red_false
                         )
                         rechargeSum.setTextColor(resources.getColor(R.color.home_666666))
                     }
