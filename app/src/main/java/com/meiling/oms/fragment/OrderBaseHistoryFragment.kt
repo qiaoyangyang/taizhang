@@ -36,17 +36,21 @@ import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.oms.dialog.OrderGoodsListDetailDialog
 import com.meiling.oms.eventBusData.MessageEvent
-import com.meiling.oms.eventBusData.MessageEventUpDataTip
+import com.meiling.oms.eventBusData.MessageEventHistoryUpDataTip
 import com.meiling.oms.eventBusData.MessageHistoryEventSelect
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.viewmodel.MainViewModel2
-import com.meiling.oms.widget.*
+import com.meiling.oms.widget.SS
+import com.meiling.oms.widget.formatCurrentDate
+import com.meiling.oms.widget.setSingleClickListener
+import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseOrderBinding>() {
+class OrderBaseHistoryFragment :
+    BaseFragment<BaseOrderFragmentViewModel, FragmentBaseOrderBinding>() {
 
 
     private lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
@@ -54,7 +58,7 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
 
     companion object {
         fun newInstance(type: String, isSelect: Boolean): Fragment {
-            val orderBaseFragment = OrderBaseHostoryFragment()
+            val orderBaseFragment = OrderBaseHistoryFragment()
             val bundle = Bundle()
             bundle.putString("type", type)
             bundle.putBoolean("isSelect", isSelect)
@@ -66,12 +70,13 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
     var endTime = formatCurrentDate()
     var orderTime = "1"
     var channelId = "0"
+    var isValid = ""
 
 
     override fun onResume() {
         super.onResume()
         initViewData()
-        EventBus.getDefault().post(MessageEventUpDataTip())
+        EventBus.getDefault().post(MessageEventHistoryUpDataTip())
     }
 
     override fun onStart() {
@@ -106,6 +111,8 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
                     val btnCancelDis =
                         holder.getView<TextView>(R.id.txt_base_order_dis_cancel)//取消配送
                     val btnOrderDisIgnore = holder.getView<TextView>(R.id.txt_order_ignore)//忽略配送
+                    val btnOrderCncelIgnore =
+                        holder.getView<TextView>(R.id.txt_order_cancel_ignore)//取消忽略配送
                     val btnShopDetail =
                         holder.getView<ShapeRelativeLayout>(R.id.srl_check_shop)//商品详情
 
@@ -113,6 +120,7 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
                     val orderAddress =
                         holder.getView<TextView>(R.id.txt_base_order_delivery_address)
                     val callPhone = holder.getView<ImageView>(R.id.iv_call_phone)
+                    val imgIgnore = holder.getView<ImageView>(R.id.img_ignore)
                     val channelLogoImg =
                         holder.getView<AppCompatImageView>(R.id.img_order_channel_icon)
                     val imsDeliveryWay = holder.getView<AppCompatImageView>(R.id.ims_delivery_way)
@@ -126,12 +134,12 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
                     if (item.goodsVoList?.isNotEmpty() == true) {
 
                         for (ne in item.goodsVoList!!) {
-                            sum += ne?.totalPrice!!
+//                            sum += ne?.totalPrice!!
                             sumNumber += ne?.number!!
                         }
                         holder.setText(
                             R.id.txt_base_order_shop_msg,
-                            "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(sum)}元"
+                            "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
                         )
                         holder.setText(
                             R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}"
@@ -172,8 +180,11 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
                     }
                     btnShopDetail.setSingleClickListener {
                         val orderGoodsListDetailDialog =
-                            OrderGoodsListDetailDialog().newInstance(sumNumber,
-                                SaveDecimalUtils.decimalUtils(sum).toString(),item.goodsVoList!!)
+                            OrderGoodsListDetailDialog().newInstance(
+                                sumNumber,
+                                SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!).toString(),
+                                item.goodsVoList!!
+                            )
                         orderGoodsListDetailDialog.show(childFragmentManager)
                     }
 //
@@ -227,12 +238,22 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
                     }
                     btnOrderDisIgnore.setSingleClickListener {
                         val dialog: MineExitDialog =
-                            MineExitDialog().newInstance("温馨提示", "确定忽略订单？", "取消", "确认", false)
+                            MineExitDialog().newInstance(
+                                "温馨提示",
+                                "您确认要忽略该订单吗?\n忽略后可去「订单查询」中查找到该订单",
+                                "取消",
+                                "确认",
+                                false
+                            )
                         dialog.setOkClickLister {
-                            mViewModel.invalid(item.order!!.viewId.toString(),"0")
+                            mViewModel.invalid(item.order!!.viewId.toString(), "0")
                             dialog.dismiss()
                         }
                         dialog.show(childFragmentManager)
+
+                    }
+                    btnOrderCncelIgnore.setSingleClickListener {
+                        mViewModel.invalid(item.order!!.viewId.toString(), "1")
                     }
                     var orderDisDialog =
                         OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
@@ -261,7 +282,7 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
 
                         }
                     }
-                    //deliveryType == "1" ,"3" 待配送 2:自提
+                    //deliveryType == "1" ,"3" 待配送 2:自提 isValid//1 有效 0无效
                     if (item.order!!.deliveryType == "2") {
                         imsDeliveryWay.visibility = View.VISIBLE
                         checkMap.visibility = View.INVISIBLE
@@ -278,39 +299,68 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
                         "0" -> {
                             //deliveryType == "1" ,"3" 待配送 2:自提
                             if (item.order!!.deliveryType == "2") {
-                                btnSendDis.text = "确认出货"
+                                btnSendDis.text = "自提完成"
                             } else {
                                 btnSendDis.text = "发起配送"
                             }
+                            btnSendDis.visibility = View.VISIBLE
                             btnOrderDisIgnore.visibility = View.VISIBLE
                             btnCancelDis.visibility = View.GONE
                         }
                         "20" -> {
+                            btnOrderDisIgnore.visibility = View.GONE
+                            btnOrderCncelIgnore.visibility = View.GONE
                             btnCancelDis.visibility = View.VISIBLE
+                            btnSendDis.visibility = View.VISIBLE
                             btnSendDis.text = "加小费"
                         }
                         "30" -> {
+                            btnOrderDisIgnore.visibility = View.GONE
+                            btnOrderCncelIgnore.visibility = View.GONE
                             btnCancelDis.visibility = View.VISIBLE
+                            btnSendDis.visibility = View.VISIBLE
                             btnSendDis.text = "配送详情"
                         }
                         "50" -> {
+                            btnOrderDisIgnore.visibility = View.GONE
+                            btnOrderCncelIgnore.visibility = View.GONE
                             btnCancelDis.visibility = View.GONE
+                            btnSendDis.visibility = View.VISIBLE
                             btnSendDis.text = "配送详情"
                         }
                         "70" -> {
+                            btnOrderDisIgnore.visibility = View.GONE
+                            btnOrderCncelIgnore.visibility = View.GONE
                             btnCancelDis.visibility = View.GONE
+                            btnSendDis.visibility = View.VISIBLE
                             btnSendDis.text = "重新配送"
                         }
                         "80" -> {
+                            btnOrderDisIgnore.visibility = View.GONE
+                            btnOrderDisIgnore.visibility = View.GONE
                             btnCancelDis.visibility = View.GONE
+                            btnSendDis.visibility = View.VISIBLE
                             if (item.order!!.deliveryType == "2") {
                                 btnSendDis.visibility = View.GONE
                             } else {
-
+                                btnOrderDisIgnore.visibility = View.GONE
                                 btnSendDis.visibility = View.VISIBLE
                                 btnSendDis.text = "配送详情"
                             }
                         }
+                    }
+
+
+
+                    if (item.order!!.isValid == 0) {
+                        imgIgnore.visibility = View.VISIBLE
+                        btnCancelDis.visibility = View.GONE
+                        btnSendDis.visibility = View.INVISIBLE
+                        btnOrderDisIgnore.visibility = View.GONE
+                        btnOrderCncelIgnore.visibility = View.VISIBLE
+                    } else {
+                        imgIgnore.visibility = View.GONE
+                        btnOrderCncelIgnore.visibility = View.GONE
                     }
                 }
             }
@@ -322,23 +372,22 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
                     Intent(
                         requireActivity(),
                         OrderDetail1Activity::class.java
-                    ).putExtra("orderId", orderDisAdapter.data.get(position).order!!.viewId)
+                    ).putExtra("orderViewId", orderDisAdapter.data.get(position).order!!.viewId)
                 )
             } else {
                 startActivity(
                     Intent(
                         requireActivity(),
                         OrderDetailActivity::class.java
-                    ).putExtra("orderId", orderDisAdapter.data.get(position).order!!.viewId)
+                    ).putExtra("orderViewId", orderDisAdapter.data.get(position).order!!.viewId)
                 )
             }
 
-            showToast("订单详情")
         }
         mDatabind.sflLayout.setOnRefreshListener {
             pageIndex = 1
             initViewData()
-            EventBus.getDefault().post(MessageEventUpDataTip())
+            EventBus.getDefault().post(MessageEventHistoryUpDataTip())
         }
     }
 
@@ -355,7 +404,7 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
             pageSize = "20",
             orderTime = orderTime,
             deliverySelect = "0",
-            isValid = "",
+            isValid = isValid,
             businessNumber = "",
             channelId = channelId
         )
@@ -371,7 +420,7 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
                 pageSize = "20",
                 orderTime = orderTime,
                 deliverySelect = "0",
-                isValid = "",
+                isValid = isValid,
                 businessNumber = "",
                 selectText = "",
                 channelId = channelId
@@ -400,7 +449,7 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
         }
         mViewModel.orderList.onSuccess.observe(this) {
             dismissLoading()
-            EventBus.getDefault().post(MessageEventUpDataTip())
+            EventBus.getDefault().post(MessageEventHistoryUpDataTip())
             mDatabind.sflLayout.finishRefresh()
             if (it.pageIndex == 1) {
                 if (it.content.isNullOrEmpty()) {
@@ -435,7 +484,7 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
         mViewModel.cancelOrderDto.onSuccess.observe(this) {
             dismissLoading()
             mDatabind.sflLayout.autoRefresh()
-            EventBus.getDefault().post(MessageEventUpDataTip())
+            EventBus.getDefault().post(MessageEventHistoryUpDataTip())
             showToast("配送已取消")
         }
         mViewModel.cancelOrderDto.onError.observe(this) {
@@ -449,7 +498,7 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
         mViewModel.orderFinish.onSuccess.observe(this) {
             dismissLoading()
             mDatabind.sflLayout.autoRefresh()
-            EventBus.getDefault().post(MessageEventUpDataTip())
+            EventBus.getDefault().post(MessageEventHistoryUpDataTip())
             showToast("出货成功")
         }
         mViewModel.orderFinish.onError.observe(this) {
@@ -466,7 +515,14 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
             dismissLoading()
             showToast(it.msg)
         }
-
+        mViewModel.invalidDto.onSuccess.observe(this) {
+            showToast("取消忽略成功")
+            mDatabind.sflLayout.autoRefresh()
+            EventBus.getDefault().post(MessageEventHistoryUpDataTip())
+        }
+        mViewModel.invalidDto.onError.observe(this) {
+            showToast(it.msg)
+        }
     }
 
 
@@ -489,6 +545,7 @@ class OrderBaseHostoryFragment : BaseFragment<BaseOrderFragmentViewModel, Fragme
         endTime = messageHistoryEventTime.selectDialogDto.endDate
         orderTime = messageHistoryEventTime.selectDialogDto.orderTime
         channelId = messageHistoryEventTime.selectDialogDto.channelId!!
+        isValid = messageHistoryEventTime.selectDialogDto.isValid!!
         initViewData()
         (mDatabind.rvOrderList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
             0,

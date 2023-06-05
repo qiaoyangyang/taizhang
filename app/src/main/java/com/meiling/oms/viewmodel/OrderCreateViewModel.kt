@@ -9,7 +9,7 @@ import com.meiling.common.network.service.orderCreateService
 class OrderCreateViewModel(application: Application) : BaseViewModel(application) {
 
     var cityPoiOfflineDto = BaseLiveData<ArrayList<ShopBean>>()
-    var saveCreateDto = BaseLiveData<OrderDto.Content.Order>()
+    var saveCreateDto = BaseLiveData<OrderDetail>()
     var orderCreateAddressDiscern = BaseLiveData<OrderCreateAddressDiscern>()
     fun getCityPoiOffline() {
         request({ orderCreateService.getCityPoiOffline() }, cityPoiOfflineDto)

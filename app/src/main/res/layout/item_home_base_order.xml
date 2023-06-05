@@ -105,17 +105,18 @@
 
         <TextView
             android:id="@+id/txt_order_store"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/img_order_channel_icon"
             android:layout_marginVertical="@dimen/dp_20"
-            android:layout_marginEnd="@dimen/dp_20"
             android:text=""
             android:textColor="#a6000000"
             android:textSize="@dimen/sp_28"
-            tools:text="美团店铺" />
+            android:layout_toStartOf="@+id/img_next"
+            tools:text="美团店铺美团店铺美团店铺美团店铺美团店铺美团店铺美团店铺美团店铺美团店铺" />
 
         <ImageView
+            android:id="@+id/img_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -329,6 +330,18 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/txt_order_cancel_ignore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="取消忽略"
+                app:drawableStartCompat="@drawable/icon_order_ignore"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="gone"
+                app:layout_constraintLeft_toRightOf="@+id/img_order_print"
+                app:layout_constraintRight_toLeftOf="@+id/txt_base_order_dis"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
                 android:id="@+id/txt_order_ignore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -351,10 +364,10 @@
                 android:text="取消配送"
                 android:textColor="@color/home_646A89"
                 android:textSize="@dimen/sp_32"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/img_order_print"
                 app:layout_constraintRight_toLeftOf="@+id/txt_base_order_dis"
+                android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent" />
 
 

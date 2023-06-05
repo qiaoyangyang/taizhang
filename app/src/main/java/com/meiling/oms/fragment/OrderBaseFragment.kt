@@ -122,12 +122,12 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     if (item.goodsVoList?.isNotEmpty() == true) {
 
                         for (ne in item.goodsVoList!!) {
-                            sum += ne?.totalPrice!!
+//                            sum += ne?.totalPrice!!
                             sumNumber += ne?.number!!
                         }
                         holder.setText(
                             R.id.txt_base_order_shop_msg,
-                            "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(sum)}元"
+                            "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
                         )
                         holder.setText(
                             R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}"
@@ -168,7 +168,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     }
                     btnShopDetail.setSingleClickListener {
                         val orderGoodsListDetailDialog =
-                            OrderGoodsListDetailDialog().newInstance(sumNumber,SaveDecimalUtils.decimalUtils(sum).toString(),item.goodsVoList!!)
+                            OrderGoodsListDetailDialog().newInstance(sumNumber,SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!).toString(),item.goodsVoList!!)
                         orderGoodsListDetailDialog.show(childFragmentManager)
                     }
 //
@@ -222,7 +222,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     }
                     btnOrderDisIgnore.setSingleClickListener {
                         val dialog: MineExitDialog =
-                            MineExitDialog().newInstance("温馨提示", "确定忽略订单？", "取消", "确认", false)
+                            MineExitDialog().newInstance("温馨提示", "您确认要忽略该订单吗?\n忽略后可去「订单查询」中查找到该订单", "取消", "确认", false)
                         dialog.setOkClickLister {
                             mViewModel.invalid(item.order!!.viewId.toString(),"0")
                             dialog.dismiss()
@@ -273,7 +273,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         "0" -> {
                             //deliveryType == "1" ,"3" 待配送 2:自提
                             if (item.order!!.deliveryType == "2") {
-                                btnSendDis.text = "确认出货"
+                                btnSendDis.text = "自提完成"
                             } else {
                                 btnSendDis.text = "发起配送"
                             }
@@ -450,7 +450,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             dismissLoading()
             mDatabind.sflLayout.autoRefresh()
             EventBus.getDefault().post(MessageEventUpDataTip())
-            showToast("出货成功")
+            showToast("自提完成")
         }
         mViewModel.orderFinish.onError.observe(this) {
             dismissLoading()
@@ -468,7 +468,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         }
 
         mViewModel.invalidDto.onSuccess.observe(this) {
-            showToast("订单已忽略")
+            showToast("订单忽略成功")
             mDatabind.sflLayout.autoRefresh()
             EventBus.getDefault().post(MessageEventUpDataTip())
         }

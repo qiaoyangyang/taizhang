@@ -56,13 +56,14 @@ class HomeHistoryOrderFragment :
         timetype = 2,
         orderTime = "1",
         channelId = "0",
+        isValid = ""
     )
 
     //    logisticsStatus：0.待配送  20.带抢单 30.待取货 50.配送中 70.取消 80.已送达
     @SuppressLint("RtlHardcoded")
     override fun initData() {
-        fragmentList.add(BaseHistoryOrderFragment.newInstance("", true))
-        fragmentList.add(BaseHistoryOrderFragment.newInstance("70", true))
+        fragmentList.add(OrderBaseHistoryFragment.newInstance("", true))
+        fragmentList.add(OrderBaseHistoryFragment.newInstance("70", true))
         mDatabind.viewPager.adapter =
             BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
         mDatabind.viewPager.setCurrentItem(0, false)
@@ -84,7 +85,7 @@ class HomeHistoryOrderFragment :
                     pageSize = "20",
                     orderTime = it.orderTime,
                     deliverySelect = "0",
-                    isValid = "",
+                    isValid = it.isValid,
                     businessNumber = "",
                     channelId = it.channelId!!
                 )
@@ -105,6 +106,7 @@ class HomeHistoryOrderFragment :
             timetype = 2,
             orderTime = "1",
             channelId = "0",
+            isValid = ""
         )
         EventBus.getDefault().post(MessageHistoryEventSelect(selectDialogDto, ""))
         mViewModel.statusCount(
@@ -171,7 +173,7 @@ class HomeHistoryOrderFragment :
             orderTime = selectDialogDto.orderTime,
             deliverySelect = "0",
             isValid = "",
-            businessNumber = "",
+            businessNumber = selectDialogDto.isValid,
             channelId = selectDialogDto.channelId!!
         )
     }

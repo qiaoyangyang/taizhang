@@ -16,7 +16,7 @@ import com.meiling.oms.dialog.OrderSelectDialog
 import com.meiling.oms.dialog.OrderSelectStoreDialog
 import com.meiling.oms.eventBusData.MessageEventHistoryUpDataTip
 import com.meiling.oms.eventBusData.MessageHistoryEventSelect
-import com.meiling.oms.fragment.OrderBaseHostoryFragment
+import com.meiling.oms.fragment.OrderBaseHistoryFragment
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.formatCurrentDate
 import com.meiling.oms.widget.setSingleClickListener
@@ -44,43 +44,14 @@ class OrderHistoryActivity :
         mViewModel.statusCountDto.onSuccess.observe(this) {
             mDatabind.tabLayout.updateTabBadge(0) {
                 badgeGravity = Gravity.CENTER or Gravity.TOP
-                badgeText = if (it.deliveryNot == 0) {
+                badgeText = if (it.deliveryAll == 0) {
                     "--"
                 } else {
-                    it.deliveryNot.toString()
+                    it.deliveryAll.toString()
                 }
                 badgeOffsetY = -23
             }
             mDatabind.tabLayout.updateTabBadge(1) {
-                badgeGravity = Gravity.CENTER or Gravity.TOP
-                badgeText = if (it.deliveryOrder == 0) {
-                    "--"
-                } else {
-                    it.deliveryOrder.toString()
-                }
-                badgeOffsetY = -23
-
-            }
-            mDatabind.tabLayout.updateTabBadge(2) {
-                badgeGravity = Gravity.CENTER or Gravity.TOP
-                badgeText = if (it.deliveryGoods == 0) {
-                    "--"
-                } else {
-                    it.deliveryGoods.toString()
-                }
-                badgeOffsetY = -20
-
-            }
-            mDatabind.tabLayout.updateTabBadge(3) {
-                badgeGravity = Gravity.CENTER or Gravity.TOP
-                badgeText = if (it.deliverying == 0) {
-                    "--"
-                } else {
-                    it.deliverying.toString()
-                }
-                badgeOffsetY = -20
-            }
-            mDatabind.tabLayout.updateTabBadge(4) {
                 badgeGravity = Gravity.CENTER or Gravity.TOP
                 badgeText = if (it.deliveryCancel == 0) {
                     "--"
@@ -89,17 +60,7 @@ class OrderHistoryActivity :
                 }
                 badgeOffsetY = -20
             }
-            mDatabind.tabLayout.updateTabBadge(5) {
-                badgeGravity = Gravity.CENTER or Gravity.TOP
-                badgeText = if (it.deliveryComplete == 0) {
-                    "--"
-                } else {
-                    it.deliveryComplete.toString()
-                }
-                badgeOffsetY = -20
 
-            }
-            Log.e("order", "createObserver: " + it)
         }
         mViewModel.statusCountDto.onError.observe(this) {
             showToast("${it.msg}")
@@ -108,8 +69,8 @@ class OrderHistoryActivity :
 
     private val fragmentList: MutableList<Fragment> = ArrayList()
     override fun initData() {
-        fragmentList.add(OrderBaseHostoryFragment.newInstance("", true))
-        fragmentList.add(OrderBaseHostoryFragment.newInstance("70", true))
+        fragmentList.add(OrderBaseHistoryFragment.newInstance("", true))
+        fragmentList.add(OrderBaseHistoryFragment.newInstance("70", true))
         mDatabind.viewPager.adapter =
             BaseFragmentPagerAdapter(supportFragmentManager, lifecycle, fragmentList)
         mDatabind.viewPager.setCurrentItem(0, true)
@@ -127,6 +88,7 @@ class OrderHistoryActivity :
         timetype = 2,
         orderTime = "1",
         channelId = "0",
+        isValid = "",
     )
 
     override fun initListener() {
@@ -149,7 +111,7 @@ class OrderHistoryActivity :
                     pageSize = "20",
                     orderTime = it.orderTime,
                     deliverySelect = "0",
-                    isValid = "",
+                    isValid = it.isValid,
                     businessNumber = "",
                     channelId = it.channelId!!
                 )
@@ -196,7 +158,7 @@ class OrderHistoryActivity :
             pageSize = "20",
             orderTime = selectDialogDto.orderTime,
             deliverySelect = "0",
-            isValid = "",
+            isValid = selectDialogDto.isValid,
             businessNumber = "",
             channelId = selectDialogDto.channelId!!,
             poiId = poiId

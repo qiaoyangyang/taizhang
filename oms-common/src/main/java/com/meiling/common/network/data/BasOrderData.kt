@@ -76,7 +76,7 @@ data class OrderDto(
         @SerializedName("miniProgramsMa")
         var miniProgramsMa: Any? = Any(),
         @SerializedName("order")
-        var order: Order? = Order(),
+        var order: OrderDetail? = OrderDetail(),
         @SerializedName("order62Code")
         var order62Code: Any? = Any(),
         @SerializedName("orderModifyRecord")
@@ -125,178 +125,12 @@ data class OrderDto(
         var shop: OrderShop? = OrderShop(),
         @SerializedName("poi")
         var poi: OrderPoi? = OrderPoi()
-    ):Serializable {
+    ) : Serializable {
 
 
-        data class Order(
-            @SerializedName("activityFee")
-            var activityFee: Double? = 0.0,
-            @SerializedName("actualIncome")
-            var actualIncome: Double? = 0.0,
-            @SerializedName("actualPayPrice")
-            var actualPayPrice: Double? = 0.0,
-            @SerializedName("addressDesensitization")
-            var addressDesensitization: String? = "",
-            @SerializedName("adminUserId")
-            var adminUserId: Int? = 0,
-            @SerializedName("arriveTime")
-            var arriveTime: String? = "",
-            @SerializedName("arriveTimeDate")
-            var arriveTimeDate: String? = "",
-            @SerializedName("attachment")
-            var attachment: String? = "",
-            @SerializedName("auditId")
-            var auditId: Any? = Any(),
-            @SerializedName("boxPriceTotal")
-            var boxPriceTotal: Any? = Any(),
-            @SerializedName("cardMoney")
-            var cardMoney: Any? = Any(),
-            @SerializedName("cardNo")
-            var cardNo: Any? = Any(),
-            @SerializedName("cardType")
-            var cardType: Any? = Any(),
-            @SerializedName("changePrice")
-            var changePrice: Double? = 0.0,
-            @SerializedName("channelCreateTime")
-            var channelCreateTime: String? = "",
-            @SerializedName("channelDaySn")
-            var channelDaySn: Int? = 0,
-            @SerializedName("channelId")
-            var channelId: Int? = 0,
-            @SerializedName("channelOrderNum")
-            var channelOrderNum: String? = "",
-            @SerializedName("completeTime")
-            var completeTime: Long? = 0,
-            @SerializedName("couponCode")
-            var couponCode: String? = "",
-            @SerializedName("couponName")
-            var couponName: Any? = Any(),
-            @SerializedName("createTime")
-            var createTime: Long? = 0,
-            @SerializedName("deliverName")
-            var deliverName: String? = "",
-            @SerializedName("deliverPhone")
-            var deliverPhone: String? = "",
-            @SerializedName("deliverPrice")
-            var deliverPrice: Int? = 0,
-            @SerializedName("deliveryFee")
-            var deliveryFee: Double? = 0.0,
-            @SerializedName("deliveryGeo")
-            var deliveryGeo: String? = "",
-            @SerializedName("deliveryStatusName")
-            var deliveryStatusName: String? = "",
-            @SerializedName("deliveryTime")
-            var deliveryTime: Long? = 0,
-            @SerializedName("deliveryType")
-            var deliveryType: String? = "",
-            @SerializedName("depositPhone")
-            var depositPhone: String? = "",
-            @SerializedName("districtCode")
-            var districtCode: String? = "",
-            @SerializedName("emergencyFee")
-            var emergencyFee: Int? = 0,
-            @SerializedName("enterTime")
-            var enterTime: Any? = Any(),
-            @SerializedName("extras")
-            var extras: String? = "",
-            @SerializedName("fpoiId")
-            var fpoiId: Int? = 0,
-            @SerializedName("fshopId")
-            var fshopId: Int? = 0,
-            @SerializedName("goodNames")
-            var goodNames: Any? = Any(),
-            @SerializedName("goodsCost")
-            var goodsCost: Double? = 0.0,
-            @SerializedName("goodsInfo")
-            var goodsInfo: Boolean? = false,
-            @SerializedName("id")
-            var id: Int? = 0,
-            @SerializedName("invoiceTitle")
-            var invoiceTitle: String? = "",
-            @SerializedName("invoiceType")
-            var invoiceType: Int? = 0,
-            @SerializedName("isDeliver")
-            var isDeliver: Int? = 0,
-            @SerializedName("isPostSale")
-            var isPostSale: Int? = 0,
-            @SerializedName("isShowUserInfo")
-            var isShowUserInfo: Boolean? = false,
-            @SerializedName("isUpdate")
-            var isUpdate: Int? = 0,
-            @SerializedName("isValid")
-            var isValid: Int? = 0,
-            @SerializedName("lat")
-            var lat: String? = "",
-            @SerializedName("logisticsStatus")
-            var logisticsStatus: String? = "",
-            @SerializedName("lon")
-            var lon: String? = "",
-            @SerializedName("negative")
-            var negative: Int? = 0,
-            @SerializedName("orderHandleType")
-            var orderHandleType: Int? = 0,
-            @SerializedName("orderIndex")
-            var orderIndex: Int? = 0,
-            @SerializedName("orderSource")
-            var orderSource: Int? = 0,
-            @SerializedName("ordererName")
-            var ordererName: String? = "",
-            @SerializedName("payPrice")
-            var payPrice: Double? = 0.0,
-            @SerializedName("payType")
-            var payType: Int? = 0,
-            @SerializedName("payee")
-            var payee: String? = "",
-            @SerializedName("perfectGoodsInfo")
-            var perfectGoodsInfo: Boolean? = false,
-            @SerializedName("platformServiceFee")
-            var platformServiceFee: Double? = 0.0,
-            @SerializedName("poiId")
-            var poiId: String? = "",
-            @SerializedName("preMode")
-            var preMode: Int? = 0,
-            @SerializedName("prescriptionImage")
-            var prescriptionImage: String? = "",
-            @SerializedName("recvAddr")
-            var recvAddr: String? = "",
-            @SerializedName("recvGender")
-            var recvGender: Any? = Any(),
-            @SerializedName("recvName")
-            var recvName: String? = "",
-            @SerializedName("recvPhone")
-            var recvPhone: String? = "",
-            @SerializedName("recvUserId")
-            var recvUserId: Long? = 0,
-            @SerializedName("refundCheck")
-            var refundCheck: Int? = 0,
-            @SerializedName("refundPrice")
-            var refundPrice: Double? = 0.0,
-            @SerializedName("remark")
-            var remark: String? = "",
-            @SerializedName("shopId")
-            var shopId: Int? = 0,
-            @SerializedName("status")
-            var status: Int? = 0,
-            @SerializedName("takeGoodsCode")
-            var takeGoodsCode: String? = "",
-            @SerializedName("tenantId")
-            var tenantId: Int? = 0,
-            @SerializedName("tenantStatus")
-            var tenantStatus: Int? = 0,
-            @SerializedName("totalPrice")
-            var totalPrice: Double? = 0.0,
-            @SerializedName("type")
-            var type: Int? = 0,
-            @SerializedName("updateTime")
-            var updateTime: Long? = 0,
-            @SerializedName("userId")
-            var userId: Long? = 0,
-            @SerializedName("viewId")
-            var viewId: String? = ""
-        ) : Serializable
+
     }
 }
-
 
 
 data class OrderShop(
@@ -534,6 +368,7 @@ data class SelectDialogDto(
     var timetype: Int,//时间类型 0自定义时间 1 昨天 2 今天 3 近七天 4 进30天
     var channelId: String?,// 平台  渠道全部传null,根据返回渠道
     var orderTime: String,// 日期类型  1.下单时间，2 收货时间，出货时间 4,完成时间
+    var isValid: String = "",// 忽略订单  1.有效订单，0 无效订单， 4,所有订单是空
 
 ) : Serializable
 
@@ -641,8 +476,8 @@ data class OrderGoodsVo(
     @SerializedName("unitUseType")
     var unitUseType: Any? = Any(),
     @SerializedName("specs")
-    var specs: String? =""
-):Serializable
+    var specs: String? = ""
+) : Serializable
 
 data class OrderDetailDto(
     @SerializedName("deliveryConsume")
@@ -656,15 +491,32 @@ data class OrderDetailDto(
     @SerializedName("orderId")
     var orderId: Long? = 0,
     @SerializedName("remark")
-    var remark: String? = ""
-)
+    var remark: String? = "",
+    @SerializedName("shop")
+    var shop: OrderShop? = OrderShop(),
+    @SerializedName("poi")
+    var poi: OrderPoi? = OrderPoi(),
+    @SerializedName("channelName")
+    var channelName: String? = "",
+    @SerializedName("channelLogo")
+    var channelLogo: String? = "",
+    @SerializedName("distance")
+    var distance: String? = "",
+    @SerializedName("centerLat")
+    var centerLat: String? = "",
+    @SerializedName("centerLon")
+    var centerLon: String? = "",
+
+
+    )
+
 data class OrderDetail(
     @SerializedName("activityFee")
     var activityFee: Double? = 0.0,
     @SerializedName("actualIncome")
     var actualIncome: Double? = 0.0,
     @SerializedName("actualPayPrice")
-    var actualPayPrice: Double? = 0.0,
+    var actualPayPrice: String? = "",
     @SerializedName("addressDesensitization")
     var addressDesensitization: String? = "",
     @SerializedName("adminUserId")
@@ -780,7 +632,7 @@ data class OrderDetail(
     @SerializedName("perfectGoodsInfo")
     var perfectGoodsInfo: Boolean? = false,
     @SerializedName("platformServiceFee")
-    var platformServiceFee: Double? = 0.0,
+    var platformServiceFee: String? = "",
     @SerializedName("poiId")
     var poiId: String? = "",
     @SerializedName("preMode")

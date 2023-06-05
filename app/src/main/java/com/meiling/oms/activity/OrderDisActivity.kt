@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.meiling.common.BaseViewModel
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.network.data.OrderDetail
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityDisBinding
 import com.meiling.oms.fragment.*
@@ -27,13 +28,13 @@ import org.greenrobot.eventbus.ThreadMode
 class OrderDisActivity : BaseActivity<OrderDisFragmentViewModel, ActivityDisBinding>() {
 
     private val fragmentList: MutableList<Fragment> = ArrayList()
-    lateinit var content: OrderDto.Content.Order
+    lateinit var content: OrderDetail
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewPager.isUserInputEnabled = false
 
 
         content =
-            intent.getSerializableExtra("kk") as OrderDto.Content.Order
+            intent.getSerializableExtra("kk") as OrderDetail
         mDatabind.ivDetail.setOnClickListener {
             if (orderSendAddress != null) {
                 ARouter.getInstance().build("/app/OrderChangeAddressActivity")
