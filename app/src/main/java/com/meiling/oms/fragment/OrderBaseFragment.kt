@@ -23,6 +23,7 @@ import com.hjq.shape.layout.ShapeRelativeLayout
 import com.hjq.shape.view.ShapeTextView
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
+import com.meiling.common.network.data.OrderDetailDto
 import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.SaveDecimalUtils
@@ -49,7 +50,7 @@ import org.greenrobot.eventbus.ThreadMode
 class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseOrderBinding>() {
 
 
-    private lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
+    private lateinit var orderDisAdapter: BaseQuickAdapter<OrderDetailDto, BaseViewHolder>
     var pageIndex = 1
 
     companion object {
@@ -91,9 +92,9 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         requireArguments().getString("type").toString()
         orderDisAdapter =
             object :
-                BaseQuickAdapter<OrderDto.Content, BaseViewHolder>(R.layout.item_home_base_order),
+                BaseQuickAdapter<OrderDetailDto, BaseViewHolder>(R.layout.item_home_base_order),
                 LoadMoreModule {
-                override fun convert(holder: BaseViewHolder, item: OrderDto.Content) {
+                override fun convert(holder: BaseViewHolder, item: OrderDetailDto) {
                     val imgPrint = holder.getView<TextView>(R.id.img_order_print)
                     val checkMap = holder.getView<TextView>(R.id.txt_check_map)
                     val orderDelivery = holder.getView<TextView>(R.id.txt_base_order_delivery_1)
@@ -340,7 +341,8 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
     }
 
     var list = ArrayList<String>()
-    var orderSore = "1"
+    var orderSore = "4"
+    var orderTime = "1" //1下单时间 2收货时间 7发货时间
     var poiId = "0"
     var channelId = "0"
     private fun initViewData() {
@@ -351,12 +353,13 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             businessNumberType = "1",
             pageIndex = pageIndex,
             pageSize = "10",
-            orderTime = "1",
+            orderTime = orderTime,
             deliverySelect = "0",
             isValid = "1",
             businessNumber = "",
             channelId = channelId,
-            poiId = poiId
+            poiId = poiId,
+            sort = orderSore
         )
         orderDisAdapter.loadMoreModule.loadMoreView = SS()
         orderDisAdapter.loadMoreModule.setOnLoadMoreListener {
@@ -368,13 +371,14 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 businessNumberType = "1",
                 pageIndex = pageIndex,
                 pageSize = "10",
-                orderTime = "1",
+                orderTime = orderTime,
                 deliverySelect = "0",
                 isValid = "1",
                 businessNumber = "",
                 selectText = "",
                 channelId = channelId,
-                poiId = poiId
+                poiId = poiId,
+                sort = orderSore
             )
         }
     }
@@ -406,11 +410,11 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 if (it.content.isNullOrEmpty()) {
                     orderDisAdapter.setList(null)
                 } else {
-                    orderDisAdapter.setList(it.content as MutableList<OrderDto.Content>)
+                    orderDisAdapter.setList(it.content as MutableList<OrderDetailDto>)
                     orderDisAdapter.notifyDataSetChanged()
                 }
             } else {
-                orderDisAdapter.addData(it.content as MutableList<OrderDto.Content>)
+                orderDisAdapter.addData(it.content as MutableList<OrderDetailDto>)
                 orderDisAdapter.notifyDataSetChanged()
             }
 
@@ -496,6 +500,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
         // 在这里处理事件
         channelId = event.selectDialogDto.channelId.toString()
         orderSore = event.selectDialogDto.orderSort.toString()
+        orderTime = event.selectDialogDto.orderTime.toString()
         poiId = event.shopId
 //        mDatabind.sflLayout.autoRefresh()
         initViewData()

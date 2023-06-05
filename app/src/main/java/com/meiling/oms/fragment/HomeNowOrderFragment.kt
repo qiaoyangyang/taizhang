@@ -70,7 +70,8 @@ class HomeNowOrderFragment :
     }
     var selectDialogDto = SelectOrderDialogDto(
         channelId = "0",
-        orderSort = "1",
+        orderTime = "1",
+        orderSort = "4",
     )
     var poiId = "0"
     override fun initListener() {

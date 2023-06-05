@@ -34,6 +34,7 @@ import com.meiling.oms.adapter.OrderBaseShopListAdapter
 import com.meiling.oms.databinding.ActivityOrderDetailBinding
 import com.meiling.oms.dialog.DataTipDialog
 import com.meiling.oms.dialog.MineExitDialog
+import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.oms.eventBusData.MessageEvent
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.copyText
@@ -252,13 +253,20 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
                         0 -> {
                             // setgetPrint()
-                            showToast("发起配送")
+//                            showToast("发起配送")
+                            ARouter.getInstance().build("/app/OrderDisActivity")
+                                .withSerializable("kk", orderDetailDto?.order).navigation()
                         }
                         20 -> {
                             showToast("加小费")
+                            ARouter.getInstance().build("/app/OrderDisAddTipActivity")
+                                .withSerializable("kk", orderDetailDto!!).navigation()
                         }
                         30, 50, 80 -> {
-                            showToast("配送详情")
+//                            showToast("配送详情")
+                            var orderDisDialog =
+                                OrderDistributionDetailDialog().newInstance(false, orderDetailDto?.order?.viewId!!)
+                            orderDisDialog.show(supportFragmentManager)
                         }
                     }
                 }

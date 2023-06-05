@@ -47,6 +47,7 @@ interface HomeService {
         @Query("selectText") selectText: String = "",
         @Query("channelId") channelId: String = "0",
         @Query("poiId") poiId: String = "",
+        @Query("sort") sort: String = "",
     ): ResultData<OrderDto>
 
   //订单详情

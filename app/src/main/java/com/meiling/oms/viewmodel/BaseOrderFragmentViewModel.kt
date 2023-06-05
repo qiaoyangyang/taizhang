@@ -35,7 +35,8 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
         businessNumber: String = "",
         selectText: String = "",
         channelId: String = "0",//渠道全部传null,根据返回渠道,
-        poiId: String = "0"
+        poiId: String = "0",
+        sort:String = ""
     ) {
         request({
             homeService.orderList(
@@ -51,7 +52,8 @@ class BaseOrderFragmentViewModel(application: Application) : BaseViewModel(appli
                 businessNumber = businessNumber,
                 selectText = selectText,
                 channelId = channelId,
-                poiId = poiId
+                poiId = poiId,
+                sort = sort
             )
         }, orderList)
 //        request({
