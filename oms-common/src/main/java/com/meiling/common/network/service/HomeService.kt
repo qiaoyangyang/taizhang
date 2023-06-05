@@ -30,6 +30,39 @@ interface HomeService {
         @Query("channelId") channelId: String = "0",
     ): ResultData<OrderDto>
 
+    //订单列表
+    @GET("/saas/order/orderList")
+    suspend fun orderList(
+        @Query("logisticsStatus") logisticsStatus: String,
+        @Query("startTime") startTime: String,
+        @Query("endTime") endTime: String,
+        @Query("businessNumberType") businessNumberType: String,
+        @Query("pageIndex") pageIndex: String,
+        @Query("orderTime") orderTime: String = "1",
+        @Query("pageSize") pageSize: String = "20",
+        @Query("deliverySelect") deliverySelect: String = "0",
+        @Query("orderStatus") orderStatus: String = "300",
+        @Query("isValid") isValid: String = "",
+        @Query("businessNumber") businessNumber: String = "",
+        @Query("selectText") selectText: String = "",
+        @Query("channelId") channelId: String = "0",
+        @Query("poiId") poiId: String = "",
+    ): ResultData<OrderDto>
+
+  //订单详情
+    @GET("/saas/order/orderDetailVo")
+    suspend fun orderDetail(
+        @Query("orderViewId") orderViewId: String,
+    ): ResultData<OrderDetailDto>
+
+
+    //忽略订单
+    @POST("saas/order/invalid/{orderViewId}/{value}")
+    suspend fun invalid(
+        @Path("orderViewId") orderViewId: String,
+        @Path("value") value: String //0忽略订单 1 恢复忽略订单
+    ): ResultData<String>
+
     @GET("/saas/order/statusCount")
     suspend fun statusCount(
         @Query("logisticsStatus") logisticsStatus: String,
@@ -44,6 +77,7 @@ interface HomeService {
         @Query("isValid") isValid: String = "",
         @Query("businessNumber") businessNumber: String = "",
         @Query("channelId") channelId: String = "0",
+        @Query("poiId") poiId: String = "0",
     ): ResultData<StatusCountDto>
 
     @GET("/saas/order/shop/updateRemark")

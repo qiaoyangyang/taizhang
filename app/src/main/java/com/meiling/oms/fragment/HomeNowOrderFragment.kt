@@ -10,7 +10,6 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.fragment.BaseFragment
-import com.meiling.common.network.data.SelectDialogDto
 import com.meiling.common.network.data.SelectOrderDialogDto
 import com.meiling.oms.activity.OrderCreateActivity
 import com.meiling.oms.adapter.BaseFragmentPagerAdapter
@@ -18,10 +17,12 @@ import com.meiling.oms.databinding.FragmentHomeOrderOningBinding
 import com.meiling.oms.dialog.OrderFilterSortDialog
 import com.meiling.oms.dialog.OrderSelectStoreDialog
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
-import com.meiling.oms.eventBusData.MessageHistoryEventSelect
 import com.meiling.oms.eventBusData.MessageOrderEventSelect
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
-import com.meiling.oms.widget.*
+import com.meiling.oms.widget.formatCurrentDate
+import com.meiling.oms.widget.formatCurrentDateBeforeMouth
+import com.meiling.oms.widget.setSingleClickListener
+import com.meiling.oms.widget.showToast
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -93,9 +94,10 @@ class HomeNowOrderFragment :
                     pageSize = "10",
                     orderTime = "",
                     deliverySelect = "0",
-                    isValid = "",
+                    isValid = "1",
                     businessNumber = "",
-                    channelId = it.channelId!!
+                    channelId = it.channelId!!,
+                    poiId = poiId
                 )
             }
 
@@ -139,9 +141,10 @@ class HomeNowOrderFragment :
             pageSize = "20",
             orderTime = "1",
             deliverySelect = "0",
-            isValid = "",
+            isValid = "1",
             businessNumber = "",
-            channelId = selectDialogDto.channelId.toString()
+            channelId = selectDialogDto.channelId.toString(),
+            poiId = poiId
         )
     }
 

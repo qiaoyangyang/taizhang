@@ -61,7 +61,7 @@
         android:layout_gravity="end"
         android:layout_toStartOf="@+id/tv_shop_money"
         android:paddingBottom="@dimen/dp_50"
-        android:text="商品1件，共" />
+        tools:text="商品1件，共" />
 
     <TextView
         android:id="@+id/tv_shop_money"
@@ -72,7 +72,7 @@
         android:layout_gravity="end"
         android:textColor="@color/red"
         android:paddingBottom="@dimen/dp_50"
-        android:text="50.00" />
+        tools:text="50.00" />
 
     <TextView
         android:id="@+id/tv_shop_money1"

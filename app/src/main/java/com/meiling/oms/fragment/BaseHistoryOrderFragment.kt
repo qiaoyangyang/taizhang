@@ -21,6 +21,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
+import com.meiling.common.network.data.OrderGoodsVo
 import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.SaveDecimalUtils
 import com.meiling.oms.R
@@ -42,7 +43,7 @@ class BaseHistoryOrderFragment :
 
 
     private lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
-    lateinit var orderGoodsListAdapter: BaseQuickAdapter<OrderDto.Content.GoodsVo, BaseViewHolder>
+    lateinit var orderGoodsListAdapter: BaseQuickAdapter<OrderGoodsVo, BaseViewHolder>
 
     var pageIndex = 1
 
@@ -199,10 +200,10 @@ class BaseHistoryOrderFragment :
                         )
                     }
                     orderGoodsListAdapter = object :
-                        BaseQuickAdapter<OrderDto.Content.GoodsVo, BaseViewHolder>(R.layout.item_home_order_shop),
+                        BaseQuickAdapter<OrderGoodsVo, BaseViewHolder>(R.layout.item_home_order_shop),
                         LoadMoreModule {
                         override fun convert(
-                            holder: BaseViewHolder, item: OrderDto.Content.GoodsVo
+                            holder: BaseViewHolder, item: OrderGoodsVo
                         ) {
                             val view = holder.getView<ImageView>(R.id.img_order_shop_icon)
                             holder.setText(R.id.txt_order_shop_name, item.gname)
@@ -221,7 +222,7 @@ class BaseHistoryOrderFragment :
                     }
                     ryOrderSendDisDetail!!.adapter = orderGoodsListAdapter
                     if (item.goodsVoList?.isNotEmpty() == true) {
-                        orderGoodsListAdapter.setList(item.goodsVoList as MutableList<OrderDto.Content.GoodsVo>)
+                        orderGoodsListAdapter.setList(item.goodsVoList as MutableList<OrderGoodsVo>)
                         var sum: Double = 0.0
                         var sumNumber: Int = 0
                         for (ne in item.goodsVoList!!) {

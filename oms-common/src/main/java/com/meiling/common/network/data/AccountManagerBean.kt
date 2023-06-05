@@ -98,67 +98,67 @@ data class CreateSelectPoiDto(
 
 data class PoiContentList(
     @SerializedName("address")
-    var address: String?,
+    var address: String? = "",
     @SerializedName("autoTransOrder")
-    var autoTransOrder: Int?,
+    var autoTransOrder: Int? = 0,
     @SerializedName("cargoType")
-    var cargoType: Int?,
+    var cargoType: Int? = 0,
     @SerializedName("cityCode")
-    var cityCode: String?,
+    var cityCode: String? = "",
     @SerializedName("cityId")
-    var cityId: Int?,
+    var cityId: Int? = 0,
     @SerializedName("cityName")
-    var cityName: String?,
+    var cityName: String? = "",
     @SerializedName("contactPerson")
-    var contactPerson: String?,
+    var contactPerson: String? = "",
     @SerializedName("districtCode")
-    var districtCode: String?,
+    var districtCode: String? = "",
     @SerializedName("factoryId")
-    var factoryId: Any?,
+    var factoryId: Any? = Any(),
     @SerializedName("factoryName")
-    var factoryName: Any?,
+    var factoryName: Any? = Any(),
     @SerializedName("fuRepertoryCheck")
-    var fuRepertoryCheck: Int?,
+    var fuRepertoryCheck: Int? = 0,
     @SerializedName("id")
-    var id: String?,
+    var id: String? = "",
     @SerializedName("lat")
-    var lat: String?,
+    var lat: String? = "",
     @SerializedName("lon")
-    var lon: String?,
+    var lon: String? = "",
     @SerializedName("manyPeopleInventory")
-    var manyPeopleInventory: Int?,
+    var manyPeopleInventory: Int? = 0,
     @SerializedName("merchantId")
-    var merchantId: String?,
+    var merchantId: String? = "",
     @SerializedName("mobilePhone")
-    var mobilePhone: String?,
+    var mobilePhone: String? = "",
     @SerializedName("name")
-    var name: String?,
+    var name: String? = "",
     @SerializedName("offlineShopProperties")
-    var offlineShopProperties: Any?,
+    var offlineShopProperties: Any? = Any(),
     @SerializedName("phone")
-    var phone: String?,
+    var phone: String? = "",
     @SerializedName("poiGroupNames")
-    var poiGroupNames: Any?,
+    var poiGroupNames: Any? = Any(),
     @SerializedName("provinceCode")
-    var provinceCode: String?,
+    var provinceCode: String? = "",
     @SerializedName("shopNum")
-    var shopNum: Int?,
+    var shopNum: Int? = 0,
     @SerializedName("shopProperties")
-    var shopProperties: Any?,
+    var shopProperties: Any? = Any(),
     @SerializedName("sinceCode")
-    var sinceCode: String?,
+    var sinceCode: String? = "",
     @SerializedName("stationChannelId")
-    var stationChannelId: Any?,
+    var stationChannelId: Any? = Any(),
     @SerializedName("stationCommonId")
-    var stationCommonId: String?,
+    var stationCommonId: String? = "",
     @SerializedName("status")
-    var status: Int?,
+    var status: Int? = 0,
     @SerializedName("tenantId")
-    var tenantId: Int?,
+    var tenantId: Int? = 0,
     @SerializedName("type")
-    var type: Int?,
+    var type: Int? = 0,
     @SerializedName("viewId")
-    var viewId: Long?
+    var viewId: Long? = 0L
 ) {
     var isSelect = false
 }

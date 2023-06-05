@@ -31,5 +31,12 @@ class MyViewModel(application: Application) : BaseViewModel(application) {
     fun getBalance() {
         request({ myRechargeService.getPayAccountAmountVo() }, balance)
     }
+    var UmengToken = BaseLiveData<Any>()
+    fun setUmengToken() {
+
+        request({ meService.setUmengToken() }, UmengToken)
+    }
+
+
 
 }

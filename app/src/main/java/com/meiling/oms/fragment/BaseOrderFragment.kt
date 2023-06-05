@@ -24,6 +24,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDto
+import com.meiling.common.network.data.OrderGoodsVo
 import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.SaveDecimalUtils.decimalUtils
 import com.meiling.oms.R
@@ -46,7 +47,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
 
 
     private lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
-    lateinit var orderGoodsListAdapter: BaseQuickAdapter<OrderDto.Content.GoodsVo, BaseViewHolder>
+    lateinit var orderGoodsListAdapter: BaseQuickAdapter<OrderGoodsVo, BaseViewHolder>
 
     var pageIndex = 1;
 
@@ -220,10 +221,10 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         )
                     }
                     orderGoodsListAdapter = object :
-                        BaseQuickAdapter<OrderDto.Content.GoodsVo, BaseViewHolder>(R.layout.item_home_order_shop),
+                        BaseQuickAdapter<OrderGoodsVo, BaseViewHolder>(R.layout.item_home_order_shop),
                         LoadMoreModule {
                         override fun convert(
-                            holder: BaseViewHolder, item: OrderDto.Content.GoodsVo
+                            holder: BaseViewHolder, item: OrderGoodsVo
                         ) {
                             val view = holder.getView<ImageView>(R.id.img_order_shop_icon)
                             holder.setText(R.id.txt_order_shop_name, item.gname)
@@ -242,21 +243,14 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     }
                     ryOrderSendDisDetail!!.adapter = orderGoodsListAdapter
                     if (item.goodsVoList?.isNotEmpty() == true) {
-                        orderGoodsListAdapter.setList(item.goodsVoList as MutableList<OrderDto.Content.GoodsVo>)
+                        orderGoodsListAdapter.setList(item.goodsVoList as MutableList<OrderGoodsVo>)
                         var sum: Double = 0.0
                         var sumNumber: Int = 0
                         for (ne in item.goodsVoList!!) {
                             sum += ne?.totalPrice!!
                             sumNumber += ne?.number!!
-//                            if (ne.refundNum == ne.number){
-//                                ne.isRefund = true
-//                            }else{
-//                                ne.isRefund = false
-//                            }
                         }
-                        holder.setText(
-                            R.id.txt_order_shop_msg, "${item.goodsVoList?.size}种商品，共${sumNumber}件"
-                        )
+                        holder.setText(R.id.txt_order_shop_msg, "${item.goodsVoList?.size}种商品，共${sumNumber}件")
                         holder.setText(R.id.txt_total_money, "¥${decimalUtils(sum)}")
                     }
 
@@ -447,7 +441,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             pageSize = "20",
             orderTime = "1",
             deliverySelect = "0",
-            isValid = "",
+            isValid = "1",
             businessNumber = "",
         )
         orderDisAdapter.loadMoreModule.loadMoreView = SS()
@@ -462,7 +456,7 @@ class BaseOrderFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                 pageSize = "20",
                 orderTime = "1",
                 deliverySelect = "0",
-                isValid = "",
+                isValid = "1",
                 businessNumber = "",
                 selectText = ""
             )

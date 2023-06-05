@@ -1,8 +1,6 @@
 package com.meiling.oms.activity
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
@@ -11,8 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.UiSettings
@@ -25,16 +21,14 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCa
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseActivity
-import com.meiling.common.network.data.GoodsListVo
+import com.meiling.common.network.data.OrderGoodsVo
 import com.meiling.common.utils.PermissionUtilis
 import com.meiling.oms.R
-import com.meiling.oms.R.id.iv_arrow
 import com.meiling.oms.adapter.OrderBaseShopListAdapter
 import com.meiling.oms.databinding.ActivityOrderDetailBinding
 import com.meiling.oms.dialog.DataTipDialog
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
-import com.meiling.oms.viewmodel.OrderCreateViewModel
 import com.meiling.oms.widget.copyText
 import com.meiling.oms.widget.showToast
 import io.reactivex.annotations.NonNull
@@ -51,6 +45,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
     //商品
     private lateinit var orderDisAdapter: OrderBaseShopListAdapter
     override fun initView(savedInstanceState: Bundle?) {
+        mViewModel.getOrderDetail(intent.getStringExtra("orderViewId").toString())
         mDatabind.map?.onCreate(savedInstanceState)
         if (aMap == null) {
 
@@ -70,16 +65,16 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
         behavior = BottomSheetBehavior.from(mDatabind.bottomSheet)
         behavior?.addBottomSheetCallback(bottomSheetCallback())
-        behavior?.peekHeight = dp2px(100)
+        behavior?.peekHeight = dp2px(120)
         behavior?.state = BottomSheetBehavior.STATE_HALF_EXPANDED
 
         orderDisAdapter = OrderBaseShopListAdapter()
-        var goods = ArrayList<GoodsListVo>()
-        goods.add(GoodsListVo(gname = "张三"))
-        goods.add(GoodsListVo(gname = "张三1"))
-        goods.add(GoodsListVo(gname = "张三2"))
+//        var goods = ArrayList<GoodsListVo>()
+//        goods.add(GoodsListVo(gname = "张三"))
+//        goods.add(GoodsListVo(gname = "张三1"))
+//        goods.add(GoodsListVo(gname = "张三2"))
 
-        orderDisAdapter.setList(goods)
+//        orderDisAdapter.setList(goods)
         mDatabind.included.recyShopList.adapter = orderDisAdapter
         mDatabind.included.tvRevocation.setOnClickListener(this)
         mDatabind.included.tvGoOn.setOnClickListener(this)
@@ -220,7 +215,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             }
             //修改订单
             R.id.btn_change_address -> {
-
+                startActivity(Intent(this,OrderChangeAddressActivity::class.java))
 
             }
             //打电话
@@ -288,10 +283,20 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         mViewModel.printDto.onError.observe(this) {
             showToast(it.msg)
         }
+
+        mViewModel.orderDetailDto.onStart.observe(this) {}
+        mViewModel.orderDetailDto.onSuccess.observe(this) {
+            Log.d("TAG", "createObserver:${it.goodsVoList.toString()} ")
+            orderDisAdapter.setList(it.goodsVoList as MutableList<OrderGoodsVo>)
+            orderDisAdapter.notifyDataSetChanged()
+        }
+        mViewModel.orderDetailDto.onError.observe(this) {}
     }
 
     private fun dialPhoneNumber(phoneNumber: String) {
         val dialIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${phoneNumber}"))
         startActivity(dialIntent)
     }
+
+
 }
