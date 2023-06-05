@@ -21,6 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCa
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDetailDto
 import com.meiling.common.network.data.OrderGoodsVo
 import com.meiling.common.utils.DoubleClickHelper
@@ -135,7 +136,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 iv_icon.setBackgroundResource(R.drawable.add_shop_02)
                 tv_distance.visibility = View.GONE
             }
-        }else if (type==1){
+        } else if (type == 1) {
             if (int == 1) {
                 iv_icon.setBackgroundResource(R.drawable.add_shop_02)
                 tv_distance.visibility = View.GONE
@@ -143,7 +144,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 iv_icon.setBackgroundResource(R.drawable.collected)
                 tv_distance.visibility = View.GONE
             }
-        }else if (type==2){
+        } else if (type == 2) {
             if (int == 1) {
                 iv_icon.setBackgroundResource(R.drawable.add_1)
                 tv_distance.visibility = View.GONE
@@ -224,27 +225,17 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 //忽略订单
                 R.id.tv_revocation -> {
                     if (orderDetailDto != null) {
-                        if (orderDetailDto?.order?.logisticsStatus?.toInt() == 0) {
-                            if (orderDetailDto?.order?.isValid == 1) {
-                                val dialog: MineExitDialog =
-                                    MineExitDialog().newInstance(
-                                        "温馨提示",
-                                        "确定忽略订单？",
-                                        "取消",
-                                        "确认",
-                                        false
-                                    )
-                                dialog.setOkClickLister {
-                                    mViewModel.invalid(
-                                        orderDetailDto?.order!!.viewId.toString(),
-                                        "0"
-                                    )
-                                    showToast("订单已经忽略")
-                                    dialog.dismiss()
+                        when (orderDetailDto?.order?.logisticsStatus?.toInt()) {
+                            0 -> {
+                                if (orderDetailDto?.order?.isValid == 1){
+                                    setinvalid()
                                 }
-                                dialog.show(supportFragmentManager)
-                            } else {
-                                mViewModel.invalid(orderDetailDto?.order!!.viewId.toString(), "1")
+                            }
+                            20 ->{
+                                setcancelOrder()
+                            }
+                            50 ->{
+                                setgetPrint()
                             }
                         }
 
@@ -252,33 +243,48 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 }
                 //自提完成
                 R.id.tv_go_on -> {
+                    when (orderDetailDto?.order?.logisticsStatus?.toInt()) {
 
+                        0->{
+                           // setgetPrint()
+                            showToast("发起配送")
+                        }
+                        20->{
+                            showToast("加小费")
+                        }
+                        30,50,80->{
+                            showToast("配送详情")
+                        }
+                    }
                 }
                 //打印小票
                 R.id.btn_Print_receipt -> {
-                    //收银小票:1 退款小票:3
-                    when (orderDetailDto?.order!!.logisticsStatus) {
-                        "70" -> {
-                            mViewModel.getPrint(
-                                orderDetailDto?.order?.viewId.toString(),
-                                orderDetailDto?.order?.shopId.toString(),
-                                "3"
-                            )
-                        }
-                        else -> {
-                            mViewModel.getPrint(
-                                orderDetailDto?.order?.viewId.toString(),
-                                orderDetailDto?.order?.shopId.toString(),
-                                "1"
-                            )
-                        }
 
+                    when (orderDetailDto?.order?.logisticsStatus?.toInt()) {
+
+                        0,30,50 ,70,80->{
+                            setgetPrint()
+                        }
                     }
 
                 }
                 //修改订单
                 R.id.btn_change_address -> {
-                    startActivity(Intent(this, OrderChangeAddressActivity::class.java))
+                    when (orderDetailDto?.order?.logisticsStatus?.toInt()) {
+                        0 -> {
+                            if (orderDetailDto?.order?.isValid == 0){
+                                mViewModel.invalid(
+                                    orderDetailDto?.order!!.viewId.toString(),
+                                    "0"
+                                )
+                            }else{
+                                startActivity(Intent(this, OrderChangeAddressActivity::class.java))
+                            }
+                        }
+
+                    }
+
+
 
                 }
                 //打电话
@@ -349,6 +355,17 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
     override fun createObserver() {
 
         super.createObserver()
+        mViewModel.invalidDto.onStart.observe(this){
+            showLoading("")
+        }
+        mViewModel.invalidDto.onSuccess.observe(this){
+            disLoading()
+            finish()
+        }
+        mViewModel.invalidDto.onError.observe(this){
+            disLoading()
+            showToast(it.msg)
+        }
         mViewModel.printDto.onStart.observe(this) {
         }
         mViewModel.printDto.onSuccess.observe(this) {
@@ -356,6 +373,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             showToast("已发送打印任务")
         }
         mViewModel.printDto.onError.observe(this) {
+            disLoading()
             showToast(it.msg)
         }
 
@@ -377,14 +395,14 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
                 behavior?.peekHeight = dp2px(160)
 
-                if (it.order?.isValid==1) {
+                if (it.order?.isValid == 1) {
                     mDatabind.included.tvGoOn.text = "发起配送"
                     mDatabind.included.tvRevocation.text = "忽略订单"
                     mDatabind.included.btnPrintReceipt.text = "打印小票"
                     mDatabind.included.btnChangeAddress.text = "修改订单"
-                }else if (it.order?.isValid==0){
-                    mDatabind.included.tvGoOn.visibility=View.GONE
-                    mDatabind.included.tvRevocation.visibility=View.GONE
+                } else if (it.order?.isValid == 0) {
+                    mDatabind.included.tvGoOn.visibility = View.GONE
+                    mDatabind.included.tvRevocation.visibility = View.GONE
 
                     mDatabind.included.btnPrintReceipt.text = "打印小票"
                     mDatabind.included.btnChangeAddress.text = "取消忽略"
@@ -531,6 +549,68 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         val dialIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${phoneNumber}"))
         startActivity(dialIntent)
     }
+
+    //确定忽悠订单
+   fun setinvalid(){
+        val dialog: MineExitDialog =
+            MineExitDialog().newInstance(
+                "温馨提示",
+                "您确认要忽略该订单吗？\n" +
+                        "忽略后可去「订单查询」中查找到该订单",
+                "取消",
+                "确认",
+                false
+            )
+        dialog.setOkClickLister {
+            mViewModel.invalid(
+                orderDetailDto?.order!!.viewId.toString(),
+                "0"
+            )
+            showToast("订单已经忽略")
+            dialog.dismiss()
+        }
+        dialog.show(supportFragmentManager)
+
+   }
+    //取消配送
+    fun setcancelOrder(){
+        val dialog: MineExitDialog =
+            MineExitDialog().newInstance("温馨提示", "确定取消配送吗？", "取消", "确认", false)
+        dialog.setOkClickLister {
+            mViewModel.cancelOrder(
+                CancelOrderSend(
+                    deliveryConsumerId = orderDetailDto?.deliveryConsume!!.id ?: "0",
+                    poiId = orderDetailDto?.order!!.poiId ?: "0",
+                    stationChannelId = orderDetailDto?.deliveryConsume!!.stationChannelId
+                        ?: "0"
+                )
+            )
+            dialog.dismiss()
+        }
+        dialog.show(supportFragmentManager)
+    }
+    //收银小票
+    fun setgetPrint(){
+        //收银小票:1 退款小票:3
+        when (orderDetailDto?.order!!.logisticsStatus) {
+            "70" -> {
+                mViewModel.getPrint(
+                    orderDetailDto?.order?.viewId.toString(),
+                    orderDetailDto?.order?.shopId.toString(),
+                    "3"
+                )
+            }
+            else -> {
+                mViewModel.getPrint(
+                    orderDetailDto?.order?.viewId.toString(),
+                    orderDetailDto?.order?.shopId.toString(),
+                    "1"
+                )
+            }
+
+        }
+    }
+
 
 
 }
