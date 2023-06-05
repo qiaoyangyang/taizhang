@@ -372,14 +372,14 @@ class OrderBaseHistoryFragment :
                     Intent(
                         requireActivity(),
                         OrderDetail1Activity::class.java
-                    ).putExtra("orderId", orderDisAdapter.data.get(position).order!!.viewId)
+                    ).putExtra("orderViewId", orderDisAdapter.data.get(position).order!!.viewId)
                 )
             } else {
                 startActivity(
                     Intent(
                         requireActivity(),
                         OrderDetailActivity::class.java
-                    ).putExtra("orderId", orderDisAdapter.data.get(position).order!!.viewId)
+                    ).putExtra("orderViewId", orderDisAdapter.data.get(position).order!!.viewId)
                 )
             }
 
