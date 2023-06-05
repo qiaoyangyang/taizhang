@@ -6,10 +6,10 @@ import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.LogisticsConfirmDtoList
 import com.meiling.common.network.data.LogisticsInsertDto
 import com.meiling.common.network.data.OrderSendAddress
-import com.meiling.oms.eventBusData.MessageEventUpDataTip
+import com.meiling.common.network.data.SelectLabel
 import com.meiling.oms.databinding.FragmentDis3Binding
-import com.meiling.oms.dialog.OrderDisGoodsSelectDialog
 import com.meiling.oms.dialog.OrderDisPlatformDialog
+import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
@@ -36,15 +36,23 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
     var poid: String = ""
     var orderId: String = ""
     var orderPrice: String = ""
+    var channelType: String = ""
+    var logisticsMenuList = ArrayList<SelectLabel>()
     lateinit var orderSendAddress: OrderSendAddress
     override fun initView(savedInstanceState: Bundle?) {
-        var orderDisGoodsSelectDialog = OrderDisPlatformDialog().newInstance()
+
         mDatabind.txtRecPlatform.setSingleClickListener {
-            orderDisGoodsSelectDialog.show(childFragmentManager)
-            orderDisGoodsSelectDialog.setOkClickLister { id, name ->
-                mDatabind.txtRecPlatform.text = name
-//                selectShop = id
+            if (logisticsMenuList.size > 0) {
+                var orderDisGoodsSelectDialog = OrderDisPlatformDialog().newInstance(logisticsMenuList)
+                orderDisGoodsSelectDialog.show(childFragmentManager)
+                orderDisGoodsSelectDialog.setOkClickLister { id, name ->
+                    mDatabind.txtRecPlatform.text = name
+                    channelType = id
+                }
+            } else {
+                showToast("请重试")
             }
+
         }
         poid = arguments?.getString("poid").toString()
         orderId = arguments?.getString("orderId").toString()
@@ -54,6 +62,7 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
             orderId,
             "SELF"
         )
+        mViewModel.logisticsMenu()
         mDatabind.btnSendDis.setSingleClickListener {
 
             if (mDatabind.edtRecName.text.toString().isNullOrEmpty()) {
@@ -64,8 +73,13 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
                 showToast("请输入配送员手机号")
                 return@setSingleClickListener
             }
+            if (!isPhoneNumber(mDatabind.edtRecPhone.text.toString())) {
+                showToast("请输入正确手机号")
+                return@setSingleClickListener
+            }
+
             if (mDatabind.edtRecPlatformOrder.text.toString().isNullOrEmpty()) {
-                showToast("请输入手机号")
+                showToast("请输物流单号")
                 return@setSingleClickListener
             }
 
@@ -76,8 +90,8 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
                     orderId = orderId,
                     deliveryName = mDatabind.edtRecName.text.toString(),
                     deliveryPhone = mDatabind.edtRecPhone.text.toString(),
-                    deliveryId = "",
-                    channelType = "",
+                    deliveryId = mDatabind.edtRecPlatformOrder.text.toString(),
+                    channelType = channelType,
                     orderAndPoiDeliveryDateDto = orderSendAddress!!
                 )
             )
@@ -148,6 +162,24 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
             }
 
         }
+
+        mViewModel.logisticsMenu.onStart.observe(this) {
+        }
+        mViewModel.logisticsMenu.onSuccess.observe(this) {
+            dismissLoading()
+            mDatabind.txtRecPlatform.text = it[0].label
+            channelType = it[0].value
+            logisticsMenuList.addAll(it)
+        }
+        mViewModel.logisticsMenu.onError.observe(this) {
+            dismissLoading()
+            showToast(it.msg)
+
+        }
     }
 
+    private fun isPhoneNumber(input: String): Boolean {
+        val regex = Regex("^1[3-9]\\d{9}$")
+        return regex.matches(input)
+    }
 }

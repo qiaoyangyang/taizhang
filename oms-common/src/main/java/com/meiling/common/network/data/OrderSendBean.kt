@@ -128,6 +128,16 @@ data class OrderSendShopSelect(
         return name.toString()
     }
 }
+data class SelectLabel(
+    @SerializedName("label")
+    var label: String,
+    @SerializedName("value")
+    var value: String
+) : IWheel {
+    override fun getShowText(): String {
+        return label.toString()
+    }
+}
 
 data class LogisticsConfirmDtoList(var logisticsConfirmDtoList: ArrayList<LogisticsInsertDto>)
 
@@ -275,13 +285,6 @@ data class OrderSendDetail(
         var statusName: String
     )
 }
-
-data class SelectLabel(
-    @SerializedName("label")
-    var label: String,
-    @SerializedName("value")
-    var value: String
-)
 
 data class OrderSendSetting(
     @SerializedName("address")

@@ -46,6 +46,7 @@ interface HomeService {
         @Query("businessNumber") businessNumber: String = "",
         @Query("selectText") selectText: String = "",
         @Query("channelId") channelId: String = "0",
+        @Query("poiId") poiId: String = "",
     ): ResultData<OrderDto>
 
   //订单详情
@@ -76,6 +77,7 @@ interface HomeService {
         @Query("isValid") isValid: String = "",
         @Query("businessNumber") businessNumber: String = "",
         @Query("channelId") channelId: String = "0",
+        @Query("poiId") poiId: String = "0",
     ): ResultData<StatusCountDto>
 
     @GET("/saas/order/shop/updateRemark")

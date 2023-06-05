@@ -99,6 +99,7 @@ class OrderSelectStoreDialog : BaseNiceDialog() {
         )
         createSelectPoiDto.onSuccess.observe(this) {
             var poiList = ArrayList<PoiContentList>()
+            poiList.add(PoiContentList(name = "全部门店", id = "0"))
             poiList.addAll(it.content as MutableList<PoiContentList>)
             for (item in poiList) {
                 if (type == item.name) {

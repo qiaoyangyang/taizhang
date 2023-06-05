@@ -1,10 +1,11 @@
 package com.meiling.oms.dialog
 
+import android.os.Bundle
 import android.view.Gravity
 import android.widget.ImageView
 import com.hjq.shape.view.ShapeButton
 import com.meiling.common.base.WheelItemView
-import com.meiling.common.network.data.OrderSendShopSelect
+import com.meiling.common.network.data.SelectLabel
 import com.meiling.oms.R
 import com.shehuan.nicedialog.BaseNiceDialog
 import com.shehuan.nicedialog.ViewHolder
@@ -21,13 +22,18 @@ class OrderDisPlatformDialog : BaseNiceDialog() {
         return R.layout.dialog_order_dis_goods_select
     }
 
-    fun newInstance(): OrderDisPlatformDialog {
-        return OrderDisPlatformDialog()
+    fun newInstance(arrayList: ArrayList<SelectLabel>): OrderDisPlatformDialog {
+        val args = Bundle()
+        args.putSerializable("selectLabel", arrayList)
+        var dialog = OrderDisPlatformDialog()
+        dialog.arguments = args
+        return dialog
     }
 
-    var shopBean = ArrayList<OrderSendShopSelect>()
+    var shopBean = ArrayList<SelectLabel>()
 
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
+        shopBean = requireArguments().getSerializable("selectLabel") as ArrayList<SelectLabel>
         var cityid_view = holder?.getView<WheelItemView>(R.id.wheel_view_left)
         var wheel_view_center = holder?.getView<WheelItemView>(R.id.wheel_view_center)
         var btn_ok_exit = holder?.getView<ShapeButton>(R.id.btn_ok_exit)
@@ -36,23 +42,14 @@ class OrderDisPlatformDialog : BaseNiceDialog() {
 //            loadData1(wheel_view_center!!, shopBean, selectedIndex)
 //        }
 
-        shopBean.add(OrderSendShopSelect("10", "其它"))
-        shopBean.add(OrderSendShopSelect("20", "达达"))
-        shopBean.add(OrderSendShopSelect("30", "顺丰同城"))
-        shopBean.add(OrderSendShopSelect("40", "顺丰医药"))
-        shopBean.add(OrderSendShopSelect("50", "顺丰快递"))
-        shopBean.add(OrderSendShopSelect("60", "EMS"))
-        shopBean.add(OrderSendShopSelect("70", "UU跑腿"))
-        shopBean.add(OrderSendShopSelect("80", "美团同城"))
-        shopBean.add(OrderSendShopSelect("90", "闪送"))
 //        wheel_view_center?.setOnSelectedListener { context, selectedIndex ->
 //            Log.d("yjk", "convertView: $selectedIndex")
 //        }
         btn_ok_exit?.setOnClickListener {
             var shop = shopBean[cityid_view?.selectedIndex!!]
             okSelectClickLister?.invoke(
-                shop.id,
-                shop.name,
+                shop.value,
+                shop.label,
             )
             dismiss()
         }
@@ -64,8 +61,8 @@ class OrderDisPlatformDialog : BaseNiceDialog() {
         }
     }
 
-    private fun loadData(wheelItemView: WheelItemView, label: ArrayList<OrderSendShopSelect>) {
-        val items = arrayOfNulls<OrderSendShopSelect>(label.size)
+    private fun loadData(wheelItemView: WheelItemView, label: ArrayList<SelectLabel>) {
+        val items = arrayOfNulls<SelectLabel>(label.size)
         label.forEachIndexed { index, shopBean ->
             items[index] = shopBean
         }
