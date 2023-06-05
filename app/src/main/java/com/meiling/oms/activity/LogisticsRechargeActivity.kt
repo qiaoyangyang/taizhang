@@ -84,10 +84,19 @@ class LogisticsRechargeActivity :
             }
         }
 
-
-        adapter.setOnItemClickListener { adapte, view, position ->
-            click(adapte,position)
+        adapter.addChildClickViewIds(R.id.txtShopName,R.id.textToRecharege)
+        adapter.setOnItemChildClickListener { adapter, view, position ->
+            when(view.id){
+                R.id.txtShopName->{
+                    var showOtherBindShopDialog=ShowOtherBindShopDialog().newInstance("使用门店",(adapter.data.get(position) as BalanceItem).stationCommonId)
+                    showOtherBindShopDialog.show(supportFragmentManager)
+                }
+                R.id.textToRecharege->{
+                    click(adapter,position)
+                }
+            }
         }
+
 
         mDatabind.recyClerView.adapter = adapter
 
