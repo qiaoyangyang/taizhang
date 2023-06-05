@@ -361,11 +361,18 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
                 behavior?.peekHeight = dp2px(160)
 
-                mDatabind.included.tvGoOn.text = "发起配送"
-                mDatabind.included.tvRevocation.text = "忽略订单"
-                mDatabind.included.btnPrintReceipt.text = "打印小票"
-                mDatabind.included.btnChangeAddress.text = "修改订单"
+                if (it.order?.isValid==1) {
+                    mDatabind.included.tvGoOn.text = "发起配送"
+                    mDatabind.included.tvRevocation.text = "忽略订单"
+                    mDatabind.included.btnPrintReceipt.text = "打印小票"
+                    mDatabind.included.btnChangeAddress.text = "修改订单"
+                }else if (it.order?.isValid==0){
+                    mDatabind.included.tvGoOn.visibility=View.GONE
+                    mDatabind.included.tvRevocation.visibility=View.GONE
 
+                    mDatabind.included.btnPrintReceipt.text = "打印小票"
+                    mDatabind.included.btnChangeAddress.text = "取消忽略"
+                }
 
                 val latLng = LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
                 addGrowMarker(latLng, 1, 0)
