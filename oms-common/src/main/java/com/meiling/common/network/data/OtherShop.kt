@@ -10,7 +10,7 @@ data class OtherShop(
     var thirdShopName: String = "",
     var select:Boolean?=false, override var isSelect: Boolean=false
 ):java.io.Serializable,ListSelectModel {
-    override fun getTypeName(): String {
+    override fun getSelectTypeName(): String {
         return thirdShopName
     }
 }

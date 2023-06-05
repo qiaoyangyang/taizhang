@@ -10,9 +10,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.activity.BaseActivity
-import com.meiling.common.network.data.Merchant
-import com.meiling.common.network.data.Shop
-import com.meiling.common.network.data.ShopBean
+import com.meiling.common.network.data.*
 import com.meiling.common.network.service.loginService
 import com.meiling.common.network.service.meService
 import com.meiling.common.utils.GlideAppUtils
@@ -29,7 +27,7 @@ import com.meiling.oms.widget.showToast
 class LogisticsRechargeActivity :
     BaseActivity<LogisticsRechargeViewModel, ActivityLogistcsRechargeLayoutBinding>() {
 
-    lateinit var adapter: BaseQuickAdapter<Merchant, BaseViewHolder>
+    lateinit var adapter: BaseQuickAdapter<BalanceItem, BaseViewHolder>
     var name = ""//品牌名称，默认企业名称的简称
     var  shopName=""//门店名称
     var tenantId = ""
@@ -38,6 +36,7 @@ class LogisticsRechargeActivity :
     var poid = ""
     var from = ""
     var shopList = ArrayList<ShopBean>()
+    var type=""
     override fun initView(savedInstanceState: Bundle?) {
 
     }
@@ -59,7 +58,7 @@ class LogisticsRechargeActivity :
             ) {
                 poid = sho.id.toString()
                 mDatabind.TitleBar.titleView.text = sho.name
-                getLogisticsList(poid)
+                getMerchantBalance()
             }
 
             override fun Ondismiss() {
@@ -69,66 +68,11 @@ class LogisticsRechargeActivity :
         shopDialog.show(supportFragmentManager)
     }
 
-    override fun onLeftClick(view: View) {
-        if (from.isNullOrBlank()) {
-            finish()
-        }else{
-            val dialog: MineExitDialog =
-                MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
-            dialog.setOkClickLister {
-                dialog.dismiss()
-                startActivity(Intent(this, LoginActivity::class.java))
-                ActivityUtils.finishAllActivities()
-
-            }
-            dialog.show(supportFragmentManager)
-        }
-
-
-    }
-
-    override fun onRightClick(view: View) {
-        super.onRightClick(view)
-        if (!from.isNullOrBlank()) {
-            val dialog: MineExitDialog =
-                MineExitDialog().newInstance("温馨提示", "确定跳过绑定物流流程？\n" +
-                        "（登录后可在「我的」中进行设置）", "取消", "确认", false)
-            dialog.setOkClickLister {
-                dialog.dismiss()
-                startActivity(Intent(this, ForgetPwdFinishActivity::class.java)
-                    .putExtra("account", account)
-                    .putExtra("password", pwd)
-                    .putExtra("title", "注册成功")
-                    .putExtra("context", "注册成功"))
-                ActivityUtils.finishAllActivities()
-            }
-            dialog.show(supportFragmentManager)
-
-        }
-    }
-
-
-
-    override fun onBackPressed() {
-        if (from.isNullOrBlank()) {
-            finish()
-        }else{
-            val dialog: MineExitDialog =
-                MineExitDialog().newInstance("温馨提示", "确定退出当前页面吗？", "取消", "确认", false)
-            dialog.setOkClickLister {
-                dialog.dismiss()
-                startActivity(Intent(this, LoginActivity::class.java))
-                ActivityUtils.finishAllActivities()
-
-            }
-            dialog.show(supportFragmentManager)
-        }
-    }
 
     override fun onResume() {
         super.onResume()
         if(!poid.isNullOrBlank()){
-            getLogisticsList(poid)
+            getMerchantBalance()
         }
     }
     @SuppressLint("SuspiciousIndentation")
@@ -141,37 +85,38 @@ class LogisticsRechargeActivity :
         poid = intent?.getStringExtra("poid") ?: ""
         from = intent?.getStringExtra("from") ?: ""
         shopName= intent?.getStringExtra("shopName") ?: ""
-        if (from.isNullOrBlank()) {
-            TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
 
-            //获取门店列表
-            mViewModel.launchRequest(
-                { meService.citypoi() },
-                false,
-                onSuccess = {
-                    it?.let {
-                        if (it.size >= 1) {
-                            mDatabind.TitleBar.titleView.text = it.get(0).shopList?.get(0)?.name
-                            poid = it.get(0).shopList?.get(0)?.id.toString()
-                            getLogisticsList(poid)
-                        }
-                        shopList = it
+        getMerchantBalance()
 
-                    }
-                },
-                onError = {}
-            )
-        }else{
-            mDatabind.TitleBar.rightTitle = "跳过"
-            getLogisticsList(poid)
+
+        mDatabind.selectLogistcsType.setOnClickListener {
+
+            var chooseViewDialog=ChooseViewDialog()
+            chooseViewDialog.setMySureOnclickListener {
+                mDatabind.selectLogistcsType.text = it.typeName
+                type=it.type
+                getMerchantBalance()
+            }
+            chooseViewDialog.show(supportFragmentManager)
         }
 
 
-        adapter = object : BaseQuickAdapter<Merchant, BaseViewHolder>(R.layout.item_logistcs_recharege) {
-            override fun convert(holder: BaseViewHolder, item: Merchant) {
-                holder.setText(R.id.txtLogistcsName, item.typeName)
+        adapter = object : BaseQuickAdapter<BalanceItem, BaseViewHolder>(R.layout.item_logistcs_recharege) {
+            override fun convert(holder: BaseViewHolder, item: BalanceItem) {
+                holder.setText(R.id.txtLogistcsName, item.channelType)
                 var img = holder.getView<ImageView>(R.id.img)
                 GlideAppUtils.loadUrl(img, item.iconUrl)
+                holder?.setText(R.id.txtMoney,item.balance)
+                holder?.setText(R.id.txtPhone,item.accountNo)
+                if(item.stationCommonId.isNotEmpty()){
+                    if(item.stationCommonId.size>1){
+                        holder?.setText(R.id.txtShopName,item.stationCommonId.get(0).name+">")
+                    }else{
+                        holder?.setText(R.id.txtShopName,item.stationCommonId.get(0).name)
+                    }
+                }
+
+
             }
         }
 
@@ -188,39 +133,23 @@ class LogisticsRechargeActivity :
     }
 
     private fun click(adapte: BaseQuickAdapter<*, *>, position: Int) {
-        var merchant = adapte.data.get(position) as Merchant
+        var merchant = adapte.data.get(position) as BalanceItem
 
-        if (merchant.type == "uu") {
+        if (merchant.channelType == "uu") {
+            mViewModel?.launchRequest(
+                {
+                    loginService.merchantRecharge(MerchantRecharge("1","H5",merchant.channelType,merchant.stationCommonId.get(0).id))
+                },
+                onSuccess = {
+                    startActivity(Intent(this,BaseWebActivity::class.java).putExtra("url", it))
+                },
+                onError = {
+                    it?.let { showToast(it) }
+                }
+            )
 
-            var uuBinding = UUBinding()
-            uuBinding.setCodeListener {
-                mViewModel.launchRequest(
-                    { loginService.getCode(it, "uu") },
-                    true,
-                    onSuccess = {
-                        showToast("获取验证码成功")
-                    },
-                    onError = {
-                        it?.let { it1 -> showToast(it1) }
-                    }
-                )
-            }
-            uuBinding.setUUSureOnclickListener { phone, code ->
-                uuBinding.dismiss()
-                mViewModel.launchRequest(
-                    { loginService.getOpenId(code, phone, poid, "uu") },
-                    true,
-                    onSuccess = {
-                        getShopList("uu")
-                    },
-                    onError = {
-                        it?.let { it1 -> showToast(it1) }
-                    }
-                )
-            }
-            uuBinding.show(supportFragmentManager)
         } else {
-            when (merchant.type) {
+            when (merchant.channelType) {
                 "dada" -> {
                     var bindingOther = BindDadaOtherLogistics()
                         .newInstance(
@@ -259,21 +188,6 @@ class LogisticsRechargeActivity :
         }
     }
 
-    fun getLogisticsList(poid:String){
-        //获取物流
-        mViewModel.launchRequest(//9024
-            { loginService.getMerChantList(poid) },
-            onSuccess = {
-                it?.let {
-                    var hasBindingList=it.filter { it.status=="0" }
-                        adapter.setList(hasBindingList)
-                }
-            },
-            onError = {
-                it?.let { showToast(it) }
-            }
-        )
-    }
 
 
     /**
@@ -298,11 +212,29 @@ class LogisticsRechargeActivity :
 //        }
 //        otherShopListDialog.show(supportFragmentManager)
 
-        var chooseViewDialog=ChooseViewDialog().newInstance(poid)
+        var chooseViewDialog=ChooseViewDialog().newInstance("配送平台")
         chooseViewDialog.setMySureOnclickListener {
-            showToast(it.thirdShopName)
+            showToast(it.typeName)
         }
         chooseViewDialog.show(supportFragmentManager)
+    }
+
+
+    /**
+     * 获取余额列表
+     */
+    fun getMerchantBalance(){
+        mViewModel.launchRequest(
+            {
+                loginService.getMerchantBalanceList(type,"")
+            },
+            onSuccess = {
+                it?.let { adapter?.setList(it) }
+            },
+            onError = {
+
+            }
+        )
     }
 
     /**
