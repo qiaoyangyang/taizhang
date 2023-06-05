@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.UiSettings
@@ -33,10 +34,13 @@ import com.meiling.oms.adapter.OrderBaseShopListAdapter
 import com.meiling.oms.databinding.ActivityOrderDetailBinding
 import com.meiling.oms.dialog.DataTipDialog
 import com.meiling.oms.dialog.MineExitDialog
+import com.meiling.oms.eventBusData.MessageEvent
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.copyText
 import com.meiling.oms.widget.showToast
 import io.reactivex.annotations.NonNull
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 //配送订单详情
@@ -278,7 +282,17 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                                     "0"
                                 )
                             }else{
-                                startActivity(Intent(this, OrderChangeAddressActivity::class.java))
+                                //startActivity(Intent(this, OrderChangeAddressActivity::class.java))
+                                ARouter.getInstance().build("/app/OrderChangeAddressActivity")
+                    .withString("receiveTime", orderDetailDto?.order?.arriveTimeDate)
+                    .withString("receiveName", orderDetailDto?.order?.recvName)
+                    .withString("receivePhone", orderDetailDto?.order?.recvPhone)
+                    .withString("receiveAddress", orderDetailDto?.order?.recvAddr)
+                    .withString("receiveRemark", orderDetailDto?.order?.remark)
+                    .withString("lat", orderDetailDto?.order?.lat)
+                    .withString("lon", orderDetailDto?.order?.lon)
+                    .withString("orderId", orderDetailDto?.order?.viewId)
+                    .withInt("index", 0)
                             }
                         }
 
@@ -299,7 +313,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                                     showToast("获取部分权限成功，但部分权限未正常授予")
                                     return
                                 }
-                                dialPhoneNumber("12345678")
+                                dialPhoneNumber(orderDetailDto?.order?.recvPhone.toString())
                             }
 
                             override fun onDenied(
@@ -609,6 +623,11 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             }
 
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageEvent) {
+        initData()
     }
 
 
