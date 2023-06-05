@@ -28,44 +28,11 @@ class LogisticsRechargeActivity :
     BaseActivity<LogisticsRechargeViewModel, ActivityLogistcsRechargeLayoutBinding>() {
 
     lateinit var adapter: BaseQuickAdapter<BalanceItem, BaseViewHolder>
-    var name = ""//品牌名称，默认企业名称的简称
-    var  shopName=""//门店名称
     var tenantId = ""
-    var account = ""//管理员账号，默认注册时输入的手机号
-    var pwd = ""
     var poid = ""
-    var from = ""
-    var shopList = ArrayList<ShopBean>()
     var type=""
     override fun initView(savedInstanceState: Bundle?) {
 
-    }
-
-    override fun onTitleClick(view: View) {
-        showShopListDialog(shopList)
-    }
-
-    fun showShopListDialog(shopBean: ArrayList<ShopBean>) {
-        var shopDialog = ShopDialog().newInstance(shopBean!!, "选择发货门店")
-
-        shopDialog.setOnresilience(object : ShopDialog.Onresilience {
-
-            override fun resilience(
-                cityid: Int,
-                cityidname: String,
-                shopid: Int,
-                sho: Shop,
-            ) {
-                poid = sho.id.toString()
-                mDatabind.TitleBar.titleView.text = sho.name
-                getMerchantBalance()
-            }
-
-            override fun Ondismiss() {
-            }
-
-        })
-        shopDialog.show(supportFragmentManager)
     }
 
 
@@ -78,20 +45,15 @@ class LogisticsRechargeActivity :
     @SuppressLint("SuspiciousIndentation")
     override fun initData() {
         super.initData()
-        name = intent?.getStringExtra("name") ?: ""
         tenantId = intent?.getStringExtra("tenantId") ?: ""
-        account = intent?.getStringExtra("account") ?: ""
-        pwd = intent?.getStringExtra("pwd") ?: ""
         poid = intent?.getStringExtra("poid") ?: ""
-        from = intent?.getStringExtra("from") ?: ""
-        shopName= intent?.getStringExtra("shopName") ?: ""
 
         getMerchantBalance()
 
-
+        //选择物流类型
         mDatabind.selectLogistcsType.setOnClickListener {
 
-            var chooseViewDialog=ChooseViewDialog()
+            var chooseViewDialog=ChooseViewDialog().newInstance("配送平台")
             chooseViewDialog.setMySureOnclickListener {
                 mDatabind.selectLogistcsType.text = it.typeName
                 type=it.type
@@ -100,6 +62,16 @@ class LogisticsRechargeActivity :
             chooseViewDialog.show(supportFragmentManager)
         }
 
+        //选择门店
+        mDatabind.selectShop.setOnClickListener {
+            var chooseViewDialog=ChooseShopViewDialog().newInstance("发货门店")
+            chooseViewDialog.setMySureOnclickListener {
+                mDatabind.selectShop.text = it.name
+                poid=it.id!!
+                getMerchantBalance()
+            }
+            chooseViewDialog.show(supportFragmentManager)
+        }
 
         adapter = object : BaseQuickAdapter<BalanceItem, BaseViewHolder>(R.layout.item_logistcs_recharege) {
             override fun convert(holder: BaseViewHolder, item: BalanceItem) {
@@ -226,7 +198,7 @@ class LogisticsRechargeActivity :
     fun getMerchantBalance(){
         mViewModel.launchRequest(
             {
-                loginService.getMerchantBalanceList(type,"")
+                loginService.getMerchantBalanceList(type,poid)
             },
             onSuccess = {
                 it?.let { adapter?.setList(it) }

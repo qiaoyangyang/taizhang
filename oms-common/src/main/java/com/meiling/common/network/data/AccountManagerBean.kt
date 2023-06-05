@@ -85,7 +85,7 @@ data class AccountListContentDto(
 
 data class CreateSelectPoiDto(
     @SerializedName("content")
-    var content: List<PoiContentList?>?,
+    var content: ArrayList<PoiContentList>?= arrayListOf(),
     @SerializedName("pageIndex")
     var pageIndex: Int?,
     @SerializedName("pageSize")
@@ -159,8 +159,11 @@ data class PoiContentList(
     var type: Int? = 0,
     @SerializedName("viewId")
     var viewId: Long? = 0L
-) {
-    var isSelect = false
+) :ListSelectModel{
+    override var isSelect = false
+    override fun getSelectTypeName(): String {
+        return name!!
+    }
 }
 
 data class CreateShopBean(
