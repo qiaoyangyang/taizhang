@@ -224,14 +224,30 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 //忽略订单
                 R.id.tv_revocation -> {
                     if (orderDetailDto != null) {
-                        val dialog: MineExitDialog =
-                            MineExitDialog().newInstance("温馨提示", "确定忽略订单？", "取消", "确认", false)
-                        dialog.setOkClickLister {
-                            mViewModel.invalid(orderDetailDto?.order!!.viewId.toString(), "0")
-                            showToast("订单已经忽略")
-                            dialog.dismiss()
+                        if (orderDetailDto?.order?.logisticsStatus?.toInt() == 0) {
+                            if (orderDetailDto?.order?.isValid == 1) {
+                                val dialog: MineExitDialog =
+                                    MineExitDialog().newInstance(
+                                        "温馨提示",
+                                        "确定忽略订单？",
+                                        "取消",
+                                        "确认",
+                                        false
+                                    )
+                                dialog.setOkClickLister {
+                                    mViewModel.invalid(
+                                        orderDetailDto?.order!!.viewId.toString(),
+                                        "0"
+                                    )
+                                    showToast("订单已经忽略")
+                                    dialog.dismiss()
+                                }
+                                dialog.show(supportFragmentManager)
+                            } else {
+                                mViewModel.invalid(orderDetailDto?.order!!.viewId.toString(), "1")
+                            }
                         }
-                        dialog.show(supportFragmentManager)
+
                     }
                 }
                 //自提完成
