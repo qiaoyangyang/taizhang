@@ -21,8 +21,12 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCa
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.network.data.OrderDetailDto
 import com.meiling.common.network.data.OrderGoodsVo
+import com.meiling.common.utils.DoubleClickHelper
+import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.PermissionUtilis
+import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.adapter.OrderBaseShopListAdapter
 import com.meiling.oms.databinding.ActivityOrderDetailBinding
@@ -45,7 +49,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
     //商品
     private lateinit var orderDisAdapter: OrderBaseShopListAdapter
     override fun initView(savedInstanceState: Bundle?) {
-        mViewModel.getOrderDetail(intent.getStringExtra("orderViewId").toString())
+
         mDatabind.map?.onCreate(savedInstanceState)
         if (aMap == null) {
 
@@ -54,27 +58,16 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             uiSettings = aMap?.uiSettings;//实例化UiSettings类对象
             uiSettings?.isZoomControlsEnabled = false
 
-            aMap?.moveCamera(CameraUpdateFactory.zoomTo(12f))
-            val latLng = LatLng(39.906901, 116.397972)
-            addGrowMarker(latLng, 1)
-            val latLng1 = LatLng(34.242593, 108.903436)
-            addGrowMarker(latLng1, 2)
+            //aMap?.moveCamera(CameraUpdateFactory.zoomTo(12f))
+
         }
 
 
 
         behavior = BottomSheetBehavior.from(mDatabind.bottomSheet)
-        behavior?.addBottomSheetCallback(bottomSheetCallback())
-        behavior?.peekHeight = dp2px(120)
-        behavior?.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+
 
         orderDisAdapter = OrderBaseShopListAdapter()
-//        var goods = ArrayList<GoodsListVo>()
-//        goods.add(GoodsListVo(gname = "张三"))
-//        goods.add(GoodsListVo(gname = "张三1"))
-//        goods.add(GoodsListVo(gname = "张三2"))
-
-//        orderDisAdapter.setList(goods)
         mDatabind.included.recyShopList.adapter = orderDisAdapter
         mDatabind.included.tvRevocation.setOnClickListener(this)
         mDatabind.included.tvGoOn.setOnClickListener(this)
@@ -85,14 +78,15 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         mDatabind.included.txtOrderAccount.setOnClickListener(this)
         mDatabind.included.txtOrderID.setOnClickListener(this)
         mDatabind.included.txtOrderId1.setOnClickListener(this)
-        mDatabind.included.ivPlayBack.visibility=View.GONE
+        mDatabind.included.ivPlayBack.visibility = View.GONE
 
 
     }
 
     override fun initData() {
         super.initData()
-        var orderid = intent.getStringExtra("orderId").toString()
+        var orderid = intent.getStringExtra("orderViewId").toString()
+        mViewModel.getOrderDetail(orderid)
 
 
     }
@@ -121,23 +115,42 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         mDatabind.map.onSaveInstanceState(outState)
     }
 
-    private val ZOOM = 15f
+    private val ZOOM = 10f
 
     /**
      * 添加带生长效果marker
      */
-    private fun addGrowMarker(latLng: LatLng, int: Int) {
+    private fun addGrowMarker(latLng: LatLng, int: Int, type: Int) {
         val options = MarkerOptions()
         options.position(latLng)
         val view = LayoutInflater.from(this).inflate(R.layout.addimg, null, false)
         var iv_icon = view.findViewById<ImageView>(R.id.iv_icon)
         var tv_distance = view.findViewById<TextView>(R.id.tv_distance)
-        if (int == 1) {
-            iv_icon.setBackgroundResource(R.drawable.add_1)
-            tv_distance.visibility = View.INVISIBLE
-        } else {
-            iv_icon.setBackgroundResource(R.drawable.collected)
-            tv_distance.visibility = View.VISIBLE
+        if (type == 0) {
+            if (int == 1) {
+                iv_icon.setBackgroundResource(R.drawable.add_1)
+                tv_distance.visibility = View.VISIBLE
+                tv_distance.text = "顾客距离门店${orderDetailDto?.distance}km"
+            } else {
+                iv_icon.setBackgroundResource(R.drawable.add_shop_02)
+                tv_distance.visibility = View.GONE
+            }
+        }else if (type==1){
+            if (int == 1) {
+                iv_icon.setBackgroundResource(R.drawable.add_shop_02)
+                tv_distance.visibility = View.GONE
+            } else {
+                iv_icon.setBackgroundResource(R.drawable.collected)
+                tv_distance.visibility = View.GONE
+            }
+        }else if (type==2){
+            if (int == 1) {
+                iv_icon.setBackgroundResource(R.drawable.add_1)
+                tv_distance.visibility = View.GONE
+            } else {
+                iv_icon.setBackgroundResource(R.drawable.add_shop_02)
+                tv_distance.visibility = View.GONE
+            }
         }
 
         options.icon(
@@ -145,6 +158,8 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         )
         val marker: Marker = aMap!!.addMarker(options)
         marker.startAnimation()
+        aMap!!.moveCamera(CameraUpdateFactory.zoomTo(ZOOM))
+        aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
     }
 
     private fun bottomSheetCallback(): BottomSheetCallback {
@@ -176,7 +191,16 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                     distance = height * slideOffset
                     //地图跟随滑动，将我的位置移动到中心
                     aMap!!.moveCamera(CameraUpdateFactory.zoomTo(ZOOM))
-                    val latLng = LatLng(39.906901, 116.397972)
+                    var latLng = LatLng(39.906901, 116.397972)
+                    if (orderDetailDto != null) {
+                        Log.d("yjk", "onSlide: 99999")
+                        latLng = LatLng(
+                            orderDetailDto?.order?.lat?.toDouble()!!,
+                            orderDetailDto?.order?.lon?.toDouble()!!
+                        )
+
+                    }
+                    Log.d("yjk", "onSlide: ")
                     aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
                     mDatabind.map.scrollTo(0, -(distance / 2f).toInt())
                     mDatabind.map.translationY = -distance
@@ -194,85 +218,120 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
     }
 
     override fun onClick(v: View?) {
-        when (v?.id) {
-            //忽略订单
-            R.id.tv_revocation -> {
-                val dialog: MineExitDialog =
-                    MineExitDialog().newInstance("温馨提示", "您确认要忽略该订单吗？ \n忽略后可去「订单查询」中查找到该订单", "取消", "确认", false)
-                dialog.setOkClickLister {
-                    showToast("订单已经忽略")
-                    dialog.dismiss()
+        if (!DoubleClickHelper.isOnDoubleClick()) {
+            when (v?.id) {
+
+                //忽略订单
+                R.id.tv_revocation -> {
+                    if (orderDetailDto != null) {
+                        val dialog: MineExitDialog =
+                            MineExitDialog().newInstance("温馨提示", "确定忽略订单？", "取消", "确认", false)
+                        dialog.setOkClickLister {
+                            mViewModel.invalid(orderDetailDto?.order!!.viewId.toString(), "0")
+                            showToast("订单已经忽略")
+                            dialog.dismiss()
+                        }
+                        dialog.show(supportFragmentManager)
+                    }
                 }
-                dialog.show(supportFragmentManager)
-            }
-            //自提完成
-            R.id.tv_go_on -> {
+                //自提完成
+                R.id.tv_go_on -> {
 
-            }
-            //打印小票
-            R.id.btn_Print_receipt -> {
-
-            }
-            //修改订单
-            R.id.btn_change_address -> {
-                startActivity(Intent(this,OrderChangeAddressActivity::class.java))
-
-            }
-            //打电话
-            R.id.iv_call_phone -> {
-                XXPermissions.with(this).permission(PermissionUtilis.Group.PHONE_CALL).request(object :OnPermissionCallback{
-                    override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
-                        if (!allGranted) {
-                            showToast("获取部分权限成功，但部分权限未正常授予")
-                            return
-                        }
-                        dialPhoneNumber("12345678")
-                    }
-
-                    override fun onDenied(
-                        permissions: MutableList<String>,
-                        doNotAskAgain: Boolean
-                    ) {
-                        if (doNotAskAgain) {
-                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                            XXPermissions.startPermissionActivity(
-                                this@OrderDetailActivity,
-                                permissions
+                }
+                //打印小票
+                R.id.btn_Print_receipt -> {
+                    //收银小票:1 退款小票:3
+                    when (orderDetailDto?.order!!.logisticsStatus) {
+                        "70" -> {
+                            mViewModel.getPrint(
+                                orderDetailDto?.order?.viewId.toString(),
+                                orderDetailDto?.order?.shopId.toString(),
+                                "3"
                             )
-                        } else {
-                            showToast("授权失败，请检查权限")
+                        }
+                        else -> {
+                            mViewModel.getPrint(
+                                orderDetailDto?.order?.viewId.toString(),
+                                orderDetailDto?.order?.shopId.toString(),
+                                "1"
+                            )
                         }
 
                     }
 
-                })
+                }
+                //修改订单
+                R.id.btn_change_address -> {
+                    startActivity(Intent(this, OrderChangeAddressActivity::class.java))
 
-            }
-            //平台服务费
-            R.id.txt_order_platform_account -> {
-                DataTipDialog().newInstance("部分外卖平台存在服务费，仅记录展示，非小喵来客收取","平台服务费").show(supportFragmentManager)
-            }
-            //本单支付入账
-            R.id.txt_order_account -> {
-                DataTipDialog().newInstance("本单支付入账=顾客实际支付-平台服务费","本单支付入账").show(supportFragmentManager)
+                }
+                //打电话
+                R.id.iv_call_phone -> {
+                    XXPermissions.with(this).permission(PermissionUtilis.Group.PHONE_CALL)
+                        .request(object : OnPermissionCallback {
+                            override fun onGranted(
+                                permissions: MutableList<String>,
+                                allGranted: Boolean
+                            ) {
+                                if (!allGranted) {
+                                    showToast("获取部分权限成功，但部分权限未正常授予")
+                                    return
+                                }
+                                dialPhoneNumber("12345678")
+                            }
 
-            }
-            //订单编号
-            R.id.txt_order_ID -> {
-                copyText(this, "")
-                showToast("复制成功")
+                            override fun onDenied(
+                                permissions: MutableList<String>,
+                                doNotAskAgain: Boolean
+                            ) {
+                                if (doNotAskAgain) {
+                                    // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                                    XXPermissions.startPermissionActivity(
+                                        this@OrderDetailActivity,
+                                        permissions
+                                    )
+                                } else {
+                                    showToast("授权失败，请检查权限")
+                                }
 
-            }
-            //三方编号
-            R.id.txt_order_id_1 -> {
-                copyText(this, "")
-                showToast("复制成功")
+                            }
 
+                        })
+
+                }
+                //平台服务费
+                R.id.txt_order_platform_account -> {
+                    DataTipDialog().newInstance("部分外卖平台存在服务费，仅记录展示，非小喵来客收取", "平台服务费")
+                        .show(supportFragmentManager)
+                }
+                //本单支付入账
+                R.id.txt_order_account -> {
+                    DataTipDialog().newInstance("本单支付入账=顾客实际支付-平台服务费", "本单支付入账")
+                        .show(supportFragmentManager)
+
+                }
+                //订单编号
+                R.id.txt_order_ID -> {
+                    copyText(this, orderDetailDto?.order?.viewId.toString())
+                    showToast("复制成功")
+
+                }
+                //三方编号
+                R.id.txt_order_id_1 -> {
+                    copyText(this, orderDetailDto?.order?.channelOrderNum.toString())
+                    showToast("复制成功")
+
+                }
             }
+        } else {
+            Log.d("yjk", "请勿重复点击")
         }
     }
 
+    var orderDetailDto: OrderDetailDto? = null
+
     override fun createObserver() {
+
         super.createObserver()
         mViewModel.printDto.onStart.observe(this) {
         }
@@ -289,8 +348,162 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             Log.d("TAG", "createObserver:${it.goodsVoList.toString()} ")
             orderDisAdapter.setList(it.goodsVoList as MutableList<OrderGoodsVo>)
             orderDisAdapter.notifyDataSetChanged()
+            orderDetailDto = it
+            // logisticsStatus 待配送0 待抢单20 待取货30 配送中50 已取消70 已送达80
+            var deliveryStatusName = ""
+            if (it.order?.logisticsStatus?.toInt() == 0) {
+                TextDrawableUtils.setLeftDrawable(
+                    mDatabind.included.tvStatusTitle,
+                    R.drawable.to_be_delivered,
+
+                    )
+                deliveryStatusName = "待配送"
+
+                behavior?.peekHeight = dp2px(160)
+
+                if (it.order?.isValid==1) {
+                    mDatabind.included.tvGoOn.text = "发起配送"
+                    mDatabind.included.tvRevocation.text = "忽略订单"
+                    mDatabind.included.btnPrintReceipt.text = "打印小票"
+                    mDatabind.included.btnChangeAddress.text = "修改订单"
+                }else if (it.order?.isValid==0){
+                    mDatabind.included.tvGoOn.visibility=View.GONE
+                    mDatabind.included.tvRevocation.visibility=View.GONE
+
+                    mDatabind.included.btnPrintReceipt.text = "打印小票"
+                    mDatabind.included.btnChangeAddress.text = "取消忽略"
+                }
+
+                val latLng = LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
+                addGrowMarker(latLng, 1, 0)
+                val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
+                addGrowMarker(latLng1, 2, 0)
+
+            } else if (it.order?.logisticsStatus?.toInt() == 20) {
+                TextDrawableUtils.setLeftDrawable(
+                    mDatabind.included.tvStatusTitle,
+                    R.drawable.daito_be_delivered_20
+                )
+                deliveryStatusName = "待抢单"
+                behavior?.peekHeight = dp2px(160)
+
+                mDatabind.included.tvGoOn.text = "加小费"
+                mDatabind.included.tvRevocation.text = "取消配送"
+                mDatabind.included.btnPrintReceipt.text = "打印小票"
+                mDatabind.included.btnChangeAddress.visibility = View.GONE
+                val latLng = LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
+                addGrowMarker(latLng, 1, 0)
+                val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
+                addGrowMarker(latLng1, 2, 0)
+
+
+            } else if (it.order?.logisticsStatus?.toInt() == 30) {
+                TextDrawableUtils.setLeftDrawable(
+                    mDatabind.included.tvStatusTitle,
+                    R.drawable.daito_be_delivered_30
+                )
+                behavior?.peekHeight = dp2px(160)
+                deliveryStatusName = "待取货"
+
+                mDatabind.included.tvGoOn.text = "配送详情"
+                mDatabind.included.tvRevocation.text = "取消配送"
+                mDatabind.included.btnPrintReceipt.text = "打印小票"
+                mDatabind.included.btnChangeAddress.visibility = View.GONE
+
+                val latLng = LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
+                addGrowMarker(latLng, 1, 1)
+                val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
+                addGrowMarker(latLng1, 2, 1)
+
+
+            } else if (it.order?.logisticsStatus?.toInt() == 50) {
+                TextDrawableUtils.setLeftDrawable(
+                    mDatabind.included.tvStatusTitle,
+                    R.drawable.daito_be_delivered_50
+                )
+                deliveryStatusName = "配送中"
+
+                mDatabind.included.tvGoOn.text = "配送详情"
+                mDatabind.included.tvRevocation.text = "打印小票"
+                mDatabind.included.btnPrintReceipt.visibility = View.GONE
+                mDatabind.included.btnChangeAddress.visibility = View.GONE
+
+                behavior?.peekHeight = dp2px(120)
+            } else if (it.order?.logisticsStatus?.toInt() == 70) {
+                TextDrawableUtils.setLeftDrawable(
+                    mDatabind.included.tvStatusTitle,
+                    R.drawable.daito_be_delivered_70
+                )
+                deliveryStatusName = "已取消"
+                mDatabind.included.tvGoOn.visibility = View.GONE
+                mDatabind.included.tvRevocation.text = "打印小票"
+                mDatabind.included.btnPrintReceipt.visibility = View.GONE
+                mDatabind.included.btnChangeAddress.visibility = View.GONE
+                behavior?.peekHeight = dp2px(120)
+
+                val latLng = LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
+                addGrowMarker(latLng, 1, 1)
+                val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
+                addGrowMarker(latLng1, 2, 1)
+
+            } else if (it.order?.logisticsStatus?.toInt() == 80) {
+                TextDrawableUtils.setLeftDrawable(
+                    mDatabind.included.tvStatusTitle,
+                    R.drawable.daito_be_delivered_80
+                )
+                val latLng = LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
+                addGrowMarker(latLng, 1, 2)
+                val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
+                addGrowMarker(latLng1, 2, 2)
+
+                deliveryStatusName = "已送达"
+                mDatabind.included.tvRevocation.text = "打印小票"
+                mDatabind.included.tvGoOn.text = "配送详情"
+                mDatabind.included.btnPrintReceipt.visibility = View.GONE
+                mDatabind.included.btnChangeAddress.visibility = View.GONE
+                behavior?.peekHeight = dp2px(120)
+            }
+            mDatabind.included.tvStatusTitle.text = deliveryStatusName
+            mDatabind.included.txtActualMoney.text = "¥" + it?.order?.actualPayPrice//顾客实际支付
+            mDatabind.included.txtPlatformMoney.text = "¥" + it?.order?.platformServiceFee//平台服务费
+            mDatabind.included.txtOrderAccountMoney.text = "¥" + it?.order?.actualIncome//本单支付入账
+            mDatabind.included.txtArriveTime.text = it?.order?.arriveTimeDate//送达时间
+            mDatabind.included.txtInsertOrderTime.text = it?.order?.channelCreateTime//下单时间
+            mDatabind.included.txtOrderDeliverStore.text = it?.poi?.name//发货门店
+            mDatabind.included.txtOrderChannelStore.text = it?.shop?.name//渠道店铺
+            mDatabind.included.txtOrderID.text = it?.order?.viewId//订单编号
+            mDatabind.included.txtOrderId1.text = it?.order?.channelOrderNum//三方编号
+            mDatabind.included.txtBaseOrderRemark.text = it?.order?.remark//备注
+            mDatabind.included.txtBaseOrderDeliveryPhone.text = it.order?.recvPhone//电话
+            mDatabind.included.txtOrderDeliveryName.text = it.order?.recvName//电话
+            mDatabind.included.txtCheckMap.text = "${it.distance}km"//电话
+            mDatabind.included.txtBaseOrderDeliveryAddress.text =
+                it.order?.recvAddr?.replace("@@", "")//地址
+            mDatabind.included.txtOrderStore.text = "${it.channelName} "//渠道
+            mDatabind.included.txtBaseOrderNo.text = "${it.order?.channelDaySn} "//单号
+            mDatabind.included.txtBaseOrderDeliveryTime.text = "${it.order?.arriveTimeDate} "//时间
+            GlideAppUtils.loadUrl(
+                mDatabind.included.imgOrderChannelIcon,
+                it.channelLogo ?: "https://static.igoodsale.com/%E7%BA%BF%E4%B8%8B.svg"
+            )
+            //deliveryType == "1" ,"3" 待配送 2:自提
+            if (it.order!!.deliveryType == "2") {
+
+                mDatabind.included.txtBaseOrderDelivery1.text = "前自提"
+            } else {
+
+                mDatabind.included.txtBaseOrderDelivery1.text = "前送达"
+            }
+
+            behavior?.addBottomSheetCallback(bottomSheetCallback())
+
+            behavior?.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+
+
         }
-        mViewModel.orderDetailDto.onError.observe(this) {}
+        mViewModel.orderDetailDto.onError.observe(this) {
+
+        }
     }
 
     private fun dialPhoneNumber(phoneNumber: String) {
