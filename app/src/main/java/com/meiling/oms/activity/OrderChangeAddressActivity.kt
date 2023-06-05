@@ -64,6 +64,7 @@ class OrderChangeAddressActivity :
         orderId = intent.getStringExtra("orderId").toString()
         lat = intent.getStringExtra("lat").toString()
         lon = intent.getStringExtra("lon").toString()
+
         if (isreceiveRemark==1){
             mDatabind.txtOrderChangePhoneRemarkTip.visibility=View.GONE
             mDatabind.edtOrderChangeRemark.visibility=View.GONE
