@@ -39,6 +39,7 @@ import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.copyText
 import com.meiling.oms.widget.showToast
 import io.reactivex.annotations.NonNull
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -66,7 +67,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             //aMap?.moveCamera(CameraUpdateFactory.zoomTo(12f))
 
         }
-
+        EventBus.getDefault().register(this)
 
 
         behavior = BottomSheetBehavior.from(mDatabind.bottomSheet)
@@ -231,14 +232,14 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                     if (orderDetailDto != null) {
                         when (orderDetailDto?.order?.logisticsStatus?.toInt()) {
                             0 -> {
-                                if (orderDetailDto?.order?.isValid == 1){
+                                if (orderDetailDto?.order?.isValid == 1) {
                                     setinvalid()
                                 }
                             }
-                            20 ->{
+                            20 -> {
                                 setcancelOrder()
                             }
-                            50 ->{
+                            50 -> {
                                 setgetPrint()
                             }
                         }
@@ -249,14 +250,14 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 R.id.tv_go_on -> {
                     when (orderDetailDto?.order?.logisticsStatus?.toInt()) {
 
-                        0->{
-                           // setgetPrint()
+                        0 -> {
+                            // setgetPrint()
                             showToast("发起配送")
                         }
-                        20->{
+                        20 -> {
                             showToast("加小费")
                         }
-                        30,50,80->{
+                        30, 50, 80 -> {
                             showToast("配送详情")
                         }
                     }
@@ -266,7 +267,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
                     when (orderDetailDto?.order?.logisticsStatus?.toInt()) {
 
-                        0,30,50 ,70,80->{
+                        0, 30, 50, 70, 80 -> {
                             setgetPrint()
                         }
                     }
@@ -276,28 +277,30 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 R.id.btn_change_address -> {
                     when (orderDetailDto?.order?.logisticsStatus?.toInt()) {
                         0 -> {
-                            if (orderDetailDto?.order?.isValid == 0){
+                            if (orderDetailDto?.order?.isValid == 0) {
                                 mViewModel.invalid(
                                     orderDetailDto?.order!!.viewId.toString(),
                                     "0"
                                 )
-                            }else{
+                            } else {
                                 //startActivity(Intent(this, OrderChangeAddressActivity::class.java))
                                 ARouter.getInstance().build("/app/OrderChangeAddressActivity")
-                    .withString("receiveTime", orderDetailDto?.order?.arriveTimeDate)
-                    .withString("receiveName", orderDetailDto?.order?.recvName)
-                    .withString("receivePhone", orderDetailDto?.order?.recvPhone)
-                    .withString("receiveAddress", orderDetailDto?.order?.recvAddr)
-                    .withString("receiveRemark", orderDetailDto?.order?.remark)
-                    .withString("lat", orderDetailDto?.order?.lat)
-                    .withString("lon", orderDetailDto?.order?.lon)
-                    .withString("orderId", orderDetailDto?.order?.viewId)
-                    .withInt("index", 0)
+                                    .withString(
+                                        "receiveTime",
+                                        orderDetailDto?.order?.arriveTimeDate
+                                    )
+                                    .withString("receiveName", orderDetailDto?.order?.recvName)
+                                    .withString("receivePhone", orderDetailDto?.order?.recvPhone)
+                                    .withString("receiveAddress", orderDetailDto?.order?.recvAddr)
+                                    .withString("receiveRemark", orderDetailDto?.order?.remark)
+                                    .withString("lat", orderDetailDto?.order?.lat)
+                                    .withString("lon", orderDetailDto?.order?.lon)
+                                    .withString("orderId", orderDetailDto?.order?.viewId)
+                                    .withInt("index", 0).navigation()
                             }
                         }
 
                     }
-
 
 
                 }
@@ -369,14 +372,14 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
     override fun createObserver() {
 
         super.createObserver()
-        mViewModel.invalidDto.onStart.observe(this){
+        mViewModel.invalidDto.onStart.observe(this) {
             showLoading("")
         }
-        mViewModel.invalidDto.onSuccess.observe(this){
+        mViewModel.invalidDto.onSuccess.observe(this) {
             disLoading()
             finish()
         }
-        mViewModel.invalidDto.onError.observe(this){
+        mViewModel.invalidDto.onError.observe(this) {
             disLoading()
             showToast(it.msg)
         }
@@ -565,7 +568,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
     }
 
     //确定忽悠订单
-   fun setinvalid(){
+    fun setinvalid() {
         val dialog: MineExitDialog =
             MineExitDialog().newInstance(
                 "温馨提示",
@@ -585,9 +588,10 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         }
         dialog.show(supportFragmentManager)
 
-   }
+    }
+
     //取消配送
-    fun setcancelOrder(){
+    fun setcancelOrder() {
         val dialog: MineExitDialog =
             MineExitDialog().newInstance("温馨提示", "确定取消配送吗？", "取消", "确认", false)
         dialog.setOkClickLister {
@@ -603,8 +607,9 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         }
         dialog.show(supportFragmentManager)
     }
+
     //收银小票
-    fun setgetPrint(){
+    fun setgetPrint() {
         //收银小票:1 退款小票:3
         when (orderDetailDto?.order!!.logisticsStatus) {
             "70" -> {
@@ -627,8 +632,12 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
+        Log.d("yjk", "onMessageEvent: .")
         initData()
     }
+
+
+
 
 
 
