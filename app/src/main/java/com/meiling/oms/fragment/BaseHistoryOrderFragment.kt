@@ -280,7 +280,7 @@ class BaseHistoryOrderFragment :
                             "0" -> {
                                 if (item.order!!.deliveryType == "2") {
 //                                   val dialog: MineExitDialog =
-//                                       MineExitDialog().newInstance("温馨提示", "确定确认出货吗？", "取消", "确认", false)
+//                                       MineExitDialog().newInstance("温馨提示", "确定自提完成吗？", "取消", "确认", false)
 //                                   dialog.setOkClickLister {
                                     mViewModel.orderFinish(item.order!!.viewId!!)
 //                                       dialog.dismiss()
@@ -311,7 +311,7 @@ class BaseHistoryOrderFragment :
                         holder.setText(R.id.txt_order_delivery_1, "自提")
                         holder.setGone(R.id.txt_order_dis, true)
                         changeOrder.visibility = View.INVISIBLE
-                        btnSendDis.text = "确认出货"
+                        btnSendDis.text = "自提完成"
                         btnCancelDis.visibility = View.GONE
                         btnSendDis.visibility = View.VISIBLE
                         holder.setText(R.id.txt_order_delivery_state, "自提")
@@ -334,7 +334,7 @@ class BaseHistoryOrderFragment :
                                 holder.setText(R.id.txt_order_delivery_1, "自提")
                                 holder.setGone(R.id.txt_order_dis, true)
                                 changeOrder.visibility = View.INVISIBLE
-                                btnSendDis.text = "确认出货"
+                                btnSendDis.text = "自提完成"
                                 btnSendDis.visibility = View.VISIBLE
                                 btnCancelDis.visibility = View.GONE
                                 holder.setText(R.id.txt_order_delivery_state, "自提")

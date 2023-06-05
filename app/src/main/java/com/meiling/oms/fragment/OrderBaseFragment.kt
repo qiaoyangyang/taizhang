@@ -273,7 +273,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         "0" -> {
                             //deliveryType == "1" ,"3" 待配送 2:自提
                             if (item.order!!.deliveryType == "2") {
-                                btnSendDis.text = "确认出货"
+                                btnSendDis.text = "自提完成"
                             } else {
                                 btnSendDis.text = "发起配送"
                             }
@@ -450,7 +450,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             dismissLoading()
             mDatabind.sflLayout.autoRefresh()
             EventBus.getDefault().post(MessageEventUpDataTip())
-            showToast("出货成功")
+            showToast("自提完成")
         }
         mViewModel.orderFinish.onError.observe(this) {
             dismissLoading()

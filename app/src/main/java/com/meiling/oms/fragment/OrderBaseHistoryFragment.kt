@@ -299,7 +299,7 @@ class OrderBaseHistoryFragment :
                         "0" -> {
                             //deliveryType == "1" ,"3" 待配送 2:自提
                             if (item.order!!.deliveryType == "2") {
-                                btnSendDis.text = "确认出货"
+                                btnSendDis.text = "自提完成"
                             } else {
                                 btnSendDis.text = "发起配送"
                             }
