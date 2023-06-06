@@ -80,8 +80,6 @@ class LogisticsRechargeActivity :
         super.initData()
         poid = intent?.getStringExtra("poid") ?: ""
 
-        getMerchantBalance()
-
         //选择物流类型
         mDatabind.selectLogistcsType.setOnClickListener {
 
@@ -172,6 +170,7 @@ class LogisticsRechargeActivity :
                     var tv_decreate = view.findViewById<TextView>(R.id.txt_error)
                     tv_decreate.text="未查询到内容"
                     adapter.setEmptyView(view)
+                    getMerchantBalance()
                 } else {
                     val view =
                         LayoutInflater.from(this).inflate(R.layout.empty_logistics_layout, null, false)
