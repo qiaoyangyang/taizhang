@@ -90,6 +90,7 @@ public class SpannableUtils {
         textView.setText(builder);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
+
     public static void setAgreeTextColor(Context context, String content, TextView textView, int ling, int begin, int color) {
         SpannableStringBuilder builder = new SpannableStringBuilder(content);
         builder.setSpan(new ClickableSpan() {
@@ -238,8 +239,9 @@ public class SpannableUtils {
     private static int getChCount(String str) {
         int cnt = 0;
         Pattern pattern = Pattern.compile(regEx);
-        Matcher matcher = pattern.matcher(str);;
-        while(matcher.find()) {
+        Matcher matcher = pattern.matcher(str);
+        ;
+        while (matcher.find()) {
             cnt++;
         }
         return cnt;

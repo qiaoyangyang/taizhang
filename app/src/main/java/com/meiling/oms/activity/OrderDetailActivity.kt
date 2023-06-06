@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -25,10 +26,7 @@ import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDetailDto
 import com.meiling.common.network.data.OrderGoodsVo
-import com.meiling.common.utils.DoubleClickHelper
-import com.meiling.common.utils.GlideAppUtils
-import com.meiling.common.utils.PermissionUtilis
-import com.meiling.common.utils.TextDrawableUtils
+import com.meiling.common.utils.*
 import com.meiling.oms.R
 import com.meiling.oms.adapter.OrderBaseShopListAdapter
 import com.meiling.oms.databinding.ActivityOrderDetailBinding
@@ -530,14 +528,25 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             mDatabind.included.txtCheckMap.text = "${it.distance}km"//电话
             mDatabind.included.txtBaseOrderDeliveryAddress.text =
                 it.order?.recvAddr?.replace("@@", "")//地址
-            mDatabind.included.txtOrderStore.text = "${it.channelName} "//渠道
+            mDatabind.included.txtOrderStore.text = "${it.channelName} ${it.shop?.name}"//渠道
             mDatabind.included.txtBaseOrderNo.text = "${it.order?.channelDaySn} "//单号
             mDatabind.included.txtBaseOrderDeliveryTime.text = "${it.order?.arriveTimeDate} "//时间
             var sumNumber: Int = 0
             for (ne in it.goodsVoList!!) {
                 sumNumber += ne?.number!!
             }
-            mDatabind.included.tvCommon.text = "商品${sumNumber}件，共${it.order?.totalPrice}元"//时间
+            var totalPrice = "商品${sumNumber}件，共${it.order?.totalPrice}元"
+            var ling = ((totalPrice.length - it.order?.totalPrice.toString().length) - 1)
+
+
+            SpannableUtils.setTiktokBindingTextcolor(
+                this,
+                totalPrice,
+                mDatabind.included.tvCommon,
+                ling, totalPrice.length-1, R.color.red, 1
+            ) {
+
+            }
             GlideAppUtils.loadUrl(
                 mDatabind.included.imgOrderChannelIcon,
                 it.channelLogo ?: "https://static.igoodsale.com/%E7%BA%BF%E4%B8%8B.svg"
@@ -635,10 +644,6 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         Log.d("yjk", "onMessageEvent: .")
         initData()
     }
-
-
-
-
 
 
 }
