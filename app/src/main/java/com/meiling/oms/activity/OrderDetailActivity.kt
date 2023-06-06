@@ -153,12 +153,12 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 iv_icon.setBackgroundResource(R.drawable.add_shop_02)
                 tv_distance.visibility = View.GONE
             }
-        }else if (type == 3) {
+        } else if (type == 3) {
             if (int == 1) {//骑手
                 iv_icon.setBackgroundResource(R.drawable.rider_01)
                 tv_distance.visibility = View.VISIBLE
                 tv_distance.text = "骑手距离顾客${orderDetailDto?.distance}km"
-            }else if (int==2){//用户
+            } else if (int == 2) {//用户
                 iv_icon.setBackgroundResource(R.drawable.collected)
                 tv_distance.visibility = View.GONE
             } else {
@@ -205,7 +205,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                     val height = bottomSheet.height
                     distance = height * slideOffset
                     //地图跟随滑动，将我的位置移动到中心
-                   // aMap!!.moveCamera(CameraUpdateFactory.zoomTo(ZOOM))
+                    // aMap!!.moveCamera(CameraUpdateFactory.zoomTo(ZOOM))
                     var latLng = LatLng(39.906901, 116.397972)
                     if (orderDetailDto != null) {
                         Log.d("yjk", "onSlide: 99999")
@@ -216,7 +216,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
                     }
                     Log.d("yjk", "onSlide: ")
-                  //  aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
+                    //  aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
                     mDatabind.map.scrollTo(0, -(distance / 2f).toInt())
                     mDatabind.map.translationY = -distance
 
@@ -273,7 +273,10 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                         30, 50, 80 -> {
 //                            showToast("配送详情")
                             var orderDisDialog =
-                                OrderDistributionDetailDialog().newInstance(false, orderDetailDto?.order?.viewId!!)
+                                OrderDistributionDetailDialog().newInstance(
+                                    false,
+                                    orderDetailDto?.order?.viewId!!
+                                )
                             orderDisDialog.show(supportFragmentManager)
                         }
                     }
@@ -484,22 +487,38 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 mDatabind.included.btnPrintReceipt.text = "打印小票"
                 mDatabind.included.btnChangeAddress.visibility = View.GONE
 
-                val latLng = LatLng(it.riderPositionDTO?.riderLat?.toDouble()!!, it?.riderPositionDTO?.riderLng?.toDouble()!!)//客户
-                addGrowMarker(latLng, 1, 3)
+                if (it.deliveryConsume?.type != 30) {
+                    var latLng = LatLng(
+                        it.riderPositionDTO?.riderLat?.toDouble()!!,
+                        it?.riderPositionDTO?.riderLng?.toDouble()!!
+                    )//客户
+                    addGrowMarker(latLng, 1, 3)
+                    val latLng2 =
+                        LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
+                    addGrowMarker(latLng2, 2, 3)
 
-                val latLng2 = LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
-                addGrowMarker(latLng2, 2, 3)
+                    val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
+                    addGrowMarker(latLng1, 3, 3)
 
-                val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
-                addGrowMarker(latLng1, 3, 3)
+                    var mAllLatLng = ArrayList<LatLng>()
+                    // 添加我的位置
+                    mAllLatLng.add(latLng)
+                    mAllLatLng.add(latLng1)
+                    mAllLatLng.add(latLng2)
+                    setMapBounds(mAllLatLng)
 
-                var mAllLatLng = ArrayList<LatLng>()
-                // 添加我的位置
-                mAllLatLng.add(latLng)
-                mAllLatLng.add(latLng1)
-                mAllLatLng.add(latLng2)
-                setMapBounds(mAllLatLng)
-
+                } else {
+                    val latLng =
+                        LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
+                    addGrowMarker(latLng, 1, 0)
+                    val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
+                    addGrowMarker(latLng1, 2, 0)
+                    var mAllLatLng = ArrayList<LatLng>()
+                    // 添加我的位置
+                    mAllLatLng.add(latLng)
+                    mAllLatLng.add(latLng1)
+                    setMapBounds(mAllLatLng)
+                }
             } else if (it.order?.logisticsStatus?.toInt() == 50) {
                 TextDrawableUtils.setLeftDrawable(
                     mDatabind.included.tvStatusTitle,
@@ -511,21 +530,41 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 mDatabind.included.tvRevocation.text = "打印小票"
                 mDatabind.included.btnPrintReceipt.visibility = View.GONE
                 mDatabind.included.btnChangeAddress.visibility = View.GONE
-                val latLng = LatLng(it.riderPositionDTO?.riderLat?.toDouble()!!, it?.riderPositionDTO?.riderLng?.toDouble()!!)//客户
-                addGrowMarker(latLng, 1, 3)
+                if (it.deliveryConsume?.type != 30) {
+                    var latLng = LatLng(
+                        it.riderPositionDTO?.riderLat?.toDouble()!!,
+                        it?.riderPositionDTO?.riderLng?.toDouble()!!
+                    )//客户
+                    addGrowMarker(latLng, 1, 3)
+                    val latLng2 =
+                        LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
+                    addGrowMarker(latLng2, 2, 3)
 
-                val latLng2 = LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
-                addGrowMarker(latLng2, 2, 3)
+                    val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
+                    addGrowMarker(latLng1, 3, 3)
 
-                val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
-                addGrowMarker(latLng1, 3, 3)
+                    var mAllLatLng = ArrayList<LatLng>()
+                    // 添加我的位置
+                    mAllLatLng.add(latLng)
+                    mAllLatLng.add(latLng1)
+                    mAllLatLng.add(latLng2)
+                    setMapBounds(mAllLatLng)
 
-                var mAllLatLng = ArrayList<LatLng>()
-                // 添加我的位置
-                mAllLatLng.add(latLng)
-                mAllLatLng.add(latLng1)
-                mAllLatLng.add(latLng2)
-                setMapBounds(mAllLatLng)
+                } else {
+                    val latLng =
+                        LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
+                    addGrowMarker(latLng, 1, 0)
+                    val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
+                    addGrowMarker(latLng1, 2, 0)
+                    var mAllLatLng = ArrayList<LatLng>()
+                    // 添加我的位置
+                    mAllLatLng.add(latLng)
+                    mAllLatLng.add(latLng1)
+                    setMapBounds(mAllLatLng)
+                }
+
+
+
 
                 behavior?.peekHeight = dp2px(120)
             } else if (it.order?.logisticsStatus?.toInt() == 70) {
@@ -589,7 +628,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             mDatabind.included.txtOrderStore.text = "${it.channelName} ${it.shop?.name}"//渠道
             mDatabind.included.txtBaseOrderNo.text = "${it.order?.channelDaySn} "//单号
             mDatabind.included.txtBaseOrderDeliveryTime.text = "${it.order?.arriveTimeDate} "//时间
-            var sumNumber  = it.goodsTotalNum
+            var sumNumber = it.goodsTotalNum
 //
             var totalPrice = "商品${sumNumber}件，共${it.order?.totalPrice}元"
             var ling = ((totalPrice.length - it.order?.totalPrice.toString().length) - 1)
@@ -599,7 +638,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 this,
                 totalPrice,
                 mDatabind.included.tvCommon,
-                ling, totalPrice.length-1, R.color.red, 1
+                ling, totalPrice.length - 1, R.color.red, 1
             ) {
 
             }
@@ -619,7 +658,6 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             behavior?.addBottomSheetCallback(bottomSheetCallback())
 
             behavior?.state = BottomSheetBehavior.STATE_HALF_EXPANDED
-
 
 
         }
