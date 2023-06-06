@@ -6,6 +6,7 @@ import com.meiling.common.network.data.*
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -34,9 +35,12 @@ interface OrderDisService {
     @POST("saas/logistics/cancelOrder")
     suspend fun cancelOrderSend(@Body cancelCouponSum: CancelOrderSend): ResultData<String>
 
-    //自提订单确认
-    @POST("saas/order/orderOutStorage")
-    suspend fun orderFinish(@Query("orderId") orderId: String): ResultData<Any>
+    //完成自提
+    @POST("saas/order/shop/shipped/{orderId}")
+    suspend fun orderFinish(@Path("orderId") orderId: String): ResultData<Any>
+//  //自提订单确认
+//    @POST("saas/order/orderOutStorage")
+//    suspend fun orderFinish(@Query("orderId") orderId: String): ResultData<Any>
 
 
     //发起配送

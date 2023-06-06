@@ -25,8 +25,6 @@ import com.hjq.shape.view.ShapeTextView
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDetailDto
-import com.meiling.common.network.data.OrderDto
-import com.meiling.common.network.data.OrderGoodsVo
 import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.SaveDecimalUtils
 import com.meiling.oms.R
@@ -35,7 +33,9 @@ import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.oms.dialog.OrderGoodsListDetailDialog
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
-import com.meiling.oms.widget.*
+import com.meiling.oms.widget.KeyBoardUtil
+import com.meiling.oms.widget.setSingleClickListener
+import com.meiling.oms.widget.showToast
 
 @Route(path = "/app/Search1Activity")
 class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1Binding>() {
@@ -43,6 +43,7 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
     lateinit var orderDisAdapter: BaseQuickAdapter<OrderDetailDto, BaseViewHolder>
 
     var telPhone = ""
+    var intentIsValid: String = ""
     override fun initView(savedInstanceState: Bundle?) {
         orderDisAdapter =
             object :
@@ -57,6 +58,8 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                     val btnCancelDis =
                         holder.getView<TextView>(R.id.txt_base_order_dis_cancel)//取消配送
                     val btnOrderDisIgnore = holder.getView<TextView>(R.id.txt_order_ignore)//忽略配送
+                    val btnOrderCncelIgnore =
+                        holder.getView<TextView>(R.id.txt_order_cancel_ignore)//取消忽略配送
                     val btnShopDetail =
                         holder.getView<ShapeRelativeLayout>(R.id.srl_check_shop)//商品详情
 
@@ -64,6 +67,7 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                     val orderAddress =
                         holder.getView<TextView>(R.id.txt_base_order_delivery_address)
                     val callPhone = holder.getView<ImageView>(R.id.iv_call_phone)
+                    val imgIgnore = holder.getView<ImageView>(R.id.img_ignore)
                     val channelLogoImg =
                         holder.getView<AppCompatImageView>(R.id.img_order_channel_icon)
                     val imsDeliveryWay = holder.getView<AppCompatImageView>(R.id.ims_delivery_way)
@@ -72,22 +76,22 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                     checkMap.text = "${item.distance}km"
                     telPhone = item.order?.recvPhone ?: ""
                     orderAddress.text = item.order?.recvAddr!!.replace("@@", "")
-                    var sum: Double = 0.0
-                    var sumNumber: Int = 0
-                    if (item.goodsVoList?.isNotEmpty() == true) {
-
-                        for (ne in item.goodsVoList!!) {
-                            sum += ne?.totalPrice!!
-                            sumNumber += ne?.number!!
-                        }
+//                    var sum: Double = 0.0
+                    val sumNumber: Int = item.goodsTotalNum ?: 0
+//                    if (item.goodsVoList?.isNotEmpty() == true) {
+//
+//                        for (ne in item.goodsVoList!!) {
+////                            sum += ne?.totalPrice!!
+//                            sumNumber += ne?.number!!
+//                        }
                         holder.setText(
                             R.id.txt_base_order_shop_msg,
-                            "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(sum)}元"
+                            "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
                         )
                         holder.setText(
                             R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}"
                         )
-                    }
+//                    }
 
                     holder.setText(R.id.txt_base_order_No, "${item.order?.channelDaySn}")
                     holder.setText(
@@ -123,8 +127,11 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                     }
                     btnShopDetail.setSingleClickListener {
                         val orderGoodsListDetailDialog =
-                            OrderGoodsListDetailDialog().newInstance(sumNumber,
-                                SaveDecimalUtils.decimalUtils(sum).toString(),item.goodsVoList!!)
+                            OrderGoodsListDetailDialog().newInstance(
+                                sumNumber,
+                                SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!).toString(),
+                                item.goodsVoList!!
+                            )
                         orderGoodsListDetailDialog.show(supportFragmentManager)
                     }
 //
@@ -158,7 +165,13 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
 //
 
                     checkMap.setSingleClickListener {
-                        showToast("查看地图")
+//                        showToast("查看地图")
+                        startActivity(
+                            Intent(
+                               this@OrderSearchActivity,
+                                OrderMapCheActivity::class.java
+                            ).putExtra("orderDetailDto", item)
+                        )
                     }
                     btnCancelDis.setSingleClickListener {
                         val dialog: MineExitDialog =
@@ -178,12 +191,23 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                     }
                     btnOrderDisIgnore.setSingleClickListener {
                         val dialog: MineExitDialog =
-                            MineExitDialog().newInstance("温馨提示", "您确认要忽略该订单吗？ \n忽略后可去「订单查询」中查找到该订单", "取消", "确认", false)
+                            MineExitDialog().newInstance(
+                                "温馨提示",
+                                "您确认要忽略该订单吗?\n忽略后可去「订单查询」中查找到该订单",
+                                "取消",
+                                "确认",
+                                false
+                            )
                         dialog.setOkClickLister {
-                            mViewModel.invalid(item.order!!.viewId.toString(),"0")
+                            mViewModel.invalid(item.order!!.viewId.toString(), "0")
                             dialog.dismiss()
                         }
                         dialog.show(supportFragmentManager)
+                        intentIsValid = ""
+                    }
+                    btnOrderCncelIgnore.setSingleClickListener {
+                        mViewModel.invalid(item.order!!.viewId.toString(), "1")
+                        intentIsValid = "1"
                     }
                     var orderDisDialog =
                         OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
@@ -212,7 +236,7 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
 
                         }
                     }
-                    //deliveryType == "1" ,"3" 待配送 2:自提
+                    //deliveryType == "1" ,"3" 待配送 2:自提 isValid//1 有效 0无效
                     if (item.order!!.deliveryType == "2") {
                         imsDeliveryWay.visibility = View.VISIBLE
                         checkMap.visibility = View.INVISIBLE
@@ -229,47 +253,99 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                         "0" -> {
                             //deliveryType == "1" ,"3" 待配送 2:自提
                             if (item.order!!.deliveryType == "2") {
-                                btnSendDis.text = "确认出货"
+                                btnSendDis.text = "自提完成"
                             } else {
                                 btnSendDis.text = "发起配送"
                             }
+                            btnSendDis.visibility = View.VISIBLE
                             btnOrderDisIgnore.visibility = View.VISIBLE
                             btnCancelDis.visibility = View.GONE
                         }
                         "20" -> {
+                            btnOrderDisIgnore.visibility = View.GONE
+                            btnOrderCncelIgnore.visibility = View.GONE
                             btnCancelDis.visibility = View.VISIBLE
+                            btnSendDis.visibility = View.VISIBLE
                             btnSendDis.text = "加小费"
                         }
                         "30" -> {
+                            btnOrderDisIgnore.visibility = View.GONE
+                            btnOrderCncelIgnore.visibility = View.GONE
                             btnCancelDis.visibility = View.VISIBLE
+                            btnSendDis.visibility = View.VISIBLE
                             btnSendDis.text = "配送详情"
                         }
                         "50" -> {
+                            btnOrderDisIgnore.visibility = View.GONE
+                            btnOrderCncelIgnore.visibility = View.GONE
                             btnCancelDis.visibility = View.GONE
+                            btnSendDis.visibility = View.VISIBLE
                             btnSendDis.text = "配送详情"
                         }
                         "70" -> {
+                            btnOrderDisIgnore.visibility = View.GONE
+                            btnOrderCncelIgnore.visibility = View.GONE
                             btnCancelDis.visibility = View.GONE
+                            btnSendDis.visibility = View.VISIBLE
                             btnSendDis.text = "重新配送"
                         }
                         "80" -> {
+                            btnOrderDisIgnore.visibility = View.GONE
+                            btnOrderDisIgnore.visibility = View.GONE
                             btnCancelDis.visibility = View.GONE
+                            btnSendDis.visibility = View.VISIBLE
                             if (item.order!!.deliveryType == "2") {
                                 btnSendDis.visibility = View.GONE
                             } else {
-
+                                btnOrderDisIgnore.visibility = View.GONE
                                 btnSendDis.visibility = View.VISIBLE
                                 btnSendDis.text = "配送详情"
                             }
                         }
                     }
+
+
+
+                    if (item.order!!.isValid == 0) {
+                        imgIgnore.visibility = View.VISIBLE
+                        btnCancelDis.visibility = View.GONE
+                        btnSendDis.visibility = View.INVISIBLE
+                        btnOrderDisIgnore.visibility = View.GONE
+                        btnOrderCncelIgnore.visibility = View.VISIBLE
+                    } else {
+                        imgIgnore.visibility = View.GONE
+                        btnOrderCncelIgnore.visibility = View.GONE
+                    }
                 }
             }
         mDatabind.rvHistoryOrderList.adapter = orderDisAdapter
+        orderDisAdapter.setOnItemClickListener { adapter, view, position ->
 
+            if (orderDisAdapter.data.get(position).order!!.deliveryType.toString() == "2") {
+                startActivity(
+                    Intent(
+                        this,
+                        OrderDetail1Activity::class.java
+                    ).putExtra("orderViewId", orderDisAdapter.data.get(position).order!!.viewId)
+                )
+            } else {
+                startActivity(
+                    Intent(
+                        this,
+                        OrderDetailActivity::class.java
+                    ).putExtra("orderViewId", orderDisAdapter.data.get(position).order!!.viewId)
+                )
+            }
+
+        }
         var intentOrderId = intent.getStringExtra("pushOrderId")
+        intentIsValid = intent.getStringExtra("isValid").toString()
+        if (intentIsValid.isNotBlank()) {
+            intentIsValid = ""
+        }
         if (intentOrderId != null) {
             b = true
+            intentIsValid = ""
             mDatabind.edtSearch.setText(intentOrderId)
         } else {
             b = false
@@ -320,9 +396,10 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                 pageSize = "50",
                 orderTime = "1",
                 deliverySelect = "0",
-                isValid = "",
+                isValid = intentIsValid,
                 businessNumber = "",
-                selectText = mDatabind.edtSearch.text.trim().toString()
+                selectText = mDatabind.edtSearch.text.trim().toString(),
+                sort = "4"
             )
 
         }
@@ -351,9 +428,10 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                 pageSize = "50",
                 orderTime = "1",
                 deliverySelect = "0",
-                isValid = "",
+                isValid = intentIsValid,
                 businessNumber = "",
-                selectText = mDatabind.edtSearch.text.trim().toString()
+                selectText = mDatabind.edtSearch.text.trim().toString(),
+                sort = "4"
             )
 
         }
@@ -391,6 +469,7 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
         }
         mViewModel.orderFinish.onSuccess.observe(this) {
             disLoading()
+
             mViewModel.orderList(
                 logisticsStatus = "",
                 startTime = "",
@@ -400,7 +479,7 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                 pageSize = "50",
                 orderTime = "1",
                 deliverySelect = "0",
-                isValid = "",
+                isValid = intentIsValid,
                 businessNumber = "",
                 selectText = mDatabind.edtSearch.text.trim().toString()
             )
@@ -420,6 +499,32 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
             showToast(it.msg)
         }
 
+
+        mViewModel.invalidDto.onSuccess.observe(this) {
+            if (intentIsValid.isNullOrEmpty()) {
+                showToast("订单忽略成功")
+            } else {
+                showToast("取消忽略成功")
+            }
+            KeyBoardUtil.closeKeyBord(mDatabind.edtSearch, this)
+            mViewModel.orderList(
+                logisticsStatus = "",
+                startTime = "",
+                endTime = "",
+                businessNumberType = "1",
+                pageIndex = 1,
+                pageSize = "50",
+                orderTime = "1",
+                deliverySelect = "0",
+                isValid = intentIsValid,
+                businessNumber = "",
+                selectText = mDatabind.edtSearch.text.trim().toString(),
+                sort = "4"
+            )
+        }
+        mViewModel.invalidDto.onError.observe(this) {
+            showToast(it.msg)
+        }
     }
 
 

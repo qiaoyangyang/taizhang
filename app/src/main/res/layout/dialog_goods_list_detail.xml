@@ -51,7 +51,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_2"
         android:layout_above="@+id/tv_shop_num"
-        android:background="@color/home_666666" />
+        android:layout_marginBottom="@dimen/dp_16"
+        android:background="@color/home_F1F1F1" />
 
     <TextView
         android:id="@+id/tv_shop_num"

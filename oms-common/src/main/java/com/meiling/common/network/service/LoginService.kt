@@ -147,6 +147,20 @@ interface LoginService {
     suspend fun merChantSave(@Body putMerChant:PutMerChant):ResultData<Any>
 
     /**
+     * 获取余额列表
+     * channelType 物流类型(uu,ss,sf_tc,dada)
+     * poiId 门店编号
+     */
+    @GET("/saas/express/merchant/balance")
+    suspend fun getMerchantBalanceList(@Query("channelType")channelType:String,@Query("poiId")poiId:String):ResultData<ArrayList<BalanceItem>>
+
+    /**
+     * 物流充值
+     */
+    @POST("/saas/express/merchant/recharge")
+    suspend fun merchantRecharge(@Body merchantRecharge:MerchantRecharge):ResultData<String>
+
+    /**
      * 手动绑定门店
      * poiId门店编号
      * thirdShopId三方门店编号
@@ -189,4 +203,6 @@ interface LoginService {
                             @Query("pageSize")pageSize:String,
                             @Query("poiId")poiId:String,
                             @Query("type")type:String):ResultData<ArrayList<OtherShop>>
+
+
 }

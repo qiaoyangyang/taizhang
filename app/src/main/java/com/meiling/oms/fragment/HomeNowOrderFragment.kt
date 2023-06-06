@@ -76,7 +76,7 @@ class HomeNowOrderFragment :
     var poiId = "0"
     override fun initListener() {
         mDatabind.imgSearchOrder.setOnClickListener {
-            ARouter.getInstance().build("/app/Search1Activity").navigation()
+            ARouter.getInstance().build("/app/Search1Activity").withString("isValid", "1").navigation()
         }
         mDatabind.imgCreateOrder.setOnClickListener {
             startActivity(Intent(requireContext(), OrderCreateActivity::class.java))

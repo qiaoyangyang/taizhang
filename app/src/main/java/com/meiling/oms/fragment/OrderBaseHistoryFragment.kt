@@ -28,10 +28,7 @@ import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.SaveDecimalUtils
 import com.meiling.oms.R
-import com.meiling.oms.activity.ChannelActivity
-import com.meiling.oms.activity.MainActivity
-import com.meiling.oms.activity.OrderDetail1Activity
-import com.meiling.oms.activity.OrderDetailActivity
+import com.meiling.oms.activity.*
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
@@ -72,6 +69,7 @@ class OrderBaseHistoryFragment :
     var orderTime = "1"
     var channelId = "0"
     var isValid = ""
+    var intentIsValid = ""
 
 
     override fun onResume() {
@@ -131,13 +129,8 @@ class OrderBaseHistoryFragment :
                     telPhone = item.order?.recvPhone ?: ""
                     orderAddress.text = item.order?.recvAddr!!.replace("@@", "")
                     var sum: Double = 0.0
-                    var sumNumber: Int = 0
-                    if (item.goodsVoList?.isNotEmpty() == true) {
+                    var sumNumber: Int = item.goodsTotalNum ?: 0
 
-                        for (ne in item.goodsVoList!!) {
-//                            sum += ne?.totalPrice!!
-                            sumNumber += ne?.number!!
-                        }
                         holder.setText(
                             R.id.txt_base_order_shop_msg,
                             "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
@@ -145,7 +138,6 @@ class OrderBaseHistoryFragment :
                         holder.setText(
                             R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}"
                         )
-                    }
 
                     holder.setText(R.id.txt_base_order_No, "${item.order?.channelDaySn}")
                     holder.setText(
@@ -219,7 +211,13 @@ class OrderBaseHistoryFragment :
 //
 
                     checkMap.setSingleClickListener {
-                        showToast("查看地图")
+//                        showToast("查看地图")
+                        startActivity(
+                            Intent(
+                                requireActivity(),
+                                OrderMapCheActivity::class.java
+                            ).putExtra("orderDetailDto", item)
+                        )
                     }
                     btnCancelDis.setSingleClickListener {
                         val dialog: MineExitDialog =
@@ -236,6 +234,7 @@ class OrderBaseHistoryFragment :
                             dialog.dismiss()
                         }
                         dialog.show(childFragmentManager)
+
                     }
                     btnOrderDisIgnore.setSingleClickListener {
                         val dialog: MineExitDialog =
@@ -251,10 +250,11 @@ class OrderBaseHistoryFragment :
                             dialog.dismiss()
                         }
                         dialog.show(childFragmentManager)
-
+                        intentIsValid = ""
                     }
                     btnOrderCncelIgnore.setSingleClickListener {
                         mViewModel.invalid(item.order!!.viewId.toString(), "1")
+                        intentIsValid = ""
                     }
                     var orderDisDialog =
                         OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
@@ -394,7 +394,7 @@ class OrderBaseHistoryFragment :
 
     var list = ArrayList<String>()
     var orderSore = "1"
-    var poiId = "1"
+    var poiId = "0"
     private fun initViewData() {
         mViewModel.orderList(
             logisticsStatus = requireArguments().getString("type").toString(),
@@ -408,6 +408,7 @@ class OrderBaseHistoryFragment :
             isValid = isValid,
             businessNumber = "",
             channelId = channelId,
+            poiId = poiId,
             sort = "4"
         )
         orderDisAdapter.loadMoreModule.loadMoreView = SS()
@@ -426,6 +427,7 @@ class OrderBaseHistoryFragment :
                 businessNumber = "",
                 selectText = "",
                 channelId = channelId,
+                poiId = poiId,
                 sort = "4"
             )
         }
@@ -519,7 +521,11 @@ class OrderBaseHistoryFragment :
             showToast(it.msg)
         }
         mViewModel.invalidDto.onSuccess.observe(this) {
-            showToast("取消忽略成功")
+            if (intentIsValid=="0"){
+                showToast("订单忽略成功")
+            }else{
+                showToast("取消忽略成功")
+            }
             mDatabind.sflLayout.autoRefresh()
             EventBus.getDefault().post(MessageEventHistoryUpDataTip())
         }
@@ -549,6 +555,7 @@ class OrderBaseHistoryFragment :
         orderTime = messageHistoryEventTime.selectDialogDto.orderTime
         channelId = messageHistoryEventTime.selectDialogDto.channelId!!
         isValid = messageHistoryEventTime.selectDialogDto.isValid!!
+        poiId = messageHistoryEventTime.shopId
         initViewData()
         (mDatabind.rvOrderList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
             0,
