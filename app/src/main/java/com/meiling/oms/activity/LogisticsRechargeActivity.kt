@@ -102,10 +102,11 @@ class LogisticsRechargeActivity :
 
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun click(adapte: BaseQuickAdapter<*, *>, position: Int) {
         var merchant = adapte.data.get(position) as BalanceItem
 
-//        if (merchant.channelType == "uu") {
+        if (merchant.channelType != "dada") {
             mViewModel?.launchRequest(
                 {
                     loginService.merchantRecharge(MerchantRecharge("1","H5",merchant.channelType,merchant.stationCommonId.get(0).id))
@@ -117,7 +118,23 @@ class LogisticsRechargeActivity :
                     it?.let { showToast(it) }
                 }
             )
-//        }
+        }else{
+            var dadaRechargeDialog=DadaRechargeDialog()
+            dadaRechargeDialog.setMySureOnclickListener {
+                mViewModel?.launchRequest(
+                    {
+                        loginService.merchantRecharge(MerchantRecharge(it,"H5",merchant.channelType,merchant.stationCommonId.get(0).id))
+                    },
+                    onSuccess = {
+                        startActivity(Intent(this,BaseWebActivity::class.java).putExtra("url", it))
+                    },
+                    onError = {
+                        it?.let { showToast(it) }
+                    }
+                )
+            }
+            dadaRechargeDialog.show(supportFragmentManager)
+        }
     }
 
 

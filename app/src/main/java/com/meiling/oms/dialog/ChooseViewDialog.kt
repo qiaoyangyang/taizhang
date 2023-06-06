@@ -61,7 +61,7 @@ class ChooseViewDialog : BaseNiceDialog() {
         recy?.adapter=adapter
 
         var list=ArrayList<Merchant>()
-        list.add(Merchant(typeName ="全部配送", type = "qb", isSelect = true ))
+        list.add(Merchant(typeName ="全部配送", type = "", isSelect = true ))
         list.add(Merchant(typeName ="达达", type = "dada" ))
         list.add(Merchant(typeName ="顺丰同城",type="sf_tc" ))
         list.add(Merchant(typeName ="UU跑腿",type="uu" ))
