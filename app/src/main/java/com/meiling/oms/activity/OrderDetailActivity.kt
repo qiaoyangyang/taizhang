@@ -511,7 +511,6 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 mDatabind.included.tvRevocation.text = "打印小票"
                 mDatabind.included.btnPrintReceipt.visibility = View.GONE
                 mDatabind.included.btnChangeAddress.visibility = View.GONE
-
                 val latLng = LatLng(it.riderPositionDTO?.riderLat?.toDouble()!!, it?.riderPositionDTO?.riderLng?.toDouble()!!)//客户
                 addGrowMarker(latLng, 1, 3)
 
