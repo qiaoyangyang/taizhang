@@ -24,5 +24,10 @@ data class Merchant(
     @SerializedName("typeName")
     var typeName: String = "",
     @SerializedName("guideUrl")
-    var guideUrl:String =""
-) : Serializable
+    var guideUrl:String ="",
+    override var isSelect: Boolean=false
+) : Serializable,ListSelectModel {
+    override fun getSelectTypeName(): String {
+        return typeName
+    }
+}

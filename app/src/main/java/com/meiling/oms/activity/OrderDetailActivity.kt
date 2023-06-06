@@ -53,6 +53,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
     override fun initView(savedInstanceState: Bundle?) {
 
         mDatabind.map?.onCreate(savedInstanceState)
+        EventBus.getDefault().register(this)
         if (aMap == null) {
 
             aMap = mDatabind.map.map
@@ -60,10 +61,9 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             uiSettings = aMap?.uiSettings;//实例化UiSettings类对象
             uiSettings?.isZoomControlsEnabled = false
 
-            //aMap?.moveCamera(CameraUpdateFactory.zoomTo(12f))
 
         }
-        EventBus.getDefault().register(this)
+
 
 
         behavior = BottomSheetBehavior.from(mDatabind.bottomSheet)
@@ -117,7 +117,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         mDatabind.map.onSaveInstanceState(outState)
     }
 
-    private val ZOOM = 4f
+    private val ZOOM = 10f
 
     /**
      * 添加带生长效果marker
@@ -161,11 +161,8 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         val marker: Marker = aMap!!.addMarker(options)
         marker.startAnimation()
 
-        val linearParams = mDatabind.map.layoutParams //取控件textView当前的布局参数
-
-       // aMap?.setPointToCenter(linearParams?.width!!.toInt() /2, linearParams?.height!!.toInt()/2)
-        aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
         aMap!!.moveCamera(CameraUpdateFactory.zoomTo(ZOOM))
+        aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
     }
 
     private fun bottomSheetCallback(): BottomSheetCallback {
@@ -196,7 +193,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                     val height = bottomSheet.height
                     distance = height * slideOffset
                     //地图跟随滑动，将我的位置移动到中心
-                    aMap!!.moveCamera(CameraUpdateFactory.zoomTo(ZOOM))
+                   // aMap!!.moveCamera(CameraUpdateFactory.zoomTo(ZOOM))
                     var latLng = LatLng(39.906901, 116.397972)
                     if (orderDetailDto != null) {
                         Log.d("yjk", "onSlide: 99999")
@@ -207,7 +204,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
                     }
                     Log.d("yjk", "onSlide: ")
-                    aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
+                  //  aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
                     mDatabind.map.scrollTo(0, -(distance / 2f).toInt())
                     mDatabind.map.translationY = -distance
 
@@ -436,7 +433,11 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 addGrowMarker(latLng, 1, 0)
                 val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
                 addGrowMarker(latLng1, 2, 0)
-
+                var mAllLatLng = ArrayList<LatLng>()
+                // 添加我的位置
+                mAllLatLng.add(latLng)
+                mAllLatLng.add(latLng1)
+                setMapBounds(mAllLatLng)
             } else if (it.order?.logisticsStatus?.toInt() == 20) {
                 TextDrawableUtils.setLeftDrawable(
                     mDatabind.included.tvStatusTitle,
@@ -453,7 +454,11 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 addGrowMarker(latLng, 1, 0)
                 val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
                 addGrowMarker(latLng1, 2, 0)
-
+                var mAllLatLng = ArrayList<LatLng>()
+                // 添加我的位置
+                mAllLatLng.add(latLng)
+                mAllLatLng.add(latLng1)
+                setMapBounds(mAllLatLng)
             } else if (it.order?.logisticsStatus?.toInt() == 30) {
                 TextDrawableUtils.setLeftDrawable(
                     mDatabind.included.tvStatusTitle,
@@ -471,7 +476,11 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 addGrowMarker(latLng, 1, 1)
                 val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
                 addGrowMarker(latLng1, 2, 1)
-
+                var mAllLatLng = ArrayList<LatLng>()
+                // 添加我的位置
+                mAllLatLng.add(latLng)
+                mAllLatLng.add(latLng1)
+                setMapBounds(mAllLatLng)
 
             } else if (it.order?.logisticsStatus?.toInt() == 50) {
                 TextDrawableUtils.setLeftDrawable(
@@ -502,7 +511,11 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 addGrowMarker(latLng, 1, 1)
                 val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
                 addGrowMarker(latLng1, 2, 1)
-
+                var mAllLatLng = ArrayList<LatLng>()
+                // 添加我的位置
+                mAllLatLng.add(latLng)
+                mAllLatLng.add(latLng1)
+                setMapBounds(mAllLatLng)
             } else if (it.order?.logisticsStatus?.toInt() == 80) {
                 TextDrawableUtils.setLeftDrawable(
                     mDatabind.included.tvStatusTitle,
@@ -512,7 +525,11 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 addGrowMarker(latLng, 1, 2)
                 val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
                 addGrowMarker(latLng1, 2, 2)
-
+                var mAllLatLng = ArrayList<LatLng>()
+                // 添加我的位置
+                mAllLatLng.add(latLng)
+                mAllLatLng.add(latLng1)
+                setMapBounds(mAllLatLng)
                 deliveryStatusName = "已送达"
                 mDatabind.included.tvRevocation.text = "打印小票"
                 mDatabind.included.tvGoOn.text = "配送详情"
@@ -571,7 +588,8 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             behavior?.addBottomSheetCallback(bottomSheetCallback())
 
             behavior?.state = BottomSheetBehavior.STATE_HALF_EXPANDED
-           // setAllLatLng()
+
+
 
         }
         mViewModel.orderDetailDto.onError.observe(this) {
@@ -652,23 +670,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         Log.d("yjk", "onMessageEvent: .")
         initData()
     }
-    lateinit var mAllLatLng:ArrayList<LatLng>
-    /**
-     * 获取所有点的集合
-     */
-    private fun setAllLatLng() {
-        if (mAllLatLng == null) {
-            mAllLatLng = ArrayList<LatLng>()
-        }
-        val latLng = LatLng(orderDetailDto?.order?.lat?.toDouble()!!, orderDetailDto?.order?.lon?.toDouble()!!)//客户
-        val latLng1 = LatLng(orderDetailDto?.poi?.lat?.toDouble()!!, orderDetailDto?.poi?.lon?.toDouble()!!)
-        //
-        // 添加我的位置
-        mAllLatLng.add(latLng)
-        mAllLatLng.add(latLng1)
-        // 将所有的点显示到地图界面上
-        setMapBounds(mAllLatLng)
-    }
+
 
     /**
      * include marker show zoom
@@ -679,14 +681,12 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             latlngBuilder.include(latLng)
         }
         val bounds = latlngBuilder.build()
-        aMap?.setMapStatusLimits(bounds)
-        Log.d("yjk","将所有的点显示到地图界面上")
-//        aMap?.animateCamera(
-//            CameraUpdateFactory.newLatLngBounds(
-//                bounds,
-//                40
-//            )
-//        ) // 地图显示包含全部的点 40 表示padding=40，如果你想让你的marker布局全部显示出来就需要考虑到marker的高度来设置padding值
+        aMap?.animateCamera(
+            CameraUpdateFactory.newLatLngBounds(
+                bounds,
+                300
+            )
+        ) // 地图显示包含全部的点 40 表示padding=40，如果你想让你的marker布局全部显示出来就需要考虑到marker的高度来设置padding值
     }
 
 

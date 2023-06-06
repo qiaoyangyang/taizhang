@@ -45,8 +45,8 @@ class OrderMapCheActivity :
         addGrowMarker(latLng1, 2, 0,orderDetailDto.distance.toString())
            var mAllLatLng = ArrayList<LatLng>()
         // 添加我的位置
-        mAllLatLng.add(latLng);
-        mAllLatLng.add(latLng1);
+        mAllLatLng.add(latLng)
+        mAllLatLng.add(latLng1)
         // 将所有的点显示到地图界面上
         setMapBounds(mAllLatLng);
     }
@@ -118,8 +118,8 @@ class OrderMapCheActivity :
         ).position(latLng)
         val marker: Marker = aMap!!.addMarker(options)
         marker.startAnimation()
-        aMap!!.moveCamera(CameraUpdateFactory.zoomTo(ZOOM))
-        aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
+       // aMap!!.moveCamera(CameraUpdateFactory.zoomTo(ZOOM))
+       // aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
 
 //        aMap?.moveCamera(CameraUpdateFactory.zoomTo(17.0f))
 //        var movecity = CameraUpdateFactory.newLatLngZoom(latLng,17f)
