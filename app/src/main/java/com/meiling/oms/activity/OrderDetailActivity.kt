@@ -571,7 +571,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             behavior?.addBottomSheetCallback(bottomSheetCallback())
 
             behavior?.state = BottomSheetBehavior.STATE_HALF_EXPANDED
-           // setAllLatLng()
+            setAllLatLng()
 
         }
         mViewModel.orderDetailDto.onError.observe(this) {
@@ -679,14 +679,14 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             latlngBuilder.include(latLng)
         }
         val bounds = latlngBuilder.build()
-        aMap?.setMapStatusLimits(bounds)
+      //  aMap?.setMapStatusLimits(bounds)
         Log.d("yjk","将所有的点显示到地图界面上")
-//        aMap?.animateCamera(
-//            CameraUpdateFactory.newLatLngBounds(
-//                bounds,
-//                40
-//            )
-//        ) // 地图显示包含全部的点 40 表示padding=40，如果你想让你的marker布局全部显示出来就需要考虑到marker的高度来设置padding值
+        aMap?.animateCamera(
+            CameraUpdateFactory.newLatLngBounds(
+                bounds,
+                300
+            )
+        ) // 地图显示包含全部的点 40 表示padding=40，如果你想让你的marker布局全部显示出来就需要考虑到marker的高度来设置padding值
     }
 
 
