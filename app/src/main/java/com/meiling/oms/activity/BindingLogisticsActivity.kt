@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
+import androidx.lifecycle.ViewModelProvider
 import com.blankj.utilcode.util.ActivityUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -23,6 +24,7 @@ import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityBandingLogistcsLayoutBinding
 import com.meiling.oms.dialog.*
 import com.meiling.oms.viewmodel.BindingLogisticsViewModel
+import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.widget.setSingleClickListener
 import com.meiling.oms.widget.showToast
 
@@ -39,8 +41,15 @@ class BindingLogisticsActivity :
     var poid = ""
     var from = ""
     var shopList = ArrayList<ShopBean>()
+    lateinit var mainViewModel: MainViewModel2
     override fun initView(savedInstanceState: Bundle?) {
-
+        MainActivity.mainActivity?.let {
+            mainViewModel =
+                ViewModelProvider(it).get(MainViewModel2::class.java)
+        } ?: run {
+            mainViewModel =
+                ViewModelProvider(this@BindingLogisticsActivity).get(MainViewModel2::class.java)
+        }
     }
 
     override fun onTitleClick(view: View) {
@@ -350,6 +359,7 @@ class BindingLogisticsActivity :
                         mDatabind.title.visibility=View.GONE
                         mDatabind.recyClerView.visibility=View.GONE
                     }else{
+                        mainViewModel.getByTenantId.value = mainViewModel.getByTenantId.value?.copy(logistics = 1)
                         mDatabind.view1.visibility=View.VISIBLE
                         mDatabind.title.visibility=View.VISIBLE
                         mDatabind.recyClerView.visibility=View.VISIBLE
