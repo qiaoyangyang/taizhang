@@ -42,7 +42,7 @@ class DataFragment : BaseFragment<DataViewModel, FragmentDataBinding>() {
             BaseFragmentPagerAdapter(childFragmentManager, lifecycle, fragmentList)
         mDatabind.viewPager.setCurrentItem(0, true)
         ViewPager2Delegate.install(mDatabind.viewPager, mDatabind.tabLayout)
-        TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
+        TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia1)
         ImmersionBar.setTitleBar(this, mDatabind.TitleBar)
     }
 

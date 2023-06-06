@@ -38,7 +38,7 @@ class ChannelActivity : BaseActivity<StoreManagementViewModel, ActivityChannelBi
     lateinit var channelX: ChannelX
     lateinit var mainViewModel: MainViewModel2
     override fun initView(savedInstanceState: Bundle?) {
-        TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
+        TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia1)
         initRecycleyView()
         initRecycleyView1()
         mDatabind.tvNewlyBuiltStore.setSingleClickListener() {

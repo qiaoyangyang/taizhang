@@ -152,7 +152,7 @@ class BindingLogisticsActivity :
         from = intent?.getStringExtra("from") ?: ""
         shopName= intent?.getStringExtra("shopName") ?: ""
         if (from.isNullOrBlank()) {
-            TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia)
+            TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia1)
             mDatabind.btnSuccess.visibility = View.GONE
 
             //获取门店列表
