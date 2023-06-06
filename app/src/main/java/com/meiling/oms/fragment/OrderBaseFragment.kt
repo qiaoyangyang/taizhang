@@ -79,6 +79,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
 
 
     var telPhone = ""
+    var deliveryConsumeType = 2
     lateinit var vm: MainViewModel2
     override fun initView(savedInstanceState: Bundle?) {
         vm = ViewModelProvider(
@@ -116,13 +117,13 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     orderAddress.text = item.order?.recvAddr!!.replace("@@", "")
                     var sum: Double = 0.0
                     var sumNumber = item.goodsTotalNum
-                        holder.setText(
-                            R.id.txt_base_order_shop_msg,
-                            "共${item.goodsTotalNum}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
-                        )
-                        holder.setText(
-                            R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}"
-                        )
+                    holder.setText(
+                        R.id.txt_base_order_shop_msg,
+                        "共${item.goodsTotalNum}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
+                    )
+                    if (!item.goodsVoList.isNullOrEmpty()){
+                        holder.setText(R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}")
+                    }
 
                     holder.setText(R.id.txt_base_order_No, "${item.order?.channelDaySn}")
                     holder.setText(
@@ -236,6 +237,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             "0" -> {
                                 if (item.order!!.deliveryType == "2") {
                                     mViewModel.orderFinish(item.order!!.viewId!!)
+                                    deliveryConsumeType = 2
                                 } else {
                                     ARouter.getInstance().build("/app/OrderDisActivity")
                                         .withSerializable("kk", item.order).navigation()
@@ -253,6 +255,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                             "50" -> {
                                 if (item.deliveryConsume!!.type == 30) {
                                     mViewModel.orderFinish(item.order!!.viewId!!)
+                                    deliveryConsumeType = 30
                                 } else {
                                     orderDisDialog.show(childFragmentManager)
                                 }
@@ -466,7 +469,12 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             dismissLoading()
             mDatabind.sflLayout.autoRefresh()
             EventBus.getDefault().post(MessageEventUpDataTip())
-            showToast("自提完成")
+            if (deliveryConsumeType == 30) {
+                showToast("配送完成")
+            } else {
+                showToast("订单自提完成")
+            }
+
         }
         mViewModel.orderFinish.onError.observe(this) {
             dismissLoading()

@@ -42,6 +42,7 @@ class OrderDetail1Activity :
 
 
     private var b = true
+    var deliveryConsumeType = 2
 
     override fun initListener() {
 
@@ -240,7 +241,7 @@ class OrderDetail1Activity :
 
         mViewModel.orderFinish.onSuccess.observe(this) {
             disLoading()
-            showToast("订单自提完成")
+             showToast("订单自提完成")
             finish()
         }
         mViewModel.orderFinish.onError.observe(this) {

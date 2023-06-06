@@ -129,15 +129,15 @@ class OrderBaseHistoryFragment :
                     telPhone = item.order?.recvPhone ?: ""
                     orderAddress.text = item.order?.recvAddr!!.replace("@@", "")
                     var sum: Double = 0.0
-                    var sumNumber: Int = item.goodsTotalNum ?: 0
+                    var sumNumber = item.goodsTotalNum
 
                         holder.setText(
                             R.id.txt_base_order_shop_msg,
-                            "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
+                            "共${item.goodsTotalNum}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
                         )
-                        holder.setText(
-                            R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}"
-                        )
+                    if (!item.goodsVoList.isNullOrEmpty()){
+                        holder.setText(R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}")
+                    }
 
                     holder.setText(R.id.txt_base_order_No, "${item.order?.channelDaySn}")
                     holder.setText(
@@ -174,7 +174,7 @@ class OrderBaseHistoryFragment :
                     btnShopDetail.setSingleClickListener {
                         val orderGoodsListDetailDialog =
                             OrderGoodsListDetailDialog().newInstance(
-                                sumNumber,
+                                sumNumber?:0,
                                 SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!).toString(),
                                 item.goodsVoList!!
                             )
