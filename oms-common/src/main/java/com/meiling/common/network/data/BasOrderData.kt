@@ -356,6 +356,8 @@ data class DeliveryConsume(
     var stationChannelId: String? = "",
     @SerializedName("viewId")
     var viewId: String? = "",
+    @SerializedName("type")
+    var type: Int? = 0,
 //    @SerializedName("vrcId")
 //    var vrcId: Int?,
 //    @SerializedName("weight")

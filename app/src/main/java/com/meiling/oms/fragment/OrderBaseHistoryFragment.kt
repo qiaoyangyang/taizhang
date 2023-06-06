@@ -277,7 +277,14 @@ class OrderBaseHistoryFragment :
                                 ARouter.getInstance().build("/app/OrderDisActivity")
                                     .withSerializable("kk", item.order).navigation()
                             }
-                            "30", "50", "80" -> {
+                            "50" -> {
+                               if(item.deliveryConsume!!.type == 30){
+                                   mViewModel.orderFinish(item.order!!.viewId!!)
+                               }else{
+                                   orderDisDialog.show(childFragmentManager)
+                               }
+                            }
+                            "30",  "80" -> {
                                 orderDisDialog.show(childFragmentManager)
                             }
 
@@ -327,7 +334,12 @@ class OrderBaseHistoryFragment :
                             btnOrderCncelIgnore.visibility = View.GONE
                             btnCancelDis.visibility = View.GONE
                             btnSendDis.visibility = View.VISIBLE
-                            btnSendDis.text = "配送详情"
+                            if (item.deliveryConsume!!.type == 30) {
+                                btnSendDis.text = "配送完成"
+                            } else {
+                                btnSendDis.text = "配送详情"
+                            }
+//                            btnSendDis.text = "配送详情"
                         }
                         "70" -> {
                             btnOrderDisIgnore.visibility = View.GONE
@@ -402,7 +414,7 @@ class OrderBaseHistoryFragment :
             endTime = endTime,
             businessNumberType = "1",
             pageIndex = pageIndex,
-            pageSize = "20",
+            pageSize = "10",
             orderTime = "1",
             deliverySelect = "0",
             isValid = isValid,
@@ -420,7 +432,7 @@ class OrderBaseHistoryFragment :
                 endTime = endTime,
                 businessNumberType = "1",
                 pageIndex = pageIndex,
-                pageSize = "20",
+                pageSize = "10",
                 orderTime = "1",
                 deliverySelect = "0",
                 isValid = isValid,

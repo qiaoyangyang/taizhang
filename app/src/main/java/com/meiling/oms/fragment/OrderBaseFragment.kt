@@ -115,7 +115,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     telPhone = item.order?.recvPhone ?: ""
                     orderAddress.text = item.order?.recvAddr!!.replace("@@", "")
                     var sum: Double = 0.0
-                    var sumNumber: Int? = item.goodsTotalNum
+                    var sumNumber = item.goodsTotalNum
                         holder.setText(
                             R.id.txt_base_order_shop_msg,
                             "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
@@ -251,7 +251,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                                     .withSerializable("kk", item.order).navigation()
                             }
                             "50" -> {
-                                if (item.order!!.deliveryType == "4") {
+                                if (item.deliveryConsume!!.type == 30) {
                                     mViewModel.orderFinish(item.order!!.viewId!!)
                                 } else {
                                     orderDisDialog.show(childFragmentManager)
@@ -298,7 +298,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         }
                         "50" -> {
                             btnCancelDis.visibility = View.GONE
-                            if (item.order?.deliveryType == "4") {
+                            if (item.deliveryConsume!!.type == 30) {
                                 btnSendDis.text = "配送完成"
                             } else {
                                 btnSendDis.text = "配送详情"
