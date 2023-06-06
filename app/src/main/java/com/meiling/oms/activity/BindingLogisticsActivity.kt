@@ -358,8 +358,9 @@ class BindingLogisticsActivity :
                         mDatabind.view1.visibility=View.GONE
                         mDatabind.title.visibility=View.GONE
                         mDatabind.recyClerView.visibility=View.GONE
-                    }else{
                         mainViewModel.getByTenantId.value = mainViewModel.getByTenantId.value?.copy(logistics = 1)
+
+                    }else{
                         mDatabind.view1.visibility=View.VISIBLE
                         mDatabind.title.visibility=View.VISIBLE
                         mDatabind.recyClerView.visibility=View.VISIBLE
