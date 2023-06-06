@@ -4,9 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.hjq.shape.view.ShapeTextView
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.*
 import com.meiling.common.network.service.loginService
@@ -15,6 +19,7 @@ import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityLogistcsRechargeLayoutBinding
 import com.meiling.oms.dialog.*
 import com.meiling.oms.viewmodel.LogisticsRechargeViewModel
+import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.widget.showToast
 
 /**
@@ -26,8 +31,41 @@ class LogisticsRechargeActivity :
     lateinit var adapter: BaseQuickAdapter<BalanceItem, BaseViewHolder>
     var poid = ""
     var type=""
+    lateinit var mainViewModel: MainViewModel2
     override fun initView(savedInstanceState: Bundle?) {
+        mainViewModel =
+            ViewModelProvider(MainActivity.mainActivity!!).get(MainViewModel2::class.java)
+        adapter = object : BaseQuickAdapter<BalanceItem, BaseViewHolder>(R.layout.item_logistcs_recharege) {
+            override fun convert(holder: BaseViewHolder, item: BalanceItem) {
+                holder.setText(R.id.txtLogistcsName, item.channelType)
+                var img = holder.getView<ImageView>(R.id.img)
+                GlideAppUtils.loadUrl(img, item.iconUrl)
+                holder?.setText(R.id.txtMoney,item.balance)
+                holder?.setText(R.id.txtPhone,item.accountNo)
+                if(item.stationCommonId.isNotEmpty()){
+                    if(item.stationCommonId.size>1){
+                        holder?.setText(R.id.txtShopName,item.stationCommonId.get(0).name+">")
+                    }else{
+                        holder?.setText(R.id.txtShopName,item.stationCommonId.get(0).name)
+                    }
+                }
+            }
+        }
 
+        adapter.addChildClickViewIds(R.id.txtShopName,R.id.textToRecharege)
+        adapter.setOnItemChildClickListener { adapter, view, position ->
+            when(view.id){
+                R.id.txtShopName->{
+                    var showOtherBindShopDialog=ShowOtherBindShopDialog().newInstance("使用门店",(adapter.data.get(position) as BalanceItem).stationCommonId)
+                    showOtherBindShopDialog.show(supportFragmentManager)
+                }
+                R.id.textToRecharege->{
+                    click(adapter,position)
+                }
+            }
+        }
+
+        mDatabind.recyClerView.adapter = adapter
     }
 
 
@@ -66,39 +104,6 @@ class LogisticsRechargeActivity :
             }
             chooseViewDialog.show(supportFragmentManager)
         }
-
-        adapter = object : BaseQuickAdapter<BalanceItem, BaseViewHolder>(R.layout.item_logistcs_recharege) {
-            override fun convert(holder: BaseViewHolder, item: BalanceItem) {
-                holder.setText(R.id.txtLogistcsName, item.channelType)
-                var img = holder.getView<ImageView>(R.id.img)
-                GlideAppUtils.loadUrl(img, item.iconUrl)
-                holder?.setText(R.id.txtMoney,item.balance)
-                holder?.setText(R.id.txtPhone,item.accountNo)
-                if(item.stationCommonId.isNotEmpty()){
-                    if(item.stationCommonId.size>1){
-                        holder?.setText(R.id.txtShopName,item.stationCommonId.get(0).name+">")
-                    }else{
-                        holder?.setText(R.id.txtShopName,item.stationCommonId.get(0).name)
-                    }
-                }
-            }
-        }
-
-        adapter.addChildClickViewIds(R.id.txtShopName,R.id.textToRecharege)
-        adapter.setOnItemChildClickListener { adapter, view, position ->
-            when(view.id){
-                R.id.txtShopName->{
-                    var showOtherBindShopDialog=ShowOtherBindShopDialog().newInstance("使用门店",(adapter.data.get(position) as BalanceItem).stationCommonId)
-                    showOtherBindShopDialog.show(supportFragmentManager)
-                }
-                R.id.textToRecharege->{
-                    click(adapter,position)
-                }
-            }
-        }
-
-
-        mDatabind.recyClerView.adapter = adapter
 
     }
 
@@ -150,6 +155,7 @@ class LogisticsRechargeActivity :
                 it?.let { adapter?.setList(it) }
             },
             onError = {
+                it?.let { showToast(it) }
                 adapter?.data?.clear()
             }
         )
@@ -157,7 +163,40 @@ class LogisticsRechargeActivity :
 
 
     override fun createObserver() {
+        mainViewModel.getByTenantId.observe(this) {
+            if (it.poi == 1) {//门店是否创建 1绑定;-1没绑定
+                if (it.logistics == 1) {//物流是否绑定 1绑定;-1没绑定
+                    mDatabind.topConlay.visibility = View.VISIBLE
+                    val view =
+                        LayoutInflater.from(this).inflate(R.layout.store_managemnet2, null, false)
+                    var tv_decreate = view.findViewById<TextView>(R.id.txt_error)
+                    tv_decreate.text="未查询到内容"
+                    adapter.setEmptyView(view)
+                } else {
+                    val view =
+                        LayoutInflater.from(this).inflate(R.layout.empty_logistics_layout, null, false)
+                    var tv_decreate = view.findViewById<ShapeTextView>(R.id.tv_decreate)
+                    tv_decreate.setOnClickListener {
+                        startActivity(
+                            Intent(this,BindingLogisticsActivity::class.java))
+                    }
+                    adapter.setEmptyView(view)
+                    mDatabind.topConlay.visibility = View.GONE
+                }
+            } else {
+                val view =
+                    LayoutInflater.from(this).inflate(R.layout.store_managemnet1, null, false)
+                var tv_decreate = view.findViewById<ShapeTextView>(R.id.tv_decreate)
+                var tv_name_t= view.findViewById<TextView>(R.id.tv_name_t)
+                tv_name_t.visibility=View.GONE
+                tv_decreate.setOnClickListener {
+                    startActivity(Intent(this, NewlyBuiltStoreActivity::class.java))
+                }
+                adapter.setEmptyView(view)
+                mDatabind.topConlay.visibility = View.GONE
+            }
 
+        }
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityLogistcsRechargeLayoutBinding {
