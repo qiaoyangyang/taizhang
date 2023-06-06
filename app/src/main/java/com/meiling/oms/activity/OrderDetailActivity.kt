@@ -31,6 +31,7 @@ import com.meiling.oms.dialog.DataTipDialog
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
 import com.meiling.oms.eventBusData.MessageEvent
+import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
 import com.meiling.oms.widget.copyText
 import com.meiling.oms.widget.showToast
@@ -270,7 +271,20 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                             ARouter.getInstance().build("/app/OrderDisAddTipActivity")
                                 .withSerializable("kk", orderDetailDto!!).navigation()
                         }
-                        30, 50, 80 -> {
+                        50 -> {
+                            if (orderDetailDto?.deliveryConsume?.type!=30){
+                                var orderDisDialog =
+                                    OrderDistributionDetailDialog().newInstance(
+                                        false,
+                                        orderDetailDto?.order?.viewId!!
+                                    )
+                                orderDisDialog.show(supportFragmentManager)
+                            }else{
+                                mViewModel.orderFinish(orderDetailDto?.order?.viewId!!)
+
+                            }
+                        }
+                        30, 80 -> {
 //                            showToast("配送详情")
                             var orderDisDialog =
                                 OrderDistributionDetailDialog().newInstance(
@@ -390,7 +404,21 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
     override fun createObserver() {
 
-        super.createObserver()
+        mViewModel.orderFinish.onStart.observe(this) {
+            showLoading("请求中")
+        }
+        mViewModel.orderFinish.onSuccess.observe(this) {
+            disLoading()
+            showToast("自提完成")
+            finish()
+        }
+        mViewModel.orderFinish.onError.observe(this) {
+            disLoading()
+//            mDatabind.sflLayout.autoRefresh()
+            showToast(it.msg)
+
+        }
+
         mViewModel.invalidDto.onStart.observe(this) {
             showLoading("")
         }
@@ -481,8 +509,11 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 )
                 behavior?.peekHeight = dp2px(160)
                 deliveryStatusName = "待取货"
-
-                mDatabind.included.tvGoOn.text = "配送详情"
+                if (it.deliveryConsume?.type != 30) {
+                    mDatabind.included.tvGoOn.text = "配送详情"
+                } else {
+                    mDatabind.included.tvGoOn.text = "配送完成"
+                }
                 mDatabind.included.tvRevocation.text = "取消配送"
                 mDatabind.included.btnPrintReceipt.text = "打印小票"
                 mDatabind.included.btnChangeAddress.visibility = View.GONE
