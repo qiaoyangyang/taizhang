@@ -13,9 +13,10 @@
     app:shape_solidColor="@color/white"
     android:clickable="true"
     android:foreground="?attr/selectableItemBackground"
-    app:shape_shadowSize="0dp">
-    <!--    app:shape_shadowOffsetY="2dp"-->
-    <!--    app:shape_shadowOffsetX="2dp"-->
+        app:shape_shadowOffsetY="3dp"
+        app:shape_shadowOffsetX="1dp"
+    app:shape_shadowSize="5dp">
+
     <com.hjq.shape.layout.ShapeRelativeLayout
         android:id="@+id/srl_check_order_detail"
         android:layout_width="match_parent"

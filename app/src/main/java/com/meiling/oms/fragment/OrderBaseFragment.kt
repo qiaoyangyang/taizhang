@@ -115,8 +115,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     telPhone = item.order?.recvPhone ?: ""
                     orderAddress.text = item.order?.recvAddr!!.replace("@@", "")
                     var sum: Double = 0.0
-                    val sumNumber: Int = item.goodsTotalNum ?: 0
-
+                    val sumNumber: Int? = item.goodsTotalNum
                         holder.setText(
                             R.id.txt_base_order_shop_msg,
                             "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
@@ -159,7 +158,11 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     }
                     btnShopDetail.setSingleClickListener {
                         val orderGoodsListDetailDialog =
-                            OrderGoodsListDetailDialog().newInstance(sumNumber,SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!).toString(),item.goodsVoList!!)
+                            OrderGoodsListDetailDialog().newInstance(
+                                sumNumber ?: 0,
+                                SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!).toString(),
+                                item.goodsVoList!!
+                            )
                         orderGoodsListDetailDialog.show(childFragmentManager)
                     }
 //
@@ -247,7 +250,15 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                                 ARouter.getInstance().build("/app/OrderDisActivity")
                                     .withSerializable("kk", item.order).navigation()
                             }
-                            "30", "50", "80" -> {
+                            "50" -> {
+                                if (item.order!!.deliveryType == "4") {
+                                    mViewModel.orderFinish(item.order!!.viewId!!)
+                                } else {
+                                    orderDisDialog.show(childFragmentManager)
+                                }
+
+                            }
+                            "30", "80" -> {
                                 orderDisDialog.show(childFragmentManager)
                             }
 
@@ -287,7 +298,12 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         }
                         "50" -> {
                             btnCancelDis.visibility = View.GONE
-                            btnSendDis.text = "配送详情"
+                            if (item.order?.deliveryType == "4") {
+                                btnSendDis.text = "配送完成"
+                            } else {
+                                btnSendDis.text = "配送详情"
+                            }
+
                         }
                         "70" -> {
                             btnCancelDis.visibility = View.GONE

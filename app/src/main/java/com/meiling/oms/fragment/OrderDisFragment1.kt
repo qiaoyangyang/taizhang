@@ -331,16 +331,7 @@ class  OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1B
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             dismissLoading()
-            EventBus.getDefault().post(MessageEventUpDataTip())
-            showToast("发起配送成功")
-            mActivity.finish()
-        }
-        mViewModel.sendSuccess.onStart.observe(this) {
-            showLoading("请求中")
-        }
-        mViewModel.sendSuccess.onError.observe(this) {
-            dismissLoading()
-            if (it.errCode == 760) {
+            if (it != null &&it == 760) {
                 val dialog: MineExitDialog =
                     MineExitDialog().newInstance(
                         "温馨提示",
@@ -355,8 +346,34 @@ class  OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1B
                 }
                 dialog.show(childFragmentManager)
             } else {
-                showToast(it.msg)
+                EventBus.getDefault().post(MessageEventUpDataTip())
+                showToast("发起配送成功")
+                mActivity.finish()
             }
+
+        }
+        mViewModel.sendSuccess.onStart.observe(this) {
+            showLoading("请求中")
+        }
+        mViewModel.sendSuccess.onError.observe(this) {
+            dismissLoading()
+//            if (it.errCode == 760) {
+//                val dialog: MineExitDialog =
+//                    MineExitDialog().newInstance(
+//                        "温馨提示",
+//                        "可用余额（账户余额-冻结余额）不足，无法发起配送，请去充值中心进行余额充值！",
+//                        "知道了",
+//                        "去充值",
+//                        false
+//                    )
+//                dialog.setOkClickLister {
+//
+//                    ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
+//                }
+//                dialog.show(childFragmentManager)
+//            } else {
+                showToast(it.msg)
+//            }
 
 
         }
