@@ -24,6 +24,7 @@ import com.hjq.shape.layout.ShapeRelativeLayout
 import com.hjq.shape.view.ShapeTextView
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.network.data.CancelOrderSend
+import com.meiling.common.network.data.OrderDetailDto
 import com.meiling.common.network.data.OrderDto
 import com.meiling.common.network.data.OrderGoodsVo
 import com.meiling.common.utils.GlideAppUtils
@@ -39,15 +40,15 @@ import com.meiling.oms.widget.*
 @Route(path = "/app/Search1Activity")
 class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySearch1Binding>() {
 
-    lateinit var orderDisAdapter: BaseQuickAdapter<OrderDto.Content, BaseViewHolder>
+    lateinit var orderDisAdapter: BaseQuickAdapter<OrderDetailDto, BaseViewHolder>
 
     var telPhone = ""
     override fun initView(savedInstanceState: Bundle?) {
         orderDisAdapter =
             object :
-                BaseQuickAdapter<OrderDto.Content, BaseViewHolder>(R.layout.item_home_base_order),
+                BaseQuickAdapter<OrderDetailDto, BaseViewHolder>(R.layout.item_home_base_order),
                 LoadMoreModule {
-                override fun convert(holder: BaseViewHolder, item: OrderDto.Content) {
+                override fun convert(holder: BaseViewHolder, item: OrderDetailDto) {
                     val imgPrint = holder.getView<TextView>(R.id.img_order_print)
                     val checkMap = holder.getView<TextView>(R.id.txt_check_map)
                     val orderDelivery = holder.getView<TextView>(R.id.txt_base_order_delivery_1)
@@ -91,7 +92,7 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                     holder.setText(R.id.txt_base_order_No, "${item.order?.channelDaySn}")
                     holder.setText(
                         R.id.txt_base_order_delivery_time,
-                        "${item.order?.arriveTimeDate}"
+                        "${item.arriveTime}"
                     )
                     holder.setText(R.id.txt_base_order_remark, "${item.order?.remark}")
                     holder.setText(
@@ -372,7 +373,7 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
             } else {
                 mDatabind.rvHistoryOrderList.visibility = View.VISIBLE
                 mDatabind.rlOrderEmpty.visibility = View.GONE
-                orderDisAdapter.setList(it.content as MutableList<OrderDto.Content>)
+                orderDisAdapter.setList(it.content as MutableList<OrderDetailDto>)
             }
             orderDisAdapter.notifyDataSetChanged()
             Log.e("order", "createObserver: " + it)

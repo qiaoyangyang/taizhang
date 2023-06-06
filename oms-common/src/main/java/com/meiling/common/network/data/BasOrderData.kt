@@ -7,7 +7,7 @@ import java.io.Serializable
 
 data class OrderDto(
     @SerializedName("content")
-    var content: List<Content?>? = listOf(),
+    var content: List<OrderDetailDto?>? = listOf(),
     @SerializedName("contentT")
     var contentT: Any? = Any(),
     @SerializedName("extra")
@@ -22,279 +22,114 @@ data class OrderDto(
     var totalPage: Int? = 0,
 
     ) {
-    data class Content(
-        @SerializedName("adminUserName")
-        var adminUserName: String? = "",
-        @SerializedName("afterSaleInfo")
-        var afterSaleInfo: String? = "",
-        @SerializedName("canBeReselect")
-        var canBeReselect: Boolean? = false,
-        @SerializedName("cardNo")
-        var cardNo: String? = "",
-        @SerializedName("cardTypeName")
-        var cardTypeName: String? = "",
-        @SerializedName("channelLogo")
-        var channelLogo: String? = "",
-        @SerializedName("channelName")
-        var channelName: String? = "",
-        @SerializedName("city")
-        var city: String? = "",
-        @SerializedName("commission")
-        var commission: Any? = Any(),
-        @SerializedName("deliveryConsume")
-        var deliveryConsume: DeliveryConsume? = DeliveryConsume(),
-        @SerializedName("deliveryConsumeLog")
-        var deliveryConsumeLog: DeliveryConsumeLog? = DeliveryConsumeLog(),
-        @SerializedName("depositPrice")
-        var depositPrice: Int? = 0,
-        @SerializedName("discountAmount")
-        var discountAmount: Int? = 0,
-        @SerializedName("discountTotalPrice")
-        var discountTotalPrice: Any? = Any(),
-        @SerializedName("expectedBalancePayTime")
-        var expectedBalancePayTime: String? = "",
-        @SerializedName("finalPrice")
-        var finalPrice: Int? = 0,
-        @SerializedName("fixedResaleOrderPayDepositPriceTypeVoList")
-        var fixedResaleOrderPayDepositPriceTypeVoList: List<Any?>? = listOf(),
-        @SerializedName("fixedResaleOrderPayFinalPriceTypeVoList")
-        var fixedResaleOrderPayFinalPriceTypeVoList: List<Any?>? = listOf(),
-        @SerializedName("fixedResaleOrderStatus")
-        var fixedResaleOrderStatus: Any? = Any(),
-        @SerializedName("fixedResaleOrderType")
-        var fixedResaleOrderType: Any? = Any(),
-        @SerializedName("giftcardBalance")
-        var giftcardBalance: Any? = Any(),
-        @SerializedName("goodsVoList")
-        var goodsVoList: ArrayList<OrderGoodsVo?>? = ArrayList(),
-        @SerializedName("hasMarkPay")
-        var hasMarkPay: Int? = 0,
-        @SerializedName("isShowCouponCode")
-        var isShowCouponCode: Any? = Any(),
-        @SerializedName("isShowUserInfo")
-        var isShowUserInfo: Any? = Any(),
-        @SerializedName("miniProgramsMa")
-        var miniProgramsMa: Any? = Any(),
-        @SerializedName("order")
-        var order: Order? = Order(),
-        @SerializedName("order62Code")
-        var order62Code: Any? = Any(),
-        @SerializedName("orderModifyRecord")
-        var orderModifyRecord: String? = "",
-        @SerializedName("orderName")
-        var orderName: String? = "",
-        @SerializedName("orderPhone")
-        var orderPhone: String? = "",
-        @SerializedName("payChannels")
-        var payChannels: Any? = Any(),
-        @SerializedName("payExtendVos")
-        var payExtendVos: List<Any?>? = listOf(),
-        @SerializedName("payPriceList")
-        var payPriceList: List<Any?>? = listOf(),
-        @SerializedName("payType")
-        var payType: Any? = Any(),
-        @SerializedName("phone")
-        var phone: String? = "",
-        @SerializedName("preOrder")
-        var preOrder: Any? = Any(),
-        @SerializedName("prescriptionImage")
-        var prescriptionImage: List<Any?>? = listOf(),
-        @SerializedName("promotionMap")
-        var promotionMap: List<Any?>? = listOf(),
-        @SerializedName("refund")
-        var refund: Int? = 0,
-        @SerializedName("shipmentShopName")
-        var shipmentShopName: String? = "",
-        @SerializedName("shopName")
-        var shopName: String? = "",
-        @SerializedName("spreadFee")
-        var spreadFee: Any? = Any(),
-        @SerializedName("statusColor")
-        var statusColor: String? = "",
-        @SerializedName("statusName")
-        var statusName: String? = "",
-        @SerializedName("supplierPrice")
-        var supplierPrice: Int? = 0,
-        @SerializedName("tradeNo")
-        var tradeNo: Any? = Any(),
-        @SerializedName("tradeOut")
-        var tradeOut: Any? = Any(),
-        @SerializedName("distance")
-        var distance: String? = "",
-        @SerializedName("shop")
-        var shop: OrderShop? = OrderShop(),
-        @SerializedName("poi")
-        var poi: OrderPoi? = OrderPoi()
-    ) : Serializable {
-
-
-        data class Order(
-            @SerializedName("activityFee")
-            var activityFee: Double? = 0.0,
-            @SerializedName("actualIncome")
-            var actualIncome: Double? = 0.0,
-            @SerializedName("actualPayPrice")
-            var actualPayPrice: Double? = 0.0,
-            @SerializedName("addressDesensitization")
-            var addressDesensitization: String? = "",
-            @SerializedName("adminUserId")
-            var adminUserId: Int? = 0,
-            @SerializedName("arriveTime")
-            var arriveTime: String? = "",
-            @SerializedName("arriveTimeDate")
-            var arriveTimeDate: String? = "",
-            @SerializedName("attachment")
-            var attachment: String? = "",
-            @SerializedName("auditId")
-            var auditId: Any? = Any(),
-            @SerializedName("boxPriceTotal")
-            var boxPriceTotal: Any? = Any(),
-            @SerializedName("cardMoney")
-            var cardMoney: Any? = Any(),
-            @SerializedName("cardNo")
-            var cardNo: Any? = Any(),
-            @SerializedName("cardType")
-            var cardType: Any? = Any(),
-            @SerializedName("changePrice")
-            var changePrice: Double? = 0.0,
-            @SerializedName("channelCreateTime")
-            var channelCreateTime: String? = "",
-            @SerializedName("channelDaySn")
-            var channelDaySn: Int? = 0,
-            @SerializedName("channelId")
-            var channelId: Int? = 0,
-            @SerializedName("channelOrderNum")
-            var channelOrderNum: String? = "",
-            @SerializedName("completeTime")
-            var completeTime: Long? = 0,
-            @SerializedName("couponCode")
-            var couponCode: String? = "",
-            @SerializedName("couponName")
-            var couponName: Any? = Any(),
-            @SerializedName("createTime")
-            var createTime: Long? = 0,
-            @SerializedName("deliverName")
-            var deliverName: String? = "",
-            @SerializedName("deliverPhone")
-            var deliverPhone: String? = "",
-            @SerializedName("deliverPrice")
-            var deliverPrice: Int? = 0,
-            @SerializedName("deliveryFee")
-            var deliveryFee: Double? = 0.0,
-            @SerializedName("deliveryGeo")
-            var deliveryGeo: String? = "",
-            @SerializedName("deliveryStatusName")
-            var deliveryStatusName: String? = "",
-            @SerializedName("deliveryTime")
-            var deliveryTime: Long? = 0,
-            @SerializedName("deliveryType")
-            var deliveryType: String? = "",
-            @SerializedName("depositPhone")
-            var depositPhone: String? = "",
-            @SerializedName("districtCode")
-            var districtCode: String? = "",
-            @SerializedName("emergencyFee")
-            var emergencyFee: Int? = 0,
-            @SerializedName("enterTime")
-            var enterTime: Any? = Any(),
-            @SerializedName("extras")
-            var extras: String? = "",
-            @SerializedName("fpoiId")
-            var fpoiId: Int? = 0,
-            @SerializedName("fshopId")
-            var fshopId: Int? = 0,
-            @SerializedName("goodNames")
-            var goodNames: Any? = Any(),
-            @SerializedName("goodsCost")
-            var goodsCost: Double? = 0.0,
-            @SerializedName("goodsInfo")
-            var goodsInfo: Boolean? = false,
-            @SerializedName("id")
-            var id: Int? = 0,
-            @SerializedName("invoiceTitle")
-            var invoiceTitle: String? = "",
-            @SerializedName("invoiceType")
-            var invoiceType: Int? = 0,
-            @SerializedName("isDeliver")
-            var isDeliver: Int? = 0,
-            @SerializedName("isPostSale")
-            var isPostSale: Int? = 0,
-            @SerializedName("isShowUserInfo")
-            var isShowUserInfo: Boolean? = false,
-            @SerializedName("isUpdate")
-            var isUpdate: Int? = 0,
-            @SerializedName("isValid")
-            var isValid: Int? = 0,
-            @SerializedName("lat")
-            var lat: String? = "",
-            @SerializedName("logisticsStatus")
-            var logisticsStatus: String? = "",
-            @SerializedName("lon")
-            var lon: String? = "",
-            @SerializedName("negative")
-            var negative: Int? = 0,
-            @SerializedName("orderHandleType")
-            var orderHandleType: Int? = 0,
-            @SerializedName("orderIndex")
-            var orderIndex: Int? = 0,
-            @SerializedName("orderSource")
-            var orderSource: Int? = 0,
-            @SerializedName("ordererName")
-            var ordererName: String? = "",
-            @SerializedName("payPrice")
-            var payPrice: Double? = 0.0,
-            @SerializedName("payType")
-            var payType: Int? = 0,
-            @SerializedName("payee")
-            var payee: String? = "",
-            @SerializedName("perfectGoodsInfo")
-            var perfectGoodsInfo: Boolean? = false,
-            @SerializedName("platformServiceFee")
-            var platformServiceFee: Double? = 0.0,
-            @SerializedName("poiId")
-            var poiId: String? = "",
-            @SerializedName("preMode")
-            var preMode: Int? = 0,
-            @SerializedName("prescriptionImage")
-            var prescriptionImage: String? = "",
-            @SerializedName("recvAddr")
-            var recvAddr: String? = "",
-            @SerializedName("recvGender")
-            var recvGender: Any? = Any(),
-            @SerializedName("recvName")
-            var recvName: String? = "",
-            @SerializedName("recvPhone")
-            var recvPhone: String? = "",
-            @SerializedName("recvUserId")
-            var recvUserId: Long? = 0,
-            @SerializedName("refundCheck")
-            var refundCheck: Int? = 0,
-            @SerializedName("refundPrice")
-            var refundPrice: Double? = 0.0,
-            @SerializedName("remark")
-            var remark: String? = "",
-            @SerializedName("shopId")
-            var shopId: Int? = 0,
-            @SerializedName("status")
-            var status: Int? = 0,
-            @SerializedName("takeGoodsCode")
-            var takeGoodsCode: String? = "",
-            @SerializedName("tenantId")
-            var tenantId: Int? = 0,
-            @SerializedName("tenantStatus")
-            var tenantStatus: Int? = 0,
-            @SerializedName("totalPrice")
-            var totalPrice: Double? = 0.0,
-            @SerializedName("type")
-            var type: Int? = 0,
-            @SerializedName("updateTime")
-            var updateTime: Long? = 0,
-            @SerializedName("userId")
-            var userId: Long? = 0,
-            @SerializedName("viewId")
-            var viewId: String? = ""
-        ) : Serializable
-    }
+//    data class Content(
+//        @SerializedName("adminUserName")
+//        var adminUserName: String? = "",
+//        @SerializedName("afterSaleInfo")
+//        var afterSaleInfo: String? = "",
+//        @SerializedName("canBeReselect")
+//        var canBeReselect: Boolean? = false,
+//        @SerializedName("cardNo")
+//        var cardNo: String? = "",
+//        @SerializedName("cardTypeName")
+//        var cardTypeName: String? = "",
+//        @SerializedName("channelLogo")
+//        var channelLogo: String? = "",
+//        @SerializedName("channelName")
+//        var channelName: String? = "",
+//        @SerializedName("city")
+//        var city: String? = "",
+//        @SerializedName("commission")
+//        var commission: Any? = Any(),
+//        @SerializedName("deliveryConsume")
+//        var deliveryConsume: DeliveryConsume? = DeliveryConsume(),
+//        @SerializedName("deliveryConsumeLog")
+//        var deliveryConsumeLog: DeliveryConsumeLog? = DeliveryConsumeLog(),
+//        @SerializedName("depositPrice")
+//        var depositPrice: Int? = 0,
+//        @SerializedName("discountAmount")
+//        var discountAmount: Int? = 0,
+//        @SerializedName("discountTotalPrice")
+//        var discountTotalPrice: Any? = Any(),
+//        @SerializedName("expectedBalancePayTime")
+//        var expectedBalancePayTime: String? = "",
+//        @SerializedName("finalPrice")
+//        var finalPrice: Int? = 0,
+//        @SerializedName("fixedResaleOrderPayDepositPriceTypeVoList")
+//        var fixedResaleOrderPayDepositPriceTypeVoList: List<Any?>? = listOf(),
+//        @SerializedName("fixedResaleOrderPayFinalPriceTypeVoList")
+//        var fixedResaleOrderPayFinalPriceTypeVoList: List<Any?>? = listOf(),
+//        @SerializedName("fixedResaleOrderStatus")
+//        var fixedResaleOrderStatus: Any? = Any(),
+//        @SerializedName("fixedResaleOrderType")
+//        var fixedResaleOrderType: Any? = Any(),
+//        @SerializedName("giftcardBalance")
+//        var giftcardBalance: Any? = Any(),
+//        @SerializedName("goodsVoList")
+//        var goodsVoList: ArrayList<OrderGoodsVo?>? = ArrayList(),
+//        @SerializedName("hasMarkPay")
+//        var hasMarkPay: Int? = 0,
+//        @SerializedName("isShowCouponCode")
+//        var isShowCouponCode: Any? = Any(),
+//        @SerializedName("isShowUserInfo")
+//        var isShowUserInfo: Any? = Any(),
+//        @SerializedName("miniProgramsMa")
+//        var miniProgramsMa: Any? = Any(),
+//        @SerializedName("order")
+//        var order: OrderDetail? = OrderDetail(),
+//        @SerializedName("order62Code")
+//        var order62Code: Any? = Any(),
+//        @SerializedName("orderModifyRecord")
+//        var orderModifyRecord: String? = "",
+//        @SerializedName("orderName")
+//        var orderName: String? = "",
+//        @SerializedName("orderPhone")
+//        var orderPhone: String? = "",
+//        @SerializedName("payChannels")
+//        var payChannels: Any? = Any(),
+//        @SerializedName("payExtendVos")
+//        var payExtendVos: List<Any?>? = listOf(),
+//        @SerializedName("payPriceList")
+//        var payPriceList: List<Any?>? = listOf(),
+//        @SerializedName("payType")
+//        var payType: Any? = Any(),
+//        @SerializedName("phone")
+//        var phone: String? = "",
+//        @SerializedName("preOrder")
+//        var preOrder: Any? = Any(),
+//        @SerializedName("prescriptionImage")
+//        var prescriptionImage: List<Any?>? = listOf(),
+//        @SerializedName("promotionMap")
+//        var promotionMap: List<Any?>? = listOf(),
+//        @SerializedName("refund")
+//        var refund: Int? = 0,
+//        @SerializedName("shipmentShopName")
+//        var shipmentShopName: String? = "",
+//        @SerializedName("shopName")
+//        var shopName: String? = "",
+//        @SerializedName("spreadFee")
+//        var spreadFee: Any? = Any(),
+//        @SerializedName("statusColor")
+//        var statusColor: String? = "",
+//        @SerializedName("statusName")
+//        var statusName: String? = "",
+//        @SerializedName("supplierPrice")
+//        var supplierPrice: Int? = 0,
+//        @SerializedName("tradeNo")
+//        var tradeNo: Any? = Any(),
+//        @SerializedName("tradeOut")
+//        var tradeOut: Any? = Any(),
+//        @SerializedName("distance")
+//        var distance: String? = "",
+//        @SerializedName("shop")
+//        var shop: OrderShop? = OrderShop(),
+//        @SerializedName("poi")
+//        var poi: OrderPoi? = OrderPoi()
+//    ) : Serializable {
+//
+//
+//
+//    }
 }
 
 
@@ -539,6 +374,7 @@ data class SelectDialogDto(
 
 data class SelectOrderDialogDto(
     var channelId: String? = "0",// 平台  渠道全部传null,根据返回渠道
+    var orderTime: String? = "1",// //1下单时间 2收货时间 7发货时间
     var orderSort: String? = "4",// 排序
 ) : Serializable
 
@@ -671,9 +507,12 @@ data class OrderDetailDto(
     var centerLat: String? = "",
     @SerializedName("centerLon")
     var centerLon: String? = "",
+    @SerializedName("shopName")
+        var shopName: String? = "",
+    @SerializedName("arriveTime")
+        var arriveTime: String? = "",
 
-
-    )
+    ):Serializable
 
 data class OrderDetail(
     @SerializedName("activityFee")

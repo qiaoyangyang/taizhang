@@ -225,6 +225,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/dp_20"
                 android:src="@drawable/icon_next"
+                android:visibility="gone"
                 android:textColor="#a6000000"
                 android:textSize="@dimen/sp_28"
                 tools:text="美团店铺" />
@@ -256,6 +257,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_order_delivery_name"
+                android:layout_marginTop="26dp"
+                android:layout_marginEnd="82dp"
                 android:layout_toStartOf="@+id/txt_check_map"
                 android:gravity="left"
                 android:paddingVertical="@dimen/dp_10"

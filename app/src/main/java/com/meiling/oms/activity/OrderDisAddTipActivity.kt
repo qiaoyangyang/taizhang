@@ -26,10 +26,10 @@ class OrderDisAddTipActivity :
     BaseActivity<OrderDisFragmentViewModel, ActivityOrderDisTipBinding>() {
 
     lateinit var ryOrderDisAddTipAdapter: BaseQuickAdapter<OrderSendAddTips, BaseViewHolder>
-    lateinit var content: OrderDto.Content
+    lateinit var content: OrderDetailDto
     override fun initView(savedInstanceState: Bundle?) {
         // 1 TC  2 自提 3 全国
-        content = intent.getSerializableExtra("kk") as OrderDto.Content
+        content = intent.getSerializableExtra("kk") as OrderDetailDto
 
         mViewModel.getOrderAndPoiDeliveryDate(
             content.order?.poiId!!,

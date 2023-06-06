@@ -84,6 +84,7 @@ class OrderFilterSortDialog : BaseNiceDialog() {
                         )
                         rechargeSum.setTextColor(resources.getColor(R.color.red))
                         selectDialogDto.channelId = item.id
+
                     } else {
                         holder.setBackgroundResource(
                             R.id.txt_recharge_sum,
@@ -106,6 +107,11 @@ class OrderFilterSortDialog : BaseNiceDialog() {
                         )
                         rechargeSum.setTextColor(resources.getColor(R.color.red))
                         selectDialogDto.orderSort = item.id
+                        when (item.id) {
+                            "4", "3" -> selectDialogDto.orderTime = "1"
+                            "26" -> selectDialogDto.orderTime = "2"
+                            "28" -> selectDialogDto.orderTime = "7"
+                        }
                     } else {
                         holder.setBackgroundResource(
                             R.id.txt_recharge_sum,
@@ -116,10 +122,10 @@ class OrderFilterSortDialog : BaseNiceDialog() {
                 }
             }
         var arralist = ArrayList<OrderSelectSort>()
-        arralist.add(OrderSelectSort("0", "最近下单在前"))
-        arralist.add(OrderSelectSort("1", "最早下单在前"))
-        arralist.add(OrderSelectSort("2", "最近收货在前"))
-        arralist.add(OrderSelectSort("3", "最近发货在前"))
+        arralist.add(OrderSelectSort("4", "最近下单在前"))
+        arralist.add(OrderSelectSort("3", "最早下单在前"))
+        arralist.add(OrderSelectSort("26", "最近收货在前"))
+        arralist.add(OrderSelectSort("28", "最近发货在前"))
         Log.d("lwq", "convertView:${selectDialogDto.toString()} ")
         for (platform in arralist) {
             platform.select =
