@@ -7,7 +7,7 @@ import java.io.Serializable
 
 data class OrderDto(
     @SerializedName("content")
-    var content: List<Content?>? = listOf(),
+    var content: List<OrderDetailDto?>? = listOf(),
     @SerializedName("contentT")
     var contentT: Any? = Any(),
     @SerializedName("extra")
@@ -22,114 +22,114 @@ data class OrderDto(
     var totalPage: Int? = 0,
 
     ) {
-    data class Content(
-        @SerializedName("adminUserName")
-        var adminUserName: String? = "",
-        @SerializedName("afterSaleInfo")
-        var afterSaleInfo: String? = "",
-        @SerializedName("canBeReselect")
-        var canBeReselect: Boolean? = false,
-        @SerializedName("cardNo")
-        var cardNo: String? = "",
-        @SerializedName("cardTypeName")
-        var cardTypeName: String? = "",
-        @SerializedName("channelLogo")
-        var channelLogo: String? = "",
-        @SerializedName("channelName")
-        var channelName: String? = "",
-        @SerializedName("city")
-        var city: String? = "",
-        @SerializedName("commission")
-        var commission: Any? = Any(),
-        @SerializedName("deliveryConsume")
-        var deliveryConsume: DeliveryConsume? = DeliveryConsume(),
-        @SerializedName("deliveryConsumeLog")
-        var deliveryConsumeLog: DeliveryConsumeLog? = DeliveryConsumeLog(),
-        @SerializedName("depositPrice")
-        var depositPrice: Int? = 0,
-        @SerializedName("discountAmount")
-        var discountAmount: Int? = 0,
-        @SerializedName("discountTotalPrice")
-        var discountTotalPrice: Any? = Any(),
-        @SerializedName("expectedBalancePayTime")
-        var expectedBalancePayTime: String? = "",
-        @SerializedName("finalPrice")
-        var finalPrice: Int? = 0,
-        @SerializedName("fixedResaleOrderPayDepositPriceTypeVoList")
-        var fixedResaleOrderPayDepositPriceTypeVoList: List<Any?>? = listOf(),
-        @SerializedName("fixedResaleOrderPayFinalPriceTypeVoList")
-        var fixedResaleOrderPayFinalPriceTypeVoList: List<Any?>? = listOf(),
-        @SerializedName("fixedResaleOrderStatus")
-        var fixedResaleOrderStatus: Any? = Any(),
-        @SerializedName("fixedResaleOrderType")
-        var fixedResaleOrderType: Any? = Any(),
-        @SerializedName("giftcardBalance")
-        var giftcardBalance: Any? = Any(),
-        @SerializedName("goodsVoList")
-        var goodsVoList: ArrayList<OrderGoodsVo?>? = ArrayList(),
-        @SerializedName("hasMarkPay")
-        var hasMarkPay: Int? = 0,
-        @SerializedName("isShowCouponCode")
-        var isShowCouponCode: Any? = Any(),
-        @SerializedName("isShowUserInfo")
-        var isShowUserInfo: Any? = Any(),
-        @SerializedName("miniProgramsMa")
-        var miniProgramsMa: Any? = Any(),
-        @SerializedName("order")
-        var order: OrderDetail? = OrderDetail(),
-        @SerializedName("order62Code")
-        var order62Code: Any? = Any(),
-        @SerializedName("orderModifyRecord")
-        var orderModifyRecord: String? = "",
-        @SerializedName("orderName")
-        var orderName: String? = "",
-        @SerializedName("orderPhone")
-        var orderPhone: String? = "",
-        @SerializedName("payChannels")
-        var payChannels: Any? = Any(),
-        @SerializedName("payExtendVos")
-        var payExtendVos: List<Any?>? = listOf(),
-        @SerializedName("payPriceList")
-        var payPriceList: List<Any?>? = listOf(),
-        @SerializedName("payType")
-        var payType: Any? = Any(),
-        @SerializedName("phone")
-        var phone: String? = "",
-        @SerializedName("preOrder")
-        var preOrder: Any? = Any(),
-        @SerializedName("prescriptionImage")
-        var prescriptionImage: List<Any?>? = listOf(),
-        @SerializedName("promotionMap")
-        var promotionMap: List<Any?>? = listOf(),
-        @SerializedName("refund")
-        var refund: Int? = 0,
-        @SerializedName("shipmentShopName")
-        var shipmentShopName: String? = "",
-        @SerializedName("shopName")
-        var shopName: String? = "",
-        @SerializedName("spreadFee")
-        var spreadFee: Any? = Any(),
-        @SerializedName("statusColor")
-        var statusColor: String? = "",
-        @SerializedName("statusName")
-        var statusName: String? = "",
-        @SerializedName("supplierPrice")
-        var supplierPrice: Int? = 0,
-        @SerializedName("tradeNo")
-        var tradeNo: Any? = Any(),
-        @SerializedName("tradeOut")
-        var tradeOut: Any? = Any(),
-        @SerializedName("distance")
-        var distance: String? = "",
-        @SerializedName("shop")
-        var shop: OrderShop? = OrderShop(),
-        @SerializedName("poi")
-        var poi: OrderPoi? = OrderPoi()
-    ) : Serializable {
-
-
-
-    }
+//    data class Content(
+//        @SerializedName("adminUserName")
+//        var adminUserName: String? = "",
+//        @SerializedName("afterSaleInfo")
+//        var afterSaleInfo: String? = "",
+//        @SerializedName("canBeReselect")
+//        var canBeReselect: Boolean? = false,
+//        @SerializedName("cardNo")
+//        var cardNo: String? = "",
+//        @SerializedName("cardTypeName")
+//        var cardTypeName: String? = "",
+//        @SerializedName("channelLogo")
+//        var channelLogo: String? = "",
+//        @SerializedName("channelName")
+//        var channelName: String? = "",
+//        @SerializedName("city")
+//        var city: String? = "",
+//        @SerializedName("commission")
+//        var commission: Any? = Any(),
+//        @SerializedName("deliveryConsume")
+//        var deliveryConsume: DeliveryConsume? = DeliveryConsume(),
+//        @SerializedName("deliveryConsumeLog")
+//        var deliveryConsumeLog: DeliveryConsumeLog? = DeliveryConsumeLog(),
+//        @SerializedName("depositPrice")
+//        var depositPrice: Int? = 0,
+//        @SerializedName("discountAmount")
+//        var discountAmount: Int? = 0,
+//        @SerializedName("discountTotalPrice")
+//        var discountTotalPrice: Any? = Any(),
+//        @SerializedName("expectedBalancePayTime")
+//        var expectedBalancePayTime: String? = "",
+//        @SerializedName("finalPrice")
+//        var finalPrice: Int? = 0,
+//        @SerializedName("fixedResaleOrderPayDepositPriceTypeVoList")
+//        var fixedResaleOrderPayDepositPriceTypeVoList: List<Any?>? = listOf(),
+//        @SerializedName("fixedResaleOrderPayFinalPriceTypeVoList")
+//        var fixedResaleOrderPayFinalPriceTypeVoList: List<Any?>? = listOf(),
+//        @SerializedName("fixedResaleOrderStatus")
+//        var fixedResaleOrderStatus: Any? = Any(),
+//        @SerializedName("fixedResaleOrderType")
+//        var fixedResaleOrderType: Any? = Any(),
+//        @SerializedName("giftcardBalance")
+//        var giftcardBalance: Any? = Any(),
+//        @SerializedName("goodsVoList")
+//        var goodsVoList: ArrayList<OrderGoodsVo?>? = ArrayList(),
+//        @SerializedName("hasMarkPay")
+//        var hasMarkPay: Int? = 0,
+//        @SerializedName("isShowCouponCode")
+//        var isShowCouponCode: Any? = Any(),
+//        @SerializedName("isShowUserInfo")
+//        var isShowUserInfo: Any? = Any(),
+//        @SerializedName("miniProgramsMa")
+//        var miniProgramsMa: Any? = Any(),
+//        @SerializedName("order")
+//        var order: OrderDetail? = OrderDetail(),
+//        @SerializedName("order62Code")
+//        var order62Code: Any? = Any(),
+//        @SerializedName("orderModifyRecord")
+//        var orderModifyRecord: String? = "",
+//        @SerializedName("orderName")
+//        var orderName: String? = "",
+//        @SerializedName("orderPhone")
+//        var orderPhone: String? = "",
+//        @SerializedName("payChannels")
+//        var payChannels: Any? = Any(),
+//        @SerializedName("payExtendVos")
+//        var payExtendVos: List<Any?>? = listOf(),
+//        @SerializedName("payPriceList")
+//        var payPriceList: List<Any?>? = listOf(),
+//        @SerializedName("payType")
+//        var payType: Any? = Any(),
+//        @SerializedName("phone")
+//        var phone: String? = "",
+//        @SerializedName("preOrder")
+//        var preOrder: Any? = Any(),
+//        @SerializedName("prescriptionImage")
+//        var prescriptionImage: List<Any?>? = listOf(),
+//        @SerializedName("promotionMap")
+//        var promotionMap: List<Any?>? = listOf(),
+//        @SerializedName("refund")
+//        var refund: Int? = 0,
+//        @SerializedName("shipmentShopName")
+//        var shipmentShopName: String? = "",
+//        @SerializedName("shopName")
+//        var shopName: String? = "",
+//        @SerializedName("spreadFee")
+//        var spreadFee: Any? = Any(),
+//        @SerializedName("statusColor")
+//        var statusColor: String? = "",
+//        @SerializedName("statusName")
+//        var statusName: String? = "",
+//        @SerializedName("supplierPrice")
+//        var supplierPrice: Int? = 0,
+//        @SerializedName("tradeNo")
+//        var tradeNo: Any? = Any(),
+//        @SerializedName("tradeOut")
+//        var tradeOut: Any? = Any(),
+//        @SerializedName("distance")
+//        var distance: String? = "",
+//        @SerializedName("shop")
+//        var shop: OrderShop? = OrderShop(),
+//        @SerializedName("poi")
+//        var poi: OrderPoi? = OrderPoi()
+//    ) : Serializable {
+//
+//
+//
+//    }
 }
 
 
@@ -374,6 +374,7 @@ data class SelectDialogDto(
 
 data class SelectOrderDialogDto(
     var channelId: String? = "0",// 平台  渠道全部传null,根据返回渠道
+    var orderTime: String? = "1",// //1下单时间 2收货时间 7发货时间
     var orderSort: String? = "4",// 排序
 ) : Serializable
 
@@ -506,9 +507,14 @@ data class OrderDetailDto(
     var centerLat: String? = "",
     @SerializedName("centerLon")
     var centerLon: String? = "",
+    @SerializedName("shopName")
+        var shopName: String? = "",
+    @SerializedName("arriveTime")
+        var arriveTime: String? = "",
+@SerializedName("goodsTotalNum")
+        var goodsTotalNum: Int? = 0,
 
-
-    )
+    ):Serializable
 
 data class OrderDetail(
     @SerializedName("activityFee")

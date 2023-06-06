@@ -4,9 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/dp_20"
-    android:layout_marginVertical="@dimen/dp_20"
-    android:background="@color/app_themes_f7f7f7"
     app:layout_constraintLeft_toRightOf="@dimen/dp_20"
     android:orientation="vertical">
 
@@ -23,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_16"
             android:gravity="center"
-            android:text="待取货"
+            android:text=""
             android:textColor="@color/red"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -43,24 +40,26 @@
                 android:layout_marginHorizontal="@dimen/dp_26"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:paddingTop="10dp"
-                android:paddingBottom="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_15"
+                android:paddingBottom="@dimen/dp_15"
                 android:text="忽略订单"
                 android:textColor="@color/textColorHint"
                 app:shape_radius="@dimen/dp_20"
+                android:textSize="@dimen/sp_34"
                 app:shape_shadowColor="@color/white"
                 app:shape_strokeColor="@color/order_FFC4C4C4"
                 app:shape_strokeWidth="1dp" />
 
             <com.hjq.shape.view.ShapeButton
+                android:textSize="@dimen/sp_34"
                 android:id="@+id/tv_go_on"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dp_26"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:paddingTop="@dimen/dp_20"
-                android:paddingBottom="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_15"
+                android:paddingBottom="@dimen/dp_15"
                 android:text="自提完成"
                 android:textColor="@color/white"
                 app:shape_radius="@dimen/dp_20"
@@ -74,6 +73,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ll_btn">
 
             <com.hjq.shape.view.ShapeButton
+                android:textSize="@dimen/sp_34"
                 android:id="@+id/btn_Print_receipt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -81,8 +81,8 @@
                 android:layout_marginRight="@dimen/dp_26"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:paddingTop="10dp"
-                android:paddingBottom="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_15"
+                android:paddingBottom="@dimen/dp_15"
                 android:text="打印小票"
                 android:textColor="@color/textColorHint"
                 app:shape_radius="@dimen/dp_20"
@@ -91,6 +91,7 @@
                 app:shape_strokeWidth="1dp" />
 
             <com.hjq.shape.view.ShapeButton
+                android:textSize="@dimen/sp_34"
                 android:id="@+id/btn_change_address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -98,8 +99,8 @@
                 android:layout_marginRight="@dimen/dp_26"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:paddingTop="@dimen/dp_20"
-                android:paddingBottom="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_15"
+                android:paddingBottom="@dimen/dp_15"
                 android:text="修改订单"
                 android:textColor="@color/textColorHint"
                 app:shape_radius="@dimen/dp_20"
@@ -110,10 +111,11 @@
     </com.hjq.shape.layout.ShapeConstraintLayout>
 
     <com.hjq.shape.layout.ShapeLinearLayout
+        android:layout_marginLeft="@dimen/dp_26"
+        android:layout_marginRight="@dimen/dp_26"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_20"
-        android:background="@color/white"
         android:orientation="vertical"
         app:shape_topLeftRadius="@dimen/dp_20"
         app:shape_topRightRadius="@dimen/dp_20">
@@ -231,6 +233,7 @@
         </com.hjq.shape.layout.ShapeRelativeLayout>
 
         <com.hjq.shape.layout.ShapeRelativeLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/dp_20">
@@ -347,6 +350,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_26"
+        android:layout_marginRight="@dimen/dp_26"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -369,6 +374,8 @@
                 tools:listitem="@layout/item_home_order_shop" />
 
             <TextView
+                android:layout_marginRight="@dimen/dp_24"
+                android:gravity="right"
                 android:id="@+id/tv_common"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -432,7 +439,6 @@
                     android:id="@+id/txt_order_platform_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/dp_10"
                     android:text="平台服务费"
                     android:textColor="#80000000"
                     android:textSize="@dimen/sp_28"
@@ -461,7 +467,6 @@
                     android:id="@+id/txt_order_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/dp_10"
                     android:text="本单支付入账"
                     android:textColor="#80000000"
                     android:textSize="@dimen/sp_28"
