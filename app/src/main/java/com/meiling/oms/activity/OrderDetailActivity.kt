@@ -3,8 +3,8 @@ package com.meiling.oms.activity
 import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
+import android.opengl.ETC1.getWidth
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +14,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.UiSettings
-import com.amap.api.maps.model.BitmapDescriptorFactory
-import com.amap.api.maps.model.LatLng
-import com.amap.api.maps.model.Marker
-import com.amap.api.maps.model.MarkerOptions
+import com.amap.api.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.hjq.permissions.OnPermissionCallback
@@ -120,7 +117,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         mDatabind.map.onSaveInstanceState(outState)
     }
 
-    private val ZOOM = 10f
+    private val ZOOM = 4f
 
     /**
      * 添加带生长效果marker
@@ -163,8 +160,12 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         )
         val marker: Marker = aMap!!.addMarker(options)
         marker.startAnimation()
-        aMap!!.moveCamera(CameraUpdateFactory.zoomTo(ZOOM))
+
+        val linearParams = mDatabind.map.layoutParams //取控件textView当前的布局参数
+
+       // aMap?.setPointToCenter(linearParams?.width!!.toInt() /2, linearParams?.height!!.toInt()/2)
         aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
+        aMap!!.moveCamera(CameraUpdateFactory.zoomTo(ZOOM))
     }
 
     private fun bottomSheetCallback(): BottomSheetCallback {
@@ -453,7 +454,6 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
                 addGrowMarker(latLng1, 2, 0)
 
-
             } else if (it.order?.logisticsStatus?.toInt() == 30) {
                 TextDrawableUtils.setLeftDrawable(
                     mDatabind.included.tvStatusTitle,
@@ -571,7 +571,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             behavior?.addBottomSheetCallback(bottomSheetCallback())
 
             behavior?.state = BottomSheetBehavior.STATE_HALF_EXPANDED
-
+           // setAllLatLng()
 
         }
         mViewModel.orderDetailDto.onError.observe(this) {
@@ -651,6 +651,42 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
     fun onMessageEvent(event: MessageEvent) {
         Log.d("yjk", "onMessageEvent: .")
         initData()
+    }
+    lateinit var mAllLatLng:ArrayList<LatLng>
+    /**
+     * 获取所有点的集合
+     */
+    private fun setAllLatLng() {
+        if (mAllLatLng == null) {
+            mAllLatLng = ArrayList<LatLng>()
+        }
+        val latLng = LatLng(orderDetailDto?.order?.lat?.toDouble()!!, orderDetailDto?.order?.lon?.toDouble()!!)//客户
+        val latLng1 = LatLng(orderDetailDto?.poi?.lat?.toDouble()!!, orderDetailDto?.poi?.lon?.toDouble()!!)
+        //
+        // 添加我的位置
+        mAllLatLng.add(latLng)
+        mAllLatLng.add(latLng1)
+        // 将所有的点显示到地图界面上
+        setMapBounds(mAllLatLng)
+    }
+
+    /**
+     * include marker show zoom
+     */
+    private fun setMapBounds(LatLngs: List<LatLng>) {
+        val latlngBuilder = LatLngBounds.builder()
+        for (latLng in LatLngs) { // 将所有的点都放到latlngBuilder中
+            latlngBuilder.include(latLng)
+        }
+        val bounds = latlngBuilder.build()
+        aMap?.setMapStatusLimits(bounds)
+        Log.d("yjk","将所有的点显示到地图界面上")
+//        aMap?.animateCamera(
+//            CameraUpdateFactory.newLatLngBounds(
+//                bounds,
+//                40
+//            )
+//        ) // 地图显示包含全部的点 40 表示padding=40，如果你想让你的marker布局全部显示出来就需要考虑到marker的高度来设置padding值
     }
 
 
