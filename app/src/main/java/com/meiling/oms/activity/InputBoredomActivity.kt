@@ -307,6 +307,8 @@ class InputBoredomActivity :
 
 
     }
-
+    override fun isStatusBarDarkFont(): Boolean {
+        return false
+    }
 
 }
