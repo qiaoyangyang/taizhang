@@ -273,14 +273,7 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             dismissLoading()
-            showToast("发起配送成功")
-            EventBus.getDefault().post(MessageEventUpDataTip())
-            mActivity.finish()
-        }
-        mViewModel.sendSuccess.onError.observe(this) {
-            dismissLoading()
-            showToast("发起配失败")
-            if (it.errCode == 760) {
+            if (it == 760) {
                 val dialog: MineExitDialog =
                     MineExitDialog().newInstance(
                         "温馨提示",
@@ -295,8 +288,14 @@ class OrderDisFragment2 : BaseFragment<OrderDisFragmentViewModel, FragmentDis2Bi
                 }
                 dialog.show(childFragmentManager)
             } else {
-                showToast(it.msg)
+                EventBus.getDefault().post(MessageEventUpDataTip())
+                showToast("发起配送成功")
+                mActivity.finish()
             }
+        }
+        mViewModel.sendSuccess.onError.observe(this) {
+            dismissLoading()
+                showToast(it.msg)
         }
         mViewModel.orderSendConfirmList.onStart.observe(this) {
             showLoading("请求中")

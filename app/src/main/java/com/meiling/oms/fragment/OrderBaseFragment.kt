@@ -118,7 +118,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     var sumNumber = item.goodsTotalNum
                         holder.setText(
                             R.id.txt_base_order_shop_msg,
-                            "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
+                            "共${item.goodsTotalNum}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
                         )
                         holder.setText(
                             R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}"
