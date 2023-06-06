@@ -153,6 +153,18 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 iv_icon.setBackgroundResource(R.drawable.add_shop_02)
                 tv_distance.visibility = View.GONE
             }
+        }else if (type == 3) {
+            if (int == 1) {//骑手
+                iv_icon.setBackgroundResource(R.drawable.rider_01)
+                tv_distance.visibility = View.VISIBLE
+                tv_distance.text = "骑手距离顾客${orderDetailDto?.distance}km"
+            }else if (int==2){//用户
+                iv_icon.setBackgroundResource(R.drawable.collected)
+                tv_distance.visibility = View.GONE
+            } else {
+                iv_icon.setBackgroundResource(R.drawable.add_shop_02)
+                tv_distance.visibility = View.GONE
+            }
         }
 
         options.icon(
@@ -472,14 +484,20 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 mDatabind.included.btnPrintReceipt.text = "打印小票"
                 mDatabind.included.btnChangeAddress.visibility = View.GONE
 
-                val latLng = LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
-                addGrowMarker(latLng, 1, 1)
+                val latLng = LatLng(it.riderPositionDTO?.riderLat?.toDouble()!!, it?.riderPositionDTO?.riderLng?.toDouble()!!)//客户
+                addGrowMarker(latLng, 1, 3)
+
+                val latLng2 = LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
+                addGrowMarker(latLng2, 2, 3)
+
                 val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
-                addGrowMarker(latLng1, 2, 1)
+                addGrowMarker(latLng1, 3, 3)
+
                 var mAllLatLng = ArrayList<LatLng>()
                 // 添加我的位置
                 mAllLatLng.add(latLng)
                 mAllLatLng.add(latLng1)
+                mAllLatLng.add(latLng2)
                 setMapBounds(mAllLatLng)
 
             } else if (it.order?.logisticsStatus?.toInt() == 50) {
@@ -493,6 +511,22 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 mDatabind.included.tvRevocation.text = "打印小票"
                 mDatabind.included.btnPrintReceipt.visibility = View.GONE
                 mDatabind.included.btnChangeAddress.visibility = View.GONE
+
+                val latLng = LatLng(it.riderPositionDTO?.riderLat?.toDouble()!!, it?.riderPositionDTO?.riderLng?.toDouble()!!)//客户
+                addGrowMarker(latLng, 1, 3)
+
+                val latLng2 = LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
+                addGrowMarker(latLng2, 2, 3)
+
+                val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
+                addGrowMarker(latLng1, 3, 3)
+
+                var mAllLatLng = ArrayList<LatLng>()
+                // 添加我的位置
+                mAllLatLng.add(latLng)
+                mAllLatLng.add(latLng1)
+                mAllLatLng.add(latLng2)
+                setMapBounds(mAllLatLng)
 
                 behavior?.peekHeight = dp2px(120)
             } else if (it.order?.logisticsStatus?.toInt() == 70) {

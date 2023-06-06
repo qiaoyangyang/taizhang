@@ -497,6 +497,8 @@ data class OrderDetailDto(
     var shop: OrderShop? = OrderShop(),
     @SerializedName("poi")
     var poi: OrderPoi? = OrderPoi(),
+    @SerializedName("riderPositionDTO")
+    var riderPositionDTO: RiderPositionDTO? = RiderPositionDTO(),
     @SerializedName("channelName")
     var channelName: String? = "",
     @SerializedName("channelLogo")
@@ -508,13 +510,23 @@ data class OrderDetailDto(
     @SerializedName("centerLon")
     var centerLon: String? = "",
     @SerializedName("shopName")
-        var shopName: String? = "",
+    var shopName: String? = "",
     @SerializedName("arriveTime")
-        var arriveTime: String? = "",
-@SerializedName("goodsTotalNum")
-        var goodsTotalNum: Int? = 0,
+    var arriveTime: String? = "",
+    @SerializedName("goodsTotalNum")
+    var goodsTotalNum: Int? = 0,
 
-    ):Serializable
+    ) : Serializable
+data class RiderPositionDTO(
+    @SerializedName("riderName")
+    var riderName: String? = "",
+    @SerializedName("riderPhone")
+    var riderPhone: String? = "",
+    @SerializedName("riderLng")
+    var riderLng: String? = "",
+    @SerializedName("riderLat")
+    var riderLat: String? = "",
+): Serializable
 
 data class OrderDetail(
     @SerializedName("activityFee")
