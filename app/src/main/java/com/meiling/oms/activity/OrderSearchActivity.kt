@@ -76,15 +76,14 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                     checkMap.text = "${item.distance}km"
                     telPhone = item.order?.recvPhone ?: ""
                     orderAddress.text = item.order?.recvAddr!!.replace("@@", "")
-                    val sumNumber: Int = item.goodsTotalNum ?: 0
+                    val sumNumber= item.goodsTotalNum ?: 0
                         holder.setText(
                             R.id.txt_base_order_shop_msg,
                             "共${item.goodsTotalNum}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
                         )
-                        holder.setText(
-                            R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}"
-                        )
-//                    }
+                    if (!item.goodsVoList.isNullOrEmpty()){
+                        holder.setText(R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}")
+                    }
 
                     holder.setText(R.id.txt_base_order_No, "${item.order?.channelDaySn}")
                     holder.setText(
