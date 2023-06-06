@@ -472,7 +472,7 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
             if (deliveryConsumeType == 30) {
                 showToast("配送完成")
             } else {
-                showToast("自提完成")
+                showToast("订单自提完成")
             }
 
         }
