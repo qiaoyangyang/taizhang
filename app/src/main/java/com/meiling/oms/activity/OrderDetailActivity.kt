@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.net.Uri
 import android.opengl.ETC1.getWidth
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -191,8 +192,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                     }
                     BottomSheetBehavior.STATE_HALF_EXPANDED -> //列表滑动到顶端
                     {
-                        if (
-                            mDatabind.TitleBar?.translationY !== 0f) {
+                        if (mDatabind.TitleBar?.translationY !== 0f) {
                             mDatabind.TitleBar?.translationY = 0f
                         }
                     }
@@ -272,38 +272,34 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                                 .withSerializable("kk", orderDetailDto!!).navigation()
                         }
                         50 -> {
-                            if (orderDetailDto?.deliveryConsume?.type!=30){
-                                var orderDisDialog =
-                                    OrderDistributionDetailDialog().newInstance(
-                                        false,
-                                        orderDetailDto?.order?.viewId!!
-                                    )
+                            if (orderDetailDto?.deliveryConsume?.type != 30) {
+                                var orderDisDialog = OrderDistributionDetailDialog().newInstance(
+                                    false, orderDetailDto?.order?.viewId!!
+                                )
                                 orderDisDialog.show(supportFragmentManager)
-                            }else{
+                            } else {
                                 mViewModel.orderFinish(orderDetailDto?.order?.viewId!!)
 
                             }
                         }
                         30, 80 -> {
 //                            showToast("配送详情")
-                            var orderDisDialog =
-                                OrderDistributionDetailDialog().newInstance(
-                                    false,
-                                    orderDetailDto?.order?.viewId!!
-                                )
+                            var orderDisDialog = OrderDistributionDetailDialog().newInstance(
+                                false, orderDetailDto?.order?.viewId!!
+                            )
                             orderDisDialog.show(supportFragmentManager)
                         }
                     }
                 }
                 //打印小票
                 R.id.btn_Print_receipt -> {
-
-                    when (orderDetailDto?.order?.logisticsStatus?.toInt()) {
-
-                        0, 30, 50, 70, 80 -> {
-                            setgetPrint()
-                        }
-                    }
+                    setgetPrint()
+//                    when (orderDetailDto?.order?.logisticsStatus?.toInt()) {
+//
+//                        0, 30, 50, 70, 80 -> {
+//
+//                        }
+//                    }
 
                 }
                 //修改订单
@@ -312,17 +308,14 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                         0 -> {
                             if (orderDetailDto?.order?.isValid == 0) {
                                 mViewModel.invalid(
-                                    orderDetailDto?.order!!.viewId.toString(),
-                                    "0"
+                                    orderDetailDto?.order!!.viewId.toString(), "0"
                                 )
                             } else {
                                 //startActivity(Intent(this, OrderChangeAddressActivity::class.java))
                                 ARouter.getInstance().build("/app/OrderChangeAddressActivity")
                                     .withString(
-                                        "receiveTime",
-                                        orderDetailDto?.order?.arriveTimeDate
-                                    )
-                                    .withString("receiveName", orderDetailDto?.order?.recvName)
+                                        "receiveTime", orderDetailDto?.order?.arriveTimeDate
+                                    ).withString("receiveName", orderDetailDto?.order?.recvName)
                                     .withString("receivePhone", orderDetailDto?.order?.recvPhone)
                                     .withString("receiveAddress", orderDetailDto?.order?.recvAddr)
                                     .withString("receiveRemark", orderDetailDto?.order?.remark)
@@ -342,8 +335,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                     XXPermissions.with(this).permission(PermissionUtilis.Group.PHONE_CALL)
                         .request(object : OnPermissionCallback {
                             override fun onGranted(
-                                permissions: MutableList<String>,
-                                allGranted: Boolean
+                                permissions: MutableList<String>, allGranted: Boolean
                             ) {
                                 if (!allGranted) {
                                     showToast("获取部分权限成功，但部分权限未正常授予")
@@ -353,14 +345,12 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                             }
 
                             override fun onDenied(
-                                permissions: MutableList<String>,
-                                doNotAskAgain: Boolean
+                                permissions: MutableList<String>, doNotAskAgain: Boolean
                             ) {
                                 if (doNotAskAgain) {
                                     // 如果是被永久拒绝就跳转到应用权限系统设置页面
                                     XXPermissions.startPermissionActivity(
-                                        this@OrderDetailActivity,
-                                        permissions
+                                        this@OrderDetailActivity, permissions
                                     )
                                 } else {
                                     showToast("授权失败，请检查权限")
@@ -430,8 +420,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             disLoading()
             showToast(it.msg)
         }
-        mViewModel.printDto.onStart.observe(this) {
-        }
+        mViewModel.printDto.onStart.observe(this) {}
         mViewModel.printDto.onSuccess.observe(this) {
             disLoading()
             showToast("已发送打印任务")
@@ -483,8 +472,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 setMapBounds(mAllLatLng)
             } else if (it.order?.logisticsStatus?.toInt() == 20) {
                 TextDrawableUtils.setLeftDrawable(
-                    mDatabind.included.tvStatusTitle,
-                    R.drawable.daito_be_delivered_20
+                    mDatabind.included.tvStatusTitle, R.drawable.daito_be_delivered_20
                 )
                 deliveryStatusName = "待抢单"
                 behavior?.peekHeight = dp2px(160)
@@ -504,8 +492,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 setMapBounds(mAllLatLng)
             } else if (it.order?.logisticsStatus?.toInt() == 30) {
                 TextDrawableUtils.setLeftDrawable(
-                    mDatabind.included.tvStatusTitle,
-                    R.drawable.daito_be_delivered_30
+                    mDatabind.included.tvStatusTitle, R.drawable.daito_be_delivered_30
                 )
                 behavior?.peekHeight = dp2px(160)
                 deliveryStatusName = "待取货"
@@ -514,8 +501,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 mDatabind.included.tvRevocation.text = "取消配送"
                 mDatabind.included.btnPrintReceipt.text = "打印小票"
                 mDatabind.included.btnChangeAddress.visibility = View.GONE
-
-                if (it.deliveryConsume?.type != 30) {
+                if (it.riderPositionDTO != null && !TextUtils.isEmpty(it.riderPositionDTO?.riderLat)) {
                     var latLng = LatLng(
                         it.riderPositionDTO?.riderLat?.toDouble()!!,
                         it?.riderPositionDTO?.riderLng?.toDouble()!!
@@ -534,23 +520,25 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                     mAllLatLng.add(latLng1)
                     mAllLatLng.add(latLng2)
                     setMapBounds(mAllLatLng)
+                }else{
 
-                } else {
-                    val latLng =
+                    val latLng2 =
                         LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
-                    addGrowMarker(latLng, 1, 0)
+                    addGrowMarker(latLng2, 2, 3)
+
                     val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
-                    addGrowMarker(latLng1, 2, 0)
+                    addGrowMarker(latLng1, 3, 3)
+
                     var mAllLatLng = ArrayList<LatLng>()
                     // 添加我的位置
-                    mAllLatLng.add(latLng)
                     mAllLatLng.add(latLng1)
+                    mAllLatLng.add(latLng2)
                     setMapBounds(mAllLatLng)
                 }
+
             } else if (it.order?.logisticsStatus?.toInt() == 50) {
                 TextDrawableUtils.setLeftDrawable(
-                    mDatabind.included.tvStatusTitle,
-                    R.drawable.daito_be_delivered_50
+                    mDatabind.included.tvStatusTitle, R.drawable.daito_be_delivered_50
                 )
                 deliveryStatusName = "配送中"
                 if (it.deliveryConsume?.type != 30) {
@@ -585,12 +573,12 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                     val latLng =
                         LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
                     addGrowMarker(latLng, 1, 0)
+
                     val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
                     addGrowMarker(latLng1, 2, 0)
                     var mAllLatLng = ArrayList<LatLng>()
                     // 添加我的位置
                     mAllLatLng.add(latLng)
-                    mAllLatLng.add(latLng1)
                     setMapBounds(mAllLatLng)
                 }
 
@@ -600,8 +588,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 behavior?.peekHeight = dp2px(120)
             } else if (it.order?.logisticsStatus?.toInt() == 70) {
                 TextDrawableUtils.setLeftDrawable(
-                    mDatabind.included.tvStatusTitle,
-                    R.drawable.daito_be_delivered_70
+                    mDatabind.included.tvStatusTitle, R.drawable.daito_be_delivered_70
                 )
                 deliveryStatusName = "已取消"
                 mDatabind.included.tvGoOn.visibility = View.GONE
@@ -621,8 +608,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 setMapBounds(mAllLatLng)
             } else if (it.order?.logisticsStatus?.toInt() == 80) {
                 TextDrawableUtils.setLeftDrawable(
-                    mDatabind.included.tvStatusTitle,
-                    R.drawable.daito_be_delivered_80
+                    mDatabind.included.tvStatusTitle, R.drawable.daito_be_delivered_80
                 )
                 val latLng = LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
                 addGrowMarker(latLng, 1, 2)
@@ -669,7 +655,10 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 this,
                 totalPrice,
                 mDatabind.included.tvCommon,
-                ling, totalPrice.length - 1, R.color.red, 1
+                ling,
+                totalPrice.length - 1,
+                R.color.red,
+                1
             ) {
 
             }
@@ -692,7 +681,8 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
 
         }
-        mViewModel.orderDetailDto.onError.observe(this) {
+        mViewModel.orderDetailDto.onError.observe(this)
+        {
 
         }
     }
@@ -704,19 +694,12 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
     //确定忽悠订单
     fun setinvalid() {
-        val dialog: MineExitDialog =
-            MineExitDialog().newInstance(
-                "温馨提示",
-                "您确认要忽略该订单吗？\n" +
-                        "忽略后可去「订单查询」中查找到该订单",
-                "取消",
-                "确认",
-                false
-            )
+        val dialog: MineExitDialog = MineExitDialog().newInstance(
+            "温馨提示", "您确认要忽略该订单吗？\n" + "忽略后可去「订单查询」中查找到该订单", "取消", "确认", false
+        )
         dialog.setOkClickLister {
             mViewModel.invalid(
-                orderDetailDto?.order!!.viewId.toString(),
-                "0"
+                orderDetailDto?.order!!.viewId.toString(), "0"
             )
             showToast("订单已经忽略")
             dialog.dismiss()
@@ -734,8 +717,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 CancelOrderSend(
                     deliveryConsumerId = orderDetailDto?.deliveryConsume!!.id ?: "0",
                     poiId = orderDetailDto?.order!!.poiId ?: "0",
-                    stationChannelId = orderDetailDto?.deliveryConsume!!.stationChannelId
-                        ?: "0"
+                    stationChannelId = orderDetailDto?.deliveryConsume!!.stationChannelId ?: "0"
                 )
             )
             dialog.dismiss()
@@ -783,8 +765,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         val bounds = latlngBuilder.build()
         aMap?.animateCamera(
             CameraUpdateFactory.newLatLngBounds(
-                bounds,
-                300
+                bounds, 300
             )
         ) // 地图显示包含全部的点 40 表示padding=40，如果你想让你的marker布局全部显示出来就需要考虑到marker的高度来设置padding值
     }
