@@ -317,5 +317,8 @@ class VoucherInspectionActivity :
             }
         }
     }
+    override fun isStatusBarDarkFont(): Boolean {
+        return false
+    }
 
 }
