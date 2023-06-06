@@ -165,7 +165,13 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
 //
 
                     checkMap.setSingleClickListener {
-                        showToast("查看地图")
+//                        showToast("查看地图")
+                        startActivity(
+                            Intent(
+                               this@OrderSearchActivity,
+                                OrderMapCheActivity::class.java
+                            ).putExtra("orderDetailDto", item)
+                        )
                     }
                     btnCancelDis.setSingleClickListener {
                         val dialog: MineExitDialog =

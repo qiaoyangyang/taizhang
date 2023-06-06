@@ -193,12 +193,12 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
 //
 
                     checkMap.setSingleClickListener {
-                        showToast("查看地图")
+//                        showToast("查看地图")
                         startActivity(
                             Intent(
                                 requireActivity(),
                                 OrderMapCheActivity::class.java
-                            ).putExtra("order", item.order).putExtra("poi", item.poi)
+                            ).putExtra("orderDetailDto", item)
                         )
                     }
                     btnCancelDis.setSingleClickListener {

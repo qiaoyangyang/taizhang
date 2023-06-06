@@ -10,13 +10,9 @@ import android.widget.TextView
 import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.UiSettings
-import com.amap.api.maps.model.BitmapDescriptorFactory
-import com.amap.api.maps.model.LatLng
-import com.amap.api.maps.model.Marker
-import com.amap.api.maps.model.MarkerOptions
+import com.amap.api.maps.model.*
 import com.meiling.common.activity.BaseActivity
-import com.meiling.common.network.data.OrderDetail
-import com.meiling.common.network.data.OrderPoi
+import com.meiling.common.network.data.OrderDetailDto
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityOrderCheckMapBinding
 import com.meiling.oms.viewmodel.BaseOrderFragmentViewModel
@@ -42,13 +38,17 @@ class OrderMapCheActivity :
 
     override fun initData() {
         super.initData()
-        var order = intent.getSerializableExtra("order") as OrderDetail
-        var poi = intent.getSerializableExtra("poi") as OrderPoi
-//        mViewModel.getOrderDetail(orderid)
-        val latLng = LatLng(order?.lat?.toDouble()!!, order?.lon?.toDouble()!!)//客户
-        addGrowMarker(latLng, 1, 0)
-        val latLng1 = LatLng(poi?.lat?.toDouble()!!, poi?.lon?.toDouble()!!)
-        addGrowMarker(latLng1, 2, 0)
+        var orderDetailDto = intent.getSerializableExtra("orderDetailDto") as OrderDetailDto
+        val latLng = LatLng(orderDetailDto.order?.lat?.toDouble()!!, orderDetailDto.order?.lon?.toDouble()!!)//客户
+        addGrowMarker(latLng, 1, 0,orderDetailDto.distance.toString())
+        val latLng1 = LatLng(orderDetailDto.poi?.lat?.toDouble()!!, orderDetailDto.poi?.lon?.toDouble()!!)
+        addGrowMarker(latLng1, 2, 0,orderDetailDto.distance.toString())
+           var mAllLatLng = ArrayList<LatLng>()
+        // 添加我的位置
+        mAllLatLng.add(latLng);
+        mAllLatLng.add(latLng1);
+        // 将所有的点显示到地图界面上
+        setMapBounds(mAllLatLng);
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityOrderCheckMapBinding {
@@ -80,7 +80,7 @@ class OrderMapCheActivity :
     /**
      * 添加带生长效果marker
      */
-    private fun addGrowMarker(latLng: LatLng, int: Int, type: Int) {
+    private fun addGrowMarker(latLng: LatLng, int: Int, type: Int,distance :String) {
         val options = MarkerOptions()
         options.position(latLng)
         val view = LayoutInflater.from(this).inflate(R.layout.addimg, null, false)
@@ -90,7 +90,7 @@ class OrderMapCheActivity :
             if (int == 1) {
                 iv_icon.setBackgroundResource(R.drawable.add_1)
                 tv_distance.visibility = View.VISIBLE
-                tv_distance.text = "顾客距离门店${1}km"
+                tv_distance.text = "顾客距离门店${distance}km"
             } else {
                 iv_icon.setBackgroundResource(R.drawable.add_shop_02)
                 tv_distance.visibility = View.GONE
@@ -115,11 +115,34 @@ class OrderMapCheActivity :
 
         options.icon(
             BitmapDescriptorFactory.fromView(view)
-        )
+        ).position(latLng)
         val marker: Marker = aMap!!.addMarker(options)
         marker.startAnimation()
         aMap!!.moveCamera(CameraUpdateFactory.zoomTo(ZOOM))
         aMap!!.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
+
+//        aMap?.moveCamera(CameraUpdateFactory.zoomTo(17.0f))
+//        var movecity = CameraUpdateFactory.newLatLngZoom(latLng,17f)
+//        aMap?.moveCamera(movecity)
+//        options.position(latLng)
+//        aMap?.addMarker(options)
+    }
+
+    /**
+     * include marker show zoom
+     */
+    private fun setMapBounds(LatLngs: List<LatLng>) {
+        val latlngBuilder = LatLngBounds.builder()
+        for (latLng in LatLngs) { // 将所有的点都放到latlngBuilder中
+            latlngBuilder.include(latLng)
+        }
+        val bounds = latlngBuilder.build()
+        aMap?.animateCamera(
+            CameraUpdateFactory.newLatLngBounds(
+                bounds,
+                300
+            )
+        ) // 地图显示包含全部的点 40 表示padding=40，如果你想让你的marker布局全部显示出来就需要考虑到marker的高度来设置padding值
     }
 
     private fun dialPhoneNumber(phoneNumber: String) {
