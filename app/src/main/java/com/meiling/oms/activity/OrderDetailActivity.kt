@@ -511,7 +511,6 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 mDatabind.included.tvRevocation.text = "打印小票"
                 mDatabind.included.btnPrintReceipt.visibility = View.GONE
                 mDatabind.included.btnChangeAddress.visibility = View.GONE
-
                 val latLng = LatLng(it.riderPositionDTO?.riderLat?.toDouble()!!, it?.riderPositionDTO?.riderLng?.toDouble()!!)//客户
                 addGrowMarker(latLng, 1, 3)
 
@@ -590,10 +589,8 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             mDatabind.included.txtOrderStore.text = "${it.channelName} ${it.shop?.name}"//渠道
             mDatabind.included.txtBaseOrderNo.text = "${it.order?.channelDaySn} "//单号
             mDatabind.included.txtBaseOrderDeliveryTime.text = "${it.order?.arriveTimeDate} "//时间
-            var sumNumber: Int = 0
-            for (ne in it.goodsVoList!!) {
-                sumNumber += ne?.number!!
-            }
+            var sumNumber  = it.goodsTotalNum
+//
             var totalPrice = "商品${sumNumber}件，共${it.order?.totalPrice}元"
             var ling = ((totalPrice.length - it.order?.totalPrice.toString().length) - 1)
 
