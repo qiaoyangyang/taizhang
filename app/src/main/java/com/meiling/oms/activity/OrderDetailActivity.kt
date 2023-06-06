@@ -409,7 +409,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         }
         mViewModel.orderFinish.onSuccess.observe(this) {
             disLoading()
-            showToast("自提完成")
+            showToast("配送完成")
             finish()
         }
         mViewModel.orderFinish.onError.observe(this) {
@@ -509,11 +509,8 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 )
                 behavior?.peekHeight = dp2px(160)
                 deliveryStatusName = "待取货"
-                if (it.deliveryConsume?.type != 30) {
-                    mDatabind.included.tvGoOn.text = "配送详情"
-                } else {
-                    mDatabind.included.tvGoOn.text = "配送完成"
-                }
+                mDatabind.included.tvGoOn.text = "配送详情"
+
                 mDatabind.included.tvRevocation.text = "取消配送"
                 mDatabind.included.btnPrintReceipt.text = "打印小票"
                 mDatabind.included.btnChangeAddress.visibility = View.GONE
@@ -556,8 +553,11 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                     R.drawable.daito_be_delivered_50
                 )
                 deliveryStatusName = "配送中"
-
-                mDatabind.included.tvGoOn.text = "配送详情"
+                if (it.deliveryConsume?.type != 30) {
+                    mDatabind.included.tvGoOn.text = "配送详情"
+                } else {
+                    mDatabind.included.tvGoOn.text = "配送完成"
+                }
                 mDatabind.included.tvRevocation.text = "打印小票"
                 mDatabind.included.btnPrintReceipt.visibility = View.GONE
                 mDatabind.included.btnChangeAddress.visibility = View.GONE
