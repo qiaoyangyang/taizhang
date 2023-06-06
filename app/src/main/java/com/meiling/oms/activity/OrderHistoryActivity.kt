@@ -93,7 +93,9 @@ class OrderHistoryActivity :
 
     override fun initListener() {
         mDatabind.imgSearchOrder.setOnClickListener {
-            ARouter.getInstance().build("/app/Search1Activity").navigation()
+            mDatabind.imgSearchOrder.setOnClickListener {
+                ARouter.getInstance().build("/app/Search1Activity").navigation()
+            }
         }
         mDatabind.imgOrderScreen.setOnClickListener {
             var orderSelectDialog = OrderSelectDialog().newInstance(

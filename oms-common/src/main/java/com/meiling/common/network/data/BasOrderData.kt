@@ -511,6 +511,8 @@ data class OrderDetailDto(
         var shopName: String? = "",
     @SerializedName("arriveTime")
         var arriveTime: String? = "",
+@SerializedName("goodsTotalNum")
+        var goodsTotalNum: Int? = 0,
 
     ):Serializable
 

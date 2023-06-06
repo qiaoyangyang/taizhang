@@ -541,10 +541,11 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             mDatabind.included.txtOrderStore.text = "${it.channelName} "//渠道
             mDatabind.included.txtBaseOrderNo.text = "${it.order?.channelDaySn} "//单号
             mDatabind.included.txtBaseOrderDeliveryTime.text = "${it.order?.arriveTimeDate} "//时间
-            var sumNumber: Int = 0
-            for (ne in it.goodsVoList!!) {
-                sumNumber += ne?.number!!
-            }
+//            var sumNumber: Int = 0
+//            for (ne in it.goodsVoList!!) {
+//                sumNumber += ne?.number!!
+//            }
+            var sumNumber: Int = it.goodsTotalNum ?: 0
             mDatabind.included.tvCommon.text = "商品${sumNumber}件，共${it.order?.totalPrice}元"//时间
             GlideAppUtils.loadUrl(
                 mDatabind.included.imgOrderChannelIcon,

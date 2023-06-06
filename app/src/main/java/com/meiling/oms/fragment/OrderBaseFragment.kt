@@ -24,14 +24,10 @@ import com.hjq.shape.view.ShapeTextView
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.CancelOrderSend
 import com.meiling.common.network.data.OrderDetailDto
-import com.meiling.common.network.data.OrderDto
 import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.SaveDecimalUtils
 import com.meiling.oms.R
-import com.meiling.oms.activity.ChannelActivity
-import com.meiling.oms.activity.MainActivity
-import com.meiling.oms.activity.OrderDetail1Activity
-import com.meiling.oms.activity.OrderDetailActivity
+import com.meiling.oms.activity.*
 import com.meiling.oms.databinding.FragmentBaseOrderBinding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDistributionDetailDialog
@@ -119,13 +115,8 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                     telPhone = item.order?.recvPhone ?: ""
                     orderAddress.text = item.order?.recvAddr!!.replace("@@", "")
                     var sum: Double = 0.0
-                    var sumNumber: Int = 0
-                    if (item.goodsVoList?.isNotEmpty() == true) {
+                    val sumNumber: Int = item.goodsTotalNum ?: 0
 
-                        for (ne in item.goodsVoList!!) {
-//                            sum += ne?.totalPrice!!
-                            sumNumber += ne?.number!!
-                        }
                         holder.setText(
                             R.id.txt_base_order_shop_msg,
                             "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
@@ -133,7 +124,6 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         holder.setText(
                             R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}"
                         )
-                    }
 
                     holder.setText(R.id.txt_base_order_No, "${item.order?.channelDaySn}")
                     holder.setText(
@@ -204,6 +194,12 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
 
                     checkMap.setSingleClickListener {
                         showToast("查看地图")
+                        startActivity(
+                            Intent(
+                                requireActivity(),
+                                OrderMapCheActivity::class.java
+                            ).putExtra("order", item.order).putExtra("poi", item.poi)
+                        )
                     }
                     btnCancelDis.setSingleClickListener {
                         val dialog: MineExitDialog =

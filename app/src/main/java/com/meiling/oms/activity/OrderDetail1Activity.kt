@@ -50,7 +50,7 @@ class OrderDetail1Activity :
                 val dialog: MineExitDialog =
                     MineExitDialog().newInstance(
                         "温馨提示",
-                        "确定忽略订单？",
+                        "您确认要忽略该订单吗？ \n忽略后可去「订单查询」中查找到该订单？",
                         "取消",
                         "确认",
                         false
@@ -219,10 +219,10 @@ class OrderDetail1Activity :
             mDatabind.included.txtOrderStore.text = "${it.channelName} "//渠道
             mDatabind.included.txtBaseOrderNo.text = "${it.order?.channelDaySn} "//单号
             mDatabind.included.txtBaseOrderDeliveryTime.text = "${it.order?.arriveTimeDate} "//时间
-            var sumNumber: Int = 0
-            for (ne in it.goodsVoList!!) {
-                sumNumber += ne?.number!!
-            }
+            var sumNumber: Int = it.goodsTotalNum ?: 0
+//            for (ne in it.goodsVoList!!) {
+//                sumNumber += ne?.number!!
+//            }
             mDatabind.included.tvCommon.text = "商品${sumNumber}件，共${it.order?.totalPrice}元"//时间
             GlideAppUtils.loadUrl(
                 mDatabind.included.imgOrderChannelIcon,
