@@ -114,7 +114,7 @@
             android:textSize="16sp"
             android:textColor="@color/black"
             android:id="@+id/txt_title3"
-            android:text="还没有UU跑腿账号"/>
+            android:text="还没有达达的账号"/>
 
         <TextView
             android:layout_width="0dp"

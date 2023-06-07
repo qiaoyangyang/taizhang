@@ -20,7 +20,7 @@ class ShowOtherBindShopDialog : BaseNiceDialog() {
     init {
         setGravity(Gravity.BOTTOM)
         setHeight(400)
-        setOutCancel(false)
+        setOutCancel(true)
     }
     override fun intLayoutId(): Int {
         return R.layout.dialog_shop_list
@@ -48,6 +48,7 @@ class ShowOtherBindShopDialog : BaseNiceDialog() {
             title?.setText(titleString)
         }
         var btn=holder?.getView<Button>(R.id.btn_ok_select_shop_city)
+        btn?.text="我知道了"
         var recy=holder?.getView<RecyclerView>(R.id.rv_shop_or_city)
         var ivCloseRecharge=holder?.getView<ImageView>(R.id.iv_close_select_shop_city)
         var adapter= ChooseViewAdapter<BalanceChildItem>()

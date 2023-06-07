@@ -310,7 +310,13 @@ class NewlyBuiltStoreActivity :
                     .putExtra("name", name)
                     .putExtra("poid", it)
                     .putExtra("shopName", mViewModel.PoiVoBean.value?.poiVo?.name)
-                    .putExtra("from", fromIntent))
+                    .putExtra("from", fromIntent)
+                    .putExtra("phone",mViewModel.PoiVoBean.value?.poiVo?.phone)
+                    .putExtra("etStoreAddress",mViewModel.PoiVoBean.value?.poiVo?.storeaddress)
+                    .putExtra("etDetailedAddress",mViewModel.PoiVoBean.value?.poiVo?.etdetailedaddress)
+                    .putExtra("lon",lon)
+                    .putExtra("lat",lat)
+                )
             } else
                 finish()
         }

@@ -14,7 +14,6 @@
         android:id="@+id/txt_shop_or_city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp_44"
         android:paddingVertical="@dimen/dp_30"
         android:text="门店"
         android:gravity="center"

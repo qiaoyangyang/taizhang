@@ -15,6 +15,7 @@ import com.meiling.common.network.data.Merchant
 import com.meiling.common.network.data.PutMerChant
 import com.meiling.common.network.data.Shop
 import com.meiling.common.network.data.ShopBean
+import com.meiling.common.network.service.acceptanceCheckService
 import com.meiling.common.network.service.loginService
 import com.meiling.common.network.service.meService
 import com.meiling.common.utils.GlideAppUtils
@@ -23,6 +24,7 @@ import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityBandingLogistcsLayoutBinding
 import com.meiling.oms.dialog.*
+import com.meiling.oms.service.branchInformationService
 import com.meiling.oms.viewmodel.BindingLogisticsViewModel
 import com.meiling.oms.viewmodel.MainViewModel2
 import com.meiling.oms.widget.setSingleClickListener
@@ -40,6 +42,13 @@ class BindingLogisticsActivity :
     var pwd = ""
     var poid = ""
     var from = ""
+
+    var lon=""
+    var lat= ""
+    var etStoreAddress=""//店铺地址
+    var etDetailedAddress= ""//详细地址
+    var phone=""
+
     var shopList = ArrayList<ShopBean>()
     lateinit var mainViewModel: MainViewModel2
     override fun initView(savedInstanceState: Bundle?) {
@@ -150,7 +159,14 @@ class BindingLogisticsActivity :
         pwd = intent?.getStringExtra("pwd") ?: ""
         poid = intent?.getStringExtra("poid") ?: ""
         from = intent?.getStringExtra("from") ?: ""
+
         shopName= intent?.getStringExtra("shopName") ?: ""
+        lon= intent?.getStringExtra("lon") ?: ""
+        lat= intent?.getStringExtra("lat") ?: ""
+        etStoreAddress= intent?.getStringExtra("etStoreAddress") ?: ""//店铺地址
+        etDetailedAddress= intent?.getStringExtra("etDetailedAddress") ?: ""//详细地址
+        phone= intent?.getStringExtra("phone") ?: ""//发货门店手机号
+
         if (from.isNullOrBlank()) {
             TextDrawableUtils.setRightDrawable(mDatabind.TitleBar.titleView, R.drawable.xia1)
             mDatabind.btnSuccess.visibility = View.GONE
@@ -320,8 +336,50 @@ class BindingLogisticsActivity :
 
                         }else{
                             //TODO 去注册
-                            var dialogRegistDadaLogistics=DialogRegistDadaLogistics()
-                            dialogRegistDadaLogistics.show(supportFragmentManager)
+                            if(from.isNullOrBlank()){
+                                mViewModel.launchRequest(
+                                    {
+                                        branchInformationService.poi(poid)
+                                    },
+                                    onSuccess = {
+                                        val x = it?.poiVo?.address!!.split("@@", " ","&&")
+                                        if (x.size != 0) {
+                                            it?.poiVo?.storeaddress = x[0]
+                                            it?.poiVo?.etdetailedaddress = x[1]
+                                        }
+                                        var dialogRegistDadaLogistics=DialogRegistDadaLogistics().newInstance(
+                                            it?.poiVo?.name+"",
+                                            it?.poiVo?.lon+"",
+                                            it?.poiVo?.lat+"",
+                                            it?.poiVo?.storeaddress+"",
+                                            it?.poiVo?.etdetailedaddress+"",
+                                            it?.poiVo?.phone+"",
+                                            it?.poiVo?.id.toString()+"")
+                                        dialogRegistDadaLogistics.setMySureOnclickListener {
+                                            getLogisticsList(poid)
+                                        }
+                                        dialogRegistDadaLogistics.show(supportFragmentManager)
+                                    },
+                                    onError = {
+
+                                    }
+                                )
+                            }else{
+                                var dialogRegistDadaLogistics=DialogRegistDadaLogistics().newInstance(
+                                    shopName,
+                                    lon,
+                                    lat,
+                                    etStoreAddress,
+                                    etDetailedAddress,
+                                    phone,
+                                    poid)
+                                dialogRegistDadaLogistics.setMySureOnclickListener {
+                                    getLogisticsList(poid)
+                                }
+                                dialogRegistDadaLogistics.show(supportFragmentManager)
+                            }
+
+
                         }
                     }
                     bindingOther.show(supportFragmentManager)

@@ -47,7 +47,6 @@
         android:layout_above="@+id/btn_ok_select_shop_city"
         android:layout_below="@+id/txt_title_item_city"
         android:layout_centerInParent="true"
-        android:layout_marginHorizontal="@dimen/dp_20"
         android:background="@color/white"
         android:layout_marginTop="10dp"
         android:orientation="vertical"

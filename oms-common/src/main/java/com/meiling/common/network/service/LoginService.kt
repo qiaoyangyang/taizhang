@@ -146,6 +146,19 @@ interface LoginService {
     @POST("/saas/express/merchant/save")
     suspend fun merChantSave(@Body putMerChant:PutMerChant):ResultData<Any>
 
+
+    /**
+     * 物流注册
+     */
+    @POST("/saas/express/merchant/add_merchant")
+    suspend fun addMerChant(@Body dadaMerchantAddReq:DadaMerchantAddReq):ResultData<Any>
+
+    /**
+     * 获取类目
+     */
+    @GET("/saas/express/merchant/category")
+    suspend fun getCategory(@Query("channelType")channelType:String,@Query("poiId")poiId:String):ResultData<ArrayList<OtherCategory>>
+
     /**
      * 获取余额列表
      * channelType 物流类型(uu,ss,sf_tc,dada)

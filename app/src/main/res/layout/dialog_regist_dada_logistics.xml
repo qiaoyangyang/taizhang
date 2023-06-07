@@ -70,7 +70,6 @@
                             android:gravity="right|center"
                             android:hint="请输入店铺名称"
                             android:maxLength="30"
-                            android:text="@={viewModel.PoiVoBean.poiVo.name}"
                             android:textColor="@color/home_333333"
                             android:textColorHint="@color/home_999999"
                             android:textSize="@dimen/sp_32"
@@ -113,7 +112,6 @@
                         android:drawableRight="@drawable/icon_back1"
                         android:gravity="right|center"
                         android:hint="请选择店铺地址"
-                        android:text="@={viewModel.poiVoBean.poiVo.storeaddress}"
                         android:textColor="@color/home_333333"
                         android:textColorHint="@color/home_999999"
                         android:textSize="@dimen/sp_32"
@@ -155,10 +153,8 @@
                         android:background="@color/white"
                         android:gravity="right|center"
                         android:hint="请填写详细的门店地址"
-                        android:maxLength="200"
-                        android:text="@={viewModel.poiVoBean.poiVo.etdetailedaddress}"
+                        android:maxLength="30"
                         android:textColor="@color/home_333333"
-
                         android:textColorHint="@color/home_999999"
                         android:textSize="@dimen/sp_32"
                         app:layout_constraintBaseline_toBaselineOf="@+id/tv_detailed_address"
@@ -195,7 +191,6 @@
                         android:hint="请输入手机号"
                         android:inputType="number"
                         android:maxLength="11"
-                        android:text="@={viewModel.poiVoBean.poiVo.phone}"
                         android:textColor="@color/home_333333"
                         android:textColorHint="@color/home_999999"
                         android:textSize="@dimen/sp_32"
@@ -238,7 +233,6 @@
                         android:drawableRight="@drawable/icon_back1"
                         android:gravity="right|center"
                         android:hint="请选择经营类型"
-                        android:text="@={viewModel.poiVoBean.poiVo.storeaddress}"
                         android:textColor="@color/home_333333"
                         android:textColorHint="@color/home_999999"
                         android:textSize="@dimen/sp_32"
@@ -280,11 +274,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                             android:gravity="right|center"
                             android:hint="请输入电子邮箱"
-                            android:maxLength="20"
-                            android:text="@={viewModel.poiVoBean.poiVo.sinceCode}"
+                            android:maxLength="30"
                             android:textColor="@color/home_333333"
                             android:textColorHint="@color/home_999999"
                             android:textSize="@dimen/sp_32"
@@ -307,10 +299,11 @@
                     android:button="@drawable/login_cb_agreement"
                     android:layout_marginLeft="@dimen/dp_32"
                     android:textColor="#999999"
+                    android:id="@+id/checkBoxAgree"
                     android:textSize="@dimen/sp_24"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="5dp"
-                    android:text="我已同意一下协议:"/>
+                    android:text="我已同意以下协议:"/>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -322,19 +315,22 @@
                         android:layout_height="wrap_content"
                         android:textColor="#ff1180ff"
                         android:textSize="@dimen/sp_24"
-                        android:text="注册协议"/>
+                        android:id="@+id/registUrl"
+                        android:text="《注册协议》"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#ff1180ff"
                         android:textSize="@dimen/sp_24"
-                        android:text="个人敏感信息授权协议"/>
+                        android:id="@+id/userUrl"
+                        android:text="《个人敏感信息授权协议》"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#ff1180ff"
                         android:textSize="@dimen/sp_24"
-                        android:text="授权协议"/>
+                        android:id="@+id/userUrl2"
+                        android:text="《授权协议》"/>
 
                 </LinearLayout>
 

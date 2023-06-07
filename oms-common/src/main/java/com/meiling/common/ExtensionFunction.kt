@@ -2,6 +2,10 @@ package com.meiling.common
 
 import android.content.Context
 import android.net.Uri
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -76,3 +80,4 @@ fun dp2px(context: Context, dpValue: Int): Int {
     val scale = context.resources.displayMetrics.density
     return (dpValue * scale + 0.5f).toInt()
 }
+
