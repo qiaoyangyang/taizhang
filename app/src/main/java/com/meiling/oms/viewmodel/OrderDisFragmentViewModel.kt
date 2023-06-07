@@ -43,7 +43,7 @@ class OrderDisFragmentViewModel(application: Application) : BaseViewModel(applic
     /**
      * 发起配送
      * */
-    var sendSuccess = BaseLiveData<Any>()
+    var sendSuccess = BaseLiveData<Int>()
     fun insertOrderSend(logisticsConfirmDtoList: LogisticsConfirmDtoList) {
         request(
             { orderDisService.insertOrderSend(logisticsConfirmDtoList) },

@@ -44,6 +44,8 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
 
     var telPhone = ""
     var intentIsValid: String = ""
+    var deliveryConsumeType = 2
+
     override fun initView(savedInstanceState: Bundle?) {
         orderDisAdapter =
             object :
@@ -76,22 +78,14 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                     checkMap.text = "${item.distance}km"
                     telPhone = item.order?.recvPhone ?: ""
                     orderAddress.text = item.order?.recvAddr!!.replace("@@", "")
-//                    var sum: Double = 0.0
-                    val sumNumber: Int = item.goodsTotalNum ?: 0
-//                    if (item.goodsVoList?.isNotEmpty() == true) {
-//
-//                        for (ne in item.goodsVoList!!) {
-////                            sum += ne?.totalPrice!!
-//                            sumNumber += ne?.number!!
-//                        }
+                    val sumNumber= item.goodsTotalNum ?: 0
                         holder.setText(
                             R.id.txt_base_order_shop_msg,
-                            "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
+                            "共${item.goodsTotalNum}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
                         )
-                        holder.setText(
-                            R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}"
-                        )
-//                    }
+                    if (!item.goodsVoList.isNullOrEmpty()){
+                        holder.setText(R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}")
+                    }
 
                     holder.setText(R.id.txt_base_order_No, "${item.order?.channelDaySn}")
                     holder.setText(
@@ -216,6 +210,7 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                             "0" -> {
                                 if (item.order!!.deliveryType == "2") {
                                     mViewModel.orderFinish(item.order!!.viewId!!)
+                                    deliveryConsumeType = 2
                                 } else {
                                     ARouter.getInstance().build("/app/OrderDisActivity")
                                         .withSerializable("kk", item.order).navigation()
@@ -230,7 +225,15 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                                 ARouter.getInstance().build("/app/OrderDisActivity")
                                     .withSerializable("kk", item.order).navigation()
                             }
-                            "30", "50", "80" -> {
+                            "50" -> {
+                                if(item.deliveryConsume?.type == 30){
+                                    mViewModel.orderFinish(item.order!!.viewId!!)
+                                    deliveryConsumeType = 30
+                                }else{
+                                    orderDisDialog.show(supportFragmentManager)
+                                }
+                            }
+                            "30", "80" -> {
                                 orderDisDialog.show(supportFragmentManager)
                             }
 
@@ -274,13 +277,19 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                             btnCancelDis.visibility = View.VISIBLE
                             btnSendDis.visibility = View.VISIBLE
                             btnSendDis.text = "配送详情"
+
                         }
                         "50" -> {
                             btnOrderDisIgnore.visibility = View.GONE
                             btnOrderCncelIgnore.visibility = View.GONE
                             btnCancelDis.visibility = View.GONE
                             btnSendDis.visibility = View.VISIBLE
-                            btnSendDis.text = "配送详情"
+                            if (item.deliveryConsume!!.type == 30) {
+                                btnSendDis.text = "配送完成"
+                            } else {
+                                btnSendDis.text = "配送详情"
+                            }
+
                         }
                         "70" -> {
                             btnOrderDisIgnore.visibility = View.GONE
@@ -469,7 +478,11 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
         }
         mViewModel.orderFinish.onSuccess.observe(this) {
             disLoading()
-
+            if (deliveryConsumeType == 30) {
+                showToast("配送完成")
+            } else {
+                showToast("自提完成")
+            }
             mViewModel.orderList(
                 logisticsStatus = "",
                 startTime = "",
@@ -483,7 +496,7 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                 businessNumber = "",
                 selectText = mDatabind.edtSearch.text.trim().toString()
             )
-            showToast("出货成功")
+//            showToast("出货成功")
         }
         mViewModel.orderFinish.onError.observe(this) {
             disLoading()

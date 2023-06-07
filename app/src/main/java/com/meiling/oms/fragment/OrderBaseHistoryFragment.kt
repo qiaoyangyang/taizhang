@@ -129,15 +129,15 @@ class OrderBaseHistoryFragment :
                     telPhone = item.order?.recvPhone ?: ""
                     orderAddress.text = item.order?.recvAddr!!.replace("@@", "")
                     var sum: Double = 0.0
-                    var sumNumber: Int = item.goodsTotalNum ?: 0
+                    var sumNumber = item.goodsTotalNum
 
                         holder.setText(
                             R.id.txt_base_order_shop_msg,
-                            "共${sumNumber}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
+                            "共${item.goodsTotalNum}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
                         )
-                        holder.setText(
-                            R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}"
-                        )
+                    if (!item.goodsVoList.isNullOrEmpty()){
+                        holder.setText(R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}")
+                    }
 
                     holder.setText(R.id.txt_base_order_No, "${item.order?.channelDaySn}")
                     holder.setText(
@@ -174,7 +174,7 @@ class OrderBaseHistoryFragment :
                     btnShopDetail.setSingleClickListener {
                         val orderGoodsListDetailDialog =
                             OrderGoodsListDetailDialog().newInstance(
-                                sumNumber,
+                                sumNumber?:0,
                                 SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!).toString(),
                                 item.goodsVoList!!
                             )
@@ -277,7 +277,14 @@ class OrderBaseHistoryFragment :
                                 ARouter.getInstance().build("/app/OrderDisActivity")
                                     .withSerializable("kk", item.order).navigation()
                             }
-                            "30", "50", "80" -> {
+                            "50" -> {
+                               if(item.deliveryConsume!!.type == 30){
+                                   mViewModel.orderFinish(item.order!!.viewId!!)
+                               }else{
+                                   orderDisDialog.show(childFragmentManager)
+                               }
+                            }
+                            "30",  "80" -> {
                                 orderDisDialog.show(childFragmentManager)
                             }
 
@@ -327,7 +334,12 @@ class OrderBaseHistoryFragment :
                             btnOrderCncelIgnore.visibility = View.GONE
                             btnCancelDis.visibility = View.GONE
                             btnSendDis.visibility = View.VISIBLE
-                            btnSendDis.text = "配送详情"
+                            if (item.deliveryConsume!!.type == 30) {
+                                btnSendDis.text = "配送完成"
+                            } else {
+                                btnSendDis.text = "配送详情"
+                            }
+//                            btnSendDis.text = "配送详情"
                         }
                         "70" -> {
                             btnOrderDisIgnore.visibility = View.GONE
@@ -402,7 +414,7 @@ class OrderBaseHistoryFragment :
             endTime = endTime,
             businessNumberType = "1",
             pageIndex = pageIndex,
-            pageSize = "20",
+            pageSize = "10",
             orderTime = "1",
             deliverySelect = "0",
             isValid = isValid,
@@ -420,7 +432,7 @@ class OrderBaseHistoryFragment :
                 endTime = endTime,
                 businessNumberType = "1",
                 pageIndex = pageIndex,
-                pageSize = "20",
+                pageSize = "10",
                 orderTime = "1",
                 deliverySelect = "0",
                 isValid = isValid,

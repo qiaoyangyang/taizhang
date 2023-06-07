@@ -356,6 +356,8 @@ data class DeliveryConsume(
     var stationChannelId: String? = "",
     @SerializedName("viewId")
     var viewId: String? = "",
+    @SerializedName("type")
+    var type: Int? = 0,
 //    @SerializedName("vrcId")
 //    var vrcId: Int?,
 //    @SerializedName("weight")
@@ -386,34 +388,18 @@ data class OrderGoodsVo(
     var actualPrice: Double? = 0.0,
     @SerializedName("avater")
     var avater: String? = "",
-    @SerializedName("baseStockUnitName")
-    var baseStockUnitName: Any? = Any(),
-    @SerializedName("baseStockUnitStatus")
-    var baseStockUnitStatus: Any? = Any(),
-    @SerializedName("baseStockUnitTypeId")
-    var baseStockUnitTypeId: Any? = Any(),
-    @SerializedName("baseStockUnitViewId")
-    var baseStockUnitViewId: Any? = Any(),
-    @SerializedName("baseUnitName")
-    var baseUnitName: Any? = Any(),
-    @SerializedName("baseUnitStatus")
-    var baseUnitStatus: Any? = Any(),
-    @SerializedName("baseUnitViewId")
-    var baseUnitViewId: Any? = Any(),
+
+
     @SerializedName("channelId")
-    var channelId: Any? = Any(),
-    @SerializedName("channelImg")
-    var channelImg: Any? = Any(),
-    @SerializedName("countWithUnit")
-    var countWithUnit: String? = "",
-    @SerializedName("currentGoodsUnitStockNumber")
-    var currentGoodsUnitStockNumber: Any? = Any(),
+    var channelId: String? = "",
+
+
+
     @SerializedName("customCode")
     var customCode: String? = "",
     @SerializedName("depositPrice")
     var depositPrice: Double? = 0.0,
-    @SerializedName("gid")
-    var gid: Any? = Any(),
+
     @SerializedName("gname")
     var gname: String? = "",
     @SerializedName("goodsStockDeduction")
@@ -422,26 +408,21 @@ data class OrderGoodsVo(
     var goodsTotalCost: Double? = 0.0,
     @SerializedName("goodsType")
     var goodsType: Int? = 0,
-    @SerializedName("goodsUnitRatio")
-    var goodsUnitRatio: Any? = Any(),
+
     @SerializedName("goodsUnitViewId")
     var goodsUnitViewId: String? = "",
-    @SerializedName("modelType")
-    var modelType: Any? = Any(),
-    @SerializedName("multiUnit")
-    var multiUnit: Any? = Any(),
-    @SerializedName("multiUnitCurrentStock")
-    var multiUnitCurrentStock: Any? = Any(),
+
+
+
     @SerializedName("negativeNumber")
     var negativeNumber: Double? = 0.0,
     @SerializedName("number")
     var number: Int? = 0,
     @SerializedName("orderGoodsId")
-    var orderGoodsId: Int? = 0,
+    var orderGoodsId: String? = "",
     @SerializedName("originalPrice")
-    var originalPrice: Double? = 0.0,
-    @SerializedName("parentGoodsUnitViewId")
-    var parentGoodsUnitViewId: Any? = Any(),
+    var originalPrice: String? = "",
+
     @SerializedName("price")
     var price: Double? = 0.0,
     @SerializedName("profit")
@@ -453,29 +434,13 @@ data class OrderGoodsVo(
     @SerializedName("refundPrice")
     var refundPrice: Double? = 0.0,
     @SerializedName("shopNames")
-    var shopNames: Any? = Any(),
+    var shopNames: String? = "",
     @SerializedName("sku")
     var sku: String? = "",
-    @SerializedName("spuId")
-    var spuId: Any? = Any(),
+
     @SerializedName("status")
     var status: Int? = 0,
-    @SerializedName("supplierPrice")
-    var supplierPrice: Int? = 0,
-    @SerializedName("totalPrice")
-    var totalPrice: Double? = 0.0,
-    @SerializedName("unitPrice")
-    var unitPrice: Double? = 0.0,
-    @SerializedName("unitSpecBarcode")
-    var unitSpecBarcode: Any? = Any(),
-    @SerializedName("unitType")
-    var unitType: Int? = 0,
-    @SerializedName("unitTypeId")
-    var unitTypeId: Any? = Any(),
-    @SerializedName("unitUseBusinessTypeStr")
-    var unitUseBusinessTypeStr: Any? = Any(),
-    @SerializedName("unitUseType")
-    var unitUseType: Any? = Any(),
+
     @SerializedName("specs")
     var specs: String? = ""
 ) : Serializable
@@ -515,6 +480,8 @@ data class OrderDetailDto(
     var arriveTime: String? = "",
     @SerializedName("goodsTotalNum")
     var goodsTotalNum: Int? = 0,
+    @SerializedName("riderDistance")
+    var riderDistance: String? = "",
 
     ) : Serializable
 data class RiderPositionDTO(

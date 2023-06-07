@@ -331,7 +331,7 @@ class  OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1B
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             dismissLoading()
-            if (it != null &&it == 760) {
+            if (it == 760) {
                 val dialog: MineExitDialog =
                     MineExitDialog().newInstance(
                         "温馨提示",

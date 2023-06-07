@@ -377,7 +377,7 @@
                 android:layout_marginRight="@dimen/dp_24"
                 android:gravity="right"
                 android:id="@+id/tv_common"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginBottom="@dimen/dp_20"
@@ -550,6 +550,7 @@
                 android:layout_marginTop="@dimen/dp_16">
 
                 <TextView
+                    android:id="@+id/tv_shopName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="发货门店"
@@ -559,8 +560,14 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:maxEms="1"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:gravity="right"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_shopName"
                     android:id="@+id/txt_order_deliver_store"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="桃源门店"
                     android:textColor="#E5000000"
@@ -576,6 +583,7 @@
                 android:layout_marginTop="@dimen/dp_16">
 
                 <TextView
+                    android:id="@+id/tv_name_t"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="渠道店铺"
@@ -585,8 +593,15 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:maxEms="1"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:gravity="right"
+
+                    app:layout_constraintLeft_toRightOf="@+id/tv_name_t"
                     android:id="@+id/txt_order_channel_store"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="t_X1ca3rIE#1美团"
                     android:textColor="#E5000000"

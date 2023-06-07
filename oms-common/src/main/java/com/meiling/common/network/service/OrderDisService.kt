@@ -45,7 +45,7 @@ interface OrderDisService {
 
     //发起配送
     @POST("/saas/logistics/insertOrderApp")
-    suspend fun insertOrderSend(@Body logisticsConfirmDtoList: LogisticsConfirmDtoList): ResultData<Any>
+    suspend fun insertOrderSend(@Body logisticsConfirmDtoList: LogisticsConfirmDtoList): ResultData<Int>
 
     //配送详情
     @GET("/saas/logistics/getLogisticsOrderList")
