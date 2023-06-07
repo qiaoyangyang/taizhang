@@ -394,6 +394,22 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
     override fun createObserver() {
 
+        mViewModel.cancelOrderDto.onStart.observe(this) {
+            showLoading("请求中")
+        }
+        mViewModel.cancelOrderDto.onSuccess.observe(this) {
+            disLoading()
+
+            showToast("配送已取消")
+            finish()
+        }
+        mViewModel.cancelOrderDto.onError.observe(this) {
+            disLoading()
+//            mDatabind.sflLayout.autoRefresh()
+            showToast(it.msg)
+        }
+
+
         mViewModel.orderFinish.onStart.observe(this) {
             showLoading("请求中")
         }

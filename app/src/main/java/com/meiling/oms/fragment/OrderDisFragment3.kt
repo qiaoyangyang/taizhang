@@ -2,12 +2,14 @@ package com.meiling.oms.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import com.alibaba.android.arouter.launcher.ARouter
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.network.data.LogisticsConfirmDtoList
 import com.meiling.common.network.data.LogisticsInsertDto
 import com.meiling.common.network.data.OrderSendAddress
 import com.meiling.common.network.data.SelectLabel
 import com.meiling.oms.databinding.FragmentDis3Binding
+import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDisPlatformDialog
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
@@ -149,17 +151,33 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
         }
         mViewModel.sendSuccess.onSuccess.observe(this) {
             dismissLoading()
-            EventBus.getDefault().post(MessageEventUpDataTip())
-            showToast("发起配送成功")
-            mActivity.finish()
+            if (it == 760) {
+                val dialog: MineExitDialog =
+                    MineExitDialog().newInstance(
+                        "温馨提示",
+                        "可用余额（账户余额-冻结余额）不足，无法发起配送，请去充值中心进行余额充值！",
+                        "知道了",
+                        "去充值",
+                        false
+                    )
+                dialog.setOkClickLister {
+
+                    ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
+                }
+                dialog.show(childFragmentManager)
+            } else {
+                EventBus.getDefault().post(MessageEventUpDataTip())
+                showToast("发起配送成功")
+                mActivity.finish()
+            }
         }
         mViewModel.sendSuccess.onError.observe(this) {
             dismissLoading()
-            if (it.msg == null || it.msg == "") {
-                showToast("操作失败")
-            } else {
+//            if (it.msg == null || it.msg == "") {
+//                showToast("操作失败")
+//            } else {
                 showToast(it.msg)
-            }
+//            }
 
         }
 
