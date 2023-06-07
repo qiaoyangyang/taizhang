@@ -255,6 +255,9 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                             70 -> {
                                 setOrderChangeAddressActivity()
                             }
+                            80->{
+                                setgetPrint()
+                            }
                         }
 
                     }
