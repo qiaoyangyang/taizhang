@@ -159,7 +159,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             if (int == 1) {//骑手
                 iv_icon.setBackgroundResource(R.drawable.rider_01)
                 tv_distance.visibility = View.VISIBLE
-                tv_distance.text = "骑手距离顾客${orderDetailDto?.distance}km"
+                tv_distance.text = "骑手距离顾客${orderDetailDto?.riderDistance}km"
             } else if (int == 2) {//用户
                 iv_icon.setBackgroundResource(R.drawable.collected)
                 tv_distance.visibility = View.GONE
@@ -267,7 +267,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                                 .withSerializable("kk", orderDetailDto?.order).navigation()
                         }
                         20 -> {
-                            showToast("加小费")
+                          //  showToast("加小费")
                             ARouter.getInstance().build("/app/OrderDisAddTipActivity")
                                 .withSerializable("kk", orderDetailDto!!).navigation()
                         }
@@ -579,6 +579,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                     var mAllLatLng = ArrayList<LatLng>()
                     // 添加我的位置
                     mAllLatLng.add(latLng)
+                    mAllLatLng.add(latLng1)
                     setMapBounds(mAllLatLng)
                 }
 

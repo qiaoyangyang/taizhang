@@ -480,6 +480,8 @@ data class OrderDetailDto(
     var arriveTime: String? = "",
     @SerializedName("goodsTotalNum")
     var goodsTotalNum: Int? = 0,
+    @SerializedName("riderDistance")
+    var riderDistance: String? = "",
 
     ) : Serializable
 data class RiderPositionDTO(
