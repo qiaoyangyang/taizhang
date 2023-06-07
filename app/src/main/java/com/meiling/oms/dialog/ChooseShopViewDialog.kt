@@ -78,7 +78,9 @@ class ChooseShopViewDialog : BaseNiceDialog() {
                         it.content!!.add(0,poiContentList)
 
                         refeshLayout?.finishRefresh()
-                        adapter.setList(it.content!!)
+                        if(!it.content.isNullOrEmpty()){
+                            adapter.setList(it.content!!)
+                        }
                     }
 
                 },
@@ -100,7 +102,9 @@ class ChooseShopViewDialog : BaseNiceDialog() {
                 onSuccess = {
                     it?.let {
                         refeshLayout?.finishLoadMore()
-                        adapter.addData(it.content!!)
+                        if(!it.content.isNullOrEmpty()){
+                            adapter.addData(it.content!!)
+                        }
                     }?: let{
                         refeshLayout?.finishLoadMore()
                     }

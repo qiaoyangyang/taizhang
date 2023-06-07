@@ -215,13 +215,14 @@ class DialogRegistDadaLogistics : BaseNiceDialog() {
             dadaMerchantAddReq.business=categoryId
             dadaMerchantAddReq.poiId=poid
             dadaMerchantAddReq.detailAddress=etDetailedAddress?.text.toString()
-            dismiss()
+
             mViewModel?.launchRequest(
                 {
                     loginService.addMerChant(dadaMerchantAddReq)
                 },
                 onSuccess = {
-                    showToast("注册、绑定物流成功")
+                    showToast("操作成功")
+                    dismiss()
                     sureOnclickListener?.invoke()
                 },
                 onError = {
