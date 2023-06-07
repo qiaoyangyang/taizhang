@@ -61,7 +61,7 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
             if (!isSelectMoney) {
                 money = mDatabind.txtRechargeOther.text.toString()
                 if (money.isNullOrBlank()){
-                    showToast("请选择或者输入充值金额")
+                    showToast("请选择充值金额")
                     return@setSingleClickListener
                 }else{
                     for (rechargeDto in rechargeAdapter.data) {
@@ -75,11 +75,12 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
                 }
             }
             if (money.isNullOrBlank()) {
-                showToast("请选择或者输入充值金额")
+//                showToast("请选择或者输入充值金额")
+                showToast("请选择充值金额")
                 return@setSingleClickListener
             }
             if (BigDecimal(money) <= BigDecimal("0")) {
-                showToast("请选择或者输入充值金额")
+                showToast("请选择充值金额")
                 return@setSingleClickListener
             }
 //            mViewModel.rechargeRequest(

@@ -111,7 +111,7 @@ class  OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1B
                         viewPrice.visibility = View.INVISIBLE
                     } else {
                         viewPrice.visibility = View.VISIBLE
-                        viewPrice.textSize = 11f
+//                        viewPrice.textSize = 11f
                         viewPrice.setTextColor(resources.getColor(R.color.red))
                         viewPrice.text = item.errMsg
                     }
