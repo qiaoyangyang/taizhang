@@ -213,13 +213,13 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
                 //                \"outTradeNo\":\"6377950985064448\",\"sign\":\"756A5B4FE65A82370DBAAECE961D978A\",
                 //                \"partnerId\":\"1616538581\",\"prepayId\":\"wx07173358695014fbffb62e33f3c75a0000\",
                 //                \"nonceStr\":\"WVph3ZuGYuAi9uoo\",\"dealTradeNo\":\"zz1686130438404053\"}"}
-                var appId = jsonObject.get("appId")
-                var partnerId = jsonObject.get("partnerId")
-                var prepayId = jsonObject.get("prepayId")
-                var nonceStr = jsonObject.get("nonceStr")
-                var timeStamp = jsonObject.get("timeStamp")
-                var packageValue = jsonObject.get("packageValue")
-                var sign = jsonObject.get("sign")
+                var appId = jsonObject.optString("appId","12")
+                var partnerId = jsonObject.optString("partnerId","1")
+                var prepayId = jsonObject.optString("prepayId","1")
+                var nonceStr = jsonObject.optString("nonceStr","1")
+                var timeStamp = jsonObject.optString("timeStamp","1")
+                var packageValue = jsonObject.optString("packageValue","1")
+                var sign = jsonObject.optString("sign","1")
                 PayUtils.WxPay(
                     appId.toString(),
                     partnerId.toString(),
