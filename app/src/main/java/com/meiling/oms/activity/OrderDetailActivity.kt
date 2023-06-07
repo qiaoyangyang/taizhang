@@ -754,6 +754,11 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         Log.d("yjk", "onMessageEvent: .")
         initData()
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageEventUpDataTip) {
+        Log.d("yjk", "onMessageEvent: .")
+        initData()
+    }
 
 
     /**

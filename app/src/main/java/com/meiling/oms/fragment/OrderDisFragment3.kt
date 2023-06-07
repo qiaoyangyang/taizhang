@@ -1,5 +1,6 @@
 package com.meiling.oms.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.alibaba.android.arouter.launcher.ARouter
@@ -8,6 +9,7 @@ import com.meiling.common.network.data.LogisticsConfirmDtoList
 import com.meiling.common.network.data.LogisticsInsertDto
 import com.meiling.common.network.data.OrderSendAddress
 import com.meiling.common.network.data.SelectLabel
+import com.meiling.oms.activity.MyRechargeToPayActivity
 import com.meiling.oms.databinding.FragmentDis3Binding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDisPlatformDialog
@@ -162,7 +164,7 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
                     )
                 dialog.setOkClickLister {
 
-                    ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
+                    startActivity(Intent(requireActivity(), MyRechargeToPayActivity::class.java))
                 }
                 dialog.show(childFragmentManager)
             } else {

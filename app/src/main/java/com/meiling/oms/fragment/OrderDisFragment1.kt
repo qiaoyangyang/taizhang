@@ -1,5 +1,6 @@
 package com.meiling.oms.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -16,12 +17,14 @@ import com.meiling.common.network.data.*
 import com.meiling.common.utils.SoftKeyBoardListener
 import com.meiling.common.utils.SoftKeyBoardListener.OnSoftKeyBoardChangeListener
 import com.meiling.oms.R
+import com.meiling.oms.activity.MyRechargeToPayActivity
 import com.meiling.oms.activity.OrderDisActivity
 import com.meiling.oms.databinding.FragmentDis1Binding
 import com.meiling.oms.dialog.MineExitDialog
 import com.meiling.oms.dialog.OrderDisGoodsSelectDialog
 import com.meiling.oms.dialog.OrderDisRuleTipCheckDialog
 import com.meiling.oms.dialog.OrderDisRuleTipDialog
+import com.meiling.oms.eventBusData.MessageEvent
 import com.meiling.oms.eventBusData.MessageEventUpDataTip
 import com.meiling.oms.viewmodel.OrderDisFragmentViewModel
 import com.meiling.oms.widget.setSingleClickListener
@@ -342,7 +345,7 @@ class  OrderDisFragment1 : BaseFragment<OrderDisFragmentViewModel, FragmentDis1B
                     )
                 dialog.setOkClickLister {
 
-                    ARouter.getInstance().build("/app/MyRechargeActivity").navigation()
+                    startActivity(Intent(requireActivity(), MyRechargeToPayActivity::class.java))
                 }
                 dialog.show(childFragmentManager)
             } else {
