@@ -53,7 +53,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:textSize="@dimen/sp_28"
             android:textColor="@color/home_666666"
-            android:text="手机号"/>
+            android:text="账号"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

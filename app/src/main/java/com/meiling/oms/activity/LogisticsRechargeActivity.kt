@@ -31,6 +31,7 @@ class LogisticsRechargeActivity :
     lateinit var adapter: BaseQuickAdapter<BalanceItem, BaseViewHolder>
     var poid = ""
     var type=""
+    var logistics="-1"
     lateinit var mainViewModel: MainViewModel2
     override fun initView(savedInstanceState: Bundle?) {
         mainViewModel =
@@ -71,7 +72,7 @@ class LogisticsRechargeActivity :
 
     override fun onResume() {
         super.onResume()
-        if(!poid.isNullOrBlank()){
+        if(logistics=="1"){
             getMerchantBalance()
         }
     }
@@ -115,7 +116,7 @@ class LogisticsRechargeActivity :
                     loginService.merchantRecharge(MerchantRecharge("1","H5",merchant.channelType,merchant.stationCommonId.get(0).id))
                 },
                 onSuccess = {
-                    startActivity(Intent(this,BaseWebActivity::class.java).putExtra("url", it))
+                    startActivity(Intent(this,BaseWebActivity::class.java).putExtra("url", it).putExtra("title","物流充值"))
                 },
                 onError = {
                     it?.let { showToast(it) }
@@ -129,7 +130,7 @@ class LogisticsRechargeActivity :
                         loginService.merchantRecharge(MerchantRecharge(it,"H5",merchant.channelType,merchant.stationCommonId.get(0).id))
                     },
                     onSuccess = {
-                        startActivity(Intent(this,BaseWebActivity::class.java).putExtra("url", it))
+                        startActivity(Intent(this,BaseWebActivity::class.java).putExtra("url", it).putExtra("title","物流充值"))
                     },
                     onError = {
                         it?.let { showToast(it) }
@@ -165,6 +166,7 @@ class LogisticsRechargeActivity :
             if (it.poi == 1) {//门店是否创建 1绑定;-1没绑定
                 if (it.logistics == 1) {//物流是否绑定 1绑定;-1没绑定
                     mDatabind.topConlay.visibility = View.VISIBLE
+                    logistics="1"
                     val view =
                         LayoutInflater.from(this).inflate(R.layout.store_managemnet2, null, false)
                     var tv_decreate = view.findViewById<TextView>(R.id.txt_error)

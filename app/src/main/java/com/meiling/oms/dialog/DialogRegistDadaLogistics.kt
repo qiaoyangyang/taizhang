@@ -16,6 +16,7 @@ import com.hjq.permissions.XXPermissions
 import com.meiling.common.network.data.DadaMerchantAddReq
 import com.meiling.common.network.service.loginService
 import com.meiling.common.utils.PermissionUtilis
+import com.meiling.common.utils.RegularUtils
 import com.meiling.common.view.ClearEditText
 import com.meiling.oms.R
 import com.meiling.oms.activity.BaseWebActivity
@@ -48,6 +49,10 @@ class DialogRegistDadaLogistics : BaseNiceDialog() {
     private var categoryId: String?=""
     private var lon: String=""
     private var lat: String=""
+    var shopName:String=""
+    var _etStoreAddress=""
+    var _etDetailedAddress=""
+    var phone=""
     private var etStoreAddress: TextView?=null
     var sureOnclickListener:(()->Unit)?=null
     var dadaMerchantAddReq= DadaMerchantAddReq()
@@ -55,10 +60,20 @@ class DialogRegistDadaLogistics : BaseNiceDialog() {
         this.sureOnclickListener=listener
     }
 
-    fun newInstance(account:String,pwd:String,poid:String): DialogRegistDadaLogistics{
+    fun newInstance(shopName:String,
+                    lon:String,
+                    lat:String,
+                    etStoreAddress:String,
+                    etDetailedAddress:String,
+                    phone:String,
+                    poid:String): DialogRegistDadaLogistics{
         val args = Bundle()
-        args.putString("account",account)
-        args.putString("pwd",pwd)
+        args.putString("shopName",shopName)
+        args.putString("lon",lon)
+        args.putString("lat",lat)
+        args.putString("etStoreAddress",etStoreAddress)
+        args.putString("etDetailedAddress",etDetailedAddress)
+        args.putString("phone",phone)
         args.putString("poid",poid)
         val fragment = DialogRegistDadaLogistics()
         fragment.arguments = args
@@ -66,9 +81,16 @@ class DialogRegistDadaLogistics : BaseNiceDialog() {
     }
     private val REQUEST_CODE = 1000
     override fun convertView(holder: ViewHolder?, dialog: BaseNiceDialog?) {
-        var account=arguments?.getString("account")
-        var pwd=arguments?.getString("pwd")
-        var poid=arguments?.getString("poid")
+        shopName=arguments?.getString("shopName")?:""
+        lon=arguments?.getString("lon")?:""
+        lat=arguments?.getString("lat")?:""
+        _etStoreAddress=arguments?.getString("etStoreAddress")?:""
+        _etDetailedAddress=arguments?.getString("etDetailedAddress")?:""
+        phone=arguments?.getString("phone")?:""
+
+        var poid=arguments?.getString("poid")?:""
+
+
         etStoreAddress=holder?.getView<TextView>(R.id.et_Store_address)
         var checkBoxAgree=holder?.getView<CheckBox>(R.id.checkBoxAgree)
         var mViewModel= ViewModelProvider(requireActivity()).get(BindingLogisticsViewModel::class.java)
@@ -81,6 +103,27 @@ class DialogRegistDadaLogistics : BaseNiceDialog() {
         etDetailedAddress=holder?.getView<ClearEditText>(R.id.et_detailed_address)
         //邮箱
         etStoreNumber=holder?.getView<ClearEditText>(R.id.et_Store_number)
+
+
+        shopName?.let {
+            etStoreName?.setText(it)
+        }
+        _etStoreAddress.let {
+            etStoreAddress?.text=it
+        }
+        _etDetailedAddress.let{
+            etDetailedAddress?.setText(it)
+        }
+        lon?.let {
+            lon=it
+        }
+        lat?.let {
+            lat=it
+        }
+        phone.let {
+            etStoreTelephone?.setText(it)
+        }
+
         etStoreAddress?.setOnClickListener {
             XXPermissions.with(this).permission(PermissionUtilis.Group.LOCAL)
                 .request(object : OnPermissionCallback {
@@ -153,7 +196,15 @@ class DialogRegistDadaLogistics : BaseNiceDialog() {
 
         btn?.setOnClickListener {
             if(checkBoxAgree?.isChecked==false){
-                showToast("请阅读并同意协议")
+                showToast("请同意并勾选协议")
+                return@setOnClickListener
+            }
+            if(!RegularUtils.isMobileSimple(etStoreTelephone?.text.toString().trim())){
+                showToast("手机号格式错误,请修改")
+                return@setOnClickListener
+            }
+            if(!RegularUtils.isEmail(etStoreNumber?.text.toString().trim())){
+                showToast("请输入正确的邮箱")
                 return@setOnClickListener
             }
             dadaMerchantAddReq.shopName=etStoreName?.text.toString()
@@ -171,6 +222,7 @@ class DialogRegistDadaLogistics : BaseNiceDialog() {
                     loginService.addMerChant(dadaMerchantAddReq)
                 },
                 onSuccess = {
+                    showToast("注册、绑定物流成功")
                     sureOnclickListener?.invoke()
                 },
                 onError = {
