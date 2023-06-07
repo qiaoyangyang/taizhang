@@ -3,13 +3,11 @@ package com.meiling.oms.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.Nullable
-import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.common.activity.BaseActivity
@@ -19,8 +17,9 @@ import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityReachargeToPayBinding
 import com.meiling.oms.fragment.*
-import com.meiling.oms.pay.AliPayResp
-import com.meiling.oms.pay.PayUtils
+import com.meiling.oms.wxapi.AliPayResp
+import com.meiling.oms.wxapi.PayUtils
+import com.meiling.oms.wxapi.WXPayListener
 import com.meiling.oms.viewmodel.RechargeViewModel
 import com.meiling.oms.widget.*
 import io.reactivex.rxjava3.core.Observer
@@ -38,7 +37,7 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
     lateinit var rechargeAdapter: BaseQuickAdapter<RechargeDto, BaseViewHolder>
 
     var money = ""
-    var channel = "2"
+    var channel = "1"
 
     var isSelectMoney = false
     var isPayType = true
@@ -83,12 +82,21 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
                 showToast("请选择或者输入充值金额")
                 return@setSingleClickListener
             }
+//            mViewModel.rechargeRequest(
+//                RechargeRequest(
+//                    money,
+//                    "3",
+//                    channel,
+//                    presentedAmount = giveMoney,
+//                    ""
+//                )
+//            )
             mViewModel.rechargeRequest(
                 RechargeRequest(
-                    money,
+                    "0.01",
                     "3",
                     channel,
-                    presentedAmount = giveMoney,
+                    presentedAmount = "0",
                     ""
                 )
             )
@@ -127,7 +135,7 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
             isPayType = true
             TextDrawableUtils.setRightDrawable(mDatabind.txtWeixinPay, R.drawable.ic_spu_true)
             TextDrawableUtils.setRightDrawable(mDatabind.txtAliPay, R.drawable.ic_spu_fase)
-            channel = "3"
+            channel = "1"
         }
         mDatabind.txtAliPay.setSingleClickListener {
             isPayType = false
@@ -199,25 +207,82 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
         mViewModel.rechargeDto.onSuccess.observe(this) {
             disLoading()
             val jsonObject = JSONObject(it)
-            var from = jsonObject.get("form")
-            PayUtils.aliPay(this,
-                from.toString(),
-                object : Observer<AliPayResp> {
-                    override fun onSubscribe(d: Disposable) {
-                    }
+            if (channel == "1") {
+//                "{\"timeStamp\":\"1686130438\",\"packageValue\":\"Sign=WXPay\",\"appId\":\"wx5adb2670c2e93388\",
+                //                \"outTradeNo\":\"6377950985064448\",\"sign\":\"756A5B4FE65A82370DBAAECE961D978A\",
+                //                \"partnerId\":\"1616538581\",\"prepayId\":\"wx07173358695014fbffb62e33f3c75a0000\",
+                //                \"nonceStr\":\"WVph3ZuGYuAi9uoo\",\"dealTradeNo\":\"zz1686130438404053\"}"}
+                var appId = jsonObject.get("appId")
+                var partnerId = jsonObject.get("partnerId")
+                var prepayId = jsonObject.get("prepayId")
+                var nonceStr = jsonObject.get("nonceStr")
+                var timeStamp = jsonObject.get("timeStamp")
+                var packageValue = jsonObject.get("packageValue")
+                var sign = jsonObject.get("sign")
+                PayUtils.WxPay(
+                    appId.toString(),
+                    partnerId.toString(),
+                    prepayId.toString(),
+                    nonceStr.toString(),
+                    timeStamp.toString(),
+                    packageValue.toString(),
+                    sign.toString(),
+                    object : Observer<String> {
+                        override fun onSubscribe(d: Disposable) {
+                        }
 
-                    override fun onError(e: Throwable) {
-                    }
+                        override fun onNext(t: String) {
+                            startActivityForResult(
+                                Intent(
+                                    this@MyRechargeToPayActivity,
+                                    RechargeFinishActivity::class.java
+                                ), REQUEST_CODE
+                            )
+                        }
 
-                    override fun onComplete() {
-                    }
+                        override fun onError(e: Throwable) {
+                            startActivityForResult(
+                                Intent(
+                                    this@MyRechargeToPayActivity,
+                                    RechargeFinishActivity::class.java
+                                ), REQUEST_CODE
+                            )
+                        }
 
-                    override fun onNext(t: AliPayResp) {
-                        startActivityForResult(Intent(this@MyRechargeToPayActivity,RechargeFinishActivity::class.java),REQUEST_CODE)
-                    }
+                        override fun onComplete() {
 
-                }
-            )
+                        }
+
+
+                    })
+            } else {
+                var from = jsonObject.get("form")
+                PayUtils.aliPay(this,
+                    from.toString(),
+                    object : Observer<AliPayResp> {
+                        override fun onSubscribe(d: Disposable) {
+                        }
+
+                        override fun onError(e: Throwable) {
+                        }
+
+                        override fun onComplete() {
+                        }
+
+                        override fun onNext(t: AliPayResp) {
+                            startActivityForResult(
+                                Intent(
+                                    this@MyRechargeToPayActivity,
+                                    RechargeFinishActivity::class.java
+                                ), REQUEST_CODE
+                            )
+                        }
+
+                    }
+                )
+            }
+
+
         }
         mViewModel.rechargeDto.onError.observe(this) {
             disLoading()

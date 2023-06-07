@@ -1,6 +1,7 @@
-package com.meiling.oms.pay;
+package com.meiling.oms.wxapi;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.alipay.sdk.app.PayTask;
 import com.blankj.utilcode.util.Utils;
@@ -46,7 +47,7 @@ public class PayUtils {
         Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(@NotNull ObservableEmitter<String> emitter) throws Exception {
-                IWXAPI api = WXAPIFactory.createWXAPI(Utils.getApp(), "WE_CHAT_APP_ID", false);
+                IWXAPI api = WXAPIFactory.createWXAPI(Utils.getApp(), "wx5adb2670c2e93388", false);
                 PayReq req = new PayReq();
                 req.appId = appId;
                 req.partnerId = partnerId;

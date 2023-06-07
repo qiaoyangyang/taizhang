@@ -1,8 +1,9 @@
-package com.meiling.oms.pay;
+package com.meiling.oms.wxapi;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -22,7 +23,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        api = WXAPIFactory.createWXAPI(this, "WE_CHAT_APP_ID");
+        api = WXAPIFactory.createWXAPI(this, "wx5adb2670c2e93388");
         api.handleIntent(getIntent(), this);
     }
 
