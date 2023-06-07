@@ -252,6 +252,9 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                             50 -> {
                                 setgetPrint()
                             }
+                            70 -> {
+                                setOrderChangeAddressActivity()
+                            }
                         }
 
                     }
@@ -267,7 +270,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                                 .withSerializable("kk", orderDetailDto?.order).navigation()
                         }
                         20 -> {
-                          //  showToast("加小费")
+                            //  showToast("加小费")
                             ARouter.getInstance().build("/app/OrderDisAddTipActivity")
                                 .withSerializable("kk", orderDetailDto!!).navigation()
                         }
@@ -289,6 +292,10 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                             )
                             orderDisDialog.show(supportFragmentManager)
                         }
+                        70->{
+                            ARouter.getInstance().build("/app/OrderDisActivity")
+                                .withSerializable("kk", orderDetailDto?.order).navigation()
+                        }
                     }
                 }
                 //打印小票
@@ -304,29 +311,8 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 }
                 //修改订单
                 R.id.btn_change_address -> {
-                    when (orderDetailDto?.order?.logisticsStatus?.toInt()) {
-                        0 -> {
-                            if (orderDetailDto?.order?.isValid == 0) {
-                                mViewModel.invalid(
-                                    orderDetailDto?.order!!.viewId.toString(), "0"
-                                )
-                            } else {
-                                //startActivity(Intent(this, OrderChangeAddressActivity::class.java))
-                                ARouter.getInstance().build("/app/OrderChangeAddressActivity")
-                                    .withString(
-                                        "receiveTime", orderDetailDto?.order?.arriveTimeDate
-                                    ).withString("receiveName", orderDetailDto?.order?.recvName)
-                                    .withString("receivePhone", orderDetailDto?.order?.recvPhone)
-                                    .withString("receiveAddress", orderDetailDto?.order?.recvAddr)
-                                    .withString("receiveRemark", orderDetailDto?.order?.remark)
-                                    .withString("lat", orderDetailDto?.order?.lat)
-                                    .withString("lon", orderDetailDto?.order?.lon)
-                                    .withString("orderId", orderDetailDto?.order?.viewId)
-                                    .withInt("index", 0).navigation()
-                            }
-                        }
+                    setOrderChangeAddressActivity()
 
-                    }
 
 
                 }
@@ -405,7 +391,6 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
         }
         mViewModel.cancelOrderDto.onError.observe(this) {
             disLoading()
-//            mDatabind.sflLayout.autoRefresh()
             showToast(it.msg)
         }
 
@@ -536,7 +521,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                     mAllLatLng.add(latLng1)
                     mAllLatLng.add(latLng2)
                     setMapBounds(mAllLatLng)
-                }else{
+                } else {
 
                     val latLng2 =
                         LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
@@ -608,9 +593,9 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                     mDatabind.included.tvStatusTitle, R.drawable.daito_be_delivered_70
                 )
                 deliveryStatusName = "已取消"
-                mDatabind.included.tvGoOn.visibility = View.GONE
-                mDatabind.included.tvRevocation.text = "打印小票"
-                mDatabind.included.btnPrintReceipt.visibility = View.GONE
+                mDatabind.included.tvGoOn.text = "重新配送"
+                mDatabind.included.tvRevocation.text = "修改订单"
+                mDatabind.included.btnPrintReceipt.text = "打印小票"
                 mDatabind.included.btnChangeAddress.visibility = View.GONE
                 behavior?.peekHeight = dp2px(120)
 
@@ -786,6 +771,34 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
             )
         ) // 地图显示包含全部的点 40 表示padding=40，如果你想让你的marker布局全部显示出来就需要考虑到marker的高度来设置padding值
     }
+    //修改订单
+    private fun  setOrderChangeAddressActivity(){
+
+        when (orderDetailDto?.order?.logisticsStatus?.toInt()) {
+            0 ,70-> {
+                if (orderDetailDto?.order?.isValid == 0) {
+                    mViewModel.invalid(
+                        orderDetailDto?.order!!.viewId.toString(), "0"
+                    )
+                } else {
+                    //startActivity(Intent(this, OrderChangeAddressActivity::class.java))
+                    ARouter.getInstance().build("/app/OrderChangeAddressActivity")
+                        .withString(
+                            "receiveTime", orderDetailDto?.order?.arriveTimeDate
+                        ).withString("receiveName", orderDetailDto?.order?.recvName)
+                        .withString("receivePhone", orderDetailDto?.order?.recvPhone)
+                        .withString("receiveAddress", orderDetailDto?.order?.recvAddr)
+                        .withString("receiveRemark", orderDetailDto?.order?.remark)
+                        .withString("lat", orderDetailDto?.order?.lat)
+                        .withString("lon", orderDetailDto?.order?.lon)
+                        .withString("orderId", orderDetailDto?.order?.viewId)
+                        .withInt("index", 0).navigation()
+                }
+            }
+
+        }
+    }
+
 
 
 }
