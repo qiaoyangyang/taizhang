@@ -249,7 +249,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                             20 -> {
                                 setcancelOrder()
                             }
-                            50 -> {
+                            50,70 -> {
                                 setgetPrint()
                             }
                         }
