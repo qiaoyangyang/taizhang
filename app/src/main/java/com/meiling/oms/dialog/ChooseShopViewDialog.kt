@@ -93,31 +93,7 @@ class ChooseShopViewDialog : BaseNiceDialog() {
             )
         }
         refeshLayout?.autoRefresh()
-        refeshLayout?.setEnableLoadMore(true)
-        refeshLayout?.setOnLoadMoreListener {
-            pageIndex++
-            mViewModel.launchRequest(
-                { accountService.getPoiList(pageIndex, "20") },
-                true,
-                onSuccess = {
-                    it?.let {
-                        refeshLayout?.finishLoadMore()
-                        if(!it.content.isNullOrEmpty()){
-                            adapter.addData(it.content!!)
-                        }
-                    }?: let{
-                        refeshLayout?.finishLoadMore()
-                    }
-
-                },
-                onError = {
-                    refeshLayout?.finishLoadMore()
-                    it?.let {
-                        showToast(it)
-                    }
-                }
-            )
-        }
+        refeshLayout?.setEnableLoadMore(false)
 
         ivCloseRecharge?.setOnClickListener { dismiss() }
         btn?.setOnClickListener {
