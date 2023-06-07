@@ -191,7 +191,6 @@ class DialogRegistDadaLogistics : BaseNiceDialog() {
         var btn=holder?.getView<Button>(R.id.tv_go_on)
         btn?.canEnabled(etStoreName!!) { btnCanEnable() }
         btn?.canEnabled(etStoreTelephone!!) { btnCanEnable() }
-        btn?.canEnabled(etDetailedAddress!!) { btnCanEnable() }
         btn?.canEnabled(etStoreNumber!!) { btnCanEnable() }
 
         btn?.setOnClickListener {
@@ -237,7 +236,6 @@ class DialogRegistDadaLogistics : BaseNiceDialog() {
     private fun btnCanEnable():Boolean{
         var canEnable=!etStoreName?.text.toString().trim().isNullOrBlank()&&
                 !etStoreAddress?.text.toString().trim().isNullOrBlank()&&
-                !etDetailedAddress?.text.toString().trim().isNullOrBlank()&&
                 !etStoreTelephone?.text.toString().trim().isNullOrBlank()&&
                 !tvOperateType2?.text.toString().trim().isNullOrBlank()&&
                 !etStoreNumber?.text.toString().trim().isNullOrBlank()
