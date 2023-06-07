@@ -32,7 +32,6 @@ class DadaRechargeDialog : BaseNiceDialog() {
         var ivCloseRecharge=holder?.getView<ImageView>(R.id.iv_close_recharge)
         ivCloseRecharge?.setOnClickListener { dismiss() }
         btn?.setOnClickListener {
-            dismiss()
             sureOnclickListener?.invoke(txtMoney?.text.toString().trim())
         }
 
