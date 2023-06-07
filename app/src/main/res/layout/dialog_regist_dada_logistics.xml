@@ -307,6 +307,7 @@
                     android:button="@drawable/login_cb_agreement"
                     android:layout_marginLeft="@dimen/dp_32"
                     android:textColor="#999999"
+                    android:id="@+id/checkBoxAgree"
                     android:textSize="@dimen/sp_24"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="5dp"
@@ -322,19 +323,22 @@
                         android:layout_height="wrap_content"
                         android:textColor="#ff1180ff"
                         android:textSize="@dimen/sp_24"
-                        android:text="注册协议"/>
+                        android:id="@+id/registUrl"
+                        android:text="《注册协议》"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#ff1180ff"
                         android:textSize="@dimen/sp_24"
-                        android:text="个人敏感信息授权协议"/>
+                        android:id="@+id/userUrl"
+                        android:text="《个人敏感信息授权协议》"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#ff1180ff"
                         android:textSize="@dimen/sp_24"
-                        android:text="授权协议"/>
+                        android:id="@+id/userUrl2"
+                        android:text="《授权协议》"/>
 
                 </LinearLayout>
 

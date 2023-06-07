@@ -61,18 +61,6 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             R.color.pwd_1180FF
         )
 
-        var encodeString= "zzR8DzkHjXN03nQToakn8Q=="
-        println("encodeString=="+encodeString)
-        var decodeString= DesUtils.decode("9588028820109132570743325311898426347857298773549468758875018579537757772163084478873699447306034466200616411960574122434059469100235892702736860872901247123456",encodeString)
-        println("decodeString=="+decodeString)
-
-        var ss="QWRtaW44ODg4ISE="
-        var sss=EncodeUtils.base64Decode(ss)
-
-
-        println("bse64=="+String(Base64.decode(ss,0)))
-        println("bse64=="+String(sss))
-//        var decod= Base64().decode(ss.toByte()!!,Base64.DEFAULT)
 
 //        SpannableUtils.setTextLoginYSColor(
 //            this,

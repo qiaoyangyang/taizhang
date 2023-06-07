@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.meiling.common.network.data.OtherCategory
 import com.meiling.common.network.data.OtherShop
 import com.meiling.common.network.service.loginService
 import com.meiling.oms.R
@@ -30,8 +31,8 @@ class OperateTypeListDialog : BaseNiceDialog() {
         return R.layout.dialog_operate_type_list
     }
 
-    var sureOnclickListener:((otherShop:OtherShop)->Unit)?=null
-    fun setMySureOnclickListener(listener: (otherShop:OtherShop)->Unit){
+    var sureOnclickListener:((otherShop:OtherCategory)->Unit)?=null
+    fun setMySureOnclickListener(listener: (otherShop:OtherCategory)->Unit){
         this.sureOnclickListener=listener
     }
 
@@ -52,9 +53,9 @@ class OperateTypeListDialog : BaseNiceDialog() {
         var pageIndex = 1
         var mViewModel=ViewModelProvider(requireActivity()).get(BindingLogisticsViewModel::class.java)
 
-        var adapter=object :BaseQuickAdapter<OtherShop,BaseViewHolder>(R.layout.item_operate_type_layout){
-            override fun convert(holder: BaseViewHolder, item: OtherShop) {
-                holder.setText(R.id.txt_shop_or_city,item.thirdShopName)
+        var adapter=object :BaseQuickAdapter<OtherCategory,BaseViewHolder>(R.layout.item_operate_type_layout){
+            override fun convert(holder: BaseViewHolder, item: OtherCategory) {
+                holder.setText(R.id.txt_shop_or_city,item.categoryName)
                 if(item.select==true){
                     holder.itemView.setBackgroundResource(R.drawable.bg_true2)
                     holder.setTextColorRes(R.id.txt_shop_or_city,R.color.account_FA2C19)
@@ -66,7 +67,7 @@ class OperateTypeListDialog : BaseNiceDialog() {
         }
         adapter.setOnItemClickListener { adapter, view, position ->
 
-            (adapter.data as ArrayList<OtherShop> ).forEachIndexed { index, otherShop ->
+            (adapter.data as ArrayList<OtherCategory> ).forEachIndexed { index, otherShop ->
                 otherShop.select = index==position
             }
             adapter.notifyDataSetChanged()
@@ -75,8 +76,7 @@ class OperateTypeListDialog : BaseNiceDialog() {
         recy?.adapter=adapter
         refeshLayout?.setOnRefreshListener {
             mViewModel.launchRequest(
-                { loginService.getShopList("1", "20", poid!!, "uu") },
-                true,
+                { loginService.getCategory("dada",poid!!) },
                 onSuccess = {
                     it?.let {
                         if(it.size>=1){
@@ -89,14 +89,6 @@ class OperateTypeListDialog : BaseNiceDialog() {
                 },
                 onError = {
                     refeshLayout?.finishRefresh()
-                    var list=ArrayList<OtherShop>()
-                    list.add(OtherShop(thirdShopName = "123"))
-                    list.add(OtherShop(thirdShopName = "1234"))
-                    list.add(OtherShop(thirdShopName = "1235"))
-                    list.add(OtherShop(thirdShopName = "1236"))
-                    list.add(OtherShop(thirdShopName = "1237"))
-                    list.add(OtherShop(thirdShopName = "1238"))
-                    adapter.setList(list)
                     it?.let {
                         showToast(it)
                     }
@@ -104,35 +96,13 @@ class OperateTypeListDialog : BaseNiceDialog() {
             )
         }
         refeshLayout?.autoRefresh()
-        refeshLayout?.setEnableLoadMore(true)
-        refeshLayout?.setOnLoadMoreListener {
-            pageIndex++
-            mViewModel.launchRequest(
-                { loginService.getShopList(pageIndex.toString(), "20", poid!!, "uu") },
-                true,
-                onSuccess = {
-                    it?.let {
-                        refeshLayout?.finishLoadMore()
-                        adapter.addData(it)
-                    }?: let{
-                        refeshLayout?.finishLoadMore()
-                    }
-
-                },
-                onError = {
-                    refeshLayout?.finishLoadMore()
-                    it?.let {
-                        showToast(it)
-                    }
-                }
-            )
-        }
+        refeshLayout?.setEnableLoadMore(false)
 
         ivCloseRecharge?.setOnClickListener { dismiss() }
         btn?.setOnClickListener {
             dismiss()
             var selectShop=adapter.data.filter { it.select==true }
-            sureOnclickListener?.invoke(selectShop!!.get(0) as OtherShop)
+            sureOnclickListener?.invoke(selectShop!!.get(0) as OtherCategory)
         }
 
     }

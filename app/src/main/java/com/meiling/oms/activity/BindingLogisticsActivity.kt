@@ -320,7 +320,10 @@ class BindingLogisticsActivity :
 
                         }else{
                             //TODO 去注册
-                            var dialogRegistDadaLogistics=DialogRegistDadaLogistics()
+                            var dialogRegistDadaLogistics=DialogRegistDadaLogistics().newInstance(account,pwd,poid)
+                            dialogRegistDadaLogistics.setMySureOnclickListener {
+                                getLogisticsList(poid)
+                            }
                             dialogRegistDadaLogistics.show(supportFragmentManager)
                         }
                     }
