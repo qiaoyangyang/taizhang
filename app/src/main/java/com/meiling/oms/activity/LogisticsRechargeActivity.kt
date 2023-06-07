@@ -130,6 +130,7 @@ class LogisticsRechargeActivity :
                         loginService.merchantRecharge(MerchantRecharge(it,"H5",merchant.channelType,merchant.stationCommonId.get(0).id))
                     },
                     onSuccess = {
+                        dadaRechargeDialog?.dismiss()
                         startActivity(Intent(this,BaseWebActivity::class.java).putExtra("url", it).putExtra("title","物流充值"))
                     },
                     onError = {
