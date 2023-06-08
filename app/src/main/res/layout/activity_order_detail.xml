@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
+    android:layout_height="match_parent">
 
     <com.amap.api.maps.MapView
 
@@ -15,16 +15,23 @@
 
         />
 
-    <com.hjq.bar.TitleBar
-        style="@style/TitleBar_white"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:id="@+id/TitleBar"
-        app:title="订单详情"
-        />
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.hjq.bar.TitleBar
+            android:id="@+id/TitleBar"
+            style="@style/TitleBar_white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:title="订单详情" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
 
     <androidx.core.widget.NestedScrollView
-        android:layout_marginTop="@dimen/dp_130"
+
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,6 +45,7 @@
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <include
                 android:id="@+id/included"
                 layout="@layout/order_detail" />
