@@ -15,7 +15,7 @@
     android:foreground="?attr/selectableItemBackground"
         app:shape_shadowOffsetY="3dp"
         app:shape_shadowOffsetX="1dp"
-    app:shape_shadowSize="5dp">
+    app:shape_shadowSize="0dp">
 
     <com.hjq.shape.layout.ShapeRelativeLayout
         android:id="@+id/srl_check_order_detail"
@@ -100,9 +100,9 @@
             android:layout_marginStart="@dimen/dp_8"
             android:layout_toEndOf="@+id/txt_base_order_delivery_time"
             android:text="前自提"
-            android:textColor="@color/home_000000"
+            android:textColor="@color/black_90"
             android:textSize="@dimen/sp_32"
-            android:textStyle="bold" />
+            />
 
         <TextView
             android:id="@+id/txt_order_store"
@@ -148,7 +148,7 @@
                 android:layout_marginTop="12dp"
                 android:maxWidth="@dimen/dp_300"
                 android:singleLine="true"
-                android:textColor="@color/home_333333"
+                android:textColor="@color/black_90"
                 android:textSize="@dimen/sp_32"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -178,7 +178,7 @@
                 android:layout_marginEnd="@dimen/dp_20"
                 android:layout_toStartOf="@+id/iv_call_phone"
                 android:gravity="center_vertical"
-                android:textColor="@color/home_646A89"
+                android:textColor="@color/black_65"
                 android:textSize="@dimen/sp_28"
                 app:drawableStartCompat="@drawable/icon_order_local"
                 app:layout_constraintRight_toRightOf="parent"
@@ -207,7 +207,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_base_order_delivery_phone"
                 android:layout_marginTop="@dimen/dp_10"
-                android:textColor="@color/home_333333"
+                android:textColor="@color/black_90"
                 android:textSize="@dimen/sp_28"
                 app:layout_constraintEnd_toEndOf="@+id/txt_check_map"
                 app:layout_constraintStart_toStartOf="@+id/txt_order_delivery_name"
@@ -230,7 +230,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dp_10"
                     android:text="备注"
-                    android:textColor="@color/home_000000"
+                    android:textColor="@color/black_90"
                     android:textSize="@dimen/sp_28"
                     android:textStyle="bold" />
 
@@ -239,7 +239,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_10"
-                    android:textColor="@color/home_333333"
+                    android:textColor="@color/black_90"
                     android:textSize="@dimen/sp_28"
                     tools:text="宝贝，生日快乐～顾客不需要辅导餐具，   需要18根蜡烛。" />
             </com.hjq.shape.layout.ShapeLinearLayout>
@@ -258,7 +258,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingVertical="@dimen/dp_10"
-                android:textColor="@color/home_333333"
+                android:textColor="@color/black_90"
                 android:textSize="@dimen/sp_28"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -270,7 +270,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_base_order_shop_msg"
-                android:textColor="@color/home_333333"
+                android:textColor="@color/black_90"
                 android:textSize="@dimen/sp_28"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll_remark"
@@ -323,7 +323,7 @@
                 android:layout_toStartOf="@+id/txt_base_order_dis"
                 android:gravity="center"
                 android:text="打印小票"
-                android:textColor="@color/home_646A89"
+                android:textColor="@color/home_ff454b65"
                 android:textSize="@dimen/sp_28"
                 app:drawableStartCompat="@drawable/icon_order_print"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -363,7 +363,7 @@
                 android:paddingHorizontal="@dimen/dp_34"
                 android:paddingVertical="@dimen/dp_10"
                 android:text="取消配送"
-                android:textColor="@color/home_646A89"
+                android:textColor="@color/home_ff454b65"
                 android:textSize="@dimen/sp_32"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/img_order_print"
@@ -377,7 +377,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/dp_32"
-                android:paddingVertical="@dimen/dp_10"
+                android:paddingVertical="@dimen/dp_20"
                 android:text="发起配送"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_32"
@@ -385,7 +385,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:shape_radius="@dimen/dp_20"
+                app:shape_radius="@dimen/dp_30"
                 app:shape_solidColor="@color/red" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

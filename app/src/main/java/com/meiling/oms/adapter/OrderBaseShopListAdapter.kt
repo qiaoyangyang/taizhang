@@ -18,9 +18,9 @@ class OrderBaseShopListAdapter :
     ) {
         val view = holder.getView<ImageView>(R.id.img_order_shop_icon)
         holder.setText(R.id.txt_order_shop_name, item.gname)
-        holder.setText(R.id.txt_order_shop_spec, item.sku)
-        holder.setText(R.id.txt_order_shop_num, "X" + item.number)
-        holder.setText(R.id.txt_order_shop_price, "¥" + item.price)
+        holder.setText(R.id.txt_order_shop_spec, item.price.toString())
+        holder.setText(R.id.txt_order_shop_num, "¥" + item.totalPrice)
+        holder.setText(R.id.txt_order_shop_price, "X" + item.number)
         val txtRefund = holder.getView<TextView>(R.id.txt_order_refund)
 
         if (item.refundNum == item.number) {
