@@ -15,7 +15,7 @@
     android:foreground="?attr/selectableItemBackground"
         app:shape_shadowOffsetY="3dp"
         app:shape_shadowOffsetX="1dp"
-    app:shape_shadowSize="5dp">
+    app:shape_shadowSize="0dp">
 
     <com.hjq.shape.layout.ShapeRelativeLayout
         android:id="@+id/srl_check_order_detail"
@@ -178,7 +178,7 @@
                 android:layout_marginEnd="@dimen/dp_20"
                 android:layout_toStartOf="@+id/iv_call_phone"
                 android:gravity="center_vertical"
-                android:textColor="@color/home_646A89"
+                android:textColor="#65000000"
                 android:textSize="@dimen/sp_28"
                 app:drawableStartCompat="@drawable/icon_order_local"
                 app:layout_constraintRight_toRightOf="parent"

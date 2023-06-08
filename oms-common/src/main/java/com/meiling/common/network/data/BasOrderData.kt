@@ -442,7 +442,9 @@ data class OrderGoodsVo(
     var status: Int? = 0,
 
     @SerializedName("specs")
-    var specs: String? = ""
+    var specs: String? = "",
+    @SerializedName("totalPrice")
+    var totalPrice: String? = ""
 ) : Serializable
 
 data class OrderDetailDto(

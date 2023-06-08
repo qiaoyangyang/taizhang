@@ -34,7 +34,7 @@
             android:textColor="@color/white"
             android:alpha="0.7"
             android:visibility="gone"
-            android:background="@color/home_666666"
+            android:background="@color/home_900000"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,8 +45,9 @@
             android:layout_marginStart="@dimen/dp_20"
             android:singleLine="true"
             android:ellipsize="end"
+            android:textStyle="bold"
             tools:text="阿卡波罗生日蛋糕"
-            android:textColor="@color/home_333333"
+            android:textColor="@color/home_900000"
             android:textSize="@dimen/sp_28"
             app:layout_constraintBottom_toTopOf="@+id/txt_order_shop_spec"
             app:layout_constraintLeft_toRightOf="@+id/img_order_shop_icon"
@@ -60,15 +61,15 @@
             android:layout_marginStart="@dimen/dp_20"
             android:singleLine="true"
             android:paddingTop="@dimen/dp_10"
-            tools:text="6英寸；榛子薄脆口味"
-            android:textColor="@color/home_666666"
+            tools:text="单价"
+            android:textColor="@color/home_900000"
             android:textSize="@dimen/sp_28"
             app:layout_constraintTop_toBottomOf="@+id/txt_order_shop_name"
             app:layout_constraintLeft_toRightOf="@+id/img_order_shop_icon" />
 
 
         <TextView
-            android:id="@+id/txt_order_shop_num"
+            android:id="@+id/txt_order_shop_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp_10"
@@ -80,7 +81,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txt_order_shop_price"
+            android:id="@+id/txt_order_shop_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_5"
