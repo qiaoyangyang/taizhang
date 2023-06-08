@@ -241,23 +241,21 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 R.id.tv_revocation -> {
                     if (orderDetailDto != null) {
                         when (orderDetailDto?.order?.logisticsStatus?.toInt()) {
-                            0 -> {
+                            0 -> {//忽略订单
                                 if (orderDetailDto?.order?.isValid == 1) {
                                     setinvalid()
                                 }
                             }
-                            20 -> {
+                            20 ,30-> {//取消配送
                                 setcancelOrder()
                             }
-                            50,70 -> {
+                            50,80 -> {//收银小票
                                 setgetPrint()
                             }
-                            70 -> {
+                            70 -> {//修改订单
                                 setOrderChangeAddressActivity()
                             }
-                            80->{
-                                setgetPrint()
-                            }
+
                         }
 
                     }
