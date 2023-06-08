@@ -139,7 +139,7 @@ class OrderDisAddTipActivity :
         mViewModel.orderSendAddress.onSuccess.observe(this) {
             mDatabind.txtOrderDisName.text = it.poiName
             mDatabind.txtOrderDisPhone.text = it.poiPhone
-            mDatabind.txtOrderDisAddress.text = it.poiAddr
+            mDatabind.txtOrderDisAddress.text = it.poiAddr?.replace("@@", "")
             mDatabind.txtOrderDisRecName.text = it.recvName
             mDatabind.txtOrderDisRecPhone.text = it.recvPhone
             mDatabind.txtOrderDisRecAddress.text =  it?.recvAddr?.replace("@@", "")

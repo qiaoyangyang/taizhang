@@ -7,155 +7,163 @@
     android:background="@color/app_themes_f7f7f7"
     android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cos_dis_line"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_30"
-        android:background="@drawable/scan_bg_input"
-        android:padding="@dimen/dp_20"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+   <androidx.core.widget.NestedScrollView
+       android:layout_width="match_parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       android:layout_height="wrap_content">
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:id="@+id/cos_dis_line"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_margin="@dimen/dp_30"
+           android:background="@drawable/scan_bg_input"
+           android:padding="@dimen/dp_20"
+          >
 
-        <TextView
-            android:id="@+id/txt_weight_tip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="配送员姓名"
-            android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_28"
-            android:drawableEnd="@drawable/icon_must_input"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBaseline_toBaselineOf="@+id/edt_rec_name"
-            />
-        <EditText
-            android:id="@+id/edt_rec_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/dp_10"
-            android:maxLength="10"
-            android:background="@null"
-            android:hint="请输入配送员姓名"
-            android:gravity="end"
-            android:textColor="@color/home_333333"
-            android:textSize="@dimen/sp_28"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-           />
+           <TextView
+               android:id="@+id/txt_weight_tip"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="配送员姓名"
+               android:textColor="@color/home_666666"
+               android:textSize="@dimen/sp_28"
+               android:drawableEnd="@drawable/icon_must_input"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintBaseline_toBaselineOf="@+id/edt_rec_name"
+               />
+           <EditText
+               android:id="@+id/edt_rec_name"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginVertical="@dimen/dp_10"
+               android:maxLength="10"
+               android:background="@null"
+               android:hint="请输入配送员姓名"
+               android:gravity="end"
+               android:maxLines="15"
+               android:textColor="@color/home_333333"
+               android:textSize="@dimen/sp_28"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               />
 
-        <View
-            android:id="@+id/view_line"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="@dimen/dp_20"
-            android:background="@color/app_themes_f7f7f7"
-            app:layout_constraintTop_toBottomOf="@+id/edt_rec_name" />
+           <View
+               android:id="@+id/view_line"
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:layout_marginVertical="@dimen/dp_20"
+               android:background="@color/app_themes_f7f7f7"
+               app:layout_constraintTop_toBottomOf="@+id/edt_rec_name" />
 
-        <TextView
-            android:id="@+id/txt_rec_time_tip"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginVertical="@dimen/dp_30"
-            android:text="配送员电话"
-            android:drawableEnd="@drawable/icon_must_input"
-            android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_28"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_line" />
-        <EditText
-            android:id="@+id/edt_rec_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/dp_10"
-            android:hint="请输入配送员手机号码"
-            android:gravity="end"
-            android:inputType="number"
-            android:singleLine="true"
-            android:maxLength="11"
-            android:textColor="@color/home_999999"
-            android:textSize="@dimen/sp_28"
-            android:background="@null"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBaseline_toBaselineOf="@+id/txt_rec_time_tip" />
-        <View
-            android:id="@+id/view_line1"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="@dimen/dp_30"
-            android:background="@color/app_themes_f7f7f7"
-            app:layout_constraintTop_toBottomOf="@+id/txt_rec_time_tip" />
-        <TextView
-            android:id="@+id/txt_rec_shop_tip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/dp_30"
-            android:text="物流平台"
-            android:drawableEnd="@drawable/icon_must_input"
-            android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_28"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_line1" />
+           <TextView
+               android:id="@+id/txt_rec_time_tip"
+               android:layout_width="wrap_content"
+               android:layout_height="0dp"
+               android:layout_marginVertical="@dimen/dp_30"
+               android:text="配送员电话"
+               android:drawableEnd="@drawable/icon_must_input"
+               android:textColor="@color/home_666666"
+               android:textSize="@dimen/sp_28"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/view_line" />
+           <EditText
+               android:id="@+id/edt_rec_phone"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginVertical="@dimen/dp_10"
+               android:hint="请输入配送员手机号码"
+               android:gravity="end"
+               android:inputType="number"
+               android:singleLine="true"
+               android:maxLength="11"
+               android:textColor="@color/home_999999"
+               android:textSize="@dimen/sp_28"
+               android:background="@null"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintBaseline_toBaselineOf="@+id/txt_rec_time_tip" />
+           <View
+               android:id="@+id/view_line1"
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:layout_marginVertical="@dimen/dp_30"
+               android:background="@color/app_themes_f7f7f7"
+               app:layout_constraintTop_toBottomOf="@+id/txt_rec_time_tip" />
+           <TextView
+               android:id="@+id/txt_rec_shop_tip"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginVertical="@dimen/dp_30"
+               android:text="物流平台"
+               android:drawableEnd="@drawable/icon_must_input"
+               android:textColor="@color/home_666666"
+               android:textSize="@dimen/sp_28"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/view_line1" />
 
-        <TextView
-            android:id="@+id/txt_rec_platform"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/dp_30"
-            android:drawableEnd="@drawable/icon_next"
-            android:text="其它"
-            android:textColor="@color/home_999999"
-            android:textSize="@dimen/sp_28"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_line1" />
+           <TextView
+               android:id="@+id/txt_rec_platform"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginVertical="@dimen/dp_30"
+               android:drawableEnd="@drawable/icon_next"
+               android:text="其它"
+               android:textColor="@color/home_999999"
+               android:textSize="@dimen/sp_28"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/view_line1" />
 
-        <View
-            android:id="@+id/view_line2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="@dimen/dp_30"
-            android:background="@color/app_themes_f7f7f7"
-            app:layout_constraintTop_toBottomOf="@+id/txt_rec_shop_tip" />
+           <View
+               android:id="@+id/view_line2"
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:layout_marginVertical="@dimen/dp_30"
+               android:background="@color/app_themes_f7f7f7"
+               app:layout_constraintTop_toBottomOf="@+id/txt_rec_shop_tip" />
 
-        <TextView
-            android:id="@+id/txt_rec_pay_type_tip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/dp_30"
-            android:text="物流单号"
-            android:drawableEnd="@drawable/icon_must_input"
-            android:textColor="@color/home_666666"
-            android:textSize="@dimen/sp_28"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_line2" />
+           <TextView
+               android:id="@+id/txt_rec_pay_type_tip"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:paddingVertical="@dimen/dp_30"
+               android:text="物流单号"
+               android:drawableEnd="@drawable/icon_must_input"
+               android:textColor="@color/home_666666"
+               android:textSize="@dimen/sp_28"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/view_line2" />
 
-        <EditText
-            android:id="@+id/edt_rec_platform_order"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:gravity="end"
-            android:hint="请输入物流单号"
-            android:textColor="@color/home_333333"
-            android:textSize="@dimen/sp_28"
-            app:layout_constraintBaseline_toBaselineOf="@+id/txt_rec_pay_type_tip"
-            app:layout_constraintEnd_toStartOf="@+id/iv_clear"
-            app:layout_constraintStart_toEndOf="@+id/txt_rec_pay_type_tip" />
-        <ImageView
-            android:id="@+id/iv_clear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:gravity="right"
-            android:src="@drawable/search_close_edt"
-            android:textColor="@color/home_333333"
-            android:textSize="@dimen/sp_28"
-            android:layout_marginVertical="@dimen/dp_30"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/view_line2"
-             />
+           <EditText
+               android:id="@+id/edt_rec_platform_order"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:background="@null"
+               android:gravity="end"
+               android:hint="请输入物流单号"
+               android:maxLength="20"
+               android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+               android:textColor="@color/home_333333"
+               android:textSize="@dimen/sp_28"
+               app:layout_constraintBaseline_toBaselineOf="@+id/txt_rec_pay_type_tip"
+               app:layout_constraintEnd_toStartOf="@+id/iv_clear"
+               app:layout_constraintStart_toEndOf="@+id/txt_rec_pay_type_tip" />
+           <ImageView
+               android:id="@+id/iv_clear"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:background="@null"
+               android:gravity="right"
+               android:src="@drawable/search_close_edt"
+               android:textColor="@color/home_333333"
+               android:textSize="@dimen/sp_28"
+               android:layout_marginVertical="@dimen/dp_30"
+               app:layout_constraintEnd_toEndOf="parent"
+               android:visibility="gone"
+               app:layout_constraintTop_toBottomOf="@+id/view_line2"
+               />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+       </androidx.constraintlayout.widget.ConstraintLayout>
+   </androidx.core.widget.NestedScrollView>
 
 
     <Button

@@ -136,7 +136,12 @@ class OrderBaseHistoryFragment :
                             "共${item.goodsTotalNum}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
                         )
                     if (!item.goodsVoList.isNullOrEmpty()){
-                        holder.setText(R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}")
+                        if (item.goodsVoList!!.size>1){
+                            holder.setText(R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname} 等")
+                        }else{
+                            holder.setText(R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}")
+                        }
+
                     }
 
                     holder.setText(R.id.txt_base_order_No, "${item.order?.channelDaySn}")
@@ -219,21 +224,27 @@ class OrderBaseHistoryFragment :
                             ).putExtra("orderDetailDto", item)
                         )
                     }
+                    var orderDisDialog =
+                        OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
                     btnCancelDis.setSingleClickListener {
-                        val dialog: MineExitDialog =
-                            MineExitDialog().newInstance("温馨提示", "确定取消配送吗？", "取消", "确认", false)
-                        dialog.setOkClickLister {
-                            mViewModel.cancelOrder(
-                                CancelOrderSend(
-                                    deliveryConsumerId = item.deliveryConsume!!.id ?: "0",
-                                    poiId = item.order!!.poiId ?: "0",
-                                    stationChannelId = item.deliveryConsume!!.stationChannelId
-                                        ?: "0"
+                        if (item.order!!.logisticsStatus == "50") {
+                            orderDisDialog.show(childFragmentManager)
+                        } else {
+                            val dialog: MineExitDialog =
+                                MineExitDialog().newInstance("温馨提示", "确定取消配送吗？", "取消", "确认", false)
+                            dialog.setOkClickLister {
+                                mViewModel.cancelOrder(
+                                    CancelOrderSend(
+                                        deliveryConsumerId = item.deliveryConsume!!.id ?: "0",
+                                        poiId = item.order!!.poiId ?: "0",
+                                        stationChannelId = item.deliveryConsume!!.stationChannelId
+                                            ?: "0"
+                                    )
                                 )
-                            )
-                            dialog.dismiss()
+                                dialog.dismiss()
+                            }
+                            dialog.show(childFragmentManager)
                         }
-                        dialog.show(childFragmentManager)
 
                     }
                     btnOrderDisIgnore.setSingleClickListener {
@@ -256,8 +267,7 @@ class OrderBaseHistoryFragment :
                         mViewModel.invalid(item.order!!.viewId.toString(), "1")
                         intentIsValid = ""
                     }
-                    var orderDisDialog =
-                        OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
+
                     btnSendDis.setSingleClickListener {
                         when (item.order!!.logisticsStatus) {
                             "0" -> {
@@ -332,11 +342,14 @@ class OrderBaseHistoryFragment :
                         "50" -> {
                             btnOrderDisIgnore.visibility = View.GONE
                             btnOrderCncelIgnore.visibility = View.GONE
-                            btnCancelDis.visibility = View.GONE
+
                             btnSendDis.visibility = View.VISIBLE
                             if (item.deliveryConsume!!.type == 30) {
+                                btnCancelDis.visibility = View.VISIBLE
                                 btnSendDis.text = "配送完成"
+                                btnCancelDis.text = "配送详情"
                             } else {
+                                btnCancelDis.visibility = View.GONE
                                 btnSendDis.text = "配送详情"
                             }
 //                            btnSendDis.text = "配送详情"

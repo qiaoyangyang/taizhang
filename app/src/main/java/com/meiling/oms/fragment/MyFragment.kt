@@ -185,7 +185,8 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
         //通知设置
         mDatabind.txtNotificationSettings.setOnClickListener {
-            startActivity(Intent(activity, NotificationSettingsActivity::class.java))
+            showToast("功能开发中")
+//            startActivity(Intent(activity, NotificationSettingsActivity::class.java))
         }
     }
 

@@ -78,13 +78,18 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                     checkMap.text = "${item.distance}km"
                     telPhone = item.order?.recvPhone ?: ""
                     orderAddress.text = item.order?.recvAddr!!.replace("@@", "")
-                    val sumNumber= item.goodsTotalNum ?: 0
+                    val sumNumber= item.goodsTotalNum
                         holder.setText(
                             R.id.txt_base_order_shop_msg,
                             "共${item.goodsTotalNum}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
                         )
                     if (!item.goodsVoList.isNullOrEmpty()){
-                        holder.setText(R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}")
+                        if (item.goodsVoList!!.size>1){
+                            holder.setText(R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname} 等")
+                        }else{
+                            holder.setText(R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}")
+                        }
+
                     }
 
                     holder.setText(R.id.txt_base_order_No, "${item.order?.channelDaySn}")
@@ -122,7 +127,7 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                     btnShopDetail.setSingleClickListener {
                         val orderGoodsListDetailDialog =
                             OrderGoodsListDetailDialog().newInstance(
-                                sumNumber,
+                                sumNumber?:0,
                                 SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!).toString(),
                                 item.goodsVoList!!
                             )
@@ -167,21 +172,27 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                             ).putExtra("orderDetailDto", item)
                         )
                     }
+                    var orderDisDialog =
+                        OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
                     btnCancelDis.setSingleClickListener {
-                        val dialog: MineExitDialog =
-                            MineExitDialog().newInstance("温馨提示", "确定取消配送吗？", "取消", "确认", false)
-                        dialog.setOkClickLister {
-                            mViewModel.cancelOrder(
-                                CancelOrderSend(
-                                    deliveryConsumerId = item.deliveryConsume!!.id ?: "0",
-                                    poiId = item.order!!.poiId ?: "0",
-                                    stationChannelId = item.deliveryConsume!!.stationChannelId
-                                        ?: "0"
+                        if (item.order!!.logisticsStatus == "50") {
+                            orderDisDialog.show(supportFragmentManager)
+                        } else {
+                            val dialog: MineExitDialog =
+                                MineExitDialog().newInstance("温馨提示", "确定取消配送吗？", "取消", "确认", false)
+                            dialog.setOkClickLister {
+                                mViewModel.cancelOrder(
+                                    CancelOrderSend(
+                                        deliveryConsumerId = item.deliveryConsume!!.id ?: "0",
+                                        poiId = item.order!!.poiId ?: "0",
+                                        stationChannelId = item.deliveryConsume!!.stationChannelId
+                                            ?: "0"
+                                    )
                                 )
-                            )
-                            dialog.dismiss()
+                                dialog.dismiss()
+                            }
+                            dialog.show(supportFragmentManager)
                         }
-                        dialog.show(supportFragmentManager)
                     }
                     btnOrderDisIgnore.setSingleClickListener {
                         val dialog: MineExitDialog =
@@ -203,8 +214,7 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                         mViewModel.invalid(item.order!!.viewId.toString(), "1")
                         intentIsValid = "1"
                     }
-                    var orderDisDialog =
-                        OrderDistributionDetailDialog().newInstance(false, item.order?.viewId!!)
+
                     btnSendDis.setSingleClickListener {
                         when (item.order!!.logisticsStatus) {
                             "0" -> {
@@ -282,12 +292,15 @@ class OrderSearchActivity : BaseActivity<BaseOrderFragmentViewModel, ActivitySea
                         "50" -> {
                             btnOrderDisIgnore.visibility = View.GONE
                             btnOrderCncelIgnore.visibility = View.GONE
-                            btnCancelDis.visibility = View.GONE
                             btnSendDis.visibility = View.VISIBLE
                             if (item.deliveryConsume!!.type == 30) {
+                                btnCancelDis.visibility = View.VISIBLE
                                 btnSendDis.text = "配送完成"
+                                btnCancelDis.text = "配送详情"
+
                             } else {
                                 btnSendDis.text = "配送详情"
+                                btnCancelDis.visibility = View.GONE
                             }
 
                         }
