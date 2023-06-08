@@ -562,11 +562,15 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 mDatabind.included.btnPrintReceipt.visibility = View.GONE
                 mDatabind.included.btnChangeAddress.visibility = View.GONE
                 if (it.deliveryConsume?.type != 30) {
-                    var latLng = LatLng(
-                        it.riderPositionDTO?.riderLat?.toDouble()!!,
-                        it?.riderPositionDTO?.riderLng?.toDouble()!!
-                    )//客户
-                    addGrowMarker(latLng, 1, 3)
+                    var mAllLatLng = ArrayList<LatLng>()
+                    if (!it.riderPositionDTO?.riderLat.isNullOrEmpty()&&!it.riderPositionDTO?.riderLat.isNullOrEmpty()){
+                        var latLng = LatLng(
+                            it.riderPositionDTO?.riderLat?.toDouble()!!,
+                            it?.riderPositionDTO?.riderLng?.toDouble()!!
+                        )//客户
+                        addGrowMarker(latLng, 1, 3)
+                        mAllLatLng.add(latLng)
+                    }
                     val latLng2 =
                         LatLng(it.order?.lat?.toDouble()!!, it?.order?.lon?.toDouble()!!)//客户
                     addGrowMarker(latLng2, 2, 3)
@@ -574,9 +578,8 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                     val latLng1 = LatLng(it.poi?.lat?.toDouble()!!, it?.poi?.lon?.toDouble()!!)
                     addGrowMarker(latLng1, 3, 3)
 
-                    var mAllLatLng = ArrayList<LatLng>()
+
                     // 添加我的位置
-                    mAllLatLng.add(latLng)
                     mAllLatLng.add(latLng1)
                     mAllLatLng.add(latLng2)
                     setMapBounds(mAllLatLng)
