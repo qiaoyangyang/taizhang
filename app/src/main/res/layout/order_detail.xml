@@ -47,7 +47,7 @@
                 app:shape_radius="@dimen/dp_20"
                 android:textSize="@dimen/sp_34"
                 app:shape_shadowColor="@color/white"
-                app:shape_strokeColor="@color/order_FFC4C4C4"
+                app:shape_strokeColor="@color/account_757575"
                 app:shape_strokeWidth="1dp" />
 
             <com.hjq.shape.view.ShapeButton
@@ -87,7 +87,7 @@
                 android:textColor="@color/textColorHint"
                 app:shape_radius="@dimen/dp_20"
                 app:shape_shadowColor="@color/white"
-                app:shape_strokeColor="@color/order_FFC4C4C4"
+                app:shape_strokeColor="@color/account_757575"
                 app:shape_strokeWidth="1dp" />
 
             <com.hjq.shape.view.ShapeButton
@@ -105,7 +105,7 @@
                 android:textColor="@color/textColorHint"
                 app:shape_radius="@dimen/dp_20"
                 app:shape_shadowColor="@color/white"
-                app:shape_strokeColor="@color/order_FFC4C4C4"
+                app:shape_strokeColor="@color/account_757575"
                 app:shape_strokeWidth="1dp" />
         </LinearLayout>
     </com.hjq.shape.layout.ShapeConstraintLayout>
