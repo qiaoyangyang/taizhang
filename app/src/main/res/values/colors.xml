@@ -5,7 +5,12 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#ff000000</color>
+    <color name="black_90">#E6000000</color>
+    <color name="black_80">#CC000000</color>
+    <color name="black_65">#A6000000</color>
+    <color name="black_40">#66000000</color>
+    <color name="black_0a">#0A000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FD4B48</color>
     <color name="red_FF4C4A">#FF4C4A</color>
@@ -18,7 +23,7 @@
     <color name="home_646A89">#646A89</color>
     <color name="home_666666">#666666</color>
     <color name="home_333333">#333333</color>
-    <color name="home_900000">#90000000</color>
+    <color name="home_ff454b65">#ff454b65</color>
     <color name="home_212121">#212121</color>
     <color name="home_000000">#000000</color>
     <color name="home_999999">#999999</color>
