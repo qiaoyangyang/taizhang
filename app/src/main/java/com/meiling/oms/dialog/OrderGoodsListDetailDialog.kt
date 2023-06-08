@@ -21,7 +21,7 @@ class OrderGoodsListDetailDialog : BaseNiceDialog() {
     init {
         setHeight(400)
         setGravity(Gravity.BOTTOM)
-        setOutCancel(false)
+        setOutCancel(true)
     }
 
     fun newInstance(
