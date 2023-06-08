@@ -15,10 +15,10 @@ import com.meiling.oms.widget.showToast
 class LebaiRetailBindingActivity : BaseActivity<StoreManagementViewModel, ActivityLebaiRetailBindingBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         GlideApp.with(this)
-            .load("https://static.igoodsale.com/elem-write.jpeg")
+            .load("https://static.igoodsale.com/img_shangou.png")
             .into(mDatabind.ivArrow3)
         mDatabind.ivArrow3.setOnClickListener {
-            ImageActivity().start(this,"https://static.igoodsale.com/elem-write.jpeg")
+            ImageActivity().start(this,"https://static.igoodsale.com/img_shangou.png")
 
         }
 

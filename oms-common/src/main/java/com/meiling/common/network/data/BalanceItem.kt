@@ -12,8 +12,11 @@ data class BalanceItem(
     var channelType: String = "",
     @SerializedName("iconUrl")
     var iconUrl: String = "",
+    @SerializedName("channelTypeName")
+    var channelTypeName: String? = "",
     @SerializedName("stationCommonId")
-    var stationCommonId: ArrayList<BalanceChildItem> = ArrayList()
+    var stationCommonId: ArrayList<BalanceChildItem> = ArrayList(),
+
 ):java.io.Serializable
 
 data class BalanceChildItem(

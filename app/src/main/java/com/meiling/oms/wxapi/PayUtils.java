@@ -2,9 +2,12 @@ package com.meiling.oms.wxapi;
 
 import android.app.Activity;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.blankj.utilcode.util.Utils;
+import com.luck.picture.lib.utils.ToastUtils;
 import com.meiling.common.utils.SchedulerTransformer;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -48,6 +51,10 @@ public class PayUtils {
             @Override
             public void subscribe(@NotNull ObservableEmitter<String> emitter) throws Exception {
                 IWXAPI api = WXAPIFactory.createWXAPI(Utils.getApp(), "wx5adb2670c2e93388", false);
+                if (!api.isWXAppInstalled()){
+                    emitter.onNext("1");
+                    return;
+                }
                 PayReq req = new PayReq();
                 req.appId = appId;
                 req.partnerId = partnerId;
