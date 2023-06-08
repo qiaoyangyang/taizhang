@@ -252,7 +252,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                             50,80 -> {//收银小票
                                 setgetPrint()
                             }
-                            70 -> {//修改订单
+                            70 -> {//
                                 setOrderChangeAddressActivity()
                             }
 
@@ -265,7 +265,8 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                     when (orderDetailDto?.order?.logisticsStatus?.toInt()) {
 
                         0 -> {
-                            // setgetPrint()
+
+                            // setgetPrint()发起配送
 //                            showToast("发起配送")
                             ARouter.getInstance().build("/app/OrderDisActivity")
                                 .withSerializable("kk", orderDetailDto?.order).navigation()
@@ -312,7 +313,16 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                 }
                 //修改订单
                 R.id.btn_change_address -> {
-                    setOrderChangeAddressActivity()
+                    if (orderDetailDto?.order?.isValid == 1) {
+                        setOrderChangeAddressActivity()//修改订单
+                    }else{
+                        if (orderDetailDto?.order?.isValid == 0) {
+                            //取消忽略
+                            mViewModel.invalid(
+                                orderDetailDto?.order!!.viewId.toString(), "0"
+                            )
+                        }
+                    }
 
 
 
@@ -775,29 +785,20 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
     //修改订单
     private fun  setOrderChangeAddressActivity(){
 
-        when (orderDetailDto?.order?.logisticsStatus?.toInt()) {
-            0 ,70-> {
-                if (orderDetailDto?.order?.isValid == 0) {
-                    mViewModel.invalid(
-                        orderDetailDto?.order!!.viewId.toString(), "0"
-                    )
-                } else {
-                    //startActivity(Intent(this, OrderChangeAddressActivity::class.java))
-                    ARouter.getInstance().build("/app/OrderChangeAddressActivity")
-                        .withString(
-                            "receiveTime", orderDetailDto?.order?.arriveTimeDate
-                        ).withString("receiveName", orderDetailDto?.order?.recvName)
-                        .withString("receivePhone", orderDetailDto?.order?.recvPhone)
-                        .withString("receiveAddress", orderDetailDto?.order?.recvAddr)
-                        .withString("receiveRemark", orderDetailDto?.order?.remark)
-                        .withString("lat", orderDetailDto?.order?.lat)
-                        .withString("lon", orderDetailDto?.order?.lon)
-                        .withString("orderId", orderDetailDto?.order?.viewId)
-                        .withInt("index", 0).navigation()
-                }
-            }
+        ARouter.getInstance().build("/app/OrderChangeAddressActivity")
+            .withString(
+                "receiveTime", orderDetailDto?.order?.arriveTimeDate
+            ).withString("receiveName", orderDetailDto?.order?.recvName)
+            .withString("receivePhone", orderDetailDto?.order?.recvPhone)
+            .withString("receiveAddress", orderDetailDto?.order?.recvAddr)
+            .withString("receiveRemark", orderDetailDto?.order?.remark)
+            .withString("lat", orderDetailDto?.order?.lat)
+            .withString("lon", orderDetailDto?.order?.lon)
+            .withString("orderId", orderDetailDto?.order?.viewId)
+            .withInt("index", 0).navigation()
 
-        }
+
+
     }
 
 
