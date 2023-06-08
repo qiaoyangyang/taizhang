@@ -82,24 +82,24 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
                 showToast("请选择充值金额")
                 return@setSingleClickListener
             }
-//            mViewModel.rechargeRequest(
-//                RechargeRequest(
-//                    money,
-//                    "3",
-//                    channel,
-//                    presentedAmount = giveMoney,
-//                    ""
-//                )
-//            )
             mViewModel.rechargeRequest(
                 RechargeRequest(
-                    "0.01",
+                    money,
                     "3",
                     channel,
-                    presentedAmount = "0",
+                    presentedAmount = giveMoney,
                     ""
                 )
             )
+//            mViewModel.rechargeRequest(
+//                RechargeRequest(
+//                    "0.01",
+//                    "3",
+//                    channel,
+//                    presentedAmount = "0",
+//                    ""
+//                )
+//            )
         }
 
         mDatabind.btnCancelRecharge.setSingleClickListener {
