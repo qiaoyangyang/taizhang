@@ -70,20 +70,20 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
         mDatabind.btnSendDis.setSingleClickListener {
 
             if (mDatabind.edtRecName.text.toString().isNullOrEmpty()) {
-                showToast("请输入配送员姓名")
+                showToast("请补全配送信息")
                 return@setSingleClickListener
             }
             if (mDatabind.edtRecPhone.text.toString().isNullOrEmpty()) {
-                showToast("请输入配送员手机号")
+                showToast("请补全配送信息")
                 return@setSingleClickListener
             }
             if (!isPhoneNumber(mDatabind.edtRecPhone.text.toString())) {
-                showToast("请输入正确手机号")
+                showToast("请补全配送信息")
                 return@setSingleClickListener
             }
 
             if (mDatabind.edtRecPlatformOrder.text.toString().isNullOrEmpty()) {
-                showToast("请输物流单号")
+                showToast("请补全配送信息")
                 return@setSingleClickListener
             }
 
@@ -187,9 +187,20 @@ class OrderDisFragment3 : BaseFragment<OrderDisFragmentViewModel, FragmentDis3Bi
         }
         mViewModel.logisticsMenu.onSuccess.observe(this) {
             dismissLoading()
-            mDatabind.txtRecPlatform.text = it[0].label
-            channelType = it[0].value
-            logisticsMenuList.addAll(it)
+            if (!it.isNullOrEmpty()){
+                logisticsMenuList.addAll(it)
+                mDatabind.txtRecPlatform.text = it.last().label
+                channelType =  it.last().value
+//                for (item in it){
+//                    if(item.label=="其它"){
+//                        mDatabind.txtRecPlatform.text = it[0].label
+//                        channelType = it[0].value
+//
+//                    }
+//                }
+
+            }
+
         }
         mViewModel.logisticsMenu.onError.observe(this) {
             dismissLoading()

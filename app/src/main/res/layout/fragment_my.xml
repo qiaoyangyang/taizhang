@@ -19,7 +19,9 @@
         app:title="我的"
         app:titleColor="@color/home_333333" />
 
-
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -384,6 +386,7 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="15dp"
             android:paddingVertical="10dp"
+            android:layout_marginBottom="@dimen/dp_30"
             >
             <TextView
                 android:layout_width="0dp"
@@ -544,5 +547,5 @@
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-
+</androidx.core.widget.NestedScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>
