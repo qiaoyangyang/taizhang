@@ -72,54 +72,102 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_2"
         android:background="@color/account_F5F5F5" />
-
     <com.angcyo.tablayout.DslTabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/bg_home_order_tab"
-        android:paddingTop="@dimen/dp_40"
-        android:paddingBottom="@dimen/dp_15"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tab_badge_gravity="center"
-        app:tab_badge_solid_color="@color/white"
-        app:tab_badge_text_color="@color/red"
-        app:tab_badge_text_size="@dimen/sp_30"
         app:tab_deselect_color="@color/home_A8ABB2"
         app:tab_draw_badge="true"
+        android:paddingTop="@dimen/dp_40"
+        android:paddingBottom="@dimen/dp_15"
         app:tab_draw_indicator="true"
-        app:tab_enable_gradient_scale="true"
-        app:tab_enable_gradient_text_size="false"
-        app:tab_enable_text_bold="true"
         app:tab_indicator_color="@color/red"
         app:tab_indicator_enable_flow="true"
         app:tab_indicator_height="@dimen/dp_5"
+        app:tab_enable_gradient_text_size="false"
+
         app:tab_indicator_solid_color="@color/white"
         app:tab_indicator_style="STYLE_BOTTOM"
         app:tab_indicator_width="30dp"
-        app:tab_indicator_y_offset="@dimen/dp_15"
+        app:tab_badge_gravity="center"
+        app:tab_badge_text_size="@dimen/sp_30"
+        app:tab_badge_solid_color="@color/white"
+        app:tab_badge_text_color="@color/red"
         app:tab_item_is_equ_width="true"
-        app:tab_select_color="@color/home_333333"
-        app:tab_text_max_size="@dimen/sp_32"
-        app:tab_text_min_size="@dimen/sp_28">
+        app:tab_indicator_y_offset="@dimen/dp_15"
+        app:tab_select_color="@color/home_333333">
 
         <TextView
+            android:paddingBottom="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="全部" />
-
+            android:text="全部"
+            />
 
         <TextView
+            android:paddingBottom="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="已取消" />
+            android:text="全部"
+            />
+
 
     </com.angcyo.tablayout.DslTabLayout>
+
+<!--    <com.angcyo.tablayout.DslTabLayout-->
+<!--        android:id="@+id/tab_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="65dp"-->
+<!--        android:background="@drawable/bg_home_order_tab"-->
+<!--        android:paddingTop="@dimen/dp_40"-->
+<!--        android:paddingBottom="@dimen/dp_15"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:tab_badge_gravity="center"-->
+<!--        app:tab_badge_solid_color="@color/white"-->
+<!--        app:tab_badge_text_color="@color/red"-->
+<!--        app:tab_badge_text_size="@dimen/sp_30"-->
+<!--        app:tab_deselect_color="@color/home_A8ABB2"-->
+<!--        app:tab_draw_badge="true"-->
+<!--        app:tab_draw_indicator="true"-->
+<!--        app:tab_enable_gradient_scale="true"-->
+<!--        app:tab_enable_gradient_text_size="false"-->
+<!--        app:tab_enable_text_bold="true"-->
+<!--        app:tab_indicator_color="@color/red"-->
+<!--        app:tab_indicator_enable_flow="true"-->
+<!--        app:tab_indicator_height="@dimen/dp_5"-->
+<!--        app:tab_indicator_solid_color="@color/white"-->
+<!--        app:tab_indicator_style="STYLE_BOTTOM"-->
+<!--        app:tab_indicator_width="30dp"-->
+<!--        app:tab_indicator_y_offset="@dimen/dp_15"-->
+<!--        app:tab_item_is_equ_width="true"-->
+<!--        app:tab_select_color="@color/home_333333"-->
+<!--        app:tab_text_max_size="@dimen/sp_32"-->
+<!--        app:tab_text_min_size="@dimen/sp_28">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:text="全部" />-->
+
+
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:text="已取消" />-->
+
+<!--    </com.angcyo.tablayout.DslTabLayout>-->
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
