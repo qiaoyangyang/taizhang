@@ -319,7 +319,7 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
                         if (orderDetailDto?.order?.isValid == 0) {
                             //取消忽略
                             mViewModel.invalid(
-                                orderDetailDto?.order!!.viewId.toString(), "0"
+                                orderDetailDto?.order!!.viewId.toString(), "1"
                             )
                         }
                     }
