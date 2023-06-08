@@ -17,11 +17,10 @@ import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.oms.R
 import com.meiling.oms.databinding.ActivityReachargeToPayBinding
 import com.meiling.oms.fragment.*
-import com.meiling.oms.wxapi.AliPayResp
-import com.meiling.oms.wxapi.PayUtils
-import com.meiling.oms.wxapi.WXPayListener
 import com.meiling.oms.viewmodel.RechargeViewModel
 import com.meiling.oms.widget.*
+import com.meiling.oms.wxapi.AliPayResp
+import com.meiling.oms.wxapi.PayUtils
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import org.json.JSONObject
@@ -233,15 +232,20 @@ class MyRechargeToPayActivity : BaseActivity<RechargeViewModel, ActivityReacharg
                         }
 
                         override fun onNext(t: String) {
-                            startActivityForResult(
-                                Intent(
-                                    this@MyRechargeToPayActivity,
-                                    RechargeFinishActivity::class.java
-                                ), REQUEST_CODE
-                            )
+                            if (t == "1") {
+                                showToast("请安装微信")
+                            } else {
+                                startActivityForResult(
+                                    Intent(
+                                        this@MyRechargeToPayActivity,
+                                        RechargeFinishActivity::class.java
+                                    ), REQUEST_CODE
+                                )
+                            }
                         }
 
                         override fun onError(e: Throwable) {
+                            showToast("请安装微信${e.toString()}")
                             startActivityForResult(
                                 Intent(
                                     this@MyRechargeToPayActivity,

@@ -52,10 +52,7 @@ public class PayUtils {
             public void subscribe(@NotNull ObservableEmitter<String> emitter) throws Exception {
                 IWXAPI api = WXAPIFactory.createWXAPI(Utils.getApp(), "wx5adb2670c2e93388", false);
                 if (!api.isWXAppInstalled()){
-                    Toast toast = new Toast(Utils.getApp());
-                    toast.makeText(Utils.getApp(), "请安装微信", Toast.LENGTH_SHORT).show();
-                    toast.setGravity(Gravity.CENTER,0,0);
-                    toast.show();
+                    emitter.onNext("1");
                     return;
                 }
                 PayReq req = new PayReq();
