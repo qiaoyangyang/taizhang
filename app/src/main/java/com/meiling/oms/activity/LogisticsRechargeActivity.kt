@@ -38,7 +38,7 @@ class LogisticsRechargeActivity :
             ViewModelProvider(MainActivity.mainActivity!!).get(MainViewModel2::class.java)
         adapter = object : BaseQuickAdapter<BalanceItem, BaseViewHolder>(R.layout.item_logistcs_recharege) {
             override fun convert(holder: BaseViewHolder, item: BalanceItem) {
-                holder.setText(R.id.txtLogistcsName, item.channelType)
+                holder.setText(R.id.txtLogistcsName, item.channelTypeName.toString())
                 var img = holder.getView<ImageView>(R.id.img)
                 GlideAppUtils.loadUrl(img, item.iconUrl)
                 holder?.setText(R.id.txtMoney,item.balance)
