@@ -61,7 +61,7 @@
                     android:paddingVertical="@dimen/dp_20"
                     android:paddingStart="@dimen/dp_20"
                     android:src="@drawable/icon_rech_wexin"
-                    android:visibility="gone" />
+                    />
 
                 <TextView
                     android:id="@+id/txt_weixin_pay"
@@ -76,7 +76,6 @@
                     android:text="微信"
                     android:textColor="@color/home_666666"
                     android:textSize="@dimen/sp_32"
-                    android:visibility="gone"
                     app:drawableEndCompat="@drawable/ic_spu_true" />
 
                 <ImageView
@@ -101,7 +100,7 @@
                     android:text="支付宝"
                     android:textColor="@color/home_666666"
                     android:textSize="@dimen/sp_32"
-                    app:drawableEndCompat="@drawable/ic_spu_true" />
+                    app:drawableEndCompat="@drawable/ic_spu_fase" />
 
 
             </com.hjq.shape.layout.ShapeRelativeLayout>
@@ -147,6 +146,7 @@
                 android:layout_marginHorizontal="@dimen/dp_20"
                 android:layout_marginVertical="@dimen/dp_20"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:paddingHorizontal="@dimen/dp_20"
                 android:paddingVertical="@dimen/dp_30"
                 app:shape_radius="@dimen/dp_20"

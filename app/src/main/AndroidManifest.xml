@@ -203,7 +203,7 @@
         <activity
             android:name=".activity.OrderDisActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.OrderSearchActivity"
             android:screenOrientation="portrait"
@@ -226,6 +226,14 @@
             android:name=".activity.MyRechargeToPayActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name="com.meiling.oms.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <activity-alias
+            android:name="com.meiling.oms.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:targetActivity="com.meiling.oms.wxapi.WXPayEntryActivity"/>
         <activity
             android:name=".activity.WriteOffActivity"
             android:screenOrientation="portrait" />

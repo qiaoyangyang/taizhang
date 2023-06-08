@@ -1,35 +1,25 @@
 package com.meiling.oms.activity
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.FragmentUtils
 import com.meiling.common.activity.BaseActivity
-import com.meiling.common.network.data.RechargeRequest
 import com.meiling.oms.R
-import com.meiling.oms.adapter.BaseFragmentPagerAdapter
 import com.meiling.oms.databinding.ActivityRechargeBinding
 import com.meiling.oms.dialog.RechargeSelectTimeDialog
 //import com.meiling.oms.dialog.RechargeDialog
-import com.meiling.oms.eventBusData.MessageEventPayMoney
 import com.meiling.oms.eventBusData.MessageEventTime
 import com.meiling.oms.eventBusData.MessageEventTimeShow
 import com.meiling.oms.fragment.*
-import com.meiling.oms.pay.AliPayResp
-import com.meiling.oms.pay.PayUtils
 import com.meiling.oms.viewmodel.RechargeViewModel
 import com.meiling.oms.widget.*
-import io.reactivex.rxjava3.core.Observer
-import io.reactivex.rxjava3.disposables.Disposable
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import org.json.JSONObject
 
 
 /**

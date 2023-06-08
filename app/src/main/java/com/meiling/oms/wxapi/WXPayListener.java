@@ -1,4 +1,4 @@
-package com.meiling.oms.pay;
+package com.meiling.oms.wxapi;
 
 
 /**
