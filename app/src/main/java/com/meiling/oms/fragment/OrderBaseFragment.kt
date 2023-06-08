@@ -122,7 +122,12 @@ class OrderBaseFragment : BaseFragment<BaseOrderFragmentViewModel, FragmentBaseO
                         "共${item.goodsTotalNum}件，共${SaveDecimalUtils.decimalUtils(item.order!!.totalPrice!!)}元"
                     )
                     if (!item.goodsVoList.isNullOrEmpty()){
-                        holder.setText(R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}")
+                        if (item.goodsVoList!!.size>1){
+                            holder.setText(R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname} 等")
+                        }else{
+                            holder.setText(R.id.txt_base_order_shop_name, "${item.goodsVoList!![0]?.gname}")
+                        }
+
                     }
 
                     holder.setText(R.id.txt_base_order_No, "${item.order?.channelDaySn}")
