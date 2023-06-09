@@ -76,7 +76,7 @@
                     android:paddingBottom="6dp"
 
                     android:text="昨日"
-                    android:textColor="@color/radiobutton_textcolor"
+                    android:textColor="@color/radiobutton_textcolor_white"
 
                     android:textSize="16sp" />
 
@@ -92,7 +92,7 @@
                     android:paddingTop="6dp"
                     android:paddingBottom="6dp"
                     android:text="今日"
-                    android:textColor="@color/radiobutton_textcolor"
+                    android:textColor="@color/radiobutton_textcolor_white"
                     android:textSize="16sp" />
 
                 <RadioButton
@@ -110,7 +110,7 @@
                     android:paddingTop="6dp"
                     android:paddingBottom="6dp"
                     android:text="近7天"
-                    android:textColor="@color/radiobutton_textcolor"
+                    android:textColor="@color/radiobutton_textcolor_white"
 
                     android:textSize="16sp" />
 
@@ -129,7 +129,7 @@
                     android:paddingBottom="6dp"
                     android:text="近30天"
 
-                    android:textColor="@color/radiobutton_textcolor"
+                    android:textColor="@color/radiobutton_textcolor_white"
                     android:textSize="16sp" />
 
 
@@ -220,7 +220,7 @@
                     android:paddingTop="6dp"
                     android:paddingBottom="6dp"
                     android:text="所有门店 "
-                    android:textColor="@color/radiobutton_textcolor"
+                    android:textColor="@color/radiobutton_textcolor_white"
                     android:textSize="16sp" />
 
                 <RadioButton
@@ -243,7 +243,7 @@
 
                     android:paddingBottom="6dp"
                     android:text="自定义门店"
-                    android:textColor="@color/radiobutton_textcolor"
+                    android:textColor="@color/radiobutton_textcolor_white"
                     android:textSize="16sp"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -287,7 +287,7 @@
                     android:paddingTop="6dp"
                     android:paddingBottom="6dp"
                     android:text="所有类型 "
-                    android:textColor="@color/radiobutton_textcolor"
+                    android:textColor="@color/radiobutton_textcolor_white"
                     android:textSize="16sp"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -308,7 +308,7 @@
 
                     android:paddingBottom="6dp"
                     android:text="代金券"
-                    android:textColor="@color/radiobutton_textcolor"
+                    android:textColor="@color/radiobutton_textcolor_white"
                     android:textSize="16sp" />
 
                 <RadioButton
@@ -326,7 +326,7 @@
 
                     android:paddingBottom="6dp"
                     android:text="团购券"
-                    android:textColor="@color/radiobutton_textcolor"
+                    android:textColor="@color/radiobutton_textcolor_white"
                     android:textSize="16sp" />
 
                 <RadioButton
@@ -343,7 +343,7 @@
 
 
                     android:text="近30天"
-                    android:textColor="@color/radiobutton_textcolor"
+                    android:textColor="@color/radiobutton_textcolor_white"
                     android:textSize="16sp"
                     android:visibility="invisible" />
 
@@ -386,7 +386,7 @@
                     android:paddingTop="6dp"
                     android:paddingBottom="6dp"
                     android:text="所有状态 "
-                    android:textColor="@color/radiobutton_textcolor"
+                    android:textColor="@color/radiobutton_textcolor_white"
                     android:textSize="16sp" />
 
                 <RadioButton
@@ -406,7 +406,7 @@
 
                     android:paddingBottom="6dp"
                     android:text="已核销"
-                    android:textColor="@color/radiobutton_textcolor"
+                    android:textColor="@color/radiobutton_textcolor_white"
                     android:textSize="16sp" />
 
                 <RadioButton
@@ -424,7 +424,7 @@
 
                     android:paddingBottom="6dp"
                     android:text="已撤销"
-                    android:textColor="@color/radiobutton_textcolor"
+                    android:textColor="@color/radiobutton_textcolor_white"
                     android:textSize="16sp" />
 
                 <RadioButton
@@ -441,7 +441,7 @@
 
 
                     android:text=""
-                    android:textColor="@color/radiobutton_textcolor"
+                    android:textColor="@color/radiobutton_textcolor_white"
                     android:textSize="16sp"
                     android:visibility="invisible" />
 
