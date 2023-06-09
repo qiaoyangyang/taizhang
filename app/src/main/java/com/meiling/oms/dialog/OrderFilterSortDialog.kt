@@ -65,6 +65,10 @@ class OrderFilterSortDialog : BaseNiceDialog() {
             for (xx in selectOrderPlatformAdapter.data) {
                 xx.select = false
             }
+            for (xx in selectSortAdapter.data) {
+                xx.select = false
+            }
+
             selectOrderPlatformAdapter.data[0].select = true
             selectSortAdapter.data[0].select = true
             selectSortAdapter.notifyDataSetChanged()
