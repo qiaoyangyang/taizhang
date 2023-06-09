@@ -219,7 +219,7 @@ public class BaseWebActivity extends AppCompatActivity {
      */
     public boolean statusBarDarkFont() {
         // 返回真表示黑色字体
-        return false;
+        return true;
     }
 
 }

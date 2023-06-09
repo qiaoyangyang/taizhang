@@ -765,12 +765,16 @@ class OrderDetailActivity : BaseActivity<BaseOrderFragmentViewModel, ActivityOrd
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
+
+        aMap?.clear()
         Log.d("yjk", "onMessageEvent: .")
         initData()
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEventUpDataTip) {
         Log.d("yjk", "onMessageEvent: .")
+
+        aMap?.clear()
         initData()
     }
 
