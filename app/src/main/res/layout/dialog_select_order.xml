@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     app:shape_solidColor="@color/white"
     app:shape_topLeftRadius="10dp"
     app:shape_topRightRadius="10dp">
@@ -33,310 +33,314 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_title" />
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="@dimen/dp_40"
-        android:layout_marginRight="16dp"
-        android:orientation="vertical"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/ll_btn"
         app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="日期类型"
-                android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_32" />
-
-            <RadioGroup
-                android:id="@+id/Rg_isVoucher"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/rb_isVoucher"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:background="@drawable/checkbox_order_normal"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:paddingVertical="6dp"
-                    android:text="下单时间"
-                    android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_28"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-                <RadioButton
-                    android:id="@+id/rb_voucher"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:background="@drawable/checkbox_order_normal"
-                    android:button="@null"
-                    android:checked="false"
-                    android:gravity="center"
-                    android:paddingVertical="6dp"
-                    android:text="收货时间"
-                    android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_28" />
-
-                <RadioButton
-                    android:id="@+id/rb_meal_voucher"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:background="@drawable/checkbox_order_normal"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:paddingVertical="6dp"
-                    android:text="出货时间"
-                    android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_28" />
-
-
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="日期"
-                android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_32" />
-
-
-            <RadioGroup
-                android:id="@+id/RG_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/rb_yesterday"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/checkbox_order_normal"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:text="昨日"
-                    android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_28" />
-
-                <RadioButton
-                    android:id="@+id/rb_today"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/checkbox_order_normal"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:text="今日"
-                    android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_28" />
-
-                <RadioButton
-                    android:id="@+id/rb_About_seven_days"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/checkbox_order_normal"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:text="近7日"
-                    android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_28" />
-
-                <RadioButton
-                    android:id="@+id/rb_nearly_days"
-                    android:layout_width="0dp"
-
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/checkbox_order_normal"
-                    android:button="@null"
-                    android:checked="false"
-                    android:gravity="center"
-
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:text="近30天"
-
-                    android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_28" />
-
-
-            </RadioGroup>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/rb_starting_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-
-                    android:background="@drawable/selected_false"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:paddingTop="6dp"
-
-                    android:paddingBottom="6dp"
-                    android:text="起始时间"
-                    android:textColor="@color/home_333333"
-
-
-                    android:textSize="@dimen/sp_28" />
-
-                <RadioButton
-                    android:id="@+id/tv_final_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/selected_false"
-                    android:button="@null"
-                    android:checked="false"
-                    android:gravity="center"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:text="终止时间"
-
-                    android:textColor="@color/home_333333"
-                    android:textSize="@dimen/sp_28"
-
-
-                    />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="标签"
-                android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_32" />
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
-            <RadioGroup
-                android:id="@+id/rg_isValid"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="日期类型"
+                    android:textColor="@color/home_333333"
+                    android:textSize="@dimen/sp_32" />
+
+                <RadioGroup
+                    android:id="@+id/Rg_isVoucher"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_isVoucher"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/checkbox_order_normal"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:paddingVertical="6dp"
+                        android:text="下单时间"
+                        android:textColor="@color/radiobutton_textcolor"
+                        android:textSize="@dimen/sp_28"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <RadioButton
+                        android:id="@+id/rb_voucher"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dp_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/checkbox_order_normal"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:paddingVertical="6dp"
+                        android:text="收货时间"
+                        android:textColor="@color/radiobutton_textcolor"
+                        android:textSize="@dimen/sp_28" />
+
+                    <RadioButton
+                        android:id="@+id/rb_meal_voucher"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/checkbox_order_normal"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:paddingVertical="6dp"
+                        android:text="出货时间"
+                        android:textColor="@color/radiobutton_textcolor"
+                        android:textSize="@dimen/sp_28" />
+
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="日期"
+                    android:textColor="@color/home_333333"
+                    android:textSize="@dimen/sp_32" />
+
+
+                <RadioGroup
+                    android:id="@+id/RG_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_yesterday"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/checkbox_order_normal"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:text="昨日"
+                        android:textColor="@color/radiobutton_textcolor"
+                        android:textSize="@dimen/sp_28" />
+
+                    <RadioButton
+                        android:id="@+id/rb_today"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/checkbox_order_normal"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:text="今日"
+                        android:textColor="@color/radiobutton_textcolor"
+                        android:textSize="@dimen/sp_28" />
+
+                    <RadioButton
+                        android:id="@+id/rb_About_seven_days"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/checkbox_order_normal"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:text="近7日"
+                        android:textColor="@color/radiobutton_textcolor"
+                        android:textSize="@dimen/sp_28" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nearly_days"
+                        android:layout_width="0dp"
+
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/checkbox_order_normal"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:text="近30天"
+
+                        android:textColor="@color/radiobutton_textcolor"
+                        android:textSize="@dimen/sp_28" />
+
+
+                </RadioGroup>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/rb_starting_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+
+                        android:background="@drawable/selected_false"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:paddingTop="6dp"
+
+                        android:paddingBottom="6dp"
+                        android:text="起始时间"
+                        android:textColor="@color/home_333333"
+
+
+                        android:textSize="@dimen/sp_28" />
+
+                    <RadioButton
+                        android:id="@+id/tv_final_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/selected_false"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:text="终止时间"
+
+                        android:textColor="@color/home_333333"
+                        android:textSize="@dimen/sp_28"
+
+
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/rb_isValid_all"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="标签"
+                    android:textColor="@color/home_333333"
+                    android:textSize="@dimen/sp_32" />
+
+                <RadioGroup
+                    android:id="@+id/rg_isValid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:background="@drawable/checkbox_order_normal"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:paddingVertical="6dp"
-                    android:text="全部"
-                    android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_28"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-                <RadioButton
-                    android:id="@+id/rb_isValid1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:background="@drawable/checkbox_order_normal"
-                    android:button="@null"
-                    android:checked="false"
-                    android:gravity="center"
-                    android:paddingVertical="6dp"
-                    android:text="无标签"
-                    android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_28" />
+                    <RadioButton
+                        android:id="@+id/rb_isValid_all"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/checkbox_order_normal"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:paddingVertical="6dp"
+                        android:text="全部"
+                        android:textColor="@color/radiobutton_textcolor"
+                        android:textSize="@dimen/sp_28"
+                        tools:ignore="TouchTargetSizeCheck" />
 
-                <RadioButton
-                    android:id="@+id/rb_isValid0"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:background="@drawable/checkbox_order_normal"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:paddingVertical="6dp"
-                    android:text="忽略订单"
-                    android:textColor="@color/radiobutton_textcolor"
-                    android:textSize="@dimen/sp_28" />
+                    <RadioButton
+                        android:id="@+id/rb_isValid1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dp_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/checkbox_order_normal"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:paddingVertical="6dp"
+                        android:text="无标签"
+                        android:textColor="@color/radiobutton_textcolor"
+                        android:textSize="@dimen/sp_28" />
 
-
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="订单平台"
-                android:textColor="@color/home_333333"
-                android:textSize="@dimen/sp_32" />
+                    <RadioButton
+                        android:id="@+id/rb_isValid0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/checkbox_order_normal"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:paddingVertical="6dp"
+                        android:text="忽略订单"
+                        android:textColor="@color/radiobutton_textcolor"
+                        android:textSize="@dimen/sp_28" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_select_order_platform"
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="4"
-                tools:listitem="@layout/item_recy_order_select_platform" />
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单平台"
+                    android:textColor="@color/home_333333"
+                    android:textSize="@dimen/sp_32" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_select_order_platform"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="4"
+                    tools:listitem="@layout/item_recy_order_select_platform" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
     <LinearLayout
         android:id="@+id/ll_btn"
         android:layout_width="match_parent"

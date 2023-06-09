@@ -1,7 +1,6 @@
 package com.meiling.oms.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
