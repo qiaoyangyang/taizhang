@@ -27,8 +27,8 @@ class AgreementActivity : BaseActivity<VoucherinspectionViewModel, ActivityAgree
         var url = "file:///android_asset/xy.html"
         if (stringExtraType == "1") {
             mDatabind.TitleBar.title = "小喵来客隐私政策"
-//            url = "file:///android_asset/xy.html"
-            url = "https://ods.igoodsale.com/#/privacyPolicy"
+            url = "file:///android_asset/ys.html"
+//            url = "https://ods.igoodsale.com/#/privacyPolicy"
         } else {
             mDatabind.TitleBar.title = "小喵来客用户协议"
 //            url = "file:///android_asset/xy.html"
