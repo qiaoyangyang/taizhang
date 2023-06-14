@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="color_theme">#1E2020</color>
+    <color name="color_line">#F9C930</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="picture_color_black">#FFFFFFFF</color>
+
+</resources>

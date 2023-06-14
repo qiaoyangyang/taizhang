@@ -24,6 +24,7 @@
         <item name="android:textAllCaps">false</item>
         <!-- 默认隐藏输入法，开启这个选项后会导致输入对话框在关闭之后不能关闭软键盘   -->
         <!--<item name="android:windowSoftInputMode">stateHidden</item>-->
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <!-- 解决启动页白屏的问题 -->
@@ -33,17 +34,7 @@
     </style>
 
 
-    <style name="tv_pay_key">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">100dp</item>
-        <item name="android:background">@drawable/bg_pay</item>
-        <item name="android:textColor">#9A9A9A</item>
-        <item name="android:textSize">36sp</item>
-        <item name="layout_constraintWidth_percent">0.23</item>
-        <item name="android:gravity">center</item>
 
-
-    </style>
 
     <style name="registTitleTxt">
         <item name="textSize">16sp</item>

@@ -65,7 +65,6 @@
             android:visibility="gone"
             android:layout_marginVertical="@dimen/dp_20"
             android:layout_marginHorizontal="@dimen/dp_30"
-            android:progressDrawable="@drawable/pro"
             />
 
         <TextView

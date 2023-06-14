@@ -8,11 +8,11 @@ import com.gyf.immersionbar.BarHide
 import com.meiling.common.activity.BaseActivity
 import com.meiling.account.adapter.ImagePagerAdapter
 import com.meiling.account.databinding.ActivityImageBinding
-import com.meiling.account.viewmodel.VoucherinspectionViewModel
+import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.IntentKey
 
 
-class ImageActivity : BaseActivity<VoucherinspectionViewModel, ActivityImageBinding>() {
+class ImageActivity : BaseActivity<MainViewModel, ActivityImageBinding>() {
 
     open fun start(context: Context, url: String) {
         val images: ArrayList<String> = ArrayList(1)

@@ -63,7 +63,7 @@
             android:name=".activity.SplashActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -74,236 +74,20 @@
         </activity>
 
 
-        <activity
-            android:name=".activity.OrderDetailActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.OrderDetail1Activity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
+        <!--       登陆页面-->
         <activity
             android:name=".activity.LoginActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.RegisterNextActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="true"
-            android:screenOrientation="portrait">
-            <!--                        <intent-filter>-->
-            <!--                            <action android:name="android.intent.action.MAIN" />-->
-
-            <!--                            <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--                        </intent-filter>-->
-            <!--                        <meta-data-->
-            <!--                            android:name="android.app.lib_name"-->
-            <!--                            android:value="" />-->
-        </activity>
-
-        <activity
-            android:name=".activity.BindingLogisticsActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="true"
-            android:screenOrientation="portrait">
-<!--                        <intent-filter>-->
-<!--                            <action android:name="android.intent.action.MAIN" />-->
-
-<!--                            <category android:name="android.intent.category.LAUNCHER" />-->
-<!--                        </intent-filter>-->
-<!--                        <meta-data-->
-<!--                            android:name="android.app.lib_name"-->
-<!--                            android:value="" />-->
-        </activity>
-
-        <activity
-            android:name=".activity.RegisterActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".activity.AboutActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.AgreementActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.AccountManagerActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.AccountNewCreateActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.PushDialogActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:theme="@style/dialogActivityTheme" />
-        <activity
-            android:name=".activity.ForgetPwdActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.ForgetPwdResetActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.ForgetPwdFinishActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.LebaiRetailBindingActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait">
-
-        </activity>
-        <activity
-            android:name=".activity.ForgetPwdGetCodeActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <!--        主页-->
         <activity
             android:name=".activity.MainActivity"
 
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.OrderHistoryActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.OrderChangeAddressActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.OrderChangeAddressMapActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.OrderCreateActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity
-            android:name=".activity.NewOrderChangeAddressMapActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.NewScanOrderChangeAddressMapActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.TiktokBindingActvity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.BindingTiktokListActivity"
+            android:screenOrientation="landscape" />
 
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.MessageCenterActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.OrderDisActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity
-            android:name=".activity.OrderSearchActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.OrderMapCheActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.OrderDisAddTipActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.PostDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.MyRechargeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.MyRechargeToPayActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity
-            android:name="com.meiling.account.wxapi.WXPayEntryActivity"
-            android:exported="true"
-            android:launchMode="singleTop" />
-        <activity-alias
-            android:name="com.meiling.account.wxapi.WXPayEntryActivity"
-            android:exported="true"
-            android:targetActivity="com.meiling.account.wxapi.WXPayEntryActivity"/>
-        <activity
-            android:name=".activity.WriteOffActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.MeituanActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.WriteDetailsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.MySettlementDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.ReleasePostActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.RechargeFinishActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.ModifyPassWordActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.VoucherInspectionActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.VoucherInspectionHistoryActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".activity.WriteOffDetailsActivity" />
-
-        <activity
-            android:name=".activity.InputBoredomActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.NotificationSettingsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.StoreManagementActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.NewlyBuiltStoreActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.ChannelActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.BaseWebActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.NoStoreActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.ImageActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" /> <!-- 查看大图 -->
-        <activity
-            android:name=".activity.NoPrintDeviceActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.SelectPrintDeviceActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.BindPrintDeviceActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.LogisticsRechargeActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".activity.PrintDeviceListActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -372,29 +156,30 @@
         <!--                <action android:name="com.example.mypushreceiver.PUSH_MESSAGE" />-->
         <!--            </intent-filter>-->
         <!--        </receiver>-->
-        <!-- 小米-->
-        <activity
-            android:name=".activity.MfrMessageActivity"
-            android:exported="true"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+        <!--        &lt;!&ndash; 小米&ndash;&gt;-->
+        <!--        <activity-->
+        <!--            android:name=".activity.MfrMessageActivity"-->
+        <!--            android:exported="true"-->
+        <!--            android:launchMode="singleTask">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+        <!--                <category android:name="android.intent.category.DEFAULT" />-->
+        <!--                <category android:name="android.intent.category.BROWSABLE" />-->
 
-                <data
-                    android:host="com.meiling.oms"
-                    android:path="/thirdpush"
-                    android:scheme="agoo" />
-            </intent-filter>
-        </activity>
+        <!--                <data-->
+        <!--                    android:host="com.meiling.oms"-->
+        <!--                    android:path="/thirdpush"-->
+        <!--                    android:scheme="agoo" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
 
     </application>
     <!--华为 -->
     <meta-data
         android:name="com.huawei.hms.client.appid"
         android:value="appid=108169495" />
+
     <queries>
         <package android:name="com.tencent.mm" />
         <package android:name="com.eg.android.AlipayGphone" />

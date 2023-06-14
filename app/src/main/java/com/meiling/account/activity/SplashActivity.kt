@@ -11,7 +11,6 @@ import com.meiling.common.activity.BaseActivity
 import com.meiling.common.utils.CrashManagerUtil
 import com.meiling.common.utils.MMKVUtils
 import com.meiling.account.databinding.ActivitySplashBinding
-import com.meiling.account.dialog.AgreementDialog
 import com.meiling.account.jpush.AppConfig
 import com.meiling.account.jpush.PushHelper
 import com.tencent.bugly.crashreport.CrashReport
@@ -25,55 +24,10 @@ import org.android.agoo.xiaomi.MiPushRegistar
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity<BaseViewModel, ActivitySplashBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
-        var agreementDialog = AgreementDialog()
-
-        agreementDialog.setOkClickLister {
-            if (it == "1") {
-                SPStaticUtils.put("isFirstInstall", true)
-                initAndStartSDK()
-                val job = GlobalScope.launch {
-                    delay(2000)
-                    if (MMKVUtils.getBoolean("isLogin")) {
-                        var intent = Intent(this@SplashActivity, MainActivity::class.java)
-                        startActivity(intent)
-                        //  ARouter.getInstance().build("/app/MainActivity").navigation()
-                        finish()
-                    } else {
-                        var intent = Intent(this@SplashActivity, LoginActivity::class.java)
-                        startActivity(intent)
-                        // ARouter.getInstance().build("/app/LoginActivity").navigation()
-                        finish()
-
-                    }
-                }
-            } else {
-                SPStaticUtils.put("isFirstInstall", false)
-                finish()
-            }
-        }
-        if (SPStaticUtils.getBoolean("isFirstInstall")) {
-            val job = GlobalScope.launch {
-                delay(2000)
-                if (MMKVUtils.getBoolean("isLogin")) {
-                    var intent = Intent(this@SplashActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    //  ARouter.getInstance().build("/app/MainActivity").navigation()
-                    finish()
-                } else {
-                    var intent = Intent(this@SplashActivity, LoginActivity::class.java)
-                    startActivity(intent)
-                    // ARouter.getInstance().build("/app/LoginActivity").navigation()
-                    finish()
-
-                }
-            }
-            //友盟统计用户活跃度
-            PushAgent.getInstance(this).onAppStart();
-        } else {
-            agreementDialog.show(supportFragmentManager)
-        }
 
 
+        finish()
+        startActivity(Intent(this, LoginActivity::class.java))
 
     }
 

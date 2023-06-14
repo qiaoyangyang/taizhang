@@ -1,0 +1,213 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.meiling.common'
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
+    resourcePrefix "common_"
+
+    defaultConfig {
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode build_versions.version_code
+        versionName build_versions.version_name
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters 'armeabi-v7a'//, 'arm64-v8a','x86'
+//            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'arm64-v8a', 'x86_64'
+        }
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('../oms')
+            storePassword '1q2w3e4r'
+            keyAlias 'oms'
+            keyPassword '1q2w3e4r'
+        }
+        release {
+            storeFile file('../oms')
+            storePassword '1q2w3e4r'
+            keyAlias 'oms'
+            keyPassword '1q2w3e4r'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String","BASE_URL",'"http://test-oms.igoodsale.com"'
+        }
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String","BASE_URL",'"http://dev-oms-api.igoodsale.com"'
+        }
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java']
+            jniLibs.srcDirs = ['libs']
+            res.srcDirs = ['src/main/res']
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+
+}
+
+dependencies {
+
+    api 'androidx.core:core-ktx:1.9.0'
+    api 'androidx.appcompat:appcompat:1.6.1'
+    api 'com.google.android.material:material:1.6.1'
+    api 'androidx.constraintlayout:constraintlayout:2.1.4'
+    api 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.0'
+    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    api "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
+    api 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.0'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+    implementation 'com.orhanobut:logger:2.2.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.11.0'
+
+
+    api "com.alibaba:arouter-api:1.5.2"
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
+    api "com.squareup.retrofit2:adapter-rxjava3:2.9.0"
+    api "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
+
+
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.6'
+    api 'com.github.getActivity:ShapeView:8.3'
+    api 'com.github.bumptech.glide:glide:4.14.2'
+    kapt 'com.github.bumptech.glide:compiler:4.14.2'
+
+    //svg图片
+//    implementation 'com.github.bumptech.glide:glide-svg:2.0.0'
+    api 'com.caverock:androidsvg-aar:1.3'
+//    api 'com.github.xiaohaibin:XBanner:androidx_v1.2.6'
+    api 'com.github.chrisbanes:PhotoView:2.3.0'
+    api 'io.github.scwang90:refresh-layout-kernel:2.0.5'
+    api 'io.github.scwang90:refresh-header-material:2.0.5'
+    api 'io.github.scwang90:refresh-footer-classics:2.0.5'
+    api 'com.jeremyliao:live-event-bus-x:1.7.2'
+    api 'com.github.jenly1314:zxing-lite:2.1.1'
+    api 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    api 'io.reactivex.rxjava3:rxjava:3.0.4'
+    api 'com.blankj:utilcodex:1.30.6'
+    api 'com.github.tbruyelle:rxpermissions:0.12'
+
+    api 'com.sunfusheng:MarqueeView:1.4.0'
+    api 'com.github.angcyo.DslTablayout:TabLayout:3.4.2'
+    api 'com.github.angcyo.DslTablayout:ViewPager1Delegate:3.4.2'
+    api 'com.github.angcyo.DslTablayout:ViewPager2Delegate:3.4.2'
+
+    api 'com.journeyapps:zxing-android-embedded:4.3.0'
+
+
+//    api 'com.tencent.tbs:tbssdk:44216'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+
+    api 'com.google.android.flexbox:flexbox:3.0.0'
+
+    // 标题栏框架：https://github.com/getActivity/TitleBar
+    api 'com.github.getActivity:TitleBar:9.2'
+
+
+    api 'com.makeramen:roundedimageview:2.3.0'
+    //api 'com.github.getActivity:XXPermissions:18.0'
+    api 'com.github.getActivity:XXPermissions:18.0'
+    // 状态栏沉浸：https://github.com/gyf-dev/ImmersionBar
+    api 'com.gyf.immersionbar:immersionbar:3.0.0'
+    //mmkv 代替SharedPreferences
+    api 'com.tencent:mmkv:1.2.15'
+    api 'com.github.SheHuan:NiceDialog:1.2.0'
+
+    api 'com.huawei.hms:scanplus:2.10.0.301'
+
+
+    api 'com.brucetoo.pickview:library:1.2.3'
+
+
+    //支付宝 微信 支付
+    api 'com.tencent.mm.opensdk:wechat-sdk-android:+'
+    api 'com.alipay.sdk:alipaysdk-android:+@aar'
+
+    api 'org.greenrobot:eventbus:3.2.0'
+
+
+    api 'com.github.codbking:PickTime:v1.0.1'
+
+
+    api 'com.wayne:constraint-radiogroup:1.0.0'
+
+
+    //https://gitcode.net/mirrors/lucksiege/pictureselector/-/blob/master/README_CN.md
+    api 'io.github.lucksiege:pictureselector:v3.11.1'
+    // 图片压缩 (按需引入)
+    api 'io.github.lucksiege:compress:v3.11.1'
+    //AgentWeb
+    api 'com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx' // (必选)
+    api 'com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.0-alpha.1-androidx'// (可选)
+    api 'com.github.Justson:Downloader:v5.0.0-androidx' // (可选)
+    api 'com.lcodecorex:tkrefreshlayout:1.0.7'
+
+    //bugly
+    api 'com.tencent.bugly:crashreport:latest.release'
+
+
+    //友盟基础库相关依赖（必须）
+    api 'com.umeng.umsdk:common:9.5.4'
+    api 'com.umeng.umsdk:asms:1.6.3'
+    api 'com.umeng.umsdk:utdid:1.5.2.1'
+
+    //友盟Push相关依赖（必须）
+    api 'com.umeng.umsdk:push:6.5.8'
+    api 'com.umeng.umsdk:alicloud-httpdns:1.3.2.3'
+    api 'com.umeng.umsdk:alicloud-utils:2.0.0'
+    api 'com.umeng.umsdk:alicloud_beacon:1.0.5'
+
+    api 'com.umeng.umsdk:agoo-accs:3.4.2.7'
+    api 'com.umeng.umsdk:agoo_aranger:1.0.6'
+    api 'com.umeng.umsdk:agoo_networksdk:3.5.8'
+    api 'com.umeng.umsdk:agoo_tnet4android:3.1.14.10'
+
+    //小米
+    api 'com.umeng.umsdk:xiaomi-umengaccs:1.3.2'
+    api 'com.umeng.umsdk:xiaomi-push:5.1.2'
+
+    //华为
+    api 'com.umeng.umsdk:huawei-umengaccs:1.4.1'
+    api 'com.huawei.hms:push:6.7.0.300'
+
+}
+
+
+
+
+
+
+

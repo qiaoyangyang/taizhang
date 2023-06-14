@@ -15,10 +15,10 @@ import com.blankj.utilcode.util.SPStaticUtils
 import com.google.gson.Gson
 import com.meiling.common.constant.SPConstants
 import com.meiling.common.utils.MMKVUtils
-import com.meiling.account.BuildConfig
 import com.meiling.account.R
 import com.meiling.account.UpdateAppHttpUtil
 import com.meiling.account.data.AppUpdate
+import com.vector.update_app.BuildConfig
 import com.vector.update_app.UpdateAppBean
 import com.vector.update_app.UpdateAppManager
 import com.vector.update_app.UpdateCallback
