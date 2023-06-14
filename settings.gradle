@@ -33,6 +33,6 @@ dependencyResolutionManagement {
     }
 
 }
-rootProject.name = "OMS"
-include ':oms-common'
+rootProject.name = "ml"
+include ':common'
 include ':app'

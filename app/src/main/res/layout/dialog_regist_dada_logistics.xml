@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.meiling.oms.viewmodel.StoreManagementViewModel" />
+            type="com.meiling.account.viewmodel.StoreManagementViewModel" />
 
     </data>
 

@@ -10,9 +10,9 @@
         android:layout_height="match_parent"></androidx.viewpager2.widget.ViewPager2>
 
 
-    <com.meiling.oms.MyFlipOver
+    <com.meiling.account.MyFlipOver
         android:id="@+id/MyFlipOver"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.meiling.oms.MyFlipOver>
+        android:layout_height="match_parent"></com.meiling.account.MyFlipOver>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

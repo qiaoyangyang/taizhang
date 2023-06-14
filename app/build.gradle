@@ -19,11 +19,11 @@ android {
             keyPassword '1q2w3e4r'
         }
     }
-    namespace 'com.meiling.oms'
+    namespace 'com.meiling.account'
     compileSdkVersion build_versions.target_sdk
 
     defaultConfig {
-        applicationId "com.meiling.oms"
+        applicationId "com.meiling.account"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode build_versions.version_code
@@ -70,7 +70,7 @@ android {
 }
 
 dependencies {
-    implementation project(':oms-common')
+    implementation project(':common')
     implementation 'androidx.appcompat:appcompat:1.4.1'
 //    implementation 'com.google.android.material:material:1.4.+'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
