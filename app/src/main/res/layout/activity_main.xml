@@ -7,5 +7,193 @@
     android:background="@color/white"
     tools:context=".activity.MainActivity">
 
+    <!--    左边清单-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/shopping_left_lay"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:background="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="39dp"
+                android:layout_height="39dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="22dp"
+                android:src="@color/Green" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:text="涂罗卜"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="2dp"
+                android:paddingTop="1dp"
+                android:paddingRight="2dp"
+                android:paddingBottom="1dp"
+                android:text="收银员"
+                android:textColor="@color/red"
+                android:textSize="10sp"
+                app:shape_radius="3dp"
+                app:shape_solidColor="@color/white" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:text="Aio17004"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:id="@+id/menu_shouyin1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingVertical="10dp"
+                app:shape_bottomLeftRadius="5dp"
+                app:shape_solidColor="@color/white"
+                app:shape_topLeftRadius="5dp">
+
+                <ImageView
+                    android:id="@+id/menu_shouyin_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/finished_warehousing_yet" />
+
+                <TextView
+                    android:id="@+id/tvShouyin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:text="完工入库"
+                    android:textColor="@color/red"
+                    android:textSize="12sp" />
+            </com.hjq.shape.layout.ShapeLinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="5dp"
+                android:id="@+id/menu_order_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingVertical="10dp">
+
+                <ImageView
+                    android:id="@+id/menu_img_order_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/home_data" />
+
+                <TextView
+                    android:id="@+id/menu_order_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="数据对账"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/menu_setting1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/menu_shop_receive"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_setting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/home_setting" />
+
+                    <TextView
+                        android:id="@+id/tvSet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="设 置"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/menu_shop_receive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/home_quit" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="退出"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.meiling.account.widget.NoScrollViewPager
+        android:id="@+id/viewpager"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/shopping_left_lay"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.meiling.account.widget.NoScrollViewPager>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

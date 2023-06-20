@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:roundiv="http://schemas.android.com/tools"
+    android:id="@+id/cl_bg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardElevation="10dp"
+    app:cardMaxElevation="5dp">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+
+
+            android:id="@+id/sku"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:gravity="center"
+            android:paddingLeft="12dp"
+            android:paddingTop="2dp"
+            android:paddingRight="@dimen/dp_12"
+            android:paddingBottom="2dp"
+            android:text="SKU"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_sku"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/order_FFC4C4C4"
+            android:gravity="center"
+            android:text="237812783792738"
+            android:textColor="@color/red"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/sku"
+            app:layout_constraintLeft_toRightOf="@+id/sku"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sku" />
+
+        <TextView
+            android:layout_marginLeft="12dp"
+            android:ellipsize="end"
+
+            android:id="@+id/tv_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:maxLines="3"
+            android:minLines="3"
+            android:text="草莓小熊小蛋糕草莓草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋"
+            android:textColor="#1F1F1F"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="@+id/sku"
+            app:layout_constraintRight_toRightOf="@+id/tv_sku"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sku" />
+
+        <ImageView
+            android:layout_marginLeft="12dp"
+            android:id="@+id/iv_commodity_url"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/red"
+
+            app:layout_constraintLeft_toLeftOf="@+id/sku"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/tv_specification"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:maxEms="2"
+            android:paddingTop="6dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="6dp"
+            android:text="8寸，冰淇淋奶油口味红色，大杯冰淇淋奶油口味红色"
+            android:textColor="#1F1F1F"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toRightOf="@+id/iv_commodity_url"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_commodity_url"
+            app:layout_constraintRight_toRightOf="@+id/tv_sku"
+            app:layout_constraintTop_toTopOf="@+id/iv_commodity_url" />
+
+        <TextView
+            android:id="@+id/Select_Sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="入库数："
+            android:textColor="#909090"
+            android:textSize="13sp"
+            app:layout_constraintLeft_toLeftOf="@+id/iv_commodity_url"
+            app:layout_constraintTop_toBottomOf="@+id/tv_specification" />
+        <TextView
+            android:id="@+id/tv_Select_Sum"
+            android:text="16"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_specification"
+            app:layout_constraintBaseline_toBaselineOf="@+id/Select_Sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_uni"
+            android:text="个"
+            android:textSize="13sp"
+            app:layout_constraintLeft_toRightOf="@+id/tv_Select_Sum"
+            app:layout_constraintBaseline_toBaselineOf="@+id/Select_Sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/tv_01"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+            app:layout_constraintRight_toRightOf="@+id/tv_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_uni"
+            android:background="#D8D8D8"
+            android:layout_width="0dp"
+            android:layout_height="1dp"/>
+        <TextView
+            android:id="@+id/Library_sign"
+            android:textColor="#909090"
+            android:textSize="13sp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="@+id/iv_commodity_url"
+            android:text="入库人："
+            app:layout_constraintTop_toBottomOf="@+id/tv_01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+
+            android:textColor="#1F1F1F"
+            android:id="@+id/tv_Library_sign"
+            android:text="1566541255"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_specification"
+            app:layout_constraintBaseline_toBaselineOf="@+id/Library_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/tv_02"
+            app:layout_constraintLeft_toLeftOf="@+id/sku"
+            app:layout_constraintRight_toRightOf="@+id/tv_sku"
+            app:layout_constraintTop_toBottomOf="@+id/tv_Library_sign"
+            android:background="#D8D8D8"
+            android:layout_width="0dp"
+            android:layout_height="1dp"/>
+        <TextView
+            android:id="@+id/tv_time"
+            android:textColor="#1F1F1F"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            android:text="2055 - 02 - 04 04:55"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+            app:layout_constraintRight_toRightOf="@+id/tv_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_02"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <com.hjq.shape.layout.ShapeLinearLayout
+
+            android:layout_marginTop="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@+id/tv_time"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content">
+            <com.hjq.shape.view.ShapeTextView
+                app:shape_solidColor="#FFEBEB"
+                app:shape_strokeColor="@color/red"
+                app:shape_strokeWidth="2dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:gravity="center"
+                android:textColor="@color/red"
+
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:background="#FFEBEB"
+                android:text="良品入库"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+            <com.hjq.shape.view.ShapeTextView
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:background="@color/red"
+                android:text="撤回"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+
+        </com.hjq.shape.layout.ShapeLinearLayout>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

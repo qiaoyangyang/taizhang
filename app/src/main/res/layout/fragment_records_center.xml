@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="#EEEFF1"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:paddingTop="22dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="5dp"
+
+        android:layout_weight="3"
+        android:background="@color/white">
+
+        <RadioGroup
+            android:id="@+id/startEndTimeRdg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/startEndTime1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/select_more_selector"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:paddingVertical="8dp"
+                android:text="今天"
+                android:textColor="@drawable/shape_financing_text_color"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/startEndTime2"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/select_more_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingVertical="8dp"
+                android:text="昨天"
+                android:textColor="@drawable/shape_financing_text_color"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/startEndTime3"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/select_more_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingVertical="8dp"
+                android:text="7天"
+                android:textColor="@drawable/shape_financing_text_color"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/startEndTime4"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/select_more_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingVertical="8dp"
+                android:text="30天"
+                android:textColor="@drawable/shape_financing_text_color"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/startEndTime5"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/select_more_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingVertical="8dp"
+                android:text="自定义"
+                android:textColor="@drawable/shape_financing_text_color"
+                android:textSize="14sp" />
+        </RadioGroup>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:paddingBottom="20dp"
+        android:paddingTop="22dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="7"
+        android:background="@color/white">
+
+        <com.meiling.account.widget.NoScrollViewPager
+            android:id="@+id/vp_home_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/slidingTabLayout"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/slidingTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/bg_my_data_white10"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tl_indicator_color="@color/white"
+            app:tl_indicator_corner_radius="40dp"
+            app:tl_indicator_margin_left="2dp"
+            app:tl_indicator_margin_right="2dp"
+            app:tl_indicator_style="BLOCK"
+            app:tl_tab_space_equal="true"
+            app:tl_textSelectColor="#FE4B48"
+            app:tl_textUnselectColor="#616161" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

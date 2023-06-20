@@ -52,6 +52,7 @@
     <color name="account_F5F5F5">#F5F5F5</color>
     <color name="account_757575">#FF757575</color>
     <color name="account_FA2C19">#FA2C19</color>
+    <color name="c_66A1A3A6">#66A1A3A6</color>
 
     <!-- App 样式中引用的颜色 -->
     <color name="colorPrimary">@color/white</color>
@@ -60,7 +61,9 @@
     <color name="windowBackground">#F7F7F7</color>
     <color name="textColor">#333333</color>
     <color name="textColorHint">#757575</color>
-
+    <color name="x_E3">#E3E6E4</color>
     <!-- 透明色 -->
     <color name="transparent">#00000000</color>
+    <color name="f_3233">#323233</color>
+    <color name="c_ff23b678">#FFFEC8C7</color>
 </resources>

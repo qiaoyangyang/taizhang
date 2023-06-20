@@ -158,5 +158,6 @@ dependencies {
 
     // Room的Kotlin扩展和对协程的支持
     implementation "androidx.room:room-ktx:$room_version"
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@mipmap/login_bg">
+
+    <com.hjq.shape.layout.ShapeLinearLayout
+        android:layout_marginLeft="200dp"
+        android:layout_marginRight="200dp"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        app:shape_radius="@dimen/dp_20"
+        app:shape_solidColor="@color/white"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_100"
+        android:layout_marginBottom="@dimen/dp_100"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/iv_log"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:src="@mipmap/login_bg_title" />
+
+
+        <TextView
+            android:id="@+id/txt_login_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center|center_horizontal"
+            android:paddingVertical="18dp"
+            android:text="选择店铺"
+            android:drawablePadding="5dp"
+            android:textColor="@color/home_333333"
+            android:textSize="17sp"
+            app:drawableBottomCompat="@mipmap/login_iv" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rySelectShop"
+            android:layout_width="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_recy_select_shop" />
+
+
+
+
+    </com.hjq.shape.layout.ShapeLinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

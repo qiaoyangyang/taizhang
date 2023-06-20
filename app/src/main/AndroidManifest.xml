@@ -79,6 +79,11 @@
             android:name=".activity.LoginActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
+        <!--       登陆页面-->
+        <activity
+            android:name=".activity.SelectStoreActiviy"
+            android:exported="false"
+            android:screenOrientation="landscape" />
         <!--        主页-->
         <activity
             android:name=".activity.MainActivity"
