@@ -17,9 +17,12 @@ import com.meiling.account.bean.GoosClassify
 import com.meiling.account.databinding.FragmentHomeBinding
 import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.InputUtil
+import com.meiling.account.widget.setSingleClickListener
 import com.meiling.account.widget.showToast
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.utils.RecyclerViewDivider
+import com.meiling.common.utils.TextDrawableUtils
+import com.meiling.common.utils.XNumberUtils
 
 //完工入库
 class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>() , OnItemClickListener {
@@ -33,6 +36,8 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>() , OnItem
 
 
     var data = ArrayList<GoosClassify>()
+    var isselect =false
+
     override fun initView(savedInstanceState: Bundle?) {
         data = Appdata.getGoosClassify()
         setclassification()
@@ -43,10 +48,34 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>() , OnItem
         customkeyboardAdapter!!.setList(InputUtil.getyouhuiString())
         customkeyboardAdapter?.setOnItemClickListener(this)
 
+
         mDatabind.commodityStockRcy?.layoutManager = GridLayoutManager(context, 3)
         goodaAdapter = GoodaAdapter(R.layout.item_goods)
         mDatabind.commodityStockRcy?.adapter = goodaAdapter
-        goodaAdapter?.setList(InputUtil.getyouhuiString())
+
+        goodaAdapter?.setList(InputUtil.getisExpen())
+        goodaAdapter?.setOnItemClickListener(this)
+
+        setisselect(isselect)
+        //良品入库
+        mDatabind.tvGoodProductsAreStored.setSingleClickListener {
+            setissucceed(true)
+        }
+        mDatabind.tvDefectiveProductsAreStored.setSingleClickListener {
+            setissucceed(false)
+        }
+        mDatabind.stockAddJia.setSingleClickListener {
+            var num = mDatabind.stockAddNum.text.toString()
+            mDatabind.stockAddNum.text= XNumberUtils.enquiryAdd(num, "1")
+        }
+        mDatabind.stockAddJian.setSingleClickListener {
+            var num = mDatabind.stockAddNum.text.toString()
+            if (XNumberUtils.compareTo(num, "1") != 1) {
+                return@setSingleClickListener
+            }
+
+            mDatabind.stockAddNum.text= XNumberUtils.enquirysubtract(num, "1")
+        }
 
 
     }
@@ -123,7 +152,42 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>() , OnItem
 
 
             }
+        }else if (adapter==goodaAdapter){
+            setisselect(true)
+            goodaAdapter?.data?.forEach {
+                it.isExpen=false
+
+            }
+            goodaAdapter?.data?.get(position)?.isExpen=true
+            goodaAdapter?.notifyDataSetChanged()
+
+
         }
+    }
+
+    //是否选择
+    private fun setisselect(b:Boolean){
+        mDatabind.clSucceed.visibility=View.GONE
+        if (b){
+            mDatabind.clSelect.visibility=View.VISIBLE
+            mDatabind.llSelect.visibility=View.GONE
+
+        }else{
+            mDatabind.llSelect.visibility=View.VISIBLE
+            mDatabind.clSelect.visibility=View.GONE
+        }
+    }
+    //是否成功
+    private fun setissucceed(b:Boolean){
+        mDatabind.clSelect.visibility=View.GONE
+        mDatabind.llSelect.visibility=View.GONE
+        mDatabind.clSucceed.visibility=View.VISIBLE
+        if(b){
+            TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed,R.drawable.succeed)
+        }else{
+            TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed,R.drawable.be_defeated)
+        }
+
     }
 
 

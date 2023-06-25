@@ -177,22 +177,23 @@
 
             android:layout_height="wrap_content">
             <com.hjq.shape.view.ShapeTextView
-                app:shape_solidColor="#FFEBEB"
-                app:shape_strokeColor="@color/red"
+                    app:shape_solidColor="#A1A1A1"
+                app:shape_strokeColor="#A1A1A1"
                 app:shape_strokeWidth="1dp"
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"
                 android:gravity="center"
-                android:textColor="@color/red"
+                android:textColor="#5D5D5D"
 
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_weight="1"
-                android:background="#FFEBEB"
-                android:text="良品入库"
+                android:background="#EAEAEA"
+                android:text="不良入库"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
             <com.hjq.shape.view.ShapeTextView
+                android:visibility="invisible"
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"
                 android:gravity="center"

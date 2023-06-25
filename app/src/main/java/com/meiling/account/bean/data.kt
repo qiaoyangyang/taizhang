@@ -42,3 +42,6 @@ data class GoosClassify(
 
 
 }
+data class Goods(
+      var isExpen: Boolean = false
+)

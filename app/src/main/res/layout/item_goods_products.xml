@@ -32,7 +32,7 @@
         android:id="@+id/rv_goos"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="3"
-        tools:listitem="@layout/item_good_product_detail"
+        tools:listitem="@layout/item_defective_detail"
         app:layout_constraintTop_toBottomOf="@+id/tv_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

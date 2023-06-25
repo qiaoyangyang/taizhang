@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#EEEFF1"
     android:layout_height="match_parent"
+    android:background="#EEEFF1"
     android:orientation="horizontal">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="7"
         android:layout_marginRight="5dp"
+        android:layout_weight="7"
         android:background="@color/white">
 
         <LinearLayout
@@ -143,11 +143,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:background="@color/white"
         android:layout_height="match_parent"
-        android:layout_weight="3">
+        android:layout_weight="3"
+        android:background="@color/white">
         <!--        没有选择商品的布局-->
         <LinearLayout
+            android:id="@+id/ll_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -160,8 +161,8 @@
 
             <ImageView
                 android:id="@+id/empty_img"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
                 android:src="@mipmap/drawable_cardorder_list_empty" />
 
             <TextView
@@ -173,132 +174,221 @@
                 android:textColor="#6C7795"
                 android:textSize="13sp" />
         </LinearLayout>
+        <!--        选择商品成功失败-->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:visibility="gone"
+            android:id="@+id/cl_succeed"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
 
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                app:layout_constraintRight_toRightOf="@+id/iv_commodity_url"
-                android:layout_marginLeft="20dp"
-                android:id="@+id/sku"
-                android:text="SKU"
-                android:background="@color/red"
-                app:layout_constraintTop_toTopOf="parent"
+            <TextView
+                android:id="@+id/tv_is_succeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:drawableTop="@drawable/succeed"
+                android:text="良品入库成功"
+                android:textColor="#000000"
+                android:textSize="20sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/tv_sku"
-                android:textColor="@color/red"
-                android:layout_marginRight="20dp"
-                android:textSize="16sp"
-                android:gravity="center"
-                android:text="237812783792738"
-                app:layout_constraintBottom_toBottomOf="@+id/sku"
-                android:background="@color/order_FFC4C4C4"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/sku"
-                app:layout_constraintLeft_toRightOf="@+id/sku"
-                android:layout_width="0dp"
-                android:layout_height="0dp"/>
-            <ImageView
-                android:background="@color/red"
-                android:layout_marginTop="2dp"
-                android:id="@+id/iv_commodity_url"
-                app:layout_constraintTop_toBottomOf="@+id/sku"
-                app:layout_constraintLeft_toLeftOf="@+id/sku"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                android:layout_width="50dp"
-                android:layout_height="50dp"/>
             <TextView
-                android:maxEms="2"
-                android:textSize="14sp"
+                android:id="@+id/produce_goods"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="26dp"
+                android:layout_marginTop="36dp"
+                android:text="生产商品："
+                android:textColor="#A4A4A4"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_is_succeed" />
+
+            <TextView
+                android:id="@+id/produce_goods_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minLines="3"
+
+                android:text="栗栗小熊薄脆奶油杯子热销蛋糕两行展示"
                 android:textColor="#1F1F1F"
-                android:paddingBottom="6dp"
-                android:paddingTop="6dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:background="@color/order_FFC4C4C4"
-                android:text="8寸，冰淇淋奶油口味红色，大杯冰淇淋奶油口味红色"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="@+id/produce_goods"
+                app:layout_constraintTop_toBottomOf="@+id/produce_goods" />
 
-                app:layout_constraintLeft_toLeftOf="@+id/tv_sku"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_commodity_url"
-                app:layout_constraintTop_toTopOf="@+id/iv_commodity_url"
-                app:layout_constraintRight_toRightOf="@+id/tv_sku"
-                android:layout_width="0dp"
-                android:layout_height="0dp"/>
             <TextView
-                android:minHeight="100dp"
+                android:id="@+id/Select_Sum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="入库数量："
+                android:textColor="#A4A4A4"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="@+id/produce_goods_name"
+                app:layout_constraintTop_toBottomOf="@+id/produce_goods_name" />
+
+            <TextView
+                android:id="@+id/tv_Select_Sum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
                 android:textColor="#1F1F1F"
                 android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="@+id/produce_goods_name"
+                app:layout_constraintTop_toBottomOf="@+id/Select_Sum" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:gravity="center"
+                android:text="点击其他商品，\n 可继续操作新商品\n完工入库"
+                android:textColor="#6C7795"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_select"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+
+                android:id="@+id/sku"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/red"
+                android:gravity="center"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:text="SKU"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@+id/iv_commodity_url"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_sku"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/order_FFC4C4C4"
+                android:gravity="center"
+                android:text="237812783792738"
+                android:textColor="@color/red"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/sku"
+                app:layout_constraintLeft_toRightOf="@+id/sku"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/sku" />
+
+            <ImageView
+                android:id="@+id/iv_commodity_url"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/red"
+
+                app:layout_constraintLeft_toLeftOf="@+id/sku"
+                app:layout_constraintTop_toBottomOf="@+id/sku" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/order_FFC4C4C4"
+                android:maxEms="2"
+                android:paddingLeft="10dp"
+                android:paddingTop="6dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="6dp"
+                android:text="8寸，冰淇淋奶油口味红色，大杯冰淇淋奶油口味红色"
+
+                android:textColor="#1F1F1F"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_commodity_url"
+                app:layout_constraintLeft_toLeftOf="@+id/tv_sku"
+                app:layout_constraintRight_toRightOf="@+id/tv_sku"
+                app:layout_constraintTop_toTopOf="@+id/iv_commodity_url" />
+
+            <TextView
                 android:id="@+id/tv_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:minHeight="100dp"
+                android:text="热卖草莓爱心奶油生日祝福限时惠奶油蛋糕热卖三行展示效果"
+                android:textColor="#1F1F1F"
+                android:textSize="20sp"
                 app:layout_constraintLeft_toLeftOf="@+id/iv_commodity_url"
                 app:layout_constraintRight_toRightOf="@+id/tv_sku"
-                app:layout_constraintTop_toBottomOf="@+id/iv_commodity_url"
-                android:text="热卖草莓爱心奶油生日祝福限时惠奶油蛋糕热卖三行展示效果"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
+                app:layout_constraintTop_toBottomOf="@+id/iv_commodity_url" />
+
             <TextView
-                app:layout_constraintBottom_toTopOf="@+id/rv_keyboard"
-                android:textSize="14sp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:text="* 出餐数量（单位：个）："
-                app:layout_constraintLeft_toLeftOf="@+id/tv_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="* 出餐数量（单位：个）："
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/rv_keyboard"
+                app:layout_constraintLeft_toLeftOf="@+id/tv_name" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_keyboard"
-                android:layout_marginBottom="12dp"
-                app:layout_constraintLeft_toLeftOf="@+id/sku"
-                app:layout_constraintRight_toRightOf="@+id/tv_sku"
-                app:layout_constraintBottom_toTopOf="@+id/ll_count"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintBottom_toTopOf="@+id/ll_count"
+                app:layout_constraintLeft_toLeftOf="@+id/sku"
+                app:layout_constraintRight_toRightOf="@+id/tv_sku">
 
             </androidx.recyclerview.widget.RecyclerView>
+
             <LinearLayout
 
-                app:layout_constraintLeft_toLeftOf="@+id/sku"
-                app:layout_constraintRight_toRightOf="@+id/tv_sku"
+                android:id="@+id/ll_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginEnd="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
-                android:focusable="true"
-                android:layout_width="0dp"
-                android:id="@+id/ll_count"
-                android:layout_height="wrap_content"
-
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/home_shop_right"
+                android:focusable="true"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
+                app:layout_constraintLeft_toLeftOf="@+id/sku"
+                app:layout_constraintRight_toRightOf="@+id/tv_sku">
 
                 <TextView
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:textColor="@color/home_000000"
-                    android:textStyle="bold"
-                    android:text="一"
                     android:id="@+id/stock_add_jian"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="6dp"
                     android:layout_marginEnd="4dp"
-                    android:paddingStart="4dp"
-                    android:layout_weight="1"
                     android:layout_marginBottom="6dp"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:textSize="30sp" />
+                    android:paddingStart="4dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="一"
+                    android:textColor="@color/home_000000"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="1dp"
@@ -306,21 +396,21 @@
                     android:background="#E1E2E5" />
 
                 <TextView
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:textColor="#000000"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:minWidth="70dp"
                     android:id="@+id/stock_add_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:inputType="numberDecimal"
                     android:maxLength="8"
+                    android:minWidth="70dp"
                     android:paddingVertical="6dp"
-                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="10dp"
                     android:text=""
+                    android:textColor="@color/red"
                     android:textSize="20sp" />
 
                 <View
@@ -329,12 +419,6 @@
                     android:background="#E1E2E5" />
 
                 <TextView
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:textColor="@color/home_000000"
-                    android:textStyle="bold"
-                    android:text="+"
-                    android:layout_weight="1"
                     android:id="@+id/stock_add_jia"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -342,32 +426,43 @@
                     android:layout_marginTop="6dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="6dp"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:textSize="30sp" />
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="+"
+                    android:textColor="@color/home_000000"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/ll_bottom"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="60dp"
+                app:layout_constraintBottom_toBottomOf="parent">
+
                 <TextView
-                    android:textColor="#898989"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    android:text="不良品入库"
+                    android:id="@+id/tv_Defective_products_are_stored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="#DEDEDE"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
-                <TextView
-                    android:textColor="@color/white"
                     android:gravity="center"
-                    android:textSize="16sp"
-                    android:text="良品入库"
-                    android:background="#FE4B48"
-                    android:layout_weight="1"
+                    android:text="不良品入库"
+                    android:textColor="#898989"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_Good_products_are_stored"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#FE4B48"
+                    android:gravity="center"
+                    android:text="良品入库"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
