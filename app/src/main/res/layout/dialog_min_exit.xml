@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dp_80"
+    android:background="@drawable/scan_bg_input">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="温馨提示"
+        android:textColor="#1F1F1F"
+        android:textSize="@dimen/sp_36"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:textColor="@color/home_666666"
+        android:textSize="@dimen/sp_32"
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginVertical="@dimen/dp_24"
+        android:gravity="center"
+        android:paddingVertical="@dimen/dp_24"
+        android:text="是否记住密码，以便下次直接登录？"
+        app:layout_constraintBottom_toTopOf="@+id/ll_btn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginVertical="@dimen/dp_24"
+        android:gravity="center"
+        android:paddingVertical="@dimen/dp_24"
+        android:src="@mipmap/img"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/ll_btn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+
+        <com.hjq.shape.view.ShapeButton
+
+            android:id="@+id/btn_cancel_exit"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_weight="1"
+            android:background="@drawable/order_bg_red"
+            android:gravity="center"
+            android:shadowColor="@color/home_666666"
+            android:text="取消"
+            android:textColor="@color/home_666666"
+            android:textSize="@dimen/sp_32"
+            app:shape_radius="@dimen/sp_15"
+            app:shape_solidColor="@color/white"
+            app:shape_strokeColor="@color/toast_rec_DDDDDD"
+            app:shape_strokeWidth="@dimen/dp_1" />
+
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/btn_ok_exit"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:shadowColor="@color/home_666666"
+            android:text="确认"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_32"
+            app:shape_radius="@dimen/sp_15"
+            app:shape_solidColor="@color/red" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

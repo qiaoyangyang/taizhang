@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.hjq.base.BasePopupWindow
 import com.meiling.account.R
 import com.meiling.account.adapter.MyPagerAdapter
 import com.meiling.account.adapter.ShortTimeAdapter
@@ -50,6 +51,22 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         mDatabind.startEndTimeRdg.setOnCheckedChangeListener(this)
         mDatabind.startEndTime1.isChecked=true
         settime()
+        mDatabind.startEndTime5.setSingleClickListener {
+            mDatabind.startEndTime5.isChecked=true
+            OptionDatePopWindow.Builder(mActivity).setListener(object :
+                OptionDatePopWindow.OnListener{
+                override fun onSelected(
+                    popupWindow: BasePopupWindow?,
+                    startTime: String,
+                    endTim: String
+                ) {
+                    startTimen=startTime
+                    endTime=endTim
+                    settime()
+                }
+
+            }).showAsDropDown(mDatabind.tvStartTime)
+        }
 
 
     }
@@ -113,9 +130,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
                 settime()
 
             }
-            R.id.startEndTime5->{
-                OptionDatePopWindow.Builder(mActivity).showAsDropDown(mDatabind.tvStartTime)
-            }
+
         }
     }
 

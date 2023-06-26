@@ -28,13 +28,15 @@
         app:layout_constraintTop_toTopOf="@+id/tv_time"
         android:layout_width="0dp"
         android:layout_height="1dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_goos"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="3"
-        tools:listitem="@layout/item_defective_detail"
-        app:layout_constraintTop_toBottomOf="@+id/tv_time"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time"
+        app:spanCount="3"
+        tools:layout_editor_absoluteX="0dp"
+        tools:listitem="@layout/item_defective_detail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

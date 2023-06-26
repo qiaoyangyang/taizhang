@@ -38,7 +38,6 @@
             android:id="@+id/tv_sku"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginRight="20dp"
             android:background="@color/order_FFC4C4C4"
             android:gravity="center"
             android:text="237812783792738"
@@ -193,6 +192,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
             <com.hjq.shape.view.ShapeTextView
+                android:id="@+id/btn_withdraw"
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"
                 android:gravity="center"
