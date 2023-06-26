@@ -1,4 +1,4 @@
-package com.meiling.account.widget.com.yy.live.widget;
+package com.meiling.account.widget;
 
 
 import android.app.Activity;

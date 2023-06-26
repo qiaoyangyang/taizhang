@@ -9,6 +9,7 @@ import com.meiling.common.fragment.BaseFragment
 //入库报表
 class WarehousingReportFragment  : BaseFragment<MainViewModel, FragmentWarehousingReportBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
+
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentWarehousingReportBinding {

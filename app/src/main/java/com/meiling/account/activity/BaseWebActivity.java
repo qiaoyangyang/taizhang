@@ -27,7 +27,7 @@ import com.just.agentweb.WebChromeClient;
 import com.just.agentweb.WebViewClient;
 import com.meiling.account.AndroidInterface;
 import com.meiling.account.R;
-import com.meiling.account.widget.com.yy.live.widget.WebLayout;
+import com.meiling.account.widget.WebLayout;
 
 public class BaseWebActivity extends AppCompatActivity {
 

@@ -3,21 +3,26 @@ package com.meiling.account.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.CompoundButton
+import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.meiling.account.R
 import com.meiling.account.adapter.MyPagerAdapter
 import com.meiling.account.adapter.ShortTimeAdapter
 import com.meiling.account.databinding.FragmentRecordsCenterBinding
+import com.meiling.account.dialog.OptionDatePopWindow
 import com.meiling.account.viewmodel.MainViewModel
-import com.meiling.account.widget.InputUtil
-import com.meiling.account.widget.showToast
+import com.meiling.account.widget.*
 import com.meiling.common.fragment.BaseFragment
+import com.wayne.constraintradiogroup.ConstraintRadioGroup
 
 //数据中心
 class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterBinding>(),OnPageChangeListener ,
+    RadioGroup.OnCheckedChangeListener,
     OnItemClickListener {
     private val mFragments: ArrayList<Fragment> = ArrayList()
     private val mTitles: ArrayList<String> = ArrayList()
@@ -42,6 +47,11 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         shortTimeAdapter?.setList(InputUtil.getShortTime())
         shortTimeAdapter?.setOnItemClickListener(this)
         mDatabind. vpHomePager.addOnPageChangeListener(this)
+        mDatabind.startEndTimeRdg.setOnCheckedChangeListener(this)
+        mDatabind.startEndTime1.isChecked=true
+        settime()
+
+
     }
 
     override fun getBind(inflater: LayoutInflater): FragmentRecordsCenterBinding {
@@ -72,6 +82,46 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         shortTimeAdapter?.data?.get(position)?.boolean=true
         shortTimeAdapter?.notifyDataSetChanged()
 
+    }
+
+
+    var startTimen =  formatCurrentDate()
+    var endTime = formatCurrentDate()
+    override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
+        when(checkedId){
+            R.id.startEndTime1->{
+                startTimen = formatCurrentDate()
+                endTime = formatCurrentDate()
+                settime()
+
+            }
+            R.id.startEndTime2->{
+                startTimen = formatCurrentDateBeforeDay()
+                endTime = formatCurrentDateBeforeDay()
+                settime()
+
+            }
+            R.id.startEndTime3->{
+                startTimen = formatCurrentDateBeforeWeek()
+                endTime = formatCurrentDateBeforeWeek()
+                settime()
+
+            }
+            R.id.startEndTime4->{
+                startTimen = formatCurrentDateBeforeMouth()
+                endTime = formatCurrentDateBeforeMouth()
+                settime()
+
+            }
+            R.id.startEndTime5->{
+                OptionDatePopWindow.Builder(mActivity).showAsDropDown(mDatabind.tvStartTime)
+            }
+        }
+    }
+
+    fun settime(){
+        mDatabind.tvStartTime.text=startTimen
+        mDatabind.tvEndTime.text=endTime
     }
 
 
