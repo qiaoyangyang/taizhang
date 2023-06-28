@@ -2,12 +2,14 @@ package com.meiling.account.fragment
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.hjq.base.BasePopupWindow
 import com.meiling.account.R
 import com.meiling.account.adapter.CustomkeyboardAdapter
 import com.meiling.account.adapter.GoodaAdapter
@@ -15,6 +17,7 @@ import com.meiling.account.adapter.TabAdapter
 import com.meiling.account.bean.Appdata
 import com.meiling.account.bean.GoosClassify
 import com.meiling.account.databinding.FragmentHomeBinding
+import com.meiling.account.dialog.ClassificationPopWindow
 import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.InputUtil
 import com.meiling.account.widget.setSingleClickListener
@@ -25,10 +28,10 @@ import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.common.utils.XNumberUtils
 
 //完工入库
-class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>() , OnItemClickListener {
+class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemClickListener {
     //键盘
     var customkeyboardAdapter: CustomkeyboardAdapter? = null
-
+    //商品
     var goodaAdapter: GoodaAdapter? = null
 
     //分类more
@@ -36,7 +39,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>() , OnItem
 
 
     var data = ArrayList<GoosClassify>()
-    var isselect =false
+    var isselect = false
 
     override fun initView(savedInstanceState: Bundle?) {
         data = Appdata.getGoosClassify()
@@ -66,7 +69,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>() , OnItem
         }
         mDatabind.stockAddJia.setSingleClickListener {
             var num = mDatabind.stockAddNum.text.toString()
-            mDatabind.stockAddNum.text= XNumberUtils.enquiryAdd(num, "1")
+            mDatabind.stockAddNum.text = XNumberUtils.enquiryAdd(num, "1")
         }
         mDatabind.stockAddJian.setSingleClickListener {
             var num = mDatabind.stockAddNum.text.toString()
@@ -74,7 +77,29 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>() , OnItem
                 return@setSingleClickListener
             }
 
-            mDatabind.stockAddNum.text= XNumberUtils.enquirysubtract(num, "1")
+            mDatabind.stockAddNum.text = XNumberUtils.enquirysubtract(num, "1")
+        }
+
+        mDatabind.inventoryStockTabMore.setSingleClickListener {
+            ClassificationPopWindow.Builder(mActivity).setGravity(Gravity.RIGHT)
+                .setListener(object :
+                    ClassificationPopWindow.OnListener {
+                    override fun onSelected(
+                        popupWindow: BasePopupWindow?,
+                        id: Int,
+                        boolean: Boolean
+                    ) {
+                        if (boolean==false) {
+                            tabAdapter?.data?.forEach {
+                                it.select = false
+
+                            }
+                            tabAdapter?.getItem(id)?.select = true
+                            tabAdapter?.notifyDataSetChanged()
+                        }
+                    }
+
+                }).setList(data).showAsDropDown(mDatabind.inventoryStockTabMore)
         }
 
 
@@ -116,13 +141,14 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>() , OnItem
 
 
     }
+
     var num: String = ""
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-        if (adapter==customkeyboardAdapter){
+        if (adapter == customkeyboardAdapter) {
             if (!TextUtils.isEmpty(customkeyboardAdapter?.getItem(position))) {
                 if (customkeyboardAdapter?.getItem(position).equals("20")) {
                     num = ""
-                   mDatabind.stockAddNum .text = num
+                    mDatabind.stockAddNum.text = num
                 } else {
 
                     var start = num.indexOf(".")
@@ -152,13 +178,13 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>() , OnItem
 
 
             }
-        }else if (adapter==goodaAdapter){
+        } else if (adapter == goodaAdapter) {
             setisselect(true)
             goodaAdapter?.data?.forEach {
-                it.isExpen=false
+                it.isExpen = false
 
             }
-            goodaAdapter?.data?.get(position)?.isExpen=true
+            goodaAdapter?.data?.get(position)?.isExpen = true
             goodaAdapter?.notifyDataSetChanged()
 
 
@@ -166,26 +192,27 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>() , OnItem
     }
 
     //是否选择
-    private fun setisselect(b:Boolean){
-        mDatabind.clSucceed.visibility=View.GONE
-        if (b){
-            mDatabind.clSelect.visibility=View.VISIBLE
-            mDatabind.llSelect.visibility=View.GONE
+    private fun setisselect(b: Boolean) {
+        mDatabind.clSucceed.visibility = View.GONE
+        if (b) {
+            mDatabind.clSelect.visibility = View.VISIBLE
+            mDatabind.llSelect.visibility = View.GONE
 
-        }else{
-            mDatabind.llSelect.visibility=View.VISIBLE
-            mDatabind.clSelect.visibility=View.GONE
+        } else {
+            mDatabind.llSelect.visibility = View.VISIBLE
+            mDatabind.clSelect.visibility = View.GONE
         }
     }
+
     //是否成功
-    private fun setissucceed(b:Boolean){
-        mDatabind.clSelect.visibility=View.GONE
-        mDatabind.llSelect.visibility=View.GONE
-        mDatabind.clSucceed.visibility=View.VISIBLE
-        if(b){
-            TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed,R.drawable.succeed)
-        }else{
-            TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed,R.drawable.be_defeated)
+    private fun setissucceed(b: Boolean) {
+        mDatabind.clSelect.visibility = View.GONE
+        mDatabind.llSelect.visibility = View.GONE
+        mDatabind.clSucceed.visibility = View.VISIBLE
+        if (b) {
+            TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed, R.drawable.succeed)
+        } else {
+            TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed, R.drawable.be_defeated)
         }
 
     }

@@ -12,6 +12,7 @@ class MineExitDialog : BaseNiceDialog() {
 
     init {
         setMargin(30)
+        setWidth(350)
         setOutCancel(false)
     }
 

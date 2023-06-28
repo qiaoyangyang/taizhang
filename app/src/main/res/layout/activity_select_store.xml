@@ -11,7 +11,7 @@
         android:layout_marginRight="200dp"
         android:orientation="vertical"
         android:layout_width="0dp"
-        app:shape_radius="@dimen/dp_20"
+        app:shape_radius="10dp"
         app:shape_solidColor="@color/white"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dp_100"

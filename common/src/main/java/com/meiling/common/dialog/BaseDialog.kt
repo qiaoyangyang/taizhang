@@ -1,13 +1,15 @@
 package com.meiling.common.dialog
 
-import android.content.Context
 import android.app.Dialog
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
-import android.graphics.drawable.ColorDrawable
-import android.graphics.Color
-import android.os.Bundle
+import anet.channel.util.Utils
 import com.meiling.common.R
+
 
 abstract class BaseDialog @JvmOverloads constructor(
     context: Context,
@@ -29,11 +31,14 @@ abstract class BaseDialog @JvmOverloads constructor(
         )
         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         initDialogStyle(window)
+
         initView()
         initData()
     }
 
-    open fun initDialogStyle(window: Window?) {}
+    open fun initDialogStyle(window: Window?) {
+
+    }
     abstract val layoutId: Int
     abstract fun initView()
     abstract fun initData()

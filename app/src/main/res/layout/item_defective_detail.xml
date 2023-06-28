@@ -176,7 +176,7 @@
 
             android:layout_height="wrap_content">
             <com.hjq.shape.view.ShapeTextView
-                    app:shape_solidColor="#A1A1A1"
+                    app:shape_solidColor="#EAEAEA"
                 app:shape_strokeColor="#A1A1A1"
                 app:shape_strokeWidth="1dp"
                 android:paddingTop="14dp"

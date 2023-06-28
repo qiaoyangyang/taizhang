@@ -7,8 +7,8 @@
     android:background="@mipmap/login_bg">
 
     <com.hjq.shape.layout.ShapeConstraintLayout
-        android:layout_width="@dimen/dp_600"
-        app:shape_radius="@dimen/dp_20"
+        android:layout_width="600dp"
+        app:shape_radius="10dp"
         app:shape_solidColor="@color/white"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dp_100"
@@ -102,8 +102,8 @@
             android:padding="@dimen/dp_20">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/dp_10"
                 android:src="@mipmap/login_icon_pwd" />
@@ -115,7 +115,7 @@
                 android:layout_marginStart="15dp"
                 android:background="#C8C9CC" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <com.meiling.common.view.PasswordEditText
                 android:id="@+id/edtPaswd"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -133,6 +133,7 @@
                 android:textSize="18sp" />
 
             <CheckBox
+                android:visibility="gone"
                 android:id="@+id/cbLookPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -157,6 +158,7 @@
             android:textColor="@color/white"
             android:textSize="18sp" />
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/btnLogin"
             android:id="@+id/cl_agreement"
             android:layout_width="wrap_content"

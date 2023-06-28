@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="@+id/txtRecyCategoryItem"
+        app:layout_constraintBottom_toBottomOf="@+id/txtRecyCategoryItem"
+        android:src="@drawable/red_class"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        app:layout_constraintLeft_toRightOf="@+id/iv"
+        android:id="@+id/txtRecyCategoryItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingLeft="6dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingVertical="10dp"
+        android:textColor="#FF323233"
+        android:textSize="16sp"
+        tools:text="协和便利店东单店" />
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/txtRecyCategoryItem"
+        android:background="#E2EBF3"
+        app:layout_constraintLeft_toLeftOf="@+id/txtRecyCategoryItem"
+
+        android:layout_width="0dp"
+        app:layout_constraintRight_toRightOf="@+id/txtRecyCategoryItem"
+        android:layout_height="1dp"/>
+    <View
+        android:layout_width="40dp"
+        android:layout_height="3dp"
+        android:id="@+id/recyCategoryItemline"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/bg_e4b48_corner4" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

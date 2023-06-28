@@ -10,12 +10,13 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.meiling.account.adapter.SelectShopAdapger
 import com.meiling.account.databinding.ActivityLoginBinding
 import com.meiling.account.databinding.ActivitySelectStoreBinding
+import com.meiling.account.viewmodel.LoginViewModel
 import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.showToast
 import com.meiling.common.activity.BaseActivity
 
 //  选择门店
-class SelectStoreActiviy : BaseActivity<MainViewModel, ActivitySelectStoreBinding>() ,
+class SelectStoreActiviy : BaseActivity<LoginViewModel, ActivitySelectStoreBinding>() ,
     OnItemClickListener {
     private lateinit var selectShopAdapger: SelectShopAdapger
     override fun initView(savedInstanceState: Bundle?) {

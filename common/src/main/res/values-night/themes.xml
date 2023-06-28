@@ -5,6 +5,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item> <!--模糊-->
     </style>
     <style name="LoadingDialog" parent="Theme.AppCompat.Dialog" tools:ignore="ResourceName">
         <item name="android:windowFrame">@null</item>

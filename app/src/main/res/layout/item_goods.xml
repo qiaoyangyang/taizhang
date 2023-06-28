@@ -20,12 +20,29 @@
             android:id="@+id/iv_Img"
             style="@style/CustomRoundAngleImageView"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
             android:scaleType="centerCrop"
             android:layout_marginLeft="1dp"
+
             android:layout_marginTop="1dp"
             android:layout_marginRight="1dp"
             app:layout_constraintTop_toTopOf="parent" />
+        <com.hjq.shape.view.ShapeTextView
+            android:text="个"
+            android:layout_marginBottom="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="10dp"
+            app:shape_radius="6dp"
+            android:paddingLeft="10dp"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            app:shape_solidColor="@color/red"
+            app:layout_constraintRight_toRightOf="@+id/iv_Img"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_Img"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
 
         <TextView

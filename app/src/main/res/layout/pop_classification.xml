@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjq.shape.layout.ShapeConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:shape_radius="6dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:shape_shadowColor="#0C1F37"
+
+    app:shape_shadowSize="5dp"
+
+    app:shape_solidColor="@color/white"
+
+    >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/tv_SynchronizingSort"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_tab_p">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/tv_SynchronizingSort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_login_false"
+        android:drawableLeft="@drawable/category_refresh"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:text="同步分类"
+        android:textColor="#67686A"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:shape_radius="10dp"
+        app:shape_solidColor="@color/white"
+        app:shape_strokeColor="#D8D8D8"
+        app:shape_strokeWidth="1dp" />
+
+
+</com.hjq.shape.layout.ShapeConstraintLayout>

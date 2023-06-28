@@ -176,6 +176,7 @@
 
             android:layout_height="wrap_content">
             <com.hjq.shape.view.ShapeTextView
+                android:id="@+id/btn_Receipt"
                 app:shape_solidColor="#FFEBEB"
                 app:shape_strokeColor="@color/red"
                 app:shape_strokeWidth="1dp"
