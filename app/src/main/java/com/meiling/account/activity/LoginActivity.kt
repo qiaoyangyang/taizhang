@@ -32,8 +32,8 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         }
 
         mDatabind.btnLogin.setSingleClickListener {
-           mViewModel.mobileLogin(mDatabind.edtName.text.toString(),mDatabind.edtPaswd.text.toString())
-           // startActivity(Intent(this, SelectStoreActiviy::class.java))
+          // mViewModel.mobileLogin(mDatabind.edtName.text.toString(),mDatabind.edtPaswd.text.toString())
+            startActivity(Intent(this, SelectStoreActiviy::class.java))
 
         }
         mDatabind.imgClear.setSingleClickListener {
