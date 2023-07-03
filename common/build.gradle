@@ -206,6 +206,10 @@ dependencies {
 
     api 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
+   // api 'com.github.kongqw:NetworkMonitor:1.0.1'
+
+
+
 }
 
 

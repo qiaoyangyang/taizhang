@@ -1,6 +1,9 @@
 package com.meiling.account.widget;
 
+import android.graphics.Color;
+
 import com.meiling.account.bean.Goods;
+import com.meiling.account.bean.Ranking;
 import com.meiling.account.bean.ShortTime;
 
 import org.jetbrains.annotations.NotNull;
@@ -52,5 +55,34 @@ public class InputUtil {
         strings.add(new ShortTime(false));
 
         return strings;
+    }
+    @NotNull
+    public static List<Integer> colors(){
+        List<Integer> colors = new ArrayList<>(); //每个模块的颜色
+        colors.add(Color.parseColor("#E55A55"));
+        colors.add(Color.parseColor("#FF974D"));
+
+        colors.add(Color.parseColor("#FFDC4C"));
+        colors.add(Color.parseColor("#A8E0FB"));
+
+        colors.add(Color.parseColor("#5B6E96"));
+        colors.add(Color.parseColor("#61D9AC"));
+
+        colors.add(Color.parseColor("#5AAEF6"));
+        colors.add(Color.parseColor("#6E61E4"));
+        colors.add(Color.parseColor("#26C0DB"));
+        colors.add(Color.parseColor("#6E61E4"));
+        return colors;
+    }
+    @NotNull
+    public static List<Ranking> setRanking(){
+        List<Ranking>rankings=new ArrayList<>();
+        for (Integer in:InputUtil.colors()
+             ) {
+            rankings.add(new Ranking(in));
+        }
+
+
+        return rankings;
     }
 }

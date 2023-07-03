@@ -28,12 +28,13 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:id="@+id/iv_left_icon_"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:paddingRight="20dp"
-                android:src="@drawable/left_icon"
+                android:src="@drawable/let_bank"
                 app:layout_constraintRight_toLeftOf="@+id/yearMonthTxt"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,12 +52,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:id="@+id/iv_right_icon_"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:paddingLeft="20dp"
-                android:src="@drawable/right_icon"
+                android:src="@drawable/ret_bank"
                 app:layout_constraintLeft_toRightOf="@+id/yearMonthTxt"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,14 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.meiling.account.adapter.SelectShopAdapger
-import com.meiling.account.databinding.ActivityLoginBinding
 import com.meiling.account.databinding.ActivitySelectStoreBinding
 import com.meiling.account.viewmodel.LoginViewModel
-import com.meiling.account.viewmodel.MainViewModel
-import com.meiling.account.widget.showToast
 import com.meiling.common.activity.BaseActivity
 
 //  选择门店
@@ -29,7 +25,7 @@ class SelectStoreActiviy : BaseActivity<LoginViewModel, ActivitySelectStoreBindi
 
     override fun initData() {
         super.initData()
-        selectShopAdapger.setList(arrayListOf("","",""))
+        selectShopAdapger.setList(arrayListOf("2222","",""))
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivitySelectStoreBinding {

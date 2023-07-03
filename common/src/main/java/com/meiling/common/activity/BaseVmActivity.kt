@@ -3,6 +3,7 @@ package com.meiling.common.activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -10,6 +11,7 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -23,13 +25,17 @@ import com.meiling.common.R
 import com.meiling.common.action.TitleBarAction
 import com.meiling.common.dialog.LoadingDialog
 import com.meiling.common.getVmClazz
+import com.meiling.common.network.NetworkMonitorManager
 import com.meiling.common.network.data.ByTenantId
+import com.meiling.common.network.enums.NetworkState
+import com.meiling.common.network.interfaces.NetworkMonitor
+import com.meiling.common.network.util.NetworkStateUtils
 import com.meiling.common.utils.GsonUtils
 import com.meiling.common.utils.MMKVUtils
 import com.umeng.analytics.MobclickAgent
 
 
-abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleBarAction {
+abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), TitleBarAction {
 
     private var isUserDb = false
 
@@ -72,6 +78,8 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
         initData()
         hideBottomUIMenu()
         hideNavigationBar()
+        NetworkMonitorManager.getInstance().register(this)
+        initTipView();//初始化提示View
     }
 
 
@@ -95,7 +103,8 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
     fun userDataBinding(isUserDb: Boolean) {
         this.isUserDb = isUserDb
     }
-    fun settitleBar(){
+
+    fun settitleBar() {
         val titleBar = getTitleBar()
         titleBar?.setOnTitleBarListener(this)
 
@@ -107,16 +116,15 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
             // 设置标题栏沉浸
 
             if (titleBar != null) {
-                Log.d("yjk", "initListener: ")
                 ImmersionBar.setTitleBar(this, titleBar)
-            }else{
-                Log.d("yjk", "initListener ==null ")
+            } else {
             }
-        }else{
+        } else {
 //            ImmersionBar.with(this).statusBarDarkFont(true)
 //                .autoDarkModeEnable(true, 0.2f).init()
         }
     }
+
     open fun initDataBind() {
 
     }
@@ -143,9 +151,9 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
         if (!mLoadingDialog!!.isShowing()) {
             mLoadingDialog!!.show()
         }
-        if (TextUtils.isEmpty(content)){
+        if (TextUtils.isEmpty(content)) {
             mLoadingDialog?.setContent("加载中")
-        }else {
+        } else {
             mLoadingDialog?.setContent(content)
         }
     }
@@ -162,6 +170,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
     open fun getContentView(): ViewGroup? {
         return findViewById(Window.ID_ANDROID_CONTENT)
     }
+
     /* 设置标题栏的标题
     */
     override fun setTitle(@StringRes id: Int) {
@@ -182,8 +191,6 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
     }
 
 
-
-
     override fun onLeftClick(view: View) {
         onBackPressed()
         overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out)
@@ -192,6 +199,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
     override fun onTitleClick(view: View) {
 
     }
+
     /**
      * 是否使用沉浸式状态栏
      */
@@ -205,6 +213,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
     open fun isStatusBarDarkFont(): Boolean {
         return true
     }
+
     /**
      * 获取状态栏沉浸的配置对象
      */
@@ -214,11 +223,13 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
         }
         return immersionBar!!
     }
+
     /** 标题栏对象 */
     private var titleBar: TitleBar? = null
 
     /** 状态栏沉浸 */
     private var immersionBar: ImmersionBar? = null
+
     /**
      * 初始化沉浸式状态栏
      */
@@ -227,9 +238,11 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
             .statusBarDarkFont(isStatusBarDarkFont()) // 指定导航栏背景颜色
             .autoDarkModeEnable(true, 0.2f)
     }
-    var byTenantId: ByTenantId?=null
+
+    var byTenantId: ByTenantId? = null
     open fun ByTenantId(): ByTenantId? {
-        byTenantId = GsonUtils.getPerson(MMKVUtils.getString("UserBean", ""), ByTenantId::class.java)
+        byTenantId =
+            GsonUtils.getPerson(MMKVUtils.getString("UserBean", ""), ByTenantId::class.java)
         return byTenantId
     }
 
@@ -248,12 +261,14 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
         }
     }
 
-    open fun setContentView(){}
+    open fun setContentView() {}
 
     override fun onResume() {
         super.onResume()
         // 自动采集选择
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+        val networkState: Boolean = NetworkStateUtils.hasNetworkCapability(this)
+        hasNetWork(networkState)
     }
 
     override fun onPause() {
@@ -266,7 +281,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
     /**
      * 隐藏软键盘
      */
-     open fun hideSoftKeyboard() {
+    open fun hideSoftKeyboard() {
         // 隐藏软键盘，避免软键盘引发的内存泄露
         val view = currentFocus
         if (view != null) {
@@ -274,6 +289,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
             manager?.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
+
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (ev!!.action == MotionEvent.ACTION_DOWN) {
             val v = currentFocus
@@ -282,13 +298,14 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
 //               // SoftKeyboardUtils.hideKeyboard(v!!)
 //                KeyBoardUtil.hideKeyBoard(this,v)
 //            }
-            if (v!=null) {
+            if (v != null) {
                 hideSoftKeyboard()
-               // KeyBoardUtil.hideKeyBoard(this, v)
+                // KeyBoardUtil.hideKeyBoard(this, v)
             }
         }
         return super.dispatchTouchEvent(ev)
     }
+
     open fun hideBottomUIMenu() {
         //隐藏虚拟按键，并且全屏
         if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
@@ -302,6 +319,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
             _window.setAttributes(params)
         }
     }
+
     /**
      * 隐藏系统的导航栏
      */
@@ -314,8 +332,91 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() , TitleB
             decorView.setSystemUiVisibility(uiOptions)
         }
     }
+
     override fun setRequestedOrientation(requestedOrientation: Int) {
         return
     }
+
+    var mTipView: View? = null
+    var mWindowManager: WindowManager? = null
+    var mLayoutParams: WindowManager.LayoutParams? = null
+
+    open fun initTipView() {
+        val inflater = layoutInflater
+
+        mTipView = inflater.inflate(R.layout.network_tip, null) //提示View布局
+        mWindowManager = this.getSystemService(WINDOW_SERVICE) as WindowManager
+        mLayoutParams = WindowManager.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.TYPE_APPLICATION,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,  //   | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, //注释掉可以进行事件监听
+            PixelFormat.TRANSLUCENT
+        )
+        //使用非CENTER时，可以通过设置XY的值来改变View的位置
+        mLayoutParams?.gravity = Gravity.TOP
+        mLayoutParams?.x = 50
+        mLayoutParams?.y = 0
+//        mLayoutParams.gravity = Gravity.CENTER;
+    }
+
+
+    open fun hasNetWork(has: Boolean) {
+        Log.d("yjk", "hasNetWork: $mCheckNetWork")
+            if (has) {
+                if (mTipView != null && mTipView!!.parent != null) {
+                    mWindowManager!!.removeView(mTipView)
+                    Log.e("日志", "有网络")
+                }
+            } else {
+                if (mTipView!!.parent == null) {
+                    mWindowManager!!.addView(mTipView, mLayoutParams)
+                    var iv_Close = mTipView?.findViewById<ImageView>(R.id.iv_Close)
+                    iv_Close?.setOnClickListener {
+                        mWindowManager!!.removeView(mTipView)
+                    }
+
+
+                    Log.e("日志", "无网络")
+
+                }
+
+
+        }
+    }
+
+    @NetworkMonitor
+    fun onNetWorkStateChange(networkState: NetworkState) {
+        Log.d("yjk", "onNetWorkStateChange: ")
+        when (networkState) {
+            NetworkState.NONE -> {
+                // showToast("暂无网络")
+                hasNetWork(false)
+            }
+            NetworkState.WIFI -> {
+                hasNetWork(true)
+            }
+            NetworkState.CELLULAR -> {
+            }
+        }
+    }
+     var mCheckNetWork = false //默认检查网络状态
+
+    override fun onDestroy() {
+        super.onDestroy()
+        NetworkMonitorManager.getInstance().unregister(this)
+    }
+
+
+    open fun isCheckNetWork(): Boolean {
+        return mCheckNetWork
+    }
+    override fun finish() {
+        super.finish()
+        //当提示View被动态添加后直接关闭页面会导致该View内存溢出，所以需要在finish时移除
+        if (mTipView != null && mTipView!!.parent != null) {
+            mWindowManager!!.removeView(mTipView)
+        }
+    }
+
 
 }

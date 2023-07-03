@@ -390,7 +390,7 @@ public class LineChartManager {
         // 每一个LineDataSet代表一条线
         LineDataSet lineDataSet = new LineDataSet(entries, name);
         //LINEAR 折线图  CUBIC_BEZIER 圆滑曲线
-        initLineDataSet(lineDataSet, color, LineDataSet.Mode.CUBIC_BEZIER);
+        initLineDataSet(lineDataSet, color, LineDataSet.Mode.LINEAR);
         //线条自定义内容 放在这里
         lineDataSet.setValueFormatter(new IValueFormatter() {
             @Override
@@ -416,7 +416,7 @@ public class LineChartManager {
         }
         // 每一个LineDataSet代表一条线
         LineDataSet lineDataSet = new LineDataSet(entries, name);
-        initLineDataSet(lineDataSet, color, LineDataSet.Mode.CUBIC_BEZIER);
+        initLineDataSet(lineDataSet, color, LineDataSet.Mode.LINEAR);
         lineChart.getLineData().addDataSet(lineDataSet);
         lineChart.invalidate();
     }

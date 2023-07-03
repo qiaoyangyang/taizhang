@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import com.meiling.common.network.NetworkMonitorManager
+import com.meiling.common.network.enums.NetworkState
+import com.meiling.common.network.interfaces.NetworkMonitor
+import com.meiling.common.network.util.NetworkStateUtils
 import com.meiling.account.databinding.ActivityLoginBinding
-import com.meiling.account.databinding.ActivityMainBinding
 import com.meiling.account.viewmodel.LoginViewModel
-import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.KeyBoardUtil
 import com.meiling.account.widget.setSingleClickListener
 import com.meiling.account.widget.showToast
@@ -56,7 +59,11 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
         })
 
+
+
+
     }
+
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityLoginBinding {
         return ActivityLoginBinding.inflate(layoutInflater)
@@ -77,4 +84,14 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             //disLoading()
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        hasNetWork(true)
+
+    }
+
+
+
+
 }

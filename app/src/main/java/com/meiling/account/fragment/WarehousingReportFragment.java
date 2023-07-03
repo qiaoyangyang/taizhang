@@ -7,14 +7,17 @@ import android.view.LayoutInflater;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.meiling.account.R;
+import com.meiling.account.adapter.RankingAdapter;
 import com.meiling.account.bean.CompositeIndexBean;
 import com.meiling.account.bean.IncomeBean;
 import com.meiling.account.bean.LineChartBean;
 import com.meiling.account.databinding.FragmentWarehousingReportBinding;
 import com.meiling.account.manager.PieChartManager;
 import com.meiling.account.viewmodel.MainViewModel;
+import com.meiling.account.widget.InputUtil;
 import com.meiling.common.fragment.BaseFragment;
 import com.meiling.account.manager.LineChartManager;
 import com.meiling.common.utils.LocalJsonAnalyzeUtil;
@@ -28,6 +31,8 @@ public class WarehousingReportFragment extends BaseFragment<MainViewModel, Fragm
     private List<CompositeIndexBean> shanghai;//沪市指数
 
     private LineChartManager lineChartManager1;
+
+    private RankingAdapter rankingAdapter;
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
         lineChartManager1 = new LineChartManager(mDatabind.lineChart);
@@ -88,25 +93,19 @@ public class WarehousingReportFragment extends BaseFragment<MainViewModel, Fragm
         date.add(19.1f);
         date.add(29.1f);
         date.add(59.1f);
-        List<Integer> colors = new ArrayList<>(); //每个模块的颜色
-        colors.add(Color.parseColor("#E55A55"));
-        colors.add(Color.parseColor("#FF974D"));
 
-        colors.add(Color.parseColor("#FFDC4C"));
-        colors.add(Color.parseColor("#A8E0FB"));
 
-        colors.add(Color.parseColor("#5B6E96"));
-        colors.add(Color.parseColor("#61D9AC"));
-
-        colors.add(Color.parseColor("#5AAEF6"));
-        colors.add(Color.parseColor("#6E61E4"));
-        colors.add(Color.parseColor("#26C0DB"));
-        colors.add(Color.parseColor("#6E61E4"));
 
 
         //饼状图管理类
         PieChartManager pieChartManager1 = new PieChartManager(mDatabind.pieChart1);
-        pieChartManager1.setPieChart(names, date, colors);
+        pieChartManager1.setPieChart(names, date, InputUtil.colors());
+
+
+        rankingAdapter=new RankingAdapter();
+        mDatabind.rvRanking.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mDatabind.rvRanking.setAdapter(rankingAdapter);
+        rankingAdapter.setList(InputUtil.setRanking());
 
 
 

@@ -65,7 +65,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/view"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="协和便利店东单店" />
+        android:text="协和便利店东单店" />
 
 
     <ImageView
