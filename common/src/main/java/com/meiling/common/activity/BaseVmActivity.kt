@@ -3,6 +3,7 @@ package com.meiling.common.activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -32,6 +34,7 @@ import com.meiling.common.network.interfaces.NetworkMonitor
 import com.meiling.common.network.util.NetworkStateUtils
 import com.meiling.common.utils.GsonUtils
 import com.meiling.common.utils.MMKVUtils
+import com.meiling.common.utils.SpannableUtils
 import com.umeng.analytics.MobclickAgent
 
 
@@ -345,7 +348,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), TitleBa
         val inflater = layoutInflater
 
         mTipView = inflater.inflate(R.layout.network_tip, null) //提示View布局
-        mWindowManager = this.getSystemService(WINDOW_SERVICE) as WindowManager
+         mWindowManager = this.getSystemService(WINDOW_SERVICE) as WindowManager
         mLayoutParams = WindowManager.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.TYPE_APPLICATION,
@@ -370,6 +373,9 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), TitleBa
             } else {
                 if (mTipView!!.parent == null) {
                     mWindowManager!!.addView(mTipView, mLayoutParams)
+                    var tv_title = mTipView?.findViewById<TextView>(R.id.tv_title)
+                    SpannableUtils.setTextcolor(this,"网络故障，请检查WiFi连接情况后，重试...",tv_title,5,14,R.color.tv_title)
+
                     var iv_Close = mTipView?.findViewById<ImageView>(R.id.iv_Close)
                     iv_Close?.setOnClickListener {
                         mWindowManager!!.removeView(mTipView)

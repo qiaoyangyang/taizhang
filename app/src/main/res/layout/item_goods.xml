@@ -58,7 +58,7 @@
             android:layout_marginRight="10dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="jshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdkjshdk"
+            android:text="草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋"
             android:textColor="#1F1F1F"
             android:textSize="16sp"
             android:textStyle="bold"

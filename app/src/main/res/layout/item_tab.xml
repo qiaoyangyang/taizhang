@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:paddingHorizontal="30dp"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/txtRecyCategoryItem"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:paddingLeft="6dp"
@@ -22,14 +22,16 @@
         android:textSize="16sp"
         tools:text="协和便利店东单店" />
     <View
+        app:layout_constraintTop_toBottomOf="@+id/txtRecyCategoryItem"
         android:layout_width="40dp"
         android:layout_height="3dp"
         android:id="@+id/recyCategoryItemline"
         android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         android:background="@drawable/bg_e4b48_corner4" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

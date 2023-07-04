@@ -5,4 +5,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="picture_color_black">#FFFFFFFF</color>
     <color name="transparent_gray">#90000000</color>
+    <color name="tv_title">#FFDF5E</color>
 </resources>

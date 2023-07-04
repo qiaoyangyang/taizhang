@@ -68,6 +68,16 @@ class ClassificationPopWindow {
 
 
         }
+        override fun setGravity(gravity: Int): Builder = apply {
+            when (gravity) {
+                // 如果这个是在中间显示的
+                Gravity.CENTER, Gravity.CENTER_VERTICAL -> {
+                    // 重新设置动画
+                    setAnimStyle(AnimAction.ANIM_SCALE)
+                }
+            }
+            super.setGravity(gravity)
+        }
         fun setList(data: MutableList<GoosClassify>): Builder = apply {
             classificationAdapter?.setList(data)
         }

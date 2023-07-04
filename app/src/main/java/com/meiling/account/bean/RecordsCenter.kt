@@ -5,5 +5,6 @@ data class ShortTime(
 )
 
 data class Ranking(
-    var textcolor:Int?=0
+    var textcolor:Int?=0,
+    var float:Float?=0f
 )

@@ -13,6 +13,7 @@
 
     android:layout_height="wrap_content">
     <TextView
+        android:id="@+id/tv_title"
         android:gravity="center"
         android:drawablePadding="20dp"
         android:drawableLeft="@drawable/bg_wf"

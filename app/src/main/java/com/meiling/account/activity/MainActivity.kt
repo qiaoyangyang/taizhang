@@ -1,5 +1,6 @@
 package com.meiling.account.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -8,10 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.viewpager.widget.ViewPager
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.meiling.account.R
 import com.meiling.account.adapter.FragAdapter
 import com.meiling.account.databinding.ActivityMainBinding
+import com.meiling.account.dialog.MineExitDialog
 import com.meiling.account.eventBusData.MessageEvent
 import com.meiling.account.fragment.HomeFragment
 import com.meiling.account.fragment.RecordsCenterFragment
@@ -19,8 +24,10 @@ import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.setSingleClickListener
 import com.meiling.common.GlideApp
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.constant.ARouteConstants
 import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.GlideCircleTransform
+import com.meiling.common.utils.MMKVUtils
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -56,6 +63,20 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         mDatabind.viewpager.setNoScroll(true);
 
         setmessage()
+        mDatabind.menuShopReceive.setSingleClickListener {
+            val dialog: MineExitDialog =
+                MineExitDialog().newInstance("退出登录", "确定要退出登录当前账号吗？", "取消", "确认", false)
+            dialog.setOkClickLister {
+                ToastUtils.showShort("账号登录过期，请重新登录")
+                MMKVUtils.clear()
+                ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY)
+                    .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).navigation()
+                ActivityUtils.finishAllActivities()
+                // mViewModel.setUmengToken()
+
+            }
+            dialog.show(supportFragmentManager)
+        }
 
     }
 

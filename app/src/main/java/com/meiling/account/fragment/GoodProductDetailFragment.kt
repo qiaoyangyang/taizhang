@@ -14,6 +14,7 @@ import com.meiling.account.dialog.MineExitDialog
 import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.InputUtil
 import com.meiling.common.fragment.BaseFragment
+import com.meiling.common.utils.RecyclerViewDivider
 
 //良品明细
 class GoodProductDetailFragment : BaseFragment<MainViewModel, FragmentGoodProductDetailBinding>(),
@@ -24,6 +25,7 @@ class GoodProductDetailFragment : BaseFragment<MainViewModel, FragmentGoodProduc
         goodProducttimeAdapter = GoodProducttimeAdapter()
         mDatabind.rvGoos?.adapter = goodProducttimeAdapter
         goodProducttimeAdapter?.setList(InputUtil.getyouhuiString())
+
         goodProducttimeAdapter?.setListener(this)
         goodProducttimeAdapter?.setOnItemChildClickListener(this)
 

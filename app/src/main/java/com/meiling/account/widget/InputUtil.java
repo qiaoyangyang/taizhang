@@ -69,18 +69,43 @@ public class InputUtil {
         colors.add(Color.parseColor("#61D9AC"));
 
         colors.add(Color.parseColor("#5AAEF6"));
-        colors.add(Color.parseColor("#6E61E4"));
         colors.add(Color.parseColor("#26C0DB"));
+        colors.add(Color.parseColor("#6E61E4"));
         colors.add(Color.parseColor("#6E61E4"));
         return colors;
     }
     @NotNull
+    public static List<Float> date(){
+        List<Float> date = new ArrayList<>(); //shuju
+        date.add(35f);
+        date.add(35f);
+
+        date.add(35f);
+        date.add(35f);
+        date.add(35f);
+
+        date.add(35f);
+        date.add(35f);
+
+        date.add(35f);
+        date.add(35f);
+        date.add(35f);
+        return date;
+    }
+
+    @NotNull
     public static List<Ranking> setRanking(){
         List<Ranking>rankings=new ArrayList<>();
-        for (Integer in:InputUtil.colors()
-             ) {
-            rankings.add(new Ranking(in));
-        }
+        rankings.add(new Ranking(Color.parseColor("#E55A55"),35f));
+        rankings.add(new Ranking(Color.parseColor("#FF974D"),35f));
+        rankings.add(new Ranking(Color.parseColor("#FFDC4C"),35f));
+        rankings.add(new Ranking(Color.parseColor("#A8E0FB"),35f));
+        rankings.add(new Ranking(Color.parseColor("#5B6E96"),35f));
+        rankings.add(new Ranking(Color.parseColor("#61D9AC"),35f));
+        rankings.add(new Ranking(Color.parseColor("#5AAEF6"),35f));
+        rankings.add(new Ranking(Color.parseColor("#26C0DB"),35f));
+        rankings.add(new Ranking(Color.parseColor("#6E61E4"),35f));
+        rankings.add(new Ranking(Color.parseColor("#6E61E4"),35f));
 
 
         return rankings;

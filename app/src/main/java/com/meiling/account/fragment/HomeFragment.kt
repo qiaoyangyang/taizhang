@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.hjq.base.BasePopupWindow
+import com.hjq.base.action.AnimAction
 import com.meiling.account.R
 import com.meiling.account.adapter.CustomkeyboardAdapter
 import com.meiling.account.adapter.GoodaAdapter
@@ -81,7 +82,8 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
         }
 
         mDatabind.inventoryStockTabMore.setSingleClickListener {
-            ClassificationPopWindow.Builder(mActivity).setGravity(Gravity.RIGHT)
+            ClassificationPopWindow.Builder(mActivity).setGravity(Gravity.RIGHT).setAnimStyle(
+                AnimAction.ANIM_EMPTY)
                 .setListener(object :
                     ClassificationPopWindow.OnListener {
                     override fun onSelected(

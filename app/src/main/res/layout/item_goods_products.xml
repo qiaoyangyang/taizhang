@@ -3,40 +3,60 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
+    android:layout_marginTop="10dp"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <TextView
+        android:layout_marginLeft="10dp"
+
         android:gravity="center"
         android:id="@+id/tv_time"
         android:drawablePadding="@dimen/dp_10"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_lsit_mun"
+        app:layout_constraintTop_toTopOf="@+id/tv_lsit_mun"
         android:drawableLeft="@drawable/time"
         android:textStyle="bold"
         android:textSize="16sp"
         android:text="2065-06-12 12:00-12:30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
     <TextView
+        app:layout_constraintRight_toLeftOf="@+id/tv_lsit_mun"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_time"
-        android:background="#D8D8D8"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_lsit_mun"
+        android:background="#50D8D8D8"
 
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/tv_time"
-        app:layout_constraintTop_toTopOf="@+id/tv_time"
+        app:layout_constraintTop_toTopOf="@+id/tv_lsit_mun"
         android:layout_width="0dp"
         android:layout_height="1dp"/>
+    <com.hjq.shape.view.ShapeTextView
+        android:paddingTop="7dp"
+        android:layout_marginRight="10dp"
+        android:paddingBottom="7dp"
+        android:id="@+id/tv_lsit_mun"
+        android:gravity="center"
+        android:text="3"
+        app:shape_radius="10dp"
+        android:textColor="#1F1F1F"
+        android:textSize="16sp"
+        app:shape_solidColor="#F5F6FC"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_goos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/tv_time"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lsit_mun"
         app:spanCount="3"
-        tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/item_defective_detail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,6 +21,7 @@ import com.meiling.account.widget.InputUtil;
 import com.meiling.common.fragment.BaseFragment;
 import com.meiling.account.manager.LineChartManager;
 import com.meiling.common.utils.LocalJsonAnalyzeUtil;
+import com.meiling.common.utils.RecyclerViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,31 +80,20 @@ public class WarehousingReportFragment extends BaseFragment<MainViewModel, Fragm
         names.add("模块八");
         names.add("模块九");
         names.add("模块十");
-        List<Float> date = new ArrayList<>(); //每个模块的值（占比率）
-        date.add(10.3f);
-        date.add(20.2f);
 
-        date.add(30.4f);
-        date.add(39.1f);
-        date.add(34.1f);
-
-        date.add(26.1f);
-        date.add(12.1f);
-
-        date.add(19.1f);
-        date.add(29.1f);
-        date.add(59.1f);
 
 
 
 
         //饼状图管理类
         PieChartManager pieChartManager1 = new PieChartManager(mDatabind.pieChart1);
-        pieChartManager1.setPieChart(names, date, InputUtil.colors());
+        pieChartManager1.setPieChart(names, InputUtil.date(), InputUtil.colors());
+
+        mDatabind.rvRanking.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
         rankingAdapter=new RankingAdapter();
-        mDatabind.rvRanking.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         mDatabind.rvRanking.setAdapter(rankingAdapter);
         rankingAdapter.setList(InputUtil.setRanking());
 

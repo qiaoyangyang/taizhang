@@ -8,23 +8,31 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.meiling.common.network.NetworkMonitorManager
 import com.meiling.common.network.enums.NetworkState
 import com.meiling.common.network.interfaces.NetworkMonitor
 import com.meiling.common.network.util.NetworkStateUtils
 import com.meiling.account.databinding.ActivityLoginBinding
+import com.meiling.account.dialog.MineExitDialog
 import com.meiling.account.viewmodel.LoginViewModel
 import com.meiling.account.widget.KeyBoardUtil
 import com.meiling.account.widget.setSingleClickListener
 import com.meiling.account.widget.showToast
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.constant.ARouteConstants
 import com.meiling.common.utils.InputTextManager
+import com.meiling.common.utils.MMKVUtils
 
 //登陆页面
+@Route(path = "/app/LoginActivity")
 class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
-//        mDatabind.edtName.setText("1")
-//        mDatabind.edtPaswd.setText("1")
+        mDatabind.edtName.setText("1")
+        mDatabind.edtPaswd.setText("1")
         mDatabind.btnLogin.let {
             InputTextManager.with(this)
                 .addView(mDatabind.edtName)
@@ -36,8 +44,8 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
         mDatabind.btnLogin.setSingleClickListener {
           // mViewModel.mobileLogin(mDatabind.edtName.text.toString(),mDatabind.edtPaswd.text.toString())
-            startActivity(Intent(this, SelectStoreActiviy::class.java))
 
+            setSaveaccount()
         }
         mDatabind.imgClear.setSingleClickListener {
             mDatabind.edtName.setText("")
@@ -89,6 +97,17 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         super.onResume()
         hasNetWork(true)
 
+    }
+    fun setSaveaccount(){
+        val dialog: MineExitDialog =
+            MineExitDialog().newInstance("温馨提示", "是否记住密码，以便下次直接登录？", "取消", "确认", false)
+        dialog.setOkClickLister {
+
+            // mViewModel.setUmengToken()
+            startActivity(Intent(this, SelectStoreActiviy::class.java))
+
+        }
+        dialog.show(supportFragmentManager)
     }
 
 

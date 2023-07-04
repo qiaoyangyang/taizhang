@@ -1,6 +1,9 @@
 package com.meiling.account.fragment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.CompoundButton
@@ -22,7 +25,8 @@ import com.meiling.common.fragment.BaseFragment
 import com.wayne.constraintradiogroup.ConstraintRadioGroup
 
 //数据中心
-class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterBinding>(),OnPageChangeListener ,
+class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterBinding>(),
+    OnPageChangeListener,
     RadioGroup.OnCheckedChangeListener,
     OnItemClickListener {
     private val mFragments: ArrayList<Fragment> = ArrayList()
@@ -38,36 +42,81 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         mFragments.add(DefectiveDetailFragment())
         mFragments.add(WarehousingReportFragment())
 
-        mDatabind. vpHomePager.adapter = MyPagerAdapter(childFragmentManager, mFragments, mTitles)
-        mDatabind. slidingTabLayout.setViewPager(mDatabind.vpHomePager)
-        mDatabind. vpHomePager.setNoScroll(true)
+        mDatabind.vpHomePager.adapter = MyPagerAdapter(childFragmentManager, mFragments, mTitles)
+        mDatabind.slidingTabLayout.setViewPager(mDatabind.vpHomePager)
+        mDatabind.vpHomePager.setNoScroll(true)
 
-        mDatabind.rvShorTime?.layoutManager = GridLayoutManager(context,2)
+        mDatabind.rvShorTime?.layoutManager = GridLayoutManager(context, 2)
         shortTimeAdapter = ShortTimeAdapter()
         mDatabind.rvShorTime?.adapter = shortTimeAdapter
         shortTimeAdapter?.setList(InputUtil.getShortTime())
         shortTimeAdapter?.setOnItemClickListener(this)
-        mDatabind. vpHomePager.addOnPageChangeListener(this)
+        mDatabind.vpHomePager.addOnPageChangeListener(this)
         mDatabind.startEndTimeRdg.setOnCheckedChangeListener(this)
-        mDatabind.startEndTime1.isChecked=true
+        mDatabind.startEndTime1.isChecked = true
         settime()
         mDatabind.startEndTime5.setSingleClickListener {
-            mDatabind.startEndTime5.isChecked=true
+            mDatabind.startEndTime5.isChecked = true
             OptionDatePopWindow.Builder(mActivity).setListener(object :
-                OptionDatePopWindow.OnListener{
+                OptionDatePopWindow.OnListener {
                 override fun onSelected(
                     popupWindow: BasePopupWindow?,
                     startTime: String,
                     endTim: String
                 ) {
-                    startTimen=startTime
-                    endTime=endTim
+                    startTimen = startTime
+                    endTime = endTim
                     settime()
                 }
 
             }).showAsDropDown(mDatabind.tvStartTime)
         }
+        mDatabind.imgClear.setSingleClickListener {
+            startTimen = ""
+            settime()
+        }
+        mDatabind.imgClear1.setSingleClickListener {
+            endTime = ""
+            settime()
+        }
+        mDatabind.tvStartTime.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (mDatabind.startEndTime5.isChecked) {
+                    if (TextUtils.isEmpty(mDatabind.tvStartTime.text.toString())) {
+                        mDatabind.imgClear.visibility = View.INVISIBLE
+                    } else {
+                        mDatabind.imgClear.visibility = View.VISIBLE
+                    }
+                }
+            }
+        })
+        mDatabind.tvEndTime.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (mDatabind.startEndTime5.isChecked) {
+                    if (TextUtils.isEmpty(mDatabind.tvEndTime.text.toString())) {
+                        mDatabind.imgClear1.visibility = View.INVISIBLE
+                    } else {
+                        mDatabind.imgClear1.visibility = View.VISIBLE
+                    }
+                }
+            }
+        })
+
+        mDatabind.tvDetail.setSingleClickListener {
+            mDatabind.vpHomePager.setCurrentItem(1,false)
+        }
 
     }
 
@@ -79,12 +128,12 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
     }
 
     override fun onPageSelected(position: Int) {
-        if (position==2){
-            mDatabind.rvShorTime.visibility=View.GONE
-            mDatabind.ll3.visibility=View.VISIBLE
-        }else{
-            mDatabind.ll3.visibility=View.GONE
-            mDatabind.rvShorTime.visibility=View.VISIBLE
+        if (position == 2) {
+            mDatabind.rvShorTime.visibility = View.GONE
+            mDatabind.ll3.visibility = View.VISIBLE
+        } else {
+            mDatabind.ll3.visibility = View.GONE
+            mDatabind.rvShorTime.visibility = View.VISIBLE
         }
 
     }
@@ -94,37 +143,37 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         shortTimeAdapter?.data?.forEach {
-            it.boolean=false
+            it.boolean = false
         }
-        shortTimeAdapter?.data?.get(position)?.boolean=true
+        shortTimeAdapter?.data?.get(position)?.boolean = true
         shortTimeAdapter?.notifyDataSetChanged()
 
     }
 
 
-    var startTimen =  formatCurrentDate()
+    var startTimen = formatCurrentDate()
     var endTime = formatCurrentDate()
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
-        when(checkedId){
-            R.id.startEndTime1->{
+        when (checkedId) {
+            R.id.startEndTime1 -> {
                 startTimen = formatCurrentDate()
                 endTime = formatCurrentDate()
                 settime()
 
             }
-            R.id.startEndTime2->{
+            R.id.startEndTime2 -> {
                 startTimen = formatCurrentDateBeforeDay()
                 endTime = formatCurrentDateBeforeDay()
                 settime()
 
             }
-            R.id.startEndTime3->{
+            R.id.startEndTime3 -> {
                 startTimen = formatCurrentDateBeforeWeek()
                 endTime = formatCurrentDateBeforeWeek()
                 settime()
 
             }
-            R.id.startEndTime4->{
+            R.id.startEndTime4 -> {
                 startTimen = formatCurrentDateBeforeMouth()
                 endTime = formatCurrentDateBeforeMouth()
                 settime()
@@ -134,9 +183,9 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         }
     }
 
-    fun settime(){
-        mDatabind.tvStartTime.text=startTimen
-        mDatabind.tvEndTime.text=endTime
+    fun settime() {
+        mDatabind.tvStartTime.text = startTimen
+        mDatabind.tvEndTime.text = endTime
     }
 
 

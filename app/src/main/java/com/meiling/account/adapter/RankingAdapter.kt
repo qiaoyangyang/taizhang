@@ -7,6 +7,7 @@ import com.meiling.account.R
 import com.meiling.account.bean.Ranking
 import com.meiling.account.widget.InputUtil
 
+//生产商品排行
 class RankingAdapter : BaseQuickAdapter<Ranking, BaseViewHolder>(R.layout.item_ranking) {
     override fun convert(holder: BaseViewHolder, item: Ranking) {
 

@@ -2,8 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp">
+    android:paddingTop="10dp"
+  >
 
     <TextView
         android:id="@+id/tv_ranking"
@@ -24,20 +26,26 @@
         android:layout_marginLeft="10dp"
         android:text="草莓小熊蛋糕（6英寸）"
         android:textColor="#262626"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_constraintLeft_toRightOf="@+id/tv_ranking"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <com.hjq.shape.view.ShapeTextView
+        app:shape_radius="10dp"
+        app:shape_solidColor="#F5F6FC"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:id="@+id/tv_mun"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text=" 190 个"
+        android:text=" X190 个"
         android:textColor="#E55A55"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/tv_name"
         app:layout_constraintTop_toTopOf="parent" />
