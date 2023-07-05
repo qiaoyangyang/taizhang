@@ -34,4 +34,14 @@ data class AppUpdate(
         @SerializedName("versionName")
         var versionName: String?
     )
+
+
+
+
+
 }
+data class AndIn(
+    var startWarehouseDate: String,
+    var endWarehouseDate: String,
+    var voucherType: Int=3,
+)

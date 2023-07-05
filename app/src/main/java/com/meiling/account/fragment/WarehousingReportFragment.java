@@ -3,6 +3,7 @@ package com.meiling.account.fragment;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import com.meiling.account.adapter.RankingAdapter;
 import com.meiling.account.bean.CompositeIndexBean;
 import com.meiling.account.bean.IncomeBean;
 import com.meiling.account.bean.LineChartBean;
+import com.meiling.account.data.AndIn;
 import com.meiling.account.databinding.FragmentWarehousingReportBinding;
 import com.meiling.account.manager.PieChartManager;
 import com.meiling.account.viewmodel.MainViewModel;
@@ -22,6 +24,10 @@ import com.meiling.common.fragment.BaseFragment;
 import com.meiling.account.manager.LineChartManager;
 import com.meiling.common.utils.LocalJsonAnalyzeUtil;
 import com.meiling.common.utils.RecyclerViewDivider;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +40,7 @@ public class WarehousingReportFragment extends BaseFragment<MainViewModel, Fragm
     private LineChartManager lineChartManager1;
 
     private RankingAdapter rankingAdapter;
+
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
         lineChartManager1 = new LineChartManager(mDatabind.lineChart);
@@ -57,7 +64,7 @@ public class WarehousingReportFragment extends BaseFragment<MainViewModel, Fragm
 
         //展示图表
         lineChartManager1.showLineChart(incomeBeanList, "良品入库", getResources().getColor(R.color.Blue));
-        lineChartManager1.addLine(shanghai, "不良品入库",getResources().getColor(R.color.red));
+        lineChartManager1.addLine(shanghai, "不良品入库", getResources().getColor(R.color.red));
         //设置曲线填充色 以及 MarkerView
         Drawable drawable = getResources().getDrawable(R.drawable.fade_blue);
         Drawable drawable1 = getResources().getDrawable(R.drawable.fade_blue1);
@@ -65,8 +72,6 @@ public class WarehousingReportFragment extends BaseFragment<MainViewModel, Fragm
         lineChartManager1.setChartFillDrawable(drawable);
         lineChartManager1.setChartFillDrawable1(drawable1);
         lineChartManager1.setMarkerView(getActivity());
-
-
 
 
         List<String> names = new ArrayList<>(); //每个模块的内容描述
@@ -82,9 +87,6 @@ public class WarehousingReportFragment extends BaseFragment<MainViewModel, Fragm
         names.add("模块十");
 
 
-
-
-
         //饼状图管理类
         PieChartManager pieChartManager1 = new PieChartManager(mDatabind.pieChart1);
         pieChartManager1.setPieChart(names, InputUtil.date(), InputUtil.colors());
@@ -92,12 +94,30 @@ public class WarehousingReportFragment extends BaseFragment<MainViewModel, Fragm
         mDatabind.rvRanking.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        rankingAdapter=new RankingAdapter();
+        rankingAdapter = new RankingAdapter();
 
         mDatabind.rvRanking.setAdapter(rankingAdapter);
         rankingAdapter.setList(InputUtil.setRanking());
 
 
-
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void data(AndIn efundType) {
+        Log.d("yjk", "data:  1 " + efundType.getVoucherType());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+
 }

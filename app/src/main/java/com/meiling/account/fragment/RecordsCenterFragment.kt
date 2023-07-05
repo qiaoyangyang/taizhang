@@ -17,12 +17,15 @@ import com.hjq.base.BasePopupWindow
 import com.meiling.account.R
 import com.meiling.account.adapter.MyPagerAdapter
 import com.meiling.account.adapter.ShortTimeAdapter
+import com.meiling.account.data.AndIn
+import com.meiling.account.data.AppUpdate
 import com.meiling.account.databinding.FragmentRecordsCenterBinding
 import com.meiling.account.dialog.OptionDatePopWindow
 import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.*
 import com.meiling.common.fragment.BaseFragment
 import com.wayne.constraintradiogroup.ConstraintRadioGroup
+import org.greenrobot.eventbus.EventBus
 
 //数据中心
 class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterBinding>(),
@@ -32,6 +35,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
     private val mFragments: ArrayList<Fragment> = ArrayList()
     private val mTitles: ArrayList<String> = ArrayList()
     var shortTimeAdapter: ShortTimeAdapter? = null
+    var voucherType=0
 
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -67,6 +71,13 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
                     startTimen = startTime
                     endTime = endTim
                     settime()
+                    var outAndIn = AndIn(
+                        startTimen,
+                        endTime,
+                        voucherType
+
+                    )
+                    EventBus.getDefault().post(outAndIn)
                 }
 
             }).showAsDropDown(mDatabind.tvStartTime)
@@ -128,6 +139,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
     }
 
     override fun onPageSelected(position: Int) {
+        voucherType=position
         if (position == 2) {
             mDatabind.rvShorTime.visibility = View.GONE
             mDatabind.ll3.visibility = View.VISIBLE
@@ -159,24 +171,55 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
                 startTimen = formatCurrentDate()
                 endTime = formatCurrentDate()
                 settime()
+                var outAndIn = AndIn(
+                    startTimen,
+                    endTime,
+                    voucherType
+
+                )
+                EventBus.getDefault().post(outAndIn)
+
 
             }
             R.id.startEndTime2 -> {
                 startTimen = formatCurrentDateBeforeDay()
                 endTime = formatCurrentDateBeforeDay()
                 settime()
+                var outAndIn = AndIn(
+                    startTimen,
+                    endTime,
+                    voucherType
+
+                )
+                EventBus.getDefault().post(outAndIn)
+
 
             }
             R.id.startEndTime3 -> {
                 startTimen = formatCurrentDateBeforeWeek()
                 endTime = formatCurrentDateBeforeWeek()
                 settime()
+                var outAndIn = AndIn(
+                    startTimen,
+                    endTime,
+                    voucherType
+
+                )
+                EventBus.getDefault().post(outAndIn)
+
 
             }
             R.id.startEndTime4 -> {
                 startTimen = formatCurrentDateBeforeMouth()
                 endTime = formatCurrentDateBeforeMouth()
                 settime()
+                var outAndIn = AndIn(
+                    startTimen,
+                    endTime,
+                    voucherType
+
+                )
+                EventBus.getDefault().post(outAndIn)
 
             }
 
@@ -187,6 +230,9 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         mDatabind.tvStartTime.text = startTimen
         mDatabind.tvEndTime.text = endTime
     }
+
+
+
 
 
 }

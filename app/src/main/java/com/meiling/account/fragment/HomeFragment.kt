@@ -1,7 +1,9 @@
 package com.meiling.account.fragment
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +23,7 @@ import com.meiling.account.databinding.FragmentHomeBinding
 import com.meiling.account.dialog.ClassificationPopWindow
 import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.InputUtil
+import com.meiling.account.widget.KeyBoardUtil
 import com.meiling.account.widget.setSingleClickListener
 import com.meiling.account.widget.showToast
 import com.meiling.common.fragment.BaseFragment
@@ -32,6 +35,7 @@ import com.meiling.common.utils.XNumberUtils
 class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemClickListener {
     //键盘
     var customkeyboardAdapter: CustomkeyboardAdapter? = null
+
     //商品
     var goodaAdapter: GoodaAdapter? = null
 
@@ -41,6 +45,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
     var data = ArrayList<GoosClassify>()
     var isselect = false
+    var searchkey=""//  搜素关键字
 
     override fun initView(savedInstanceState: Bundle?) {
         data = Appdata.getGoosClassify()
@@ -61,17 +66,54 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
         goodaAdapter?.setOnItemClickListener(this)
 
         setisselect(isselect)
+        mDatabind.stockSearchGoodEdit.setOnEditorActionListener { v, actionId, event ->
+            if ((actionId == 0 || actionId == 3) && event != null) {
+                //点击搜索
+                // TODO:  搜索
+                KeyBoardUtil.closeKeyBord( mDatabind.stockSearchGoodEdit, requireContext())
+            }
+            return@setOnEditorActionListener false
+        }
+
+        //监听输入是否有内容  有内容显示删除按钮
+        mDatabind.stockSearchGoodEdit.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (mDatabind.stockSearchGoodEdit.text.toString().isEmpty()) {
+                    mDatabind.goodsStockSearchGoodClear.visibility=View.GONE
+                }else{
+                    mDatabind.goodsStockSearchGoodClear.visibility=View.VISIBLE
+                }
+            }
+
+        })
+        //删除搜素内容
+        mDatabind.goodsStockSearchGoodClear.setSingleClickListener {
+            searchkey=""
+            mDatabind.stockSearchGoodEdit.setText(searchkey)
+
+        }
         //良品入库
         mDatabind.tvGoodProductsAreStored.setSingleClickListener {
             setissucceed(true)
         }
+        //不良品入库
         mDatabind.tvDefectiveProductsAreStored.setSingleClickListener {
             setissucceed(false)
         }
+        //加号
         mDatabind.stockAddJia.setSingleClickListener {
             var num = mDatabind.stockAddNum.text.toString()
             mDatabind.stockAddNum.text = XNumberUtils.enquiryAdd(num, "1")
         }
+        //减
         mDatabind.stockAddJian.setSingleClickListener {
             var num = mDatabind.stockAddNum.text.toString()
             if (XNumberUtils.compareTo(num, "1") != 1) {
@@ -80,10 +122,11 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
             mDatabind.stockAddNum.text = XNumberUtils.enquirysubtract(num, "1")
         }
-
+        //分类的对话框
         mDatabind.inventoryStockTabMore.setSingleClickListener {
             ClassificationPopWindow.Builder(mActivity).setGravity(Gravity.RIGHT).setAnimStyle(
-                AnimAction.ANIM_EMPTY)
+                AnimAction.ANIM_EMPTY
+            )
                 .setListener(object :
                     ClassificationPopWindow.OnListener {
                     override fun onSelected(
@@ -91,7 +134,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
                         id: Int,
                         boolean: Boolean
                     ) {
-                        if (boolean==false) {
+                        if (boolean == false) {
                             tabAdapter?.data?.forEach {
                                 it.select = false
 

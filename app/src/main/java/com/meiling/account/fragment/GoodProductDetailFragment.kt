@@ -1,6 +1,7 @@
 package com.meiling.account.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,12 +10,15 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.meiling.account.R
 import com.meiling.account.adapter.GoodProducttimeAdapter
 import com.meiling.account.adapter.OnListener
+import com.meiling.account.data.AndIn
 import com.meiling.account.databinding.FragmentGoodProductDetailBinding
 import com.meiling.account.dialog.MineExitDialog
 import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.InputUtil
 import com.meiling.common.fragment.BaseFragment
-import com.meiling.common.utils.RecyclerViewDivider
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 //良品明细
 class GoodProductDetailFragment : BaseFragment<MainViewModel, FragmentGoodProductDetailBinding>(),
@@ -55,4 +59,20 @@ class GoodProductDetailFragment : BaseFragment<MainViewModel, FragmentGoodProduc
             }
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun data(refundType: AndIn) {
+        Log.d("yjk", "data:  1 " +refundType.voucherType)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
 }
