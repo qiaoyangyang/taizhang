@@ -10,7 +10,7 @@
     <!--    左边清单-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/shopping_left_lay"
-        android:layout_width="70dp"
+        android:layout_width="75dp"
         android:layout_height="match_parent"
         android:background="@color/red"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,6 +42,7 @@
                 android:textSize="14sp" />
 
             <com.hjq.shape.view.ShapeTextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -68,11 +69,11 @@
                 android:textSize="10sp" />
 
             <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_marginLeft="4dp"
                 android:id="@+id/menu_shouyin1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -99,12 +100,12 @@
             </com.hjq.shape.layout.ShapeLinearLayout>
 
             <LinearLayout
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="4dp"
                 android:id="@+id/menu_order_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingVertical="10dp">

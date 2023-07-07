@@ -100,7 +100,7 @@ public class LineChartManager {
         legend = lineChart.getLegend();
         //设置显示类型，LINE CIRCLE SQUARE EMPTY 等等 多种方式，查看LegendForm 即可
         legend.setForm(Legend.LegendForm.LINE);
-        legend.setTextSize(12f);
+        legend.setTextSize(18f);
         //显示位置 左下方
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);

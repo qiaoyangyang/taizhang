@@ -18,6 +18,8 @@
     >
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -41,9 +43,9 @@
         android:drawableLeft="@drawable/category_refresh"
         android:drawablePadding="10dp"
         android:gravity="center"
-        android:paddingLeft="10dp"
+        android:paddingLeft="30dp"
         android:paddingTop="10dp"
-        android:paddingRight="10dp"
+        android:paddingRight="30dp"
         android:paddingBottom="10dp"
         android:text="同步分类"
         android:textColor="#67686A"

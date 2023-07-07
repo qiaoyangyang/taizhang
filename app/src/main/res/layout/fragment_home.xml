@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_marginRight="5dp"
         android:layout_weight="7"
-        android:background="@color/white">
+       >
 
         <LinearLayout
             android:id="@+id/inventory_layout"
@@ -91,7 +91,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginStart="@dimen/dp_24"
             android:id="@+id/inventory_goods_stock_tab_layout"
             android:layout_width="match_parent"
 
@@ -100,6 +99,7 @@
             app:layout_constraintTop_toBottomOf="@+id/inventory_layout">
 
             <androidx.recyclerview.widget.RecyclerView
+
                 android:id="@+id/inventory_raw"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -118,16 +118,16 @@
             app:layout_constraintTop_toBottomOf="@+id/inventory_goods_stock_tab_layout"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:background="@color/order_remark_F4F4F4"
+            android:background="#F4F4F4"
             android:layout_width="0dp"
             android:layout_height="1dp"/>
 
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:layout_marginTop="10dp"
 
             android:id="@+id/commodity_refeshLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="20dp"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv">
@@ -286,11 +286,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:textStyle="bold"
                 android:id="@+id/tv_sku"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginRight="20dp"
-                android:background="@color/order_FFC4C4C4"
+                android:background="#F4F4F4"
                 android:gravity="center"
                 android:text="237812783792738"
                 android:textColor="@color/red"
@@ -313,7 +314,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@color/order_FFC4C4C4"
+                android:background="#F4F4F4"
                 android:maxEms="2"
                 android:paddingLeft="10dp"
                 android:paddingTop="6dp"
@@ -329,6 +330,7 @@
                 app:layout_constraintTop_toTopOf="@+id/iv_commodity_url" />
 
             <TextView
+                android:textStyle="bold"
                 android:id="@+id/tv_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -336,7 +338,7 @@
                 android:minHeight="100dp"
                 android:text="热卖草莓爱心奶油生日祝福限时惠奶油蛋糕热卖三行展示效果"
                 android:textColor="#1F1F1F"
-                android:textSize="20sp"
+                android:textSize="26sp"
                 app:layout_constraintLeft_toLeftOf="@+id/iv_commodity_url"
                 app:layout_constraintRight_toRightOf="@+id/tv_sku"
                 app:layout_constraintTop_toBottomOf="@+id/iv_commodity_url" />
@@ -346,8 +348,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginBottom="5dp"
-                android:text="* 出餐数量（单位：个）："
-                android:textSize="14sp"
+                android:text="入库数量 （单位：个）："
+                android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/rv_keyboard"
                 app:layout_constraintLeft_toLeftOf="@+id/tv_name" />
 
@@ -392,7 +394,7 @@
                     android:paddingStart="4dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:text="一"
+                    android:text="-"
                     android:textColor="@color/home_000000"
                     android:textSize="30sp"
                     android:textStyle="bold" />
@@ -403,9 +405,10 @@
                     android:background="#E1E2E5" />
 
                 <TextView
+                    android:textStyle="bold"
                     android:id="@+id/stock_add_num"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:inputType="numberDecimal"
@@ -418,7 +421,7 @@
                     android:paddingBottom="10dp"
                     android:text=""
                     android:textColor="@color/red"
-                    android:textSize="20sp" />
+                    android:textSize="24sp" />
 
                 <View
                     android:layout_width="1dp"

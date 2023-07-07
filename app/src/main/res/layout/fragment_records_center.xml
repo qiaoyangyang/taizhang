@@ -244,6 +244,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_01">
 
             <com.hjq.shape.layout.ShapeConstraintLayout
+                android:layout_weight="4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:shape_radius="4dp"
@@ -254,7 +255,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="30dp"
                     android:drawableLeft="@drawable/aggregate"
                     android:drawablePadding="10dp"
                     android:gravity="center"
@@ -273,7 +274,7 @@
                     android:layout_marginTop="10dp"
                     android:text="包含：良品和不良品的入库总和"
                     android:textColor="#8A8E9F"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     app:layout_constraintLeft_toLeftOf="@+id/aggregate"
                     app:layout_constraintTop_toBottomOf="@+id/aggregate" />
 
@@ -284,11 +285,13 @@
                     android:layout_marginTop="12dp"
                     android:text="300"
                     android:textColor="#5B6388"
+                    android:textStyle="bold"
                     android:textSize="32sp"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_ts"
                     app:layout_constraintTop_toBottomOf="@+id/tv_ts" />
 
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:text="件"
                     android:textColor="#5B6388"
                     android:textSize="16sp"
@@ -298,20 +301,20 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintBaseline_toBaselineOf="@+id/tv_aggregate" />
                 <TextView
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="30dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginTop="12dp"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:textColor="#8A8E9F"
                     android:text="共计14种商品"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_aggregate"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_aggregate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
 
             </com.hjq.shape.layout.ShapeConstraintLayout>
             <com.hjq.shape.layout.ShapeConstraintLayout
+                android:layout_weight="4"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -323,7 +326,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="30dp"
                     android:drawableLeft="@drawable/accepted_goods"
                     android:drawablePadding="10dp"
                     android:gravity="center"
@@ -352,12 +355,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="300"
+                    android:textStyle="bold"
                     android:textColor="#5B6388"
                     android:textSize="32sp"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_ts1"
                     app:layout_constraintTop_toBottomOf="@+id/tv_ts1" />
 
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:text="件"
                     android:textColor="#5B6388"
                     android:textSize="16sp"
@@ -368,27 +373,26 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/tv_accepted_goods" />
                 <TextView
                     android:id="@+id/tv_accepted_goods_num"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="30dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginTop="12dp"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:textColor="#8A8E9F"
                     android:text="共计14种商品"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_accepted_goods"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_accepted_goods"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <com.hjq.shape.view.ShapeTextView
                     android:id="@+id/tv_detail"
                     android:drawableRight="@drawable/bank"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
                     android:textColor="#5B6388"
                     android:gravity="center"
                     android:paddingRight="20dp"
                     android:paddingBottom="5dp"
                     android:paddingTop="5dp"
                     android:paddingLeft="20dp"
-                    app:shape_strokeColor="#CACCD8"
+                    app:shape_strokeColor="#5B6388"
                     app:shape_strokeWidth="1dp"
                     app:shape_radius="18dp"
                     android:text="明细"
@@ -402,6 +406,7 @@
             </com.hjq.shape.layout.ShapeConstraintLayout>
             <com.hjq.shape.layout.ShapeConstraintLayout
                 android:layout_marginTop="10dp"
+                android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:shape_radius="4dp"
@@ -412,7 +417,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="30dp"
                     android:drawableLeft="@drawable/yield"
                     android:drawablePadding="10dp"
                     android:gravity="center"
@@ -443,11 +448,10 @@
                     android:layout_marginTop="10dp"
                     android:text="良品/总入库x100"
                     android:textColor="#8A8E9F"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     app:layout_constraintLeft_toLeftOf="@+id/Yield"
                     app:layout_constraintTop_toBottomOf="@+id/Yield" />
                 <TextView
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_ts3"
                     android:textStyle="bold"
                     android:text="85.3%"
                     android:layout_marginRight="16dp"
@@ -486,10 +490,22 @@
             app:layout_constraintBottom_toTopOf="@+id/slidingTabLayout"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:background="#F4F4F4"
+            app:layout_constraintBottom_toTopOf="@+id/slidingTabLayout"
+
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
+
         <com.flyco.tablayout.SlidingTabLayout
+            android:layout_marginBottom="10dp"
+
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:id="@+id/slidingTabLayout"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:background="@drawable/bg_my_data_white10"
@@ -502,6 +518,7 @@
             app:tl_indicator_margin_right="2dp"
             app:tl_indicator_style="BLOCK"
             app:tl_tab_space_equal="true"
+            app:tl_textsize="18sp"
             app:tl_textSelectColor="#FE4B48"
             app:tl_textUnselectColor="#616161" />
 

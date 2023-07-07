@@ -34,8 +34,8 @@ class ClassificationPopWindow {
             setOutsideTouchable(true)
             setYOffset(10)
             setXOffset(10)
-            setWidth(300)
-            setHeight(400)
+            setWidth(450)
+            setHeight(600)
 
             var tv_SynchronizingSort = inflate.findViewById<TextView>(R.id.tv_SynchronizingSort)
 

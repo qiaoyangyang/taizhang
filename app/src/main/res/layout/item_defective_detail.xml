@@ -102,7 +102,7 @@
             android:layout_marginTop="22dp"
             android:text="入库数："
             android:textColor="#909090"
-            android:textSize="13sp"
+            android:textSize="18sp"
             app:layout_constraintLeft_toLeftOf="@+id/iv_commodity_url"
             app:layout_constraintTop_toBottomOf="@+id/tv_specification" />
         <TextView
@@ -136,7 +136,7 @@
         <TextView
             android:id="@+id/Library_sign"
             android:textColor="#909090"
-            android:textSize="13sp"
+            android:textSize="18sp"
             android:layout_marginTop="22dp"
             app:layout_constraintLeft_toLeftOf="@+id/iv_commodity_url"
             android:text="入库人："
@@ -144,7 +144,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
-
+            android:textStyle="bold"
             android:textColor="#1F1F1F"
             android:id="@+id/tv_Library_sign"
             android:text="1566541255"
