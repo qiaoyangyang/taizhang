@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.meiling.account.adapter.SelectShopAdapger
 import com.meiling.account.databinding.ActivitySelectStoreBinding
 import com.meiling.account.viewmodel.LoginViewModel
+import com.meiling.account.widget.showToast
 import com.meiling.common.activity.BaseActivity
 
 //  选择门店
@@ -25,13 +26,30 @@ class SelectStoreActiviy : BaseActivity<LoginViewModel, ActivitySelectStoreBindi
 
     override fun initData() {
         super.initData()
-        selectShopAdapger.setList(arrayListOf("2222","",""))
+        mViewModel.userStoreList()
+       //
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivitySelectStoreBinding {
         return ActivitySelectStoreBinding.inflate(layoutInflater)
     }
 
+    override fun createObserver() {
+        super.createObserver()
+        mViewModel.UserStoreList.onStart.observe(this){
+            showLoading("")
+        }
+        mViewModel.UserStoreList.onSuccess.observe(this){
+            disLoading()
+            selectShopAdapger.setList(it)
+
+        }
+        mViewModel.UserStoreList.onError.observe(this){
+            disLoading()
+            showToast(it.msg)
+
+        }
+    }
 
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {

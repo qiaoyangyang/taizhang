@@ -20,7 +20,7 @@ public class Appdata {
             }else {
                 goosClassify.setSelect(false);
             }
-            goosClassify.setName("分类"+i);
+            goosClassify.setSortName("分类"+i);
             goosClassifies.add(goosClassify);
         }
         return goosClassifies;

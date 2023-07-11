@@ -29,9 +29,12 @@ public class GoodaAdapter extends BaseQuickAdapter<Goods, BaseViewHolder> {
         }else {
             baseViewHolder.setBackgroundResource(R.id.cl_bg,R.drawable.bg_goods_fase);
         }
+        baseViewHolder.setText(R.id.tv_goodsUnit,s.getGoodsUnit());
+        baseViewHolder.setText(R.id.tv_name,s.getGoodsName());
+        baseViewHolder.setText(R.id.tv_goodsSpecsValus,s.getGoodsSpecsValus());
         CustomRoundAngleImageView view = baseViewHolder.getView(R.id.iv_Img);
         GlideApp.with(getContext())
-                .load("https://t7.baidu.com/it/u=3208595851,3710378865&fm=193&f=GIF")
+                .load(s.getGoodsImgurl())
                 .into(view);
     }
 }

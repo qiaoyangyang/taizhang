@@ -4,11 +4,11 @@
     xmlns:roundiv="http://schemas.android.com/tools"
     android:id="@+id/cl_bg"
     android:layout_width="match_parent"
-    app:cardBackgroundColor="@color/white"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    app:cardMaxElevation="5dp"
-    app:cardElevation="10dp">
+    app:cardBackgroundColor="@color/white"
+    app:cardElevation="10dp"
+    app:cardMaxElevation="5dp">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,33 +18,35 @@
 
         <com.meiling.account.widget.CustomRoundAngleImageView
             android:id="@+id/iv_Img"
+            style="@style/CustomRoundAngleImageView"
+            android:layout_width="0dp"
+
+            android:layout_height="120dp"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            style="@style/CustomRoundAngleImageView"
-            android:layout_margin="5dp"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:scaleType="centerCrop"
-
             app:layout_constraintTop_toTopOf="parent" />
-        <com.hjq.shape.view.ShapeTextView
-            android:layout_marginRight="8dp"
-            android:text="个"
-            android:layout_marginBottom="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingRight="10dp"
-            app:shape_radius="6dp"
-            android:paddingLeft="10dp"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            app:shape_solidColor="@color/red"
-            app:layout_constraintRight_toRightOf="@+id/iv_Img"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_Img"
 
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/tv_goodsUnit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:text="个"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_Img"
+            app:layout_constraintRight_toRightOf="@+id/iv_Img"
+
+            app:shape_radius="6dp"
+            app:shape_solidColor="@color/red" />
 
 
         <TextView
@@ -58,29 +60,25 @@
             android:layout_marginRight="10dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋糕草莓小熊小蛋"
             android:textColor="#1F1F1F"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_Img" />
+
         <TextView
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/tv_goodsSpecsValus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
-            app:layout_constraintRight_toRightOf="@+id/tv_name"
-            app:layout_constraintLeft_toLeftOf="@+id/tv_name"
             android:textColor="#1F1F1F"
             android:textSize="16sp"
-            android:text="8寸，冰淇淋奶油口味红色，大杯装"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
-
-
-
-
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+            app:layout_constraintRight_toRightOf="@+id/tv_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

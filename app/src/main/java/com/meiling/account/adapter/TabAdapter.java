@@ -19,7 +19,7 @@ public class TabAdapter extends BaseQuickAdapter<GoosClassify, BaseViewHolder> {
 
     @Override
     protected void convert(@NonNull BaseViewHolder holder, GoosClassify item) {
-        holder.setText(R.id.txtRecyCategoryItem, item.getName());
+        holder.setText(R.id.txtRecyCategoryItem, item.getSortName());
         TextView textView = holder.getView(R.id.txtRecyCategoryItem);
         if (item.getSelect()) {
             holder.setTextColor(R.id.txtRecyCategoryItem, Color.parseColor("#FE4B48"));

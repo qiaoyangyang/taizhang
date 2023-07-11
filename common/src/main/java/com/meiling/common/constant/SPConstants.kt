@@ -15,6 +15,6 @@ object SPConstants {
     const val CARDNO = "CARDNO"
     const val ROLE = "ROLE"
     const val tenantId = "tenantId"
-    const val adminViewId = "adminViewId"
+    const val userViewId = "userViewId"
     const val IP = "IP"
 }

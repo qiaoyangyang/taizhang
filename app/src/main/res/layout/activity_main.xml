@@ -33,6 +33,7 @@
               />
 
             <TextView
+                android:id="@+id/tv_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -58,6 +59,7 @@
                 app:shape_solidColor="@color/white" />
 
             <com.hjq.shape.view.ShapeTextView
+                android:id="@+id/tv_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

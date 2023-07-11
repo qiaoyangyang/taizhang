@@ -3,6 +3,7 @@ package com.meiling.account.activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -22,6 +23,7 @@ import com.meiling.account.fragment.HomeFragment
 import com.meiling.account.fragment.RecordsCenterFragment
 import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.setSingleClickListener
+import com.meiling.account.widget.showToast
 import com.meiling.common.GlideApp
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.constant.ARouteConstants
@@ -80,8 +82,11 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
 
     }
 
+
     //设置用户信息
     fun setmessage() {
+        Log.d("yjk","用户信息--"+userInfoBean?.userName)
+        mDatabind.tvUserName.text=MyuserInfoBean()?.userName
         GlideApp.with(this)
             .load("https://lmg.jj20.com/up/allimg/4k/s/02/210924233115O14-0-lp.jpg")
             .circleCrop()
@@ -99,7 +104,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
 
     override fun initData() {
 
-
+        mViewModel.userInfo()
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityMainBinding {
@@ -112,7 +117,19 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     }
 
     override fun createObserver() {
-
+        mViewModel.userBean.onStart.observe(this) {
+            showLoading("请稍后...")
+        }
+        mViewModel.userBean.onSuccess.observe(this) {
+            disLoading()
+            SaveUserBean(it)
+            setmessage()
+            //startActivity(Intent(this, SelectStoreActiviy::class.java))
+        }
+        mViewModel.userBean.onError.observe(this) {
+            disLoading()
+            showToast(it.msg)
+        }
     }
 
 
@@ -180,5 +197,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     override fun isCheckNetWork(): Boolean {
         return true
     }
+
 
 }

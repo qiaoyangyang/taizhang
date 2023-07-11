@@ -49,7 +49,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                 }
             }.onFailure {
                 if (it.message!!.isNotEmpty()) {
-                    if (it.message!!.contains("403")) {
+                    if (it.message!!.contains("401")) {
 //                        val toast = Toast.makeText(
 //                            Utils.getApp(),
 //                            "账号登录过期，请重新登录",
@@ -94,7 +94,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
             }.onSuccess {
                 if (it.code == 200) {
                     resultState.postValue(it.data)
-                } else if (it.code == 403) {
+                } else if (it.code == 401) {
                     ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
                 } else {
                     onError(ExceptionHandle.handleException(APIException(it.code, it.msg)))
@@ -116,7 +116,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
             }.onSuccess {
                 if (it.code == 200) {
                     resultState.postValue(it.data)
-                } else if (it.code == 403) {
+                } else if (it.code == 401) {
                     ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
                 } else {
                     onError.postValue(APIException(it.code, it.msg))
@@ -148,7 +148,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                         } else {
                             onSuccess.invoke(null)
                         }
-                    } else if (it.code == 403) {
+                    } else if (it.code == 401) {
                         ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY).navigation()
                     } else {
                         if (onError != null) {

@@ -29,6 +29,7 @@ import com.meiling.common.dialog.LoadingDialog
 import com.meiling.common.getVmClazz
 import com.meiling.common.network.NetworkMonitorManager
 import com.meiling.common.network.data.ByTenantId
+import com.meiling.common.network.data.userInfoBean
 import com.meiling.common.network.enums.NetworkState
 import com.meiling.common.network.interfaces.NetworkMonitor
 import com.meiling.common.network.util.NetworkStateUtils
@@ -45,6 +46,9 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), TitleBa
     lateinit var mViewModel: VM
 
     private var mLoadingDialog: LoadingDialog? = null
+
+
+
 
     abstract fun initView(savedInstanceState: Bundle?)
 
@@ -241,15 +245,14 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), TitleBa
             .statusBarDarkFont(isStatusBarDarkFont()) // 指定导航栏背景颜色
             .autoDarkModeEnable(true, 0.2f)
     }
-
-    var byTenantId: ByTenantId? = null
-    open fun ByTenantId(): ByTenantId? {
-        byTenantId =
-            GsonUtils.getPerson(MMKVUtils.getString("UserBean", ""), ByTenantId::class.java)
-        return byTenantId
+     var userInfoBean: userInfoBean? = null
+    open fun MyuserInfoBean(): userInfoBean? {
+        userInfoBean =
+            GsonUtils.getPerson(MMKVUtils.getString("UserBean", ""), com.meiling.common.network.data.userInfoBean::class.java)
+        return userInfoBean
     }
 
-    open fun SaveUserBean(userBean: ByTenantId?) {
+    open fun SaveUserBean(userBean: userInfoBean?) {
         MMKVUtils.putString("UserBean", Gson().toJson(userBean))
     }
 

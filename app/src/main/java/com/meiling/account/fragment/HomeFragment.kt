@@ -11,13 +11,20 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.github.promeg.pinyinhelper.Pinyin
 import com.hjq.base.BasePopupWindow
 import com.hjq.base.action.AnimAction
+import com.meihao.kotlin.cashier.db.ArticleDao
+import com.meihao.kotlin.cashier.db.ArticleGoosDataBase
+import com.meihao.kotlin.cashier.db.GoosClassifyDaoDao
+import com.meihao.kotlin.cashier.db.GoosClassifyDataBase
 import com.meiling.account.R
 import com.meiling.account.adapter.CustomkeyboardAdapter
 import com.meiling.account.adapter.GoodaAdapter
 import com.meiling.account.adapter.TabAdapter
 import com.meiling.account.bean.Appdata
+import com.meiling.account.bean.Goods
+import com.meiling.account.bean.GoodsController
 import com.meiling.account.bean.GoosClassify
 import com.meiling.account.databinding.FragmentHomeBinding
 import com.meiling.account.dialog.ClassificationPopWindow
@@ -45,10 +52,12 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
     var data = ArrayList<GoosClassify>()
     var isselect = false
-    var searchkey=""//  搜素关键字
+    var searchkey = ""//  搜素关键字
+
+
+    val goodsCategoryDao: GoosClassifyDaoDao = GoosClassifyDataBase.instance.getGoodsCategoryDao()
 
     override fun initView(savedInstanceState: Bundle?) {
-        data = Appdata.getGoosClassify()
         setclassification()
 
         mDatabind.rvKeyboard?.layoutManager = GridLayoutManager(context, 3)
@@ -62,7 +71,6 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
         goodaAdapter = GoodaAdapter(R.layout.item_goods)
         mDatabind.commodityStockRcy?.adapter = goodaAdapter
 
-        goodaAdapter?.setList(InputUtil.getisExpen())
         goodaAdapter?.setOnItemClickListener(this)
 
         setisselect(isselect)
@@ -70,7 +78,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
             if ((actionId == 0 || actionId == 3) && event != null) {
                 //点击搜索
                 // TODO:  搜索
-                KeyBoardUtil.closeKeyBord( mDatabind.stockSearchGoodEdit, requireContext())
+                KeyBoardUtil.closeKeyBord(mDatabind.stockSearchGoodEdit, requireContext())
             }
             return@setOnEditorActionListener false
         }
@@ -87,16 +95,16 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
             override fun afterTextChanged(s: Editable?) {
                 if (mDatabind.stockSearchGoodEdit.text.toString().isEmpty()) {
-                    mDatabind.goodsStockSearchGoodClear.visibility=View.GONE
-                }else{
-                    mDatabind.goodsStockSearchGoodClear.visibility=View.VISIBLE
+                    mDatabind.goodsStockSearchGoodClear.visibility = View.GONE
+                } else {
+                    mDatabind.goodsStockSearchGoodClear.visibility = View.VISIBLE
                 }
             }
 
         })
         //删除搜素内容
         mDatabind.goodsStockSearchGoodClear.setSingleClickListener {
-            searchkey=""
+            searchkey = ""
             mDatabind.stockSearchGoodEdit.setText(searchkey)
 
         }
@@ -126,25 +134,21 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
         mDatabind.inventoryStockTabMore.setSingleClickListener {
             ClassificationPopWindow.Builder(mActivity).setGravity(Gravity.RIGHT).setAnimStyle(
                 AnimAction.ANIM_EMPTY
-            )
-                .setListener(object :
-                    ClassificationPopWindow.OnListener {
-                    override fun onSelected(
-                        popupWindow: BasePopupWindow?,
-                        id: Int,
-                        boolean: Boolean
-                    ) {
-                        if (boolean == false) {
-                            tabAdapter?.data?.forEach {
-                                it.select = false
+            ).setListener(object : ClassificationPopWindow.OnListener {
+                override fun onSelected(
+                    popupWindow: BasePopupWindow?, id: Int, boolean: Boolean
+                ) {
+                    if (boolean == false) {
+                        tabAdapter?.data?.forEach {
+                            it.select = false
 
-                            }
-                            tabAdapter?.getItem(id)?.select = true
-                            tabAdapter?.notifyDataSetChanged()
                         }
+                        tabAdapter?.getItem(id)?.select = true
+                        tabAdapter?.notifyDataSetChanged()
                     }
+                }
 
-                }).setList(data).showAsDropDown(mDatabind.inventoryStockTabMore)
+            }).setList(data).showAsDropDown(mDatabind.inventoryStockTabMore)
         }
 
 
@@ -178,13 +182,36 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
 
         }
-        tabAdapter?.setList(data)
+
 
         mDatabind.inventoryStockTabMore.setOnClickListener {
 
         }
 
 
+    }
+
+    val articleDao: ArticleDao =
+        ArticleGoosDataBase.instance.getGoodsToOrderContentDao()
+    var pageNum: Int = 1
+    var pageSize: Int = 10
+    var sortCode: String = ""
+    override fun initData() {
+        super.initData()
+        if (goodsCategoryDao.selectGoodsCount() == 0) {
+            mViewModel.sorlistt()
+        } else {
+            data = goodsCategoryDao.getCategoryname() as ArrayList<GoosClassify>
+            data[0].select = true
+            tabAdapter?.setList(data)
+        }
+        if (articleDao.selectGoodsCount() == 0) {
+            mViewModel.goodslistt(GoodsController(pageNum, pageSize, sortCode))
+        } else {
+
+            var goods = articleDao.getGoodsByKeyWord("") as ArrayList<Goods>
+            goodaAdapter?.setList(goods)
+        }
     }
 
     var num: String = ""
@@ -258,6 +285,82 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
             TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed, R.drawable.succeed)
         } else {
             TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed, R.drawable.be_defeated)
+        }
+
+    }
+
+    override fun createObserver() {
+        super.createObserver()
+
+        mViewModel.goosClassify.onStart.observe(this) {
+            showLoading("")
+        }
+
+        mViewModel.goosClassify.onSuccess.observe(this) {
+            dismissLoading()
+            var category = GoosClassify(id = "0", sortName = "全部商品")
+            category.select = true
+            it.add(0, category)
+            data = it
+
+            goodsCategoryDao.insertAll(it)
+            tabAdapter?.setList(data)
+
+
+        }
+
+        mViewModel.goosClassify.onError.observe(this) {
+            dismissLoading()
+            showToast(it.msg)
+        }
+
+
+        mViewModel.goods.onStart.observe(this) {
+            showLoading("")
+        }
+
+        mViewModel.goods.onSuccess.observe(this) {
+            dismissLoading()
+            var isLoadAll =
+                it.total <= pageNum * pageSize
+            it.data?.forEach {
+                var allChinesePinyin = Pinyin.toPinyin(it?.goodsName, "|")
+                //获取完整拼音
+                var allChinesePinyinList = allChinesePinyin.split("|")
+                var allChinesePinyinTemp = StringBuffer()
+                allChinesePinyinList.forEach {
+                    allChinesePinyinTemp.append(it)
+                }
+                it?.chineseAllPinYin = allChinesePinyinTemp.toString()
+                //获取首字母
+                var s = StringBuffer()
+                var pinyinList = allChinesePinyin?.split("|")
+                pinyinList?.forEach {
+                    if (it.first() in 'a'..'z' || it.first() in 'A'..'Z') {
+                        s.append(it.first())
+                    } else {
+                        s.append(it)
+                    }
+                }
+                it?.chineseFirstPinYin = s.toString()
+            }
+            if (isLoadAll) {
+                articleDao.insertAll(it?.data as ArrayList<Goods>)
+
+                var goods = articleDao.getGoodsByKeyWord(sortCode) as ArrayList<Goods>
+                goodaAdapter?.setList(goods)
+
+            } else {
+                pageNum + 1
+                mViewModel.goodslistt(GoodsController(pageNum, pageSize, sortCode))
+            }
+
+
+        }
+
+        mViewModel.goods.onError.observe(this) {
+            dismissLoading()
+            showToast(it.msg)
         }
 
     }

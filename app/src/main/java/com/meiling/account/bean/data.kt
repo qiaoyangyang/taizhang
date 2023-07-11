@@ -6,33 +6,29 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class GoosClassify(
-    @PrimaryKey
-    @SerializedName("viewId")
-    var viewId: String = "",// 1603702495480254464
-    @SerializedName("adminUserId")
-    var adminUserId: Long = 0, // 28193829391283910
-    @SerializedName("childList")
-    var childList: ArrayList<GoosClassify> = arrayListOf<GoosClassify>(),
+
     @SerializedName("createTime")
-    var createTime: String = "", // 2022-12-16T10:44:04.000+00:00
-    @SerializedName("creatorName")
-    var creatorName: String? = "", // null
-    @SerializedName("fullPath")
-    var fullPath: String = "", // 1603702495480254464
-    @SerializedName("level")
-    var level: Int = 0, // 1
-    @SerializedName("modifier")
-    var modifier: String = "", // 28193829391283910
-    @SerializedName("modifierName")
-    var modifierName: String? = "", // null
-    @SerializedName("name")
-    var name: String = "", // 测试标签001
-    @SerializedName("parentId")
-    var parentId: String = "", // 0
+    var createTime: String? = "",
+    @PrimaryKey
+    @SerializedName("id")
+    var id: String="",
+    @SerializedName("operationId")
+    var operationId: String? = "",
+    @SerializedName("sortCode")
+    var sortCode: String? = "",
+    @SerializedName("sortName")
+    var sortName: String? = "",
+    @SerializedName("status")
+    var status: Int? = 0,
+    @SerializedName("tenantId")
+    var tenantId: Int? = 0,
     @SerializedName("updateTime")
-    var updateTime: String = "", // 2022-12-16T10:44:04.000+00:00
-    var select: Boolean = true
+    var updateTime: String? = "",
+    @SerializedName("weight")
+    var weight: Int? = 0,
+    var select: Boolean = false
 
 ) {
     @Ignore
@@ -42,6 +38,61 @@ data class GoosClassify(
 
 
 }
+data class GoodsBean(
+
+    @SerializedName("data")
+    var data: List<Goods?>? = listOf(),
+    @SerializedName("total")
+    var total: Int = 0
+)
+
+@Entity
 data class Goods(
-      var isExpen: Boolean = false
+    var chineseAllPinYin: String? = "",
+    var chineseFirstPinYin: String? = "",
+    var isExpen: Boolean = false,
+    @SerializedName("costPrice")
+    var costPrice: Int? = 0,
+    @SerializedName("createTime")
+    var createTime: String? = "",
+    @SerializedName("goodsImgurl")
+    var goodsImgurl: String? = "",
+    @SerializedName("goodsName")
+    var goodsName: String? = "",
+    @SerializedName("goodsSpecs")
+    var goodsSpecs: String? = "",
+    @SerializedName("goodsUnit")
+    var goodsUnit: String? = "",
+    @SerializedName("id")
+    var id: Int? = 0,
+    @SerializedName("operationId")
+    var operationId: String? = "",
+
+    @SerializedName("retailPrice")
+    var retailPrice: Int? = 0,
+    @SerializedName("seriesCode")
+    var seriesCode: String? = "",
+    @SerializedName("skuCode")
+    var skuCode: String? = "",
+    @SerializedName("sortCode")
+    var sortCode: String? = "",
+    @SerializedName("status")
+    var status: Int? = 0,
+    @SerializedName("tenantId")
+    var tenantId: Int? = 0,
+    @SerializedName("unitViewId")
+    var unitViewId: String? = "",
+    @SerializedName("updateTime")
+    var updateTime: String? = "",
+    @SerializedName("goodsSpecsValus")
+    var goodsSpecsValus: String? = "",
+    @PrimaryKey
+    @SerializedName("viewId")
+    var viewId: String = ""
+)
+
+data class GoodsController(
+    var pageNum :Int=0,
+    var pageSize :Int=10,
+    var sortCode :String="",
 )

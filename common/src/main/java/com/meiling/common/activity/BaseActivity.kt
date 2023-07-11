@@ -32,4 +32,5 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewBinding> : BaseVmDbActi
 
 
 
+
 }

@@ -24,6 +24,7 @@ import com.meiling.account.widget.setSingleClickListener
 import com.meiling.account.widget.showToast
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.constant.ARouteConstants
+import com.meiling.common.constant.SPConstants
 import com.meiling.common.utils.InputTextManager
 import com.meiling.common.utils.MMKVUtils
 
@@ -31,26 +32,33 @@ import com.meiling.common.utils.MMKVUtils
 @Route(path = "/app/LoginActivity")
 class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
-        mDatabind.edtName.setText("1")
-        mDatabind.edtPaswd.setText("1")
+        mDatabind.edtName.setText("15535958281")
+        mDatabind.edtPaswd.setText("123456")
+        //监听是否添加用户名和密码
         mDatabind.btnLogin.let {
             InputTextManager.with(this)
                 .addView(mDatabind.edtName)
                 .addView(mDatabind.edtPaswd)
                 .setMain(it)
                 .build()
-            KeyBoardUtil.hideKeyBoard(this,mDatabind.btnLogin)
+            KeyBoardUtil.hideKeyBoard(this, mDatabind.btnLogin)
         }
 
+        //登陆按钮
         mDatabind.btnLogin.setSingleClickListener {
-          // mViewModel.mobileLogin(mDatabind.edtName.text.toString(),mDatabind.edtPaswd.text.toString())
+            mViewModel.mobileLogin(
+                mDatabind.edtName.text.toString(),
+                mDatabind.edtPaswd.text.toString()
+            )
 
-            setSaveaccount()
+            //setSaveaccount()
         }
+        //清楚账号
         mDatabind.imgClear.setSingleClickListener {
             mDatabind.edtName.setText("")
         }
-        mDatabind.edtName.addTextChangedListener(object : TextWatcher{
+        //
+        mDatabind.edtName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -58,16 +66,14 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (TextUtils.isEmpty(mDatabind.edtName.text.toString())){
-                    mDatabind.imgClear.visibility=View.GONE
-                }else{
-                    mDatabind.imgClear.visibility=View.VISIBLE
+                if (TextUtils.isEmpty(mDatabind.edtName.text.toString())) {
+                    mDatabind.imgClear.visibility = View.GONE
+                } else {
+                    mDatabind.imgClear.visibility = View.VISIBLE
                 }
             }
 
         })
-
-
 
 
     }
@@ -79,17 +85,37 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
     override fun createObserver() {
         super.createObserver()
-        mViewModel.loginData.onStart.observe(this){
+        mViewModel.loginData.onStart.observe(this) {
             showLoading("请稍后...")
         }
-        mViewModel.loginData.onSuccess.observe(this){
+        mViewModel.loginData.onSuccess.observe(this) {
             disLoading()
+            MMKVUtils.putString(SPConstants.TOKEN, it.token!!)
+            MMKVUtils.putString(SPConstants.tenantId, it.tenantId!!)
+            MMKVUtils.putString(SPConstants.userViewId, it.userViewId!!)
+            showLoading("请稍后...")
+            mViewModel.userInfo()
+
             // TODO:
-            startActivity(Intent(this, SelectStoreActiviy::class.java))
+            // startActivity(Intent(this, SelectStoreActiviy::class.java))
         }
-        mViewModel.loginData.onError.observe(this){
+        mViewModel.loginData.onError.observe(this) {
+            disLoading()
             showToast(it.msg)
             //disLoading()
+        }
+
+        mViewModel.userBean.onStart.observe(this) {
+            showLoading("请稍后...")
+        }
+        mViewModel.userBean.onSuccess.observe(this) {
+            disLoading()
+            SaveUserBean(it)
+            startActivity(Intent(this, SelectStoreActiviy::class.java))
+        }
+        mViewModel.userBean.onError.observe(this) {
+            disLoading()
+            showToast(it.msg)
         }
     }
 
@@ -98,7 +124,8 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         hasNetWork(true)
 
     }
-    fun setSaveaccount(){
+
+    fun setSaveaccount() {
         val dialog: MineExitDialog =
             MineExitDialog().newInstance("温馨提示", "是否记住密码，以便下次直接登录？", "取消", "确认", false)
         dialog.setOkClickLister {
@@ -109,8 +136,6 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         }
         dialog.show(supportFragmentManager)
     }
-
-
 
 
 }

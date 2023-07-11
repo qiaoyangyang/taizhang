@@ -4,14 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 
 data class  LoginDto(
-    val adminUser: AdminUser,
-    val isChain: String,
-    val isNew: String,
-    val lastAccessTenant: String,
-    val multiUnitMark: Boolean,
-    val poiIdList: String,
-    val role: String,
-    val state: String
+ var token:String,
+ var userViewId:String,
+ var tenantId:String,
+
 )
 
 data class AdminUser(
@@ -52,4 +48,10 @@ data class SaveSuccess(
     var tenantId:String,
     var adminUserViewId:String,
     var secret:String?
+)
+data class UserLoginData(
+    var phone:String,
+    var loginPassword:String,
+
+
 )

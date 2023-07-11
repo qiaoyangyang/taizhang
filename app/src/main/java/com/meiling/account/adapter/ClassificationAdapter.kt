@@ -10,7 +10,7 @@ import com.meiling.account.bean.GoosClassify
 
 class ClassificationAdapter :BaseQuickAdapter<GoosClassify, BaseViewHolder>(R.layout.item_tab_p) {
     override fun convert(holder: BaseViewHolder, item: GoosClassify) {
-        holder.setText(R.id.txtRecyCategoryItem, item.name)
+        holder.setText(R.id.txtRecyCategoryItem, item.sortName)
         val textView = holder.getView<TextView>(R.id.txtRecyCategoryItem)
         if (item.select) {
             holder.setTextColor(R.id.txtRecyCategoryItem, Color.parseColor("#FE4B48"))

@@ -2,14 +2,14 @@ package com.meiling.common.network;
 
 public class ResultData<T> extends BaseBean {
 
-    private T data;
+    private T result;
  
     public T getData() {
-        return data;
+        return result;
     }
  
-    public void setData(T data) {
-        this.data = data;
+    public void setData(T result) {
+        this.result = result;
     }
  
 }

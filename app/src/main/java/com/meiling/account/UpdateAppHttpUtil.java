@@ -59,8 +59,7 @@ public class UpdateAppHttpUtil implements HttpManager {
     public void asyncPost(@NonNull String url, @NonNull Map<String, String> params, @NonNull final Callback callBack) {
         OkHttpUtils.post()
 //                .addHeader(MMKVUtils.INSTANCE.getString(SharedPreferences.), Config.headerValue)
-                .addHeader("platform", "app")
-                .addHeader("adminViewId", MMKVUtils.INSTANCE.getString(SPConstants.adminViewId, ""))
+               // .addHeader("adminViewId", MMKVUtils.INSTANCE.getString(SPConstants.adminViewId, ""))
                 .addHeader("adminToken", MMKVUtils.INSTANCE.getString(SPConstants.TOKEN, ""))
                 .addHeader("tenantId", MMKVUtils.INSTANCE.getString(SPConstants.tenantId, ""))
                 .url(url)

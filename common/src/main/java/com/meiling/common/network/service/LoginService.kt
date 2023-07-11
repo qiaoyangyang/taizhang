@@ -15,14 +15,27 @@ interface LoginService {
 
 
     /**
-     * 验证码登录
+     * 登录
      * **/
-    @POST("/uc/admin/phone_login")
+    @POST("/user/passwordLogin")
     suspend fun mobileLogin(
-        @Query("phone") mobile: String,
-        @Query("code") code: String,
-        @Query("state") state: String = "",
+        @Body dataDisDto: UserLoginData,
     ): ResultData<LoginDto>
+
+    /**
+     *
+    用户信息详情
+     * **/
+    @GET("/user/current/userInfo")
+    suspend fun userInfo(
+    ): ResultData<userInfoBean>
+
+    /**
+     *用户所在门店
+     * **/
+    @GET("/user/userStoreList")
+    suspend fun userStoreList(
+    ): ResultData<ArrayList<UserStoreList>>
 
 
 }
