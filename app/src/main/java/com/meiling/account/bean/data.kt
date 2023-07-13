@@ -3,8 +3,8 @@ package com.meiling.account.bean
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 @Entity
 data class GoosClassify(
@@ -91,8 +91,41 @@ data class Goods(
     var viewId: String = ""
 )
 
+//商品入参
 data class GoodsController(
     var pageNum :Int=0,
     var pageSize :Int=10,
     var sortCode :String="",
+)
+
+data class StorageGoods(
+    var goodsType:Int,//	integer($int32)   良品类型 1.良品, 2.不良品
+    var goodsViewId:String,//商品id
+    var storageNumber:String,//入库数量
+    var storeName:String,//入库门店名称
+    var storeViewId:String,//入库门店业务id
+
+
+
+
+)
+data class DateSplit(
+    var startTime: String,//起始时间
+    var endTime: String,//1.良品, 2.不良品
+    var goodsType:Int=0,//1.良品, 2.不良品
+
+)
+
+
+data class DateSplitList(
+    var boolean: Boolean?=false,
+
+    @SerializedName("dateValue")
+    var dateValue: String? = "",
+    @SerializedName("endTime")
+    var endTime: String? = "",
+    @SerializedName("goodsTotalNumber")
+    var goodsTotalNumber: String? = "",
+    @SerializedName("startTime")
+    var startTime: String? = ""
 )

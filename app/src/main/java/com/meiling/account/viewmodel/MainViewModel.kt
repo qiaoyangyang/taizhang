@@ -1,10 +1,7 @@
 package com.meiling.account.viewmodel
 
 import android.app.Application
-import com.meiling.account.bean.Goods
-import com.meiling.account.bean.GoodsBean
-import com.meiling.account.bean.GoodsController
-import com.meiling.account.bean.GoosClassify
+import com.meiling.account.bean.*
 import com.meiling.account.service.commodityService
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
@@ -37,6 +34,29 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
 
 
         request({ commodityService.goodslistt(goosClassify) }, goods)
+    }
+
+
+    //商品入库
+    val storageGoodssave = BaseLiveData<String>()
+    fun storageGood(goosClassify: StorageGoods) {
+
+
+        request({ commodityService.storageGoodssave(goosClassify) }, storageGoodssave)
+    }
+    //获取时间分段列表
+    val dateSplitlist = BaseLiveData<ArrayList<DateSplitList>>()
+    fun dateSplit(dateSplit: DateSplit) {
+
+
+        request({ commodityService.dateSplit(dateSplit) }, dateSplitlist)
+    }
+    //获取时间分段列表
+    val goodsSplitlist = BaseLiveData<ArrayList<DateSplitList>>()
+    fun goodsSplit(dateSplit: DateSplit) {
+
+
+        request({ commodityService.goodsSplit(dateSplit) }, dateSplitlist)
     }
 
 

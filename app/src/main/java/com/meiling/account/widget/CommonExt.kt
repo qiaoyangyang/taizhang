@@ -52,7 +52,7 @@ inline fun <T : View> T.setSingleClickListener(time: Long = 300, crossinline blo
  * 格式化当前日期
  */
 fun formatCurrentDate(): String {
-    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    val sdf = SimpleDateFormat("yyyy-MM-dd ")
     return sdf.format(Date())
 }
 

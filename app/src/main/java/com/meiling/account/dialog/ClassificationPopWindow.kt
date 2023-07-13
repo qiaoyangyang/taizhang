@@ -58,7 +58,7 @@ class ClassificationPopWindow {
                     position: Int
                 ) {
                     if (listener!=null){
-                        listener?.onSelected(getPopupWindow(),0,false)
+                        listener?.onSelected(getPopupWindow(),position,false)
                         dismiss()
                     }
                 }

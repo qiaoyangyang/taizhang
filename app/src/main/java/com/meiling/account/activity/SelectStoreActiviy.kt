@@ -53,6 +53,7 @@ class SelectStoreActiviy : BaseActivity<LoginViewModel, ActivitySelectStoreBindi
 
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        SaveUserStoreList(selectShopAdapger.data[position])
         startActivity(Intent(this, MainActivity::class.java))
     }
 

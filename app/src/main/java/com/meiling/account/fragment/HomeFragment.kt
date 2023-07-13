@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -22,10 +23,10 @@ import com.meiling.account.R
 import com.meiling.account.adapter.CustomkeyboardAdapter
 import com.meiling.account.adapter.GoodaAdapter
 import com.meiling.account.adapter.TabAdapter
-import com.meiling.account.bean.Appdata
 import com.meiling.account.bean.Goods
 import com.meiling.account.bean.GoodsController
 import com.meiling.account.bean.GoosClassify
+import com.meiling.account.bean.StorageGoods
 import com.meiling.account.databinding.FragmentHomeBinding
 import com.meiling.account.dialog.ClassificationPopWindow
 import com.meiling.account.viewmodel.MainViewModel
@@ -33,6 +34,7 @@ import com.meiling.account.widget.InputUtil
 import com.meiling.account.widget.KeyBoardUtil
 import com.meiling.account.widget.setSingleClickListener
 import com.meiling.account.widget.showToast
+import com.meiling.common.GlideApp
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.utils.RecyclerViewDivider
 import com.meiling.common.utils.TextDrawableUtils
@@ -52,14 +54,13 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
     var data = ArrayList<GoosClassify>()
     var isselect = false
-    var searchkey = ""//  搜素关键字
 
 
     val goodsCategoryDao: GoosClassifyDaoDao = GoosClassifyDataBase.instance.getGoodsCategoryDao()
 
     override fun initView(savedInstanceState: Bundle?) {
         setclassification()
-
+        //键盘
         mDatabind.rvKeyboard?.layoutManager = GridLayoutManager(context, 3)
         customkeyboardAdapter = CustomkeyboardAdapter(R.layout.item_customkey)
         mDatabind.rvKeyboard?.adapter = customkeyboardAdapter
@@ -78,6 +79,10 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
             if ((actionId == 0 || actionId == 3) && event != null) {
                 //点击搜索
                 // TODO:  搜索
+                sortCode = mDatabind.stockSearchGoodEdit.text.toString()
+
+                var goods = articleDao.getGoodsByKeyWord(sortCode) as ArrayList<Goods>
+                goodaAdapter?.setList(goods)
                 KeyBoardUtil.closeKeyBord(mDatabind.stockSearchGoodEdit, requireContext())
             }
             return@setOnEditorActionListener false
@@ -104,17 +109,27 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
         })
         //删除搜素内容
         mDatabind.goodsStockSearchGoodClear.setSingleClickListener {
-            searchkey = ""
-            mDatabind.stockSearchGoodEdit.setText(searchkey)
+            sortCode = ""
+            mDatabind.stockSearchGoodEdit.setText(sortCode)
+
+            var goods = articleDao.getGoodsByKeyWord(sortCode) as ArrayList<Goods>
+            goodaAdapter?.setList(goods)
 
         }
         //良品入库
         mDatabind.tvGoodProductsAreStored.setSingleClickListener {
-            setissucceed(true)
+
+            Log.d("yjk", "良品入库: " + userStoreList()?.tenantId)
+            //
+            goodsType = 1
+            setstorageGood()
         }
         //不良品入库
         mDatabind.tvDefectiveProductsAreStored.setSingleClickListener {
-            setissucceed(false)
+            // setissucceed(false)
+            goodsType = 2
+            setstorageGood()
+
         }
         //加号
         mDatabind.stockAddJia.setSingleClickListener {
@@ -143,8 +158,24 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
                             it.select = false
 
                         }
+
+                        var item = tabAdapter?.getItem(id)
                         tabAdapter?.getItem(id)?.select = true
                         tabAdapter?.notifyDataSetChanged()
+
+                        if (TextUtils.isEmpty(item?.sortCode)) {
+                            var goods = articleDao.getGoodsByKeyWord(sortCode) as ArrayList<Goods>
+                            goodaAdapter?.setList(goods)
+                        } else {
+                            var goods =
+                                articleDao.getGoodsByCategoryId(item?.sortCode!!) as ArrayList<Goods>
+                            goodaAdapter?.setList(goods)
+                        }
+                    } else {
+                        pageNum=1
+                        goodsCategoryDao.deleteAll()
+                        articleDao.deleteAll()
+                        initData()
                     }
                 }
 
@@ -157,7 +188,6 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
     override fun getBind(inflater: LayoutInflater): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(inflater)
     }
-
     /**
      * 分类
      */
@@ -178,13 +208,17 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
             }
             tabAdapter?.getItem(position)?.select = true
+            var item = tabAdapter?.getItem(position)
+
             tabAdapter?.notifyDataSetChanged()
+            if (TextUtils.isEmpty(item?.sortCode)) {
+                var goods = articleDao.getGoodsByKeyWord(sortCode) as ArrayList<Goods>
+                goodaAdapter?.setList(goods)
+            } else {
+                var goods = articleDao.getGoodsByKeyWord(item?.sortCode!!) as ArrayList<Goods>
+                goodaAdapter?.setList(goods)
+            }
 
-
-        }
-
-
-        mDatabind.inventoryStockTabMore.setOnClickListener {
 
         }
 
@@ -198,6 +232,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
     var sortCode: String = ""
     override fun initData() {
         super.initData()
+
         if (goodsCategoryDao.selectGoodsCount() == 0) {
             mViewModel.sorlistt()
         } else {
@@ -205,16 +240,17 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
             data[0].select = true
             tabAdapter?.setList(data)
         }
+
         if (articleDao.selectGoodsCount() == 0) {
             mViewModel.goodslistt(GoodsController(pageNum, pageSize, sortCode))
         } else {
 
-            var goods = articleDao.getGoodsByKeyWord("") as ArrayList<Goods>
+            var goods = articleDao.getGoodsByKeyWord(sortCode) as ArrayList<Goods>
             goodaAdapter?.setList(goods)
         }
     }
 
-    var num: String = ""
+    var num: String = "1"
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         if (adapter == customkeyboardAdapter) {
             if (!TextUtils.isEmpty(customkeyboardAdapter?.getItem(position))) {
@@ -258,10 +294,37 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
             }
             goodaAdapter?.data?.get(position)?.isExpen = true
             goodaAdapter?.notifyDataSetChanged()
+            setgoods(goodaAdapter?.getItem(position)!!)
 
 
         }
     }
+
+    var goods: Goods? = null
+
+    private fun setgoods(goodsdata: Goods) {
+
+        if (goods != null) {
+            if (goods?.viewId == goodsdata.viewId) {
+                num = XNumberUtils.enquiryAdd(num, "1")
+            } else {
+                num = "1"
+            }
+
+        }
+        this.goods = goodsdata
+
+
+        mDatabind.tvSku.text = goods?.skuCode
+        mDatabind.stockAddNum.text = num
+        mDatabind.tvGoodsSpecsValus.text = goods?.goodsSpecsValus
+        mDatabind.tvName.text = goods?.goodsName
+        GlideApp.with(this)
+            .load(goods?.goodsImgurl)
+            .into(mDatabind.ivCommodityUrl)
+
+    }
+
 
     //是否选择
     private fun setisselect(b: Boolean) {
@@ -277,15 +340,19 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
     }
 
     //是否成功
-    private fun setissucceed(b: Boolean) {
+    private fun setissucceed(b: Int) {
         mDatabind.clSelect.visibility = View.GONE
         mDatabind.llSelect.visibility = View.GONE
         mDatabind.clSucceed.visibility = View.VISIBLE
-        if (b) {
+        if (b == 1) {
             TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed, R.drawable.succeed)
         } else {
             TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed, R.drawable.be_defeated)
         }
+        mDatabind.produceGoodsName.text = goods?.goodsName
+        mDatabind.tvSelectSum.text = num
+        num = "1"
+        goods = Goods()
 
     }
 
@@ -320,9 +387,10 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
         }
 
         mViewModel.goods.onSuccess.observe(this) {
-            dismissLoading()
-            var isLoadAll =
-                it.total <= pageNum * pageSize
+
+            var div = (it.total - 1) / pageSize + 1
+
+            var isLoadAll =pageNum==div
             it.data?.forEach {
                 var allChinesePinyin = Pinyin.toPinyin(it?.goodsName, "|")
                 //获取完整拼音
@@ -344,14 +412,16 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
                 }
                 it?.chineseFirstPinYin = s.toString()
             }
+            articleDao.insertAll(it?.data as ArrayList<Goods>)
             if (isLoadAll) {
-                articleDao.insertAll(it?.data as ArrayList<Goods>)
+                dismissLoading()
+
 
                 var goods = articleDao.getGoodsByKeyWord(sortCode) as ArrayList<Goods>
                 goodaAdapter?.setList(goods)
 
             } else {
-                pageNum + 1
+                pageNum += 1
                 mViewModel.goodslistt(GoodsController(pageNum, pageSize, sortCode))
             }
 
@@ -362,6 +432,36 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
             dismissLoading()
             showToast(it.msg)
         }
+
+        mViewModel.storageGoodssave.onStart.observe(this) {
+            showLoading("")
+
+
+        }
+        mViewModel.storageGoodssave.onSuccess.observe(this) {
+            dismissLoading()
+            setissucceed(goodsType)
+        }
+        mViewModel.storageGoodssave.onError.observe(this) {
+            dismissLoading()
+            showToast(it.msg)
+        }
+
+    }
+
+    var goodsType = -1;
+
+    // 商品入库
+    fun setstorageGood() {
+        mViewModel.storageGood(
+            StorageGoods(
+                goodsType,
+                goods?.viewId!!,
+                num,
+                userStoreList()?.storeName!!,
+                userStoreList()?.viewId!!
+            )
+        )
 
     }
 

@@ -306,12 +306,13 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="2dp"
-                android:background="@color/red"
 
                 app:layout_constraintLeft_toLeftOf="@+id/sku"
                 app:layout_constraintTop_toBottomOf="@+id/sku" />
 
             <TextView
+                android:gravity="left|center"
+                android:id="@+id/tv_goodsSpecsValus"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="#F4F4F4"
@@ -320,7 +321,6 @@
                 android:paddingTop="6dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="6dp"
-                android:text="8寸，冰淇淋奶油口味红色，大杯冰淇淋奶油口味红色"
 
                 android:textColor="#1F1F1F"
                 android:textSize="14sp"

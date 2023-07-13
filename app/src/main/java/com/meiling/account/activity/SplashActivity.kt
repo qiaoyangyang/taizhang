@@ -13,6 +13,7 @@ import com.meiling.common.utils.MMKVUtils
 import com.meiling.account.databinding.ActivitySplashBinding
 import com.meiling.account.jpush.AppConfig
 import com.meiling.account.jpush.PushHelper
+import com.meiling.common.constant.SPConstants
 import com.tencent.bugly.crashreport.CrashReport
 import com.umeng.message.PushAgent
 import kotlinx.coroutines.GlobalScope
@@ -25,9 +26,15 @@ import org.android.agoo.xiaomi.MiPushRegistar
 class SplashActivity : BaseActivity<BaseViewModel, ActivitySplashBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
 
+        var boolean = MMKVUtils.getBoolean(SPConstants.LOGINSTASTS, true)
+        if (boolean) {
+            finish()
+            startActivity(Intent(this, MainActivity::class.java))
 
-        finish()
-        startActivity(Intent(this, LoginActivity::class.java))
+        } else {
+            finish()
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
 
     }
 
@@ -39,7 +46,12 @@ class SplashActivity : BaseActivity<BaseViewModel, ActivitySplashBinding>() {
         HuaWeiRegister.register(AppConfig.getApplication());
         //建议在线程中执行初始化
         Thread { PushHelper.init(AppConfig.getApplication()) }.start()
-        MiPushRegistar.register(AppConfig.getApplication(), "2882303761520240526", "5862024070526", false)
+        MiPushRegistar.register(
+            AppConfig.getApplication(),
+            "2882303761520240526",
+            "5862024070526",
+            false
+        )
         CrashManagerUtil.getInstance(AppConfig.getApplication()).init()
         CrashReport.initCrashReport(AppConfig.getApplication(), "0e93bafb3e", false);
     }

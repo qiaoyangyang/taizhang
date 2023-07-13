@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.CompoundButton
 import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,14 +17,15 @@ import com.hjq.base.BasePopupWindow
 import com.meiling.account.R
 import com.meiling.account.adapter.MyPagerAdapter
 import com.meiling.account.adapter.ShortTimeAdapter
+import com.meiling.account.bean.DateSplit
+import com.meiling.account.bean.DateSplitList
 import com.meiling.account.data.AndIn
-import com.meiling.account.data.AppUpdate
 import com.meiling.account.databinding.FragmentRecordsCenterBinding
 import com.meiling.account.dialog.OptionDatePopWindow
 import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.*
 import com.meiling.common.fragment.BaseFragment
-import com.wayne.constraintradiogroup.ConstraintRadioGroup
+import com.meiling.common.utils.DateUtil
 import org.greenrobot.eventbus.EventBus
 
 //数据中心
@@ -35,7 +36,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
     private val mFragments: ArrayList<Fragment> = ArrayList()
     private val mTitles: ArrayList<String> = ArrayList()
     var shortTimeAdapter: ShortTimeAdapter? = null
-    var voucherType=0
+    var voucherType = 0
 
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -53,7 +54,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         mDatabind.rvShorTime?.layoutManager = GridLayoutManager(context, 2)
         shortTimeAdapter = ShortTimeAdapter()
         mDatabind.rvShorTime?.adapter = shortTimeAdapter
-        shortTimeAdapter?.setList(InputUtil.getShortTime())
+
         shortTimeAdapter?.setOnItemClickListener(this)
         mDatabind.vpHomePager.addOnPageChangeListener(this)
         mDatabind.startEndTimeRdg.setOnCheckedChangeListener(this)
@@ -126,7 +127,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         })
 
         mDatabind.tvDetail.setSingleClickListener {
-            mDatabind.vpHomePager.setCurrentItem(1,false)
+            mDatabind.vpHomePager.setCurrentItem(1, false)
         }
 
     }
@@ -139,7 +140,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
     }
 
     override fun onPageSelected(position: Int) {
-        voucherType=position
+        voucherType = position
         if (position == 2) {
             mDatabind.rvShorTime.visibility = View.GONE
             mDatabind.ll3.visibility = View.VISIBLE
@@ -159,6 +160,8 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         }
         shortTimeAdapter?.data?.get(position)?.boolean = true
         shortTimeAdapter?.notifyDataSetChanged()
+        dateSplitList=shortTimeAdapter?.getItem(position)
+        EventBus.getDefault().post(dateSplitList)
 
     }
 
@@ -231,8 +234,31 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         mDatabind.tvEndTime.text = endTime
     }
 
+    override fun initData() {
+        super.initData()
 
+        mViewModel.dateSplit(DateSplit(startTimen, endTime, voucherType + 1))
+    }
 
+    var dateSplitList: DateSplitList? = null
+    override fun createObserver() {
+        super.createObserver()
+        mViewModel.dateSplitlist.onStart.observe(this) {
+            showLoading("")
+        }
+        mViewModel.dateSplitlist.onSuccess.observe(this) {
+            dismissLoading()
+            it[0].boolean = true
+            dateSplitList = it[0]
+            shortTimeAdapter?.setList(it)
+            EventBus.getDefault().post(dateSplitList)
+        }
+        mViewModel.dateSplitlist.onError.observe(this) {
+            dismissLoading()
+            showToast(it.msg)
+        }
+
+    }
 
 
 }

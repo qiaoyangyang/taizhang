@@ -2,6 +2,7 @@ package com.meiling.account.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.Preference
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -25,13 +26,17 @@ import com.meiling.account.widget.showToast
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.constant.ARouteConstants
 import com.meiling.common.constant.SPConstants
+import com.meiling.common.utils.Constant
 import com.meiling.common.utils.InputTextManager
 import com.meiling.common.utils.MMKVUtils
 
 //登陆页面
 @Route(path = "/app/LoginActivity")
 class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
+
+
     override fun initView(savedInstanceState: Bundle?) {
+
         mDatabind.edtName.setText("15535958281")
         mDatabind.edtPaswd.setText("123456")
         //监听是否添加用户名和密码
@@ -93,6 +98,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             MMKVUtils.putString(SPConstants.TOKEN, it.token!!)
             MMKVUtils.putString(SPConstants.tenantId, it.tenantId!!)
             MMKVUtils.putString(SPConstants.userViewId, it.userViewId!!)
+            MMKVUtils.putString(SPConstants.userViewId, it.userViewId!!)
             showLoading("请稍后...")
             mViewModel.userInfo()
 
@@ -111,6 +117,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         mViewModel.userBean.onSuccess.observe(this) {
             disLoading()
             SaveUserBean(it)
+            MMKVUtils.putBoolean(SPConstants.LOGINSTASTS,true)
             startActivity(Intent(this, SelectStoreActiviy::class.java))
         }
         mViewModel.userBean.onError.observe(this) {

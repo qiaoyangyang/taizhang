@@ -10,12 +10,15 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.meiling.account.R
 import com.meiling.account.adapter.GoodProducttimeAdapter
 import com.meiling.account.adapter.OnListener
+import com.meiling.account.bean.DateSplit
+import com.meiling.account.bean.DateSplitList
 import com.meiling.account.data.AndIn
 import com.meiling.account.databinding.FragmentGoodProductDetailBinding
 import com.meiling.account.dialog.MineExitDialog
 import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.InputUtil
 import com.meiling.common.fragment.BaseFragment
+import com.meiling.common.utils.DateUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -28,10 +31,15 @@ class GoodProductDetailFragment : BaseFragment<MainViewModel, FragmentGoodProduc
         mDatabind.rvGoos?.layoutManager = LinearLayoutManager(activity)
         goodProducttimeAdapter = GoodProducttimeAdapter()
         mDatabind.rvGoos?.adapter = goodProducttimeAdapter
-        goodProducttimeAdapter?.setList(InputUtil.getyouhuiString())
+      //  goodProducttimeAdapter?.setList(InputUtil.getyouhuiString())
 
         goodProducttimeAdapter?.setListener(this)
         goodProducttimeAdapter?.setOnItemChildClickListener(this)
+
+
+    }
+
+    override fun initData() {
 
 
     }
@@ -63,6 +71,11 @@ class GoodProductDetailFragment : BaseFragment<MainViewModel, FragmentGoodProduc
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun data(refundType: AndIn) {
         Log.d("yjk", "data:  1 " +refundType.voucherType)
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun dateSplitList(refundType: DateSplitList) {
+
+        mViewModel.goodsSplit(DateSplit(refundType.startTime.toString(),refundType.endTime.toString(),1))
     }
 
     override fun onStart() {

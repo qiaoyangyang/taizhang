@@ -20,7 +20,7 @@ interface ArticleDao: BaseDao<Goods> {
     fun getGoodsByCategoryId(sortCode: String): MutableList<Goods>
 
     //商品名 拼音首字母 全拼 搜索
-    @Query("select * from Goods where goodsName  like '%' ||:keyWord || '%'  or  chineseFirstPinYin like '%' ||:keyWord || '%'or  chineseAllPinYin like '%' ||:keyWord || '%'or  skuCode like '%' ||:keyWord || '%'")
+    @Query("select * from Goods where goodsName  like '%' ||:keyWord || '%'  or  chineseFirstPinYin like '%' ||:keyWord || '%'or  chineseAllPinYin like '%' ||:keyWord || '%'or  skuCode like '%' ||:keyWord || '%''%'or  sortCode like '%' ||:keyWord || '%'")
     fun getGoodsByKeyWord(keyWord: String): MutableList<Goods>
 
 

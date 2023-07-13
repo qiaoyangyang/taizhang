@@ -29,6 +29,7 @@ import com.meiling.common.dialog.LoadingDialog
 import com.meiling.common.getVmClazz
 import com.meiling.common.network.NetworkMonitorManager
 import com.meiling.common.network.data.ByTenantId
+import com.meiling.common.network.data.UserStoreList
 import com.meiling.common.network.data.userInfoBean
 import com.meiling.common.network.enums.NetworkState
 import com.meiling.common.network.interfaces.NetworkMonitor
@@ -46,8 +47,6 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), TitleBa
     lateinit var mViewModel: VM
 
     private var mLoadingDialog: LoadingDialog? = null
-
-
 
 
     abstract fun initView(savedInstanceState: Bundle?)
@@ -245,16 +244,35 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), TitleBa
             .statusBarDarkFont(isStatusBarDarkFont()) // 指定导航栏背景颜色
             .autoDarkModeEnable(true, 0.2f)
     }
-     var userInfoBean: userInfoBean? = null
+
+    var userInfoBean: userInfoBean? = null
     open fun MyuserInfoBean(): userInfoBean? {
         userInfoBean =
-            GsonUtils.getPerson(MMKVUtils.getString("UserBean", ""), com.meiling.common.network.data.userInfoBean::class.java)
+            GsonUtils.getPerson(
+                MMKVUtils.getString("UserBean", ""),
+                com.meiling.common.network.data.userInfoBean::class.java
+            )
         return userInfoBean
     }
 
     open fun SaveUserBean(userBean: userInfoBean?) {
         MMKVUtils.putString("UserBean", Gson().toJson(userBean))
     }
+
+    var userStoreList: UserStoreList? = null
+    open fun userStoreList(): UserStoreList? {
+        userStoreList =
+            GsonUtils.getPerson(
+                MMKVUtils.getString("UserStoreList", ""),
+                com.meiling.common.network.data.UserStoreList::class.java
+            )
+        return userStoreList
+    }
+
+    open fun SaveUserStoreList(UserStoreList: UserStoreList?) {
+        MMKVUtils.putString("UserStoreList", Gson().toJson(UserStoreList))
+    }
+
 
     /**
      * 初始化软键盘
@@ -351,7 +369,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), TitleBa
         val inflater = layoutInflater
 
         mTipView = inflater.inflate(R.layout.network_tip, null) //提示View布局
-         mWindowManager = this.getSystemService(WINDOW_SERVICE) as WindowManager
+        mWindowManager = this.getSystemService(WINDOW_SERVICE) as WindowManager
         mLayoutParams = WindowManager.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.TYPE_APPLICATION,
@@ -368,26 +386,33 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), TitleBa
 
     open fun hasNetWork(has: Boolean) {
         Log.d("yjk", "hasNetWork: $mCheckNetWork")
-            if (has) {
-                if (mTipView != null && mTipView!!.parent != null) {
+        if (has) {
+            if (mTipView != null && mTipView!!.parent != null) {
+                mWindowManager!!.removeView(mTipView)
+                Log.e("日志", "有网络")
+            }
+        } else {
+            if (mTipView!!.parent == null) {
+                mWindowManager!!.addView(mTipView, mLayoutParams)
+                var tv_title = mTipView?.findViewById<TextView>(R.id.tv_title)
+                SpannableUtils.setTextcolor(
+                    this,
+                    "网络故障，请检查WiFi连接情况后，重试...",
+                    tv_title,
+                    5,
+                    14,
+                    R.color.tv_title
+                )
+
+                var iv_Close = mTipView?.findViewById<ImageView>(R.id.iv_Close)
+                iv_Close?.setOnClickListener {
                     mWindowManager!!.removeView(mTipView)
-                    Log.e("日志", "有网络")
                 }
-            } else {
-                if (mTipView!!.parent == null) {
-                    mWindowManager!!.addView(mTipView, mLayoutParams)
-                    var tv_title = mTipView?.findViewById<TextView>(R.id.tv_title)
-                    SpannableUtils.setTextcolor(this,"网络故障，请检查WiFi连接情况后，重试...",tv_title,5,14,R.color.tv_title)
-
-                    var iv_Close = mTipView?.findViewById<ImageView>(R.id.iv_Close)
-                    iv_Close?.setOnClickListener {
-                        mWindowManager!!.removeView(mTipView)
-                    }
 
 
-                    Log.e("日志", "无网络")
+                Log.e("日志", "无网络")
 
-                }
+            }
 
 
         }
@@ -408,7 +433,8 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), TitleBa
             }
         }
     }
-     var mCheckNetWork = false //默认检查网络状态
+
+    var mCheckNetWork = false //默认检查网络状态
 
     override fun onDestroy() {
         super.onDestroy()
@@ -419,6 +445,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), TitleBa
     open fun isCheckNetWork(): Boolean {
         return mCheckNetWork
     }
+
     override fun finish() {
         super.finish()
         //当提示View被动态添加后直接关闭页面会导致该View内存溢出，所以需要在finish时移除

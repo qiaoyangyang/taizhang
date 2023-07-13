@@ -4,7 +4,6 @@ import android.graphics.Color;
 
 import com.meiling.account.bean.Goods;
 import com.meiling.account.bean.Ranking;
-import com.meiling.account.bean.ShortTime;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,22 +39,7 @@ public class InputUtil {
         return goods;
     }
 
-    @NotNull
-    public static List<ShortTime> getShortTime() {
-        List<ShortTime> strings = new ArrayList<>();
 
-
-        strings.add(new ShortTime(false));
-        strings.add(new ShortTime(false));
-        strings.add(new ShortTime(false));
-        strings.add(new ShortTime(false));
-        strings.add(new ShortTime(false));
-        strings.add(new ShortTime(false));
-        strings.add(new ShortTime(false));
-        strings.add(new ShortTime(false));
-
-        return strings;
-    }
     @NotNull
     public static List<Integer> colors(){
         List<Integer> colors = new ArrayList<>(); //每个模块的颜色
