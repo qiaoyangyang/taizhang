@@ -2,10 +2,14 @@ package com.meiling.account.widget;
 
 import android.graphics.Color;
 
+import com.meiling.account.bean.CompositeIndexBean;
 import com.meiling.account.bean.Goods;
+import com.meiling.account.bean.IncomeBean;
+import com.meiling.account.bean.PeriodTimeItem;
 import com.meiling.account.bean.Ranking;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,57 +45,76 @@ public class InputUtil {
 
 
     @NotNull
-    public static List<Integer> colors(){
+    public static List<Integer> colors(ArrayList<Ranking> rankings){
         List<Integer> colors = new ArrayList<>(); //每个模块的颜色
-        colors.add(Color.parseColor("#E55A55"));
-        colors.add(Color.parseColor("#FF974D"));
+        for (int i = 0; i < rankings.size(); i++) {
+            colors.add(Color.parseColor(rankings.get(i).getRankColour()));
+        }
 
-        colors.add(Color.parseColor("#FFDC4C"));
-        colors.add(Color.parseColor("#A8E0FB"));
 
-        colors.add(Color.parseColor("#5B6E96"));
-        colors.add(Color.parseColor("#61D9AC"));
-
-        colors.add(Color.parseColor("#5AAEF6"));
-        colors.add(Color.parseColor("#26C0DB"));
-        colors.add(Color.parseColor("#6E61E4"));
-        colors.add(Color.parseColor("#6E61E4"));
         return colors;
     }
     @NotNull
-    public static List<Float> date(){
+    public static List<Float> date(ArrayList<Ranking> rankings){
         List<Float> date = new ArrayList<>(); //shuju
-        date.add(35f);
-        date.add(35f);
+        for (int i = 0; i < rankings.size(); i++) {
+            date.add(rankings.get(i).getGoodsNumber());
 
-        date.add(35f);
-        date.add(35f);
-        date.add(35f);
+        }
 
-        date.add(35f);
-        date.add(35f);
-
-        date.add(35f);
-        date.add(35f);
-        date.add(35f);
         return date;
     }
 
-    @NotNull
-    public static List<Ranking> setRanking(){
-        List<Ranking>rankings=new ArrayList<>();
-        rankings.add(new Ranking(Color.parseColor("#E55A55"),35f));
-        rankings.add(new Ranking(Color.parseColor("#FF974D"),35f));
-        rankings.add(new Ranking(Color.parseColor("#FFDC4C"),35f));
-        rankings.add(new Ranking(Color.parseColor("#A8E0FB"),35f));
-        rankings.add(new Ranking(Color.parseColor("#5B6E96"),35f));
-        rankings.add(new Ranking(Color.parseColor("#61D9AC"),35f));
-        rankings.add(new Ranking(Color.parseColor("#5AAEF6"),35f));
-        rankings.add(new Ranking(Color.parseColor("#26C0DB"),35f));
-        rankings.add(new Ranking(Color.parseColor("#6E61E4"),35f));
-        rankings.add(new Ranking(Color.parseColor("#6E61E4"),35f));
 
+    @Nullable
+    public static List<IncomeBean> incomeBeanList(@Nullable ArrayList<PeriodTimeItem> it) {
+        List<IncomeBean> incomeBeans=new ArrayList<>();
+        for (int i = 0; i < it.size(); i++) {
+            IncomeBean incomeBean=new IncomeBean();
+            incomeBean.setTradeDate(it.get(i).getDateValue());
+            incomeBean.setValue(it.get(i).getGoodProductNumber());
+            incomeBeans.add(incomeBean);
+        }
+        return incomeBeans;
+    }
 
-        return rankings;
+    @Nullable
+    public static List<CompositeIndexBean> shanghai(@Nullable ArrayList<PeriodTimeItem> it) {
+        List<CompositeIndexBean> compositeIndexBeanList=new ArrayList<>();
+        for (int i = 0; i < it.size(); i++) {
+            CompositeIndexBean compositeIndexBean=new CompositeIndexBean();
+            compositeIndexBean.setTradeDate(it.get(i).getDateValue());
+            compositeIndexBean.setRate(it.get(i).getDefectiveProductNumber());
+            compositeIndexBeanList.add(compositeIndexBean);
+        }
+        return compositeIndexBeanList;
+
+    }
+    public static Integer getmax(ArrayList<PeriodTimeItem> it){
+        //it.stream().map(item->item.getGoodProductNumber()).max(it.)
+        int maxField = 0;
+        int goodProductNumber = 0;
+        int defectiveProductNumber = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            goodProductNumber = (int) it.stream()
+                    .mapToDouble(PeriodTimeItem::getGoodProductNumber) // 将对象映射为字段的整数值
+                    .max()
+                    .orElse(0);
+        }
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            defectiveProductNumber = (int) it.stream()
+                    .mapToDouble(PeriodTimeItem::getDefectiveProductNumber) // 将对象映射为字段的整数值
+                    .max()
+                    .orElse(0);
+        }
+
+        if (goodProductNumber>defectiveProductNumber){
+            maxField=goodProductNumber;
+        }else {
+            maxField=defectiveProductNumber;
+        }
+
+        return maxField;
     }
 }

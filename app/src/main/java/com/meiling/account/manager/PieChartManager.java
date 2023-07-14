@@ -22,6 +22,7 @@ import java.util.List;
 public class PieChartManager {
     PieChart pieChart;
 
+
     public PieChartManager(PieChart mPieChart) {
         this.pieChart = mPieChart;
         initChart();
@@ -84,12 +85,11 @@ public class PieChartManager {
 
     /**
      * 设置饼状图
-     *
-     * @param name   饼状图分类的名字
+     *饼状图分类的名字
      * @param date   数值
      * @param colors 颜色集合
      */
-    public void setPieChart(List<String> name, List<Float> date, List<Integer> colors) {
+    public void setPieChart( List<Float> date, List<Integer> colors) {
         List<PieEntry> yValue = new ArrayList<>();
         for (int i = 0; i < date.size(); i++) {
             PieEntry entry = new PieEntry(date.get(i));

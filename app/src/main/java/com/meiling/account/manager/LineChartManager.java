@@ -348,7 +348,7 @@ public class LineChartManager {
      * @param name     曲线名称
      * @param color    曲线颜色
      */
-    public void showLineChart(final List<IncomeBean> dataList, String name, int color) {
+    public void showLineChart(final List<IncomeBean> dataList, String name, int color,int max) {
         List<Entry> entries = new ArrayList<>();
         for (int i = 0; i < dataList.size(); i++) {
             IncomeBean data = dataList.get(i);
@@ -361,7 +361,7 @@ public class LineChartManager {
         }
 
         /******根据需求的不同 在此在次设置X Y轴的显示内容******/
-        xAxis.setLabelCount(10, false);
+        xAxis.setLabelCount(6, false);
         //设置是否绘制刻度
         xAxis.setDrawAxisLine(false);
         //是否绘制X轴线
@@ -371,12 +371,11 @@ public class LineChartManager {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
                 String tradeDate = dataList.get((int) value % dataList.size()).getTradeDate();
-                return DateUtil.formatDateToMD(tradeDate);
+                return tradeDate ;
             }
         });
 
-        leftYAxis.setLabelCount(10);
-       // leftYAxis.setDrawScale(true);
+        leftYAxis.setLabelCount(6,false);
         leftYAxis.setDrawZeroLine(true); // draw a zero line
         leftYAxis.setZeroLineColor(Color.GRAY);
         leftYAxis.setZeroLineWidth(1f);
@@ -385,6 +384,7 @@ public class LineChartManager {
         leftYAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
+                Log.d("", "getFormattedValue: "+value);
                 return ((int) (value )) + "";
             }
         });
@@ -419,8 +419,10 @@ public class LineChartManager {
         // 每一个LineDataSet代表一条线
         LineDataSet lineDataSet = new LineDataSet(entries, name);
         initLineDataSet(lineDataSet, color, LineDataSet.Mode.LINEAR);
-        lineChart.getLineData().addDataSet(lineDataSet);
-        lineChart.invalidate();
+        if (lineChart!=null) {
+            lineChart.getLineData().addDataSet(lineDataSet);
+            lineChart.invalidate();
+        }
     }
 
     /**

@@ -26,7 +26,7 @@ import org.android.agoo.xiaomi.MiPushRegistar
 class SplashActivity : BaseActivity<BaseViewModel, ActivitySplashBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
 
-        var boolean = MMKVUtils.getBoolean(SPConstants.LOGINSTASTS, true)
+        var boolean = MMKVUtils.getBoolean(SPConstants.LOGINSTASTS, false)
         if (boolean) {
             finish()
             startActivity(Intent(this, MainActivity::class.java))

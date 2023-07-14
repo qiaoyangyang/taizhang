@@ -11,8 +11,8 @@ import java.util.Date;
 public class DateUtil {
 
     public static String formatDateToMD(String str) {
-        SimpleDateFormat sf1 = new SimpleDateFormat("yyyyMMdd");
-        SimpleDateFormat sf2 = new SimpleDateFormat("MM-dd");
+        SimpleDateFormat sf1 = new SimpleDateFormat("yyyy-MM-dd ");
+        SimpleDateFormat sf2 = new SimpleDateFormat("HH:mm");
         String formatStr = "";
         try {
             formatStr = sf2.format(sf1.parse(str));

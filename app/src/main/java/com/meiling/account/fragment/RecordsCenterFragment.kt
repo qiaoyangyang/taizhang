@@ -1,10 +1,10 @@
 package com.meiling.account.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RadioGroup
@@ -19,14 +19,17 @@ import com.meiling.account.adapter.MyPagerAdapter
 import com.meiling.account.adapter.ShortTimeAdapter
 import com.meiling.account.bean.DateSplit
 import com.meiling.account.bean.DateSplitList
+import com.meiling.account.bean.Statistics
 import com.meiling.account.data.AndIn
 import com.meiling.account.databinding.FragmentRecordsCenterBinding
 import com.meiling.account.dialog.OptionDatePopWindow
 import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.*
 import com.meiling.common.fragment.BaseFragment
-import com.meiling.common.utils.DateUtil
+import com.meiling.common.utils.TextDrawableUtils
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 //数据中心
 class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterBinding>(),
@@ -59,6 +62,8 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         mDatabind.vpHomePager.addOnPageChangeListener(this)
         mDatabind.startEndTimeRdg.setOnCheckedChangeListener(this)
         mDatabind.startEndTime1.isChecked = true
+
+        shortTimeAdapter?.setEmptyView(R.layout.no_time_data)
         settime()
         mDatabind.startEndTime5.setSingleClickListener {
             mDatabind.startEndTime5.isChecked = true
@@ -72,13 +77,12 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
                     startTimen = startTime
                     endTime = endTim
                     settime()
-                    var outAndIn = AndIn(
-                        startTimen,
-                        endTime,
-                        voucherType
+                    if (voucherType != 2) {
+                        initData()
+                    } else {
+                        statement()
+                    }
 
-                    )
-                    EventBus.getDefault().post(outAndIn)
                 }
 
             }).showAsDropDown(mDatabind.tvStartTime)
@@ -144,10 +148,19 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         if (position == 2) {
             mDatabind.rvShorTime.visibility = View.GONE
             mDatabind.ll3.visibility = View.VISIBLE
+
+
+
+            statement()
+
         } else {
+            initData()
             mDatabind.ll3.visibility = View.GONE
             mDatabind.rvShorTime.visibility = View.VISIBLE
         }
+
+        //  EventBus.getDefault().post(dateSplitList)
+
 
     }
 
@@ -160,7 +173,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         }
         shortTimeAdapter?.data?.get(position)?.boolean = true
         shortTimeAdapter?.notifyDataSetChanged()
-        dateSplitList=shortTimeAdapter?.getItem(position)
+        dateSplitList = shortTimeAdapter?.getItem(position)
         EventBus.getDefault().post(dateSplitList)
 
     }
@@ -174,13 +187,13 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
                 startTimen = formatCurrentDate()
                 endTime = formatCurrentDate()
                 settime()
-                var outAndIn = AndIn(
-                    startTimen,
-                    endTime,
-                    voucherType
+                if (voucherType != 2) {
+                    initData()
+                } else {
+                    statement()
+                }
 
-                )
-                EventBus.getDefault().post(outAndIn)
+//
 
 
             }
@@ -188,43 +201,40 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
                 startTimen = formatCurrentDateBeforeDay()
                 endTime = formatCurrentDateBeforeDay()
                 settime()
-                var outAndIn = AndIn(
-                    startTimen,
-                    endTime,
-                    voucherType
-
-                )
-                EventBus.getDefault().post(outAndIn)
+                if (voucherType != 2) {
+                    initData()
+                } else {
+                    statement()
+                }
+//
 
 
             }
             R.id.startEndTime3 -> {
                 startTimen = formatCurrentDateBeforeWeek()
-                endTime = formatCurrentDateBeforeWeek()
+                endTime = formatCurrentDate()
                 settime()
-                var outAndIn = AndIn(
-                    startTimen,
-                    endTime,
-                    voucherType
-
-                )
-                EventBus.getDefault().post(outAndIn)
-
+                if (voucherType != 2) {
+                    initData()
+                } else {
+                    statement()
+                }
 
             }
             R.id.startEndTime4 -> {
                 startTimen = formatCurrentDateBeforeMouth()
-                endTime = formatCurrentDateBeforeMouth()
+                endTime = formatCurrentDate()
+                initData()
                 settime()
-                var outAndIn = AndIn(
-                    startTimen,
-                    endTime,
-                    voucherType
+                if (voucherType != 2) {
+                    initData()
+                } else {
+                    statement()
+                }
 
-                )
-                EventBus.getDefault().post(outAndIn)
 
             }
+
 
         }
     }
@@ -232,6 +242,17 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
     fun settime() {
         mDatabind.tvStartTime.text = startTimen
         mDatabind.tvEndTime.text = endTime
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser) {
+            if (voucherType == 2) {
+                statement()
+            } else {
+                initData()
+            }
+        }
     }
 
     override fun initData() {
@@ -244,21 +265,84 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
     override fun createObserver() {
         super.createObserver()
         mViewModel.dateSplitlist.onStart.observe(this) {
-            showLoading("")
         }
         mViewModel.dateSplitlist.onSuccess.observe(this) {
-            dismissLoading()
-            it[0].boolean = true
-            dateSplitList = it[0]
-            shortTimeAdapter?.setList(it)
-            EventBus.getDefault().post(dateSplitList)
+            if (it.size != 0) {
+                it[0].boolean = true
+                dateSplitList = it[0]
+                shortTimeAdapter?.setList(it)
+                EventBus.getDefault().post(dateSplitList)
+            } else {
+                shortTimeAdapter?.setList(it)
+
+                EventBus.getDefault().post(DateSplitList())
+            }
         }
         mViewModel.dateSplitlist.onError.observe(this) {
-            dismissLoading()
             showToast(it.msg)
+        }
+        mViewModel.statisticsdata.onStart.observe(this) {
+
+        }
+        mViewModel.statisticsdata.onSuccess.observe(this) {
+
+            mDatabind.tvAggregate.text = it.storageGoodsTotalNumber
+            mDatabind.tvGoodsTotalNumber.text = "共计${it.goodsTotalNumber}种商品"
+
+            mDatabind.tvAcceptedGoods.text = it.goodProductTotalNumber
+            mDatabind.tvGoodProductGoodsTotalNumber.text = "共计${it.goodProductGoodsTotalNumber}种商品"
+
+            mDatabind.tvGoodProductRatio.text = it.goodProductRatio
+            mDatabind.tvGoodProductRate.text = it.goodProductRate
+            if (it.ratioType == 1) {
+                mDatabind.tvGoodProductRatio.setTextColor(Color.parseColor("#52C41A"))
+                TextDrawableUtils.setLeftDrawable(mDatabind.tvGoodProductRatio, R.drawable.zhangsan)
+
+            } else {
+                mDatabind.tvGoodProductRatio.setTextColor(Color.parseColor("#FF472A"))
+                TextDrawableUtils.setLeftDrawable(mDatabind.tvGoodProductRatio, R.drawable.dao_san)
+            }
+
+
+        }
+        mViewModel.statisticsdata.onError.observe(this) {
+
         }
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun data(refundType: AndIn) {
+        //Log.d("yjk", "data:  1 " +refundType.voucherType)
+        initData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+    //请求报表数据
+    fun statement() {
+        mViewModel.statistics(
+            Statistics(
+                startTimen, endTime,
+                userStoreList()!!.viewId!!
+            )
+        )
+        var outAndIn = AndIn(
+            startTimen,
+            endTime,
+            voucherType
+
+        )
+        EventBus.getDefault().post(outAndIn)
+
+    }
 
 }

@@ -52,12 +52,60 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
         request({ commodityService.dateSplit(dateSplit) }, dateSplitlist)
     }
     //获取时间分段列表
-    val goodsSplitlist = BaseLiveData<ArrayList<DateSplitList>>()
+    val goodsSplitlist = BaseLiveData<ArrayList<GoodsSplit>>()
     fun goodsSplit(dateSplit: DateSplit) {
 
 
-        request({ commodityService.goodsSplit(dateSplit) }, dateSplitlist)
+        request({ commodityService.goodsSplit(dateSplit) }, goodsSplitlist)
     }
+
+    //获取时间分段列表
+    val storageGoodsdata = BaseLiveData<String>()
+    fun goodsSplit(viewId: String) {
+
+
+        request({ commodityService.storageGoods(viewId) }, storageGoodsdata)
+    }
+
+    //入库统计
+    val statisticsdata = BaseLiveData<FormStatistics>()
+    fun statistics(statistics: Statistics) {
+
+        var statistics1 = Statistics();
+
+        statistics1.startTime=statistics.startTime+" 00:00:00"
+        statistics1.endTime=statistics.endTime+" 00:00:00"
+        statistics1.storeViewId=statistics.storeViewId
+
+        request({ commodityService.statistics(statistics1) }, statisticsdata)
+    }
+    //入库统计
+    val rankingdata = BaseLiveData<ArrayList<Ranking>>()
+    fun ranking(statistics: Statistics) {
+
+        var statistics1 = Statistics();
+
+        statistics1.startTime=statistics.startTime+" 00:00:00"
+        statistics1.endTime=statistics.endTime+" 00:00:00"
+        statistics1.storeViewId=statistics.storeViewId
+
+        request({ commodityService.ranking(statistics1) }, rankingdata)
+    }
+
+    //入库统计图
+    val periodTimedata = BaseLiveData<ArrayList<PeriodTimeItem>>()
+    fun periodTime(statistics: Statistics) {
+
+        var statistics1 = Statistics();
+
+        statistics1.startTime=statistics.startTime+" 00:00:00"
+        statistics1.endTime=statistics.endTime+" 00:00:00"
+        statistics1.storeViewId=statistics.storeViewId
+
+        request({ commodityService.periodTime(statistics1) }, periodTimedata)
+    }
+
+
 
 
 }

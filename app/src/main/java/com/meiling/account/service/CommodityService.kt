@@ -53,7 +53,44 @@ interface CommodityService {
     @POST("/storageGoods/goodsSplit")
     suspend fun goodsSplit(
         @Body dateSplit: DateSplit,
-    ): ResultData<ArrayList<DateSplitList>>
+    ): ResultData<ArrayList<GoodsSplit>>
+
+    /**
+     *
+    入库商品撤回
+     * **/
+    @GET("/storageGoods/revoke/{viewId}")
+    suspend fun storageGoods(
+        @Path("viewId")viewId: String
+    ): ResultData<String>
+    /**
+     *
+    时间段内入库商品列表
+     * **/
+    @POST("/form/statistics")
+    suspend fun statistics(
+        @Body statistics: Statistics,
+    ): ResultData<FormStatistics>
+
+    /**
+     *
+    入库排行榜
+     * **/
+    @POST("/form/ranking")
+    suspend fun ranking(
+        @Body statistics: Statistics,
+    ): ResultData<ArrayList<Ranking>>
+
+
+    /**
+     *
+    入库排行榜
+     * **/
+    @POST("/form/periodTime")
+    suspend fun periodTime(
+        @Body statistics: Statistics,
+    ): ResultData<ArrayList<PeriodTimeItem>>
+
 
 
 }

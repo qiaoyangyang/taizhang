@@ -5,86 +5,15 @@
     "message":"SUCCESS",
     "result":{
       "clientAccumulativeRate":[
-        {
-          "tradeDate":"20180502",
-          "value":12
-        },
-        {
-          "tradeDate":"20180503",
-          "value":45
-        },
-        {
-          "tradeDate":"20180504",
-          "value":67
-        },
-        {
-          "tradeDate":"20180507",
-          "value":78
-        },
-        {
-          "tradeDate":"20180508",
-          "value":69
-        },
-        {
-          "tradeDate":"20180509",
-          "value":8
-        },
-        {
-          "tradeDate":"20180510",
-          "value":90
-        },
-        {
-          "tradeDate":"20180511",
-          "value":56
-        },
-        {
-          "tradeDate":"20180514",
-          "value":4
-        },
-        {
-          "tradeDate":"20180515",
-          "value":6
-        },
-        {
-          "tradeDate":"20180516",
-          "value":100
-        },
-        {
-          "tradeDate":"20180517",
-          "value":78
-        },
-        {
-          "tradeDate":"20180518",
-          "value":78
-        },
-        {
-          "tradeDate":"20180521",
-          "value":99
-        },
-        {
-          "tradeDate":"20180522",
-          "value":34
-        },
-        {
-          "tradeDate":"20180523",
-          "value":24
-        },
-        {
-          "tradeDate":"20180524",
-          "value":34
-        },
-        {
-          "tradeDate":"20180525",
-          "value":67
-        }
+
       ],
       "compositeIndexShanghai":[
         {
-          "rate":"78",
+          "rate":"8",
           "tradeDate":"20180502"
         },
         {
-          "rate":"56",
+          "rate":"10",
           "tradeDate":"20180503"
         },
         {
@@ -120,7 +49,7 @@
           "tradeDate":"20180515"
         },
         {
-          "rate":"345",
+          "rate":"45",
           "tradeDate":"20180516"
         },
         {
@@ -132,7 +61,7 @@
           "tradeDate":"20180518"
         },
         {
-          "rate":"127",
+          "rate":"27",
           "tradeDate":"20180521"
         },
         {
