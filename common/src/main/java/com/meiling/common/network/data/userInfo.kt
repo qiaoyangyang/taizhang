@@ -15,16 +15,10 @@ data class userInfoBean(
     var operationId: String? = "",
     @SerializedName("password")
     var password: String? = "",
-    @SerializedName("permissions")
-    var permissions: Any? = Any(),
     @SerializedName("phone")
     var phone: String? = "",
-    @SerializedName("roles")
-    var roles: List<Any?>? = listOf(),
     @SerializedName("status")
     var status: Int? = 0,
-    @SerializedName("stores")
-    var stores: List<Store?>? = listOf(),
     @SerializedName("tenantId")
     var tenantId: Int? = 0,
     @SerializedName("updateTime")

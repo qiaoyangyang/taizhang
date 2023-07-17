@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase
 import com.meiling.account.bean.UserBean
 import com.meiling.account.jpush.AppConfig
 
-@Database(entities = [UserBean::class],version = 0,exportSchema = false)
+@Database(entities = [UserBean::class],version = 1,exportSchema = false)
 abstract class UserLoginDataBase:RoomDatabase() {
     abstract fun getUserLoginDao():UserLoginDao
     private object Single{

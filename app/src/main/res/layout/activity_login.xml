@@ -70,7 +70,6 @@
                 android:textColor="#323233"
                 android:textSize="18sp" />
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/goods_search_more"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
