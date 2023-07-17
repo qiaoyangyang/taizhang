@@ -370,7 +370,11 @@ public class LineChartManager {
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                String tradeDate = dataList.get((int) value % dataList.size()).getTradeDate();
+                String tradeDate="";
+                if (dataList.size()!=0){
+                    tradeDate= dataList.get((int) value % dataList.size()).getTradeDate();
+                }
+
                 return tradeDate ;
             }
         });

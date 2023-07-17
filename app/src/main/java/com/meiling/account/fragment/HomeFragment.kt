@@ -78,7 +78,6 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
         mDatabind.stockSearchGoodEdit.setOnEditorActionListener { v, actionId, event ->
             if ((actionId == 0 || actionId == 3) && event != null) {
                 //点击搜索
-                // TODO:  搜索
                 sortCode = mDatabind.stockSearchGoodEdit.text.toString()
 
                 var goods = articleDao.getGoodsByKeyWord(sortCode) as ArrayList<Goods>
@@ -86,6 +85,13 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
                 KeyBoardUtil.closeKeyBord(mDatabind.stockSearchGoodEdit, requireContext())
             }
             return@setOnEditorActionListener false
+        }
+        mDatabind.goodsStockSearchImgLayout.setOnClickListener {
+            sortCode = mDatabind.stockSearchGoodEdit.text.toString()
+
+            var goods = articleDao.getGoodsByKeyWord(sortCode) as ArrayList<Goods>
+            goodaAdapter?.setList(goods)
+            KeyBoardUtil.closeKeyBord(mDatabind.stockSearchGoodEdit, requireContext())
         }
 
         //监听输入是否有内容  有内容显示删除按钮
@@ -121,12 +127,20 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
             Log.d("yjk", "良品入库: " + userStoreList()?.tenantId)
             //
+            if (TextUtils.isEmpty(mDatabind.stockAddNum.text.toString())){
+                showToast("请输入数量")
+                return@setSingleClickListener
+            }
             goodsType = 1
             setstorageGood()
         }
         //不良品入库
         mDatabind.tvDefectiveProductsAreStored.setSingleClickListener {
             // setissucceed(false)
+            if (TextUtils.isEmpty(mDatabind.stockAddNum.text.toString())){
+                showToast("请输入数量")
+                return@setSingleClickListener
+            }
             goodsType = 2
             setstorageGood()
 
@@ -306,7 +320,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
         if (goods != null) {
             if (goods?.viewId == goodsdata.viewId) {
-                num = XNumberUtils.enquiryAdd(num, "1")
+                num = XNumberUtils.enquiryAdd(mDatabind.stockAddNum.text.toString(), "1")
             } else {
                 num = "1"
             }
@@ -345,8 +359,10 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
         mDatabind.llSelect.visibility = View.GONE
         mDatabind.clSucceed.visibility = View.VISIBLE
         if (b == 1) {
+            mDatabind.tvIsSucceed.text="良品入库成功"
             TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed, R.drawable.succeed)
         } else {
+            mDatabind.tvIsSucceed.text="不良品入库成功"
             TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed, R.drawable.be_defeated)
         }
         mDatabind.produceGoodsName.text = goods?.goodsName

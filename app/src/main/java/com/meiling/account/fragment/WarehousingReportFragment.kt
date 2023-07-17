@@ -2,6 +2,8 @@ package com.meiling.account.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.meiling.account.R
 import com.meiling.account.adapter.RankingAdapter
@@ -13,7 +15,6 @@ import com.meiling.account.manager.PieChartManager
 import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.InputUtil
 import com.meiling.common.fragment.BaseFragment
-import com.meiling.common.utils.LocalJsonAnalyzeUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -30,6 +31,7 @@ class WarehousingReportFragment :
     override fun initView(savedInstanceState: Bundle?) {
         lineChartManager1 = LineChartManager(mDatabind!!.lineChart)
     }
+
 
     override fun getBind(inflater: LayoutInflater): FragmentWarehousingReportBinding {
         return FragmentWarehousingReportBinding.inflate(inflater)
@@ -90,8 +92,10 @@ class WarehousingReportFragment :
         }
         mViewModel.periodTimedata.onSuccess.observe(this) {
             if (it.size != 0) {
+                mDatabind.lineChart.visibility=View.VISIBLE
                 incomeBeanList = InputUtil.incomeBeanList(it)
                 shanghai = InputUtil.shanghai(it)
+
                 lineChartManager1!!.showLineChart(
                     incomeBeanList,
                     "良品入库",
@@ -104,6 +108,8 @@ class WarehousingReportFragment :
                 lineChartManager1!!.setChartFillDrawable(drawable)
                 lineChartManager1!!.setChartFillDrawable1(drawable1)
                 lineChartManager1!!.setMarkerView(activity)
+            }else{
+                mDatabind.lineChart.visibility=View.GONE
             }
 
 
@@ -120,7 +126,12 @@ class WarehousingReportFragment :
             //饼状图管理类
             val pieChartManager1 = PieChartManager(mDatabind!!.pieChart1)
             if (pieChartManager1 != null) {
-                pieChartManager1.setPieChart(InputUtil.date(it), InputUtil.colors(it))
+                if (it.size!=0) {
+                    mDatabind!!.pieChart1.visibility=View.VISIBLE
+                    pieChartManager1.setPieChart(InputUtil.date(it), InputUtil.colors(it))
+                }else{
+                    mDatabind!!.pieChart1.visibility=View.GONE
+                }
             }
         }
     }
