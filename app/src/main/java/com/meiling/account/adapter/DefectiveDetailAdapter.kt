@@ -19,5 +19,11 @@ class DefectiveDetailAdapter :
         GlideApp.with(context)
             .load(item?.goodsImageUrl)
             .into(holder.getView(R.id.iv_commodity_url))
+        if (item?.isRevoke==1){
+            holder.setVisible(R.id.btn_withdraw,true)
+
+        }else{
+            holder.setVisible(R.id.btn_withdraw,false)
+        }
     }
 }

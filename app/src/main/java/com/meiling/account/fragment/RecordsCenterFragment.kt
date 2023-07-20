@@ -124,7 +124,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
                     if (TextUtils.isEmpty(mDatabind.tvEndTime.text.toString())) {
                         mDatabind.imgClear1.visibility = View.INVISIBLE
                     } else {
-                        mDatabind.imgClear1.visibility = View.VISIBLE
+                        mDatabind.imgClear1.visibility = View.INVISIBLE
                     }
                 }
             }
@@ -298,7 +298,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
                 mDatabind.tvGoodProductRatio.setTextColor(Color.parseColor("#52C41A"))
                 TextDrawableUtils.setLeftDrawable(mDatabind.tvGoodProductRatio, R.drawable.zhangsan)
 
-            } else {
+            } else if (it.ratioType==2){
                 mDatabind.tvGoodProductRatio.setTextColor(Color.parseColor("#FF472A"))
                 TextDrawableUtils.setLeftDrawable(mDatabind.tvGoodProductRatio, R.drawable.dao_san)
             }

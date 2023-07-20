@@ -147,12 +147,12 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
         }
         //加号
         mDatabind.stockAddJia.setSingleClickListener {
-            var num = mDatabind.stockAddNum.text.toString()
+            num = mDatabind.stockAddNum.text.toString()
             mDatabind.stockAddNum.text = XNumberUtils.enquiryAdd(num, "1")
         }
         //减
         mDatabind.stockAddJian.setSingleClickListener {
-            var num = mDatabind.stockAddNum.text.toString()
+           num = mDatabind.stockAddNum.text.toString()
             if (XNumberUtils.compareTo(num, "1") != 1) {
                 return@setSingleClickListener
             }
@@ -273,6 +273,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
                     mDatabind.stockAddNum.text = num
                 } else {
 
+
                     var start = num.indexOf(".")
 
 
@@ -293,7 +294,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
 
 
-                    num += customkeyboardAdapter?.getItem(position)
+                    num =mDatabind.stockAddNum.text.toString()+ customkeyboardAdapter?.getItem(position)
 
                     mDatabind.stockAddNum.text = num
                 }
@@ -332,6 +333,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
         mDatabind.tvSku.text = goods?.skuCode
         mDatabind.stockAddNum.text = num
         mDatabind.tvGoodsSpecsValus.text = goods?.goodsSpecsValus
+        mDatabind.tvGoodsUnit.text ="入库数量 （单位：${goods?.goodsUnit}）："
         mDatabind.tvName.text = goods?.goodsName
         GlideApp.with(this)
             .load(goods?.goodsImgurl)
@@ -365,8 +367,9 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
             mDatabind.tvIsSucceed.text="不良品入库成功"
             TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed, R.drawable.be_defeated)
         }
-        mDatabind.produceGoodsName.text = goods?.goodsName
-        mDatabind.tvSelectSum.text = num
+        mDatabind.produceGoodsName.text = goods?.goodsUnit
+        mDatabind.tvGoodsUnit.text = goods?.goodsName
+        mDatabind.tvSelectSum.text = mDatabind.stockAddNum.text.toString()
         num = "1"
         goods = Goods()
 
@@ -473,7 +476,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
             StorageGoods(
                 goodsType,
                 goods?.viewId!!,
-                num,
+                mDatabind.stockAddNum.text.toString(),
                 userStoreList()?.storeName!!,
                 userStoreList()?.viewId!!
             )

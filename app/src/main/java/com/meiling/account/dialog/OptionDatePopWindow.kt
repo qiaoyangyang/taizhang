@@ -46,6 +46,7 @@ class OptionDatePopWindow {
             var iv_right_icon_ = inflate.findViewById<ImageView>(R.id.iv_right_icon_)
             var btn_cancel = inflate.findViewById<ShapeButton>(R.id.btn_cancel)
             var btn_confirm = inflate.findViewById<ShapeButton>(R.id.btn_confirm)
+            calendarView.setSelectRange(1,180)
             btn_cancel.setOnClickListener{
                 dismiss()
             }

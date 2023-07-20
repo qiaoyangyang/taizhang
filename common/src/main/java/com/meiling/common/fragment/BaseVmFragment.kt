@@ -12,7 +12,6 @@ import com.gyf.immersionbar.ImmersionBar
 import com.meiling.common.BaseViewModel
 import com.meiling.common.dialog.LoadingDialog
 import com.meiling.common.getVmClazz
-import com.meiling.common.network.data.ByTenantId
 import com.meiling.common.utils.GsonUtils
 import com.meiling.common.utils.MMKVUtils
 
@@ -123,15 +122,6 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
     abstract fun dismissLoading()
 
 
-    var byTenantId: ByTenantId?=null
-    open fun ByTenantId(): ByTenantId? {
-        byTenantId = GsonUtils.getPerson(MMKVUtils.getString("byTenantId", ""), ByTenantId::class.java)
-        return byTenantId
-    }
-
-    open fun SaveUserBean(byTenantId: ByTenantId?) {
-        MMKVUtils.putString("byTenantId", Gson().toJson(byTenantId))
-    }
 
 
 

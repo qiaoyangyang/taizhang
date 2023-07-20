@@ -44,31 +44,6 @@ class GoodProductDetailFragment : BaseFragment<MainViewModel, FragmentGoodProduc
 
         goodProducttimeAdapter?.setEmptyView(R.layout.no_data)
 
-        mDatabind.rvGoos.addOnScrollListener(object : OnScrollListener() {
-
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-
-
-            }
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                //获取滚动时的第一条展示的position
-
-                var layoutManager = recyclerView?.layoutManager as LinearLayoutManager
-                var findFirstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-                var position = 0
-
-                for (i in 0 until findFirstVisibleItemPosition) {
-                    position += i
-                }
-                Log.d("yjk", "onScrolled: $position")
-
-            }
-
-        })
     }
 
     override fun initData() {

@@ -61,7 +61,7 @@ public class LineChartManager {
         //是否显示边界
         lineChart.setDrawBorders(false);
         //是否可以拖动
-//        lineChart.setDragEnabled(false);
+        lineChart.setDragEnabled(true);
         lineChart.setDoubleTapToZoomEnabled(true);
 
         //是否有触摸事件
@@ -361,7 +361,7 @@ public class LineChartManager {
         }
 
         /******根据需求的不同 在此在次设置X Y轴的显示内容******/
-        xAxis.setLabelCount(6, false);
+      //  xAxis.setLabelCount(6, false);
         //设置是否绘制刻度
         xAxis.setDrawAxisLine(false);
         //是否绘制X轴线
@@ -379,8 +379,8 @@ public class LineChartManager {
             }
         });
 
-        leftYAxis.setLabelCount(6,false);
-        leftYAxis.setDrawZeroLine(true); // draw a zero line
+       // leftYAxis.setLabelCount(6,false);
+        leftYAxis.setDrawZeroLine(false); // draw a zero line
         leftYAxis.setZeroLineColor(Color.GRAY);
         leftYAxis.setZeroLineWidth(1f);
         leftYAxis.setAxisLineWidth(1f);
@@ -446,7 +446,7 @@ public class LineChartManager {
             entries.add(entry);
         }
 
-        LineDataSet lineDataSet = new LineDataSet(entries, name);
+               LineDataSet lineDataSet = new LineDataSet(entries, name);
         initLineDataSet(lineDataSet, color, LineDataSet.Mode.LINEAR);
 
         lineData.getDataSets().set(position, lineDataSet);

@@ -17,7 +17,7 @@ interface LoginService {
     /**
      * 登录
      * **/
-    @POST("/user/passwordLogin")
+    @POST("api/user/passwordLogin")
     suspend fun mobileLogin(
         @Body dataDisDto: UserLoginData,
     ): ResultData<LoginDto>
@@ -26,14 +26,14 @@ interface LoginService {
      *
     用户信息详情
      * **/
-    @GET("/user/current/userInfo")
+    @GET("api/user/current/userInfo")
     suspend fun userInfo(
     ): ResultData<userInfoBean>
 
     /**
      *用户所在门店
      * **/
-    @GET("/user/userStoreList")
+    @GET("api/user/userStoreList")
     suspend fun userStoreList(
     ): ResultData<ArrayList<UserStoreList>>
 

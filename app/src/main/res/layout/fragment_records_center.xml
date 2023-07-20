@@ -430,7 +430,6 @@
                     app:layout_constraintTop_toTopOf="parent" />
                 <TextView
                     android:id="@+id/tv_goodProductRatio"
-                    android:drawableLeft="@drawable/zhangsan"
                     android:textSize="14sp"
                     android:layout_marginLeft="12dp"
                     android:textColor="@color/Green"

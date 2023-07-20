@@ -21,6 +21,7 @@ import com.meihao.kotlin.cashier.db.UserLoginDataBase
 import com.meiling.account.R
 import com.meiling.account.bean.UserBean
 import com.meiling.account.databinding.ActivityLoginBinding
+import com.meiling.account.dialog.LoginDialog
 import com.meiling.account.dialog.MineExitDialog
 import com.meiling.account.dialog.PopLoginPopwindow
 import com.meiling.account.jpush.PushHelper
@@ -42,7 +43,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
 
-        mDatabind.edtName.setText("15535958281")
+            mDatabind.edtName.setText("15535958281")
         mDatabind.edtPaswd.setText("123456")
         //监听是否添加用户名和密码
         mDatabind.btnLogin.let {
@@ -145,12 +146,10 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
     fun setSaveaccount(userInfoBean: userInfoBean) {
         var listUser = userLoginDao.getAllUsers()
 
-        val dialog: MineExitDialog =
-            MineExitDialog().newInstance("温馨提示", "是否记住密码，以便下次直接登录？", "取消", "确认", false)
+        val dialog: LoginDialog =
+            LoginDialog().newInstance("温馨提示", "是否记住密码，以便下次直接登录？", "取消", "确认", false)
         dialog.setOkClickLister {
 
-            // mViewModel.setUmengToken()
-           //
             login(userInfoBean)
 
         }
@@ -185,7 +184,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             } else {
                 userLoginDao.insert(
                     UserBean(
-                        adminUserId = loginBean.viewId,
+                        adminUserId = loginBean.viewId.toString(),
                         phone = loginBean.phone,
                         password = mDatabind.edtPaswd.text.toString(),
 

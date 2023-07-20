@@ -344,11 +344,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/iv_commodity_url" />
 
             <TextView
+
+                android:id="@+id/tv_goodsUnit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginBottom="5dp"
-                android:text="入库数量 （单位：个）："
+                android:text=""
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/rv_keyboard"
                 app:layout_constraintLeft_toLeftOf="@+id/tv_name" />

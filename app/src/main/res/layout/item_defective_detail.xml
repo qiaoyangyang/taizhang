@@ -197,6 +197,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
             <com.hjq.shape.view.ShapeTextView
+                android:id="@+id/btn_withdraw"
                 android:visibility="invisible"
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"

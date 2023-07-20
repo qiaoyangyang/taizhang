@@ -17,7 +17,7 @@ interface CommodityService {
     /**
      *获取分类列表
      * **/
-    @GET("/sort/list")
+    @GET("api/sort/list")
     suspend fun sorlistt(
     ): ResultData<ArrayList<GoosClassify>>
 
@@ -25,7 +25,7 @@ interface CommodityService {
     /**
      *商品管理
      * **/
-    @POST("/goods/list")
+    @POST("api/goods/list")
     suspend fun goodslistt(
         @Body goodsController: GoodsController,
     ): ResultData<GoodsBean>
@@ -33,7 +33,7 @@ interface CommodityService {
     /**
      *商品入库
      * **/
-    @POST("/storageGoods/save")
+    @POST("api/storageGoods/save")
     suspend fun storageGoodssave(
         @Body storageGoods: StorageGoods,
     ): ResultData<String>
@@ -41,7 +41,7 @@ interface CommodityService {
   /**
      *获取时间分段列表
      * **/
-    @POST("/storageGoods/dateSplit")
+    @POST("api/storageGoods/dateSplit")
     suspend fun dateSplit(
         @Body dateSplit: DateSplit,
     ): ResultData<ArrayList<DateSplitList>>
@@ -50,7 +50,7 @@ interface CommodityService {
      *
     时间段内入库商品列表
      * **/
-    @POST("/storageGoods/goodsSplit")
+    @POST("api/storageGoods/goodsSplit")
     suspend fun goodsSplit(
         @Body dateSplit: DateSplit,
     ): ResultData<ArrayList<GoodsSplit>>
@@ -59,7 +59,7 @@ interface CommodityService {
      *
     入库商品撤回
      * **/
-    @GET("/storageGoods/revoke/{viewId}")
+    @GET("api/storageGoods/revoke/{viewId}")
     suspend fun storageGoods(
         @Path("viewId")viewId: String
     ): ResultData<String>
@@ -67,7 +67,7 @@ interface CommodityService {
      *
     时间段内入库商品列表
      * **/
-    @POST("/form/statistics")
+    @POST("api/form/statistics")
     suspend fun statistics(
         @Body statistics: Statistics,
     ): ResultData<FormStatistics>
@@ -76,7 +76,7 @@ interface CommodityService {
      *
     入库排行榜
      * **/
-    @POST("/form/ranking")
+    @POST("api/form/ranking")
     suspend fun ranking(
         @Body statistics: Statistics,
     ): ResultData<ArrayList<Ranking>>
@@ -86,7 +86,7 @@ interface CommodityService {
      *
     入库排行榜
      * **/
-    @POST("/form/periodTime")
+    @POST("api/form/periodTime")
     suspend fun periodTime(
         @Body statistics: Statistics,
     ): ResultData<ArrayList<PeriodTimeItem>>

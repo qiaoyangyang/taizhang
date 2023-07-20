@@ -5,11 +5,8 @@ import com.meiling.account.bean.*
 import com.meiling.account.service.commodityService
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
-import com.meiling.common.network.data.ByTenantId
 import com.meiling.common.network.data.userInfoBean
 import com.meiling.common.network.service.loginService
-import com.meiling.common.network.service.meService
-import com.meiling.common.utils.MMKVUtils
 
 class MainViewModel(application: Application) : BaseViewModel(application) {
 

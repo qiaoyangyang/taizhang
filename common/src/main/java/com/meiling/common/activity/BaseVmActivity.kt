@@ -3,7 +3,6 @@ package com.meiling.common.activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Bundle
@@ -28,7 +27,6 @@ import com.meiling.common.action.TitleBarAction
 import com.meiling.common.dialog.LoadingDialog
 import com.meiling.common.getVmClazz
 import com.meiling.common.network.NetworkMonitorManager
-import com.meiling.common.network.data.ByTenantId
 import com.meiling.common.network.data.UserStoreList
 import com.meiling.common.network.data.userInfoBean
 import com.meiling.common.network.enums.NetworkState
