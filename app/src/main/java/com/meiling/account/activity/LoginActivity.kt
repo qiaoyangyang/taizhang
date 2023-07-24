@@ -16,8 +16,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hjq.base.action.AnimAction
-import com.meihao.kotlin.cashier.db.UserLoginDao
-import com.meihao.kotlin.cashier.db.UserLoginDataBase
+import com.meihao.kotlin.cashier.db.*
 import com.meiling.account.R
 import com.meiling.account.bean.UserBean
 import com.meiling.account.databinding.ActivityLoginBinding
@@ -40,11 +39,16 @@ import com.meiling.common.utils.MMKVUtils
 class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
     var userLoginDao: UserLoginDao = UserLoginDataBase.instance.getUserLoginDao()
+    val articleDao: ArticleDao =
+        ArticleGoosDataBase.instance.getGoodsToOrderContentDao()
+
+    val goodsCategoryDao: GoosClassifyDaoDao = GoosClassifyDataBase.instance.getGoodsCategoryDao()
+
 
     override fun initView(savedInstanceState: Bundle?) {
 
-            mDatabind.edtName.setText("15535958281")
-        mDatabind.edtPaswd.setText("123456")
+//        mDatabind.edtName.setText("15535958281")
+//        mDatabind.edtPaswd.setText("123456")
         //监听是否添加用户名和密码
         mDatabind.btnLogin.let {
             InputTextManager.with(this)
@@ -128,7 +132,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             SaveUserBean(it)
             setSaveaccount(it)
             MMKVUtils.putBoolean(SPConstants.LOGINSTASTS, true)
-          //  startActivity(Intent(this, SelectStoreActiviy::class.java))
+            //  startActivity(Intent(this, SelectStoreActiviy::class.java))
         }
         mViewModel.userBean.onError.observe(this) {
             disLoading()
@@ -149,6 +153,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         val dialog: LoginDialog =
             LoginDialog().newInstance("温馨提示", "是否记住密码，以便下次直接登录？", "取消", "确认", false)
         dialog.setOkClickLister {
+            dialog.dismiss()
 
             login(userInfoBean)
 
@@ -169,40 +174,49 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             }
         }
     }
+
     fun login(loginBean: userInfoBean) {
-
-        //lwq
-        Thread {
+        if (loginBean.stores?.size != 0) {
+            //lwq
+            Thread {
 //            userLoginDao.deleteAll()
-            var userBean = userLoginDao.selectUserByUserId(loginBean.viewId.toString())
-            if (userBean != null) {
-                userBean.issave = 1
-                userBean.isselect = false
+                var userBean = userLoginDao.selectUserByUserId(loginBean.viewId.toString())
+                if (userBean != null) {
+                    userBean.issave = 1
+                    userBean.isselect = false
 
-                userBean.password = mDatabind.edtPaswd.text.toString()
-                userLoginDao.update(userBean)
-            } else {
-                userLoginDao.insert(
-                    UserBean(
-                        adminUserId = loginBean.viewId.toString(),
-                        phone = loginBean.phone,
-                        password = mDatabind.edtPaswd.text.toString(),
+                    userBean.password = mDatabind.edtPaswd.text.toString()
+                    userLoginDao.update(userBean)
+                } else {
+                    userLoginDao.insert(
+                        UserBean(
+                            adminUserId = loginBean.viewId.toString(),
+                            phone = loginBean.phone,
+                            password = mDatabind.edtPaswd.text.toString(),
 
 
-                        issave = 1,
-                        isselect = false
+                            issave = 1,
+                            isselect = false
+                        )
                     )
-                )
-            }
+                }
 
-            PushHelper.init(applicationContext)
-        }.start()
-        startActivity(Intent(this, SelectStoreActiviy::class.java))
+                PushHelper.init(applicationContext)
+            }.start()
+            goodsCategoryDao.deleteAll()
+            articleDao.deleteAll()
 
+            startActivity(Intent(this, SelectStoreActiviy::class.java))
+        } else {
+            showToast("请检查门店配置，重新登录")
+
+        }
 
 
     }
+
     lateinit var popVip: PopupWindow
+
     //选择密码的对话框
     fun initPopShopList(view: View, list: MutableList<UserBean>) {
 
@@ -264,8 +278,6 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         }
 
     }
-
-
 
 
 }

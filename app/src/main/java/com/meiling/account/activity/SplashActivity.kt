@@ -27,7 +27,8 @@ class SplashActivity : BaseActivity<BaseViewModel, ActivitySplashBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
 
         var boolean = MMKVUtils.getBoolean(SPConstants.LOGINSTASTS, false)
-        if (boolean) {
+
+        if (boolean &&userStoreList()!=null) {
             finish()
             startActivity(Intent(this, MainActivity::class.java))
 

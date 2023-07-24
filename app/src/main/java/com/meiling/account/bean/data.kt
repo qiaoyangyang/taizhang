@@ -165,7 +165,7 @@ data class Info(
     @SerializedName("goodsUnit")
     var goodsUnit: String? = "",
     @SerializedName("goodsWeight")
-    var goodsWeight: Int? = 0,
+    var goodsWeight: String? = "",
     @SerializedName("isRevoke")
     var isRevoke: Int? = 0,
     @SerializedName("operationId")
@@ -179,7 +179,7 @@ data class Info(
     @SerializedName("tenantId")
     var tenantId: Int? = 0,
     @SerializedName("unitViewId")
-    var unitViewId: Any? = Any(),
+    var unitViewId: String? = "",
     @SerializedName("userPhone")
     var userPhone: String? = "",
     @SerializedName("viewId")

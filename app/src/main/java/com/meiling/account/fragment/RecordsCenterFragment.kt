@@ -107,7 +107,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
                     if (TextUtils.isEmpty(mDatabind.tvStartTime.text.toString())) {
                         mDatabind.imgClear.visibility = View.INVISIBLE
                     } else {
-                        mDatabind.imgClear.visibility = View.VISIBLE
+                        mDatabind.imgClear.visibility = View.INVISIBLE
                     }
                 }
             }

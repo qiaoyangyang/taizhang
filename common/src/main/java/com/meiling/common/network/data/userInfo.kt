@@ -26,7 +26,9 @@ data class userInfoBean(
     @SerializedName("userName")
     var userName: String? = "",
     @SerializedName("viewId")
-    var viewId: String? = ""
+    var viewId: String? = "",
+    @SerializedName("stores")
+    var stores: List<String?>? = listOf(),
 )
 
 data class Store(
