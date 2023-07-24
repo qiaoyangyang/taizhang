@@ -113,6 +113,7 @@ data class DateSplit(
     var startTime: String,//起始时间
     var endTime: String,//1.良品, 2.不良品
     var goodsType: Int = 0,//1.良品, 2.不良品
+    var storeViewId: String = "",
 
 )
 
@@ -158,6 +159,8 @@ data class Info(
     var goodsName: String? = "",
     @SerializedName("goodsNumber")
     var goodsNumber: String? = "",
+    @SerializedName("realGoodsNumber")
+    var realGoodsNumber: String? = "",
     @SerializedName("goodsSpecs")
     var goodsSpecs: String? = "",
     @SerializedName("goodsType")

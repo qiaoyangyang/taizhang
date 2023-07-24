@@ -55,7 +55,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="15dp"
-
             android:layout_marginRight="10dp"
             android:ellipsize="end"
             android:letterSpacing="0.05"

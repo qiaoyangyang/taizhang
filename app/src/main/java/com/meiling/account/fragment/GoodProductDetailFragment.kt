@@ -107,7 +107,7 @@ class GoodProductDetailFragment : BaseFragment<MainViewModel, FragmentGoodProduc
                 DateSplit(
                     refundType.startTime.toString(),
                     refundType.endTime.toString(),
-                    1
+                    1,userStoreList()!!.viewId!!
                 )
             )
         }

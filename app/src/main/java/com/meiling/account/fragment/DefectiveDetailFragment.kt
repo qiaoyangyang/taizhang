@@ -43,7 +43,7 @@ class DefectiveDetailFragment : BaseFragment<MainViewModel, FragmentGoodProductD
             DateSplit(
                 startTime,
                 endTime,
-                2
+                2,userStoreList()!!.viewId!!
             )
         )
     }
@@ -97,7 +97,7 @@ class DefectiveDetailFragment : BaseFragment<MainViewModel, FragmentGoodProductD
                 DateSplit(
                     refundType.startTime.toString(),
                     refundType.endTime.toString(),
-                    2
+                    2,userStoreList()!!.viewId!!
                 )
             )
         }

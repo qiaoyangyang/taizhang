@@ -258,7 +258,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
     override fun initData() {
         super.initData()
 
-        mViewModel.dateSplit(DateSplit(startTimen, endTime, voucherType + 1))
+        mViewModel.dateSplit(DateSplit(startTimen, endTime, voucherType + 1,userStoreList()!!.viewId!!))
     }
 
     var dateSplitList: DateSplitList? = null
@@ -338,7 +338,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         var outAndIn = AndIn(
             startTimen,
             endTime,
-            voucherType
+            voucherType,
 
         )
         EventBus.getDefault().post(outAndIn)

@@ -367,9 +367,8 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
             mDatabind.tvIsSucceed.text="不良品入库成功"
             TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed, R.drawable.be_defeated)
         }
-        mDatabind.produceGoodsName.text = goods?.goodsUnit
-        mDatabind.tvGoodsUnit.text = goods?.goodsName
-        mDatabind.tvSelectSum.text = mDatabind.stockAddNum.text.toString()
+        mDatabind.produceGoodsName.text = goods?.goodsName
+        mDatabind.tvSelectSum.text = mDatabind.stockAddNum.text.toString()+goods?.goodsUnit
         num = "1"
         goods = Goods()
 
