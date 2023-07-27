@@ -1,6 +1,7 @@
-package com.meiling.common.network.service
+package com.meiling.account.service
 
 
+import com.meiling.account.wxapi.MyApiUtil
 import com.meiling.common.network.ResultData
 import com.meiling.common.network.RetrofitClient
 import com.meiling.common.network.data.*
@@ -36,6 +37,15 @@ interface LoginService {
     @GET("api/user/userStoreList")
     suspend fun userStoreList(
     ): ResultData<ArrayList<UserStoreList>>
+
+
+    /**
+     *用户所在门店
+     * **/
+    @GET(MyApiUtil.WeChatLogin)
+    suspend fun WeChatLogin(
+    ): ResultData<String>
+
 
 
 }

@@ -27,6 +27,8 @@ import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.*
 import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.utils.TextDrawableUtils
+import com.tencent.mm.opensdk.diffdev.DiffDevOAuthFactory
+import com.tencent.mm.opensdk.diffdev.IDiffDevOAuth
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -295,12 +297,16 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
             mDatabind.tvGoodProductRatio.text = it.goodProductRatio
             mDatabind.tvGoodProductRate.text = it.goodProductRate
             if (it.ratioType == 1) {
+                mDatabind.tvGoodProductRatio.visibility=View.VISIBLE
                 mDatabind.tvGoodProductRatio.setTextColor(Color.parseColor("#52C41A"))
                 TextDrawableUtils.setLeftDrawable(mDatabind.tvGoodProductRatio, R.drawable.zhangsan)
 
             } else if (it.ratioType==2){
+                mDatabind.tvGoodProductRatio.visibility=View.VISIBLE
                 mDatabind.tvGoodProductRatio.setTextColor(Color.parseColor("#FF472A"))
                 TextDrawableUtils.setLeftDrawable(mDatabind.tvGoodProductRatio, R.drawable.dao_san)
+            }else{
+                mDatabind.tvGoodProductRatio.visibility=View.INVISIBLE
             }
 
 
@@ -308,6 +314,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         mViewModel.statisticsdata.onError.observe(this) {
 
         }
+
 
     }
 

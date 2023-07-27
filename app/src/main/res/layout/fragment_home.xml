@@ -347,15 +347,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/iv_commodity_url" />
 
             <TextView
-
+                android:textStyle="bold"
                 android:id="@+id/tv_goodsUnit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="16dp"
                 android:text=""
                 android:textSize="16sp"
-                app:layout_constraintBottom_toTopOf="@+id/rv_keyboard"
+                app:layout_constraintBottom_toTopOf="@+id/ll_count"
                 app:layout_constraintLeft_toLeftOf="@+id/tv_name" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -363,7 +363,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                app:layout_constraintBottom_toTopOf="@+id/ll_count"
+                app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
                 app:layout_constraintLeft_toLeftOf="@+id/sku"
                 app:layout_constraintRight_toRightOf="@+id/tv_sku">
 
@@ -382,7 +382,7 @@
                 android:gravity="center_vertical"
 
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
+                app:layout_constraintBottom_toTopOf="@+id/rv_keyboard"
                 app:layout_constraintLeft_toLeftOf="@+id/sku"
                 app:layout_constraintRight_toRightOf="@+id/tv_sku">
 
@@ -426,7 +426,7 @@
                     android:paddingBottom="10dp"
                     android:text=""
                     android:textColor="@color/red"
-                    android:textSize="24sp" />
+                    android:textSize="32sp" />
 
                 <View
                     android:layout_width="1dp"

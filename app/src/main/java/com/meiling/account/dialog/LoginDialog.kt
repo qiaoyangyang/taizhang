@@ -16,8 +16,8 @@ class LoginDialog : BaseNiceDialog() {
         setOutCancel(false)
     }
 
-    var okSelectClickLister: (() -> Unit)? = null
-    fun setOkClickLister(okClickLister: () -> Unit) {
+    lateinit var okSelectClickLister: OkSelectClickLister
+    fun setOkClickLister(okClickLister: OkSelectClickLister) {
         this.okSelectClickLister = okClickLister
     }
 
@@ -61,11 +61,15 @@ class LoginDialog : BaseNiceDialog() {
         holder?.setText(R.id.tv_title, title)
         holder?.setText(R.id.tv_content, content)
         cancel?.setSingleClickListener {
-            okSelectClickLister?.invoke()
+            okSelectClickLister?.invoke(1)
         }
         ok?.setSingleClickListener {
-            okSelectClickLister?.invoke()
+            okSelectClickLister?.invoke(2)
         }
 
+    }
+
+    interface OkSelectClickLister{
+      fun  invoke(type:Int)
     }
 }

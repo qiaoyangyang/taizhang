@@ -152,12 +152,23 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
         val dialog: LoginDialog =
             LoginDialog().newInstance("温馨提示", "是否记住密码，以便下次直接登录？", "取消", "确认", false)
-        dialog.setOkClickLister {
-            dialog.dismiss()
+        dialog.setOkClickLister(object : LoginDialog.OkSelectClickLister {
+            override fun invoke(type: Int) {
+                dialog.dismiss()
 
-            login(userInfoBean)
 
-        }
+                if (type == 2) {
+                    login(userInfoBean)
+                } else if (type == 1) {
+                    if (userInfoBean.stores?.size != 0) {
+                        startActivity(Intent(this@LoginActivity,SelectStoreActiviy::class.java))
+                    } else {
+                        showToast("请检查门店配置，重新登录")
+                    }
+                }
+            }
+
+        })
         if (listUser.size == 0) {
 
             dialog.show(supportFragmentManager)

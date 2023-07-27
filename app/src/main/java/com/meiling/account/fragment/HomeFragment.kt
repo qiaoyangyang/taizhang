@@ -265,6 +265,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
     }
 
     var num: String = "1"
+    var isaadd:Boolean=false
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         if (adapter == customkeyboardAdapter) {
             if (!TextUtils.isEmpty(customkeyboardAdapter?.getItem(position))) {
@@ -273,6 +274,11 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
                     mDatabind.stockAddNum.text = num
                 } else {
 
+                    if (!isaadd){
+                        isaadd=true
+                        num=""
+                        mDatabind.stockAddNum.text = num
+                    }
 
                     var start = num.indexOf(".")
 
@@ -294,7 +300,8 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
 
 
-                    num =mDatabind.stockAddNum.text.toString()+ customkeyboardAdapter?.getItem(position)
+                    //num =mDatabind.stockAddNum.text.toString()+ customkeyboardAdapter?.getItem(position)
+                    num += customkeyboardAdapter?.getItem(position)
 
                     mDatabind.stockAddNum.text = num
                 }
@@ -323,6 +330,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
             if (goods?.viewId == goodsdata.viewId) {
                 num = XNumberUtils.enquiryAdd(mDatabind.stockAddNum.text.toString(), "1")
             } else {
+                isaadd=false
                 num = "1"
             }
 
@@ -370,6 +378,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
         mDatabind.produceGoodsName.text = goods?.goodsName
         mDatabind.tvSelectSum.text = mDatabind.stockAddNum.text.toString()+goods?.goodsUnit
         num = "1"
+        isaadd=false
         goods = Goods()
 
     }

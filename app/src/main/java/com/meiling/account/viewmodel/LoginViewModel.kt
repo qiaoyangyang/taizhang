@@ -1,10 +1,10 @@
 package com.meiling.account.viewmodel
 
 import android.app.Application
+import com.meiling.account.service.loginService
 import com.meiling.common.BaseLiveData
 import com.meiling.common.BaseViewModel
 import com.meiling.common.network.data.*
-import com.meiling.common.network.service.loginService
 import com.meiling.common.utils.MMKVUtils
 
 class LoginViewModel(application: Application) : BaseViewModel(application) {
@@ -26,6 +26,11 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
     val UserStoreList = BaseLiveData<ArrayList<UserStoreList>>()
     fun userStoreList() {
         request({ loginService.userStoreList() }, UserStoreList)
+    }
+    //用户所在门店
+    val WeChatLogin = BaseLiveData<String>()
+    fun WeChatLogin() {
+        request({ loginService.WeChatLogin() }, WeChatLogin)
     }
 
 
