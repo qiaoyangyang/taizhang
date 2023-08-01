@@ -1,6 +1,8 @@
 package com.meiling.account;
 
 
+import android.util.Log;
+
 import java.io.File;
 import java.util.Map;
 
@@ -58,10 +60,10 @@ public class UpdateAppHttpUtil implements HttpManager {
     @Override
     public void asyncPost(@NonNull String url, @NonNull Map<String, String> params, @NonNull final Callback callBack) {
         OkHttpUtils.post()
-//                .addHeader(MMKVUtils.INSTANCE.getString(SharedPreferences.), Config.headerValue)
-               // .addHeader("adminViewId", MMKVUtils.INSTANCE.getString(SPConstants.adminViewId, ""))
-                .addHeader("adminToken", MMKVUtils.INSTANCE.getString(SPConstants.TOKEN, ""))
+                .addHeader("userViewId", MMKVUtils.INSTANCE.getString(SPConstants.userViewId, ""))
+                .addHeader("token", MMKVUtils.INSTANCE.getString(SPConstants.TOKEN, ""))
                 .addHeader("tenantId", MMKVUtils.INSTANCE.getString(SPConstants.tenantId, ""))
+                .addHeader("platform", "ipad")
                 .url(url)
                 .params(params)
                 .build()
@@ -73,7 +75,9 @@ public class UpdateAppHttpUtil implements HttpManager {
 
                     @Override
                     public void onResponse(String response, int id) {
+                        Log.d("UpdateAppHttpUtil---", "onResponse: "+response);
                         callBack.onResponse(response);
+
                     }
                 });
 

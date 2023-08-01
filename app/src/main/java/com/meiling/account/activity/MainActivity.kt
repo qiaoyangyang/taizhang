@@ -26,6 +26,7 @@ import com.meiling.account.eventBusData.MessageEvent
 import com.meiling.account.fragment.HomeFragment
 import com.meiling.account.fragment.RecordsCenterFragment
 import com.meiling.account.viewmodel.MainViewModel
+import com.meiling.account.widget.UpdateVersion
 import com.meiling.account.widget.setSingleClickListener
 import com.meiling.account.widget.showToast
 import com.meiling.common.GlideApp
@@ -89,6 +90,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
             dialog.show(supportFragmentManager)
         }
 
+        MMKVUtils.putBoolean("isUpdate", true)
+
     }
 
 
@@ -108,6 +111,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
 
     override fun onResume() {
         super.onResume()
+        if (MMKVUtils.getBoolean("isUpdate")) {
+            UpdateVersion.getUpdateVersion(this, "0")
+        }
 
     }
 

@@ -13,12 +13,14 @@ import android.widget.TextView
 import android.widget.Toast
 import com.blankj.utilcode.util.SPStaticUtils
 import com.google.gson.Gson
+import com.meiling.account.BuildConfig
 import com.meiling.common.constant.SPConstants
 import com.meiling.common.utils.MMKVUtils
 import com.meiling.account.R
 import com.meiling.account.UpdateAppHttpUtil
 import com.meiling.account.data.AppUpdate
-import com.vector.update_app.BuildConfig
+import com.meiling.account.data.Result
+import com.meiling.common.utils.GsonUtils
 import com.vector.update_app.UpdateAppBean
 import com.vector.update_app.UpdateAppManager
 import com.vector.update_app.UpdateCallback
@@ -30,16 +32,18 @@ import java.io.File
 object UpdateVersion {
 
     fun getUpdateVersion(context: Activity, type: String = "0") {
+       // var url = "http://book.qingyouhn.cn/api"
+        var url = "http://standingbook-api.igoodsale.com"
         val map: HashMap<String, String> = HashMap()
-        map.put("versioncode", BuildConfig.VERSION_CODE.toString())
+        map.put("versionCode", BuildConfig.VERSION_CODE.toString())
         map.put("appId", "1")
         UpdateAppManager.Builder().setActivity(context)
             .setHttpManager(UpdateAppHttpUtil())
             .setUpdateUrl(
                 SPStaticUtils.getString(
                     SPConstants.IP,
-                    "https://ods-api.igoodsale.com"
-                ) + "/saas/Version/CheckUpdate"
+                    url
+                ) + "/appSetting/queryInfo"
             )
 //            .setUpdateUrl("http://dev-oms-api.igoodsale.com/saas/Version/CheckUpdate")
             .setPost(true)
@@ -48,25 +52,27 @@ object UpdateVersion {
             .checkNewApp(object : UpdateCallback() {
                 override fun parseJson(json: String): UpdateAppBean {
                     val updateAppBean = UpdateAppBean()
-                    val (code, data) = Gson().fromJson(json, AppUpdate::class.java)
+                    //val (code, result) = Gson().fromJson(json, AppUpdate::class.java)
+                    var person = GsonUtils.getPerson(json, AppUpdate::class.java)
+                    var result = person.result
 
-                    if (code == 200) {
-                        if (data!!.updateId != null && data.downloadUrl != null) {
+                    if (person.code == 200) {
+                        if (result!!.updateId != null && result.downloadUrl != null) {
 //                            updateInstall 1 强制更新
-                            val i: Int = data.versionCode!!.toInt()
+                            val i: Int = result.versionCode!!.toInt()
 //                            是否更新
                             if (i > BuildConfig.VERSION_CODE) {
-                                updateAppBean.isConstraint = data.updateInstall == 1
+                                updateAppBean.isConstraint = result.updateInstall == 1
                                 updateAppBean.update = "Yes"
                             } else {
                                 updateAppBean.update = "No"
                             }
 //
                             //版本号
-                            updateAppBean.updateLog = data.versionName
-                            updateAppBean.newVersion = data.versionCode
+                            updateAppBean.updateLog = result.versionName
+                            updateAppBean.newVersion = result.versionCode
                             //下载地址
-                            updateAppBean.apkFileUrl = data.downloadUrl
+                            updateAppBean.apkFileUrl = result.downloadUrl
                         }
                     }
                     return updateAppBean
@@ -135,7 +141,7 @@ object UpdateVersion {
         if (MMKVUtils.getBoolean("isUpdate")) {
             dialog.show()
         } else {
-                dialog.show()
+            dialog.show()
         }
         if (updateApp.isConstraint) {
             cancel.visibility = View.GONE
@@ -201,7 +207,7 @@ object UpdateVersion {
         })
 
         cancel.setOnClickListener {
-            MMKVUtils.putBoolean("isUpdate",false)
+            MMKVUtils.putBoolean("isUpdate", false)
             dialog.dismiss()
         }
         serverUpdate.setOnClickListener {
