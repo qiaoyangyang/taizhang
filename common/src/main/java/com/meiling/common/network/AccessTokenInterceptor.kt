@@ -16,6 +16,7 @@ class AccessTokenInterceptor : Interceptor {
         builder.header("userViewId", MMKVUtils.getString(SPConstants.userViewId))
         builder.header("token", MMKVUtils.getString(SPConstants.TOKEN))
         builder.header("tenantId", MMKVUtils.getString(SPConstants.tenantId))
+        builder.header("platform", "ipad")
 
         return chain.proceed(builder.build())
     }

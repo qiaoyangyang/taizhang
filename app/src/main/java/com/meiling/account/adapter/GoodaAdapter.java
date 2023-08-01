@@ -1,6 +1,7 @@
 package com.meiling.account.adapter;
 
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,6 +12,7 @@ import com.meiling.account.R;
 import com.meiling.account.bean.Goods;
 import com.meiling.account.widget.CustomRoundAngleImageView;
 import com.meiling.common.GlideApp;
+import com.meiling.common.utils.GlideAppUtils;
 
 import java.util.List;
 
@@ -32,9 +34,10 @@ public class GoodaAdapter extends BaseQuickAdapter<Goods, BaseViewHolder> {
         baseViewHolder.setText(R.id.tv_goodsUnit,s.getGoodsUnit());
         baseViewHolder.setText(R.id.tv_name,s.getGoodsName());
         baseViewHolder.setText(R.id.tv_goodsSpecsValus,s.getGoodsSpecsValus());
-        CustomRoundAngleImageView view = baseViewHolder.getView(R.id.iv_Img);
+        ImageView view = baseViewHolder.getView(R.id.iv_Img);
         GlideApp.with(getContext())
                 .load(s.getGoodsImgurl())
                 .into(view);
+//
     }
 }

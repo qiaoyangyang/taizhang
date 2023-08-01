@@ -14,6 +14,10 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.meihao.kotlin.cashier.db.ArticleDao
+import com.meihao.kotlin.cashier.db.ArticleGoosDataBase
+import com.meihao.kotlin.cashier.db.GoosClassifyDaoDao
+import com.meihao.kotlin.cashier.db.GoosClassifyDataBase
 import com.meiling.account.R
 import com.meiling.account.adapter.FragAdapter
 import com.meiling.account.databinding.ActivityMainBinding
@@ -47,7 +51,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     override fun isStatusBarEnabled(): Boolean {
         return false
     }
-
+    val articleDao: ArticleDao =
+        ArticleGoosDataBase.instance.getGoodsToOrderContentDao()
+    val goodsCategoryDao: GoosClassifyDaoDao = GoosClassifyDataBase.instance.getGoodsCategoryDao()
     override fun initView(savedInstanceState: Bundle?) {
         fragments.add(HomeFragment())
         fragments.add(RecordsCenterFragment())
@@ -71,6 +77,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
             dialog.setOkClickLister {
                 ToastUtils.showShort("账号登录过期，请重新登录")
                 MMKVUtils.clear()
+                articleDao.deleteAll()
+                goodsCategoryDao.deleteAll()
+
                 ARouter.getInstance().build(ARouteConstants.LOGIN_ACTIVITY)
                     .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).navigation()
                 ActivityUtils.finishAllActivities()

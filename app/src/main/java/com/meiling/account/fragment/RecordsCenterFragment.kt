@@ -133,7 +133,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         })
 
         mDatabind.tvDetail.setSingleClickListener {
-            mDatabind.vpHomePager.setCurrentItem(1, false)
+            mDatabind.vpHomePager.setCurrentItem(0, false)
         }
 
     }
@@ -254,6 +254,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
             } else {
                 initData()
             }
+           // mDatabind.vpHomePager.setCurrentItem(0, false)
         }
     }
 

@@ -19,7 +19,7 @@
         <com.meiling.account.widget.CustomRoundAngleImageView
             android:id="@+id/iv_Img"
             style="@style/CustomRoundAngleImageView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
 
             android:layout_height="120dp"
             android:layout_margin="5dp"
