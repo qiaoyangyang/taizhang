@@ -127,7 +127,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
             Log.d("yjk", "良品入库: " + userStoreList()?.tenantId)
             //
-            if (TextUtils.isEmpty(mDatabind.stockAddNum.text.toString())){
+            if (TextUtils.isEmpty(mDatabind.stockAddNum.text.toString())) {
                 showToast("请输入数量")
                 return@setSingleClickListener
             }
@@ -137,7 +137,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
         //不良品入库
         mDatabind.tvDefectiveProductsAreStored.setSingleClickListener {
             // setissucceed(false)
-            if (TextUtils.isEmpty(mDatabind.stockAddNum.text.toString())){
+            if (TextUtils.isEmpty(mDatabind.stockAddNum.text.toString())) {
                 showToast("请输入数量")
                 return@setSingleClickListener
             }
@@ -152,7 +152,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
         }
         //减
         mDatabind.stockAddJian.setSingleClickListener {
-           num = mDatabind.stockAddNum.text.toString()
+            num = mDatabind.stockAddNum.text.toString()
             if (XNumberUtils.compareTo(num, "1") != 1) {
                 return@setSingleClickListener
             }
@@ -186,7 +186,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
                             goodaAdapter?.setList(goods)
                         }
                     } else {
-                        pageNum=1
+                        pageNum = 1
                         goodsCategoryDao.deleteAll()
                         articleDao.deleteAll()
                         initData()
@@ -202,6 +202,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
     override fun getBind(inflater: LayoutInflater): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(inflater)
     }
+
     /**
      * 分类
      */
@@ -265,7 +266,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
     }
 
     var num: String = "1"
-    var isaadd:Boolean=false
+    var isaadd: Boolean = false
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         if (adapter == customkeyboardAdapter) {
             if (!TextUtils.isEmpty(customkeyboardAdapter?.getItem(position))) {
@@ -274,9 +275,9 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
                     mDatabind.stockAddNum.text = num
                 } else {
 
-                    if (!isaadd){
-                        isaadd=true
-                        num=""
+                    if (!isaadd) {
+                        isaadd = true
+                        num = ""
                         mDatabind.stockAddNum.text = num
                     }
 
@@ -297,7 +298,6 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
                             return
                         }
                     }
-
 
 
                     //num =mDatabind.stockAddNum.text.toString()+ customkeyboardAdapter?.getItem(position)
@@ -330,7 +330,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
             if (goods?.viewId == goodsdata.viewId) {
                 num = XNumberUtils.enquiryAdd(mDatabind.stockAddNum.text.toString(), "1")
             } else {
-                isaadd=false
+                isaadd = false
                 num = "1"
             }
 
@@ -341,7 +341,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
         mDatabind.tvSku.text = goods?.skuCode
         mDatabind.stockAddNum.text = num
         mDatabind.tvGoodsSpecsValus.text = goods?.goodsSpecsValus
-        mDatabind.tvGoodsUnit.text ="入库数量 （单位：${goods?.goodsUnit}）："
+        mDatabind.tvGoodsUnit.text = "入库数量 （单位：${goods?.goodsUnit}）："
         mDatabind.tvName.text = goods?.goodsName
         GlideApp.with(this)
             .load(goods?.goodsImgurl)
@@ -365,20 +365,27 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
     //是否成功
     private fun setissucceed(b: Int) {
-        mDatabind.clSelect.visibility = View.GONE
-        mDatabind.llSelect.visibility = View.GONE
-        mDatabind.clSucceed.visibility = View.VISIBLE
+        Log.d("mkl", "是否成功: ")
         if (b == 1) {
-            mDatabind.tvIsSucceed.text="良品入库成功"
+            mDatabind.tvIsSucceed.text = "良品入库成功"
             TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed, R.drawable.succeed)
-        } else {
-            mDatabind.tvIsSucceed.text="不良品入库成功"
+        } else if (b == 2) {
+            mDatabind.tvIsSucceed.text = "不良品入库成功"
             TextDrawableUtils.setTopDrawable(mDatabind.tvIsSucceed, R.drawable.be_defeated)
         }
-        mDatabind.produceGoodsName.text = goods?.goodsName
-        mDatabind.tvSelectSum.text = mDatabind.stockAddNum.text.toString()+goods?.goodsUnit
+        if (goods != null) {
+            mDatabind.clSelect.visibility = View.GONE
+            mDatabind.llSelect.visibility = View.GONE
+            mDatabind.clSucceed.visibility = View.VISIBLE
+            mDatabind.produceGoodsName.text = goods?.goodsName
+            mDatabind.tvSelectSum.text = mDatabind.stockAddNum.text.toString() + goods?.goodsUnit
+        }else{
+            mDatabind.clSelect.visibility = View.GONE
+            mDatabind.llSelect.visibility = View.VISIBLE
+            mDatabind.clSucceed.visibility = View.GONE
+        }
         num = "1"
-        isaadd=false
+        isaadd = false
         goods = Goods()
 
     }
@@ -417,7 +424,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
             var div = (it.total - 1) / pageSize + 1
 
-            var isLoadAll =pageNum==div
+            var isLoadAll = pageNum == div
             it.data?.forEach {
                 var allChinesePinyin = Pinyin.toPinyin(it?.goodsName, "|")
                 //获取完整拼音
@@ -467,7 +474,7 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
         }
         mViewModel.storageGoodssave.onSuccess.observe(this) {
             dismissLoading()
-            setissucceed(goodsType)
+                setissucceed(goodsType)
         }
         mViewModel.storageGoodssave.onError.observe(this) {
             dismissLoading()
@@ -480,15 +487,17 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
     // 商品入库
     fun setstorageGood() {
-        mViewModel.storageGood(
-            StorageGoods(
-                goodsType,
-                goods?.viewId!!,
-                mDatabind.stockAddNum.text.toString(),
-                userStoreList()?.storeName!!,
-                userStoreList()?.viewId!!
+        if (goodsType != -1) {
+            mViewModel.storageGood(
+                StorageGoods(
+                    goodsType,
+                    goods?.viewId!!,
+                    mDatabind.stockAddNum.text.toString(),
+                    userStoreList()?.storeName!!,
+                    userStoreList()?.viewId!!
+                )
             )
-        )
+        }
 
     }
 

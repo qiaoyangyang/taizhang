@@ -37,6 +37,7 @@ import com.meiling.common.utils.GlideCircleTransform
 import com.meiling.common.utils.MMKVUtils
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import kotlin.math.log
 
 //主页……
 @Route(path = "/app/MainActivity")
@@ -44,9 +45,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     ViewPager.OnPageChangeListener {
     var fragments = ArrayList<Fragment>()
 
-    companion object {
-        var mainActivity: ViewModelStoreOwner? = null
-    }
 
 
     override fun isStatusBarEnabled(): Boolean {
@@ -56,10 +54,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         ArticleGoosDataBase.instance.getGoodsToOrderContentDao()
     val goodsCategoryDao: GoosClassifyDaoDao = GoosClassifyDataBase.instance.getGoodsCategoryDao()
     override fun initView(savedInstanceState: Bundle?) {
-        fragments.add(HomeFragment())
-        fragments.add(RecordsCenterFragment())
-        var fragAdapter = FragAdapter(supportFragmentManager, fragments)
-        mDatabind.viewpager.adapter = fragAdapter
+
 
         mDatabind.menuShouyin1.setSingleClickListener {
             mDatabind.viewpager.setCurrentItem(0, false)
@@ -118,8 +113,16 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     }
 
     override fun initData() {
+        Log.d("mkl", "initData: ")
 
         mViewModel.userInfo()
+
+        fragments.add(HomeFragment())
+
+        fragments.add(RecordsCenterFragment())
+        var fragAdapter = FragAdapter(supportFragmentManager, fragments)
+        mDatabind.viewpager.adapter = fragAdapter
+
     }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivityMainBinding {

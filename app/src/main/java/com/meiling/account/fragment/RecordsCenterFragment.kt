@@ -147,6 +147,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
 
     override fun onPageSelected(position: Int) {
         voucherType = position
+
         if (position == 2) {
             mDatabind.rvShorTime.visibility = View.GONE
             mDatabind.ll3.visibility = View.VISIBLE
@@ -249,6 +250,7 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser) {
+            mDatabind.vpHomePager.setCurrentItem(0, false)
             if (voucherType == 2) {
                 statement()
             } else {

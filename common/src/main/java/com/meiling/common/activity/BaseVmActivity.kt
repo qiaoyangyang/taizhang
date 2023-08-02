@@ -84,10 +84,13 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), TitleBa
         hideNavigationBar()
         NetworkMonitorManager.getInstance().register(this)
         initTipView();//初始化提示View
+        Log.d("yjk", "init: ")
     }
 
 
-    open fun initListener() {}
+    open fun initListener() {
+
+    }
     open fun initData() {}
 
     /**
