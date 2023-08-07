@@ -4,7 +4,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.meiling.account.R
 import com.meiling.account.bean.Info
+import com.meiling.account.widget.InputUtil
 import com.meiling.common.GlideApp
+import com.meiling.common.flowlayout.FlowLayout
 import com.meiling.common.utils.XNumberUtils
 
 //良品明细
@@ -15,7 +17,6 @@ class DefectiveDetailAdapter :
         holder.setText(R.id.tv_sku,item?.skuCode)
         holder.setText(R.id.tv_Select_Sum,XNumberUtils.formatteddata(item?.realGoodsNumber,3))
         holder.setText(R.id.tv_Library_sign,item?.userPhone)
-        holder.setText(R.id.tv_specification,item?.goodsSpecsValues)
         holder.setText(R.id.tv_time,item?.createTime)
         holder.setText(R.id.tv_uni,item?.goodsUnit)
         GlideApp.with(context)
@@ -27,5 +28,12 @@ class DefectiveDetailAdapter :
         }else{
             holder.setVisible(R.id.btn_withdraw,false)
         }
+
+        var flash_light_layout = holder.getView<FlowLayout>(R.id.flash_light_layout)
+        var mainFlowLayoutAdapter =
+            MainFlowLayoutAdapter(InputUtil.getSpezifikation(item?.goodsSpecsValues))
+
+        flash_light_layout?.setAdapter(mainFlowLayoutAdapter)
+        mainFlowLayoutAdapter.setiscompile(true)
     }
 }

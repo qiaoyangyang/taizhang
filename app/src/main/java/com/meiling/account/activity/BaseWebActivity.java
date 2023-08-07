@@ -3,31 +3,33 @@ package com.meiling.account.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
-import com.just.agentweb.AgentWeb;
-import com.just.agentweb.DefaultWebClient;
-import com.just.agentweb.WebChromeClient;
-import com.just.agentweb.WebViewClient;
-import com.meiling.account.AndroidInterface;
+import com.just.agentwebX5.AgentWeb;
+import com.just.agentwebX5.DefaultWebClient;
+import com.just.agentwebX5.WebDefaultSettingsManager;
+import com.just.agentwebX5.WebSettings;
 import com.meiling.account.R;
-import com.meiling.account.widget.WebLayout;
 
 public class BaseWebActivity extends AppCompatActivity {
 
@@ -70,47 +72,38 @@ public class BaseWebActivity extends AppCompatActivity {
         mAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent(mLinearLayout, new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator()
-                .setWebChromeClient(mWebChromeClient)
-                .setWebViewClient(mWebViewClient)
-                .setMainFrameErrorView(R.layout.agentweb_error_page, -1)
-                .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
-                .setWebLayout(new WebLayout(this))
-                .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.ASK)//打开其他应用时，弹窗咨询用户是否前往其他应用
-                .interceptUnkownUrl() //拦截找不到相关页面的Scheme
+                .defaultProgressBarColor()
+                .setWebSettings(new WebDefaultSettingsManager(){
+                    @Override
+                    public WebSettings toSetting(WebView webView) {
+                        super.toSetting(webView);
+                        getWebSettings().setUseWideViewPort(true);
+                        getWebSettings().setBuiltInZoomControls(true); // 显示放大缩小 controler
+                        getWebSettings().setSupportZoom(true); // 可以缩放
+                        //设置隐藏缩放控件
+                        getWebSettings().setDisplayZoomControls(false);
+                        getWebSettings().setLoadWithOverviewMode(true);
+
+                        return this;
+                    }
+                })
+//                .setWebViewClient(mWebViewClient)
+//                .setWebLayout(new WebLayout(this))
+//                .interceptUnkownUrl() //拦截找不到相关页面的Scheme
                 .createAgentWeb()
                 .ready()
                 .go(url);
         initImmersion();
-        mAgentWeb.getJsInterfaceHolder().addJavaObject("android", new AndroidInterface(mAgentWeb, this));
+//        mAgentWeb.getJsInterfaceHolder().addJavaObject("android", new AndroidInterface(mAgentWeb, this));
+//        mAgentWeb.getJsInterfaceHolder().addJavaObject("android", new BindingLogisticsActivity.AndroidInterface2(mAgentWeb, this));
 
     }
 
-    private com.just.agentweb.WebViewClient mWebViewClient = new WebViewClient() {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            return super.shouldOverrideUrlLoading(view, request);
-        }
+    private WebViewClient mWebViewClient = new WebViewClient(){
 
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            //do you  work
-            Log.i("Info", "BaseWebActivity onPageStarted---" + url);
-        }
-
-        @Override
-        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            handler.proceed();
-
-        }
     };
-    private com.just.agentweb.WebChromeClient mWebChromeClient = new WebChromeClient() {
-        @Override
-        public void onReceivedTitle(WebView view, String title) {
-            super.onReceivedTitle(view, title);
-            if (mTitleTextView != null) {
-                mTitleTextView.setText("");
-            }
-        }
+    private WebChromeClient mWebChromeClient = new WebChromeClient() {
+
     };
 
 

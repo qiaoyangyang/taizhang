@@ -4,14 +4,14 @@ package com.meiling.account.widget;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.just.agentweb.IWebLayout;
+import com.just.agentwebX5.IWebLayout;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.meiling.account.R;
+import com.tencent.smtt.sdk.WebView;
 
 public class WebLayout implements IWebLayout {
 
@@ -34,10 +34,9 @@ public class WebLayout implements IWebLayout {
 
     @Nullable
     @Override
-    public WebView getWebView() {
+    public WebView getWeb() {
         return mWebView;
     }
-
 
 
 }

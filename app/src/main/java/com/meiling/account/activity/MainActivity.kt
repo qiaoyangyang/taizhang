@@ -7,13 +7,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.viewpager.widget.ViewPager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.meihao.kotlin.cashier.db.ArticleDao
 import com.meihao.kotlin.cashier.db.ArticleGoosDataBase
 import com.meihao.kotlin.cashier.db.GoosClassifyDaoDao
@@ -21,6 +19,7 @@ import com.meihao.kotlin.cashier.db.GoosClassifyDataBase
 import com.meiling.account.R
 import com.meiling.account.adapter.FragAdapter
 import com.meiling.account.databinding.ActivityMainBinding
+import com.meiling.account.dialog.HelfenDialog
 import com.meiling.account.dialog.MineExitDialog
 import com.meiling.account.eventBusData.MessageEvent
 import com.meiling.account.fragment.HomeFragment
@@ -32,12 +31,11 @@ import com.meiling.account.widget.showToast
 import com.meiling.common.GlideApp
 import com.meiling.common.activity.BaseActivity
 import com.meiling.common.constant.ARouteConstants
-import com.meiling.common.utils.GlideAppUtils
 import com.meiling.common.utils.GlideCircleTransform
 import com.meiling.common.utils.MMKVUtils
+import com.meiling.common.utils.ScreenManager
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import kotlin.math.log
 
 //主页……
 @Route(path = "/app/MainActivity")
@@ -45,7 +43,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     ViewPager.OnPageChangeListener {
     var fragments = ArrayList<Fragment>()
 
-
+    var screenManager: ScreenManager = ScreenManager.getInstance()
 
     override fun isStatusBarEnabled(): Boolean {
         return false
@@ -54,6 +52,11 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         ArticleGoosDataBase.instance.getGoodsToOrderContentDao()
     val goodsCategoryDao: GoosClassifyDaoDao = GoosClassifyDataBase.instance.getGoodsCategoryDao()
     override fun initView(savedInstanceState: Bundle?) {
+        screenManager.initPayLayoutWidth(this)
+        mDatabind.menuHelfen.setSingleClickListener {
+            HelfenDialog().show(supportFragmentManager)
+          //  HelfenPopWindow.Builder(this).showAtLocation(mDatabind.viewpager)
+        }
 
 
         mDatabind.menuShouyin1.setSingleClickListener {

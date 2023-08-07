@@ -13,7 +13,6 @@ android {
     defaultConfig {
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
-        versionCode build_versions.version_code
         versionName build_versions.version_name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
@@ -169,10 +168,10 @@ dependencies {
     api 'io.github.lucksiege:pictureselector:v3.11.1'
     // 图片压缩 (按需引入)
     api 'io.github.lucksiege:compress:v3.11.1'
-    //AgentWeb
-    api 'com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx' // (必选)
-    api 'com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.0-alpha.1-androidx'// (可选)
-    api 'com.github.Justson:Downloader:v5.0.0-androidx' // (可选)
+//    //AgentWeb
+//    api 'com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx' // (必选)
+//    api 'com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.0-alpha.1-androidx'// (可选)
+//    api 'com.github.Justson:Downloader:v5.0.0-androidx' // (可选)
     api 'com.lcodecorex:tkrefreshlayout:1.0.7'
 
     //bugly
@@ -208,7 +207,8 @@ dependencies {
 
    // api 'com.github.kongqw:NetworkMonitor:1.0.1'
 
-
+    //AgentWeb
+    api 'com.just.agentwebX5:agentwebX5:1.0.0'
 
 
 }

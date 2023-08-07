@@ -4,7 +4,8 @@ import android.app.Activity;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
-import com.just.agentweb.AgentWeb;
+import com.just.agentwebX5.AgentWeb;
+
 
 public class AndroidInterface {
 

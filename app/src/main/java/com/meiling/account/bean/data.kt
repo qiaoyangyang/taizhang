@@ -221,3 +221,11 @@ class PeriodTimeItem (
     @SerializedName("goodProductNumber")
     var goodProductNumber: Double? = 0.0
 )
+class Spezifikation(
+    var goodsSpecsValus:String="",
+     var isselect //是否选择
+    : Boolean = false
+
+
+)
+

@@ -151,5 +151,23 @@
         <!-- 动画时间 -->
         <attr name="pb_animDuration" format="integer" />
     </declare-styleable>
-
+    <declare-styleable name="FlowLayout">
+        <!-- 最大显示行数 -->
+        <attr name="flow_max_row_count" format="integer" />
+        <!-- 每一行水平方向对齐方式 -->
+        <attr name="flow_horizontal_gravity" format="enum">
+            <!-- 每一行水平方向对齐方式：左对齐，默认 -->
+            <enum name="left" value="0" />
+            <!-- 每一行水平方向对齐方式：右对齐 -->
+            <enum name="right" value="1" />
+            <!-- 每一行水平方向对齐方式：左右对齐 -->
+            <enum name="left_right" value="2" />
+            <!-- 每一行水平方向对齐方式：居中对齐 -->
+            <enum name="center" value="3" />
+        </attr>
+        <!-- 水平方向间距 -->
+        <attr name="flow_horizontal_spacing" format="dimension" />
+        <!-- 竖直方向间距 -->
+        <attr name="flow_vertical_spacing" format="dimension" />
+    </declare-styleable>
 </resources>

@@ -1,17 +1,20 @@
 package com.meiling.account.widget;
 
 import android.graphics.Color;
+import android.text.TextUtils;
 
 import com.meiling.account.bean.CompositeIndexBean;
 import com.meiling.account.bean.Goods;
 import com.meiling.account.bean.IncomeBean;
 import com.meiling.account.bean.PeriodTimeItem;
 import com.meiling.account.bean.Ranking;
+import com.meiling.account.bean.Spezifikation;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class InputUtil {
@@ -116,5 +119,21 @@ public class InputUtil {
         }
 
         return maxField;
+    }
+    public static List<Spezifikation> getSpezifikation(String data){
+        List<Spezifikation> spezifikations=new ArrayList<>();
+        List<String> stringList = Arrays.asList((data.split(",")));
+        for (int i = 0; i < stringList.size(); i++) {
+            if (!TextUtils.isEmpty(stringList.get(i))){
+                Spezifikation spezifikation=new Spezifikation();
+                spezifikation.setGoodsSpecsValus(stringList.get(i));
+                spezifikation.setIsselect(false);
+                spezifikations.add(spezifikation);
+
+            }
+
+        }
+        return spezifikations;
+
     }
 }

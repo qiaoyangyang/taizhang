@@ -291,13 +291,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:paddingLeft="10dp"
                 android:textStyle="bold"
                 android:id="@+id/tv_sku"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginRight="20dp"
                 android:background="#F4F4F4"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="237812783792738"
                 android:textColor="@color/red"
                 android:textSize="16sp"
@@ -308,14 +309,15 @@
 
             <ImageView
                 android:id="@+id/iv_commodity_url"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginTop="2dp"
 
                 app:layout_constraintLeft_toLeftOf="@+id/sku"
                 app:layout_constraintTop_toBottomOf="@+id/sku" />
 
             <TextView
+                android:visibility="gone"
                 android:gravity="left|center"
                 android:id="@+id/tv_goodsSpecsValus"
                 android:layout_width="0dp"
@@ -333,6 +335,21 @@
                 app:layout_constraintLeft_toLeftOf="@+id/tv_sku"
                 app:layout_constraintRight_toRightOf="@+id/tv_sku"
                 app:layout_constraintTop_toTopOf="@+id/iv_commodity_url" />
+
+            <com.meiling.common.flowlayout.FlowLayout
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/flash_light_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_commodity_url"
+                app:layout_constraintLeft_toLeftOf="@+id/tv_sku"
+                app:layout_constraintRight_toRightOf="@+id/tv_sku"
+                app:layout_constraintTop_toTopOf="@+id/iv_commodity_url"
+                />
+
+
+
 
             <TextView
                 android:textStyle="bold"

@@ -68,6 +68,7 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_Img" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_goodsSpecsValus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -79,6 +80,21 @@
             app:layout_constraintLeft_toLeftOf="@+id/tv_name"
             app:layout_constraintRight_toRightOf="@+id/tv_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+        <com.meiling.common.flowlayout.FlowLayout
+            android:id="@+id/flash_light_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:textColor="#1F1F1F"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+            app:layout_constraintRight_toRightOf="@+id/tv_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+           >
+
+        </com.meiling.common.flowlayout.FlowLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

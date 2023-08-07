@@ -22,6 +22,7 @@ import com.meihao.kotlin.cashier.db.GoosClassifyDataBase
 import com.meiling.account.R
 import com.meiling.account.adapter.CustomkeyboardAdapter
 import com.meiling.account.adapter.GoodaAdapter
+import com.meiling.account.adapter.MainFlowLayoutAdapter
 import com.meiling.account.adapter.TabAdapter
 import com.meiling.account.bean.Goods
 import com.meiling.account.bean.GoodsController
@@ -340,7 +341,14 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
         mDatabind.tvSku.text = goods?.skuCode
         mDatabind.stockAddNum.text = num
-        mDatabind.tvGoodsSpecsValus.text = goods?.goodsSpecsValus
+       // mDatabind.tvGoodsSpecsValus.text = goods?.goodsSpecsValus
+        var mainFlowLayoutAdapter =
+            MainFlowLayoutAdapter(InputUtil.getSpezifikation(goods?.goodsSpecsValus))
+        mDatabind.flashLightLayout.setAdapter(mainFlowLayoutAdapter)
+        mainFlowLayoutAdapter.setiscompile(true)
+
+
+
         mDatabind.tvGoodsUnit.text = "入库数量 （单位：${goods?.goodsUnit}）："
         mDatabind.tvName.text = goods?.goodsName
         GlideApp.with(this)

@@ -68,27 +68,22 @@
 
         <ImageView
             android:id="@+id/iv_commodity_url"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="22dp"
 
             app:layout_constraintLeft_toLeftOf="@+id/sku"
             app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
-        <TextView
-            android:id="@+id/tv_specification"
+        <com.meiling.common.flowlayout.FlowLayout
+
+            android:id="@+id/flash_light_layout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:maxEms="2"
-            android:maxLines="2"
-            android:paddingTop="6dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="6dp"
-            android:text="8寸，冰淇淋奶油口味红色，大杯冰淇淋奶油口味红色"
-            android:textColor="#1F1F1F"
-            android:textSize="18sp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_commodity_url"
             app:layout_constraintLeft_toRightOf="@+id/iv_commodity_url"
             app:layout_constraintRight_toRightOf="@+id/tv_sku"
             app:layout_constraintTop_toTopOf="@+id/iv_commodity_url" />
@@ -113,7 +108,7 @@
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/Select_Sum"
-            app:layout_constraintLeft_toLeftOf="@+id/tv_specification" />
+            app:layout_constraintLeft_toLeftOf="@+id/flash_light_layout" />
 
         <TextView
             android:id="@+id/tv_uni"
@@ -155,7 +150,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/Library_sign"
-            app:layout_constraintLeft_toLeftOf="@+id/tv_specification" />
+            app:layout_constraintLeft_toLeftOf="@+id/flash_light_layout" />
 
         <TextView
             android:id="@+id/tv_02"
