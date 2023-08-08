@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:background="@color/white"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp"
+    android:paddingTop="@dimen/dp_10"
   >
 
     <TextView
         android:id="@+id/tv_ranking"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
         android:background="@drawable/btn_background_round"
         android:gravity="center"
         android:text="1"
@@ -23,29 +23,29 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="@dimen/dp_10"
         android:text="草莓小熊蛋糕（6英寸）"
         android:textColor="#262626"
-        android:textSize="18sp"
+        android:textSize="@dimen/sp_18"
         app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_constraintLeft_toRightOf="@+id/tv_ranking"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.hjq.shape.view.ShapeTextView
-        app:shape_radius="10dp"
+        app:shape_radius="@dimen/dp_10"
         app:shape_solidColor="#F5F6FC"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_5"
         android:id="@+id/tv_mun"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="@dimen/dp_16"
         android:text=" X190 个"
         android:textColor="#E55A55"
-        android:textSize="16sp"
+        android:textSize="@dimen/sp_16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/tv_name"
         app:layout_constraintTop_toTopOf="parent" />

@@ -57,6 +57,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
             HelfenDialog().show(supportFragmentManager)
           //  HelfenPopWindow.Builder(this).showAtLocation(mDatabind.viewpager)
         }
+        mDatabind.menuSetting1.setOnClickListener {
+            startActivity(Intent(this,SettingActivity::class.java))
+        }
 
 
         mDatabind.menuShouyin1.setSingleClickListener {

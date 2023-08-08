@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:paddingHorizontal="30dp"
+    android:paddingHorizontal="@dimen/dp_30"
     android:layout_height="wrap_content">
 
     <TextView
@@ -18,12 +18,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_gravity="center"
         android:gravity="center"
-        android:paddingVertical="10dp"
+        android:paddingVertical="@dimen/dp_10"
         tools:text="协和便利店东单店" />
     <View
         app:layout_constraintTop_toBottomOf="@+id/txtRecyCategoryItem"
-        android:layout_width="40dp"
-        android:layout_height="3dp"
+        android:layout_width="@dimen/sp_40"
+        android:layout_height="@dimen/dp_3"
         android:id="@+id/recyCategoryItemline"
         android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"

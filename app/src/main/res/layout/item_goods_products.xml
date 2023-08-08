@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:layout_marginTop="30dp"
+    android:layout_marginTop="@dimen/dp_30"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <TextView
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="@dimen/dp_10"
 
         android:gravity="center"
         android:id="@+id/tv_time"
@@ -18,36 +18,36 @@
         app:layout_constraintTop_toTopOf="@+id/tv_lsit_mun"
         android:drawableLeft="@drawable/time"
         android:textStyle="bold"
-        android:textSize="16sp"
+        android:textSize="@dimen/sp_16"
         android:text="2065-06-12 12:00-12:30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <TextView
         app:layout_constraintRight_toLeftOf="@+id/tv_lsit_mun"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
         app:layout_constraintBottom_toBottomOf="@+id/tv_lsit_mun"
         android:background="#50D8D8D8"
 
         app:layout_constraintLeft_toRightOf="@+id/tv_time"
         app:layout_constraintTop_toTopOf="@+id/tv_lsit_mun"
         android:layout_width="0dp"
-        android:layout_height="1dp"/>
+        android:layout_height="@dimen/dp_1"/>
     <com.hjq.shape.view.ShapeTextView
-        android:paddingTop="7dp"
-        android:layout_marginRight="10dp"
-        android:paddingBottom="7dp"
+        android:paddingTop="@dimen/dp_7"
+        android:layout_marginRight="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_7"
         android:id="@+id/tv_lsit_mun"
         android:gravity="center"
         android:text="3"
-        app:shape_radius="10dp"
+        app:shape_radius="@dimen/dp_10"
         android:textColor="#1F1F1F"
-        android:textSize="18sp"
+        android:textSize="@dimen/sp_18"
         app:shape_solidColor="#F5F6FC"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_width="70dp"
+        android:layout_width="@dimen/dp_70"
         android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView

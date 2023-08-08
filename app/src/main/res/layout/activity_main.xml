@@ -10,7 +10,7 @@
     <!--    左边清单-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/shopping_left_lay"
-        android:layout_width="75dp"
+        android:layout_width="@dimen/dp_75"
         android:layout_height="match_parent"
         android:background="@color/red"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="75dp"
+            android:layout_width="@dimen/dp_75"
             android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -26,10 +26,10 @@
 
             <ImageView
                 android:id="@+id/iv_head_portraits"
-                android:layout_width="39dp"
-                android:layout_height="39dp"
+                android:layout_width="@dimen/dp_39"
+                android:layout_height="@dimen/dp_39"
                 android:layout_gravity="center"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="@dimen/dp_22"
               />
 
             <TextView
@@ -37,25 +37,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/dp_15"
                 android:text="涂罗卜"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="@dimen/sp_14" />
 
             <com.hjq.shape.view.ShapeTextView
                 android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="2dp"
-                android:paddingTop="1dp"
-                android:paddingRight="2dp"
-                android:paddingBottom="1dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:paddingLeft="@dimen/dp_2"
+                android:paddingTop="@dimen/dp_1"
+                android:paddingRight="@dimen/dp_2"
+                android:paddingBottom="@dimen/dp_1"
                 android:text="收银员"
                 android:textColor="@color/red"
-                android:textSize="10sp"
-                app:shape_radius="3dp"
+                android:textSize="@dimen/sp_10"
+                app:shape_radius="@dimen/dp_3"
                 app:shape_solidColor="@color/white" />
 
             <com.hjq.shape.view.ShapeTextView
@@ -63,26 +63,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:paddingLeft="@dimen/dp_2"
+                android:paddingRight="@dimen/dp_2"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="10sp" />
+                android:textSize="@dimen/sp_10" />
 
             <com.hjq.shape.layout.ShapeLinearLayout
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="@dimen/dp_4"
                 android:id="@+id/menu_shouyin1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/dp_10"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingVertical="10dp"
-                app:shape_bottomLeftRadius="5dp"
+                android:paddingVertical="@dimen/dp_10"
+                app:shape_bottomLeftRadius="@dimen/dp_5"
                 app:shape_solidColor="@color/white"
-                app:shape_topLeftRadius="5dp">
+                app:shape_topLeftRadius="@dimen/dp_5">
 
                 <ImageView
                     android:id="@+id/menu_shouyin_img"
@@ -98,19 +98,19 @@
                     android:gravity="center_horizontal"
                     android:text="完工入库"
                     android:textColor="@color/red"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/sp_12" />
             </com.hjq.shape.layout.ShapeLinearLayout>
 
             <LinearLayout
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="@dimen/dp_4"
                 android:id="@+id/menu_order_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/dp_20"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingVertical="20dp">
+                android:paddingVertical="@dimen/dp_20">
 
                 <ImageView
                     android:id="@+id/menu_img_order_search"
@@ -125,7 +125,7 @@
                     android:gravity="center_horizontal"
                     android:text="数据对账"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/sp_12" />
             </LinearLayout>
 
             <RelativeLayout
@@ -134,7 +134,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1">
                 <LinearLayout
-                    android:paddingVertical="10dp"
+                    android:paddingVertical="@dimen/dp_10"
                     android:id="@+id/menu_helfen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
                         android:gravity="center_horizontal"
                         android:text="帮 助"
                         android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/sp_12" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -168,7 +168,7 @@
                     android:layout_gravity="center"
                     android:clickable="true"
                     android:gravity="center"
-                    android:paddingVertical="20dp"
+                    android:paddingVertical="@dimen/dp_20"
                     android:orientation="vertical">
 
                     <ImageView
@@ -184,7 +184,7 @@
                         android:gravity="center_horizontal"
                         android:text="设 置"
                         android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/sp_12" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -194,7 +194,7 @@
                     android:layout_alignParentBottom="true"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:paddingVertical="20dp">
+                    android:paddingVertical="@dimen/dp_20">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -207,7 +207,7 @@
                         android:gravity="center_horizontal"
                         android:text="退出"
                         android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/sp_12" />
                 </LinearLayout>
             </RelativeLayout>
 

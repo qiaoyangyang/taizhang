@@ -7,8 +7,8 @@
     android:background="@mipmap/login_bg">
 
     <com.hjq.shape.layout.ShapeConstraintLayout
-        android:layout_width="600dp"
-        app:shape_radius="10dp"
+        android:layout_width="@dimen/dp_600"
+        app:shape_radius="@dimen/dp_10"
         app:shape_solidColor="@color/white"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dp_100"
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="@dimen/dp_50"
             android:src="@mipmap/login_bg_title" />
 
         <LinearLayout
@@ -36,7 +36,7 @@
             android:id="@+id/llLoginName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="@dimen/dp_80"
             android:background="@drawable/bg_login_false"
             android:orientation="horizontal"
             android:padding="@dimen/dp_20">
@@ -52,7 +52,7 @@
                 android:layout_width="1dp"
                 android:layout_height="@dimen/dp_20"
                 android:layout_gravity="center"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="@dimen/dp_15"
                 android:background="#C8C9CC" />
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -60,7 +60,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="@dimen/dp_15"
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="请输入登录账号"
@@ -68,12 +68,12 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textColor="#323233"
-                android:textSize="18sp" />
+                android:textSize="@dimen/sp_18" />
             <ImageView
                 android:layout_marginRight="10dp"
                 android:id="@+id/goods_search_more"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_log_xia"
                 />
@@ -90,20 +90,20 @@
 
 
         <LinearLayout
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
             app:layout_constraintTop_toBottomOf="@+id/llLoginName"
             android:id="@+id/llLoginPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/dp_20"
             android:background="@drawable/bg_login_false"
             android:orientation="horizontal"
             android:padding="@dimen/dp_20">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/dp_10"
                 android:src="@drawable/yaosi" />
@@ -112,7 +112,7 @@
                 android:layout_width="1dp"
                 android:layout_height="@dimen/dp_20"
                 android:layout_gravity="center"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="@dimen/dp_15"
                 android:background="#C8C9CC" />
 
             <com.meiling.common.view.PasswordEditText
@@ -120,7 +120,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="@dimen/dp_15"
                 android:layout_weight="1"
                 android:background="@null"
                 android:digits="@string/editRule_pwd"
@@ -130,18 +130,18 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textColor="#323233"
-                android:textSize="18sp" />
+                android:textSize="@dimen/sp_18" />
 
             <CheckBox
                 android:visibility="gone"
                 android:id="@+id/cbLookPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="@dimen/dp_15"
                 android:button="@drawable/login_password_look_selector"
                 android:checked="true"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp" />
+                android:paddingTop="@dimen/dp_5"
+                android:paddingBottom="@dimen/dp_5" />
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -149,21 +149,21 @@
             app:layout_constraintTop_toBottomOf="@+id/llLoginPwd"
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/dp_60"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_20"
             android:background="@drawable/login_btn_selector"
             android:enabled="false"
             android:text="登录"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="@dimen/sp_18" />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/btnLogin"
             android:id="@+id/cl_agreement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
+            android:paddingVertical="@dimen/dp_5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent">
@@ -182,11 +182,11 @@
                 android:id="@+id/tv_agreement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:layout_marginLeft="5dp"
-                android:drawablePadding="5dp"
+                android:paddingVertical="@dimen/dp_8"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:drawablePadding="@dimen/dp_5"
                 android:text="登录即代表您同意《美零台账用户协议和隐私政策》"
-                android:textSize="14sp"
+                android:textSize="@dimen/sp_14"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/cb_agreementv" />
         </androidx.constraintlayout.widget.ConstraintLayout>

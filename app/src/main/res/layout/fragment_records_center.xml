@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
 
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="@dimen/dp_5"
         android:layout_weight="3"
 
         android:background="@color/white"
@@ -32,61 +32,61 @@
                 android:id="@+id/startEndTime1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="@dimen/dp_5"
                 android:layout_weight="1"
                 android:background="@drawable/select_more_selector"
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:paddingVertical="8dp"
+                android:paddingVertical="@dimen/dp_8"
                 android:text="今天"
                 android:textColor="@drawable/shape_financing_text_color"
-                android:textSize="14sp" />
+                android:textSize="@dimen/sp_14" />
 
             <RadioButton
                 android:id="@+id/startEndTime2"
 
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="@dimen/dp_5"
                 android:layout_weight="1"
                 android:background="@drawable/select_more_selector"
                 android:button="@null"
                 android:gravity="center"
-                android:paddingVertical="8dp"
+                android:paddingVertical="@dimen/dp_8"
                 android:text="昨天"
                 android:textColor="@drawable/shape_financing_text_color"
-                android:textSize="14sp" />
+                android:textSize="@dimen/sp_14" />
 
             <RadioButton
                 android:id="@+id/startEndTime3"
 
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="@dimen/dp_5"
                 android:layout_weight="1"
                 android:background="@drawable/select_more_selector"
                 android:button="@null"
                 android:gravity="center"
-                android:paddingVertical="8dp"
+                android:paddingVertical="@dimen/dp_8"
                 android:text="7天"
                 android:textColor="@drawable/shape_financing_text_color"
-                android:textSize="14sp" />
+                android:textSize="@dimen/sp_14" />
 
             <RadioButton
                 android:id="@+id/startEndTime4"
                 android:layout_width="0dp"
 
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="@dimen/dp_5"
                 android:layout_weight="1"
                 android:background="@drawable/select_more_selector"
                 android:button="@null"
                 android:gravity="center"
-                android:paddingVertical="8dp"
+                android:paddingVertical="@dimen/dp_8"
                 android:text="30天"
                 android:textColor="@drawable/shape_financing_text_color"
-                android:textSize="14sp" />
+                android:textSize="@dimen/sp_14" />
 
             <RadioButton
                 android:id="@+id/startEndTime5"
@@ -97,10 +97,10 @@
                 android:background="@drawable/select_more_selector"
                 android:button="@null"
                 android:gravity="center"
-                android:paddingVertical="8dp"
+                android:paddingVertical="@dimen/dp_8"
                 android:text="自定义"
                 android:textColor="@drawable/shape_financing_text_color"
-                android:textSize="14sp" />
+                android:textSize="@dimen/sp_14" />
         </RadioGroup>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -108,11 +108,11 @@
             android:id="@+id/ll_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dp_10"
             android:orientation="horizontal"
-            android:paddingHorizontal="25dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:paddingHorizontal="@dimen/dp_25"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
             app:layout_constraintTop_toBottomOf="@+id/startEndTimeRdg">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -122,8 +122,8 @@
                 android:layout_width="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:gravity="center_vertical"
             >
 
@@ -136,18 +136,18 @@
                     android:gravity="center"
                     android:paddingVertical="5dp"
                     android:textColor="#1F1F1F"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/sp_14"
                     tools:text="2022-05-24" />
                 <ImageView
                     android:visibility="invisible"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/dp_10"
                     app:layout_constraintLeft_toRightOf="@+id/tv_startTime"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
 
                     android:id="@+id/imgClear"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_close_edt"
                     />
@@ -160,12 +160,12 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/dp_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-"
                 android:textColor="#FF7A7A7A"
-                android:textSize="16sp" />
+                android:textSize="@dimen/sp_16" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 app:layout_constraintTop_toTopOf="parent"
@@ -173,10 +173,10 @@
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/dp_10"
                 app:layout_constraintBaseline_toBottomOf="parent"
-                android:layout_marginBottom="10dp"
-                android:paddingHorizontal="10dp">
+                android:layout_marginBottom="@dimen/dp_10"
+                android:paddingHorizontal="@dimen/dp_10">
 
                 <TextView
                     app:layout_constraintTop_toTopOf="parent"
@@ -185,20 +185,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:paddingVertical="5dp"
+                    android:paddingVertical="@dimen/dp_5"
                     android:textColor="#1F1F1F"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/sp_14"
                     tools:text="2022-05-25" />
                 <ImageView
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:visibility="invisible"
                     app:layout_constraintLeft_toRightOf="@+id/tv_endTime"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
 
                     android:id="@+id/imgClear1"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_close_edt"
                     />
@@ -209,10 +209,10 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dp_10"
             android:id="@+id/tv_01"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="@dimen/dp_10"
             android:background="#EEEFF1"
             app:layout_constraintTop_toBottomOf="@+id/ll_time" />
 
@@ -221,7 +221,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/white"
-            android:padding="20dp"
+            android:padding="@dimen/dp_20"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/startEndTimeRdg"
@@ -237,7 +237,7 @@
             android:id="@+id/ll_3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/dp_15"
             android:background="@color/white"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -247,21 +247,21 @@
                 android:layout_weight="4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:shape_radius="4dp"
+                app:shape_radius="@dimen/dp_4"
                 app:shape_solidColor="#FFF7F0">
 
                 <TextView
                     android:id="@+id/aggregate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_30"
                     android:drawableLeft="@drawable/aggregate"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/dp_10"
                     android:gravity="center"
                     android:text="生产入库总计件数"
                     android:textColor="#484C5D"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/sp_18"
                     android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -270,11 +270,11 @@
                     android:id="@+id/tv_ts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="@dimen/dp_30"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:text="包含：良品和不良品的入库总和"
                     android:textColor="#8A8E9F"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/sp_16"
                     app:layout_constraintLeft_toLeftOf="@+id/aggregate"
                     app:layout_constraintTop_toBottomOf="@+id/aggregate" />
 
@@ -282,19 +282,19 @@
                     android:id="@+id/tv_aggregate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/sp_12"
                     android:text=""
                     android:textColor="#5B6388"
                     android:textStyle="bold"
-                    android:textSize="32sp"
+                    android:textSize="@dimen/sp_30"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_ts"
                     app:layout_constraintTop_toBottomOf="@+id/tv_ts" />
 
                 <TextView
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:text="件"
                     android:textColor="#5B6388"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/sp_16"
                     app:layout_constraintLeft_toRightOf="@+id/tv_aggregate"
 
                     android:layout_width="wrap_content"
@@ -302,10 +302,10 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/tv_aggregate" />
                 <TextView
                     android:id="@+id/tv_goodsTotalNumber"
-                    android:layout_marginBottom="30dp"
+                    android:layout_marginBottom="@dimen/dp_30"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginTop="12dp"
-                    android:textSize="16sp"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:textSize="@dimen/sp_16"
                     android:textColor="#8A8E9F"
                     android:text=""
                     app:layout_constraintLeft_toLeftOf="@+id/tv_aggregate"
@@ -316,24 +316,24 @@
             </com.hjq.shape.layout.ShapeConstraintLayout>
             <com.hjq.shape.layout.ShapeConstraintLayout
                 android:layout_weight="4"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/dp_10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:shape_radius="4dp"
+                app:shape_radius="@dimen/dp_4"
                 app:shape_solidColor="#1404ED9B">
 
                 <TextView
                     android:id="@+id/accepted_goods"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_30"
                     android:drawableLeft="@drawable/accepted_goods"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/dp_10"
                     android:gravity="center"
                     android:text="良品入库总计件数"
                     android:textColor="#484C5D"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/sp_18"
                     android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -342,11 +342,11 @@
                     android:id="@+id/tv_ts1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="@dimen/dp_30"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:text="按重量入库的商品，每单算1件"
                     android:textColor="#8A8E9F"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/sp_14"
                     app:layout_constraintLeft_toLeftOf="@+id/accepted_goods"
                     app:layout_constraintTop_toBottomOf="@+id/accepted_goods" />
 
@@ -354,19 +354,19 @@
                     android:id="@+id/tv_accepted_goods"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/dp_12"
                     android:text=""
                     android:textStyle="bold"
                     android:textColor="#5B6388"
-                    android:textSize="32sp"
+                    android:textSize="@dimen/sp_30"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_ts1"
                     app:layout_constraintTop_toBottomOf="@+id/tv_ts1" />
 
                 <TextView
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:text="件"
                     android:textColor="#5B6388"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/sp_16"
                     app:layout_constraintLeft_toRightOf="@+id/tv_accepted_goods"
 
                     android:layout_width="wrap_content"
@@ -374,10 +374,10 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/tv_accepted_goods" />
                 <TextView
                     android:id="@+id/tv_goodProductGoodsTotalNumber"
-                    android:layout_marginBottom="30dp"
+                    android:layout_marginBottom="@dimen/dp_30"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginTop="12dp"
-                    android:textSize="16sp"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:textSize="@dimen/sp_16"
                     android:textColor="#8A8E9F"
                     android:text=""
                     app:layout_constraintLeft_toLeftOf="@+id/tv_accepted_goods"
@@ -386,18 +386,18 @@
                 <com.hjq.shape.view.ShapeTextView
                     android:id="@+id/tv_detail"
                     android:drawableRight="@drawable/bank"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/sp_16"
                     android:textColor="#5B6388"
                     android:gravity="center"
-                    android:paddingRight="20dp"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingLeft="20dp"
+                    android:paddingRight="@dimen/dp_20"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingLeft="@dimen/dp_20"
                     app:shape_strokeColor="#5B6388"
-                    app:shape_strokeWidth="1dp"
-                    app:shape_radius="18dp"
+                    app:shape_strokeWidth="@dimen/dp_1"
+                    app:shape_radius="@dimen/dp_18"
                     android:text="明细"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginRight="@dimen/dp_16"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_goodProductGoodsTotalNumber"
                     app:layout_constraintRight_toRightOf="parent"
                     android:layout_width="wrap_content"
@@ -406,32 +406,32 @@
 
             </com.hjq.shape.layout.ShapeConstraintLayout>
             <com.hjq.shape.layout.ShapeConstraintLayout
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/dp_10"
                 android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:shape_radius="4dp"
+                app:shape_radius="@dimen/dp_4"
                 app:shape_solidColor="#14044AED">
 
                 <TextView
                     android:id="@+id/Yield"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_30"
                     android:drawableLeft="@drawable/yield"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/dp_10"
                     android:gravity="center"
                     android:text="良品率"
                     android:textColor="#484C5D"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/sp_18"
                     android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
                 <TextView
                     android:id="@+id/tv_goodProductRatio"
-                    android:textSize="14sp"
-                    android:layout_marginLeft="12dp"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginLeft="@dimen/dp_12"
                     android:textColor="@color/Green"
                     app:layout_constraintBaseline_toBaselineOf="@+id/Yield"
                     app:layout_constraintLeft_toRightOf="@+id/Yield"
@@ -441,23 +441,23 @@
 
                 <TextView
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="@dimen/dp_20"
                     android:id="@+id/tv_ts3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="@dimen/dp_30"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:text="良品/总入库x100%"
                     android:textColor="#8A8E9F"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/sp_16"
                     app:layout_constraintLeft_toLeftOf="@+id/Yield"
                     app:layout_constraintTop_toBottomOf="@+id/Yield" />
                 <TextView
                     android:id="@+id/tv_goodProductRate"
                     android:textStyle="bold"
                     android:text=""
-                    android:layout_marginRight="16dp"
-                    android:textSize="32sp"
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:textSize="@dimen/sp_32"
                     android:textColor="#5B6388"
                     app:layout_constraintTop_toTopOf="@+id/Yield"
                     app:layout_constraintRight_toRightOf="parent"
@@ -488,39 +488,39 @@
             android:id="@+id/vp_home_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/dp_10"
             app:layout_constraintBottom_toTopOf="@+id/slidingTabLayout"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/dp_10"
             android:background="#F4F4F4"
             app:layout_constraintBottom_toTopOf="@+id/slidingTabLayout"
 
             android:layout_width="match_parent"
-            android:layout_height="2dp"/>
+            android:layout_height="@dimen/dp_2"/>
 
         <com.flyco.tablayout.SlidingTabLayout
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/dp_10"
 
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
             android:id="@+id/slidingTabLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_16"
             android:background="@drawable/bg_my_data_white10"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:tl_indicator_color="@color/white"
-            app:tl_indicator_corner_radius="40dp"
-            app:tl_indicator_margin_left="2dp"
-            app:tl_indicator_margin_right="2dp"
+            app:tl_indicator_corner_radius="@dimen/dp_40"
+            app:tl_indicator_margin_left="@dimen/dp_2"
+            app:tl_indicator_margin_right="@dimen/dp_2"
             app:tl_indicator_style="BLOCK"
             app:tl_tab_space_equal="true"
-            app:tl_textsize="18sp"
+            app:tl_textsize="@dimen/sp_18"
             app:tl_textSelectColor="#FE4B48"
             app:tl_textUnselectColor="#616161" />
 

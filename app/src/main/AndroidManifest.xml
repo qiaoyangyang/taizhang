@@ -98,6 +98,14 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
+        <!--        设置页面-->
+        <activity
+            android:name=".activity.SettingActivity"
+
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
 
 
         <provider
