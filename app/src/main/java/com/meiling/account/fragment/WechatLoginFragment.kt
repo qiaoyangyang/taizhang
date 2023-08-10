@@ -5,17 +5,15 @@ import android.view.LayoutInflater
 import com.meiling.account.databinding.FragmentHomeBinding
 import com.meiling.account.databinding.FragmnetBasicInformationBinding
 import com.meiling.account.databinding.FragmnetLoginPasswordBinding
+import com.meiling.account.databinding.FragmnetWechatLoginBinding
 import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.common.fragment.BaseFragment
-//修改密码
-class LoginPasswordFragment : BaseFragment<MainViewModel, FragmnetLoginPasswordBinding>() {
+//微信登录
+class WechatLoginFragment : BaseFragment<MainViewModel, FragmnetWechatLoginBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
-        mDatabind.tvChangePassword.setOnClickListener {
-
-        }
     }
 
-    override fun getBind(inflater: LayoutInflater): FragmnetLoginPasswordBinding {
-        return FragmnetLoginPasswordBinding.inflate(inflater)
+    override fun getBind(inflater: LayoutInflater): FragmnetWechatLoginBinding {
+        return FragmnetWechatLoginBinding.inflate(inflater)
     }
 }

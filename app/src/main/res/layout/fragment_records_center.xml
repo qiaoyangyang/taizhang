@@ -453,11 +453,12 @@
                     app:layout_constraintLeft_toLeftOf="@+id/Yield"
                     app:layout_constraintTop_toBottomOf="@+id/Yield" />
                 <TextView
+
                     android:id="@+id/tv_goodProductRate"
                     android:textStyle="bold"
                     android:text=""
                     android:layout_marginRight="@dimen/dp_16"
-                    android:textSize="@dimen/sp_32"
+                    android:textSize="@dimen/sp_22"
                     android:textColor="#5B6388"
                     app:layout_constraintTop_toTopOf="@+id/Yield"
                     app:layout_constraintRight_toRightOf="parent"

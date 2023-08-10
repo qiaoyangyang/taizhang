@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/red"
-        android:paddingVertical="@dimen/dp_20"
+        android:paddingVertical="@dimen/dp_15"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -21,7 +21,7 @@
             android:drawableLeft="@drawable/bar_arrows_left_white"
             android:text="返回首页"
             android:textColor="@color/white"
-            android:textSize="28sp"
+            android:textSize="@dimen/sp_22"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,8 +46,8 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:background="@drawable/head"
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="@dimen/dp_100"/>
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_80"/>
             <TextView
                 android:layout_marginTop="@dimen/dp_10"
                 android:id="@+id/username"
@@ -97,20 +97,20 @@
             </androidx.recyclerview.widget.RecyclerView>
 
             <com.hjq.shape.view.ShapeTextView
-                android:textSize="@dimen/sp_28"
+                android:textSize="@dimen/sp_22"
                 android:textColor="@color/red"
-                android:paddingVertical="10dp"
-                android:paddingHorizontal="40dp"
+                android:paddingVertical="@dimen/dp_10"
+                android:paddingHorizontal="@dimen/dp_40"
                 android:gravity="center"
                 app:shape_strokeWidth="1dp"
                 app:shape_radius="30dp"
                 app:shape_strokeColor="@color/red"
                 app:shape_solidColor="@color/white"
-                android:layout_marginBottom="100dp"
+                android:layout_marginBottom="@dimen/dp_59"
                 android:text="退出登录"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@+id/rv_set"
+                app:layout_constraintLeft_toLeftOf="@+id/rv_set"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

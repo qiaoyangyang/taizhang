@@ -1,43 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.hjq.shape.layout.ShapeConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_marginLeft="70dp"
+    android:layout_height="wrap_content"
     android:background="#E0FE4B48"
-    android:layout_width="match_parent"
 
-    android:layout_height="wrap_content">
+    android:paddingVertical="@dimen/dp_10"
+    android:orientation="vertical">
+
+
+
     <TextView
         android:id="@+id/tv_title"
-        android:gravity="center"
-        android:drawablePadding="20dp"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:drawableLeft="@drawable/bg_wf"
-        android:textSize="16sp"
-        android:textColor="@color/white"
+        android:drawablePadding="@dimen/dp_20"
+        android:gravity="center"
+
         android:text="网络故障，请检查WiFi连接情况后，重试..."
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+
+        />
+
+
+
     <ImageView
         android:id="@+id/iv_Close"
-        android:layout_marginRight="20dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="@dimen/dp_26"
+        android:layout_height="@dimen/dp_26"
+        android:layout_marginRight="@dimen/dp_20"
         android:src="@drawable/guaibi"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+</com.hjq.shape.layout.ShapeConstraintLayout>

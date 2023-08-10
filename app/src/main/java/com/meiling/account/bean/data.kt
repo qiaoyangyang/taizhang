@@ -228,4 +228,9 @@ class Spezifikation(
 
 
 )
+data class SetBaen(
+    var name:String="",
+    var isselect //是否选择
+    : Boolean = false
 
+)

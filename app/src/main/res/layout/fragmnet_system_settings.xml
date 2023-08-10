@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_36"
+            android:layout_marginTop="@dimen/dp_70"
+            android:text="震动反馈"
+            android:textColor="#86909C"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.meiling.common.view.SwitchButton
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="@dimen/dp_10"
+            app:layout_constraintBottom_toTopOf="@+id/tv_line"
+            android:id="@+id/checkChangeOrderPrintAuto"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_change_password"
+            app:layout_constraintRight_toLeftOf="@+id/tv_change_password"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_change_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_36"
+            android:text="震动:开"
+            android:textColor="@color/red"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBottom_toBottomOf="@+id/checkChangeOrderPrintAuto"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/checkChangeOrderPrintAuto" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:text="点击页面按钮后，系统跟随点击震动反馈"
+            android:textColor="#303133"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBaseline_toBaselineOf="@+id/username"
+            app:layout_constraintLeft_toRightOf="@+id/username" />
+
+        <TextView
+            android:id="@+id/tv_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/dp_15"
+            android:background="#D9D9D9"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_user_name"
+            app:layout_constraintRight_toRightOf="@+id/tv_change_password"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
+
+        <TextView
+            android:id="@+id/tv_last_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="2077 / 04 / 11 21:27 最后更新"
+            android:textColor="#959595"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintRight_toRightOf="@+id/tv_change_password"
+            app:layout_constraintTop_toBottomOf="@+id/tv_line" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/software_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_36"
+            android:layout_marginTop="@dimen/dp_36"
+            android:text="软件版本"
+            android:textColor="#86909C"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_software_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_36"
+            android:text="最新版本"
+            android:textColor="@color/red"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/software_version" />
+
+        <TextView
+            android:id="@+id/tv_software_versions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:text="V 1.0.1"
+            android:textColor="#303133"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBaseline_toBaselineOf="@+id/software_version"
+            app:layout_constraintLeft_toRightOf="@+id/software_version" />
+
+        <TextView
+            android:id="@+id/tv_line1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/dp_15"
+            android:background="#D9D9D9"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_software_versions"
+            app:layout_constraintRight_toRightOf="@+id/tv_software_version"
+            app:layout_constraintTop_toBottomOf="@+id/tv_software_versions" />
+
+        <TextView
+            android:id="@+id/tv_last_update_Software"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="2077 / 04 / 11 21:27 最后更新"
+            android:textColor="#959595"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintRight_toRightOf="@+id/tv_software_version"
+            app:layout_constraintTop_toBottomOf="@+id/tv_line1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

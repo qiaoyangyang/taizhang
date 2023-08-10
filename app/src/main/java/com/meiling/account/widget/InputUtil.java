@@ -8,6 +8,7 @@ import com.meiling.account.bean.Goods;
 import com.meiling.account.bean.IncomeBean;
 import com.meiling.account.bean.PeriodTimeItem;
 import com.meiling.account.bean.Ranking;
+import com.meiling.account.bean.SetBaen;
 import com.meiling.account.bean.Spezifikation;
 
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class InputUtil {
@@ -57,6 +59,7 @@ public class InputUtil {
 
         return colors;
     }
+
     @NotNull
     public static List<Float> date(ArrayList<Ranking> rankings){
         List<Float> date = new ArrayList<>(); //shuju
@@ -134,6 +137,19 @@ public class InputUtil {
 
         }
         return spezifikations;
+
+    }
+
+    @Nullable
+    public static Collection<SetBaen> gettsettinglist() {
+        List<SetBaen> setBaens=new ArrayList<>();
+        setBaens.add(new SetBaen("基础信息",true));
+        setBaens.add(new SetBaen("登录密码",false));
+        setBaens.add(new SetBaen("微信登录",false));
+        setBaens.add(new SetBaen("切换门店",false));
+        setBaens.add(new SetBaen("系统设置",false));
+        return setBaens;
+
 
     }
 }

@@ -71,6 +71,7 @@ public class UpdateAppHttpUtil implements HttpManager {
                     @Override
                     public void onError(okhttp3.Call call, Exception e, int id) {
                         callBack.onError(e.getMessage());
+                        Log.d("UpdateAppHttpUtil---", "onError: "+e.getMessage());
                     }
 
                     @Override

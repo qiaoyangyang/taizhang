@@ -127,8 +127,10 @@ class GoodProductDetailFragment : BaseFragment<MainViewModel, FragmentGoodProduc
     override fun createObserver() {
         super.createObserver()
         mViewModel.goodsSplitlist.onStart.observe(this) {
+
         }
         mViewModel.goodsSplitlist.onSuccess.observe(this) {
+
             goodProducttimeAdapter?.setList(it)
 
 

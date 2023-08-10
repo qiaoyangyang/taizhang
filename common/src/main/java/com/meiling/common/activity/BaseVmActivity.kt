@@ -374,14 +374,16 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), TitleBa
         mLayoutParams = WindowManager.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.TYPE_APPLICATION,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,  //   | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, //注释掉可以进行事件监听
+            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,  //   | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, //注释掉可以进行事件监听
             PixelFormat.TRANSLUCENT
         )
+        mLayoutParams?.flags=WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
         //使用非CENTER时，可以通过设置XY的值来改变View的位置
         mLayoutParams?.gravity = Gravity.TOP
-        mLayoutParams?.x = 50
+        mLayoutParams?.horizontalMargin=40f
+        mLayoutParams?.x =300
         mLayoutParams?.y = 0
-//        mLayoutParams.gravity = Gravity.CENTER;
+       // mLayoutParams?.gravity = Gravity.CENTER;
     }
 
 
