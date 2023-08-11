@@ -18,8 +18,6 @@ import com.meihao.kotlin.cashier.db.GoosClassifyDaoDao
 import com.meihao.kotlin.cashier.db.GoosClassifyDataBase
 import com.meiling.account.R
 import com.meiling.account.adapter.FragAdapter
-import com.meiling.account.data.AndIn
-import com.meiling.account.data.RefreshData
 import com.meiling.account.databinding.ActivityMainBinding
 import com.meiling.account.dialog.HelfenDialog
 import com.meiling.account.dialog.MineExitDialog
@@ -36,9 +34,10 @@ import com.meiling.common.constant.ARouteConstants
 import com.meiling.common.utils.GlideCircleTransform
 import com.meiling.common.utils.MMKVUtils
 import com.meiling.common.utils.ScreenManager
-import org.greenrobot.eventbus.EventBus
+import com.meiling.common.utils.VibrationUtils
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+
 
 //主页……
 @Route(path = "/app/MainActivity")
@@ -54,6 +53,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     val articleDao: ArticleDao =
         ArticleGoosDataBase.instance.getGoodsToOrderContentDao()
     val goodsCategoryDao: GoosClassifyDaoDao = GoosClassifyDataBase.instance.getGoodsCategoryDao()
+
     override fun initView(savedInstanceState: Bundle?) {
         screenManager.initPayLayoutWidth(this)
         mDatabind.menuHelfen.setSingleClickListener {
@@ -61,7 +61,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
           //  HelfenPopWindow.Builder(this).showAtLocation(mDatabind.viewpager)
         }
         mDatabind.menuSetting1.setOnClickListener {
-           // startActivity(Intent(this,SettingActivity::class.java))
+            var vibrationUtils = VibrationUtils(this)
+            vibrationUtils.vibrate()
+            startActivity(Intent(this,SettingActivity::class.java))
+
         }
 
 

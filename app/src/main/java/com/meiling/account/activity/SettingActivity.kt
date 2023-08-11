@@ -46,7 +46,6 @@ class SettingActivity : BaseActivity<LoginViewModel, ActivitySetttingBinding>() 
     }
 
     override fun initData() {
-
         fragments.add(BasicInformationFragment())
         fragments.add(LoginPasswordFragment())
         fragments.add(WechatLoginFragment())
