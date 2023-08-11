@@ -1,13 +1,10 @@
 package com.meiling.account.fragment
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.meiling.account.R
@@ -22,6 +19,7 @@ import com.meiling.account.dialog.MineExitDialog
 import com.meiling.account.viewmodel.MainViewModel
 import com.meiling.account.widget.showToast
 import com.meiling.common.fragment.BaseFragment
+import com.meiling.common.utils.PreventUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -69,27 +67,32 @@ class GoodProductDetailFragment : BaseFragment<MainViewModel, FragmentGoodProduc
     ) {
         this.goodProductDetailAdapterposition = intt
         this.goodProductDetailAdapter = goodProductDetailAdapter
-        when (id) {
-            R.id.btn_withdraw -> {
-                val dialog: MineExitDialog =
-                    MineExitDialog().newInstance(
-                        "确认撤销入库操作",
-                        "请确认要撤销当前商品的入库操作，这将影响库存统计，请谨慎操作。",
-                        "取消",
-                        "确认",
-                        false
-                    )
-                dialog.setOkClickLister {
-                    dialog.dismiss()
-                    mViewModel.goodsSplit(
-                        goodProducttimeAdapter?.getItem(intt)?.infoList?.get(
-                            position
-                        )?.viewId.toString()
-                    )
+        if (!PreventUtils.isFastClick()) {
+            when (id) {
+
+                R.id.btn_withdraw -> {
+
+                    val dialog: MineExitDialog =
+                        MineExitDialog().newInstance(
+                            "确认撤销入库操作",
+                            "请确认要撤销当前商品的入库操作，这将影响库存统计，请谨慎操作。",
+                            "取消",
+                            "确认",
+                            false
+                        )
+                    dialog.setOkClickLister {
+                        dialog.dismiss()
+                        mViewModel.goodsSplit(
+                            goodProducttimeAdapter?.getItem(intt)?.infoList?.get(
+                                position
+                            )?.viewId.toString()
+                        )
+
+                    }
+                    dialog.show(activity?.supportFragmentManager)
+
 
                 }
-                dialog.show(activity?.supportFragmentManager)
-
             }
         }
     }
@@ -107,7 +110,7 @@ class GoodProductDetailFragment : BaseFragment<MainViewModel, FragmentGoodProduc
                 DateSplit(
                     refundType.startTime.toString(),
                     refundType.endTime.toString(),
-                    1,userStoreList()!!.viewId!!
+                    1, userStoreList()!!.viewId!!
                 )
             )
         }

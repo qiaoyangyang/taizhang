@@ -16,7 +16,7 @@ class OmsApplication : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
         AppConfig.init(this)
-        NetworkMonitorManager.getInstance().init(this, 1_500)
+        NetworkMonitorManager.getInstance().init(this, 1500)
         if (SPStaticUtils.getBoolean("isFirstInstall")) {
             MapsInitializer.loadWorldGridMap(true);
             MapsInitializer.setNetWorkEnable(true);

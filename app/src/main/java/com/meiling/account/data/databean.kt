@@ -48,3 +48,6 @@ data class AndIn(
     var endWarehouseDate: String,
     var voucherType: Int=3,
 )
+data class RefreshData(
+    var tetxt: String="",
+)

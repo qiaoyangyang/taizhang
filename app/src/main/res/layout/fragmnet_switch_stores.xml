@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_title"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -16,26 +18,26 @@
             android:layout_marginLeft="@dimen/dp_36"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="登录密码"
+            android:text="选择门店"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
             android:textSize="@dimen/sp_14"
             android:textColor="@color/red"
             android:layout_marginRight="@dimen/dp_36"
-            android:id="@+id/tv_change_password"
-            android:text="修改密码"
+            android:id="@+id/tv_modify_store"
+            android:text="修改门店"
             app:layout_constraintTop_toTopOf="@+id/username"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
-            android:textSize="@dimen/sp_14"
+            android:textSize="@dimen/sp_16"
             android:id="@+id/tv_user_name"
             android:textColor="#303133"
             android:layout_marginLeft="@dimen/dp_20"
             app:layout_constraintBaseline_toBaselineOf="@+id/username"
-            android:text="可修改设置，密码至少6~16位数字"
+            android:text="当前数据为“浮光之丘 SKP店”数据"
             app:layout_constraintLeft_toRightOf="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -54,13 +56,14 @@
             android:layout_marginTop="@dimen/dp_10"
             android:textColor="#959595"
             app:layout_constraintTop_toBottomOf="@+id/tv_line"
-            app:layout_constraintRight_toRightOf="@+id/tv_change_password"
+            app:layout_constraintRight_toRightOf="@+id/tv_modify_store"
             android:text="2077 / 04 / 11 21:27 最后更新"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@+id/cl_title"
         android:id="@+id/rySelectShop"
         android:layout_width="match_parent"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -70,6 +73,66 @@
         android:layout_marginBottom="@dimen/dp_20"
         android:layout_marginLeft="@dimen/dp_100"
         android:layout_marginRight="@dimen/dp_100"
-        tools:listitem="@layout/item_recy_select_shop" />
+        tools:listitem="@layout/item_recy_select_shop1" />
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/dp_59"
 
-</LinearLayout>
+        android:id="@+id/ll_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_30"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
+
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/btn_ok_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_25"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_25"
+            android:paddingBottom="@dimen/dp_10"
+            android:shadowColor="@color/home_666666"
+            android:text="取消"
+            android:textColor="#616161"
+            android:textSize="@dimen/sp_16"
+            app:shape_radius="@dimen/dp_26"
+            app:shape_solidColor="#F3F3F3"
+            app:shape_strokeWidth="0dp" />
+
+        <com.hjq.shape.view.ShapeButton
+            android:id="@+id/btn_cancel_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_25"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_25"
+            android:paddingBottom="@dimen/dp_10"
+
+            android:text="确定"
+
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            app:shape_radius="@dimen/dp_26"
+            app:shape_solidColor="@color/red"
+
+            />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

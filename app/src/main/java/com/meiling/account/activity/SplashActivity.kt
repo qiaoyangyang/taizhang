@@ -3,6 +3,7 @@ package com.meiling.account.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import com.amap.api.maps.MapsInitializer
 import com.blankj.utilcode.util.SPStaticUtils
@@ -30,9 +31,12 @@ class SplashActivity : BaseActivity<BaseViewModel, ActivitySplashBinding>() {
 
         if (boolean &&userStoreList()!=null) {
             finish()
+
             startActivity(Intent(this, MainActivity::class.java))
+            Log.d("qi", "initView:1 ")
 
         } else {
+            Log.d("qi", "initView:kkkkkkk ")
             finish()
             startActivity(Intent(this, LoginActivity::class.java))
         }
@@ -40,22 +44,6 @@ class SplashActivity : BaseActivity<BaseViewModel, ActivitySplashBinding>() {
     }
 
 
-    fun initAndStartSDK() {
-        MapsInitializer.loadWorldGridMap(true);
-        MapsInitializer.setNetWorkEnable(true);
-        PushHelper.preInit(AppConfig.getApplication());
-        HuaWeiRegister.register(AppConfig.getApplication());
-        //建议在线程中执行初始化
-        Thread { PushHelper.init(AppConfig.getApplication()) }.start()
-        MiPushRegistar.register(
-            AppConfig.getApplication(),
-            "2882303761520240526",
-            "5862024070526",
-            false
-        )
-        CrashManagerUtil.getInstance(AppConfig.getApplication()).init()
-        CrashReport.initCrashReport(AppConfig.getApplication(), "0e93bafb3e", false);
-    }
 
     override fun getBind(layoutInflater: LayoutInflater): ActivitySplashBinding {
         return ActivitySplashBinding.inflate(layoutInflater)

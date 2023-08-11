@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.PopupWindow
@@ -92,7 +93,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         mDatabind.goodsSearchMore.setOnClickListener {
             initPopShopList(mDatabind.llLoginName, userLoginDao.getStudentById(1))
         }
-
+        Log.d("qi", "initView:log ")
 
     }
 

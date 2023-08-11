@@ -79,5 +79,7 @@ class UserStoreList(
     @SerializedName("updateTime")
     var updateTime: String? = "",
     @SerializedName("viewId")
-    var viewId: String? = ""
+    var viewId: String? = "",
+
+    var isselect:Boolean=false
 )

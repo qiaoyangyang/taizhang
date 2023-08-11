@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.meiling.account.R
 import com.meiling.account.adapter.SelectShopAdapger
 import com.meiling.account.databinding.ActivitySelectStoreBinding
 import com.meiling.account.viewmodel.LoginViewModel
 import com.meiling.account.widget.showToast
 import com.meiling.common.activity.BaseActivity
+import com.meiling.common.utils.SpannableUtils
 
 //  选择门店
 class SelectStoreActiviy : BaseActivity<LoginViewModel, ActivitySelectStoreBinding>() ,

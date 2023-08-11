@@ -7,8 +7,8 @@
     android:background="@mipmap/login_bg">
 
     <com.hjq.shape.layout.ShapeLinearLayout
-        android:layout_marginLeft="200dp"
-        android:layout_marginRight="200dp"
+        android:layout_marginLeft="@dimen/dp_200"
+        android:layout_marginRight="@dimen/dp_200"
         android:orientation="vertical"
         android:layout_width="0dp"
         app:shape_radius="10dp"

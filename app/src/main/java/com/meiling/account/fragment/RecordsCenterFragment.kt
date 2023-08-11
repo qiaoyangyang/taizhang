@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RadioGroup
@@ -21,6 +22,7 @@ import com.meiling.account.bean.DateSplit
 import com.meiling.account.bean.DateSplitList
 import com.meiling.account.bean.Statistics
 import com.meiling.account.data.AndIn
+import com.meiling.account.data.RefreshData
 import com.meiling.account.databinding.FragmentRecordsCenterBinding
 import com.meiling.account.dialog.OptionDatePopWindow
 import com.meiling.account.viewmodel.MainViewModel
@@ -353,6 +355,13 @@ class RecordsCenterFragment : BaseFragment<MainViewModel, FragmentRecordsCenterB
         )
         EventBus.getDefault().post(outAndIn)
 
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun data(refundType: RefreshData) {
+
+        initData()
     }
 
 }

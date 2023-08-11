@@ -28,6 +28,7 @@ import com.meiling.account.bean.Goods
 import com.meiling.account.bean.GoodsController
 import com.meiling.account.bean.GoosClassify
 import com.meiling.account.bean.StorageGoods
+import com.meiling.account.data.RefreshData
 import com.meiling.account.databinding.FragmentHomeBinding
 import com.meiling.account.dialog.ClassificationPopWindow
 import com.meiling.account.viewmodel.MainViewModel
@@ -40,6 +41,9 @@ import com.meiling.common.fragment.BaseFragment
 import com.meiling.common.utils.RecyclerViewDivider
 import com.meiling.common.utils.TextDrawableUtils
 import com.meiling.common.utils.XNumberUtils
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 //完工入库
 class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemClickListener {
@@ -407,12 +411,15 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
         mViewModel.goosClassify.onSuccess.observe(this) {
             dismissLoading()
+            Log.d("yjk", "createObserver: "+data.size)
             var category = GoosClassify(id = "0", sortName = "全部商品")
             category.select = true
             it.add(0, category)
-            data = it
+
 
             goodsCategoryDao.insertAll(it)
+            data = goodsCategoryDao.getCategoryname() as ArrayList<GoosClassify>
+            data[0].select = true
             tabAdapter?.setList(data)
 
 
@@ -509,5 +516,24 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        // 检查订阅者是否已经注册，如果已经注册，则先进行反注册
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this)
+        }else{
+            // 重新注册订阅者
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun data(refundType: RefreshData) {
+        Log.d("yjk", "data: refundType")
+        pageNum = 1
+        goodsCategoryDao.deleteAll()
+        articleDao.deleteAll()
+        initData()
+    }
 
 }
