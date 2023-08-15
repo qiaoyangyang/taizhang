@@ -33,7 +33,7 @@ object UpdateVersion {
 
     fun getUpdateVersion(context: Activity, type: String = "0") {
        // var url = "http://book.qingyouhn.cn/api"
-        var url = "http://standingbook-api.igoodsale.com/api"
+       // var url = "http://standingbook-api.igoodsale.com/api"
         val map: HashMap<String, String> = HashMap()
         map.put("versionCode", BuildConfig.VERSION_CODE.toString())
         map.put("appId", "1")
@@ -42,7 +42,7 @@ object UpdateVersion {
             .setUpdateUrl(
                 SPStaticUtils.getString(
                     SPConstants.IP,
-                    url
+                    BuildConfig.BASE_URL
                 ) + "/appSetting/queryInfo"
             )
 //            .setUpdateUrl("http://dev-oms-api.igoodsale.com/saas/Version/CheckUpdate")

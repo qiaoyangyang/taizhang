@@ -2,6 +2,7 @@ package com.meiling.account.viewmodel
 
 import android.app.Application
 import com.meiling.account.bean.*
+import com.meiling.account.data.AppUpdate
 import com.meiling.account.service.commodityService
 import com.meiling.account.service.loginService
 import com.meiling.common.BaseLiveData
@@ -100,6 +101,14 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
         statistics1.storeViewId=statistics.storeViewId
 
         request({ commodityService.periodTime(statistics1) }, periodTimedata)
+    }
+    //app
+    val appUpdate = BaseLiveData<com.meiling.account.data.Result>()
+    fun appUpdate() {
+
+
+
+        request({ commodityService.queryInfo() }, appUpdate)
     }
 
 

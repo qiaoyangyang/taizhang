@@ -63,7 +63,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         mDatabind.menuSetting1.setOnClickListener {
             var vibrationUtils = VibrationUtils(this)
             vibrationUtils.vibrate()
-            startActivity(Intent(this,SettingActivity::class.java))
+           startActivity(Intent(this,SettingActivity::class.java))
 
         }
 

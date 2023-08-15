@@ -1,10 +1,12 @@
 package com.meiling.account.service
 
+import com.meiling.account.BuildConfig
 import com.meiling.common.network.ResultData
 import com.meiling.common.network.RetrofitClient
 import com.meiling.common.network.data.*
 import com.meiling.account.bean.*
 import com.meiling.account.bean.PageResult
+import com.meiling.account.data.AppUpdate
 import retrofit2.http.*
 
 
@@ -92,5 +94,13 @@ interface CommodityService {
     ): ResultData<ArrayList<PeriodTimeItem>>
 
 
+    /**
+     *
+     * **/
+    @POST("api/appSetting/queryInfo")
+    suspend fun queryInfo(
+        @Query("versionCode") versionCode: String= BuildConfig.VERSION_CODE.toString(),
+        @Query("appId") appId: String = "1",
+    ): ResultData<com.meiling.account.data.Result>
 
 }
