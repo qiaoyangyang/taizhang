@@ -191,6 +191,8 @@ class HomeFragment : BaseFragment<MainViewModel, FragmentHomeBinding>(), OnItemC
                             goodaAdapter?.setList(goods)
                         }
                     } else {
+                        sortCode = ""
+                        mDatabind.stockSearchGoodEdit.setText(sortCode)
                         pageNum = 1
                         goodsCategoryDao.deleteAll()
                         articleDao.deleteAll()
