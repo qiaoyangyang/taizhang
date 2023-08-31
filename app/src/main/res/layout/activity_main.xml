@@ -168,6 +168,7 @@
                     android:layout_gravity="center"
                     android:clickable="true"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:paddingVertical="@dimen/dp_20"
                     android:orientation="vertical">
 

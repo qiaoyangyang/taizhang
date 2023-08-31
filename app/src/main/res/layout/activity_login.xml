@@ -185,7 +185,7 @@
                 android:paddingVertical="@dimen/dp_8"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:drawablePadding="@dimen/dp_5"
-                android:text="登录即代表您同意《美零台账用户协议和隐私政策》"
+                android:text="登录即代表您同意《美零车间用户协议和隐私政策》"
                 android:textSize="@dimen/sp_14"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/cb_agreementv" />
